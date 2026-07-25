@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 6
 parent: "[[Sequence (Mathematics)]]"
 tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** three standard sequence families ➔ arithmetic (diff $d$), geometric (ratio $r$), harmonic (reciprocals arithmetic).
 > - **📦 Core Components:** closed forms $a+(n-1)d$, $ar^{n-1}$, $\frac1{a+(n-1)d}$.
-> - **⚡ Critical Bottleneck:** arithmetic grows linearly, geometric exponentially; harmonic defined via reciprocals.
+> - **⚡ Key Constraint:** arithmetic grows linearly, geometric exponentially; harmonic defined via reciprocals.
 
 ## 📝 Core
 ### 1. The Three Families
@@ -31,7 +32,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 | geometric ($r<1$) | decays to 0                | converges             |
 | harmonic          | $\sim\ln n$ (partial sums) | harmonic number       |
 
-> [!NOTE] **Crossover Invariant:** the constant *difference* vs constant *ratio* is exactly why arithmetic is linear and geometric exponential — the same gap that makes geometric series converge while arithmetic ones diverge. Degenerate: $d=0$ or $r=1$ gives a constant sequence.
+> [!NOTE] **When It Flips:** the constant *difference* vs constant *ratio* is exactly why arithmetic is linear and geometric exponential — the same gap that makes geometric series converge while arithmetic ones diverge. Degenerate: $d=0$ or $r=1$ gives a constant sequence.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ Identify families:
 | 2 | $2,6,18,54$ | geometric | $a{=}2,r{=}3$ |
 | 3 | $3,4,6,12$ | harmonic | recip. $d{=}-\tfrac1{12}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Harmonic is indirect** ➔ it is not itself arithmetic/geometric; prove harmonic facts by passing to reciprocals ($3,4,6,12$ → $\tfrac{4}{12},\tfrac{3}{12},\tfrac{2}{12},\tfrac{1}{12}$).
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the recurrence and closed form for arithmetic and geometric sequences, and contrast their growth.
-> - **Core Insight Requirement:** Difference vs ratio.
+> - **Hint:** Difference vs ratio.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Arithmetic $f_n=a+(n-1)d$ (linear); geometric $f_n=ar^{n-1}$ (exponential/decaying).
-> > - **Technical Justification:** **Constant $d$ vs $r$** ➔ additive step → linear, multiplicative step → exponential.
+> > - **Short answer:** Arithmetic $f_n=a+(n-1)d$ (linear); geometric $f_n=ar^{n-1}$ (exponential/decaying).
+> > - **Why:** **Constant $d$ vs $r$** ➔ additive step → linear, multiplicative step → exponential.
 
 > [!FAQ]- What makes a sequence harmonic, and why is $3,4,6,12$ one?
-> - **Core Insight Requirement:** Reciprocals arithmetic.
+> - **Hint:** Reciprocals arithmetic.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Reciprocals form an arithmetic sequence; $\tfrac13,\tfrac14,\tfrac16,\tfrac1{12}$ have common difference $-\tfrac1{12}$.
-> > - **Technical Justification:** **Canonical $(\tfrac1n)$** ➔ integers are arithmetic.
+> > - **Short answer:** Reciprocals form an arithmetic sequence; $\tfrac13,\tfrac14,\tfrac16,\tfrac1{12}$ have common difference $-\tfrac1{12}$.
+> > - **Why:** **Canonical $(\tfrac1n)$** ➔ integers are arithmetic.

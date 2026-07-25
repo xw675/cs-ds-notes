@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relation (Database)]]"
 tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a relation body is a set of tuples ➔ four properties follow.
 > - **📦 Core Components:** no duplicate tuples ➔ tuples unordered ➔ attributes unordered ➔ atomic values.
-> - **⚡ Critical Bottleneck:** atomic values = First Normal Form; access is always **by content**, never by position.
+> - **⚡ Key Constraint:** atomic values = First Normal Form; access is always **by content**, never by position.
 
 ## 📝 Core
 ### 1. The Four Properties
@@ -35,7 +36,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 | attributes unordered | set | access by name |
 | atomic values | 1NF rule | dependencies/joins well-defined |
 
-> [!NOTE] **Crossover Invariant:** unordered tuples force declarative [[Relational Algebra]]/SQL querying by value; tuple uniqueness guarantees the full attribute set is a super key. SQL tables relax some rules (permit duplicate rows unless constrained).
+> [!NOTE] **When It Flips:** unordered tuples force declarative [[Relational Algebra]]/SQL querying by value; tuple uniqueness guarantees the full attribute set is a super key. SQL tables relax some rules (permit duplicate rows unless constrained).
 
 ## 📊 Exam Execution Trace
 
@@ -49,18 +50,18 @@ Checking a candidate relation:
 | 2 | access by row number? | invalid |
 | 3 | `dependants={Ali,Sara}` | breaks 1NF |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Never name a tuple by position** ➔ tuples are unordered, so access is always by attribute value; a multivalued cell violates atomicity (1NF).
 
 ## 🧠 Active Recall
 > [!FAQ]- State the four properties of a relation and why each follows from it being a set.
-> - **Core Insight Requirement:** Set ⟹ properties.
+> - **Hint:** Set ⟹ properties.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** No duplicate tuples, tuples unordered, attributes unordered, atomic values.
-> > - **Technical Justification:** **First three from set** ➔ atomicity is the extra 1NF rule.
+> > - **Short answer:** No duplicate tuples, tuples unordered, attributes unordered, atomic values.
+> > - **Why:** **First three from set** ➔ atomicity is the extra 1NF rule.
 
 > [!FAQ]- How does a relation differ from a tabular representation, and the link to 1NF?
-> - **Core Insight Requirement:** Display vs structure.
+> - **Hint:** Display vs structure.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Tables allow duplicate/ordered rows and composite cells; relations forbid all three.
-> > - **Technical Justification:** **1NF** ➔ atomic-value rule moves multivalued data to a separate relation.
+> > - **Short answer:** Tables allow duplicate/ordered rows and composite cells; relations forbid all three.
+> > - **Why:** **1NF** ➔ atomic-value rule moves multivalued data to a separate relation.

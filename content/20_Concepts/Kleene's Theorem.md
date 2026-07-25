@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: [3, 4]
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [Kleene, Kleene's theorem, regular language equivalence, GNFA, equivalence of regex and automata]
@@ -10,7 +11,7 @@ aliases: [Kleene, Kleene's theorem, regular language equivalence, GNFA, equivale
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** any language definable by a **regular expression**, **FA**, **NFA** or **GNFA** can be defined by **any of the others** ➔ all four formalisms have identical expressive power.
-> - **⚡ Critical Bottleneck:** the proof is **constructive** — it is a **cycle** of conversions, and each leg is a examinable hand procedure.
+> - **⚡ Key Constraint:** the proof is **constructive** — it is a **cycle** of conversions, and each leg is a examinable hand procedure.
 
 ## 📝 The theorem
 **Theorem (Kleene).** Any language which can be defined by
@@ -47,7 +48,7 @@ stateDiagram-v2
   - **Concretely** ➔ the [[Pumping Lemma for Regular Languages|pumping lemma]] exhibits **named** non-regular languages — HALF-AND-HALF $\{\mathtt{a}^{n}\mathtt{b}^{n}\}$, EQUAL and PALINDROME (see [[Proving a Language Non-Regular]]).
 - **The final picture** ➔ $\{\text{regular languages}\}$ is a **proper subset** of $\{\text{all languages}\}$.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Equivalence is about the language, not the machine** ➔ converting changes size and shape drastically (an $n$-state NFA can need $2^{n}$ DFA states); only the **set of accepted strings** is preserved.
 - 💡 **"Regular" ≠ "any language"** ➔ Kleene's Theorem says the four formalisms agree with each other, **not** that they cover everything.
 - 💡 **GNFA is a proof device** ➔ it exists to make the FA $\to$ regex direction tractable; it is not a separate model you would design from scratch.
@@ -55,10 +56,10 @@ stateDiagram-v2
 ## 🧠 Active Recall
 > [!FAQ]- What does Kleene's Theorem assert, and why is the proof arranged as a cycle?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it asserts that regular expressions, FAs, NFAs and GNFAs all define **exactly the same class of languages**. The proof is **constructive**: Regexp $\to$ NFA $\to$ FA $\to$ GNFA $\to$ Regexp.
-> > - **Technical Justification:** **Closing the loop proves mutual simulation** ➔ each arrow converts one formalism into the next while preserving the language, so following the cycle from any starting point reaches every other formalism — establishing equivalence in all directions at once.
+> > - **Short answer:** it asserts that regular expressions, FAs, NFAs and GNFAs all define **exactly the same class of languages**. The proof is **constructive**: Regexp $\to$ NFA $\to$ FA $\to$ GNFA $\to$ Regexp.
+> > - **Why:** **Closing the loop proves mutual simulation** ➔ each arrow converts one formalism into the next while preserving the language, so following the cycle from any starting point reaches every other formalism — establishing equivalence in all directions at once.
 
 > [!FAQ]- After Kleene's Theorem, which of the three opening questions remains unanswered, and how is it eventually resolved?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the first two ("can every regex language be given an FA?" and "can every FA language be given a regex?") are answered **YES**. The third — "can **every** language be represented this way?" — remains open, and the answer is **no**.
-> > - **Technical Justification:** **Cardinality plus concrete witnesses** ➔ languages are uncountable while descriptions are countable ([[Countability and Cantor Diagonalisation]]), so most languages are unreachable; the pumping lemma later names specific non-regular languages.
+> > - **Short answer:** the first two ("can every regex language be given an FA?" and "can every FA language be given a regex?") are answered **YES**. The third — "can **every** language be represented this way?" — remains open, and the answer is **no**.
+> > - **Why:** **Cardinality plus concrete witnesses** ➔ languages are uncountable while descriptions are countable ([[Countability and Cantor Diagonalisation]]), so most languages are unreachable; the pumping lemma later names specific non-regular languages.

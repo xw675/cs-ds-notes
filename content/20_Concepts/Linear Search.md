@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 1
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Search, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** scan elements one by one until match or end ➔ $O(n)$, but works on any [[Iterable]] with no precondition.
 > - **📦 Core Components:** walk sequence ➔ compare each ➔ return index / sentinel.
-> - **⚡ Critical Bottleneck:** $O(n)$ comparisons — no order, no random access needed, so it's the only option for unsorted data or a [[List (ADT)|LinkList]].
+> - **⚡ Key Constraint:** $O(n)$ comparisons — no order, no random access needed, so it's the only option for unsorted data or a [[List (ADT)|LinkList]].
 
 ## 📝 Core
 ### 1. The Algorithm (Scan Until Found)
@@ -35,7 +36,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 >             return i                 # found → index
 >     return -1                        # exhausted → sentinel (absent)
 > ```
-> 💡 **Exam Pitfall:** **"Linear" needs a reference** ➔ `naive(k)` looks $O(k)$ but is $O(2^n)$ in the bit-size $n$ of $k$ — complexity is only meaningful relative to input *size*, not value.
+> 💡 **Common Mistake:** **"Linear" needs a reference** ➔ `naive(k)` looks $O(k)$ but is $O(2^n)$ in the bit-size $n$ of $k$ — complexity is only meaningful relative to input *size*, not value.
 
 ## ⚖️ Core Decision Matrix
 | Search | Time (worst) | Precondition | Structure |
@@ -44,7 +45,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 | **[[Binary Search]]** | $O(\log n)$ | sorted + $O(1)$ access | array |
 | **[[Hash Table]]** | $O(1)$ expected | good hash, no order | hash array |
 
-> [!NOTE] **Crossover Invariant:** binary/hash search beat linear asymptotically, but linear is the *only* option when data is unsorted **or** lacks $O(1)$ random access (linked structures). For one-off searches on tiny/unsorted data, linear's $O(1)$ setup wins over sorting first ($O(n\log n)$).
+> [!NOTE] **When It Flips:** binary/hash search beat linear asymptotically, but linear is the *only* option when data is unsorted **or** lacks $O(1)$ random access (linked structures). For one-off searches on tiny/unsorted data, linear's $O(1)$ setup wins over sorting first ($O(n\log n)$).
 
 ## 📊 Exam Execution Trace
 
@@ -71,13 +72,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- When is linear search the *right* choice despite being $O(n)$ vs binary's $O(\log n)$?
-> - **Core Insight Requirement:** Preconditions and setup cost.
+> - **Hint:** Preconditions and setup cost.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** When data is unsorted, or lacks $O(1)$ random access (a LinkList), or is searched once.
-> > - **Technical Justification:** **No precondition** ➔ binary needs sorting ($O(n\log n)$) + array access; for a single search on unsorted data, paying that setup loses to a plain $O(n)$ scan.
+> > - **Short answer:** When data is unsorted, or lacks $O(1)$ random access (a LinkList), or is searched once.
+> > - **Why:** **No precondition** ➔ binary needs sorting ($O(n\log n)$) + array access; for a single search on unsorted data, paying that setup loses to a plain $O(n)$ scan.
 
 > [!FAQ]- Why is `naive(k)` "linear in $k$" actually exponential, and what does that teach about stating complexity?
-> - **Core Insight Requirement:** Value size vs bit size.
+> - **Hint:** Value size vs bit size.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $k=2^n$, so $O(k)=O(2^n)$ in the number of bits $n$ needed to write $k$.
-> > - **Technical Justification:** **Name the reference** ➔ complexity is defined relative to *input size*; "linear" without a stated reference is ambiguous and can hide exponential blow-up.
+> > - **Short answer:** $k=2^n$, so $O(k)=O(2^n)$ in the number of bits $n$ needed to write $k$.
+> > - **Why:** **Name the reference** ➔ complexity is defined relative to *input size*; "linear" without a stated reference is ambiguous and can hide exponential blow-up.

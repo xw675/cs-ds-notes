@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: [5, 6]
 parent: "[[SOLID Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [DIP, dependency inversion, depend on abstractions]
 # [[Dependency Inversion Principle (Java)]]
 
 **Context:** [[SOLID Principles (Java)|SOLID]] · the **D** · high- and low-level code both depend on an [[Interfaces (Java)|abstraction]] · the standard fix for [[SOLID Principles (Java)|downcasting/`instanceof`]] smells · realised in practice by [[Dependency Injection (Java)|dependency injection]]
-**Task signature:** a high-level class wired to several concrete types — invert it so it depends only on an interface.
+**Problem it solves:** a high-level class wired to several concrete types — invert it so it depends only on an interface.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a concrete class holds/creates other **concrete** classes ➔ introduce an abstraction both sides depend on.
-> - **⚡ Critical Bottleneck:** *high-level modules should not depend on low-level modules; both depend on abstractions* — and abstractions must not depend on details.
+> - **⚡ Key Constraint:** *high-level modules should not depend on low-level modules; both depend on abstractions* — and abstractions must not depend on details.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -58,8 +59,8 @@ classDiagram
   Dungeon --> "*" DungeonResident : residents
 ```
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: A `Report` class `new`s a `MySQLDatabase` directly to save. Invert the dependency so it works with any store.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: A `Report` class `new`s a `MySQLDatabase` directly to save. Invert the dependency so it works with any store.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > interface DataStore { void save(String data); }
@@ -72,7 +73,7 @@ classDiagram
 > > ```
 > > - **Key move:** hold the **interface** and receive the concrete via the constructor — swap `FileStore` in with no edit to `Report`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Concrete-typed fields/params** ➔ referencing `Slime`/`MySQLDatabase` directly in a high-level class is the DIP smell; use the interface type.
 - 💡 **DIP rescues OCP** ➔ depending on an abstraction is usually what makes a class closed-for-modification yet open-for-extension.
 - 💡 **Don't invert everything** ➔ an interface for a stable, single implementation adds indirection with no payoff; invert where the low-level detail actually varies.

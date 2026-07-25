@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** feed one function's output into another ➔ $(g\circ f)(x)=g(f(x))$, "g after f".
 > - **📦 Core Components:** matching (codom $f$ = dom $g$) ➔ associative ➔ identity neutral.
-> - **⚡ Critical Bottleneck:** **not commutative**; inverting reverses order ($(g\circ f)^{-1}=f^{-1}\circ g^{-1}$).
+> - **⚡ Key Constraint:** **not commutative**; inverting reverses order ($(g\circ f)^{-1}=f^{-1}\circ g^{-1}$).
 
 ## 📝 Core
 ### 1. Composition (g after f)
@@ -41,7 +42,7 @@ $$(\text{Father}\circ\text{Mother})(p)=\text{Father}(\text{Mother}(p))\ (\text{m
 | identity | yes | $g\circ i=g$ |
 | bijection preserved | yes | $g\circ f$ bijective iff both are |
 
-> [!NOTE] **Crossover Invariant:** composition models multi-stage computation; non-commutativity means swapping stages changes the result. Cascading two ciphers gives key space $K\times K'$ and decryption $d_k\circ d'_{k'}$ (socks-and-shoes).
+> [!NOTE] **When It Flips:** composition models multi-stage computation; non-commutativity means swapping stages changes the result. Cascading two ciphers gives key space $K\times K'$ and decryption $d_k\circ d'_{k'}$ (socks-and-shoes).
 
 ## 📊 Exam Execution Trace
 
@@ -57,24 +58,24 @@ $$
 $$
 **Final Extracted Output:** $g\circ f=(x+1)^2$, $f\circ g=x^2+1$; non-commutative.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Written order ≠ evaluation order** ➔ in $g\circ f$, $f$ runs first though $g$ is written first; to invert, reverse ($f^{-1}\circ g^{-1}$).
 
 ## 🧠 Active Recall
 > [!FAQ]- State the matching condition for $g\circ f$ and why written order reverses evaluation order.
-> - **Core Insight Requirement:** Codomain meets domain.
+> - **Hint:** Codomain meets domain.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Requires codomain of $f$ = domain of $g$; $(g\circ f)(x)=g(f(x))$ applies $f$ first.
-> > - **Technical Justification:** **Last acts leftmost** ➔ the notation lists the final function on the left.
+> > - **Short answer:** Requires codomain of $f$ = domain of $g$; $(g\circ f)(x)=g(f(x))$ applies $f$ first.
+> > - **Why:** **Last acts leftmost** ➔ the notation lists the final function on the left.
 
 > [!FAQ]- Justify the socks-and-shoes rule $(g\circ f)^{-1}=f^{-1}\circ g^{-1}$.
-> - **Core Insight Requirement:** Undo the last step first.
+> - **Hint:** Undo the last step first.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $(f^{-1}\circ g^{-1})\circ(g\circ f)=f^{-1}\circ i\circ f=i$ (associativity).
-> > - **Technical Justification:** **Reverse order** ➔ undo $g$ then $f$, like shoes before socks.
+> > - **Short answer:** $(f^{-1}\circ g^{-1})\circ(g\circ f)=f^{-1}\circ i\circ f=i$ (associativity).
+> > - **Why:** **Reverse order** ➔ undo $g$ then $f$, like shoes before socks.
 
 > [!FAQ]- Is composition commutative? Associative? What role does the identity play?
-> - **Core Insight Requirement:** Order matters, grouping doesn't.
+> - **Hint:** Order matters, grouping doesn't.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Not commutative; associative; identity is neutral ($g\circ i=g$).
-> > - **Technical Justification:** **Unambiguous chains** ➔ associativity lets $h\circ g\circ f$ drop brackets.
+> > - **Short answer:** Not commutative; associative; identity is neutral ($g\circ i=g$).
+> > - **Why:** **Unambiguous chains** ➔ associativity lets $h\circ g\circ f$ drop brackets.

@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: 8
 parent: "[[R for Data Science]]"
 tags: [DataScience/Tools, DataScience/Visualisation, R/Plotting, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [R plotting, barplot, hist, boxplot, R scatter plot]
 # [[R Visualisation (base graphics)]]
 
 **Context:** [[FIT1043_MOC]] · base-R plotting · same [[Data Visualisation (Chart Types)|chart-per-type]] logic as [[Plotting with Matplotlib (Pandas)|matplotlib]] · on [[R Data Frames and IO|data frames]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
-**Task signature:** draw the chart matching a variable's type, and read outliers off a boxplot.
+**Problem it solves:** draw the chart matching a variable's type, and read outliers off a boxplot.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** visualise an R column ➔ barplot / hist / boxplot / plot chosen by data type.
-> - **⚡ Critical Bottleneck:** categorical → `barplot` (often via `table()`), continuous → `hist`/`boxplot`; two continuous → `plot` (scatter).
+> - **⚡ Key Constraint:** categorical → `barplot` (often via `table()`), continuous → `hist`/`boxplot`; two continuous → `plot` (scatter).
 
 ## 🔧 Minimal Working Example
 ```r
@@ -31,8 +32,8 @@ barplot(H, names.arg=M, xlab="City", ylab="Happiness", col="blue", main="Happine
 - **Outliers from a boxplot** ➔ `outliers <- boxplot(mydata)$out` returns the flagged points (IQR rule; see [[Measures of Spread and Boxplots]]).
 - **Plot to a file** ➔ `png("chart.png")` → draw → `dev.off()` to close the device (repeat `dev.off()` until "null device").
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: From `mydata <- c(1,5,6,6,6,6,7,10)`, extract the outlier values using a boxplot.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: From `mydata <- c(1,5,6,6,6,6,7,10)`, extract the outlier values using a boxplot.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > mydata <- c(1,5,6,6,6,6,7,10)
@@ -41,6 +42,6 @@ barplot(H, names.arg=M, xlab="City", ylab="Happiness", col="blue", main="Happine
 > > ```
 > > - **Key move:** `boxplot(...)$out` pulls the outliers the IQR rule flagged.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Match the chart to the type** ➔ `barplot` is for categorical counts; use `hist` for a continuous distribution.
 - 💡 **`png()` needs `dev.off()`** ➔ after plotting to a file the output is redirected; call `dev.off()` to finish the file and restore on-screen plotting.

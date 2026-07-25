@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 1
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [Client-Supplier, Composition, has-a, Coupling]
@@ -12,9 +13,9 @@ aliases: [Client-Supplier, Composition, has-a, Coupling]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build a class from other classes ➔ hold them as fields (has-a) and call their methods.
 > - **📦 Core Components:** **client** (uses) ↔ **supplier** (provides) | composition (`this.x = new X()`) | calling public methods.
-> - **⚡ Critical Bottleneck:** the client needs to know **only how to call** a supplier's method — **not how it's implemented** (information hiding); it is coupled to the *interface*, not the internals.
+> - **⚡ Key Constraint:** the client needs to know **only how to call** a supplier's method — **not how it's implemented** (information hiding); it is coupled to the *interface*, not the internals.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Client and Supplier
 - **Client** ➔ a class that **uses** another; it holds the supplier as an attribute and calls its methods.
 - **Supplier** ➔ the class being used; it **provides** the behaviour.
@@ -52,17 +53,17 @@ aliases: [Client-Supplier, Composition, has-a, Coupling]
 >     }
 > }
 > ```
-> 💡 **Exam Pitfall:** **`*--` = composition (has-a) in a classDiagram** ➔ `MealMachine` owns a `Coffee` and a `Bread`; it depends only on their **public** methods, not their private fields.
+> 💡 **Common Mistake:** **`*--` = composition (has-a) in a classDiagram** ➔ `MealMachine` owns a `Coffee` and a `Bread`; it depends only on their **public** methods, not their private fields.
 
-> [!NOTE] **Crossover Invariant:** measure this design on coupling (how many suppliers, how much of each interface it uses), **cohesion** (does `MealMachine` do one job?), **extensibility** (could a new meal item slot in without editing `MealMachine` much?). Loose coupling to small interfaces is the goal.
+> [!NOTE] **When It Flips:** measure this design on coupling (how many suppliers, how much of each interface it uses), **cohesion** (does `MealMachine` do one job?), **extensibility** (could a new meal item slot in without editing `MealMachine` much?). Loose coupling to small interfaces is the goal.
 
 ## 🧠 Active Recall
 > [!FAQ]- What must a client know about its supplier, and what must it *not* need to know?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The client must know **how to call** the supplier's public methods (their signatures); it must **not** need to know how those methods are implemented internally.
-> > - **Technical Justification:** **Information hiding + coupling** ➔ depending only on the interface keeps coupling loose, so a supplier's internals can change without breaking the client.
+> > - **Short answer:** The client must know **how to call** the supplier's public methods (their signatures); it must **not** need to know how those methods are implemented internally.
+> > - **Why:** **Information hiding + coupling** ➔ depending only on the interface keeps coupling loose, so a supplier's internals can change without breaking the client.
 
 > [!FAQ]- How does the client–supplier relationship show up in a class diagram and in code?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** In the diagram, a `*--` (composition/has-a) arrow from client to supplier; in code, the supplier is a **field** the client creates and whose methods it calls.
-> > - **Technical Justification:** **Has-a** ➔ `MealMachine` holds `Coffee`/`Bread` fields and calls `serve()`/`toast()`.
+> > - **Short answer:** In the diagram, a `*--` (composition/has-a) arrow from client to supplier; in code, the supplier is a **field** the client creates and whose methods it calls.
+> > - **Why:** **Has-a** ➔ `MealMachine` holds `Coffee`/`Bread` fields and calls `serve()`/`toast()`.

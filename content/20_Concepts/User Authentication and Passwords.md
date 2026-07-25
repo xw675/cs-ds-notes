@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 11
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, Monash/CS_DS]
 aliases: [authentication, user authentication, passwords, authentication factors, something you know, salted hash, rainbow table, password storage]
@@ -10,7 +11,7 @@ aliases: [authentication, user authentication, passwords, authentication factors
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** prove **who** wants access ➔ at **login** (who may use the system) and again for **critical transactions** (re-check); the answer feeds [[Access Control]].
-> - **⚡ Critical Bottleneck:** **never store passwords in cleartext**; a plain hash is still beaten by **rainbow tables**, so the exam-critical answer is a **per-user salted hash**.
+> - **⚡ Key Constraint:** **never store passwords in cleartext**; a plain hash is still beaten by **rainbow tables**, so the exam-critical answer is a **per-user salted hash**.
 
 ## 📝 Authentication factors
 - **Three factor types** ➔ **something you know** (password, PIN) · **something you have** (phone, hardware token) · **something you are / other** (fingerprint, location).
@@ -30,12 +31,12 @@ aliases: [authentication, user authentication, passwords, authentication factors
 - **Salted hash** ➔ ✅ add a **unique random salt per user** before hashing → identical passwords get **different hashes**, defeating rainbow tables and forcing per-account brute force.
 - **Where it lives** ➔ the OS checks the password at login inside **kernel mode** (see [[Operating Systems and Multi-Processing|user vs kernel mode]]); access control + process **separation** protect the stored hashes from user processes.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Salt ≠ secret** ➔ the salt need not be secret; its job is to be **unique per user** so precomputed tables don't apply — not to hide.
 - 💡 **Hashing ≠ encryption** ➔ password hashes are **not decrypted** on login; the system **re-hashes the entered password (with the stored salt)** and compares digests.
 
 ## 🧠 Active Recall
 > [!FAQ]- Passwords are hashed, so why add a salt — isn't a secure hash already irreversible?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** an **unsalted** hash is deterministic, so attackers precompute **rainbow tables** once and instantly reverse *every* matching hash, and identical passwords share a hash. A **per-user salt** makes each hash unique, so those tables and cross-account shortcuts fail.
-> > - **Technical Justification:** **Forced per-account work** ➔ salting means an attacker must brute-force **each** account separately with its own salt, hugely raising cost even for a leaked database.
+> > - **Short answer:** an **unsalted** hash is deterministic, so attackers precompute **rainbow tables** once and instantly reverse *every* matching hash, and identical passwords share a hash. A **per-user salt** makes each hash unique, so those tables and cross-account shortcuts fail.
+> > - **Why:** **Forced per-account work** ➔ salting means an attacker must brute-force **each** account separately with its own salt, hugely raising cost even for a leaked database.

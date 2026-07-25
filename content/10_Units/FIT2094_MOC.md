@@ -15,7 +15,7 @@ tags: [Monash/CS_DS, 2026/S1]
 
 ## 🧰 Toolkit Cheatsheets
 - 📌 [[FIT2094 Unit Cheatsheet]] — design pipeline, normalisation, SQL decision rules, transactions, NoSQL
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> integrates Topics 8–9: anatomy, predicates, functions, joins, subqueries + integration katas
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> integrates Topics 8–9: anatomy, predicates, functions, joins, subqueries + integration practice
 
 ## 📅 Knowledge Index
 

@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 1
 parent: "[[Computational Problem]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** rearrange n orderable elements → non-decreasing ➔ correctness = permutation + ordering.
 > - **📦 Core Components:** **Bubble** ➔ adaptive, $\Theta(n^2)$ swaps | **Selection** ➔ $\Theta(n)$ swaps, never adaptive | **Insertion** ➔ adaptive + online.
-> - **⚡ Critical Bottleneck:** all three $O(n^2)$ worst (arithmetic series $\sum k$) ➔ discriminators are **stability**, **swap count**, **adaptivity**.
+> - **⚡ Key Constraint:** all three $O(n^2)$ worst (arithmetic series $\sum k$) ➔ discriminators are **stability**, **swap count**, **adaptivity**.
 
 ## 📝 Core
 ### 1. The Sorting Problem (Spec)
@@ -58,7 +59,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >         if not swapped:                       # a clean pass => already sorted
 >             break
 > ```
-> 💡 **Exam Pitfall:** **Strict `>` is load-bearing** ➔ `>=` swaps equal neighbours and breaks stability; the `swapped` flag is the *only* source of the $O(n)$ best case.
+> 💡 **Common Mistake:** **Strict `>` is load-bearing** ➔ `>=` swaps equal neighbours and breaks stability; the `swapped` flag is the *only* source of the $O(n)$ best case.
 
 ### 🔹 Selection Sort (min swaps)
 > [!code]- `selection_sort` + `find_min`
@@ -76,7 +77,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >             pos_min = i
 >     return pos_min
 > ```
-> 💡 **Exam Pitfall:** **No early-exit path** ➔ comparisons are $\sum k$ regardless of input ⟹ no $O(n)$ best case; the long-distance swap makes it **unstable**.
+> 💡 **Common Mistake:** **No early-exit path** ➔ comparisons are $\sum k$ regardless of input ⟹ no $O(n)$ best case; the long-distance swap makes it **unstable**.
 
 ### 🔹 Insertion Sort (adaptive, online)
 > [!code]- `insertion_sort`
@@ -91,7 +92,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >             i -= 1
 >         the_list[i + 1] = temp                 # 3. drop temp into the gap
 > ```
-> 💡 **Exam Pitfall:** **Flat "$O(n^2)$" hides the best case** ➔ on sorted input the `while` never fires ⟹ $O(n)$; the weak "sorted-not-final" invariant is what makes it **online**.
+> 💡 **Common Mistake:** **Flat "$O(n^2)$" hides the best case** ➔ on sorted input the `while` never fires ⟹ $O(n)$; the weak "sorted-not-final" invariant is what makes it **online**.
 
 ## ⚖️ Core Decision Matrix
 *(complexity table — Best / Average / Worst Time, Space, Stability.)*
@@ -105,7 +106,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 | [[Quick Sort]] | $O(n\log n)$ | $O(n\log n)$ | $O(n^2)$ | $O(\log n)$ | No | in-place, fast in practice |
 | [[Heapsort]] | $O(n\log n)$ | $O(n\log n)$ | $O(n\log n)$ | $O(1)$ | No | in-place + guaranteed |
 
-> [!NOTE] **Crossover Invariant:** choose an $O(n^2)$ sort when $n$ small (low overhead), nearly-sorted (insertion → $O(n)$), or writes dominate (selection's $\Theta(n)$ swaps); else $O(n\log n)$. All entries carry a $\times\,O(\text{CompEq})$ factor.
+> [!NOTE] **When It Flips:** choose an $O(n^2)$ sort when $n$ small (low overhead), nearly-sorted (insertion → $O(n)$), or writes dominate (selection's $\Theta(n)$ swaps); else $O(n\log n)$. All entries carry a $\times\,O(\text{CompEq})$ factor.
 
 ## 📊 Exam Execution Trace
 
@@ -132,25 +133,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why must a correct sort satisfy *both* permutation and ordering?
-> - **Core Insight Requirement:** Recognise that ordering alone admits element-loss bugs.
+> - **Hint:** Recognise that ordering alone admits element-loss bugs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Permutation** forces the exact input multiset; **ordering** forces non-decreasing.
-> > - **Technical Justification:** **Spec completeness** ➔ an ordered output that dropped/duplicated elements still "looks sorted" — only both clauses fully specify correctness.
+> > - **Short answer:** **Permutation** forces the exact input multiset; **ordering** forces non-decreasing.
+> > - **Why:** **Spec completeness** ➔ an ordered output that dropped/duplicated elements still "looks sorted" — only both clauses fully specify correctness.
 
 > [!FAQ]- Bubble, selection, insertion are all $O(n^2)$ — on what grounds distinguish them?
-> - **Core Insight Requirement:** Compare by adaptivity, swap count, stability, online-ness — not Big-O.
+> - **Hint:** Compare by adaptivity, swap count, stability, online-ness — not Big-O.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Selection** = $\Theta(n)$ swaps but never adaptive/unstable; **insertion** = adaptive + online + stable; **bubble** = adaptive + stable but $\Theta(n^2)$ swaps.
-> > - **Technical Justification:** **Invariant strength** ➔ selection's "final prefix" blocks adaptivity/online use; insertion's "sorted-not-final" permits both.
+> > - **Short answer:** **Selection** = $\Theta(n)$ swaps but never adaptive/unstable; **insertion** = adaptive + online + stable; **bubble** = adaptive + stable but $\Theta(n^2)$ swaps.
+> > - **Why:** **Invariant strength** ➔ selection's "final prefix" blocks adaptivity/online use; insertion's "sorted-not-final" permits both.
 
 > [!FAQ]- Prove the elementary sorts are $O(n^2)$, yet bubble/insertion reach $O(n)$ best.
-> - **Core Insight Requirement:** Evaluate the nested-loop arithmetic series and identify the short-circuit.
+> - **Hint:** Evaluate the nested-loop arithmetic series and identify the short-circuit.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Nested loops sum $\sum_{k=1}^{n-1} k = \tfrac{n^2-n}{2} = \Theta(n^2)$.
-> > - **Technical Justification:** **Short-circuit** ➔ insertion's `while` never fires on sorted input; bubble's `swapped` flag exits after one clean pass ⟹ $O(n)$; selection has no such path.
+> > - **Short answer:** Nested loops sum $\sum_{k=1}^{n-1} k = \tfrac{n^2-n}{2} = \Theta(n^2)$.
+> > - **Why:** **Short-circuit** ➔ insertion's `while` never fires on sorted input; bubble's `swapped` flag exits after one clean pass ⟹ $O(n)$; selection has no such path.
 
 > [!FAQ]- Sort 10M records by primary then secondary key in $O(n\log n)$ with stability — which algorithm, and how to stabilise quicksort if forced?
-> - **Core Insight Requirement:** Match the stability requirement to the algorithm and know the index-tag trick.
+> - **Hint:** Match the stability requirement to the algorithm and know the index-tag trick.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Use **merge sort** (or Timsort) — guaranteed $\Theta(n\log n)$, naturally stable.
-> > - **Technical Justification:** **Index tagging** ➔ sort on $(\text{key}, \text{original index})$ so ties break by input order ($O(n)$ space) — converts unstable quicksort to stable.
+> > - **Short answer:** Use **merge sort** (or Timsort) — guaranteed $\Theta(n\log n)$, naturally stable.
+> > - **Why:** **Index tagging** ➔ sort on $(\text{key}, \text{original index})$ so ties break by input order ($O(n)$ space) — converts unstable quicksort to stable.

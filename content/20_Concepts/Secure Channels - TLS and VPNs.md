@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 10
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, CS/Networks, CS/Cryptography, Monash/CS_DS]
 aliases: [TLS, SSL, HTTPS, Transport Layer Security, TLS handshake, TLS record, VPN, virtual private network, tunnel, IPSec, OpenVPN, WireGuard]
@@ -10,7 +11,7 @@ aliases: [TLS, SSL, HTTPS, Transport Layer Security, TLS handshake, TLS record, 
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** combine [[Key Establishment and Diffie-Hellman|DH]] + [[Authentication, Certificates and PKI|certificates]] + [[Symmetric Cryptography|AES]] into a channel with **confidentiality + integrity + authenticity** ➔ **TLS** for a connection, **VPN** for a whole network path.
-> - **⚡ Critical Bottleneck:** both only secure **endpoint-to-endpoint** — TLS protects a connection (often **only the server** is authenticated); a **VPN** leaves traffic **in the clear beyond the tunnel endpoint**.
+> - **⚡ Key Constraint:** both only secure **endpoint-to-endpoint** — TLS protects a connection (often **only the server** is authenticated); a **VPN** leaves traffic **in the clear beyond the tunnel endpoint**.
 
 ## 🌐 TLS — Transport Layer Security
 - **Placement** ➔ a **security layer between TCP and the application** → **HTTPS = HTTP over TLS**; also protects Mail and other protocols, not just HTTP.
@@ -26,12 +27,12 @@ aliases: [TLS, SSL, HTTPS, Transport Layer Security, TLS handshake, TLS record, 
 - **Properties** ➔ device gets a **different IP** and is **"logically" in the remote network**; the VPN **routes packets** between networks; tunnel protocols: **OpenVPN, WireGuard, IPSec** (+ proprietary).
 - **Why use one** ➔ control access to a company network; **circumvent local filters / geo-blocking**; secure encryption + **mutual authentication**; protect the endpoint; reach internal-only resources.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Tunnel ≠ end-to-end** ➔ a VPN secures **only between tunnel endpoints** (client ↔ gateway); traffic **behind** the endpoint (inside the internal network) is **still in clear**.
 - 💡 **TLS often authenticates one side** ➔ in typical HTTPS **only the server** presents a certificate; the client is usually unauthenticated at the TLS layer.
 
 ## 🧠 Active Recall
 > [!FAQ]- A VPN "encrypts your traffic" — is your data therefore encrypted end-to-end to the website you visit?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **No** — the VPN encrypts only the **tunnel** from your device to the **VPN gateway**; beyond that endpoint the packets travel onward and may be **in the clear** unless a separate layer (e.g. **TLS/HTTPS**) protects them.
-> > - **Technical Justification:** **Endpoint-scoped security** ➔ VPN security is defined between tunnel endpoints; genuine end-to-end confidentiality to the site still relies on **TLS** on top of (or instead of) the VPN.
+> > - **Short answer:** **No** — the VPN encrypts only the **tunnel** from your device to the **VPN gateway**; beyond that endpoint the packets travel onward and may be **in the clear** unless a separate layer (e.g. **TLS/HTTPS**) protects them.
+> > - **Why:** **Endpoint-scoped security** ➔ VPN security is defined between tunnel endpoints; genuine end-to-end confidentiality to the site still relies on **TLS** on top of (or instead of) the VPN.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 2
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, Math/Proof, CS/Computation, Monash/CS_DS]
 aliases: [countable, uncountable, countably infinite, bijection, Cantor, diagonalisation, diagonal argument, uncountability of languages]
@@ -10,7 +11,7 @@ aliases: [countable, uncountable, countably infinite, bijection, Cantor, diagona
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a set is **countable** if it is finite **or** in bijection with $\mathbb{N}$ ➔ $\mathbb{N},\mathbb{Z},\Sigma^{*}$ are countable, but the set of **all languages** is **uncountable**.
-> - **⚡ Critical Bottleneck:** the consequence — since descriptions (programs, regexes, grammars) form a **countable** set but languages are **uncountable**, **most languages have no finite description at all**.
+> - **⚡ Key Constraint:** the consequence — since descriptions (programs, regexes, grammars) form a **countable** set but languages are **uncountable**, **most languages have no finite description at all**.
 
 ## 📝 Countability
 - **Definition** ➔ a set is **countable** if **either** it is finite, **or** it can be put in **one-to-one correspondence (bijection)** with $\mathbb{N}$.
@@ -45,7 +46,7 @@ $$
 - **Languages are uncountable** ➔ therefore **no description system can capture every language** — there are strictly more languages than finite descriptions.
 - **Foreshadowing** ➔ this counting gap is the reason unsolvable problems exist at all; it returns as **undecidability** and the halting problem later in the unit.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Countable ≠ finite** ➔ countable includes **countably infinite** ($\mathbb{N},\mathbb{Z},\Sigma^{*}$ are all infinite yet countable). The contrast is countable vs **uncountable**.
 - 💡 **$\Sigma^{*}$ is countable but $\{$languages$\}$ is not** ➔ the *words* are listable; the **sets of words** are not. A language is a **subset** of $\Sigma^{*}$, and the powerset jumps in size.
 - 💡 **The diagonal language must be genuinely new** ➔ the force of the argument is that $\hat{L}$ is a perfectly legitimate language yet provably absent from the list; if you only showed it differed from *some* $L_n$, there'd be no contradiction.
@@ -53,10 +54,10 @@ $$
 ## 🧠 Active Recall
 > [!FAQ]- $\Sigma^{*}$ is countable. Why doesn't that make the set of all languages countable too?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** a language is a **subset** of $\Sigma^{*}$, so the set of all languages is the **powerset** of $\Sigma^{*}$. Cantor's diagonal argument shows this powerset cannot be listed — given any listing $L_1,L_2,\dots$, the language $\hat{L}$ defined by $x_n\in\hat{L}\iff x_n\notin L_n$ differs from every $L_n$.
-> > - **Technical Justification:** **Listing words ≠ listing sets of words** ➔ enumerating elements is strictly easier than enumerating subsets; the diagonal construction always escapes any proposed enumeration of the subsets.
+> > - **Short answer:** a language is a **subset** of $\Sigma^{*}$, so the set of all languages is the **powerset** of $\Sigma^{*}$. Cantor's diagonal argument shows this powerset cannot be listed — given any listing $L_1,L_2,\dots$, the language $\hat{L}$ defined by $x_n\in\hat{L}\iff x_n\notin L_n$ differs from every $L_n$.
+> > - **Why:** **Listing words ≠ listing sets of words** ➔ enumerating elements is strictly easier than enumerating subsets; the diagonal construction always escapes any proposed enumeration of the subsets.
 
 > [!FAQ]- What does uncountability of languages imply about regular expressions and programs?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** every regex/grammar/program is a **finite string**, so descriptions are **countable**; languages are **uncountable**; hence **almost all languages have no finite description** — no regex, no grammar, no program decides them.
-> > - **Technical Justification:** **Cardinality mismatch** ➔ a countable set cannot surject onto an uncountable one, so any description formalism necessarily misses (uncountably) many languages — the counting foundation of later **undecidability** results.
+> > - **Short answer:** every regex/grammar/program is a **finite string**, so descriptions are **countable**; languages are **uncountable**; hence **almost all languages have no finite description** — no regex, no grammar, no program decides them.
+> > - **Why:** **Cardinality mismatch** ➔ a countable set cannot surject onto an uncountable one, so any description formalism necessarily misses (uncountably) many languages — the counting foundation of later **undecidability** results.

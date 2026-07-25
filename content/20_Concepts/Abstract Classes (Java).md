@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 3
 parent: "[[Inheritance (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [abstract class, abstract method, concrete class, abstraction]
 # [[Abstract Classes (Java)]]
 
 **Context:** [[FIT2099_MOC]] · a base type you **never instantiate** · defines a common interface for [[Inheritance (Java)|subclasses]] and enables [[Polymorphism (Java)|polymorphism]]
-**Task signature:** capture a shared concept (Animal, Assessment) that has no meaningful standalone object, and force subclasses to fill in the specifics.
+**Problem it solves:** capture a shared concept (Animal, Assessment) that has no meaningful standalone object, and force subclasses to fill in the specifics.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** ask "will I ever instantiate this directly?" — if **no**, make it **abstract**; if **yes**, keep it concrete.
-> - **⚡ Critical Bottleneck:** an **abstract method** has no body (`abstract int mark();` — no `{}`); any subclass that leaves even one abstract method unimplemented **must itself be abstract**.
+> - **⚡ Key Constraint:** an **abstract method** has no body (`abstract int mark();` — no `{}`); any subclass that leaves even one abstract method unimplemented **must itself be abstract**.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -57,8 +58,8 @@ classDiagram
 ```
 *(`*` marks `speak()` abstract; each concrete subclass supplies its own `speak()` — the basis for [[Polymorphism (Java)|polymorphic]] dispatch.)*
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: `Person` should never be instantiated, but `Student` and `Lecturer` should. Model this. Give `Person` an abstract `role()` that each subclass implements.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: `Person` should never be instantiated, but `Student` and `Lecturer` should. Model this. Give `Person` an abstract `role()` that each subclass implements.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > abstract class Person {
@@ -73,7 +74,7 @@ classDiagram
 > > ```
 > > - **Key move:** `Person` is abstract (never a bare "person"); the abstract `role()` forces every subclass to declare its own.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Body on an abstract method** ➔ `abstract int mark() {}` is illegal — abstract methods have **no braces**; adding `{}` makes it concrete/empty.
 - 💡 **Unimplemented method ⇒ still abstract** ➔ a subclass that skips any inherited abstract method won't compile unless it too is declared `abstract`.
 - 💡 **`abstract` + `final` clash** ➔ illegal together — `final` blocks the extension that `abstract` requires.

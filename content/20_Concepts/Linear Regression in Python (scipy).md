@@ -8,11 +8,11 @@ aliases: [linregress, scipy linregress, Linear Regression Python]
 # [[Linear Regression in Python (scipy)]]
 
 **Context:** [[FIT1043_MOC]] · the applied form of [[Linear and Polynomial Regression|linear regression]] · fit a line with **scipy** · lab: `30_Projects/FIT1043_Labs/Week5-Regression-Solution.pdf`
-**Task signature:** fit $\hat y = a_0 + a_1 x$ to two numeric columns, read the slope/intercept/$r$, and plot the line.
+**Problem it solves:** fit $\hat y = a_0 + a_1 x$ to two numeric columns, read the slope/intercept/$r$, and plot the line.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a linear trend between two numeric variables ➔ linregress(x, y) returns slope, intercept, r, p, std_err.
-> - **⚡ Critical Bottleneck:** `linregress` unpacks **five** values in order; build predictions with a comprehension `slope*xi + intercept`.
+> - **⚡ Key Constraint:** `linregress` unpacks **five** values in order; build predictions with a comprehension `slope*xi + intercept`.
 
 ## 🔧 Minimal Working Example
 ```python
@@ -36,8 +36,8 @@ plt.show()
 - **Report the fit** ➔ `print('slope %f intercept %f' % (slope, intercept)); print('r %f' % r_value)`.
 - **Predict one point** ➔ `slope*70 + intercept` — but only trust it where the relationship is actually linear.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Fit Age → Runs for a players DataFrame, print the slope and r-value, and plot the line over the data.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Fit Age → Runs for a players DataFrame, print the slope and r-value, and plot the line over the data.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > slope, intercept, r_value, p_value, std_err = linregress(df['Age'], df['Runs'])
@@ -47,6 +47,6 @@ plt.show()
 > > ```
 > > - **Key move:** unpack all five returns; the comprehension turns slope/intercept into a plottable line.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Don't extrapolate past the linear range** ➔ a model fit on ages 18–40 can't predict income at 70 if the true relation bends — linear regression **assumes** linearity.
 - 💡 **Order of returns matters** ➔ `linregress` gives (slope, intercept, r, p, std_err); mis-unpacking silently mislabels them.

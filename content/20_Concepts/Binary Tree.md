@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 8
 parent: "[[Tree]]"
 tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** tree with ≤ 2 children per node ➔ ops are $O(\text{height})$, so balance decides $O(\log n)$ vs $O(n)$.
 > - **📦 Core Components:** **shape families** ➔ full/complete/perfect/balanced | **traversals** ➔ pre/in/post (DFS) + level (BFS) | **Expression Tree** ➔ operators inner, operands leaves.
-> - **⚡ Critical Bottleneck:** all traversals $O(n)$; structural ops $O(h)$ ➔ $\Theta(\log n)$ balanced, $\Theta(n)$ degenerate (sorted-input "stick").
+> - **⚡ Key Constraint:** all traversals $O(n)$; structural ops $O(h)$ ➔ $\Theta(\log n)$ balanced, $\Theta(n)$ degenerate (sorted-input "stick").
 
 ## 📝 Core
 ### 1. The Binary Tree (Shape & Balance)
@@ -42,7 +43,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >     def _len(self, c) -> int:
 >         return 0 if c is None else 1 + self._len(c.left) + self._len(c.right)
 > ```
-> 💡 **Exam Pitfall:** **`left`/`right` are node links, not subtree objects** ➔ the subtree is implied by following links; a perfect tree of height $k$ has $N=2^{k+1}-1$ ⇒ $k=\Theta(\log N)$.
+> 💡 **Common Mistake:** **`left`/`right` are node links, not subtree objects** ➔ the subtree is implied by following links; a perfect tree of height $k$ has $N=2^{k+1}-1$ ⇒ $k=\Theta(\log N)$.
 
 ### 🔹 Traversals (recursive DFS + queue-based BFS)
 > [!code]- `inorder_aux` / `level_order`
@@ -60,7 +61,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >         if node is not None:
 >             f(node.item); q.append(node.left); q.append(node.right)
 > ```
-> 💡 **Exam Pitfall:** **DFS recursion is $O(h)$ implicit stack** ➔ convert to an explicit [[Stack (ADT)]], or **Morris traversal** does inorder in $O(1)$ space by threading links; the [[Higher-Order Function]] `f` lets one traversal serve many tasks.
+> 💡 **Common Mistake:** **DFS recursion is $O(h)$ implicit stack** ➔ convert to an explicit [[Stack (ADT)]], or **Morris traversal** does inorder in $O(1)$ space by threading links; the [[Higher-Order Function]] `f` lets one traversal serve many tasks.
 
 ### 🔹 Expression Tree — traversal ⟷ notation
 > [!code]- the three readings of `(1/3) + ((6*7)/4)`
@@ -75,7 +76,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 > Inorder   (left,root,right)  ->  INFIX:    1 / 3 + 6 * 7 / 4
 > Postorder (left,right,root)  ->  POSTFIX:  1 3 / 6 7 * 4 / +   (RPN)
 > ```
-> 💡 **Exam Pitfall:** **Postfix/prefix need no parentheses or precedence** ➔ tree structure encodes grouping, so a machine evaluates RPN in one left-to-right pass with a stack.
+> 💡 **Common Mistake:** **Postfix/prefix need no parentheses or precedence** ➔ tree structure encodes grouping, so a machine evaluates RPN in one left-to-right pass with a stack.
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Cost / Result | Trigger / Note |
@@ -87,7 +88,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 | BFS (level-order) space | $O(\text{width})$ | up to $O(n)$ at widest level |
 | Morris inorder space | $O(1)$ | temporary link threading |
 
-> [!NOTE] **Crossover Invariant:** balance is the whole game — without it, sorted/adversarial input ➔ height-$N$ stick ➔ $O(N)$. Specialisations: [[Binary Search Tree (BST)]] (key order → search), **Expression Tree** (structure order → notation), and a *complete* + heap-ordered tree is a [[Heap]].
+> [!NOTE] **When It Flips:** balance is the whole game — without it, sorted/adversarial input ➔ height-$N$ stick ➔ $O(N)$. Specialisations: [[Binary Search Tree (BST)]] (key order → search), **Expression Tree** (structure order → notation), and a *complete* + heap-ordered tree is a [[Heap]].
 
 ## 📊 Exam Execution Trace
 
@@ -115,25 +116,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does a BST built from already-sorted keys degrade to $O(n)$, and what determines height generally?
-> - **Core Insight Requirement:** Insertion order sets the shape.
+> - **Hint:** Insertion order sets the shape.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each key attaches on the same side ➔ a height-$N$ "stick" identical to a [[List (ADT)|LinkList]] ➔ $O(N)$.
-> > - **Technical Justification:** **Height drives cost** ➔ balanced order gives $\Theta(\log N)$, sorted gives $\Theta(N)$; every op is $O(\text{height})$, so balance must be maintained.
+> > - **Short answer:** Each key attaches on the same side ➔ a height-$N$ "stick" identical to a [[List (ADT)|LinkList]] ➔ $O(N)$.
+> > - **Why:** **Height drives cost** ➔ balanced order gives $\Theta(\log N)$, sorted gives $\Theta(N)$; every op is $O(\text{height})$, so balance must be maintained.
 
 > [!FAQ]- Distinguish full, complete, perfect, and balanced binary trees.
-> - **Core Insight Requirement:** Nest the four shape definitions.
+> - **Hint:** Nest the four shape definitions.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Full** = 0/2 children; **complete** = last level filled left; **perfect** = full + leaves one level; **balanced** = heights differ $\le 1$.
-> > - **Technical Justification:** **Implication chain** ➔ perfect ⟹ complete and balanced; complete ⟹ balanced; the converses fail.
+> > - **Short answer:** **Full** = 0/2 children; **complete** = last level filled left; **perfect** = full + leaves one level; **balanced** = heights differ $\le 1$.
+> > - **Why:** **Implication chain** ➔ perfect ⟹ complete and balanced; complete ⟹ balanced; the converses fail.
 
 > [!FAQ]- Given preorder + inorder, reconstruct the tree; why is preorder + postorder insufficient?
-> - **Core Insight Requirement:** Roots vs subtree split.
+> - **Hint:** Roots vs subtree split.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Preorder's first element is the root; locate it in inorder to split left/right subtrees, recurse.
-> > - **Technical Justification:** **Ambiguity** ➔ pre+post can't tell whether a single child is left or right — multiple trees share the same pair.
+> > - **Short answer:** Preorder's first element is the root; locate it in inorder to split left/right subtrees, recurse.
+> > - **Why:** **Ambiguity** ➔ pre+post can't tell whether a single child is left or right — multiple trees share the same pair.
 
 > [!FAQ]- How do you obtain prefix/infix/postfix from an expression tree, and why are postfix/prefix better for machines?
-> - **Core Insight Requirement:** Traversal order = operator placement.
+> - **Hint:** Traversal order = operator placement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** preorder→prefix, inorder→infix, postorder→postfix (RPN).
-> > - **Technical Justification:** **No brackets needed** ➔ operator position encodes grouping, so RPN evaluates in one left-to-right pass with a [[Stack (ADT)]] (pop two per operator, apply, push).
+> > - **Short answer:** preorder→prefix, inorder→infix, postorder→postfix (RPN).
+> > - **Why:** **No brackets needed** ➔ operator position encodes grouping, so RPN evaluates in one left-to-right pass with a [[Stack (ADT)]] (pop two per operator, apply, push).

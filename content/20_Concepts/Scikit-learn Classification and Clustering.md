@@ -8,11 +8,11 @@ aliases: [sklearn, scikit-learn, DecisionTreeClassifier, RandomForestClassifier,
 # [[Scikit-learn Classification and Clustering]]
 
 **Context:** [[FIT1043_MOC]] · the applied form of [[Decision Trees and Regression Trees|trees]] / [[Random Forest|forests]] / [[k-means Clustering|k-means]] · one common fit/predict API · labs: `30_Projects/FIT1043_Labs/Week7-Classification-sklearn.ipynb`, `Week7-Clustering-KMeans.ipynb`
-**Task signature:** train a classifier on labelled data and evaluate it, or cluster unlabelled data with k-means.
+**Problem it solves:** train a classifier on labelled data and evaluate it, or cluster unlabelled data with k-means.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** build a model in Python ➔ pick an estimator, then fit(X, y) (supervised) or fit(X) (unsupervised), then predict.
-> - **⚡ Critical Bottleneck:** every sklearn estimator shares the **fit → predict** API; supervised needs a train/test **split**, and only **fit the scaler on train** (`fit_transform` train, `transform` test).
+> - **⚡ Key Constraint:** every sklearn estimator shares the **fit → predict** API; supervised needs a train/test **split**, and only **fit the scaler on train** (`fit_transform` train, `transform` test).
 
 ## 🔧 Minimal Working Example
 ```python
@@ -53,8 +53,8 @@ km.labels_               # cluster id per point
 plt.scatter(df['Distance_Feature'], df['Speeding_Feature'], c=km.labels_)
 ```
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Cluster drivers into 4 groups on two features, then colour the scatter by cluster and mark the centroids.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Cluster drivers into 4 groups on two features, then colour the scatter by cluster and mark the centroids.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > km = KMeans(n_clusters=4, init='random').fit(df[['Distance_Feature','Speeding_Feature']])
@@ -64,7 +64,7 @@ plt.scatter(df['Distance_Feature'], df['Speeding_Feature'], c=km.labels_)
 > > ```
 > > - **Key move:** `KMeans(n_clusters=k).fit(X)`; `.labels_` colours points, `.cluster_centers_` gives the centroids.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Never fit the scaler on test data** ➔ `fit_transform` the train set, `transform` (only) the test set — otherwise test info leaks into training.
 - 💡 **k must be chosen for k-means** ➔ `n_clusters=k` is set in advance; `init='random'` seeds are volatile (see [[k-means Clustering]]).
 - 💡 **Set `random_state`** ➔ without it, splits/forests differ every run, making results irreproducible.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 6
 parent: "[[Encapsulation and Access Modifiers (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [defensive copying, privacy leak, aliasing, mutable, immutable, escapin
 # [[Defensive Copying (Java)]]
 
 **Context:** [[FIT2099_MOC]] · protect [[Encapsulation and Access Modifiers (Java)|encapsulation]] when a class holds a **mutable** object · stop callers reaching in through a shared reference
-**Task signature:** a getter/setter/constructor that passes a mutable private object by reference, letting outside code mutate the class's internal state.
+**Problem it solves:** a getter/setter/constructor that passes a mutable private object by reference, letting outside code mutate the class's internal state.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a getter returns a reference to a **mutable** private field (or a setter/constructor stores the caller's object directly) ➔ copy it.
-> - **⚡ Critical Bottleneck:** the leak is caused by **aliasing** — two references to the *same* heap object; the caller's alias mutates the class's private state, silently breaking encapsulation.
+> - **⚡ Key Constraint:** the leak is caused by **aliasing** — two references to the *same* heap object; the caller's alias mutates the class's private state, silently breaking encapsulation.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -35,8 +36,8 @@ public Fraction getFuel() { return new Fraction(fuel); }    // caller gets a cop
 - **Where to copy** ➔ any time a mutable object crosses the class boundary: **out** of a getter, **into** a setter, and **into** a constructor.
 - **Why** ➔ a private field should be changed **only by its own class**; a shared reference hands that control away.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: `Meeting` stores a `private Date start`. Its constructor and `getStart()` currently pass the `Date` by reference. Make both defensive.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: `Meeting` stores a `private Date start`. Its constructor and `getStart()` currently pass the `Date` by reference. Make both defensive.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > public class Meeting {
@@ -47,7 +48,7 @@ public Fraction getFuel() { return new Fraction(fuel); }    // caller gets a cop
 > > ```
 > > - **Key move:** copy on the way **in** (so the caller can't keep a live alias) and on the way **out** (so the returned object isn't the field) — `Date` is mutable.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Only mutable objects leak** ➔ returning a `String`/`int` is safe (immutable/value); a `Date`, array, `List`, or your own settable class is not.
 - 💡 **Copy at BOTH ends** ➔ a defensive getter alone still leaks if the constructor/setter stored the caller's original object — defend every crossing.
 - 💡 **Reduces connascence** ➔ a leaked reference creates hidden coupling (the caller's changes reach your internals); copying keeps the class in sole control of its state.

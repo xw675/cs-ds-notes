@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 4
 parent: "[[Normalisation]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 aliases: [UNF]
@@ -11,7 +12,7 @@ aliases: [UNF]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** map a client form directly to a relation before [[Normalisation]] ➔ raw starting point.
 > - **📦 Core Components:** subject name ➔ all attributes ➔ repeating group in brackets.
-> - **⚡ Critical Bottleneck:** no PK yet; a UNF is **not** a valid relation; don't flatten.
+> - **⚡ Key Constraint:** no PK yet; a UNF is **not** a valid relation; don't flatten.
 
 ## 📝 Core
 ### 1. The UNF
@@ -29,7 +30,7 @@ aliases: [UNF]
 - **No PK, no flattening** ➔ don't indicate a PK; don't expand into tabular rows.
 - **No repeating group** ➔ maps to a single relation through to 3NF.
 
-> [!NOTE] **Crossover Invariant:** an accurate UNF ensures the business rules survive into the normalised schema; errors here propagate. Multivalued attributes are the repeating groups ([[Attribute (Conceptual Modelling)]]); the bracketed group is what 1NF splits out.
+> [!NOTE] **When It Flips:** an accurate UNF ensures the business rules survive into the normalised schema; errors here propagate. Multivalued attributes are the repeating groups ([[Attribute (Conceptual Modelling)]]); the bracketed group is what 1NF splits out.
 
 ## 📊 Exam Execution Trace
 
@@ -43,18 +44,18 @@ Building the UNF:
 | 2 | list attributes | part_no, …, part_sell |
 | 3 | bracket repeating | (vendor_no, …, restock_payment) |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **No PK, no flattening at UNF** ➔ don't indicate a primary key and don't expand the repeating data into rows; brackets capture the repeating group [[First Normal Form (1NF)|1NF]] will remove.
 
 ## 🧠 Active Recall
 > [!FAQ]- How do you represent a form as a UNF, and what must you not do?
-> - **Core Insight Requirement:** Subject + bracketed repeating group.
+> - **Hint:** Subject + bracketed repeating group.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Name by subject, list all attributes, bracket the repeating group; don't indicate a PK or flatten into rows.
-> > - **Technical Justification:** **As presented** ➔ transcribe faithfully; design decisions come later.
+> > - **Short answer:** Name by subject, list all attributes, bracket the repeating group; don't indicate a PK or flatten into rows.
+> > - **Why:** **As presented** ➔ transcribe faithfully; design decisions come later.
 
 > [!FAQ]- Why is a UNF not a valid relation, and what if a form has no repeating group?
-> - **Core Insight Requirement:** Non-atomic + no key.
+> - **Hint:** Non-atomic + no key.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** It has a repeating group and no PK, breaking the relation properties; a form with none maps to one relation.
-> > - **Technical Justification:** **1NF adds only a PK** ➔ no new relation when there is no repeating group.
+> > - **Short answer:** It has a repeating group and no PK, breaking the relation properties; a form with none maps to one relation.
+> > - **Why:** **1NF adds only a PK** ➔ no new relation when there is no repeating group.

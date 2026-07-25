@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Sets of Numbers]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $d\mid n$: $n=qd$ for some integer $q$ ➔ the relation underpinning all number theory.
 > - **📦 Core Components:** multiple/divisor ➔ $d\mathbb Z$ ➔ sum/difference/combination rule.
-> - **⚡ Critical Bottleneck:** $d\mid m,n\Rightarrow d\mid(xm+yn)$, but the converse **fails**.
+> - **⚡ Key Constraint:** $d\mid m,n\Rightarrow d\mid(xm+yn)$, but the converse **fails**.
 
 ## 📝 Core
 ### 1. The Relation (Multiples & Divisors)
@@ -28,7 +29,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 $$d\mid m \wedge d\mid n \Rightarrow d\mid(xm+yn)\ \ \forall x,y\in\mathbb Z$$
 $$\text{proof: } m=q_1d,\ n=q_2d \Rightarrow xm+yn=(xq_1+yq_2)d$$
 
-> [!NOTE] **Crossover Invariant:** the sum/difference rule is the engine of the [[Euclidean Algorithm]] ($\gcd(a,b)=\gcd(b,a-b)$) and [[Integer Linear Combination|Bézout's identity]]. $d\mathbb Z$ is symmetric about $0$ and always contains $0$ ($q=0$).
+> [!NOTE] **When It Flips:** the sum/difference rule is the engine of the [[Euclidean Algorithm]] ($\gcd(a,b)=\gcd(b,a-b)$) and [[Integer Linear Combination|Bézout's identity]]. $d\mathbb Z$ is symmetric about $0$ and always contains $0$ ($q=0$).
 
 ## 📊 Exam Execution Trace
 
@@ -42,18 +43,18 @@ Divisors of 18:
 | 2 | $2\cdot9$ | $2,9$ |
 | 3 | $3\cdot6$ | $3,6$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Converse fails** ➔ $d\mid(m+n)$ does *not* give $d\mid m$ and $d\mid n$; the rule moves from divisors to combinations, never back.
 
 ## 🧠 Active Recall
 > [!FAQ]- If $d\mid m$ and $d\mid n$, what else must $d$ divide — and why doesn't $2\mid(3+5)$ make 2 divide 3?
-> - **Core Insight Requirement:** Combinations, not summands.
+> - **Hint:** Combinations, not summands.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $d\mid(xm+yn)$ for all integers $x,y$; the converse fails.
-> > - **Technical Justification:** **Factor out $d$** ➔ $xm+yn=(xq_1+yq_2)d$; divisibility of a sum says nothing about summands.
+> > - **Short answer:** $d\mid(xm+yn)$ for all integers $x,y$; the converse fails.
+> > - **Why:** **Factor out $d$** ➔ $xm+yn=(xq_1+yq_2)d$; divisibility of a sum says nothing about summands.
 
 > [!FAQ]- State $d\mid n$ via multiples, remainders, and the set $d\mathbb Z$.
-> - **Core Insight Requirement:** Three equivalent forms.
+> - **Hint:** Three equivalent forms.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $n=qd$ ⟺ $n\in d\mathbb Z$ ⟺ $n\bmod d=0$.
-> > - **Technical Justification:** **Exact division** ➔ all three say "$d$ goes into $n$ exactly"; $d>0$, $n$ any integer.
+> > - **Short answer:** $n=qd$ ⟺ $n\in d\mathbb Z$ ⟺ $n\bmod d=0$.
+> > - **Why:** **Exact division** ➔ all three say "$d$ goes into $n$ exactly"; $d>0$, $n$ any integer.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 3
 parent: "[[Data Sources and Open Data]]"
 tags: [DataScience/DataSources, Web/API, Monash/CS_DS]
 aliases: [API, REST API, RESTful API]
@@ -10,7 +11,7 @@ aliases: [API, REST API, RESTful API]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** access an application's data/functionality **by code** ➔ a computer-facing interface (not a human UI).
-> - **⚡ Critical Bottleneck:** the consumer↔provider split — you (consumer) request from a provider's API, usually needing a **key** (sign-up/auth).
+> - **⚡ Key Constraint:** the consumer↔provider split — you (consumer) request from a provider's API, usually needing a **key** (sign-up/auth).
 
 ## 📝 Core
 - **API (Application Programmer Interface)** ➔ routines giving **programmatic** access to an application or its data; like a UI but for **computers**.
@@ -20,12 +21,12 @@ aliases: [API, REST API, RESTful API]
 - **Rich metadata** ➔ e.g. Twitter/X exposes users, follower networks, locations, hashtags, emojis; real-time tweet filtering via the streaming API; multi-language client libraries.
 - **Widespread** ➔ Facebook, Twitter/X, LinkedIn, Google Maps, YouTube, Amazon Advertising, TripAdvisor.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **An API is for computers, not people** ➔ it returns structured data (often JSON/XML) for code, not a rendered web page.
 - 💡 **Keys and policies apply** ➔ most providers require a key and enforce a developer policy / rate limits; you're a consumer of *their* service.
 
 ## 🧠 Active Recall
 > [!FAQ]- What is an API, and how do the consumer and provider roles differ?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An API is a computer-facing interface giving programmatic access to an application's data/functionality; the provider exposes it, the consumer calls it (often with an API key), commonly as a REST API.
-> > - **Technical Justification:** **Machine-to-machine** ➔ programs exchange structured data (e.g. OpenWeather returning weather JSON) instead of a human loading a web page.
+> > - **Short answer:** An API is a computer-facing interface giving programmatic access to an application's data/functionality; the provider exposes it, the consumer calls it (often with an API key), commonly as a REST API.
+> > - **Why:** **Machine-to-machine** ➔ programs exchange structured data (e.g. OpenWeather returning weather JSON) instead of a human loading a web page.

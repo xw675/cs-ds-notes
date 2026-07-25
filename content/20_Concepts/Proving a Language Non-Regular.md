@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: [4, 5]
 parent: "[[Pumping Lemma for Regular Languages]]"
 tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [non-regular, HALF-AND-HALF, EQUAL, PALINDROME, a^n b^n, pumping lemma 
 # [[Proving a Language Non-Regular]]
 
 **Context:** [[FIT2014_MOC]] · the exam-standard use of the [[Pumping Lemma for Regular Languages|Pumping Lemma]] · two routes: **pump a well-chosen word**, or **derive a contradiction from [[Closure Properties of Regular Languages|closure]]**
-**Task signature:** given a language, prove it is **not** regular.
+**Problem it solves:** given a language, prove it is **not** regular.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a language that seems to need **counting** or **matching** unboundedly ➔ assume regular, get $N$, choose a word, pump, contradict.
-> - **⚡ Critical Bottleneck:** **choose $w$ so that $|x|+|y|\le N$ leaves only ONE case.** A lazy choice forces a three-case slog; a good choice makes the proof four lines.
+> - **⚡ Key Constraint:** **choose $w$ so that $|x|+|y|\le N$ leaves only ONE case.** A lazy choice forces a three-case slog; a good choice makes the proof four lines.
 
 ## 📐 Route 1 — the Pumping Lemma recipe
 1. **Assume** $L$ is regular. By [[Kleene's Theorem]] it is recognised by some FA; let $N$ be its number of states.
@@ -60,8 +61,8 @@ $$
 $$
 - **When to reach for it** ➔ when the language is "close to" a known non-regular one; intersecting with a simple regex like $\mathtt{a}^{*}\mathtt{b}^{*}$ often strips away the noise.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata: Prove $L=\{\mathtt{a}^{n}\mathtt{b}^{m}: n>m\ge 0\}$ is not regular.
+## ✍️ Practice 
+> [!QUESTION]- Practice: Prove $L=\{\mathtt{a}^{n}\mathtt{b}^{m}: n>m\ge 0\}$ is not regular.
 > > [!SUCCESS]- Reference solution
 > > 1. Assume regular; let $N$ be the number of states of an accepting FA.
 > > 2. **Choose** $w=\mathtt{a}^{N+1}\mathtt{b}^{N}\in L$ (indeed $N+1>N$), and $|w|\ge N$.
@@ -70,7 +71,7 @@ $$
 > > 5. Contradiction ⟹ $L$ is not regular. $\blacksquare$
 > > - **Key move:** here **$i=0$** (deleting the loop) is the natural choice — pumping *down* breaks a strict inequality more cleanly than pumping up.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **You choose $w$; you do NOT choose $x,y,z$** ➔ the lemma says *there exist* $x,y,z$; to contradict it you must defeat **every** valid decomposition. Picking a convenient $y$ yourself is the most common invalid proof.
 - 💡 **Always use $|x|+|y|\le N$** ➔ it is what pins $y$ inside the first $N$ letters. A proof that ignores it needs far more cases (and often stalls).
 - 💡 **$i=2$ is a habit, not a rule** ➔ for strict-inequality languages, **pumping down to $i=0$** is usually the shorter kill.
@@ -79,10 +80,10 @@ $$
 ## 🧠 Active Recall
 > [!FAQ]- Why does choosing $w=\mathtt{a}^{N}\mathtt{b}^{N}$ beat $w=\mathtt{a}^{\lceil N/2\rceil}\mathtt{b}^{\lceil N/2\rceil}$ for HALF-AND-HALF?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** with $\mathtt{a}^{N}\mathtt{b}^{N}$, the condition $|x|+|y|\le N$ confines $xy$ to the first $N$ letters — **all $\mathtt{a}$s** — so only **one case** survives ($y$ is a non-empty block of $\mathtt{a}$s) and $xy^{2}z$ immediately has too many $\mathtt{a}$s.
-> > - **Technical Justification:** **Exploit the length constraint** ➔ the shorter word lets $y$ straddle the $\mathtt{a}$/$\mathtt{b}$ boundary, forcing three separate cases. Choosing $w$ so that the first $N$ letters are homogeneous is the general trick.
+> > - **Short answer:** with $\mathtt{a}^{N}\mathtt{b}^{N}$, the condition $|x|+|y|\le N$ confines $xy$ to the first $N$ letters — **all $\mathtt{a}$s** — so only **one case** survives ($y$ is a non-empty block of $\mathtt{a}$s) and $xy^{2}z$ immediately has too many $\mathtt{a}$s.
+> > - **Why:** **Exploit the length constraint** ➔ the shorter word lets $y$ straddle the $\mathtt{a}$/$\mathtt{b}$ boundary, forcing three separate cases. Choosing $w$ so that the first $N$ letters are homogeneous is the general trick.
 
 > [!FAQ]- Give the closure-based proof that EQUAL is non-regular, and say why it avoids pumping.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\text{EQUAL}\cap\mathtt{a}^{*}\mathtt{b}^{*}=\text{HALF-AND-HALF}$. Regular languages are **closed under intersection** and $\mathtt{a}^{*}\mathtt{b}^{*}$ is regular, so if EQUAL were regular then HALF-AND-HALF would be — contradicting its known non-regularity.
-> > - **Technical Justification:** **Reduction to a known result** ➔ the pumping work is done **once** (on HALF-AND-HALF) and then reused; intersecting with a regular language filters EQUAL down to the already-settled case, which is far quicker than a fresh case analysis.
+> > - **Short answer:** $\text{EQUAL}\cap\mathtt{a}^{*}\mathtt{b}^{*}=\text{HALF-AND-HALF}$. Regular languages are **closed under intersection** and $\mathtt{a}^{*}\mathtt{b}^{*}$ is regular, so if EQUAL were regular then HALF-AND-HALF would be — contradicting its known non-regularity.
+> > - **Why:** **Reduction to a known result** ➔ the pumping work is done **once** (on HALF-AND-HALF) and then reused; intersecting with a regular language filters EQUAL down to the already-settled case, which is far quicker than a fresh case analysis.

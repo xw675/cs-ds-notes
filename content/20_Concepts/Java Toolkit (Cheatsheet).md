@@ -11,7 +11,7 @@ aliases: [Java Toolkit, Java Cheatsheet, Java syntax reference, OO Java cheatshe
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** write correct, well-encapsulated OO Java ➔ class anatomy + modifiers + collections + inheritance/interfaces + contracts, with the exam gotchas inline.
-> - **⚡ Critical Bottleneck:** Java is **statically typed** (types fixed at declaration, checked at **compile time**) and objects are **reference types** — most FIT2099 bugs come from **reference aliasing**, **`==` vs `.equals()`**, and **access-widening** on override.
+> - **⚡ Key Constraint:** Java is **statically typed** (types fixed at declaration, checked at **compile time**) and objects are **reference types** — most FIT2099 bugs come from **reference aliasing**, **`==` vs `.equals()`**, and **access-widening** on override.
 
 ## 🧬 Class anatomy (execution order)
 ```java
@@ -124,8 +124,8 @@ int[] a = new int[5];  int[] b = {1,2,3};    // .length, 0-based
 | **Long method / God class** | **Extract Method / Extract Class** (SRP) |
 *(Full catalogue: [[Design Smells (Java)]]; discipline: [[Refactoring (Java)]].)*
 
-## 🥋 Integration Katas
-> [!QUESTION]- Kata 1: Model `Pet` so cats/dogs each make their own sound, with a factory that builds one from a `String` code, and no `switch(type)` anywhere. (uses: abstract class + polymorphism + Factory Method + collections)
+## ✍️ Integration Practice
+> [!QUESTION]- Practice 1: Model `Pet` so cats/dogs each make their own sound, with a factory that builds one from a `String` code, and no `switch(type)` anywhere. (uses: abstract class + polymorphism + Factory Method + collections)
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > abstract class Pet { abstract String sound(); }
@@ -143,7 +143,7 @@ int[] a = new int[5];  int[] b = {1,2,3};    // .length, 0-based
 > > ```
 > > - **Key move:** the `switch` lives **only** in the factory; behaviour is chosen by **polymorphism**, so a new `Pet` = one subclass + one `case`, no client edits (OCP).
 
-> [!QUESTION]- Kata 2: A `BankAccount` must reject a negative deposit, keep its balance private and un-leakable, and expose a side-effect-free `getBalance()`. (uses: encapsulation + validation/exception + CQS + defensive copy of a mutable field)
+> [!QUESTION]- Practice 2: A `BankAccount` must reject a negative deposit, keep its balance private and un-leakable, and expose a side-effect-free `getBalance()`. (uses: encapsulation + validation/exception + CQS + defensive copy of a mutable field)
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > class BankAccount {
@@ -164,7 +164,7 @@ int[] a = new int[5];  int[] b = {1,2,3};    // .length, 0-based
 > > ```
 > > - **Key move:** `throw` on precondition breach (fail fast), **command vs query** kept separate, and the mutable `log` is copied both **in and out** so callers can't alias internal state.
 
-## ⚠️ Pitfalls (top of the deduction list)
+## ⚠️ Common Mistakes (top of the deduction list)
 - 💡 **`==` on objects/Strings** ➔ compares references; use `.equals()` for value equality.
 - 💡 **Access-widening on override** ➔ an override may only **keep or widen** visibility, never narrow.
 - 💡 **`instanceof`/`switch(type)` in logic** ➔ a smell — replace with polymorphism.

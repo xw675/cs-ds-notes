@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Entity Relationship Diagram (ERD)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a real-world object data is collected about ➔ a keyed Crow's Foot box.
 > - **📦 Core Components:** name / attributes / key column ➔ strong vs weak.
-> - **⚡ Critical Bottleneck:** weak entity needs a parent's key **in** its own key + an identifying relationship.
+> - **⚡ Key Constraint:** weak entity needs a parent's key **in** its own key + an identifying relationship.
 
 ## 📝 Core
 ### 1. The Entity
@@ -39,7 +40,7 @@ $$\text{CLASS}(\underline{\text{prof\_id}}, \underline{\text{class\_no}}, \text{
 | relationship | any | **identifying** (solid) |
 | example | EMPLOYEE | DEPENDENT |
 
-> [!NOTE] **Crossover Invariant:** weak ⟹ identifying relationship — the two ideas always travel together. The identity test decides: if the entity's own attributes uniquely identify it, it is strong; if it must borrow a parent's key, it is weak.
+> [!NOTE] **When It Flips:** weak ⟹ identifying relationship — the two ideas always travel together. The identity test decides: if the entity's own attributes uniquely identify it, it is strong; if it must borrow a parent's key, it is weak.
 
 ## 📊 Exam Execution Trace
 
@@ -53,18 +54,18 @@ Deciding CLASS strong/weak:
 | 2 | needs `prof_id`? | yes |
 | 3 | verdict | CLASS weak, PROFESSOR strong |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`class_no` restarts per professor** ➔ not unique alone, so CLASS's key needs `prof_id` too — the identity test that makes it weak; a surrogate key would resolve it but is **banned conceptually**.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish a strong from a weak entity, and how each is shown in Crow's Foot.
-> - **Core Insight Requirement:** Own key vs borrowed key.
+> - **Hint:** Own key vs borrowed key.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Strong = own unique key, independent; weak = key includes a parent's key.
-> > - **Technical Justification:** **No double box** ➔ Crow's Foot marks weak by composite key + identifying (solid) relationship, unlike Chen's double rectangle.
+> > - **Short answer:** Strong = own unique key, independent; weak = key includes a parent's key.
+> > - **Why:** **No double box** ➔ Crow's Foot marks weak by composite key + identifying (solid) relationship, unlike Chen's double rectangle.
 
 > [!FAQ]- Given $(\text{prof\_id},\text{class\_no},\dots)$ with per-professor class numbering, is CLASS strong or weak?
-> - **Core Insight Requirement:** Uniqueness test.
+> - **Hint:** Uniqueness test.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** CLASS is weak; PROFESSOR is strong.
-> > - **Technical Justification:** **Composite key** ➔ `class_no` restarts per professor, so identity needs `prof_id` + `class_no`.
+> > - **Short answer:** CLASS is weak; PROFESSOR is strong.
+> > - **Why:** **Composite key** ➔ `class_no` restarts per professor, so identity needs `prof_id` + `class_no`.

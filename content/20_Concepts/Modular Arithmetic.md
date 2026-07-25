@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Divisibility]]"
 tags: [Math/NumberTheory, Math/Discrete]
 aliases: [Modulo Operation, Congruence, mod]
@@ -11,7 +12,7 @@ aliases: [Modulo Operation, Congruence, mod]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $n=qd+r$, $0\le r\le d-1$ ➔ remainder operation ⟹ congruence relation ⟹ arithmetic on $n$ residue classes.
 > - **📦 Core Components:** $n\bmod d$ (operation) ➔ $a\equiv b\pmod n$ (relation) ➔ $+,-,\times$ on $\mathbb Z_n$.
-> - **⚡ Critical Bottleneck:** negative $n$ rounds the quotient **down** ($r\ge0$, so $-6\bmod5=4$); division needs a [[Modular Inverse]].
+> - **⚡ Key Constraint:** negative $n$ rounds the quotient **down** ($r\ge0$, so $-6\bmod5=4$); division needs a [[Modular Inverse]].
 
 ## 📝 Core
 
@@ -32,27 +33,27 @@ aliases: [Modulo Operation, Congruence, mod]
 - **Division** ➔ does **not** transfer in general; needs a [[Modular Inverse]], which exists iff the element is [[Coprimality|coprime]] to $n$.
 - **Everyday instances** ➔ weekdays (mod 7), clocks (mod 24), parity toggle (mod 2), last digit (mod 10).
 
-> [!NOTE] **Crossover Invariant:** for fixed $d>0$ the pair $(q,r)$ is unique, making $\bmod$ well-defined; replacing repeated subtraction with one $\bmod$ is exactly the speed-up from naïve gcd to the [[Euclidean Algorithm]].
+> [!NOTE] **When It Flips:** for fixed $d>0$ the pair $(q,r)$ is unique, making $\bmod$ well-defined; replacing repeated subtraction with one $\bmod$ is exactly the speed-up from naïve gcd to the [[Euclidean Algorithm]].
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$-6\bmod5=4$, not $-1$** ➔ the floor convention forces $r\in[0,d-1]$; a language's `%` might return $-1$ but mathematical mod never does.
 - 💡 **$\mathbb Z_n$ equation ≠ congruence** ➔ "$2+3=1$ in $\mathbb Z_4$" is an equation (the only value there); "$2+3\equiv1\pmod4$" is a congruence (also $\equiv37$); but "$2+3=37$ in $\mathbb Z_4$" is wrong ($37\notin\mathbb Z_4$).
 
 ## 🧠 Active Recall
 > [!FAQ]- Give three equivalent definitions of $a\equiv b\pmod n$ and explain why the classes partition $\mathbb Z$.
-> - **Core Insight Requirement:** Congruence is an equivalence.
+> - **Hint:** Congruence is an equivalence.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $n\mid(a-b)$ ⟺ $\exists k:a-b=kn$ ⟺ $a\bmod n=b\bmod n$.
-> > - **Technical Justification:** **Equivalence relation** ➔ reflexive/symmetric/transitive ⟹ $n$ disjoint residue classes $[0],\dots,[n-1]$.
+> > - **Short answer:** $n\mid(a-b)$ ⟺ $\exists k:a-b=kn$ ⟺ $a\bmod n=b\bmod n$.
+> > - **Why:** **Equivalence relation** ➔ reflexive/symmetric/transitive ⟹ $n$ disjoint residue classes $[0],\dots,[n-1]$.
 
 > [!FAQ]- Why can class arithmetic use single representatives, and how do "$2+3=1$ in $\mathbb Z_4$" and "$2+3\equiv1\pmod4$" differ?
-> - **Core Insight Requirement:** Well-defined operations.
+> - **Hint:** Well-defined operations.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $[a]+[b]=[a+b]$ depends only on the classes; one representative each suffices.
-> > - **Technical Justification:** **Equation vs congruence** ➔ $\mathbb Z_4$ has only $\{0,1,2,3\}$; a congruence allows any class member ($37$), an equation does not.
+> > - **Short answer:** $[a]+[b]=[a+b]$ depends only on the classes; one representative each suffices.
+> > - **Why:** **Equation vs congruence** ➔ $\mathbb Z_4$ has only $\{0,1,2,3\}$; a congruence allows any class member ($37$), an equation does not.
 
 > [!FAQ]- Compute $-6\bmod 5$ and justify via the Division Algorithm.
-> - **Core Insight Requirement:** Floor the quotient.
+> - **Hint:** Floor the quotient.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $-6=(-2)\cdot5+4$ ⟹ $-6\bmod5=4$.
-> > - **Technical Justification:** **Round down** ➔ $q=\lfloor-6/5\rfloor=-2$ is the largest integer with $qd\le n$, guaranteeing $0\le r\le d-1$.
+> > - **Short answer:** $-6=(-2)\cdot5+4$ ⟹ $-6\bmod5=4$.
+> > - **Why:** **Round down** ➔ $q=\lfloor-6/5\rfloor=-2$ is the largest integer with $qd\le n$, guaranteeing $0\le r\le d-1$.

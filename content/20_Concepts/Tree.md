@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT1058]
+week: [8, 12]
 parent: "[[Data Structure]]"
 tags: [CS/DataStructures, CS/Complexity, Math/GraphTheory]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/Complexity, Math/GraphTheory]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** hierarchical acyclic connected structure ➔ one root, no cycles; the minimal connected graph ($n$ nodes ⇒ $n-1$ edges).
 > - **📦 Core Components:** root / leaf / inner node, depth, **height** | **rooted** (FIT1008) vs **unrooted** (FIT1058) | specialised by [[Binary Tree]].
-> - **⚡ Critical Bottleneck:** every operation is $O(\text{height})$ ➔ $\Theta(\log n)$ balanced, $\Theta(n)$ degenerate.
+> - **⚡ Key Constraint:** every operation is $O(\text{height})$ ➔ $\Theta(\log n)$ balanced, $\Theta(n)$ degenerate.
 
 ## 📝 Core
 ### 1. The Tree (Rooted, $n-1$ Edges)
@@ -37,7 +38,7 @@ tags: [CS/DataStructures, CS/Complexity, Math/GraphTheory]
 >         return -1
 >     return 1 + max(height(node.left), height(node.right))
 > ```
-> 💡 **Exam Pitfall:** **Empty tree returns −1** ➔ so a single node has height 0; operation cost follows a root-to-node path bounded by the height — self-balancing is the entire performance story.
+> 💡 **Common Mistake:** **Empty tree returns −1** ➔ so a single node has height 0; operation cost follows a root-to-node path bounded by the height — self-balancing is the entire performance story.
 
 ## ⚖️ Core Decision Matrix
 *A graph $G=(V,E)$ is a tree iff **any one** equivalent condition holds:*
@@ -50,7 +51,7 @@ tags: [CS/DataStructures, CS/Complexity, Math/GraphTheory]
 | 4 | exactly **one** simple path between any pair | unique routing |
 | 5 | add any edge ⟹ cycle; remove any ⟹ disconnect | minimal connected |
 
-> [!NOTE] **Crossover Invariant:** trees are the **minimal connected** graphs ➔ they underlie **spanning trees** (Prim/Kruskal). Cost is $O(\text{height})$: balanced $O(\log n)$, degenerate "stick" $O(n)$ — no better than a [[List (ADT)|LinkList]] (a degenerate tree, one child per node).
+> [!NOTE] **When It Flips:** trees are the **minimal connected** graphs ➔ they underlie **spanning trees** (Prim/Kruskal). Cost is $O(\text{height})$: balanced $O(\log n)$, degenerate "stick" $O(n)$ — no better than a [[List (ADT)|LinkList]] (a degenerate tree, one child per node).
 
 ## 📊 Exam Execution Trace
 
@@ -78,19 +79,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Give three equivalent definitions of a tree on $\lvert V\rvert$ vertices and explain why they imply $\lvert E\rvert = \lvert V\rvert - 1$.
-> - **Core Insight Requirement:** Equivalent characterisations + the edge count.
+> - **Hint:** Equivalent characterisations + the edge count.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (a) connected + acyclic; (b) connected, $\lvert E\rvert=\lvert V\rvert-1$; (c) exactly one simple path between any pair.
-> > - **Technical Justification:** **Parent edges** ➔ each non-root vertex contributes one parent edge, the root none ⟹ $\lvert E\rvert=\lvert V\rvert-1$; fewer disconnects, more creates a cycle.
+> > - **Short answer:** (a) connected + acyclic; (b) connected, $\lvert E\rvert=\lvert V\rvert-1$; (c) exactly one simple path between any pair.
+> > - **Why:** **Parent edges** ➔ each non-root vertex contributes one parent edge, the root none ⟹ $\lvert E\rvert=\lvert V\rvert-1$; fewer disconnects, more creates a cycle.
 
 > [!FAQ]- Why is the *height* the quantity that governs a tree's operation complexity?
-> - **Core Insight Requirement:** Operations follow a root-to-node path.
+> - **Hint:** Operations follow a root-to-node path.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Most ops traverse a root-to-node path bounded by the height.
-> > - **Technical Justification:** **Balance** ➔ balanced height $\Theta(\log n)$ ⟹ $O(\log n)$ ops; degenerate $\Theta(n)$ ⟹ $O(n)$ — controlling height (self-balancing) is the whole story.
+> > - **Short answer:** Most ops traverse a root-to-node path bounded by the height.
+> > - **Why:** **Balance** ➔ balanced height $\Theta(\log n)$ ⟹ $O(\log n)$ ops; degenerate $\Theta(n)$ ⟹ $O(n)$ — controlling height (self-balancing) is the whole story.
 
 > [!FAQ]- Why is recursion the natural paradigm for tree algorithms?
-> - **Core Insight Requirement:** A tree is recursively defined.
+> - **Hint:** A tree is recursively defined.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A tree = a node plus subtrees, each itself a tree.
-> > - **Technical Justification:** **Structural induction** ➔ "process this node, recurse on subtrees", correctness by induction over subtrees with the empty/leaf base case.
+> > - **Short answer:** A tree = a node plus subtrees, each itself a tree.
+> > - **Why:** **Structural induction** ➔ "process this node, recurse on subtrees", correctness by induction over subtrees with the empty/leaf base case.

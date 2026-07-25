@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: [0, 4]
 parent: "[[Measures of Centrality]]"
 tags: [DataScience/Statistics, DataScience/Visualisation, Monash/CS_DS]
 aliases: [Measures of Spread, Range, Variance, Standard Deviation, Boxplot, Five-Number Summary]
@@ -12,9 +13,9 @@ aliases: [Measures of Spread, Range, Variance, Standard Deviation, Boxplot, Five
 > [!abstract] Quick Revision
 > - **🎯 Objective:** quantify dispersion ➔ range, variance/standard deviation, and the IQR from percentiles.
 > - **📦 Core Components:** range (max−min) | variance $v=s^2$ / SD $s$ | IQR $=Q_3-Q_1$ | boxplot = five-number summary.
-> - **⚡ Critical Bottleneck:** range and SD are **outlier-sensitive**; the IQR (middle 50%) is robust and drives the boxplot outlier rule.
+> - **⚡ Key Constraint:** range and SD are **outlier-sensitive**; the IQR (middle 50%) is robust and drives the boxplot outlier rule.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Range, Variance, Standard Deviation
 - **Range** ➔ $\operatorname{rng}(y)=\max\{y\}-\min\{y\}$; simplest, but only two values.
 - **Variance** ➔ $v(y)=s^2(y)$ = mean of **squared deviations** from the sample mean; easier to work with algebraically.
@@ -36,7 +37,7 @@ aliases: [Measures of Spread, Range, Variance, Standard Deviation, Boxplot, Five
 | **Standard deviation** | $\sqrt{v(y)}$ | ❌ (uses all values) |
 | **IQR** | $Q_3-Q_1$ | ✅ (middle 50%) |
 
-> [!NOTE] **Crossover Invariant:** a wider spread ($s$ from $0.5 \to 1.5$) fattens the distribution and lengthens the range; the boxplot shows the same story visually — a taller box = larger IQR.
+> [!NOTE] **When It Flips:** a wider spread ($s$ from $0.5 \to 1.5$) fattens the distribution and lengthens the range; the boxplot shows the same story visually — a taller box = larger IQR.
 
 ## 📊 Exam Execution Trace
 
@@ -53,13 +54,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What five numbers make a boxplot, and what three properties does it show at once?
-> - **Core Insight Requirement:** Five-number summary.
+> - **Hint:** Five-number summary.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** min, $Q_1$, median, $Q_3$, max; it displays centrality (median), spread (box/whiskers), and skew (asymmetry) together.
-> > - **Technical Justification:** **Quartile geometry** ➔ box = IQR, line = median, whiskers/points = spread and outliers.
+> > - **Short answer:** min, $Q_1$, median, $Q_3$, max; it displays centrality (median), spread (box/whiskers), and skew (asymmetry) together.
+> > - **Why:** **Quartile geometry** ➔ box = IQR, line = median, whiskers/points = spread and outliers.
 
 > [!FAQ]- Why prefer the IQR over the range or SD when outliers are present?
-> - **Core Insight Requirement:** Middle-50% robustness.
+> - **Hint:** Middle-50% robustness.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The IQR uses only the middle 50% ($Q_3-Q_1$), so extreme values don't distort it; range uses the extremes and SD uses every value.
-> > - **Technical Justification:** **Resistance** ➔ like the median, quartile-based measures ignore the tails.
+> > - **Short answer:** The IQR uses only the middle 50% ($Q_3-Q_1$), so extreme values don't distort it; range uses the extremes and SD uses every value.
+> > - **Why:** **Resistance** ➔ like the median, quartile-based measures ignore the tails.

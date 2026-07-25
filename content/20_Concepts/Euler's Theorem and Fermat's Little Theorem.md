@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Euler Totient Function]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\gcd(x,n)=1\Rightarrow x^{\phi(n)}\equiv1\pmod n$ ➔ FLT is the prime case $x^{p-1}\equiv1$.
 > - **📦 Core Components:** Euler ➔ FLT (prime) ➔ reduce exponents mod $\phi(n)$.
-> - **⚡ Critical Bottleneck:** requires coprimality; the practical payoff is shrinking exponents in [[Modular Exponentiation]].
+> - **⚡ Key Constraint:** requires coprimality; the practical payoff is shrinking exponents in [[Modular Exponentiation]].
 
 ## 📝 Core
 ### 1. The Theorems
@@ -38,7 +39,7 @@ $$a^m\equiv a^{m\bmod\phi(n)}\pmod n$$
 | FLT | prime $p$ | $p-1$ | $p\nmid x$ |
 | exponent rule | $n$ | $m\bmod\phi(n)$ | $\gcd(a,n)=1$ |
 
-> [!NOTE] **Crossover Invariant:** the theorem shrinks the exponent in [[Modular Exponentiation]] from $m$ to $m\bmod\phi(n)$, often turning a huge power into a small one — the algebra behind RSA and key-exchange correctness.
+> [!NOTE] **When It Flips:** the theorem shrinks the exponent in [[Modular Exponentiation]] from $m$ to $m\bmod\phi(n)$, often turning a huge power into a small one — the algebra behind RSA and key-exchange correctness.
 
 ## 📊 Exam Execution Trace
 
@@ -52,18 +53,18 @@ $3^{100}\bmod7$:
 | 2 | $100\bmod6$ | 4 |
 | 3 | $3^4\bmod7$ | 4 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Coprimality required** ➔ without $\gcd(x,n)=1$ the powers never reach 1 (they get stuck — see [[Primitive Root]]).
 
 ## 🧠 Active Recall
 > [!FAQ]- State Euler's theorem and FLT, and how one specialises to the other.
-> - **Core Insight Requirement:** Group size exponent.
+> - **Hint:** Group size exponent.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Euler: $x^{\phi(n)}\equiv1$ ($\gcd=1$); FLT: $x^{p-1}\equiv1$ ($p$ prime) — Euler at $n=p$.
-> > - **Technical Justification:** **$\mathbb Z_n^*$ group** ➔ any element to the group size ($\phi(n)$) is the identity.
+> > - **Short answer:** Euler: $x^{\phi(n)}\equiv1$ ($\gcd=1$); FLT: $x^{p-1}\equiv1$ ($p$ prime) — Euler at $n=p$.
+> > - **Why:** **$\mathbb Z_n^*$ group** ➔ any element to the group size ($\phi(n)$) is the identity.
 
 > [!FAQ]- Use the theorem to simplify $2^9\bmod7$ and give the general exponent rule.
-> - **Core Insight Requirement:** Reduce exponent mod $\phi(n)$.
+> - **Hint:** Reduce exponent mod $\phi(n)$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $9\bmod6=3$, so $2^9\equiv2^3=8\equiv1\pmod7$; generally $a^x\equiv a^{x\bmod\phi(n)}$.
-> > - **Technical Justification:** **Workhorse** ➔ replaces a large exponent by a small residue in [[Modular Exponentiation]].
+> > - **Short answer:** $9\bmod6=3$, so $2^9\equiv2^3=8\equiv1\pmod7$; generally $a^x\equiv a^{x\bmod\phi(n)}$.
+> > - **Why:** **Workhorse** ➔ replaces a large exponent by a small residue in [[Modular Exponentiation]].

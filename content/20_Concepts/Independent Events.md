@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Probability]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** both occur ⟹ product ➔ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$.
 > - **📦 Core Components:** numerical test ➔ multiplicative over intersections ➔ series/parallel reliability.
-> - **⚡ Critical Bottleneck:** independent ≠ mutually exclusive (disjoint positive-probability events are dependent).
+> - **⚡ Key Constraint:** independent ≠ mutually exclusive (disjoint positive-probability events are dependent).
 
 ## 📝 Core
 ### 1. The Definition
@@ -39,7 +40,7 @@ $$\text{series: } p\cdot p=p^2;\qquad \text{parallel: } 1-(1-p)^2=2p-p^2$$
 | independent | $\mathrm{Pr}(A)\mathrm{Pr}(B)$ | product |
 | mutually exclusive | dependent | — |
 
-> [!NOTE] **Crossover Invariant:** probability is multiplicative over independent intersections (as it is additive over disjoint unions) — the tool for decomposing a complex event into independent pieces; the complement route is quickest for "at least one".
+> [!NOTE] **When It Flips:** probability is multiplicative over independent intersections (as it is additive over disjoint unions) — the tool for decomposing a complex event into independent pieces; the complement route is quickest for "at least one".
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $$
 $$
 **Final Extracted Output:** $2p-p^2$; the complement route is quicker.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Independent ≠ mutually exclusive** ➔ disjoint positive-probability events are *dependent* ($0\neq\mathrm{Pr}(A)\mathrm{Pr}(B)$); "separate on a Venn diagram" is not independence.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define independence and why mutually exclusive events (positive probability) are never independent.
-> - **Core Insight Requirement:** Product vs zero.
+> - **Hint:** Product vs zero.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Independent ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$; disjoint gives $\mathrm{Pr}(A\cap B)=0$.
-> > - **Technical Justification:** **$>0\neq0$** ➔ exclusivity means $A$ prevents $B$ — strongest dependence.
+> > - **Short answer:** Independent ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$; disjoint gives $\mathrm{Pr}(A\cap B)=0$.
+> > - **Why:** **$>0\neq0$** ➔ exclusivity means $A$ prevents $B$ — strongest dependence.
 
 > [!FAQ]- For two independent links each surviving w.p. $p$, give series and parallel survival.
-> - **Core Insight Requirement:** AND multiplies, OR via complement.
+> - **Hint:** AND multiplies, OR via complement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Series $p^2$; parallel $1-(1-p)^2=2p-p^2$.
-> > - **Technical Justification:** **Complement simplest** ➔ "at least one" = $1-$"both fail".
+> > - **Short answer:** Series $p^2$; parallel $1-(1-p)^2=2p-p^2$.
+> > - **Why:** **Complement simplest** ➔ "at least one" = $1-$"both fail".

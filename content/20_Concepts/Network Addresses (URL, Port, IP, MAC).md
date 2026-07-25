@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 7
 parent: "[[Internet Model (Layers, Protocols, Encapsulation)]]"
 tags: [CS/Networks]
 aliases: [IP Address, MAC Address, Port Numbers, IPv6, Subnet Mask]
@@ -10,7 +11,7 @@ aliases: [IP Address, MAC Address, Port Numbers, IPv6, Subnet Mask]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** URL (application) ➔ port (transport) ➔ IP (network) ➔ MAC (data link) — identity at each layer; an address identifies but does NOT route by itself.
-> - **⚡ Critical Bottleneck:** IPv4 structure — $130.194.66.43/26$ means first 26 bits = network+subnet, last 6 = host ⟹ same-subnet test by prefix comparison.
+> - **⚡ Key Constraint:** IPv4 structure — $130.194.66.43/26$ means first 26 bits = network+subnet, last 6 = host ⟹ same-subnet test by prefix comparison.
 
 ## ⚖️ Core Decision Matrix — one address per layer
 | Layer | Address | Example | Identifies |
@@ -35,7 +36,7 @@ aliases: [IP Address, MAC Address, Port Numbers, IPv6, Subnet Mask]
 - **Why** ➔ several browser windows share one IP; the port pairs each response with its connection.
 - **Convention** ➔ **server ports fixed** ($80$ HTTP, $25$ SMTP), **client ports random**, one per connection ($57017, 57018, \dots$) — a connection is the 4-tuple (src IP:port, dst IP:port).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Address ≠ route** ➔ knowing $216.58.220.99$ says nothing about how to reach it — that's routing/resolution's job.
 - 💡 **$/26$ arithmetic** ➔ mask counts PREFIX bits; hosts get $32-26=6$ bits — reading it backwards wrecks subnet questions.
 - 💡 **MAC is LAN-scoped** ➔ frames use MACs only within one subnet; crossing a router swaps frames (and MACs), never the IP.
@@ -43,10 +44,10 @@ aliases: [IP Address, MAC Address, Port Numbers, IPv6, Subnet Mask]
 ## 🧠 Active Recall
 > [!FAQ]- For $130.194.66.43/26$: give the binary, the subnet mask in dotted decimal, and how a peer decides if it's in the same subnet.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Mask $= 255.255.255.192$; compare the first 26 bits of both addresses — equal prefixes ⟹ same subnet ⟹ direct delivery, else ⟹ router.
-> > - **Technical Justification:** **Prefix routing** ➔ hierarchical addresses make the local/remote decision a single masked comparison.
+> > - **Short answer:** Mask $= 255.255.255.192$; compare the first 26 bits of both addresses — equal prefixes ⟹ same subnet ⟹ direct delivery, else ⟹ router.
+> > - **Why:** **Prefix routing** ➔ hierarchical addresses make the local/remote decision a single masked comparison.
 
 > [!FAQ]- Two browser tabs both fetch from port 80 of the same server — why don't the responses mix?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each tab's connection uses a distinct random client port; the 4-tuple disambiguates.
-> > - **Technical Justification:** **Transport-layer identity** ➔ ports address *applications/connections*, IP only addresses the machine.
+> > - **Short answer:** Each tab's connection uses a distinct random client port; the 4-tuple disambiguates.
+> > - **Why:** **Transport-layer identity** ➔ ports address *applications/connections*, IP only addresses the machine.

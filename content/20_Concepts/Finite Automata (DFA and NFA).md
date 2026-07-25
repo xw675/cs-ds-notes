@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 3
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [FA, DFA, NFA, finite automaton, deterministic finite automaton, nondeterministic finite automaton, transition table, sink state, epsilon transition, complement automaton]
@@ -11,7 +12,7 @@ aliases: [FA, DFA, NFA, finite automaton, deterministic finite automaton, nondet
 > [!abstract] Quick Revision
 > - **🎯 Objective:** read a word **letter by letter**, moving between finitely many states ➔ **accept** if you finish in a Final state. The set of accepted strings is the **language recognised**.
 > - **📦 Core Components:** **DFA** ➔ exactly **one** transition per (state, letter) | **NFA** ➔ **zero, one or many**, plus $\varepsilon$-moves.
-> - **⚡ Critical Bottleneck:** a **DFA** gives every string a **unique** path (so complementing = swap Final/non-Final); an **NFA** accepts if **at least one** path reaches a Final state — so swapping states does **not** complement an NFA.
+> - **⚡ Key Constraint:** a **DFA** gives every string a **unique** path (so complementing = swap Final/non-Final); an **NFA** accepts if **at least one** path reaches a Final state — so swapping states does **not** complement an NFA.
 
 ## 📝 Definition
 A finite automaton consists of:
@@ -73,7 +74,7 @@ stateDiagram-v2
 | easy to **complement** | ✓ (swap Final/non-Final) | ✗ |
 | expressive power | **identical** — both recognise exactly the regular languages ([[Kleene's Theorem]]) | |
 
-> [!NOTE] **Crossover Invariant:** NFAs are never *more powerful*, only more convenient — the [[NFA to DFA (Subset Construction)|subset construction]] converts any NFA into a DFA, at a cost of up to $2^{n}$ states.
+> [!NOTE] **When It Flips:** NFAs are never *more powerful*, only more convenient — the [[NFA to DFA (Subset Construction)|subset construction]] converts any NFA into a DFA, at a cost of up to $2^{n}$ states.
 
 ## 🔄 Complement languages
 - **Definition** ➔ $\overline{L}=\Sigma^{*}\setminus L$ (also written $L'$ or $L^{c}$).
@@ -92,7 +93,7 @@ Tracing $\mathtt{abba}$ on the table above (Start $=1$, Final $=\{3\}$):
 | 3 | $\mathtt{b}$ | 2 | 3 | — |
 | 4 | $\mathtt{a}$ | 3 | 3 | ends in Final ⟹ **accepted** |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Complement by swapping works only for a total DFA** ➔ it relies on every string having exactly one path. On an **NFA** it fails: a string can have both an accepting and a non-accepting path, so swapping would keep accepting it.
 - 💡 **A missing transition is not the same as rejection in a DFA** ➔ a DFA's table must be **complete**; add an explicit **sink state** rather than leaving cells blank.
 - 💡 **NFA acceptance is existential, not universal** ➔ one accepting path is enough, even if a hundred other paths crash.
@@ -101,10 +102,10 @@ Tracing $\mathtt{abba}$ on the table above (Start $=1$, Final $=\{3\}$):
 ## 🧠 Active Recall
 > [!FAQ]- Why can you complement a DFA by swapping Final and non-Final states, but not an NFA?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** in a **DFA** every string traces exactly **one** path, so "ends Final" and "ends non-Final" partition all strings — swapping the labels exactly inverts membership. In an **NFA** a string may trace **several** paths; it is accepted if *some* path ends Final, so after swapping, a string with one accepting and one non-accepting path would still be accepted.
-> > - **Technical Justification:** **Determinism gives a clean partition** ➔ complementation needs the accept/reject decision to be a function of the string; only the DFA's unique-path property guarantees that. Convert the NFA to a DFA first ([[NFA to DFA (Subset Construction)]]), then swap.
+> > - **Short answer:** in a **DFA** every string traces exactly **one** path, so "ends Final" and "ends non-Final" partition all strings — swapping the labels exactly inverts membership. In an **NFA** a string may trace **several** paths; it is accepted if *some* path ends Final, so after swapping, a string with one accepting and one non-accepting path would still be accepted.
+> > - **Why:** **Determinism gives a clean partition** ➔ complementation needs the accept/reject decision to be a function of the string; only the DFA's unique-path property guarantees that. Convert the NFA to a DFA first ([[NFA to DFA (Subset Construction)]]), then swap.
 
 > [!FAQ]- What exactly does an NFA gain over a DFA, given they recognise the same languages?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **convenience, not power** — NFAs allow missing transitions, multiple choices and $\varepsilon$-moves, so machines for a given language are far smaller and more natural to design (e.g. $\mathtt{aba}$ as a bare chain, with no sink state).
-> > - **Technical Justification:** **Equal expressive power** ➔ [[Kleene's Theorem]] and the subset construction show every NFA has an equivalent DFA, so the classes of recognised languages coincide; the price of determinising is up to $2^{n}$ states.
+> > - **Short answer:** **convenience, not power** — NFAs allow missing transitions, multiple choices and $\varepsilon$-moves, so machines for a given language are far smaller and more natural to design (e.g. $\mathtt{aba}$ as a bare chain, with no sink state).
+> > - **Why:** **Equal expressive power** ➔ [[Kleene's Theorem]] and the subset construction show every NFA has an equivalent DFA, so the classes of recognised languages coincide; the price of determinising is up to $2^{n}$ states.

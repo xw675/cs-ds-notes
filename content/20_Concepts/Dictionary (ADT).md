@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 10
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** look things up by what they are (a unique key) ➔ not by position — x["Name"].
 > - **📦 Core Components:** search / add / update / delete, all **keyed** ➔ hash-backed vs tree-backed.
-> - **⚡ Critical Bottleneck:** hash map $O(1)$ expected but **unordered**; tree map $O(\log n)$ but **ordered** (range/successor).
+> - **⚡ Key Constraint:** hash map $O(1)$ expected but **unordered**; tree map $O(\log n)$ but **ordered** (range/successor).
 
 ## 📝 Core
 ### 1. The Dictionary (Keyed Access)
@@ -33,7 +34,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 > x["Class"] = "1A"  # ADD    (new key)
 > del x["Name"]      # DELETE
 > ```
-> 💡 **Exam Pitfall:** **Keys unique + hashable/comparable** ➔ hash map needs hashable, tree map needs comparable; a mutable-as-key whose hash/order changes after insertion is a classic bug.
+> 💡 **Common Mistake:** **Keys unique + hashable/comparable** ➔ hash map needs hashable, tree map needs comparable; a mutable-as-key whose hash/order changes after insertion is a classic bug.
 
 ## ⚖️ Core Decision Matrix
 | Operation | Hash map (expected) | Tree map (worst) |
@@ -43,7 +44,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 | delete | $O(1)$ | $O(\log n)$ |
 | ordered iteration | $O(n\log n)$ (must sort) | $O(n)$ in order |
 
-> [!NOTE] **Crossover Invariant:** the hash map forfeits ordering for speed; the tree map keeps order at a $\log$ factor. Hash-map $O(1)$ is *expected* (good hashing) and *amortised* (rehash on growth) — adversarial keys degrade it to $O(n)$. A dictionary is a [[Set (ADT)]] *with values attached to each key* — same membership machinery.
+> [!NOTE] **When It Flips:** the hash map forfeits ordering for speed; the tree map keeps order at a $\log$ factor. Hash-map $O(1)$ is *expected* (good hashing) and *amortised* (rehash on growth) — adversarial keys degrade it to $O(n)$. A dictionary is a [[Set (ADT)]] *with values attached to each key* — same membership machinery.
 
 ## 📊 Exam Execution Trace
 
@@ -70,19 +71,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- You need range queries and ordered iteration — hash map or tree map, and what do you sacrifice?
-> - **Core Insight Requirement:** Order costs a log factor.
+> - **Hint:** Order costs a log factor.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A **tree map** (balanced BST): $O(\log n)$ point ops, $O(\log n+k)$ range, $O(n)$ in-order.
-> > - **Technical Justification:** **Sacrifice $O(1)$** ➔ you give up the hash map's expected $O(1)$ point operations for ordered structure.
+> > - **Short answer:** A **tree map** (balanced BST): $O(\log n)$ point ops, $O(\log n+k)$ range, $O(n)$ in-order.
+> > - **Why:** **Sacrifice $O(1)$** ➔ you give up the hash map's expected $O(1)$ point operations for ordered structure.
 
 > [!FAQ]- Why is `dict`'s $O(1)$ described as *expected* and *amortised*, not worst-case?
-> - **Core Insight Requirement:** Two separate qualifiers.
+> - **Hint:** Two separate qualifiers.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** *Expected*: good hashing ⟹ $O(1)$ average, but all-colliding adversarial keys ⟹ $O(n)$. *Amortised*: periodic $O(n)$ rehash spread over $n$ inserts ⟹ $O(1)$ each.
-> > - **Technical Justification:** **No worst-case guarantee** ➔ a single lookup can be $O(n)$; the bound is average + sequence-amortised.
+> > - **Short answer:** *Expected*: good hashing ⟹ $O(1)$ average, but all-colliding adversarial keys ⟹ $O(n)$. *Amortised*: periodic $O(n)$ rehash spread over $n$ inserts ⟹ $O(1)$ each.
+> > - **Why:** **No worst-case guarantee** ➔ a single lookup can be $O(n)$; the bound is average + sequence-amortised.
 
 > [!FAQ]- What two requirements must keys satisfy, and how does each backing store use them?
-> - **Core Insight Requirement:** Unique + (hashable or comparable).
+> - **Hint:** Unique + (hashable or comparable).
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Unique** (the invariant), and **hashable** (hash map — compute an index) or **comparable** (tree map — order in the BST).
-> > - **Technical Justification:** **Mutable-key bug** ➔ arises when a key's hash/order changes after insertion.
+> > - **Short answer:** **Unique** (the invariant), and **hashable** (hash map — compute an index) or **comparable** (tree map — order in the BST).
+> > - **Why:** **Mutable-key bug** ➔ arises when a key's hash/order changes after insertion.

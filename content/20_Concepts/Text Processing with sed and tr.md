@@ -8,11 +8,11 @@ aliases: [sed, tr, stream editor, character translator, sed substitution, backre
 # [[Text Processing with sed and tr]]
 
 **Context:** [[FIT2014_MOC]] · Lab 0 Linux tooling · the **applied** face of [[Regular Expressions]] — `sed`/`grep` patterns *are* regular expressions (POSIX BRE) · extends [[Shell Toolkit (Cheatsheet)]]
-**Task signature:** transform or search text line-by-line by a pattern — substitute, delete, translate, or match.
+**Problem it solves:** transform or search text line-by-line by a pattern — substitute, delete, translate, or match.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "replace/delete/translate/match text by a pattern" ➔ **sed** (substitute), **tr** (char-by-char map), **grep** (search). The patterns are **regular expressions**.
-> - **⚡ Critical Bottleneck:** `sed`/`grep` use **POSIX BRE**, where grouping and repetition are **backslash-escaped** — `\(...\)`, `\{...\}` — the opposite of the theory notation. And `s///` replaces only the **first** match per line unless you add `g`.
+> - **⚡ Key Constraint:** `sed`/`grep` use **POSIX BRE**, where grouping and repetition are **backslash-escaped** — `\(...\)`, `\{...\}` — the opposite of the theory notation. And `s///` replaces only the **first** match per line unless you add `g`.
 
 ## 🔧 sed — substitute by regex
 `sed 's/pattern/replacement/flags' file` — for each line, replace `pattern` with `replacement`.
@@ -54,8 +54,8 @@ tr -s ' '                            # -s: SQUEEZE runs of a char to one
 ```
 - **No file args** ➔ `tr` reads stdin, writes stdout; use redirection/pipes for files.
 
-## 🥋 Katas (write from blank)
-> [!QUESTION]- Kata 1: Remove every character that is **not a letter** from a file.
+## ✍️ Practice (write from blank)
+> [!QUESTION]- Practice 1: Remove every character that is **not a letter** from a file.
 > > [!SUCCESS]- Reference solution
 > > ```bash
 > > sed 's/[^a-zA-Z]//g' file        # delete = replace non-letters with nothing
@@ -64,14 +64,14 @@ tr -s ' '                            # -s: SQUEEZE runs of a char to one
 > > ```
 > > - **Key move:** `[^a-zA-Z]` is "not a letter"; replacing with empty (`//`) deletes. `g` makes it every match, not just the first.
 
-> [!QUESTION]- Kata 2: Convert US dates `MM/DD/YYYY` to Australian `DD/MM/YYYY`.
+> [!QUESTION]- Practice 2: Convert US dates `MM/DD/YYYY` to Australian `DD/MM/YYYY`.
 > > [!SUCCESS]- Reference solution
 > > ```bash
 > > sed 's/\([0-9][0-9]\)\/\([0-9][0-9]\)\/\([0-9]\{4\}\)/\2\/\1\/\3/' file
 > > ```
 > > - **Key move:** capture MM, DD, YYYY in three `\(...\)` groups, then re-emit as `\2\/\1\/\3` — swapping the first two. `\{4\}` repeats the digit class four times (BRE braces are escaped).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **BRE escaping is inverted** ➔ in `sed`/`grep` BRE, `(`, `)`, `{`, `}` are **literal**; grouping/repetition need `\(`, `\)`, `\{`, `\}`. (The theory's $R^*$, $(R\cup S)$ use bare metacharacters — see [[Regular Expressions]].)
 - 💡 **`s///` is first-match-only** ➔ add the `g` flag for all matches on a line; forgetting `g` silently leaves later matches untouched.
 - 💡 **Ranges are ASCII, not alphabetic-only** ➔ `[A-z]` accidentally includes `[`, `\`, `]`, `^`, `_`, backtick; use `[A-Za-z]`.
@@ -81,10 +81,10 @@ tr -s ' '                            # -s: SQUEEZE runs of a char to one
 ## 🧠 Active Recall
 > [!FAQ]- The FIT2014 theory writes regex as $(a\cup b)^*$, but `grep`/`sed` reject that syntax — why, and what's the equivalent?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** tools use **POSIX BRE**, a different concrete syntax for the *same idea*. Alternation/grouping/repetition are written `\(a\|b\)*` (or in ERE `grep -E '(a|b)*'`), and a character class `[ab]` stands for $a\cup b$ over single letters.
-> > - **Technical Justification:** **Same languages, different notation** ➔ regular expressions are a mathematical object ([[Regular Expressions]]); every implementation picks its own escaping and extensions, which is exactly the "tools differ" caveat — `\(...\)` in BRE vs bare `(...)` in the theory, `[a-z]` shorthand for a union, etc.
+> > - **Short answer:** tools use **POSIX BRE**, a different concrete syntax for the *same idea*. Alternation/grouping/repetition are written `\(a\|b\)*` (or in ERE `grep -E '(a|b)*'`), and a character class `[ab]` stands for $a\cup b$ over single letters.
+> > - **Why:** **Same languages, different notation** ➔ regular expressions are a mathematical object ([[Regular Expressions]]); every implementation picks its own escaping and extensions, which is exactly the "tools differ" caveat — `\(...\)` in BRE vs bare `(...)` in the theory, `[a-z]` shorthand for a union, etc.
 
 > [!FAQ]- What does `sed 's/2\([0-9][0-9][0-9]\)/3\1/'` do, and what is `\1`?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it finds a `2` followed by three digits and replaces it with `3` followed by **those same three digits** — rewriting `2xxx` as `3xxx`. `\1` is the text captured by the first `\(...\)` group (the three digits).
-> > - **Technical Justification:** **Backreference reuse** ➔ `\(...\)` captures a subpattern; `\1`…`\9` re-emit captured groups in the replacement, letting a substitution keep part of what it matched (here, the postcode's last three digits).
+> > - **Short answer:** it finds a `2` followed by three digits and replaces it with `3` followed by **those same three digits** — rewriting `2xxx` as `3xxx`. `\1` is the text captured by the first `\(...\)` group (the three digits).
+> > - **Why:** **Backreference reuse** ➔ `\(...\)` captures a subpattern; `\1`…`\9` re-emit captured groups in the replacement, letting a substitution keep part of what it matched (here, the postcode's last three digits).

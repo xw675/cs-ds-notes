@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Conceptual Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** refine requirements → conceptual → logical → physical ➔ each stage more implementation-specific.
 > - **📦 Core Components:** Requirements ➔ Conceptual (tech-independent) | Logical (DB type) ➔ Physical (DBMS).
-> - **⚡ Critical Bottleneck:** technology-independence **decreases** down the stages; requirements errors cascade.
+> - **⚡ Key Constraint:** technology-independence **decreases** down the stages; requirements errors cascade.
 
 ## 📝 Core
 ### 1. The Four Stages
@@ -36,7 +37,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | Logical | relations + keys | DB **type** |
 | Physical | storage structures | specific **DBMS** |
 
-> [!NOTE] **Crossover Invariant:** the technology-independent stages let business stakeholders agree on *meaning* before any platform commitment, postponing vendor lock-in to physical design. A single integrated database backs all user views.
+> [!NOTE] **When It Flips:** the technology-independent stages let business stakeholders agree on *meaning* before any platform commitment, postponing vendor lock-in to physical design. A single integrated database backs all user views.
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ Classifying dependence per stage:
 | 3 | Logical | no | DB type |
 | 4 | Physical | no | DBMS |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Logical = type-dependent, Physical = vendor-dependent** ➔ a relational logical design is identical on Oracle vs SQL Server; only physical storage differs per DBMS.
 
 ## 🧠 Active Recall
 > [!FAQ]- Name the four stages and their technology-dependence.
-> - **Core Insight Requirement:** Independence decreases down the stages.
+> - **Hint:** Independence decreases down the stages.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Requirements + Conceptual (tech-free); Logical (DB type); Physical (specific DBMS).
-> > - **Technical Justification:** **What vs how** ➔ conceptual states *what* data matter; physical states *how* stored.
+> > - **Short answer:** Requirements + Conceptual (tech-free); Logical (DB type); Physical (specific DBMS).
+> > - **Why:** **What vs how** ➔ conceptual states *what* data matter; physical states *how* stored.
 
 > [!FAQ]- Why does the logical model depend on the database type but not the vendor, while the physical depends on the DBMS?
-> - **Core Insight Requirement:** Constructs vs storage.
+> - **Hint:** Constructs vs storage.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Logical uses a type's constructs (relations, PK/FK) — identical across vendors; physical concerns file org/indexes, which each DBMS implements differently.
-> > - **Technical Justification:** **Vendor-free logic** ➔ an Oracle vs SQL Server relational design is the same at the logical level.
+> > - **Short answer:** Logical uses a type's constructs (relations, PK/FK) — identical across vendors; physical concerns file org/indexes, which each DBMS implements differently.
+> > - **Why:** **Vendor-free logic** ➔ an Oracle vs SQL Server relational design is the same at the logical level.

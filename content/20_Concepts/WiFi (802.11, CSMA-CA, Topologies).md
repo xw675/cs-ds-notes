@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 8
 parent: "[[Physical and Data Link Layers (Signals, Ethernet, CSMA-CD)]]"
 tags: [CS/Networks]
 aliases: [WiFi, 802.11, CSMA/CA, Hidden Node, BSS, ESS]
@@ -11,7 +12,7 @@ aliases: [WiFi, 802.11, CSMA/CA, Hidden Node, BSS, ESS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** WLAN NICs ↔ **Access Points** ↔ wired LAN; medium is shared radio ⟹ **CSMA/CA** (Avoidance — you often CAN'T detect wireless collisions).
 > - **📦 Core Components:** 2.4/5 GHz channels ➔ hidden node problem ➔ stop-and-wait ARQ ➔ BSS → ESS topologies ➔ placement/attenuation.
-> - **⚡ Critical Bottleneck:** 2.4 GHz channels are 22 MHz wide but 5 MHz apart ⟹ **only 1, 6, 11 don't overlap** — the neighbour-channel puzzle is a standing exam item.
+> - **⚡ Key Constraint:** 2.4 GHz channels are 22 MHz wide but 5 MHz apart ⟹ **only 1, 6, 11 don't overlap** — the neighbour-channel puzzle is a standing exam item.
 
 ## 📝 Core
 ### 1. Basics (802.11)
@@ -34,7 +35,7 @@ aliases: [WiFi, 802.11, CSMA/CA, Hidden Node, BSS, ESS]
 - **AP placement** ➔ high/ceiling-mounted, few walls, never in a closet; kill interferers (Bluetooth, microwaves, cordless phones); directional antennas where needed.
 - **NEVER put a server on WiFi** ➔ all traffic passes the AP on a shared medium ⟹ a WiFi server DOUBLES the radio traffic and waits between frames; servers belong on wired Ethernet.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Why CA, not CD** ➔ a transmitting radio can't hear a distant collision (hidden node) — detection is physically unreliable, so avoid + ACK instead.
 - 💡 **13 channels ≠ 13 usable** ➔ overlap leaves three clean choices at 2.4 GHz (1, 6, 11); adjacent-number channels interfere WORSE than same-channel sharing in some layouts.
 - 💡 **5 GHz trade** ➔ faster + cleaner spectrum, but attenuates harder — more APs, not fewer.
@@ -42,10 +43,10 @@ aliases: [WiFi, 802.11, CSMA/CA, Hidden Node, BSS, ESS]
 ## 🧠 Active Recall
 > [!FAQ]- Explain the hidden node problem and the two 802.11 countermeasures.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Nodes A and C both reach AP B but not each other ⟹ simultaneous sends collide at B undetected; countered by stop-and-wait ARQ (per-frame ACKs expose losses) and AP-controlled access.
-> > - **Technical Justification:** **Detection needs shared hearing** ➔ CSMA/CD assumes every sender hears every collision — false on radio, hence Avoidance.
+> > - **Short answer:** Nodes A and C both reach AP B but not each other ⟹ simultaneous sends collide at B undetected; countered by stop-and-wait ARQ (per-frame ACKs expose losses) and AP-controlled access.
+> > - **Why:** **Detection needs shared hearing** ➔ CSMA/CD assumes every sender hears every collision — false on radio, hence Avoidance.
 
 > [!FAQ]- Three neighbours run channels 1, 6, 6; you're on 11. Who must move, and to what?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** One of the channel-6 pair moves — but the only non-overlapping options are 1, 6, 11, all taken ⟹ the two 6s must share, or the mover picks whichever of 1/6/11 is most distant physically.
-> > - **Technical Justification:** **Three-colour constraint** ➔ 2.4 GHz gives exactly three orthogonal channels; beyond three overlapping cells, sharing is unavoidable — plan geometry, not just numbers.
+> > - **Short answer:** One of the channel-6 pair moves — but the only non-overlapping options are 1, 6, 11, all taken ⟹ the two 6s must share, or the mover picks whichever of 1/6/11 is most distant physically.
+> > - **Why:** **Three-colour constraint** ➔ 2.4 GHz gives exactly three orthogonal channels; beyond three overlapping cells, sharing is unavoidable — plan geometry, not just numbers.

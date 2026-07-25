@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 6
 parent: "[[Recurrence Relation]]"
 tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $f_1=f_2=1,\ f_n=f_{n-1}+f_{n-2}$ ➔ $1,1,2,3,5,8,13,\dots$.
 > - **📦 Core Components:** two base cases ➔ strong induction bounds ➔ Binet closed form.
-> - **⚡ Critical Bottleneck:** $f_n=\Theta(r_1^n)$, $r_1=\frac{1+\sqrt5}2$; exact formula needs **both** roots of $r^2=r+1$.
+> - **⚡ Key Constraint:** $f_n=\Theta(r_1^n)$, $r_1=\frac{1+\sqrt5}2$; exact formula needs **both** roots of $r^2=r+1$.
 
 ## 📝 Core
 ### 1. The Recurrence
@@ -40,7 +41,7 @@ $$f_n=\frac1{\sqrt5}\left(\tfrac{1+\sqrt5}2\right)^n-\frac1{\sqrt5}\left(\tfrac{
 | exact Binet | $r_1$ **and** $r_2$ | two (equality) |
 | growth | $r_1$ | $\Theta(r_1^n)$ |
 
-> [!NOTE] **Crossover Invariant:** a bound of form $r^n$ needs $r^2\ge r+1$ (one free constant, one base case); an exact formula needs equality $r^2=r+1$ and both roots (two constants, two base cases). $r_2<0$ can't be a bound but is essential in Binet. Ratio $f_{n+1}/f_n\to r_1$ (golden ratio).
+> [!NOTE] **When It Flips:** a bound of form $r^n$ needs $r^2\ge r+1$ (one free constant, one base case); an exact formula needs equality $r^2=r+1$ and both roots (two constants, two base cases). $r_2<0$ can't be a bound but is essential in Binet. Ratio $f_{n+1}/f_n\to r_1$ (golden ratio).
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ f_7 &= \tfrac1{\sqrt5}(r_1^7-r_2^7) = \tfrac1{\sqrt5}(29.03\ldots+0.03\ldots) = 
 $$
 **Final Extracted Output:** $f_7=13$ from both recurrence and Binet.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Two base cases required** ➔ the step uses the hypothesis at $k$ *and* $k-1$ (strong induction), so $n=1,2$ must be checked separately.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does proving $f_n\le2^n$ require *two* base cases?
-> - **Core Insight Requirement:** Strong induction.
+> - **Hint:** Strong induction.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The rule holds only for $n\ge3$; $f_1,f_2$ checked directly, and the step uses $k$ and $k-1$.
-> > - **Technical Justification:** **Two predecessors** ➔ needs two consecutive base cases.
+> > - **Short answer:** The rule holds only for $n\ge3$; $f_1,f_2$ checked directly, and the step uses $k$ and $k-1$.
+> > - **Why:** **Two predecessors** ➔ needs two consecutive base cases.
 
 > [!FAQ]- Why do bounds need only one root but Binet needs both?
-> - **Core Insight Requirement:** Inequality vs equality.
+> - **Hint:** Inequality vs equality.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A bound $r^n$ has one free constant (one base case, inequality); an exact formula matches two base cases with equality, needing both roots.
-> > - **Technical Justification:** **$r_2<0$** ➔ breaks the basis as a bound but is indispensable in Binet.
+> > - **Short answer:** A bound $r^n$ has one free constant (one base case, inequality); an exact formula matches two base cases with equality, needing both roots.
+> > - **Why:** **$r_2<0$** ➔ breaks the basis as a bound but is indispensable in Binet.

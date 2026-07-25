@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 1
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/Foundations, Monash/CS_DS]
 aliases: [Data Science, Drew Conway Venn Diagram]
@@ -11,7 +12,7 @@ aliases: [Data Science, Drew Conway Venn Diagram]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** define data science as the extraction of knowledge/value from data ➔ the broad, lifecycle-wide view, not just "ML on big data".
 > - **📦 Core Components:** hacking skills ∩ maths & stats ∩ substantive expertise ➔ the Conway Venn intersection.
-> - **⚡ Critical Bottleneck:** the **danger zone** — skills + domain but **no** maths/stats ➔ plausible-looking analysis with no rigour.
+> - **⚡ Key Constraint:** the **danger zone** — skills + domain but **no** maths/stats ➔ plausible-looking analysis with no rigour.
 
 ## 📝 Core
 ### 1. Defining It (the spectrum)
@@ -34,17 +35,17 @@ aliases: [Data Science, Drew Conway Venn Diagram]
 | hacking ∩ domain expertise | **Danger zone** | analysis *looks* valid but lacks rigour |
 | all three | **Data science** | the target combination |
 
-> [!NOTE] **Crossover Invariant:** the danger zone is dangerous precisely *because* it omits maths/stats — results appear legitimate with no understanding of how they were produced; data science needs **all three** skill sets together.
+> [!NOTE] **When It Flips:** the danger zone is dangerous precisely *because* it omits maths/stats — results appear legitimate with no understanding of how they were produced; data science needs **all three** skill sets together.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is "data science is what a data scientist does" a bad definition, and what is a better one?
-> - **Core Insight Requirement:** Circular vs substantive.
+> - **Hint:** Circular vs substantive.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** It's circular (defines the term by itself); a better definition is the extraction of knowledge/value from structured and unstructured data across the lifecycle.
-> > - **Technical Justification:** **Broad over narrow** ➔ "ML on big data" is useful but too narrow; the lifecycle view captures collection through communication.
+> > - **Short answer:** It's circular (defines the term by itself); a better definition is the extraction of knowledge/value from structured and unstructured data across the lifecycle.
+> > - **Why:** **Broad over narrow** ➔ "ML on big data" is useful but too narrow; the lifecycle view captures collection through communication.
 
 > [!FAQ]- In Conway's diagram, what sits at hacking ∩ domain expertise, and why is it a warning?
-> - **Core Insight Requirement:** Missing maths/stats.
+> - **Hint:** Missing maths/stats.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The **danger zone** — you can extract/structure data and know the field, but without maths/stats the analysis may be plausible yet unsound.
-> > - **Technical Justification:** **No statistical grounding** ➔ no way to judge how results were derived or whether they hold.
+> > - **Short answer:** The **danger zone** — you can extract/structure data and know the field, but without maths/stats the analysis may be plausible yet unsound.
+> > - **Why:** **No statistical grounding** ➔ no way to judge how results were derived or whether they hold.

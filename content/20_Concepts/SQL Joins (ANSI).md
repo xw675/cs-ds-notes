@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 8
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [JOIN, JOIN ON, JOIN USING, NATURAL JOIN]
 # [[SQL Joins (ANSI)]]
 
 **Context:** [[FIT2094_MOC]] · combine rows across tables on a [[Foreign Key and Referential Integrity|PK–FK]] match · SQL form of the [[Relational Algebra Joins|relational-algebra join]] · **ANSI syntax required**
-**Task signature:** retrieve columns from two related tables, matching each child row to its parent.
+**Problem it solves:** retrieve columns from two related tables, matching each child row to its parent.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** data spans two tables ➔ JOIN ... ON (explicit condition); shortcut to USING/NATURAL only when key names match.
-> - **⚡ Critical Bottleneck:** a NATURAL JOIN on tables with **no** common column silently becomes a **Cartesian product**, not a join.
+> - **⚡ Key Constraint:** a NATURAL JOIN on tables with **no** common column silently becomes a **Cartesian product**, not a join.
 
 ![[natural-join-a.png]]
 ![[natural-join-b.png]]
@@ -38,8 +39,8 @@ ON     manufacturer.manuf_id = drone_type.manuf_id;
 | **JOIN … USING** | `USING (col)` | removed | same column name |
 | **NATURAL JOIN** | implicit (all common names) | removed | same column name(s) |
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Join `MANUFACTURER` and `DRONE_TYPE` on `manuf_id` with a **single** `manuf_id` column in the output, assuming the column name matches in both.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Join `MANUFACTURER` and `DRONE_TYPE` on `manuf_id` with a **single** `manuf_id` column in the output, assuming the column name matches in both.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT *
@@ -48,7 +49,7 @@ ON     manufacturer.manuf_id = drone_type.manuf_id;
 > > ```
 > > - **Key move:** USING collapses the shared `manuf_id` to one column (ON would leave two).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Never use implicit joins** ➔ `FROM t1, t2 WHERE t1.id=t2.id` is banned in this unit; always ANSI `JOIN`.
 - 💡 **NATURAL JOIN with no shared column = Cartesian product** ➔ every row paired with every row; prefer explicit `JOIN … ON` when unsure.
 - 💡 **INNER drops unmatched rows** ➔ to keep a table's rows with no match (or join a table to itself), see [[SQL Self Join and Outer Join]].

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 11
 parent: "[[Data Management and Data Governance]]"
 tags: [DataScience/Governance, DataScience/Ethics, Monash/CS_DS]
 aliases: [Compliance, PDPA, GDPR, PCI, Data Regulations]
@@ -11,9 +12,9 @@ aliases: [Compliance, PDPA, GDPR, PCI, Data Regulations]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** meet the laws protecting personal data ➔ **ethics** (moral handling) enforced via **compliance** with regulations.
 > - **📦 Core Components:** PCI (payment cards) | PDPA (9 obligations) | GDPR (stricter EU law).
-> - **⚡ Critical Bottleneck:** **GDPR is stricter than PDPA** — 72-hour breach notification and penalties up to **4% of global turnover / €20M**.
+> - **⚡ Key Constraint:** **GDPR is stricter than PDPA** — 72-hour breach notification and penalties up to **4% of global turnover / €20M**.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Ethics & Compliance
 - **Ethics** ➔ the **moral handling** of data.
 - **Compliance** ➔ the process of **ensuring you meet regulations** (which exist to protect confidentiality).
@@ -48,15 +49,15 @@ aliases: [Compliance, PDPA, GDPR, PCI, Data Regulations]
 | **Penalty** | — | up to 4% global turnover / €20M |
 | **Scope** | national (e.g. Malaysia/SG) | EU-wide, extraterritorial |
 
-> [!NOTE] **Crossover Invariant:** compliance is where the **legal objective collides with the business objective** — regulations (PDPA/GDPR) constrain how freely a business can collect/use/transfer data to extract value, which [[Data Management and Data Governance|governance]] must balance.
+> [!NOTE] **When It Flips:** compliance is where the **legal objective collides with the business objective** — regulations (PDPA/GDPR) constrain how freely a business can collect/use/transfer data to extract value, which [[Data Management and Data Governance|governance]] must balance.
 
 ## 🧠 Active Recall
 > [!FAQ]- What is compliance, and how does GDPR go beyond PDPA?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Compliance is the process of ensuring you meet data regulations; GDPR is stricter than PDPA — explicit consent, **72-hour** breach notification, and penalties up to **4% of global turnover or €20M**.
-> > - **Technical Justification:** **Teeth** ➔ GDPR's short breach window and turnover-based fines make non-compliance far costlier than under the PDPA.
+> > - **Short answer:** Compliance is the process of ensuring you meet data regulations; GDPR is stricter than PDPA — explicit consent, **72-hour** breach notification, and penalties up to **4% of global turnover or €20M**.
+> > - **Why:** **Teeth** ➔ GDPR's short breach window and turnover-based fines make non-compliance far costlier than under the PDPA.
 
 > [!FAQ]- Name four of the PDPA's nine obligations.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Any four of: Consent, Purpose limitation, Notification, Access & correction, Accuracy, Protection, Retention limitation, Transfer limitation, Do Not Call Registry.
-> > - **Technical Justification:** **Collect–use–keep–move** ➔ the obligations govern each stage: consent to collect, limits on use, protection while held, and rules on retention/transfer.
+> > - **Short answer:** Any four of: Consent, Purpose limitation, Notification, Access & correction, Accuracy, Protection, Retention limitation, Transfer limitation, Do Not Call Registry.
+> > - **Why:** **Collect–use–keep–move** ➔ the obligations govern each stage: consent to collect, limits on use, protection while held, and rules on retention/transfer.

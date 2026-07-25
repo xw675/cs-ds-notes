@@ -11,7 +11,7 @@ aliases: [FIT1047 Exam Crib, Systems Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every assessed skill is a hand procedure ➔ convert, simplify, trace, subnet, match goal→mechanism.
-> - **⚡ Critical Bottleneck:** the unit's marks live in EXACT constants — SkipCond $000/400/800$, K-map order $00,01,11,10$, channels $1/6/11$, $\times 8$ bits↔bytes, $\frac{n(n-1)}{2}$ keys.
+> - **⚡ Key Constraint:** the unit's marks live in EXACT constants — SkipCond $000/400/800$, K-map order $00,01,11,10$, channels $1/6/11$, $\times 8$ bits↔bytes, $\frac{n(n-1)}{2}$ keys.
 
 ## 1️⃣ Data Representation (W1)
 - **Positional value** ➔ digit × base$^{\text{position}}$; dec→bin by repeated ÷2 (remainders bottom-up); bin↔hex by 4-bit groups **from the RIGHT**.

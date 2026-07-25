@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 11
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, CS/Networks, Monash/CS_DS]
 aliases: [firewall, packet filtering, stateful firewall, stateless firewall, network security, packet filter, security rules]
@@ -10,7 +11,7 @@ aliases: [firewall, packet filtering, stateful firewall, stateless firewall, net
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a firewall is a **barrier that filters (not blocks) traffic** between an internal (more secure) and external (less secure, e.g. Internet) network per **security rules**, in both directions.
-> - **⚡ Critical Bottleneck:** basic packet filtering is **stateless** and blind to context/application → it can't stop app-layer attacks, spoofing, or traffic in **encrypted tunnels**, and is useless against **internal** attackers.
+> - **⚡ Key Constraint:** basic packet filtering is **stateless** and blind to context/application → it can't stop app-layer attacks, spoofing, or traffic in **encrypted tunnels**, and is useless against **internal** attackers.
 
 ## 📝 What a firewall is
 - **Barrier, not a wall** ➔ it **filters** traffic; it does **not** completely block it. Without it, devices are **visible and accessible** — and if vulnerable, hackable.
@@ -32,12 +33,12 @@ aliases: [firewall, packet filtering, stateful firewall, stateless firewall, net
 | **Coverage** | — | Weak if ports are open, traffic is in **encrypted tunnels**, or attacks are **app-layer** |
 | **Scope** | — | No help against **internal attackers** or compromised inside devices; bypassed by **mobile/IoT** links |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Filters ≠ blocks** ➔ a firewall selectively **permits** traffic per rules; describing it as "blocking all traffic" misses the point.
 - 💡 **Perimeter-only** ➔ once an attacker is **inside** (or a device is compromised, or a phone/IoT link bypasses it), the firewall offers nothing → motivates [[IDS, IPS and Next-Generation Firewalls|IDS/IPS]] and [[Access Control]].
 
 ## 🧠 Active Recall
 > [!FAQ]- Why can't a basic packet-filtering firewall stop an attack carried inside an HTTPS connection?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** packet filtering inspects only **headers** (IP/port/protocol) and is **stateless** — the payload of an **encrypted tunnel** is opaque to it, so an app-layer attack over an allowed port (443) passes straight through.
-> > - **Technical Justification:** **No content/context awareness** ➔ the firewall sees a permitted destination port and valid addresses; detecting the malicious payload needs **application-aware** inspection (an [[IDS, IPS and Next-Generation Firewalls|NGF/IPS]]), which brings its own trade-offs.
+> > - **Short answer:** packet filtering inspects only **headers** (IP/port/protocol) and is **stateless** — the payload of an **encrypted tunnel** is opaque to it, so an app-layer attack over an allowed port (443) passes straight through.
+> > - **Why:** **No content/context awareness** ➔ the firewall sees a permitted destination port and valid addresses; detecting the malicious payload needs **application-aware** inspection (an [[IDS, IPS and Next-Generation Firewalls|NGF/IPS]]), which brings its own trade-offs.

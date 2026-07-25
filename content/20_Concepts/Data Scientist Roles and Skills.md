@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 2
 parent: "[[Data Science vs Related Disciplines]]"
 tags: [DataScience/Foundations, DataScience/Roles, Monash/CS_DS]
 aliases: [Data Analyst vs Data Scientist vs Data Engineer, Data Scientist Skills, Analyzing the Analyzers]
@@ -10,7 +11,7 @@ aliases: [Data Analyst vs Data Scientist vs Data Engineer, Data Scientist Skills
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** separate the three data roles by their **primary** output ➔ analyst = insights, scientist = models/products, engineer = infrastructure.
-> - **⚡ Critical Bottleneck:** "primarily" — the roles overlap; a data scientist is *better at stats than a software engineer, and better at software engineering than a statistician*.
+> - **⚡ Key Constraint:** "primarily" — the roles overlap; a data scientist is *better at stats than a software engineer, and better at software engineering than a statistician*.
 
 ## 📝 Core
 ### 1. The Three Roles (Jason Widjaja)
@@ -31,12 +32,12 @@ aliases: [Data Analyst vs Data Scientist vs Data Engineer, Data Scientist Skills
 - **Hardest steps** ➔ the biggest challenge for an analyst is **Collection** and **Wrangling** (see [[Data Science Process (Standard Value Chain)]]).
 - **CV to specialise** ➔ solid ML + statistics, related maths, prototyping (R/Python/Java, GitHub, Kaggle), Unix experience.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Primarily", not "only"** ➔ the three roles overlap heavily; the industry is nascent, so titles/boundaries are fluid.
 - 💡 **Not just technical** ➔ communication and curiosity rank alongside statistics and programming.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish data analyst, data scientist, and data engineer by their primary output.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Analyst → insights from data; scientist → data models/products that generate insights; engineer → data infrastructure, automated processing, model deployment at scale.
-> > - **Technical Justification:** **"Primarily"** ➔ boundaries blur — a data scientist out-stats an engineer and out-engineers a statistician.
+> > - **Short answer:** Analyst → insights from data; scientist → data models/products that generate insights; engineer → data infrastructure, automated processing, model deployment at scale.
+> > - **Why:** **"Primarily"** ➔ boundaries blur — a data scientist out-stats an engineer and out-engineers a statistician.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Relationship (Conceptual Modelling)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** does the parent's key become part of the child's key? ➔ solid = yes, dashed = no.
 > - **📦 Core Components:** identifying (solid, weak child) vs non-identifying (dashed, own key).
-> - **⚡ Critical Bottleneck:** identifying ⟹ parent PK enters the child's composite PK; non-identifying ⟹ plain FK.
+> - **⚡ Key Constraint:** identifying ⟹ parent PK enters the child's composite PK; non-identifying ⟹ plain FK.
 
 ## 📝 Core
 ### 1. The Distinction
@@ -35,7 +36,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >   DEPARTMENT ||..o{ EMPLOYEE : employs
 > ```
 > $$\text{ROOM}(\underline{\text{hotel\_id}}^{*}, \underline{\text{room\_no}}) \quad\text{vs}\quad \text{EMPLOYEE}(\underline{\text{emp\_no}}, \text{dept\_no}^{*})$$
-> 💡 **Exam Pitfall:** **It's about the *key*, not mere association** ➔ every relationship is an association; only an *identifying* one puts the parent's key *inside* the child's identifier (solid line).
+> 💡 **Common Mistake:** **It's about the *key*, not mere association** ➔ every relationship is an association; only an *identifying* one puts the parent's key *inside* the child's identifier (solid line).
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Identifying | Non-identifying |
@@ -45,7 +46,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | child | weak entity | own PK |
 | example | HOTEL–ROOM | DEPARTMENT–EMPLOYEE |
 
-> [!NOTE] **Crossover Invariant:** identifying relationships and weak entities are two views of the same dependency. Logically: identifying ⟹ parent PK becomes part of the child's **composite Primary Key**; non-identifying ⟹ parent PK is a plain **Foreign Key**. Line style is independent of the [[Cardinality (Crow's Foot Notation)|cardinality]] symbols.
+> [!NOTE] **When It Flips:** identifying relationships and weak entities are two views of the same dependency. Logically: identifying ⟹ parent PK becomes part of the child's **composite Primary Key**; non-identifying ⟹ parent PK is a plain **Foreign Key**. Line style is independent of the [[Cardinality (Crow's Foot Notation)|cardinality]] symbols.
 
 ## 📊 Exam Execution Trace
 
@@ -62,13 +63,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Define identifying vs non-identifying relationships and their Crow's Foot line styles.
-> - **Core Insight Requirement:** Key inheritance.
+> - **Hint:** Key inheritance.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Identifying = parent's key part of child's key (solid, weak child); non-identifying = child's own key (dashed).
-> > - **Technical Justification:** **ROOM vs EMPLOYEE** ➔ ROOM needs `hotel_id`; EMPLOYEE keeps `emp_no`.
+> > - **Short answer:** Identifying = parent's key part of child's key (solid, weak child); non-identifying = child's own key (dashed).
+> > - **Why:** **ROOM vs EMPLOYEE** ➔ ROOM needs `hotel_id`; EMPLOYEE keeps `emp_no`.
 
 > [!FAQ]- How does the distinction translate to the relational logical model?
-> - **Core Insight Requirement:** PK vs FK placement.
+> - **Hint:** PK vs FK placement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Identifying ⟹ parent PK becomes part of the child's composite PK; non-identifying ⟹ parent PK is only an FK.
-> > - **Technical Justification:** **Line predicts placement** ➔ solid → inside PK, dashed → FK only.
+> > - **Short answer:** Identifying ⟹ parent PK becomes part of the child's composite PK; non-identifying ⟹ parent PK is only an FK.
+> > - **Why:** **Line predicts placement** ➔ solid → inside PK, dashed → FK only.

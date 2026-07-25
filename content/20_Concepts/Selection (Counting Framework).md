@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 8
 parent: "[[Counting Principles]]"
 tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** count ways to pick $r$ from $n$ ➔ by two yes/no questions: order? replacement?.
 > - **📦 Core Components:** ordered/with $n^r$ ➔ ordered/without $(n)_r$ ➔ unordered/without $\binom{n}{r}$ ➔ unordered/with $\binom{r+n-1}{r}$.
-> - **⚡ Critical Bottleneck:** identify the cell first; order divides ordered counts by $r!$.
+> - **⚡ Key Constraint:** identify the cell first; order divides ordered counts by $r!$.
 
 ## 📝 Core
 ### 1. Two Questions
@@ -39,7 +40,7 @@ $$\text{unordered: } \binom{r+n-1}{r} \text{ (with)},\ \binom{n}{r}=\tfrac{(n)_r
 | **Ordered** | $(n)_r=\frac{n!}{(n-r)!}$ | $n^r$ |
 | **Unordered** | $\binom{n}{r}$ | $\binom{r+n-1}{r}$ |
 
-> [!NOTE] **Crossover Invariant:** ordered counts exceed their unordered partners by exactly $r!$ (the orderings of the chosen items), so $\binom{n}{r}=(n)_r/r!$. Each cell was met before: $n^r$ = functions/strings, $(n)_r$ = injections, $\binom{n}{r}$ = subsets.
+> [!NOTE] **When It Flips:** ordered counts exceed their unordered partners by exactly $r!$ (the orderings of the chosen items), so $\binom{n}{r}=(n)_r/r!$. Each cell was met before: $n^r$ = functions/strings, $(n)_r$ = injections, $\binom{n}{r}$ = subsets.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $n=5$, $r=3$, all four modes:
 | 3 | unordered, without | $\binom{5}{3}$ | 10 |
 | 4 | unordered, with | $\binom{7}{3}$ | 35 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Replacement's "simpler" side flips** ➔ for *ordered*, with-replacement ($n^r$) is simpler; for *unordered*, without-replacement ($\binom{n}{r}$) is simpler and the with-replacement case needs the bijection trick.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the four selection counts for choosing $r$ from $n$.
-> - **Core Insight Requirement:** Order × replacement.
+> - **Hint:** Order × replacement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $n^r$ (ord/with), $(n)_r$ (ord/without), $\binom{n}{r}$ (unord/without), $\binom{r+n-1}{r}$ (unord/with).
-> > - **Technical Justification:** **÷$r!$** ➔ order divides the ordered counts down to unordered.
+> > - **Short answer:** $n^r$ (ord/with), $(n)_r$ (ord/without), $\binom{n}{r}$ (unord/without), $\binom{r+n-1}{r}$ (unord/with).
+> > - **Why:** **÷$r!$** ➔ order divides the ordered counts down to unordered.
 
 > [!FAQ]- Why is $\binom{n}{r}=(n)_r/r!$, and which two questions decide the formula?
-> - **Core Insight Requirement:** Remove ordering.
+> - **Hint:** Remove ordering.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each unordered choice arises from $r!$ ordered arrangements; divide to remove order.
-> > - **Technical Justification:** **Two questions** ➔ does order matter, is replacement allowed — select one of four cells.
+> > - **Short answer:** Each unordered choice arises from $r!$ ordered arrangements; divide to remove order.
+> > - **Why:** **Two questions** ➔ does order matter, is replacement allowed — select one of four cells.

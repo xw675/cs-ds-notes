@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Set (Mathematics)]]"
 tags: [Math/SetTheory, Math/Discrete, CS/Theory]
 ---
@@ -10,7 +11,7 @@ tags: [Math/SetTheory, Math/Discrete, CS/Theory]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** encode data as finite strings over an alphabet ➔ $A^k$ = length-$k$ strings, $A^*$ = all finite strings.
 > - **📦 Core Components:** alphabet $A$ ➔ empty string $\varepsilon$ ➔ $A^*=\bigcup_k A^k$.
-> - **⚡ Critical Bottleneck:** $A^0=\{\varepsilon\}\neq\emptyset$; $A^*$ is infinite; a language is a subset of $A^*$.
+> - **⚡ Key Constraint:** $A^0=\{\varepsilon\}\neq\emptyset$; $A^*$ is infinite; a language is a subset of $A^*$.
 
 ## 📝 Core
 ### 1. Strings over an Alphabet
@@ -41,7 +42,7 @@ $$A^*=\bigcup_{k=0}^{\infty}A^k,\qquad \lvert A^k\rvert=\lvert A\rvert^k$$
 | $A^*$ | all finite strings | infinite (if $A\neq\emptyset$) |
 | language | subset of $A^*$ | varies |
 
-> [!NOTE] **Crossover Invariant:** strings are ordered (`ab`≠`ba`), alphabets are not; a length-$k$ string is an element of $A^k=A\times\cdots\times A$ ([[Cartesian Product]]), and $A^*$ is the infinite union $\bigcup_k A^k$.
+> [!NOTE] **When It Flips:** strings are ordered (`ab`≠`ba`), alphabets are not; a length-$k$ string is an element of $A^k=A\times\cdots\times A$ ([[Cartesian Product]]), and $A^*$ is the infinite union $\bigcup_k A^k$.
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ $A=\{a,b\}$ by length:
 | 2 | 1 | $\{a,b\}$ | 2 |
 | 3 | 2 | $\{aa,ab,ba,bb\}$ | 4 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$A^0=\{\varepsilon\}\neq\emptyset$** ➔ $A^0$ has one element (the empty string), $\lvert A^0\rvert=1$; the empty set has none. A box containing one empty box is not empty.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is $A^0=\{\varepsilon\}$ different from $\emptyset$, and what are their cardinalities?
-> - **Core Insight Requirement:** One element vs none.
+> - **Hint:** One element vs none.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $A^0=\{\varepsilon\}$ has $\lvert A^0\rvert=1$; $\emptyset$ has $\lvert\emptyset\rvert=0$.
-> > - **Technical Justification:** **Contains something** ➔ $\{\varepsilon\}$ holds the empty string; $\emptyset$ holds nothing.
+> > - **Short answer:** $A^0=\{\varepsilon\}$ has $\lvert A^0\rvert=1$; $\emptyset$ has $\lvert\emptyset\rvert=0$.
+> > - **Why:** **Contains something** ➔ $\{\varepsilon\}$ holds the empty string; $\emptyset$ holds nothing.
 
 > [!FAQ]- For $A=\{0,1\}$ list $A^3$, give $\lvert A^k\rvert$, and say why $A^*$ is infinite.
-> - **Core Insight Requirement:** No longest string.
+> - **Hint:** No longest string.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $A^3$ = the 8 length-3 binary strings; $\lvert A^k\rvert=\lvert A\rvert^k$.
-> > - **Technical Justification:** **Every length** ➔ $A^*=\bigcup_{k\ge0}A^k$ has no longest string when $A\neq\emptyset$.
+> > - **Short answer:** $A^3$ = the 8 length-3 binary strings; $\lvert A^k\rvert=\lvert A\rvert^k$.
+> > - **Why:** **Every length** ➔ $A^*=\bigcup_{k\ge0}A^k$ has no longest string when $A\neq\emptyset$.

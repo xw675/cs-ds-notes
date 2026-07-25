@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Entity (Conceptual Modelling)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a property describing an entity ➔ key attributes identify, non-key describe.
 > - **📦 Core Components:** simple/composite ➔ single/multi-valued ➔ derived.
-> - **⚡ Critical Bottleneck:** a multivalued attribute has no Crow's Foot symbol → becomes a separate (weak) entity.
+> - **⚡ Key Constraint:** a multivalued attribute has no Crow's Foot symbol → becomes a separate (weak) entity.
 
 ## 📝 Core
 ### 1. The Attribute
@@ -40,7 +41,7 @@ $$\text{ORDER}(\underline{\text{orderno}}, \text{orderdate}) \quad \text{[total 
 | origin | stored / derived | derived carried with sources |
 | role | key / non-key | key → PK |
 
-> [!NOTE] **Crossover Invariant:** classification is **client-driven** — the same field (phone number) may be simple or composite, single- or multi-valued, depending on requirements. Names share an entity prefix (`cust_…`), underscores not spaces.
+> [!NOTE] **When It Flips:** classification is **client-driven** — the same field (phone number) may be simple or composite, single- or multi-valued, depending on requirements. Names share an entity prefix (`cust_…`), underscores not spaces.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ Classifying attributes:
 | 2 | `address` | composite, single |
 | 3 | `degrees` | simple, multi-valued |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Carry a derived attribute alongside its sources** ➔ during design always include every client-required attribute; store-vs-compute is decided later with sample data, not at conceptual stage.
 
 ## 🧠 Active Recall
 > [!FAQ]- Classify attributes along the three axes with an example of each.
-> - **Core Insight Requirement:** Three independent axes.
+> - **Hint:** Three independent axes.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Simple/composite (`age`/`address`); single/multi-valued (`tfn`/`degrees`); derived (`age` from DOB).
-> > - **Technical Justification:** **Key cuts across** ➔ a `Key` attribute identifies; non-key describes.
+> > - **Short answer:** Simple/composite (`age`/`address`); single/multi-valued (`tfn`/`degrees`); derived (`age` from DOB).
+> > - **Why:** **Key cuts across** ➔ a `Key` attribute identifies; non-key describes.
 
 > [!FAQ]- How is a multivalued attribute represented in Crow's Foot, and why?
-> - **Core Insight Requirement:** No symbol.
+> - **Hint:** No symbol.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** As a separate (weak) entity — `car_color` → `CAR_COLOR`.
-> > - **Technical Justification:** **Relations are single-valued** ➔ each value gets its own row linked to the parent.
+> > - **Short answer:** As a separate (weak) entity — `car_color` → `CAR_COLOR`.
+> > - **Why:** **Relations are single-valued** ➔ each value gets its own row linked to the parent.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Expectation]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** spread of $X$ around $\mu$ ➔ $\mathrm{Var}(X)=E((X-\mu)^2)=E(X^2)-E(X)^2$.
 > - **📦 Core Components:** variance ➔ $\sigma=\sqrt{\mathrm{Var}}$ (same units) ➔ Chebyshev bound.
-> - **⚡ Critical Bottleneck:** variance adds only for **independent** variables; Chebyshev is universal but loose.
+> - **⚡ Key Constraint:** variance adds only for **independent** variables; Chebyshev is universal but loose.
 
 ## 📝 Core
 ### 1. The Measures
@@ -38,7 +39,7 @@ $$\mathrm{Pr}(|X-\mu|\ge t\sigma)\le\frac1{t^2}$$
 | $\mathrm{Var}(X+Y)$ | — | additive if independent |
 | Chebyshev | — | general, loose |
 
-> [!NOTE] **Crossover Invariant:** squaring weights far-out values heavily, so variance is sensitive to extremes. Chebyshev holds for *every* distribution (the fallback when shape is unknown); well-behaved distributions admit tighter bounds. Binomial variance $np(1-p)$ follows by additivity over independent trials.
+> [!NOTE] **When It Flips:** squaring weights far-out values heavily, so variance is sensitive to extremes. Chebyshev holds for *every* distribution (the fallback when shape is unknown); well-behaved distributions admit tighter bounds. Binomial variance $np(1-p)$ follows by additivity over independent trials.
 
 ## 📊 Exam Execution Trace
 
@@ -52,18 +53,18 @@ Fair die ($\mu=3.5$):
 | 2 | 2,5 | 2.25 each | $\tfrac{4.5}{6}$ |
 | 3 | 3,4 | 0.25 each | $\tfrac{0.5}{6}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Variance additivity needs independence** ➔ $\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$ only for independent $X,Y$; expectation adds unconditionally.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the two variance formulas, why $\sigma$ is needed, and the independence caveat.
-> - **Core Insight Requirement:** Second moment + units.
+> - **Hint:** Second moment + units.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Var}(X)=E((X-\mu)^2)=E(X^2)-\mu^2$; $\sigma=\sqrt{\mathrm{Var}}$ restores $X$-units.
-> > - **Technical Justification:** **Additivity** ➔ $\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$ only if independent.
+> > - **Short answer:** $\mathrm{Var}(X)=E((X-\mu)^2)=E(X^2)-\mu^2$; $\sigma=\sqrt{\mathrm{Var}}$ restores $X$-units.
+> > - **Why:** **Additivity** ➔ $\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$ only if independent.
 
 > [!FAQ]- State Chebyshev's Inequality and its virtue and limitation.
-> - **Core Insight Requirement:** Universal but loose.
+> - **Hint:** Universal but loose.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(|X-\mu|\ge t\sigma)\le\tfrac1{t^2}$ for any distribution.
-> > - **Technical Justification:** **Fallback** ➔ holds regardless of shape; specific distributions give tighter bounds.
+> > - **Short answer:** $\mathrm{Pr}(|X-\mu|\ge t\sigma)\le\tfrac1{t^2}$ for any distribution.
+> > - **Why:** **Fallback** ➔ holds regardless of shape; specific distributions give tighter bounds.

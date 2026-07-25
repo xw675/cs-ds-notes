@@ -11,7 +11,7 @@ aliases: [FIT1008 Exam Crib, Algorithms Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every exam question reduces to ➔ state the invariant, pick the implementation, justify with a Best/Worst complexity bound.
-> - **⚡ Critical Bottleneck:** array vs linked are MIRROR images — random access vs structural edit; every ADT decision question is this trade-off wearing a costume.
+> - **⚡ Key Constraint:** array vs linked are MIRROR images — random access vs structural edit; every ADT decision question is this trade-off wearing a costume.
 
 ## 1️⃣ Foundations & Complexity (W1)
 - **Algorithm** ➔ finite, well-defined, halts, correct I/O; **total correctness = invariant (partial) + variant (termination)**. Invariant proof = initialization → maintenance → termination.

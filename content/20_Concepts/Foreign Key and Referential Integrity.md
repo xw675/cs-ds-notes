@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: [3, 6]
 parent: "[[Primary Key]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a PK appearing in another relation ➔ every FK matches a full PK or is NULL.
 > - **📦 Core Components:** FK ➔ referential integrity ➔ implements relationships.
-> - **⚡ Critical Bottleneck:** must match the **full** PK (composite too) or be NULL; NULL FK = optional participation.
+> - **⚡ Key Constraint:** must match the **full** PK (composite too) or be NULL; NULL FK = optional participation.
 
 ![[referential-integrity.png]]
 
@@ -43,7 +44,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > ALTER TABLE emp ADD CONSTRAINT dept_emp_fk
 >     FOREIGN KEY (deptno) REFERENCES dept (deptno) ON DELETE SET NULL;
 > ```
-> 💡 **Exam Pitfall:** **Match the full PK or be NULL** ➔ the president has NULL `deptno` (no department, allowed); a partial match on a composite PK is invalid.
+> 💡 **Common Mistake:** **Match the full PK or be NULL** ➔ the president has NULL `deptno` (no department, allowed); a partial match on a composite PK is invalid.
 
 ## ⚖️ Core Decision Matrix
 | FK state | Valid? | Meaning |
@@ -53,7 +54,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | partial composite match | ❌ | violates referential integrity |
 | dangling (no PK) | ❌ | rejected by RDBMS |
 
-> [!NOTE] **Crossover Invariant:** a conceptual [[Relationship (Conceptual Modelling)|relationship]] becomes a concrete FK column ([[Conceptual vs Logical Model]]); a NULL FK is the circle (min 0) of [[Cardinality (Crow's Foot Notation)|Crow's Foot]]. Deletes of a referenced PK are restricted or cascaded.
+> [!NOTE] **When It Flips:** a conceptual [[Relationship (Conceptual Modelling)|relationship]] becomes a concrete FK column ([[Conceptual vs Logical Model]]); a NULL FK is the circle (min 0) of [[Cardinality (Crow's Foot Notation)|Crow's Foot]]. Deletes of a referenced PK are restricted or cascaded.
 
 ## 📊 Exam Execution Trace
 
@@ -80,19 +81,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a foreign key and state the referential integrity rule.
-> - **Core Insight Requirement:** PK in another relation.
+> - **Hint:** PK in another relation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An FK is a PK appearing elsewhere; every FK value matches a full PK or is NULL.
-> > - **Technical Justification:** **PK–FK links** ➔ `EMP.deptno` must be an existing `DEPT.deptno` or NULL.
+> > - **Short answer:** An FK is a PK appearing elsewhere; every FK value matches a full PK or is NULL.
+> > - **Why:** **PK–FK links** ➔ `EMP.deptno` must be an existing `DEPT.deptno` or NULL.
 
 > [!FAQ]- Why is a NULL FK permitted, and what must an FK referencing a composite PK do?
-> - **Core Insight Requirement:** Optional participation + full match.
+> - **Hint:** Optional participation + full match.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** NULL FK = optional participation (min 0); a composite-PK FK must match entirely.
-> > - **Technical Justification:** **Two valid states** ➔ equals a complete existing PK, or NULL.
+> > - **Short answer:** NULL FK = optional participation (min 0); a composite-PK FK must match entirely.
+> > - **Why:** **Two valid states** ➔ equals a complete existing PK, or NULL.
 
 > [!FAQ]- `CUST_TRAIN.cust_id` references `CUSTOMER`. Which on-delete rule, and why not CASCADE or SET NULL?
-> - **Core Insight Requirement:** Mandatory participation ⟹ RESTRICT.
+> - **Hint:** Mandatory participation ⟹ RESTRICT.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** RESTRICT — a training record must always name a valid customer, so a customer referenced in `CUST_TRAIN` cannot be deleted.
-> > - **Technical Justification:** **Participation reading** ➔ SET NULL would orphan the record (which customer?); CASCADE would erase historical training records; RESTRICT preserves both.
+> > - **Short answer:** RESTRICT — a training record must always name a valid customer, so a customer referenced in `CUST_TRAIN` cannot be deleted.
+> > - **Why:** **Participation reading** ➔ SET NULL would orphan the record (which customer?); CASCADE would erase historical training records; RESTRICT preserves both.

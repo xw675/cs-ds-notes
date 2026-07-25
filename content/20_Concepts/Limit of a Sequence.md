@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 6
 parent: "[[Sequence (Mathematics)]]"
 tags: [Math/Analysis, Math/Sequences, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Analysis, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the value terms get arbitrarily close to and stay close to ➔ $\forall\varepsilon\,\exists N\,\forall n>N:\ |a_n-\ell|<\varepsilon$.
 > - **📦 Core Components:** $\varepsilon$ tolerance ➔ $N$ cutoff (depends on $\varepsilon$) ➔ all later terms within $\varepsilon$.
-> - **⚡ Critical Bottleneck:** quantifier **order** ($\forall\varepsilon\,\exists N$) is essential; "eventually", not "always".
+> - **⚡ Key Constraint:** quantifier **order** ($\forall\varepsilon\,\exists N$) is essential; "eventually", not "always".
 
 ## 📝 Core
 ### 1. The Definition
@@ -31,7 +32,7 @@ tags: [Math/Analysis, Math/Sequences, Monash/CS_DS]
 
 $$\text{Given }\varepsilon>0,\text{ choose }N>\tfrac1\varepsilon.\ n>N\Rightarrow\tfrac1n<\varepsilon\Rightarrow\left|\tfrac1n-0\right|<\varepsilon.$$
 
-> [!NOTE] **Crossover Invariant:** an infinite [[Geometric Series]] is the *limit* of partial sums (exists iff $|r|<1$); for diverging sequences, [[Big-O Notation|growth order]] replaces a finite limit. Only the infinite tail matters, never a finite prefix.
+> [!NOTE] **When It Flips:** an infinite [[Geometric Series]] is the *limit* of partial sums (exists iff $|r|<1$); for diverging sequences, [[Big-O Notation|growth order]] replaces a finite limit. Only the infinite tail matters, never a finite prefix.
 
 ## 📊 Exam Execution Trace
 
@@ -46,18 +47,18 @@ $$
 $$
 **Final Extracted Output:** $N=\lceil1/\varepsilon\rceil$ works for every $\varepsilon$ ⟹ limit 0.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Order matters** ➔ $\forall\varepsilon\,\exists N$ lets $N$ depend on $\varepsilon$; swapping to $\exists N\,\forall\varepsilon$ demands one cutoff for all $\varepsilon$ — a far stronger, usually false claim.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the $\varepsilon$–$N$ definition and prove $\lim\frac1n=0$.
-> - **Core Insight Requirement:** $N$ as a function of $\varepsilon$.
+> - **Hint:** $N$ as a function of $\varepsilon$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\forall\varepsilon>0\ \exists N\ \forall n>N:\ |a_n-\ell|<\varepsilon$; take $N>\tfrac1\varepsilon$ for $\tfrac1n$.
-> > - **Technical Justification:** **Exists for every $\varepsilon$** ➔ so the limit is 0.
+> > - **Short answer:** $\forall\varepsilon>0\ \exists N\ \forall n>N:\ |a_n-\ell|<\varepsilon$; take $N>\tfrac1\varepsilon$ for $\tfrac1n$.
+> > - **Why:** **Exists for every $\varepsilon$** ➔ so the limit is 0.
 
 > [!FAQ]- Why must $N$ depend on $\varepsilon$, and why only terms "beyond $N$"?
-> - **Core Insight Requirement:** Quantifier order + eventually.
+> - **Hint:** Quantifier order + eventually.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\forall\varepsilon\,\exists N$ picks $N$ after $\varepsilon$; tighter $\varepsilon$ needs later $N$.
-> > - **Technical Justification:** **Tail only** ➔ finitely many early strays can't affect the limit.
+> > - **Short answer:** $\forall\varepsilon\,\exists N$ picks $N$ after $\varepsilon$; tighter $\varepsilon$ needs later $N$.
+> > - **Why:** **Tail only** ➔ finitely many early strays can't affect the limit.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: [8, 9]
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Subquery, Nested SELECT, IN Subquery]
 # [[SQL Subquery (Nested SELECT)]]
 
 **Context:** [[FIT2094_MOC]] · a SELECT nested inside another statement · supplies a value you can't hardcode · powers filtered [[DML UPDATE and DELETE (Oracle)|UPDATE/DELETE]]
-**Task signature:** filter (or update/delete) rows by a value that must be *looked up from another table*, not typed in.
+**Problem it solves:** filter (or update/delete) rows by a value that must be *looked up from another table*, not typed in.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** the filter value lives in another table ➔ put a SELECT in the WHERE clause; match the **operator to the subquery's output shape**.
-> - **⚡ Critical Bottleneck:** scalar ⟹ `= < >` …; single column, many rows ⟹ `IN`/`ANY`/`ALL`; many columns ⟹ row-constructor `(a,b) IN`. A multi-row subquery with `=` errors.
+> - **⚡ Key Constraint:** scalar ⟹ `= < >` …; single column, many rows ⟹ `IN`/`ANY`/`ALL`; many columns ⟹ row-constructor `(a,b) IN`. A multi-row subquery with `=` errors.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -59,8 +60,8 @@ ORDER BY dt_code, drone_id;
 - **`ANY`/`ALL`** ➔ `> ANY(...)` = greater than at least one; `> ALL(...)` = greater than every value.
 - **Anti-membership** ➔ `WHERE cust_id NOT IN (SELECT DISTINCT cust_id FROM cust_train)` selects the non-participants.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Delete customers who never attended any training (`CUST_TRAIN` holds attendance).
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Delete customers who never attended any training (`CUST_TRAIN` holds attendance).
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > DELETE FROM drone.customer
@@ -68,7 +69,7 @@ ORDER BY dt_code, drone_id;
 > > ```
 > > - **Key move:** the subquery lists attendees; `NOT IN` keeps the complement to delete.
 
-> [!QUESTION]- Kata 2: For each drone type, list the drone(s) with the **minimum** purchase price — show `dt_code`, `drone_id`, `drone_pur_price`.
+> [!QUESTION]- Practice 2: For each drone type, list the drone(s) with the **minimum** purchase price — show `dt_code`, `drone_id`, `drone_pur_price`.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT dt_code, drone_id, drone_pur_price
@@ -79,7 +80,7 @@ ORDER BY dt_code, drone_id;
 > > ```
 > > - **Key move:** a per-group aggregate can't sit in a scalar compare — match the whole `(dt_code, price)` pair against the grouped subquery.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`=` with a multi-row subquery errors** ➔ default to `IN` unless the subquery is provably single-row; use `ANY`/`ALL` for inequality against a list.
 - 💡 **Row-constructor order must align** ➔ in `(dt_code, drone_pur_price) IN (SELECT dt_code, MIN(...))` the outer columns and the subquery columns must match in **count and order**.
 - 💡 **Don't hardcode the looked-up value** ➔ typing `'DIN2'` you found by eye is rejected; retrieve it via the subquery so the query stays correct and maintainable.

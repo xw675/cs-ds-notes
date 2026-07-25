@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 9
 parent: "[[Internet Structure and Governance]]"
 tags: [CS/Networks, CS/Internet, Monash/CS_DS]
 aliases: [CDN, Content Delivery Network, load balancing, DNS load balancing, content caching, cache engine, point of presence, why the internet still works]
@@ -10,7 +11,7 @@ aliases: [CDN, Content Delivery Network, load balancing, DNS load balancing, con
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** three techniques keep big services fast ➔ **load balancing** (spread requests over many servers), **caching** (store data closer to users), **CDNs** (both, at global scale).
-> - **⚡ Critical Bottleneck:** the base protocols (**HTTP, TCP/IP, BGP**) were **not designed** for billions of users and low-latency apps; load balancing alone only solves the *server* side — you also need content **physically close** to users (a CDN).
+> - **⚡ Key Constraint:** the base protocols (**HTTP, TCP/IP, BGP**) were **not designed** for billions of users and low-latency apps; load balancing alone only solves the *server* side — you also need content **physically close** to users (a CDN).
 
 ## 📝 The problem
 - **Growth** ➔ not just more hosts, but greater **distance**; modern apps (video, streaming, web) need **low latency**; services have millions–billions of users.
@@ -31,12 +32,12 @@ aliases: [CDN, Content Delivery Network, load balancing, DNS load balancing, con
 - **How** ➔ operate servers in **many locations**, run their **own high-bandwidth network**, place **points of presence** close to end users (combination of load balancing + caching).
 - **CDNs and peering** ➔ CDNs sit **at IXPs** and **peer for free**; small ISPs avoid paying upstream for popular content (e.g. **Netflix peers with Australian ISPs → "unmetered" access**); network inefficiencies aren't blamed on the content provider. See [[Internet Structure and Governance|peering]].
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Load balancing ≠ CDN** ➔ load balancing only spreads load **within** your data centre; a **CDN** also gets the content **geographically near** the user (caching + distributed servers).
 - 💡 **Only GET is cacheable** ➔ POST/side-effecting requests must not be cached; caches respect the **`Expires:`** header to avoid serving stale data.
 
 ## 🧠 Active Recall
 > [!FAQ]- The Internet's core protocols weren't designed for billions of users — why does it still deliver low-latency video?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** engineering layers **on top** of the base protocols compensate — **load balancing** spreads demand across many servers, and **CDNs** cache content at **points of presence physically close to users**, cutting distance and latency.
-> > - **Technical Justification:** **Distance is the killer** ➔ DNS-based load balancing routes users to nearby servers, and CDN peering at **IXPs** keeps popular content one short hop away instead of crossing the globe.
+> > - **Short answer:** engineering layers **on top** of the base protocols compensate — **load balancing** spreads demand across many servers, and **CDNs** cache content at **points of presence physically close to users**, cutting distance and latency.
+> > - **Why:** **Distance is the killer** ➔ DNS-based load balancing routes users to nearby servers, and CDN peering at **IXPs** keeps popular content one short hop away instead of crossing the globe.

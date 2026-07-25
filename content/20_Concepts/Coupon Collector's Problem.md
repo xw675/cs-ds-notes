@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Geometric Distribution]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** trials until all $n$ outcomes seen ➔ $E(Z)=nH_n$.
 > - **📦 Core Components:** stagewise [[Geometric Distribution|geometric]] waits ➔ summed by [[Expectation|linearity]].
-> - **⚡ Critical Bottleneck:** $H_n\approx\ln n$ so $E(Z)\approx n\ln n$; the last coupons dominate.
+> - **⚡ Key Constraint:** $H_n\approx\ln n$ so $E(Z)\approx n\ln n$; the last coupons dominate.
 
 ## 📝 Core
 ### 1. The Problem
@@ -31,7 +32,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 $$X_k\sim\mathrm{Geom}\!\left(1-\tfrac{k-1}n\right),\ E(X_k)=\tfrac{n}{n-k+1}$$
 $$E(Z)=\sum_{k=1}^n\tfrac{n}{n-k+1}=n\sum_{j=1}^n\tfrac1j=nH_n$$
 
-> [!NOTE] **Crossover Invariant:** another showcase of [[Expectation|linearity]] — a hard distribution's mean via a chain of independent geometric stages. Applications: black-box output coverage, RNG testing, ecology species counts.
+> [!NOTE] **When It Flips:** another showcase of [[Expectation|linearity]] — a hard distribution's mean via a chain of independent geometric stages. Applications: black-box output coverage, RNG testing, ecology species counts.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ $n=4$ coupons:
 | 2 | 3 | $\tfrac24$ | 2 |
 | 3 | 4 | $\tfrac14$ | 4 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **The last coupon dominates** ➔ $X_n$ has success probability $\tfrac1n$, so $E(X_n)=n$ alone — most of the wait chases the final few.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive $E(Z)=nH_n$ for the coupon collector's problem.
-> - **Core Insight Requirement:** Stagewise geometric.
+> - **Hint:** Stagewise geometric.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $X_k\sim\mathrm{Geom}(1-\tfrac{k-1}n)$, $E(X_k)=\tfrac{n}{n-k+1}$; summing gives $nH_n$.
-> > - **Technical Justification:** **Linearity** ➔ $E(\sum X_k)=n\sum1/j$.
+> > - **Short answer:** $X_k\sim\mathrm{Geom}(1-\tfrac{k-1}n)$, $E(X_k)=\tfrac{n}{n-k+1}$; summing gives $nH_n$.
+> > - **Why:** **Linearity** ➔ $E(\sum X_k)=n\sum1/j$.
 
 > [!FAQ]- Roughly how many trials, and which stage dominates?
-> - **Core Insight Requirement:** $n\ln n$; last coupon.
+> - **Hint:** $n\ln n$; last coupon.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $E(Z)\approx n\ln n$ (since $H_n\approx\ln n$); the last coupon averages $E(X_n)=n$.
-> > - **Technical Justification:** **Rare last** ➔ success probability $\tfrac1n$ per trial for the final unseen outcome.
+> > - **Short answer:** $E(Z)\approx n\ln n$ (since $H_n\approx\ln n$); the last coupon averages $E(X_n)=n$.
+> > - **Why:** **Rare last** ➔ success probability $\tfrac1n$ per trial for the final unseen outcome.

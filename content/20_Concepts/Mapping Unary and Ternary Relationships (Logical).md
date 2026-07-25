@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 5
 parent: "[[Logical Modelling (ER Mapping)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** map self-referencing (unary) and three-way (ternary) relationships ➔ extend the binary rules.
 > - **📦 Core Components:** 1:M unary → recursive FK ➔ M:N unary / ternary → associative relation.
-> - **⚡ Critical Bottleneck:** the 1:M unary recursive FK is the **only** FK you may rename; a ternary ≠ three binaries.
+> - **⚡ Key Constraint:** the 1:M unary recursive FK is the **only** FK you may rename; a ternary ≠ three binaries.
 
 ## 📝 Core
 ### 1. 1:M Unary
@@ -33,7 +34,7 @@ $$\text{EMPLOYEE}(\underline{\text{emp\_id}}, \text{emp\_name}, \dots, \text{spv
 $$\text{ITEMCOMPONENT}(\underline{\text{item\_id}^{*}, \text{itemcomp\_item\_id}^{*}}, \text{itemcomp\_quantity})$$
 $$\text{PATIENT\_TREATMENT}(\underline{\text{patient\_id}^{*}, \text{physician\_id}^{*}, \text{treatment\_code}^{*}, \text{pt\_date}, \text{pt\_time}}, \text{results})$$
 
-> [!NOTE] **Crossover Invariant:** a true ternary can't be safely split into three binaries — that loses the combination semantics; keep it as one associative relation. Recursive *identifying* relationships are forbidden ([[Logical Modelling Constraints]]).
+> [!NOTE] **When It Flips:** a true ternary can't be safely split into three binaries — that loses the combination semantics; keep it as one associative relation. Recursive *identifying* relationships are forbidden ([[Logical Modelling Constraints]]).
 
 ## 📊 Exam Execution Trace
 
@@ -47,18 +48,18 @@ Mapping non-binary cases:
 | 2 | ITEM made-of ITEM | ITEMCOMPONENT |
 | 3 | PATIENT–PHYSICIAN–TREATMENT | PATIENT_TREATMENT |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Only the 1:M unary FK may be renamed** ➔ to avoid a name clash with the PK; elsewhere FK names match the referenced PK.
 
 ## 🧠 Active Recall
 > [!FAQ]- How is a 1:M unary relationship mapped, and what is special about its FK?
-> - **Core Insight Requirement:** Recursive renamed FK.
+> - **Hint:** Recursive renamed FK.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A self-referencing FK in the same relation, renamed (`spv_id → emp_id`).
-> > - **Technical Justification:** **Only rename case** ➔ avoids a name clash with the PK.
+> > - **Short answer:** A self-referencing FK in the same relation, renamed (`spv_id → emp_id`).
+> > - **Why:** **Only rename case** ➔ avoids a name clash with the PK.
 
 > [!FAQ]- How do you map an M:N unary and a ternary relationship?
-> - **Core Insight Requirement:** Associative relations.
+> - **Hint:** Associative relations.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** M:N unary → associative relation with two differently-named FKs to the entity's PK; ternary → one relation with composite PK from all three.
-> > - **Technical Justification:** **Combination semantics** ➔ a ternary can't be split into three binaries.
+> > - **Short answer:** M:N unary → associative relation with two differently-named FKs to the entity's PK; ternary → one relation with composite PK from all three.
+> > - **Why:** **Combination semantics** ➔ a ternary can't be split into three binaries.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: [3, 4]
 parent: "[[Von Neumann Architecture and Programs]]"
 tags: [CS/Systems, CS/Assembly]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [MARIE, MARIE Instructions, SkipCond]
 # [[MARIE Assembly (Instruction Set and Patterns)]]
 
 **Context:** [[FIT1047_MOC]] · **the Assignment 2 "programming interview" skill** · machine model + full W3 instruction set + the branching patterns · execution semantics in [[Fetch-Decode-Execute and RTL (Control)]]
-**Task signature:** hand-assemble, hand-trace, and write-from-blank small MARIE programs.
+**Problem it solves:** hand-assemble, hand-trace, and write-from-blank small MARIE programs.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** every instruction = **4-bit opcode + 12-bit address** in a 16-bit word; only ONE working register (AC) ➔ everything routes through it.
-> - **⚡ Critical Bottleneck:** `SkipCond` skips exactly ONE instruction — if/loops are built as `SkipCond` + `Jump` pairs; the condition constants are $000{:}\,AC{<}0$, $400{:}\,AC{=}0$, $800{:}\,AC{>}0$.
+> - **⚡ Key Constraint:** `SkipCond` skips exactly ONE instruction — if/loops are built as `SkipCond` + `Jump` pairs; the condition constants are $000{:}\,AC{<}0$, $400{:}\,AC{=}0$, $800{:}\,AC{>}0$.
 
 ## 🧩 Machine Model
 - **Memory** ➔ 16-bit words, 12-bit addresses ⟹ max $2^{12}=4096$ locations.
@@ -65,13 +66,13 @@ Else, ...
 ```
 - **Countdown loop shape** ➔ load counter → body → decrement (`Subt One`) → `SkipCond 400` (done?) → `Jump Loop`.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: hand-assemble `Store A` where label `A` sits at address $01F_{16}$.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: hand-assemble `Store A` where label `A` sits at address $01F_{16}$.
 > > [!SUCCESS]- Answer
 > > - Opcode `Store` $=0010$; address $01F$ ⟹ word $= 0010\,0000\,0001\,1111_2 = 201F_{16}$.
 > > - **Key move:** first hex digit IS the opcode nibble; remaining three hex digits are the address.
 
-> [!QUESTION]- Kata 2: write a MARIE program that inputs two numbers and outputs their difference (first − second).
+> [!QUESTION]- Practice 2: write a MARIE program that inputs two numbers and outputs their difference (first − second).
 > > [!SUCCESS]- Answer
 > > ```text
 > >       Input          / AC ← first
@@ -87,7 +88,7 @@ Else, ...
 > > ```
 > > - **Key move:** one accumulator ⟹ park values in labelled memory (`Store`) before the second `Input` overwrites AC.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **AC is always in the middle** ➔ no memory-to-memory moves; every value passes through the accumulator.
 - 💡 **SkipCond skips ONE instruction only** ➔ the skipped slot is almost always a `Jump` — skipping a whole block directly is impossible.
 - 💡 **The three condition constants** ➔ $000/400/800$ for $<0,\,=0,\,>0$ — memorise as hex, they look arbitrary in decimal.

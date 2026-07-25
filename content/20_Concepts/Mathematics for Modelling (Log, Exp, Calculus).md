@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+week: 0
 parent: "[[Statistical Modelling and Inference]]"
 tags: [Math/Calculus, Stats/Modelling, Monash/CS_DS]
 aliases: [log identities, exp identities, derivative rules, product rule, chain rule, partial derivative, log-likelihood algebra, MLE toolkit]
@@ -10,7 +11,7 @@ aliases: [log identities, exp identities, derivative rules, product rule, chain 
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the **log/exp identities** that turn products into sums, plus the **derivative rules** (product, chain, partial) needed to maximise a function ➔ the mechanics behind every parameter estimate.
-> - **⚡ Critical Bottleneck:** $\log$ turns a **product into a sum** ($\log\prod = \sum\log$) — this is *why* we maximise the **log**-likelihood: the i.i.d. product $\prod_i p(y_i)$ becomes a differentiable sum $\sum_i\log p(y_i)$.
+> - **⚡ Key Constraint:** $\log$ turns a **product into a sum** ($\log\prod = \sum\log$) — this is *why* we maximise the **log**-likelihood: the i.i.d. product $\prod_i p(y_i)$ becomes a differentiable sum $\sum_i\log p(y_i)$.
 
 ## 📝 Logarithm identities
 $$
@@ -53,7 +54,7 @@ $$
 $$
 - **Why it appears** ➔ models have **several** parameters; maximising a log-likelihood means setting **each** partial derivative $\partial/\partial\theta_j$ to zero.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\log$ of a sum does not split** ➔ $\log(a+b)\neq\log a+\log b$; only **products/quotients/powers** simplify. This is why the likelihood *product* is what becomes a sum, not the density itself.
 - 💡 **Chain rule is the usual omission** ➔ differentiating $\log(g(x))$ gives $g'(x)/g(x)$, not $1/g(x)$ — the inner derivative is essential.
 - 💡 **Partial ⇒ freeze the others** ➔ every variable except the one you differentiate is a constant; forgetting this drops terms.
@@ -62,10 +63,10 @@ $$
 ## 🧠 Active Recall
 > [!FAQ]- Why do we maximise the log-likelihood instead of the likelihood itself?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the likelihood of an i.i.d. sample is a **product** $\prod_i p(y_i\mid\theta)$, which is awkward to differentiate. Taking $\log$ turns it into a **sum** $\sum_i\log p(y_i\mid\theta)$ via $\log\prod=\sum\log$, and because $\log$ is strictly increasing the **maximiser $\hat\theta$ is identical**.
-> > - **Technical Justification:** **Monotone transform + sum rule for derivatives** ➔ maximising a monotone function of $L$ maximises $L$; and $\frac{d}{d\theta}\sum_i(\cdots)=\sum_i\frac{d}{d\theta}(\cdots)$ by linearity, so a sum differentiates term-by-term where a product would need the product rule repeatedly.
+> > - **Short answer:** the likelihood of an i.i.d. sample is a **product** $\prod_i p(y_i\mid\theta)$, which is awkward to differentiate. Taking $\log$ turns it into a **sum** $\sum_i\log p(y_i\mid\theta)$ via $\log\prod=\sum\log$, and because $\log$ is strictly increasing the **maximiser $\hat\theta$ is identical**.
+> > - **Why:** **Monotone transform + sum rule for derivatives** ➔ maximising a monotone function of $L$ maximises $L$; and $\frac{d}{d\theta}\sum_i(\cdots)=\sum_i\frac{d}{d\theta}(\cdots)$ by linearity, so a sum differentiates term-by-term where a product would need the product rule repeatedly.
 
 > [!FAQ]- Compute $\dfrac{\partial}{\partial x}\{y\log(x^2 y + 1)\}$ and name the rules used.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\dfrac{2xy^{2}}{x^{2}y+1}$.
-> > - **Technical Justification:** **Linearity → chain rule** ➔ treat $y$ as constant and pull it out (linearity); differentiate $\log(u)$ as $1/u$ times $u'$ with $u=x^2y+1$ (chain rule), giving $u'=2xy$; combine: $y\cdot\frac{1}{x^2y+1}\cdot 2xy = \frac{2xy^2}{x^2y+1}$.
+> > - **Short answer:** $\dfrac{2xy^{2}}{x^{2}y+1}$.
+> > - **Why:** **Linearity → chain rule** ➔ treat $y$ as constant and pull it out (linearity); differentiate $\log(u)$ as $1/u$ times $u'$ with $u=x^2y+1$ (chain rule), giving $u'=2xy$; combine: $y\cdot\frac{1}{x^2y+1}\cdot 2xy = \frac{2xy^2}{x^2y+1}$.

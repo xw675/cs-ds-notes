@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Walks, Trails, and Paths]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a closed trail using every edge exactly once ➔ returns to start.
 > - **📦 Core Components:** exists iff connected + all degrees even.
-> - **⚡ Critical Bottleneck:** a one-pass degree test (Königsberg: four odd degrees ⟹ impossible).
+> - **⚡ Key Constraint:** a one-pass degree test (Königsberg: four odd degrees ⟹ impossible).
 
 ## 📝 Core
 ### 1. The Tour
@@ -33,7 +34,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 | $C_n$ | all 2 | ✅ ($n\ge3$) |
 | any odd-degree vertex | — | ❌ |
 
-> [!NOTE] **Crossover Invariant:** a single pass over the degrees settles existence — no route search. Abstraction is the lesson: keep land-masses-and-bridges, discard geometry. Contrast a [[Cycle (Graph Theory)|cycle]] (uses each *vertex* once) with a tour (each *edge* once).
+> [!NOTE] **When It Flips:** a single pass over the degrees settles existence — no route search. Abstraction is the lesson: keep land-masses-and-bridges, discard geometry. Contrast a [[Cycle (Graph Theory)|cycle]] (uses each *vertex* once) with a tour (each *edge* once).
 
 ## 📊 Exam Execution Trace
 
@@ -48,18 +49,18 @@ C_3 &: \text{connected, degrees all even} \Rightarrow \textbf{tour } a,b,c,a \\
 $$
 **Final Extracted Output:** $C_3$ yes; Königsberg no (four odd-degree vertices).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Euler tour vs Euler trail** ➔ a closed tour needs all-even degrees; an open Euler *trail* allows exactly two odd-degree vertices (start/end).
 
 ## 🧠 Active Recall
 > [!FAQ]- State Euler's theorem and the intuition behind the even-degree condition.
-> - **Core Insight Requirement:** Edge pairing.
+> - **Hint:** Edge pairing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Connected graph has an Euler tour iff every vertex has even degree.
-> > - **Technical Justification:** **In/out pairing** ➔ each visit uses two edges; odd degree leaves one unpaired.
+> > - **Short answer:** Connected graph has an Euler tour iff every vertex has even degree.
+> > - **Why:** **In/out pairing** ➔ each visit uses two edges; odd degree leaves one unpaired.
 
 > [!FAQ]- Why is the Königsberg walk impossible, and what makes it a landmark?
-> - **Core Insight Requirement:** Model + degree test.
+> - **Hint:** Model + degree test.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Land masses = vertices, bridges = edges; all four degrees odd violate the criterion.
-> > - **Technical Justification:** **Search-free test** ➔ Euler (1736) gave a general condition, birthing graph theory.
+> > - **Short answer:** Land masses = vertices, bridges = edges; all four degrees odd violate the criterion.
+> > - **Why:** **Search-free test** ➔ Euler (1736) gave a general condition, birthing graph theory.

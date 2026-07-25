@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: [7, 9]
 parent: "[[Internet Model (Layers, Protocols, Encapsulation)]]"
 tags: [CS/Networks]
 aliases: [Physical Layer, Data Link Layer, Ethernet, CSMA/CD, Manchester Encoding]
@@ -11,7 +12,7 @@ aliases: [Physical Layer, Data Link Layer, Ethernet, CSMA/CD, Manchester Encodin
 > [!abstract] Quick Revision
 > - **🎯 Objective:** physical = transmit bits as digital (voltage square waves) or analog (modulated waves) signals; data link = **M**edia **A**ccess **C**ontrol + frames + error detection + MAC addresses.
 > - **📦 Core Components:** encodings (unipolar/NRZ/NRZI/Manchester) ➔ modulations (frequency/amplitude/phase) ➔ Ethernet CSMA/CD.
-> - **⚡ Critical Bottleneck:** CSMA/CD's three parts — sense before sending, shared medium, jam + random wait on collision — recite all three.
+> - **⚡ Key Constraint:** CSMA/CD's three parts — sense before sending, shared medium, jam + random wait on collision — recite all three.
 
 ## 📝 Core
 ### 1. Physical Layer
@@ -29,7 +30,7 @@ aliases: [Physical Layer, Data Link Layer, Ethernet, CSMA/CD, Manchester Encodin
 - **Hub trap** ➔ a hub repeats every signal to all ports: physical star, **logical shared bus** — still one collision domain.
 - **Shared-Ethernet problems** ➔ half-duplex, everything broadcast to everyone, CSMA/CD bounds network size ⟹ solved by **switches** (true logical star, next lectures).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **MAC has two meanings here** ➔ Media Access Control (the mechanism) and MAC address (the identifier) — expand the acronym the exam asks about.
 - 💡 **Physical vs logical topology** ➔ hub wiring LOOKS like a star but behaves as a bus; the collision domain follows the logical shape.
 - 💡 **More symbols ≠ more Hz** ➔ AM+PM packs more bits per symbol on the same wave — rate rises without new spectrum.
@@ -37,10 +38,10 @@ aliases: [Physical Layer, Data Link Layer, Ethernet, CSMA/CD, Manchester Encodin
 ## 🧠 Active Recall
 > [!FAQ]- Walk through CSMA/CD when two devices transmit simultaneously.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Both sensed silence and sent; signals overlap → each detects a foreign signal → transmits a jam signal so ALL devices notice → each waits a *random* time → retransmits.
-> > - **Technical Justification:** **Random backoff breaks symmetry** ➔ identical waits would re-collide forever.
+> > - **Short answer:** Both sensed silence and sent; signals overlap → each detects a foreign signal → transmits a jam signal so ALL devices notice → each waits a *random* time → retransmits.
+> > - **Why:** **Random backoff breaks symmetry** ➔ identical waits would re-collide forever.
 
 > [!FAQ]- Why is Manchester encoding worth halving the symbol efficiency?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The guaranteed mid-bit transition carries the clock with the data — receiver never drifts on long runs of 0s or 1s.
-> > - **Technical Justification:** **Self-clocking** ➔ NRZ's flat stretches give no timing edges; Manchester trades bandwidth for synchronisation.
+> > - **Short answer:** The guaranteed mid-bit transition carries the clock with the data — receiver never drifts on long runs of 0s or 1s.
+> > - **Why:** **Self-clocking** ➔ NRZ's flat stretches give no timing edges; Manchester trades bandwidth for synchronisation.

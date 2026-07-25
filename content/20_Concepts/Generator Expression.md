@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 5
 parent: "[[Iterator]]"
 tags: [CS/DataStructures, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** looks like a [[List Comprehension]] but with round brackets ➔ returns an [[Iterator]] producing elements on demand.
 > - **📦 Core Components:** lazy transform + filter, one element at a time ➔ sugar for a `yield` loop.
-> - **⚡ Critical Bottleneck:** $O(1)$ memory + short-circuit + infinite streams — but **single-use**, no `len`/indexing.
+> - **⚡ Key Constraint:** $O(1)$ memory + short-circuit + infinite streams — but **single-use**, no `len`/indexing.
 
 ## 📝 Core
 ### 1. The Generator Expression (Lazy Comprehension)
@@ -33,7 +34,7 @@ tags: [CS/DataStructures, OOP/Python]
 > next(G)  # 0   (computed only when asked)
 > next(G)  # 3
 > ```
-> 💡 **Exam Pitfall:** **Only `()` vs `[]` differs, but three consequences follow** ➔ lazy iterator (not list), $O(1)$ (not $O(n)$) memory, and single-use (no `len`/indexing/re-loop).
+> 💡 **Common Mistake:** **Only `()` vs `[]` differs, but three consequences follow** ➔ lazy iterator (not list), $O(1)$ (not $O(n)$) memory, and single-use (no `len`/indexing/re-loop).
 
 ## ⚖️ Core Decision Matrix
 | | [[List Comprehension]] `[...]` | Generator `(...)` |
@@ -44,7 +45,7 @@ tags: [CS/DataStructures, OOP/Python]
 | re-iterate? | yes | no — single-use |
 | `len`/indexing? | yes | no |
 
-> [!NOTE] **Crossover Invariant:** generators win on memory + early-exit; lists win when you need random access, `len`, or to loop more than once. A genexp is equivalent to a `yield`-based generator function — both suspend at each yield and resume on `next` (a restricted coroutine).
+> [!NOTE] **When It Flips:** generators win on memory + early-exit; lists win when you need random access, `len`, or to loop more than once. A genexp is equivalent to a `yield`-based generator function — both suspend at each yield and resume on `next` (a restricted coroutine).
 
 ## 📊 Exam Execution Trace
 
@@ -73,19 +74,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Beyond memory, name two things lazy generators enable that an eager list cannot.
-> - **Core Insight Requirement:** Infinite + short-circuit.
+> - **Hint:** Infinite + short-circuit.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (1) Infinite sequences — `(x*x for x in itertools.count())`; (2) short-circuiting — `any(is_prime(x) for x in xs)` stops at the first prime.
-> > - **Technical Justification:** **On-demand** ➔ elements never materialise; generators also fuse pipelines with no intermediate lists.
+> > - **Short answer:** (1) Infinite sequences — `(x*x for x in itertools.count())`; (2) short-circuiting — `any(is_prime(x) for x in xs)` stops at the first prime.
+> > - **Why:** **On-demand** ➔ elements never materialise; generators also fuse pipelines with no intermediate lists.
 
 > [!FAQ]- What is the single syntactic difference from a list comprehension, and the three behavioural consequences?
-> - **Core Insight Requirement:** `()` vs `[]`.
+> - **Hint:** `()` vs `[]`.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Round brackets ⟹ lazy **iterator** (not list), **$O(1)$** memory (not $O(n)$), **single-use** (no `len`/indexing/re-loop).
-> > - **Technical Justification:** **Pick by usage** ➔ generator for one-pass/huge data, comprehension for a reusable indexable collection.
+> > - **Short answer:** Round brackets ⟹ lazy **iterator** (not list), **$O(1)$** memory (not $O(n)$), **single-use** (no `len`/indexing/re-loop).
+> > - **Why:** **Pick by usage** ➔ generator for one-pass/huge data, comprehension for a reusable indexable collection.
 
 > [!FAQ]- How does a generator expression relate to a `yield`-based generator function?
-> - **Core Insight Requirement:** Sugar for a yield loop.
+> - **Hint:** Sugar for a yield loop.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `(f(x) for x in xs if p(x))` ≡ a function looping over `xs` and `yield f(x)` when `p(x)`.
-> > - **Technical Justification:** **Restricted coroutine** ➔ both suspend at each yield, resume on `next`; `yield` functions handle arbitrary control flow.
+> > - **Short answer:** `(f(x) for x in xs if p(x))` ≡ a function looping over `xs` and `yield f(x)` when `p(x)`.
+> > - **Why:** **Restricted coroutine** ➔ both suspend at each yield, resume on `next`; `yield` functions handle arbitrary control flow.

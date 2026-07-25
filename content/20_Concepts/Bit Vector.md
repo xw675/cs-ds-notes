@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Data Structure]]"
 tags: [CS/DataStructures, CS/BitManipulation]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/BitManipulation]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** store small non-negative integers as the bits of an integer ➔ bit $i{-}1$ set ⟺ item $i$ present (the characteristic function).
 > - **📦 Core Components:** bitwise member/add/remove ➔ word-parallel algebra ➔ popcount for size.
-> - **⚡ Critical Bottleneck:** $O(1)$ ops, $O(u/w)$ algebra — cost scales with the **universe** (max value), not the count.
+> - **⚡ Key Constraint:** $O(1)$ ops, $O(u/w)$ algebra — cost scales with the **universe** (max value), not the count.
 
 ## 📝 Core
 ### 1. The Bit Vector (Bits = Set)
@@ -32,7 +33,7 @@ tags: [CS/DataStructures, CS/BitManipulation]
 > elems &= ~(1 << (i-1))                                 # remove: AND with negated mask
 > union, inter, diff = a | b, a & b, a & ~b              # set algebra = bitwise logic
 > ```
-> 💡 **Exam Pitfall:** **Counting is popcount, not maintained** ➔ use `int.bit_count()` / Kernighan's `n &= n-1` (clears the lowest set bit), never a bit-by-bit Python loop; a lone huge value makes `__len__` linear in that value.
+> 💡 **Common Mistake:** **Counting is popcount, not maintained** ➔ use `int.bit_count()` / Kernighan's `n &= n-1` (clears the lowest set bit), never a bit-by-bit Python loop; a lone huge value makes `__len__` linear in that value.
 
 ## ⚖️ Core Decision Matrix
 | Operation | Complexity | Why |
@@ -42,7 +43,7 @@ tags: [CS/DataStructures, CS/BitManipulation]
 | count (`__len__`) | $O(u/w)$ POPCNT / $O(\text{popcount})$ Kernighan | no count maintained |
 | space | $u$ bits | 1 bit/element — extremely compact for dense sets |
 
-> [!NOTE] **Crossover Invariant:** right for **dense** small-integer sets with heavy membership/algebra (graph adjacency, dataflow analysis); wrong for **sparse** sets over a huge universe — use a hash set ($O(1)$ expected, space ∝ count) or a **Bloom filter** (probabilistic, sub-linear).
+> [!NOTE] **When It Flips:** right for **dense** small-integer sets with heavy membership/algebra (graph adjacency, dataflow analysis); wrong for **sparse** sets over a huge universe — use a hash set ($O(1)$ expected, space ∝ count) or a **Bloom filter** (probabilistic, sub-linear).
 
 ## 📊 Exam Execution Trace
 
@@ -70,19 +71,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What is "word-parallelism" and why does it make bit-vector set algebra so fast?
-> - **Core Insight Requirement:** One instruction, 64 bits.
+> - **Hint:** One instruction, 64 bits.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** One `&`/`\|` combines 64 memberships at once ⟹ union over $u$ is $\lceil u/64\rceil$ word ops.
-> > - **Technical Justification:** **Constant factor** ➔ ~$64\times$ fewer operations than element-wise — why bitsets dominate for dense small-universe sets.
+> > - **Short answer:** One `&`/`\|` combines 64 memberships at once ⟹ union over $u$ is $\lceil u/64\rceil$ word ops.
+> > - **Why:** **Constant factor** ➔ ~$64\times$ fewer operations than element-wise — why bitsets dominate for dense small-universe sets.
 
 > [!FAQ]- Counting set bits naïvely is $O(u)$ — describe Kernighan's trick and the hardware alternative.
-> - **Core Insight Requirement:** Cost ∝ set bits, not universe.
+> - **Hint:** Cost ∝ set bits, not universe.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `n &= n-1` clears the lowest set bit ⟹ loop runs *popcount* times ($O(\text{set bits})$); `POPCNT` counts a word in one cycle.
-> > - **Technical Justification:** **Skip the zeros** ➔ both avoid scanning every bit, fast for sparse vectors.
+> > - **Short answer:** `n &= n-1` clears the lowest set bit ⟹ loop runs *popcount* times ($O(\text{set bits})$); `POPCNT` counts a word in one cycle.
+> > - **Why:** **Skip the zeros** ➔ both avoid scanning every bit, fast for sparse vectors.
 
 > [!FAQ]- When is a bit vector the wrong choice for a set, and what replaces it?
-> - **Core Insight Requirement:** Sparse over a huge universe.
+> - **Hint:** Sparse over a huge universe.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Holding `{1_000_000}` wastes ~$10^6$ bits and counting is $O(\text{max value})$.
-> > - **Technical Justification:** **Space ∝ count** ➔ use a hash set ($O(1)$ expected) or, if approximate membership is ok, a Bloom filter (sub-linear, one-sided error).
+> > - **Short answer:** Holding `{1_000_000}` wastes ~$10^6$ bits and counting is $O(\text{max value})$.
+> > - **Why:** **Space ∝ count** ➔ use a hash set ($O(1)$ expected) or, if approximate membership is ok, a Bloom filter (sub-linear, one-sided error).

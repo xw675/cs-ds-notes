@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 3
 parent: "[[Data Wrangling]]"
 tags: [DataScience/Wrangling, DataScience/DataQuality, Monash/CS_DS]
 aliases: [Data Quality, Missing Values, Outliers, Duplicates, IQR]
@@ -11,9 +12,9 @@ aliases: [Data Quality, Missing Values, Outliers, Duplicates, IQR]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** recognise the common data-quality issues and pair each with a detection and a fix.
 > - **📦 Core Components:** interpretability · format · inconsistency/misspelling · irregularities · integrity violations · missing · outliers · duplicates.
-> - **⚡ Critical Bottleneck:** fixing is **judgement + justification** — imputation vs removal, or keeping an outlier, depends on domain context, not a rule.
+> - **⚡ Key Constraint:** fixing is **judgement + justification** — imputation vs removal, or keeping an outlier, depends on domain context, not a rule.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. The Issue Types (causes)
 - **Interpretability** ➔ no documentation / **data dictionary** ➔ can't reliably use the fields; obtain the dictionary.
 - **Data format** ➔ sources differ (**JSON** vs **XML**, etc.) ➔ hard to integrate; convert to a common format.
@@ -38,7 +39,7 @@ aliases: [Data Quality, Missing Values, Outliers, Duplicates, IQR]
 | **Outliers** | `describe()`, boxplot, 3σ | impute or remove (justify) |
 | **Duplicates** | candidate keys | merge / remove |
 
-> [!NOTE] **Crossover Invariant:** missing values and outliers share the **same fix menu** (impute vs remove) — the differentiator is detection, and every removal/imputation needs a domain justification.
+> [!NOTE] **When It Flips:** missing values and outliers share the **same fix menu** (impute vs remove) — the differentiator is detection, and every removal/imputation needs a domain justification.
 
 ## 📊 Exam Execution Trace
 
@@ -56,13 +57,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- State the IQR outlier rule, and why you shouldn't auto-delete detected outliers.
-> - **Core Insight Requirement:** IQR bounds + judgement.
+> - **Hint:** IQR bounds + judgement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Outliers fall below $Q_1 - 1.5\,\text{IQR}$ or above $Q_3 + 1.5\,\text{IQR}$ (IQR $= Q_3-Q_1$); don't auto-remove because a "far" value may be genuine — fixing needs domain justification.
-> > - **Technical Justification:** **Detect ≠ fix** ➔ boxplot/3σ flag candidates; removal vs imputation is a context decision (compare detectors first).
+> > - **Short answer:** Outliers fall below $Q_1 - 1.5\,\text{IQR}$ or above $Q_3 + 1.5\,\text{IQR}$ (IQR $= Q_3-Q_1$); don't auto-remove because a "far" value may be genuine — fixing needs domain justification.
+> > - **Why:** **Detect ≠ fix** ➔ boxplot/3σ flag candidates; removal vs imputation is a context decision (compare detectors first).
 
 > [!FAQ]- How do you detect and fix misspelling/inconsistency in a categorical column?
-> - **Core Insight Requirement:** unique + frequency matching.
+> - **Hint:** unique + frequency matching.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Inspect `unique()` values and `value_counts()`; standardise case/representation and replace infrequent variants with the best-matching frequent value.
-> > - **Technical Justification:** **Frequency as truth** ➔ common spellings are likely correct; rare near-matches are likely typos to merge.
+> > - **Short answer:** Inspect `unique()` values and `value_counts()`; standardise case/representation and replace infrequent variants with the best-matching frequent value.
+> > - **Why:** **Frequency as truth** ➔ common spellings are likely correct; rare near-matches are likely typos to merge.

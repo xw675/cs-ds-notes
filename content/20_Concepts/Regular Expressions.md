@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 2
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [regular expression, regex, regular language, Kleene star, concatenation, alternation, matched]
@@ -11,7 +12,7 @@ aliases: [regular expression, regex, regular language, Kleene star, concatenatio
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** define languages by **pattern** rather than by listing ➔ built inductively from $\emptyset$, $\varepsilon$ and letters using **concatenation**, **union** $\cup$ and **Kleene star** $^{*}$.
-> - **⚡ Critical Bottleneck:** $^{*}$ binds tightest — $\mathtt{ab}^{*}\neq(\mathtt{ab})^{*}$: the first is $\mathtt{a}$ followed by any number of $\mathtt{b}$s, the second repeats the block $\mathtt{ab}$.
+> - **⚡ Key Constraint:** $^{*}$ binds tightest — $\mathtt{ab}^{*}\neq(\mathtt{ab})^{*}$: the first is $\mathtt{a}$ followed by any number of $\mathtt{b}$s, the second repeats the block $\mathtt{ab}$.
 
 ## 📝 Why they exist
 - **Pattern matching** ➔ find URLs in logs, valid variable names, dates, numbers in mixed text.
@@ -62,7 +63,7 @@ $$(\mathtt{aa}\cup\mathtt{bb})^{*}=(\mathtt{aa}\cup\mathtt{bb})^{0}\cup(\mathtt{
 
 - **⚠ Tools differ** ➔ in whether $+$ and $?$ carry these meanings, how parentheses/vertical bars are escaped, whether `.` means "any non-newline character", and how newlines are handled. The unit's notation is the mathematical one.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\mathtt{ab}^{*}\neq(\mathtt{ab})^{*}$** ➔ the star applies to the **immediately preceding** expression; group explicitly when you mean the block.
 - 💡 **$^{*}$ includes zero copies** ➔ $R^{*}$ always contains $\varepsilon$; if you need at least one, write $RR^{*}$ (i.e. $R^{+}$).
 - 💡 **$\emptyset$ vs $\varepsilon$** ➔ $\emptyset$ represents the language with **no** words; $\varepsilon$ represents $\{\varepsilon\}$, which has **one**. *(same trap as in [[Formal Languages (Alphabets, Words, Languages)]])*
@@ -71,10 +72,10 @@ $$(\mathtt{aa}\cup\mathtt{bb})^{*}=(\mathtt{aa}\cup\mathtt{bb})^{0}\cup(\mathtt{
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish the languages of $\mathtt{ab}^{*}$, $(\mathtt{ab})^{*}$ and $\mathtt{a}^{*}\mathtt{b}^{*}$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathtt{ab}^{*}=\{\mathtt{a},\mathtt{ab},\mathtt{abb},\dots\}$ (one $\mathtt{a}$, then any number of $\mathtt{b}$s); $(\mathtt{ab})^{*}=\{\varepsilon,\mathtt{ab},\mathtt{abab},\dots\}$ (repeats of the block); $\mathtt{a}^{*}\mathtt{b}^{*}=\{\varepsilon,\mathtt{a},\mathtt{b},\mathtt{ab},\mathtt{aab},\mathtt{abb},\dots\}$ (any number of $\mathtt{a}$s **then** any number of $\mathtt{b}$s).
-> > - **Technical Justification:** **Scope of the star** ➔ $^{*}$ binds to the immediately preceding expression, so grouping decides whether a block or a single letter repeats; concatenating two starred expressions gives an ordered pair of runs.
+> > - **Short answer:** $\mathtt{ab}^{*}=\{\mathtt{a},\mathtt{ab},\mathtt{abb},\dots\}$ (one $\mathtt{a}$, then any number of $\mathtt{b}$s); $(\mathtt{ab})^{*}=\{\varepsilon,\mathtt{ab},\mathtt{abab},\dots\}$ (repeats of the block); $\mathtt{a}^{*}\mathtt{b}^{*}=\{\varepsilon,\mathtt{a},\mathtt{b},\mathtt{ab},\mathtt{aab},\mathtt{abb},\dots\}$ (any number of $\mathtt{a}$s **then** any number of $\mathtt{b}$s).
+> > - **Why:** **Scope of the star** ➔ $^{*}$ binds to the immediately preceding expression, so grouping decides whether a block or a single letter repeats; concatenating two starred expressions gives an ordered pair of runs.
 
 > [!FAQ]- What does it mean for a language to be *regular*, and why is the inductive definition needed?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** a language is **regular** iff some regular expression describes it; the word is **matched** if it lies in that language.
-> > - **Technical Justification:** **Finite description of infinite sets** ➔ the inductive rules (base cases $\emptyset,\varepsilon$, letters; closure under concatenation, $\cup$, $^{*}$) generate every regular expression from finitely many rules, and the parallel inductive semantics assigns each one a language — so infinite languages get finite descriptions.
+> > - **Short answer:** a language is **regular** iff some regular expression describes it; the word is **matched** if it lies in that language.
+> > - **Why:** **Finite description of infinite sets** ➔ the inductive rules (base cases $\emptyset,\varepsilon$, letters; closure under concatenation, $\cup$, $^{*}$) generate every regular expression from finitely many rules, and the parallel inductive semantics assigns each one a language — so infinite languages get finite descriptions.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 1
 parent: "[[FIT2014_MOC]]"
 tags: [Math/Theory, CS/Computation, Monash/CS_DS]
 aliases: [alphabet, word, string, formal language, Sigma star, empty word, epsilon, EVEN-EVEN, DOUBLEWORD, PALINDROMES, universal language]
@@ -10,7 +11,7 @@ aliases: [alphabet, word, string, formal language, Sigma star, empty word, epsil
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** alphabet $\Sigma$ (finite symbol set) ➔ **word** (finite string over $\Sigma$) ➔ **language** (a *set* of words over $\Sigma$).
-> - **⚡ Critical Bottleneck:** distinguish the **empty language** $\emptyset=\{\,\}$ from the language **containing the empty word** $\{\varepsilon\}$ — the first has $0$ elements, the second has $1$.
+> - **⚡ Key Constraint:** distinguish the **empty language** $\emptyset=\{\,\}$ from the language **containing the empty word** $\{\varepsilon\}$ — the first has $0$ elements, the second has $1$.
 
 ## 📝 Core definitions
 - **Alphabet** ➔ a **finite** set of symbols, denoted $\Sigma$; members are **letters/characters**. E.g. $\{a,b\}$, $\{0,1\}$, $\{0,\dots,9\}$.
@@ -55,7 +56,7 @@ $$
 - **Why "proof by example" fails here** ➔ listing members of DOUBLEWORD that happen to be in EVEN-EVEN is a **non-proof**; a **universal** claim needs an argument covering *every* case.
 - **The exception** ➔ an **existential** theorem ("English has a palindrome") *is* settled by one witness (`rotator`) — see [[Quantifiers (Existential and Universal)]].
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\emptyset \neq \{\varepsilon\}$** ➔ the empty language contains nothing; $\{\varepsilon\}$ contains one (empty) word. Sizes $0$ vs $1$.
 - 💡 **Language = set of words, word = string** ➔ a language is not itself a string; conflating the two breaks every later definition.
 - 💡 **Proof by example is not a proof** ➔ except when the theorem only asserts **existence**. Universal statements need a general argument ([[Proof Techniques]]).
@@ -63,10 +64,10 @@ $$
 ## 🧠 Active Recall
 > [!FAQ]- Why is $\varepsilon$ a member of both EVEN-EVEN and DOUBLEWORD?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\varepsilon$ contains $a$ **zero** times and $b$ **zero** times, and $0$ is **even**, so $\varepsilon\in$ EVEN-EVEN. Taking $x=\varepsilon$ gives $xx=\varepsilon\varepsilon=\varepsilon$, so $\varepsilon\in$ DOUBLEWORD.
-> > - **Technical Justification:** **Degenerate cases satisfy definitions** ➔ the definitions quantify over counts and decompositions that are vacuously/trivially met at length $0$ — a standard exam trap.
+> > - **Short answer:** $\varepsilon$ contains $a$ **zero** times and $b$ **zero** times, and $0$ is **even**, so $\varepsilon\in$ EVEN-EVEN. Taking $x=\varepsilon$ gives $xx=\varepsilon\varepsilon=\varepsilon$, so $\varepsilon\in$ DOUBLEWORD.
+> > - **Why:** **Degenerate cases satisfy definitions** ➔ the definitions quantify over counts and decompositions that are vacuously/trivially met at length $0$ — a standard exam trap.
 
 > [!FAQ]- Why does exhibiting many DOUBLEWORD members inside EVEN-EVEN fail to prove $\text{DOUBLEWORD}\subseteq\text{EVEN-EVEN}$?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the claim is **universal** (*every* member of DOUBLEWORD lies in EVEN-EVEN); examples cover finitely many cases while the language is **infinite**, so they only illustrate.
-> > - **Technical Justification:** **Arbitrary-element argument** ➔ take a general $w=xx$ and show $\#_a(w)=2\#_a(x)$ and $\#_b(w)=2\#_b(x)$ are even; this reasoning applies to **all** cases at once.
+> > - **Short answer:** the claim is **universal** (*every* member of DOUBLEWORD lies in EVEN-EVEN); examples cover finitely many cases while the language is **infinite**, so they only illustrate.
+> > - **Why:** **Arbitrary-element argument** ➔ take a general $w=xx$ and show $\#_a(w)=2\#_a(x)$ and $\#_b(w)=2\#_b(x)$ are even; this reasoning applies to **all** cases at once.

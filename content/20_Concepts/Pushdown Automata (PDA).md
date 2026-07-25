@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [PDA, pushdown automaton, stack automaton, CFG to PDA, PDA to CFG, stack, push, pop, dollar marker]
@@ -10,7 +11,7 @@ aliases: [PDA, pushdown automaton, stack automaton, CFG to PDA, PDA to CFG, stac
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a [[Finite Automata (DFA and NFA)|nondeterministic finite automaton]] equipped with an **unbounded stack** ➔ the stack is the extra memory that lets it **count/match**, so PDAs recognise **exactly the context-free languages**.
-> - **⚡ Critical Bottleneck:** a transition $x,y\to z$ reads $x$ from the tape, **pops $y$**, and **pushes $z$** — any of $x,y,z$ may be $\varepsilon$ (read nothing / pop nothing / push nothing). Only the **top** of the stack is ever visible.
+> - **⚡ Key Constraint:** a transition $x,y\to z$ reads $x$ from the tape, **pops $y$**, and **pushes $z$** — any of $x,y,z$ may be $\varepsilon$ (read nothing / pop nothing / push nothing). Only the **top** of the stack is ever visible.
 
 ## 📝 What a PDA is
 A pushdown automaton consists of:
@@ -56,7 +57,7 @@ Proved in **two containments**, both constructive:
 - **An NFA is a PDA that never uses its stack** ➔ so **{regular languages} ⊆ {languages recognised by a PDA}**, matching {regular} ⊆ {CFL} from [[Regular Grammars and the CFL Hierarchy]].
 - **Determinism** ➔ PDAs are **nondeterministic** in general; unlike finite automata, **deterministic** PDAs are strictly **weaker** than nondeterministic ones (not every CFL has a deterministic PDA).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Only the top of the stack is visible** ➔ a transition can inspect/replace **just** the top symbol; there is no random access into the stack.
 - 💡 **Read the transition as read–pop–push** ➔ $x,y\to z$ does all three at once; blanking any component with $\varepsilon$ is the usual source of confusion.
 - 💡 **Use the $\$$ bottom-marker** ➔ without it the PDA cannot tell "stack empty" from "more to pop", so it can't verify the counts balanced.
@@ -66,10 +67,10 @@ Proved in **two containments**, both constructive:
 ## 🧠 Active Recall
 > [!FAQ]- What does a PDA add to an NFA, and why does that extra capability capture exactly the context-free languages?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it adds an **unbounded stack** with push/pop. Because a transition can push a symbol per input letter and pop it later, the PDA can **match/count without bound** (e.g. push an $\mathtt{a}$ per $\mathtt{a}$, pop per $\mathtt{b}$), which finite automata cannot.
-> > - **Technical Justification:** **Stack = the grammar's deferred suffix** ➔ the CFG→PDA construction runs a leftmost derivation with the unresolved suffix on the stack, and the PDA→CFG construction rebuilds a grammar from empty-stack-to-empty-stack computations — so the two models generate/recognise the **same** language class.
+> > - **Short answer:** it adds an **unbounded stack** with push/pop. Because a transition can push a symbol per input letter and pop it later, the PDA can **match/count without bound** (e.g. push an $\mathtt{a}$ per $\mathtt{a}$, pop per $\mathtt{b}$), which finite automata cannot.
+> > - **Why:** **Stack = the grammar's deferred suffix** ➔ the CFG→PDA construction runs a leftmost derivation with the unresolved suffix on the stack, and the PDA→CFG construction rebuilds a grammar from empty-stack-to-empty-stack computations — so the two models generate/recognise the **same** language class.
 
 > [!FAQ]- Why is the $\$$ bottom-of-stack marker necessary in the HALF-AND-HALF PDA?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** after popping one $\mathtt{a}$ per $\mathtt{b}$, the machine must confirm the stack is **back to where it started** (all $\mathtt{a}$s matched) before accepting. The $\$$ pushed first is what it looks for: the transition $\varepsilon,\$\to\varepsilon$ to the Final state fires **only** when every $\mathtt{a}$ has been popped.
-> > - **Technical Justification:** **Detecting "empty" needs a sentinel** ➔ a raw stack gives no signal distinguishing "empty" from "non-empty"; the marker turns "counts balanced" into a concrete, testable top-of-stack condition.
+> > - **Short answer:** after popping one $\mathtt{a}$ per $\mathtt{b}$, the machine must confirm the stack is **back to where it started** (all $\mathtt{a}$s matched) before accepting. The $\$$ pushed first is what it looks for: the transition $\varepsilon,\$\to\varepsilon$ to the Final state fires **only** when every $\mathtt{a}$ has been popped.
+> > - **Why:** **Detecting "empty" needs a sentinel** ➔ a raw stack gives no signal distinguishing "empty" from "non-empty"; the marker turns "counts balanced" into a concrete, testable top-of-stack condition.

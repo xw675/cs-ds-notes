@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Set (Mathematics)]]"
 tags: [Math/SetTheory, Math/Logic, Math/Discrete]
 ---
@@ -10,7 +11,7 @@ tags: [Math/SetTheory, Math/Logic, Math/Discrete]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $A\subseteq B$: every element of $A$ is in $B$ ➔ membership of $A$ implies membership of $B$.
 > - **📦 Core Components:** $\subseteq$ (allows $=$) vs $\subset$ (proper) ➔ set equality by double inclusion.
-> - **⚡ Critical Bottleneck:** $\subseteq$ is a **partial order** (reflexive, antisymmetric, transitive); not all sets comparable.
+> - **⚡ Key Constraint:** $\subseteq$ is a **partial order** (reflexive, antisymmetric, transitive); not all sets comparable.
 
 ## 📝 Core
 ### 1. The Relation (Containment as Implication)
@@ -40,7 +41,7 @@ $$A\subseteq A,\qquad \emptyset\subseteq A \text{ (vacuously)},\qquad A\subseteq
 | transitive | yes | $A\subseteq B\subseteq C\Rightarrow A\subseteq C$ |
 | total | no | not all sets comparable |
 
-> [!NOTE] **Crossover Invariant:** $\subseteq$ is a **partial order**; antisymmetry *is* double inclusion, the standard route to set equality. $\emptyset$ and $A$ itself are the universal extreme subsets of every set.
+> [!NOTE] **When It Flips:** $\subseteq$ is a **partial order**; antisymmetry *is* double inclusion, the standard route to set equality. $\emptyset$ and $A$ itself are the universal extreme subsets of every set.
 
 ## 📊 Exam Execution Trace
 
@@ -54,24 +55,24 @@ Double-inclusion proof of $A=B$:
 | 2 | $B\subseteq A$ | $B$ | $A$ |
 | 3 | antisymmetry | — | $A=B$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\emptyset\subseteq A$ holds vacuously** ➔ no element of $\emptyset$ can violate the implication; and $\subseteq$ allows $A=B$ whereas $\subset$ forbids it.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the standard technique for proving two sets equal, and why it works.
-> - **Core Insight Requirement:** Antisymmetry.
+> - **Hint:** Antisymmetry.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Prove double inclusion $A\subseteq B$ and $B\subseteq A$.
-> > - **Technical Justification:** **$\subseteq$ antisymmetric** ➔ the two implications give the biconditional $x\in A\Leftrightarrow x\in B$.
+> > - **Short answer:** Prove double inclusion $A\subseteq B$ and $B\subseteq A$.
+> > - **Why:** **$\subseteq$ antisymmetric** ➔ the two implications give the biconditional $x\in A\Leftrightarrow x\in B$.
 
 > [!FAQ]- Why is $\emptyset\subseteq A$ for every $A$, and how does $\subseteq$ differ from $\subset$?
-> - **Core Insight Requirement:** Vacuous truth + proper.
+> - **Hint:** Vacuous truth + proper.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\emptyset\subseteq A$ vacuously (no element to check); $\subseteq$ permits $A=B$, $\subset$ requires $A\neq B$.
-> > - **Technical Justification:** **Material implication** ➔ $x\in\emptyset\Rightarrow x\in A$ is never violated.
+> > - **Short answer:** $\emptyset\subseteq A$ vacuously (no element to check); $\subseteq$ permits $A=B$, $\subset$ requires $A\neq B$.
+> > - **Why:** **Material implication** ➔ $x\in\emptyset\Rightarrow x\in A$ is never violated.
 
 > [!FAQ]- Decompose "$x\in A$ iff $x\in B$" into two implications and link each to an inclusion.
-> - **Core Insight Requirement:** if / only-if.
+> - **Hint:** if / only-if.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** "if" ($x\in A\Leftarrow x\in B$) = $B\subseteq A$; "only if" ($x\in A\Rightarrow x\in B$) = $A\subseteq B$.
-> > - **Technical Justification:** **Double inclusion** ➔ both together give $A=B$; an "iff" proof is two one-directional arguments.
+> > - **Short answer:** "if" ($x\in A\Leftarrow x\in B$) = $B\subseteq A$; "only if" ($x\in A\Rightarrow x\in B$) = $A\subseteq B$.
+> > - **Why:** **Double inclusion** ➔ both together give $A=B$; an "iff" proof is two one-directional arguments.

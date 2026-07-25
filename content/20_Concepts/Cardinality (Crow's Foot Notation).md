@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Relationship (Conceptual Modelling)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** instances of one entity associated with another ➔ 1:1, 1:M, M:N.
 > - **📦 Core Components:** bar = one/mandatory | circle = zero/optional | crow's foot = many.
-> - **⚡ Critical Bottleneck:** show **both** min and max at each end; the min comes from the business rules.
+> - **⚡ Key Constraint:** show **both** min and max at each end; the min comes from the business rules.
 
 ![[crows-foot-cardinality-notation.png]]
 
@@ -41,7 +42,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >   ORDER }o--o{ PRODUCT : contains
 > ```
 > `||` one-and-only-one | `o|` zero-or-one | `|{` one-or-many | `o{` zero-or-many.
-> 💡 **Exam Pitfall:** **A plain line (implying 1,1) is not acceptable** ➔ every end needs its optionality (min) and multiplicity (max); the min is dictated by the brief, not a notation choice.
+> 💡 **Common Mistake:** **A plain line (implying 1,1) is not acceptable** ➔ every end needs its optionality (min) and multiplicity (max); the min is dictated by the brief, not a notation choice.
 
 ## ⚖️ Core Decision Matrix
 | Symbol | Min | Max | Meaning |
@@ -51,7 +52,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | `|{` | 1 | many | one or many |
 | `o{` | 0 | many | zero or many |
 
-> [!NOTE] **Crossover Invariant:** M:N is allowed conceptually — it stays on the [[Conceptual Model]] and is resolved into an [[Associative Entity]] / two 1:M only when attributes are needed or at the [[Conceptual vs Logical Model|logical stage]]. Line *style* (solid/dashed, [[Identifying vs Non-Identifying Relationship]]) is independent of the cardinality symbols.
+> [!NOTE] **When It Flips:** M:N is allowed conceptually — it stays on the [[Conceptual Model]] and is resolved into an [[Associative Entity]] / two 1:M only when attributes are needed or at the [[Conceptual vs Logical Model|logical stage]]. Line *style* (solid/dashed, [[Identifying vs Non-Identifying Relationship]]) is independent of the cardinality symbols.
 
 ## 📊 Exam Execution Trace
 
@@ -68,13 +69,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What do the bar, circle, and crow's foot mean, and why show min and max at both ends?
-> - **Core Insight Requirement:** Optionality + multiplicity independent.
+> - **Hint:** Optionality + multiplicity independent.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Bar = one/mandatory, circle = zero/optional, crow's foot = many; inner = min, outer = max.
-> > - **Technical Justification:** **Two independent rules** ➔ "can there be none?" (min) and "can there be many?" (max) are separate business rules.
+> > - **Short answer:** Bar = one/mandatory, circle = zero/optional, crow's foot = many; inner = min, outer = max.
+> > - **Why:** **Two independent rules** ➔ "can there be none?" (min) and "can there be many?" (max) are separate business rules.
 
 > [!FAQ]- Translate "a customer may place zero or many orders, each order must belong to exactly one customer".
-> - **Core Insight Requirement:** may/must → min.
+> - **Hint:** may/must → min.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `CUSTOMER ||--o{ ORDER`.
-> > - **Technical Justification:** **`o{` vs `||`** ➔ "may/zero-or-many" on the order side, "must/exactly-one" on the customer side.
+> > - **Short answer:** `CUSTOMER ||--o{ ORDER`.
+> > - **Why:** **`o{` vs `||`** ➔ "may/zero-or-many" on the order side, "must/exactly-one" on the customer side.

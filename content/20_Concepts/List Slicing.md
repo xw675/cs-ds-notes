@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 3
 parent: "[[List (ADT)]]"
 tags: [OOP/Python, CS/DataStructures]
 ---
@@ -10,7 +11,7 @@ tags: [OOP/Python, CS/DataStructures]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** lst[a:b] returns a new list of elements [a, b) ➔ on the left of = it overwrites a block in one statement.
 > - **📦 Core Components:** `[a:b:step]` stride ➔ slice **assignment** replaces shift loops.
-> - **⚡ Critical Bottleneck:** a Python slice **copies** ($O(k)$ time + space) — NumPy slices are $O(1)$ **views** (aliased).
+> - **⚡ Key Constraint:** a Python slice **copies** ($O(k)$ time + space) — NumPy slices are $O(1)$ **views** (aliased).
 
 ## 📝 Core
 ### 1. The Slice (Extract / Overwrite a Block)
@@ -32,7 +33,7 @@ tags: [OOP/Python, CS/DataStructures]
 > x[::-1]   # [5,4,3,2,1,0] (reverse via step -1 — a COPY)
 > x[3:6] = x[2:5]           # slice assignment: x -> [0,1,2,2,3,4]
 > ```
-> 💡 **Exam Pitfall:** **`x[::-1]` makes a reversed copy** ($\Theta(n)$ time + space) ➔ it does **not** reverse in place (use `list.reverse()`/`reversed()`); every read-slice allocates.
+> 💡 **Common Mistake:** **`x[::-1]` makes a reversed copy** ($\Theta(n)$ time + space) ➔ it does **not** reverse in place (use `list.reverse()`/`reversed()`); every read-slice allocates.
 
 ## ⚖️ Core Decision Matrix
 | Slice use | Cost | Note |
@@ -42,7 +43,7 @@ tags: [OOP/Python, CS/DataStructures]
 | replace shift loop | $O(k)$ | one block-copy vs explicit per-element loop |
 | NumPy `arr[a:b]` | $O(1)$ | **view** (aliased), not a copy |
 
-> [!NOTE] **Crossover Invariant:** slicing is concise and often C-optimised (small constant) but **allocates** — for huge ranges or hot loops, in-place index manipulation avoids the copy.
+> [!NOTE] **When It Flips:** slicing is concise and often C-optimised (small constant) but **allocates** — for huge ranges or hot loops, in-place index manipulation avoids the copy.
 
 ## 📊 Exam Execution Trace
 
@@ -68,19 +69,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- A Python slice and a NumPy slice look identical — how do they differ, and what bug does each invite?
-> - **Core Insight Requirement:** Copy vs view.
+> - **Hint:** Copy vs view.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Python list slice **copies** ($O(k)$, independent); NumPy slice is a **view** ($O(1)$, shares buffer, mutations propagate).
-> > - **Technical Justification:** **Two bug classes** ➔ list slice invites a hidden $\Theta(n^2)$ if sliced in a loop; NumPy view invites an aliasing bug (use `.copy()`).
+> > - **Short answer:** Python list slice **copies** ($O(k)$, independent); NumPy slice is a **view** ($O(1)$, shares buffer, mutations propagate).
+> > - **Why:** **Two bug classes** ➔ list slice invites a hidden $\Theta(n^2)$ if sliced in a loop; NumPy view invites an aliasing bug (use `.copy()`).
 
 > [!FAQ]- Why is replacing an ArrayList shift loop with slice assignment a readability win but not a complexity win?
-> - **Core Insight Requirement:** Same $\Theta$, smaller constant.
+> - **Hint:** Same $\Theta$, smaller constant.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Both are $\Theta(N)$: the loop shifts each element once; slice assignment block-copies the same $N-\text{pos}$ elements.
-> > - **Technical Justification:** **Inherently linear** ➔ order-preserving shift is $\Theta(N)$; C block-copy only lowers the constant.
+> > - **Short answer:** Both are $\Theta(N)$: the loop shifts each element once; slice assignment block-copies the same $N-\text{pos}$ elements.
+> > - **Why:** **Inherently linear** ➔ order-preserving shift is $\Theta(N)$; C block-copy only lowers the constant.
 
 > [!FAQ]- What does `x[::-1]` produce and what is its cost?
-> - **Core Insight Requirement:** Reversed copy, not in-place.
+> - **Hint:** Reversed copy, not in-place.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A reversed **copy** (step $-1$), e.g. `[0,1,2]`→`[2,1,0]`, at $\Theta(n)$ time + space.
-> > - **Technical Justification:** **Allocates** ➔ builds a new $n$-element list, not an in-place reverse (use `list.reverse()`/`reversed()`).
+> > - **Short answer:** A reversed **copy** (step $-1$), e.g. `[0,1,2]`→`[2,1,0]`, at $\Theta(n)$ time + space.
+> > - **Why:** **Allocates** ➔ builds a new $n$-element list, not an in-place reverse (use `list.reverse()`/`reversed()`).

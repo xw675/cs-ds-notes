@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 3
 parent: "[[Inheritance (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [polymorphism, upcasting, dynamic dispatch, subtype polymorphism, one i
 # [[Polymorphism (Java)]]
 
 **Context:** [[FIT2099_MOC]] · treat many [[Inheritance (Java)|subclasses]] through one supertype · "one interface, many implementations" · the payoff of inheritance/[[Abstract Classes (Java)|abstraction]]
-**Task signature:** write code against a base type and let each concrete subclass supply its own behaviour at runtime.
+**Problem it solves:** write code against a base type and let each concrete subclass supply its own behaviour at runtime.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** you want one action to behave differently per subclass ➔ call an **overridden** method through a **base-type** reference.
-> - **⚡ Critical Bottleneck:** the **runtime object type** (not the declared variable type) decides which overridden method runs; but a base-type variable can only see the **base type's** methods — subclass-only methods are hidden.
+> - **⚡ Key Constraint:** the **runtime object type** (not the declared variable type) decides which overridden method runs; but a base-type variable can only see the **base type's** methods — subclass-only methods are hidden.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -69,8 +70,8 @@ class Barrack {
 ```
 - **Abstract supertype** ➔ the base is often an [[Abstract Classes (Java)|abstract class]]: `Assessment a = new Test();` — you code to `Assessment`, each subclass implements `mark()`.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: A `Shape` has `area()` returning `0`. `Circle` (radius r) overrides it to `πr²`. Store a `Circle` in a `Shape` variable and print its area. Why does the override run?
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: A `Shape` has `area()` returning `0`. `Circle` (radius r) overrides it to `πr²`. Store a `Circle` in a `Shape` variable and print its area. Why does the override run?
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > class Shape { public double area() { return 0; } }
@@ -84,7 +85,7 @@ class Barrack {
 > > ```
 > > - **Key move:** dispatch is on the **runtime type** (`Circle`), so `Circle.area()` runs even though the variable is declared `Shape`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Base variable hides subclass methods** ➔ if `ArmouredSoldier` adds `releaseArmour()`, a `Soldier`-typed variable **cannot** call it — declare it as `ArmouredSoldier` (or downcast) to reach subclass-only members.
 - 💡 **Override, not overload** ➔ dynamic dispatch needs the **same signature**; a different parameter list is overloading and won't be chosen polymorphically.
 - 💡 **Coupling win** ➔ `Barrack` depends only on `Soldier`, so new subclasses slot in with **no edit** — this is the extensibility payoff of polymorphism.

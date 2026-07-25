@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 8
 parent: "[[Abstract Classes (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [factory method, factory pattern, creational pattern, GoF]
 # [[Factory Method Pattern (Java)]]
 
 **Context:** [[FIT2099_MOC]] · a **creational** design pattern (GoF) · centralise object creation so callers get the right subclass without an `if/instanceof` ladder · upholds [[Open-Closed Principle (Java)|OCP]] and [[Three Core Design Principles (Java)|DRY]]
-**Task signature:** creating one of several subclasses depending on some input, without scattering the selection logic across the codebase.
+**Problem it solves:** creating one of several subclasses depending on some input, without scattering the selection logic across the codebase.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** the same "which subclass do I build?" decision is repeated (or would be) in many places ➔ move it into one **factory method**.
-> - **⚡ Critical Bottleneck:** the factory returns the **parent type** (`Card`), deciding the concrete subclass internally — callers never name the subclass, so adding a new one touches only the factory.
+> - **⚡ Key Constraint:** the factory returns the **parent type** (`Card`), deciding the concrete subclass internally — callers never name the subclass, so adding a new one touches only the factory.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -52,8 +53,8 @@ classDiagram
 ```
 *(`$` marks `createCard` static; `CardManager` depends on `Card` and instantiates a concrete subclass.)*
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Shapes are created from a code: `"C"`→Circle, `"S"`→Square, else Unknown. Write a `ShapeFactory.create(String code)` returning a `Shape`.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Shapes are created from a code: `"C"`→Circle, `"S"`→Square, else Unknown. Write a `ShapeFactory.create(String code)` returning a `Shape`.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > abstract class Shape {}
@@ -72,7 +73,7 @@ classDiagram
 > > ```
 > > - **Key move:** one factory owns the mapping and returns the base `Shape`; new shapes = one new `case`, no client edits.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Creational, not behavioural** ➔ the factory's job is *making* objects; don't stuff business logic into it beyond the selection.
 - 💡 **Return the base type** ➔ returning a concrete subclass defeats the purpose — callers would re-couple to specifics.
 - 💡 **Reduces `instanceof` sprawl** ➔ centralising creation supports [[Open-Closed Principle (Java)|OCP]]: a new subclass changes only the factory, not every caller.

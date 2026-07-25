@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+week: 1
 parent: "[[R for Data Science]]"
 tags: [DS/R, Stats/Probability, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [R simulation, set.seed, sample, rnorm, dnorm, pnorm, qnorm, d p q r fu
 # [[R Simulation and Random Sampling]]
 
 **Context:** [[FIT2086_MOC]] · generating random data and evaluating distributions in R · the applied engine behind simulation, the bootstrap and Monte Carlo (LO5) · extends [[R Toolkit (Cheatsheet)]]
-**Task signature:** draw random samples, reproduce them, and compute density / probability / quantile / random values for a named distribution.
+**Problem it solves:** draw random samples, reproduce them, and compute density / probability / quantile / random values for a named distribution.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "simulate", "sample", "draw from a distribution", "reproducible random" ➔ set.seed + sample for finite sets, and the **d/p/q/r family** for named distributions.
-> - **⚡ Critical Bottleneck:** the **first letter selects the operation** — d = density/pmf, p = CDF (probability ≤), q = quantile (inverse CDF), r = random draws. Mixing them up is the classic error.
+> - **⚡ Key Constraint:** the **first letter selects the operation** — d = density/pmf, p = CDF (probability ≤), q = quantile (inverse CDF), r = random draws. Mixing them up is the classic error.
 
 ## 🎲 Reproducibility with `set.seed`
 ```r
@@ -57,8 +58,8 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 ```
 **Expected output:** a bell-shaped histogram with the red theoretical density tracking it; sample mean/sd close to 5/2. *(plotting: see [[R Visualisation (base graphics)]].)*
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Estimate $P(X>1.5)$ for $X\sim N(0,1)$ two ways — exactly, and by simulation — reproducibly.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Estimate $P(X>1.5)$ for $X\sim N(0,1)$ two ways — exactly, and by simulation — reproducibly.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > pnorm(1.5, lower.tail = FALSE)          # exact upper-tail probability ≈ 0.0668
@@ -67,7 +68,7 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 > > ```
 > > - **Key move:** `p` gives the exact CDF (use `lower.tail=FALSE` for $>$); the simulation estimates the same probability as the **proportion** of draws exceeding 1.5. `set.seed` makes it reproducible.
 
-> [!QUESTION]- Kata 2: Simulate rolling two fair dice 10,000 times and estimate P(sum = 7).
+> [!QUESTION]- Practice 2: Simulate rolling two fair dice 10,000 times and estimate P(sum = 7).
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > set.seed(42)
@@ -77,7 +78,7 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 > > ```
 > > - **Key move:** `replace = TRUE` is mandatory (drawing 10,000 from a set of 6); vectorised `d1 + d2` then `mean(... == 7)` turns a logical vector into a proportion.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`d`/`p`/`q`/`r` mix-up** ➔ `rnorm` draws samples; `dnorm` gives density heights (not probabilities); `pnorm` gives $P(X\le q)$; `qnorm` inverts it. Reaching for the wrong prefix is the top mistake.
 - 💡 **`sample` without `replace` caps at set size** ➔ `sample(1:6, 10)` errors; you need `replace = TRUE` whenever `size` exceeds the population.
 - 💡 **Seed placement matters** ➔ `set.seed()` must precede **each** block you want reproducible; the generator advances with every draw.
@@ -86,10 +87,10 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 ## 🧠 Active Recall
 > [!FAQ]- For the normal distribution, what do `dnorm`, `pnorm`, `qnorm`, `rnorm` each return?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `dnorm(x)` = **density** $f(x)$ at `x`; `pnorm(q)` = **CDF** $P(X\le q)$; `qnorm(p)` = **quantile** $F^{-1}(p)$ (value with `p` below it); `rnorm(n)` = a vector of **`n` random draws**.
-> > - **Technical Justification:** **Prefix = operation, suffix = distribution** ➔ every named distribution reuses the four prefixes, so `dpois/ppois/qpois/rpois`, `dbinom/...` behave identically; `p` and `q` are inverse, and `r` is what you use to simulate.
+> > - **Short answer:** `dnorm(x)` = **density** $f(x)$ at `x`; `pnorm(q)` = **CDF** $P(X\le q)$; `qnorm(p)` = **quantile** $F^{-1}(p)$ (value with `p` below it); `rnorm(n)` = a vector of **`n` random draws**.
+> > - **Why:** **Prefix = operation, suffix = distribution** ➔ every named distribution reuses the four prefixes, so `dpois/ppois/qpois/rpois`, `dbinom/...` behave identically; `p` and `q` are inverse, and `r` is what you use to simulate.
 
 > [!FAQ]- Why does `set.seed(1)` before two separate `rnorm` calls not make them identical, but `set.seed(1)` before each does?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the pseudo-random generator **advances its internal state** with every number produced. One `set.seed(1)` fixes the *starting* state, so the first call consumes numbers and the second continues from where it left off — different values. Re-seeding **before each** call resets the state, reproducing the same sequence.
-> > - **Technical Justification:** **Deterministic stream from a seed** ➔ the seed selects a fixed, reproducible stream; identical output requires the generator to be at the same position, which only re-seeding guarantees.
+> > - **Short answer:** the pseudo-random generator **advances its internal state** with every number produced. One `set.seed(1)` fixes the *starting* state, so the first call consumes numbers and the second continues from where it left off — different values. Re-seeding **before each** call resets the state, reproducing the same sequence.
+> > - **Why:** **Deterministic stream from a seed** ➔ the seed selects a fixed, reproducible stream; identical output requires the generator to be at the same position, which only re-seeding guarantees.

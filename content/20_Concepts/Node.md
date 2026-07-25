@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 4
 parent: "[[Linked Node Data Structure]]"
 tags: [CS/DataStructures, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** hold one item + a link to the next node ➔ the building block of non-contiguous chains.
 > - **📦 Core Components:** singly / doubly / circular / XOR variants ➔ item ref + $k$ link refs.
-> - **⚡ Critical Bottleneck:** $O(1)$ create/splice at a held node, but $O(i)$ to reach index $i$ (no random access) + pointer overhead.
+> - **⚡ Key Constraint:** $O(1)$ create/splice at a held node, but $O(i)$ to reach index $i$ (no random access) + pointer overhead.
 
 ## 📝 Core
 ### 1. The Node (Item + Link)
@@ -36,7 +37,7 @@ tags: [CS/DataStructures, OOP/Python]
 >
 > head = Node(1); head.link = Node(2); head.link.link = Node(3)   # 1 -> 2 -> 3
 > ```
-> 💡 **Exam Pitfall:** **Pointer overhead + cache misses** ➔ a 1-byte payload may carry 8–16 bytes of pointers; separately-allocated nodes cache-miss per hop (~100× an array's sequential hit) even at the same $O(n)$.
+> 💡 **Common Mistake:** **Pointer overhead + cache misses** ➔ a 1-byte payload may carry 8–16 bytes of pointers; separately-allocated nodes cache-miss per hop (~100× an array's sequential hit) even at the same $O(n)$.
 
 ## ⚖️ Core Decision Matrix
 | Variant | Links | Buys | Costs |
@@ -46,7 +47,7 @@ tags: [CS/DataStructures, OOP/Python]
 | **Circular** | last→head | round-robin iteration | termination care |
 | node vs [[Array (Data Structure)|array slot]] | pointer | flexible growth, $O(1)$ splice | $O(i)$ access, poor cache |
 
-> [!NOTE] **Crossover Invariant:** $O(1)$ splice/relink at a held node vs $O(i)$ to reach an arbitrary position, plus per-node pointer overhead and poor locality — arrays win on access + cache, nodes win on growth + splicing.
+> [!NOTE] **When It Flips:** $O(1)$ splice/relink at a held node vs $O(i)$ to reach an arbitrary position, plus per-node pointer overhead and poor locality — arrays win on access + cache, nodes win on growth + splicing.
 
 ## 📊 Exam Execution Trace
 
@@ -73,19 +74,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Compare singly-, doubly-, and circular-linked nodes by capability and cost.
-> - **Core Insight Requirement:** Links bought vs pointers paid.
+> - **Hint:** Links bought vs pointers paid.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Singly = minimal, no backward, $O(n)$ predecessor; doubly = $O(1)$ delete-given-node + bidirectional at one extra pointer; circular = round-robin.
-> > - **Technical Justification:** **Link layout = capability** ➔ each added link buys an operation and costs update work + memory.
+> > - **Short answer:** Singly = minimal, no backward, $O(n)$ predecessor; doubly = $O(1)$ delete-given-node + bidirectional at one extra pointer; circular = round-robin.
+> > - **Why:** **Link layout = capability** ➔ each added link buys an operation and costs update work + memory.
 
 > [!FAQ]- Why do linked nodes lose to arrays on cache performance even at equal Big-O?
-> - **Core Insight Requirement:** Locality, not asymptotics.
+> - **Hint:** Locality, not asymptotics.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Separately-allocated nodes scatter across the heap ⟹ ~cache miss per hop (~100× a hit).
-> > - **Technical Justification:** **Contiguity** ➔ an array fetches neighbours per cache line + prefetch; pointer overhead (8–16 B) fits fewer payloads per line.
+> > - **Short answer:** Separately-allocated nodes scatter across the heap ⟹ ~cache miss per hop (~100× a hit).
+> > - **Why:** **Contiguity** ➔ an array fetches neighbours per cache line + prefetch; pointer overhead (8–16 B) fits fewer payloads per line.
 
 > [!FAQ]- Why is reaching the $i$-th node $O(i)$ rather than $O(1)$?
-> - **Core Insight Requirement:** No address arithmetic.
+> - **Hint:** No address arithmetic.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Addresses are unrelated, so there's no `base + i*size` — follow $i$ links, each $O(1)$.
-> > - **Technical Justification:** **No random access** ➔ this absence is exactly why [[Binary Search]] cannot run on a linked list.
+> > - **Short answer:** Addresses are unrelated, so there's no `base + i*size` — follow $i$ links, each $O(1)$.
+> > - **Why:** **No random access** ➔ this absence is exactly why [[Binary Search]] cannot run on a linked list.

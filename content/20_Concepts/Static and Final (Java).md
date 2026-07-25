@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: [2, 3]
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 aliases: [static, final, constant, blank final, non-access modifiers, static final]
@@ -10,7 +11,7 @@ aliases: [static, final, constant, blank final, non-access modifiers, static fin
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** **static** ➔ one shared copy at the class level (no object needed); **final** ➔ a binding that can be assigned **exactly once**.
-> - **⚡ Critical Bottleneck:** a `static` method can access **only** static fields / its own params/locals — never instance fields or `this`; a `final` **reference** can't be re-pointed, but the object it points to **can still mutate**.
+> - **⚡ Key Constraint:** a `static` method can access **only** static fields / its own params/locals — never instance fields or `this`; a `final` **reference** can't be re-pointed, but the object it points to **can still mutate**.
 
 ## 📝 Core
 ### `static` — class-level
@@ -33,7 +34,7 @@ aliases: [static, final, constant, blank final, non-access modifiers, static fin
 - **final reference ≠ deep-frozen** ➔ `final int[] a = {1,2};` — can't rebind `a`, but `a[0] = 9;` is fine (the object's internals still change).
 - **final class / method** ➔ `final class` cannot be [[Inheritance (Java)|extended]]; a `final` method cannot be overridden.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **static touching instance state** ➔ referencing an instance field (or `this`) from a `static` method won't compile — there may be no object.
 - 💡 **"final = immutable object"** ➔ false; `final` freezes the **binding**, not the referenced object's contents.
 - 💡 **Blank final unset in a constructor** ➔ if any constructor path leaves a blank final unassigned, it won't compile.
@@ -41,5 +42,5 @@ aliases: [static, final, constant, blank final, non-access modifiers, static fin
 ## 🧠 Active Recall
 > [!FAQ]- A field is `final`. Does that guarantee the object it refers to cannot change? Why or why not?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** No. `final` prevents **reassigning the variable** to a different object, but the referenced object's own fields/elements can still be mutated (e.g. `final List` can still `.add(...)`).
-> > - **Technical Justification:** **Reference non-transitivity** ➔ `final` constrains the binding (the arrow), not the heap object at the other end.
+> > - **Short answer:** No. `final` prevents **reassigning the variable** to a different object, but the referenced object's own fields/elements can still be mutated (e.g. `final List` can still `.add(...)`).
+> > - **Why:** **Reference non-transitivity** ➔ `final` constrains the binding (the arrow), not the heap object at the other end.

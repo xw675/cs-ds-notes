@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 5
 parent: "[[Iterator]]"
 tags: [CS/Programming, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Programming, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a function that takes and/or returns a function ➔ makes *behaviour* a parameter.
 > - **📦 Core Components:** closures, currying/partial, **map/filter/reduce**, decorators.
-> - **⚡ Critical Bottleneck:** an ordinary $O(1)$-overhead call; total cost = number of applications (e.g. $O(n)$ over a collection).
+> - **⚡ Key Constraint:** an ordinary $O(1)$-overhead call; total cost = number of applications (e.g. $O(n)$ over a collection).
 
 ## 📝 Core
 ### 1. The HOF (First-Class Functions)
@@ -40,7 +41,7 @@ tags: [CS/Programming, OOP/Python]
 > from functools import reduce
 > reduce(lambda a,b: a+b, [1,2,3,4], 0)         # reduce/fold: 10
 > ```
-> 💡 **Exam Pitfall:** **A closure keeps a reference to the captured variable** ➔ even after the enclosing call returns — `g = return_f(30)` behaves as "add 30" forever; this is how HOFs build *configured* functions at run time.
+> 💡 **Common Mistake:** **A closure keeps a reference to the captured variable** ➔ even after the enclosing call returns — `g = return_f(30)` behaves as "add 30" forever; this is how HOFs build *configured* functions at run time.
 
 ## ⚖️ Core Decision Matrix
 | Tool | Form | Replaces / adds |
@@ -52,7 +53,7 @@ tags: [CS/Programming, OOP/Python]
 | **partial/curry** | `partial(f, a)` | specialise a general fn |
 | **decorator** | `@dec` = `f = dec(f)` | wrap (logging, memoise, timing) |
 
-> [!NOTE] **Crossover Invariant:** abstraction/reuse (one `traverse(tree, f)` covers infinitely many behaviours) + composability ($f\circ g$ pipelines); the trade-off is that nested closures / point-free style can obscure control flow.
+> [!NOTE] **When It Flips:** abstraction/reuse (one `traverse(tree, f)` covers infinitely many behaviours) + composability ($f\circ g$ pipelines); the trade-off is that nested closures / point-free style can obscure control flow.
 
 ## 📊 Exam Execution Trace
 
@@ -80,19 +81,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What is a closure, and how does it let `return_f(x)` produce a function that "remembers" `x`?
-> - **Core Insight Requirement:** Captured environment outlives the call.
+> - **Hint:** Captured environment outlives the call.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A closure = inner function + captured enclosing-scope variables; `f` keeps `x = 30` after `return_f` finishes.
-> > - **Technical Justification:** **Configured functions** ➔ the captured environment is the basis of currying, decorators, and callbacks.
+> > - **Short answer:** A closure = inner function + captured enclosing-scope variables; `f` keeps `x = 30` after `return_f` finishes.
+> > - **Why:** **Configured functions** ➔ the captured environment is the basis of currying, decorators, and callbacks.
 
 > [!FAQ]- Map, filter, and reduce replace which constructs, and how do they compose with generators?
-> - **Core Insight Requirement:** Transform/select/aggregate loops.
+> - **Hint:** Transform/select/aggregate loops.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** map = transform, filter = select, reduce/fold = accumulate; `reduce(add, map(f, filter(p, xs)))` is select→transform→aggregate.
-> > - **Technical Justification:** **Lazy fusion** ➔ generator versions stream one element through all stages in $O(1)$ memory, no intermediate lists.
+> > - **Short answer:** map = transform, filter = select, reduce/fold = accumulate; `reduce(add, map(f, filter(p, xs)))` is select→transform→aggregate.
+> > - **Why:** **Lazy fusion** ➔ generator versions stream one element through all stages in $O(1)$ memory, no intermediate lists.
 
 > [!FAQ]- How is a decorator a HOF, and give a use connecting to earlier material.
-> - **Core Insight Requirement:** Wrap-and-return.
+> - **Hint:** Wrap-and-return.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** It takes a function and returns a wrapped one; `@dec def f` = `f = dec(f)`.
-> > - **Technical Justification:** **Memoisation** ➔ `@lru_cache` caches results ⟹ naive [[Recursion|Fibonacci]] $\Theta(\varphi^n)\to\Theta(n)$.
+> > - **Short answer:** It takes a function and returns a wrapped one; `@dec def f` = `f = dec(f)`.
+> > - **Why:** **Memoisation** ➔ `@lru_cache` caches results ⟹ naive [[Recursion|Fibonacci]] $\Theta(\varphi^n)\to\Theta(n)$.

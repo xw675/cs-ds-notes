@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 2
 parent: "[[Java Program Structure]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 aliases: [package, import, wildcard import, Java modules, project organization]
@@ -10,7 +11,7 @@ aliases: [package, import, wildcard import, Java modules, project organization]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** group related classes into a **package** (a namespace = a folder) ➔ avoid name clashes and structure a project.
-> - **⚡ Critical Bottleneck:** the `package` declaration must be the **very first statement** in the file (before any `import`); the folder path on disk must **match** the dotted package name.
+> - **⚡ Key Constraint:** the `package` declaration must be the **very first statement** in the file (before any `import`); the folder path on disk must **match** the dotted package name.
 
 ## 📝 Core
 - **Package** ➔ a namespace grouping related classes; declared `package com.monash.smarthome;` as the **first line**.
@@ -34,7 +35,7 @@ module my-module {
 - **`exports`** ➔ makes a specific package **visible** (optionally only `to` a named module); unexported packages stay module-private even if `public`.
 - **`provides … with …`** ➔ registers a concrete implementation of a service interface.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Wildcard import `*`** ➔ `import java.util.*;` pulls the **whole** package — discouraged: hurts readability and risks ambiguous names; import the specific class.
 - 💡 **`package` not first** ➔ any code (even an `import`) before the `package` line is a compile error.
 - 💡 **Path ≠ name** ➔ the on-disk directory structure must mirror the dotted package name exactly.
@@ -42,5 +43,5 @@ module my-module {
 ## 🧠 Active Recall
 > [!FAQ]- Why is a wildcard import (`import pkg.*;`) generally discouraged over naming the class?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it drags every class in the package into scope, hiding exactly what the file depends on and risking **name clashes** between two packages that both define a `Date` (or similar).
-> > - **Technical Justification:** **Explicit dependencies** ➔ a specific import documents the real coupling and lets the compiler resolve names unambiguously.
+> > - **Short answer:** it drags every class in the package into scope, hiding exactly what the file depends on and risking **name clashes** between two packages that both define a `Date` (or similar).
+> > - **Why:** **Explicit dependencies** ➔ a specific import documents the real coupling and lets the compiler resolve names unambiguously.

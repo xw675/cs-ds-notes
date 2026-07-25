@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+week: 1
 parent: "[[Statistical Modelling and Inference]]"
 tags: [Stats/Probability, Math/Probability, DataScience/Theory, Monash/CS_DS]
 aliases: [random variable FIT2086, joint distribution, marginal distribution, sum rule, conditional distribution, independence, iid, pdf, CDF, quantile function, event space]
@@ -11,7 +12,7 @@ aliases: [random variable FIT2086, joint distribution, marginal distribution, su
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a **random variable** $X$ takes values from an event space $\mathcal{X}$ with probabilities summing to $1$ ➔ manipulate one, two or many RVs via the **sum rule** (marginalise) and **product rule** (condition).
 > - **📦 Core Components:** joint $p(x,y)$ ➔ **marginal** $p(x)=\sum_y p(x,y)$ · **conditional** $p(x\mid y)=p(x,y)/p(y)$ · **independence** $p(x,y)=p(x)p(y)$.
-> - **⚡ Critical Bottleneck:** for **continuous** RVs a density $f(x)$ is **not** a probability — $f(x)$ can exceed $1$; only **integrals** $\int_a^b f(x)\,dx$ are probabilities, and $P(X=x)=0$ for any single point.
+> - **⚡ Key Constraint:** for **continuous** RVs a density $f(x)$ is **not** a probability — $f(x)$ can exceed $1$; only **integrals** $\int_a^b f(x)\,dx$ are probabilities, and $P(X=x)=0$ for any single point.
 
 ## 📝 Discrete random variables
 - **Definition** ➔ $X$ is a random variable if it takes values from a set $\mathcal{X}$ (the **event space**) with specified probabilities; observing $x\in\mathcal{X}$ is the **event** $X=x$.
@@ -51,7 +52,7 @@ $$P(a\le X\le b)=\int_a^b f(x)\,dx, \qquad P(X=x)=0.$$
 - **Joint over images + tags** ➔ let $I$ be an image and $\mathbf{t}$ its tag vector; a model posits a joint $p(I,\mathbf{t})$.
 - **Generate by conditioning** ➔ given target tags $\mathbf{t}^{*}$, form $p(I\mid\mathbf{t}^{*})=\dfrac{p(I,\mathbf{t}^{*})}{\int p(I,\mathbf{t}^{*})\,dI}$ and sample an image — the sum/product rules doing real work.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A density is not a probability** ➔ $f(x)$ may be $>1$; only $\int_a^b f$ is a probability, and $P(X=x)=0$ for continuous $X$. Confusing $f$ with $P$ is the classic error.
 - 💡 **Marginalise the *other* variable** ➔ to get $p(x)$ you sum/integrate over $y$; summing over $x$ instead gives $p(y)$.
 - 💡 **Conditioning needs $p(y)>0$** ➔ $p(x\mid y)=p(x,y)/p(y)$ is undefined when the conditioning event has zero probability.
@@ -60,10 +61,10 @@ $$P(a\le X\le b)=\int_a^b f(x)\,dx, \qquad P(X=x)=0.$$
 ## 🧠 Active Recall
 > [!FAQ]- From a joint distribution $p(x,y)$, how do you obtain a marginal and a conditional, and when are $X,Y$ independent?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **marginal** by the sum rule $p(x)=\sum_y p(x,y)$; **conditional** by the product rule $p(x\mid y)=p(x,y)/p(y)$; **independent** iff $p(x,y)=p(x)p(y)$ for all $x,y$ (equivalently $p(x\mid y)=p(x)$).
-> > - **Technical Justification:** **Sum rule removes a variable, product rule re-weights** ➔ marginalising integrates out the unwanted variable; conditioning renormalises the joint by the probability of the conditioning event; independence is exactly the case where that renormalisation leaves $p(x)$ unchanged.
+> > - **Short answer:** **marginal** by the sum rule $p(x)=\sum_y p(x,y)$; **conditional** by the product rule $p(x\mid y)=p(x,y)/p(y)$; **independent** iff $p(x,y)=p(x)p(y)$ for all $x,y$ (equivalently $p(x\mid y)=p(x)$).
+> > - **Why:** **Sum rule removes a variable, product rule re-weights** ➔ marginalising integrates out the unwanted variable; conditioning renormalises the joint by the probability of the conditioning event; independence is exactly the case where that renormalisation leaves $p(x)$ unchanged.
 
 > [!FAQ]- Why is $f(x)$ for a continuous RV allowed to exceed 1, and what does $P(X=x)$ equal?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $f(x)$ is a **density**, not a probability — only its **integral** over an interval is a probability, and that integral is bounded by $1$. A single point has zero width, so $P(X=x)=\int_x^x f=0$.
-> > - **Technical Justification:** **Probability = area under $f$** ➔ a tall, narrow density can have $f(x)>1$ while $\int f=1$ overall (e.g. a Uniform on $[0,0.5]$ has $f=2$); probabilities are areas $\int_a^b f\,dx$, recovered cumulatively by the CDF $F(x)=\int_{-\infty}^x f$.
+> > - **Short answer:** $f(x)$ is a **density**, not a probability — only its **integral** over an interval is a probability, and that integral is bounded by $1$. A single point has zero width, so $P(X=x)=\int_x^x f=0$.
+> > - **Why:** **Probability = area under $f$** ➔ a tall, narrow density can have $f(x)>1$ while $\int f=1$ overall (e.g. a Uniform on $[0,0.5]$ has $f=2$); probabilities are areas $\int_a^b f\,dx$, recovered cumulatively by the CDF $F(x)=\int_{-\infty}^x f$.

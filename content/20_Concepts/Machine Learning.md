@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: [1, 5]
 parent: "[[Data Science]]"
 tags: [DataScience/Foundations, ML/Concepts, Monash/CS_DS]
 aliases: [Machine Learning, ML]
@@ -10,7 +11,7 @@ aliases: [Machine Learning, ML]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build algorithms/techniques that let computers **learn** from data ➔ patterns/inference, not explicit instructions.
-> - **⚡ Critical Bottleneck:** ML earns its place only when hand-written rules fail — the task is unknown, changing, or too big/expensive for humans.
+> - **⚡ Key Constraint:** ML earns its place only when hand-written rules fail — the task is unknown, changing, or too big/expensive for humans.
 
 ## 📝 Core
 - **Definition** ➔ the study of algorithms/statistical models that perform a task **without explicit instructions**, relying on **patterns and inference** (Wikipedia); getting computers to learn and **improve over time autonomously** from data/observations (Emerj); underlying theory in **statistics**.
@@ -29,17 +30,17 @@ aliases: [Machine Learning, ML]
 - **3. Build a benchmark model** ➔ a simple baseline to beat.
 - **4. Build a better model + tune hyperparameters** ➔ improve on the baseline and adjust its settings.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **ML ≠ all of data science** ➔ it's one region of Conway's diagram (hacking ∩ maths/stats); "ML on big data" is the *narrow* definition of data science.
 - 💡 **Rules vs learning** ➔ if a simple, stable rule set solves it, a rule-based system may beat ML; reach for ML when rules can't be written or won't stay valid.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the agreed definition of machine learning and two situations where it beats a rule-based system.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** ML develops algorithms/techniques that let computers learn from data (statistical foundation); it beats rules when humans can't express the expertise (speech recognition) or when conditions keep changing (junk email).
-> > - **Technical Justification:** **Learn vs encode** ➔ rule-based systems fix behaviour up front; ML infers and adapts it from data, handling tacit, shifting, or high-volume problems.
+> > - **Short answer:** ML develops algorithms/techniques that let computers learn from data (statistical foundation); it beats rules when humans can't express the expertise (speech recognition) or when conditions keep changing (junk email).
+> > - **Why:** **Learn vs encode** ➔ rule-based systems fix behaviour up front; ML infers and adapts it from data, handling tacit, shifting, or high-volume problems.
 
 > [!FAQ]- Outline the four steps to develop an ML model.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (1) choose a measure of success; (2) set an evaluation protocol; (3) build a benchmark/baseline model; (4) build a better model and tune its hyperparameters.
-> > - **Technical Justification:** **Baseline-then-improve** ➔ a fixed metric + protocol lets you prove each model beats the last, avoiding tuning to noise.
+> > - **Short answer:** (1) choose a measure of success; (2) set an evaluation protocol; (3) build a benchmark/baseline model; (4) build a better model and tune its hyperparameters.
+> > - **Why:** **Baseline-then-improve** ➔ a fixed metric + protocol lets you prove each model beats the last, avoiding tuning to noise.

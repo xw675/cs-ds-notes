@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 10
 parent: "[[SQL Subquery (Nested SELECT)]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Nested Subquery, Correlated Subquery, Inline View, Scalar Subquery]
 # [[SQL Subquery Approaches (Nested, Correlated, Inline)]]
 
 **Context:** [[FIT2094_MOC]] · *where* a subquery sits and *how often* it runs · complements [[SQL Subquery (Nested SELECT)|the output-shape view]] · cost explained by [[Query Processing and the Optimiser]]
-**Task signature:** answer a "per-group extreme" query (e.g. min price per drone type) via one of three placements.
+**Problem it solves:** answer a "per-group extreme" query (e.g. min price per drone type) via one of three placements.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** subquery needed ➔ nested (runs once, independent) · correlated (re-runs per outer row) · inline (a SELECT in FROM used as a temp table).
-> - **⚡ Critical Bottleneck:** a **correlated** subquery references the outer row, so it executes once **per outer row** — same answer, far higher cost than nested.
+> - **⚡ Key Constraint:** a **correlated** subquery references the outer row, so it executes once **per outer row** — same answer, far higher cost than nested.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -41,8 +42,8 @@ ORDER BY dt_code, drone_id;
 - **Correlated form** ➔ `WHERE drone_pur_price = (SELECT MIN(drone_pur_price) FROM drone.drone d2 WHERE d2.dt_code = d1.dt_code)`.
 - **Inline view form** ➔ `FROM (SELECT dt_code, MIN(drone_pur_price) minprice FROM drone.drone GROUP BY dt_code) mintable JOIN drone.drone d ON mintable.dt_code=d.dt_code AND mintable.minprice=d.drone_pur_price`.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: For each drone, show `times_rented` and its share of all completed rentals as a percentage, using a scalar subquery in the SELECT list.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: For each drone, show `times_rented` and its share of all completed rentals as a percentage, using a scalar subquery in the SELECT list.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT drone_id, COUNT(*) AS times_rented,
@@ -54,6 +55,6 @@ ORDER BY dt_code, drone_id;
 > > ```
 > > - **Key move:** the scalar subquery (total completed rentals) returns one value, safe to divide by.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Scalar subquery must return exactly one value** ➔ a multi-row result in the SELECT list errors.
 - 💡 **Correlated = repeated scans** ➔ correct but costly (≈4× the nested cost here); not penalised in this unit, but prefer nested/inline when equivalent.

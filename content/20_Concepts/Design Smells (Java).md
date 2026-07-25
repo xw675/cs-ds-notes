@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 9
 parent: "[[SOLID Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [code smell, design smell, bloaters, change preventers, couplers, dispe
 # [[Design Smells (Java)]]
 
 **Context:** [[FIT2099_MOC]] · a **catalogue** of surface indicators (Fowler) that a design has a deeper problem · the *diagnosis* layer that [[Refactoring (Java)|refactoring]] then treats · leans on [[SOLID Principles (Java)|SOLID]], [[Polymorphism (Java)|polymorphism]] and composition
-**Task signature:** given a smelly class/method, **name the smell** and **choose the refactoring step** that removes it.
+**Problem it solves:** given a smelly class/method, **name the smell** and **choose the refactoring step** that removes it.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** code that *works* but is **hard to read, change, or extend** ➔ identify the smell family, apply the matching refactoring.
-> - **⚡ Critical Bottleneck:** smells are **subjective heuristics** ("might be wrong", vary by language) — a smell is a *hint to investigate*, **not proof** of a bug. Branching on **type information** (`instanceof`/`switch(type)`) is the single most exam-relevant smell ➔ its fix is almost always **Replace Conditional with Polymorphism**.
+> - **⚡ Key Constraint:** smells are **subjective heuristics** ("might be wrong", vary by language) — a smell is a *hint to investigate*, **not proof** of a bug. Branching on **type information** (`instanceof`/`switch(type)`) is the single most exam-relevant smell ➔ its fix is almost always **Replace Conditional with Polymorphism**.
 
 ## 📝 What a smell is
 - **Code smell (Fowler)** ➔ a **surface symptom** in the source that usually corresponds to a deeper design weakness; "if it stinks, change it."
@@ -125,8 +126,8 @@ classDiagram
 ```
 *(Armour fields that always changed together are **Extracted** out of `Hero`; the `SavingsAccount` primitive soup is grouped into `Address` + `MedicareInfo`. Effect: ↓ **coupling** to raw fields, ↑ **cohesion** per class, ↑ **extensibility**.)*
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: A `Customer` builds a phone string with `mobilePhone.getAreaCode()+getPrefix()+getNumber()`. Name the smell and refactor it.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: A `Customer` builds a phone string with `mobilePhone.getAreaCode()+getPrefix()+getNumber()`. Name the smell and refactor it.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > // SMELL: Feature Envy — Customer manipulates Phone's data in detail
@@ -146,12 +147,12 @@ classDiagram
 > > ```
 > > - **Key move:** **Feature Envy** ➔ **Move Method** — put formatting on `Phone` (it owns the data); `Customer` just delegates. Cuts coupling.
 
-> [!QUESTION]- Kata 2: Name the smell and the fix — "whenever I add a payment type I edit `PriceCalculator`, `Receipt`, and `TaxReport`."
+> [!QUESTION]- Practice 2: Name the smell and the fix — "whenever I add a payment type I edit `PriceCalculator`, `Receipt`, and `TaxReport`."
 > > [!SUCCESS]- Reference solution
 > > - **Smell:** **Shotgun Surgery** (one reason → many classes). *Not* Divergent Change (which is one class → many reasons).
 > > - **Fix:** **Move Method / Move Field** to gather the payment-type behaviour into one place (ideally a polymorphic `PaymentType` hierarchy), so a new type touches one class.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Smell ≠ certainty** ➔ Fowler's list is subjective and language-dependent; treat a smell as "**investigate here**", never as an automatic rewrite trigger — over-reacting causes Speculative Generality.
 - 💡 **Divergent Change ⇄ Shotgun Surgery mix-up** ➔ remember: Divergent = *one class, many reasons*; Shotgun = *one reason, many classes*. Getting the direction wrong loses the mark.
 - 💡 **Type-branching is the flagged smell** ➔ `switch(type)` / `instanceof` cascades ➔ **Replace Conditional with Polymorphism**; leaving them breaks OCP and duplicates the cascade.

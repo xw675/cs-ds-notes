@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 12
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, Monash/CS_DS]
 aliases: [vulnerability, buffer overflow, command injection, SQL injection, XSS, cross-site scripting, input sanitisation, CWE, Bobby Tables]
@@ -10,7 +11,7 @@ aliases: [vulnerability, buffer overflow, command injection, SQL injection, XSS,
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** four classic vulnerabilities — **buffer overflow**, **command injection**, **XSS**, **SQL injection** ➔ each lets attacker input become **executed code/commands**.
-> - **⚡ Critical Bottleneck:** the shared root cause is **missing input sanitisation** (+ running with excessive privileges) — the single defence theme across all four.
+> - **⚡ Key Constraint:** the shared root cause is **missing input sanitisation** (+ running with excessive privileges) — the single defence theme across all four.
 
 ## 📝 The four vulnerabilities
 - **Buffer overflow** ➔ input **larger than the buffer** overwrites the **return address** in the activation record (cf. [[MARIE Patterns (Indirect Addressing, Arrays, Subroutines)|subroutine return]]); a crafted payload redirects execution to injected code (e.g. `execve("myshell")`). **Countermeasures:** stack **canary**, **address-space layout randomisation (ASLR)**.
@@ -33,12 +34,12 @@ int main(char* argc, char** argv) {
 - **Use safe interfaces** ➔ **parameterised queries / stored procedures** (SQLi), **output encoding** (XSS — see the **OWASP** cheat sheets), avoid `system()` with user data (command injection). Helps but does **not guarantee** safety.
 - **Least privilege** ➔ don't run services as root; limits the blast radius when a vuln is hit.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Sanitisation reduces, not eliminates** ➔ predefined interfaces "**can prevent … but do not guarantee**" — defence in depth (least privilege, ASLR/canaries) still matters.
 - 💡 **XSS abuses trust, not a server bug alone** ➔ the browser runs the script **because it appears to come from the trusted domain** — the injection point is often stored user content.
 
 ## 🧠 Active Recall
 > [!FAQ]- Buffer overflow, command injection, XSS and SQL injection look unrelated — what do they share?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** all four arise from **treating untrusted input as trusted** — unchecked input crosses a boundary and becomes **executed code** (machine code, a shell command, browser script, or SQL).
-> > - **Technical Justification:** **Input sanitisation + least privilege** ➔ validating/escaping input and dropping privileges cuts every one of them; the damage scales with the **privileges** of the exploited process (root ⇒ total compromise).
+> > - **Short answer:** all four arise from **treating untrusted input as trusted** — unchecked input crosses a boundary and becomes **executed code** (machine code, a shell command, browser script, or SQL).
+> > - **Why:** **Input sanitisation + least privilege** ➔ validating/escaping input and dropping privileges cuts every one of them; the damage scales with the **privileges** of the exploited process (root ⇒ total compromise).

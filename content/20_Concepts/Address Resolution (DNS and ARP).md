@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 7
 parent: "[[Network Addresses (URL, Port, IP, MAC)]]"
 tags: [CS/Networks]
 aliases: [DNS, ARP, Iterative Lookup, Recursive Lookup]
@@ -10,7 +11,7 @@ aliases: [DNS, ARP, Iterative Lookup, Recursive Lookup]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** browsing `www.google.com.au` needs TWO resolutions ➔ DNS turns the name into $216.58.220.99$; at the destination LAN, ARP turns that IP into the MAC for frame delivery.
-> - **⚡ Critical Bottleneck:** iterative vs recursive DNS — WHO does the walking: the client (iterative, servers answer "ask X next") or the DNS server (recursive, often with ISP caching).
+> - **⚡ Key Constraint:** iterative vs recursive DNS — WHO does the walking: the client (iterative, servers answer "ask X next") or the DNS server (recursive, often with ISP caching).
 
 ## 📝 Core
 ### DNS (Domain Name System) — name → IP
@@ -30,7 +31,7 @@ aliases: [DNS, ARP, Iterative Lookup, Recursive Lookup]
 | scope | global, hierarchical servers | one LAN, broadcast |
 | caching | ISP/OS caches answers | per-host ARP cache |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Two resolutions per page view** ➔ DNS once (name→IP), ARP at every LAN hop's end (IP→MAC) — answers claiming one mechanism does both lose the mark.
 - 💡 **ARP is broadcast by necessity** ➔ you can't unicast to a MAC you don't yet know; the question IS the discovery.
 - 💡 **Iterative ≠ recursive by answer quality** ➔ both end with the same IP; they differ in who performs the chain (client vs server).
@@ -38,10 +39,10 @@ aliases: [DNS, ARP, Iterative Lookup, Recursive Lookup]
 ## 🧠 Active Recall
 > [!FAQ]- Trace every resolution step from typing `www.unimelb.edu.au` to the first frame arriving at the web server.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** DNS (iterative: root → `.au` TLD → unimelb's server, or recursive via ISP cache) yields $124.47.170.46$ → packet routes there → destination router ARP-broadcasts "who has $124.47.170.46$?" → server replies with its MAC → frame delivered.
-> > - **Technical Justification:** **Each layer resolves one hop of identity** ➔ names are for humans, IPs for global routing, MACs for local delivery.
+> > - **Short answer:** DNS (iterative: root → `.au` TLD → unimelb's server, or recursive via ISP cache) yields $124.47.170.46$ → packet routes there → destination router ARP-broadcasts "who has $124.47.170.46$?" → server replies with its MAC → frame delivered.
+> > - **Why:** **Each layer resolves one hop of identity** ➔ names are for humans, IPs for global routing, MACs for local delivery.
 
 > [!FAQ]- Why does the recursive model dominate consumer internet?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The ISP's resolver does the walking once and caches; thousands of customers reuse the answer with zero upstream queries.
-> > - **Technical Justification:** **Shared cache economics** ➔ popular names hit cache almost always, cutting latency and root/TLD load.
+> > - **Short answer:** The ISP's resolver does the walking once and caches; thousands of customers reuse the answer with zero upstream queries.
+> > - **Why:** **Shared cache economics** ➔ popular names hit cache almost always, cutting latency and root/TLD load.

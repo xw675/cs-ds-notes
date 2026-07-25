@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT2004]
+week: 1
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 ---
@@ -11,7 +12,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** measure the resource (time/space) as a function of input size $n$ ➔ the question is scalability as $n\to\infty$.
 > - **📦 Core Components:** **input size** $n$ (often bit-length!) | **RAM** unit-cost steps | **time complexity** $T(n)$ | **case** (best/worst/avg/amortised).
-> - **⚡ Critical Bottleneck:** unqualified "complexity" = **worst case**; the RAM unit-cost assumption breaks for variable-size keys ($\times\text{CompEq}$).
+> - **⚡ Key Constraint:** unqualified "complexity" = **worst case**; the RAM unit-cost assumption breaks for variable-size keys ($\times\text{CompEq}$).
 
 ## 📝 Core
 ### 1. The Resource Question
@@ -55,7 +56,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 > size = k.bit_length()      # == ceil(log2(k+1)) ~ log2 k   (a NUMBER's size)
 > len([1,2,3,5,8])           # 5   (a collection's size = element count)
 > ```
-> 💡 **Exam Pitfall:** **Exact polynomial is accurate but useless** ➔ report $O(n^2)$; a loop running $k$ times on number $k$ is **$O(2^n)$** (since $n\approx\log_2 k$), not $O(n)$.
+> 💡 **Common Mistake:** **Exact polynomial is accurate but useless** ➔ report $O(n^2)$; a loop running $k$ times on number $k$ is **$O(2^n)$** (since $n\approx\log_2 k$), not $O(n)$.
 
 ### 🔹 Cost of a step & best/worst short-circuit
 > [!code]- `swap` $O(1)$ + insertion-sort's best/worst gap
@@ -68,7 +69,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 >     a[i + 1] = a[i]             # reverse -> runs k times (WORST, O(n^2))
 >     i -= 1
 > ```
-> 💡 **Exam Pitfall:** **Best case ≠ "small input"** ➔ both fix size $n$ and differ by **arrangement**; if comparison costs $O(m)$, multiply every bound by $m$ ($O(n^2)\to O(n^2m)$).
+> 💡 **Common Mistake:** **Best case ≠ "small input"** ➔ both fix size $n$ and differ by **arrangement**; if comparison costs $O(m)$, multiply every bound by $m$ ($O(n^2)\to O(n^2m)$).
 
 ## ⚖️ Core Decision Matrix
 *(Best / Average / Worst time, with the worst-case trigger.)*
@@ -81,7 +82,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 | [[Quick Sort]] | $O(n\log n)$ | $O(n\log n)$ | $O(n^2)$ | min/max pivot |
 | [[Hash Table]] | $O(1)$ | $O(1)$ | $O(n)$ | all keys collide |
 
-> [!NOTE] **Crossover Invariant:** quote **worst** for guarantees (real-time/adversarial), **average** for typical (quicksort, hashing), best rarely. **Average ≠ amortised** — average assumes a distribution (fails on skewed inputs); amortised is a hard worst-case-sequence guarantee with no probability.
+> [!NOTE] **When It Flips:** quote **worst** for guarantees (real-time/adversarial), **average** for typical (quicksort, hashing), best rarely. **Average ≠ amortised** — average assumes a distribution (fails on skewed inputs); amortised is a hard worst-case-sequence guarantee with no probability.
 
 ## 📊 Exam Execution Trace
 
@@ -109,31 +110,31 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish worst-case, average-case, and amortised complexity, stressing each assumption.
-> - **Core Insight Requirement:** Each makes a different assumption.
+> - **Hint:** Each makes a different assumption.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Worst** = max, no assumption; **average** = expectation over a distribution; **amortised** = worst-case sequence ÷ length, no probability.
-> > - **Technical Justification:** **Guarantee vs model** ➔ amortised $O(1)$ append is a guarantee; average $O(1)$ hash lookup assumes good hashing.
+> > - **Short answer:** **Worst** = max, no assumption; **average** = expectation over a distribution; **amortised** = worst-case sequence ÷ length, no probability.
+> > - **Why:** **Guarantee vs model** ➔ amortised $O(1)$ append is a guarantee; average $O(1)$ hash lookup assumes good hashing.
 
 > [!FAQ]- A DP algorithm runs in $O(nW)$ for numeric capacity $W$ — why is it pseudo-polynomial, not polynomial?
-> - **Core Insight Requirement:** Polynomial means in the *bit-length*.
+> - **Hint:** Polynomial means in the *bit-length*.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $W$ contributes $\log_2 W$ bits ⟹ $O(nW)=O(n\,2^{\log_2 W})$ is exponential in the encoding length.
-> > - **Technical Justification:** **Value vs size** ➔ polynomial in the *value* $W$ only — hence *pseudo*-polynomial, and why Knapsack stays NP-hard.
+> > - **Short answer:** $W$ contributes $\log_2 W$ bits ⟹ $O(nW)=O(n\,2^{\log_2 W})$ is exponential in the encoding length.
+> > - **Why:** **Value vs size** ➔ polynomial in the *value* $W$ only — hence *pseudo*-polynomial, and why Knapsack stays NP-hard.
 
 > [!FAQ]- Why is "$\Theta(n^2)$" portable but "runs in 3 ms" is not?
-> - **Core Insight Requirement:** RAM-model machine-independence.
+> - **Hint:** RAM-model machine-independence.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\Theta(n^2)$ is a property under the RAM model ⟹ identical step count across machines/compilers.
-> > - **Technical Justification:** **Folded constants** ➔ "3 ms" folds in CPU speed, compiler, and input — none generalise.
+> > - **Short answer:** $\Theta(n^2)$ is a property under the RAM model ⟹ identical step count across machines/compilers.
+> > - **Why:** **Folded constants** ➔ "3 ms" folds in CPU speed, compiler, and input — none generalise.
 
 > [!FAQ]- Why do selection sort's best and worst cases coincide while quicksort's diverge?
-> - **Core Insight Requirement:** Short-circuit vs input-dependent pivot.
+> - **Hint:** Short-circuit vs input-dependent pivot.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Selection sort never early-terminates ⟹ cost depends only on $n$ ⟹ best=worst=$\Theta(n^2)$.
-> > - **Technical Justification:** **Pivot quality** ➔ quicksort's cost depends on the input (median $\Theta(n\log n)$, min/max $\Theta(n^2)$), so its cases separate.
+> > - **Short answer:** Selection sort never early-terminates ⟹ cost depends only on $n$ ⟹ best=worst=$\Theta(n^2)$.
+> > - **Why:** **Pivot quality** ➔ quicksort's cost depends on the input (median $\Theta(n\log n)$, min/max $\Theta(n^2)$), so its cases separate.
 
 > [!FAQ]- If each comparison costs $O(m)$ but each swap is $O(1)$, does merge sort or selection sort scale better?
-> - **Core Insight Requirement:** Weight ops by their true cost.
+> - **Hint:** Weight ops by their true cost.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Merge sort $\Theta(nm\log n)$ vs selection sort $\Theta(n^2 m)$ ⟹ **merge sort wins**.
-> > - **Technical Justification:** **Comparison-dominated** ➔ comparison cost amplified by $m$ dominates, so selection sort's $\Theta(n)$ swap-thrift doesn't help.
+> > - **Short answer:** Merge sort $\Theta(nm\log n)$ vs selection sort $\Theta(n^2 m)$ ⟹ **merge sort wins**.
+> > - **Why:** **Comparison-dominated** ➔ comparison cost amplified by $m$ dominates, so selection sort's $\Theta(n)$ swap-thrift doesn't help.

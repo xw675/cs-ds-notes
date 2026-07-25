@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Data Type]]"
 tags: [CS/DataStructures, CS/Abstraction]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** physical organisation of data in memory ➔ where the bytes sit; its one intrinsic operation is access.
 > - **📦 Core Components:** **contiguous** ([[Array (Data Structure)|array]]) vs **linked** ([[Node]]/[[List (ADT)|LinkList]]) — opposite strengths.
-> - **⚡ Critical Bottleneck:** same ADT on different layouts differs in **constants + cache locality** even at identical Big-O.
+> - **⚡ Key Constraint:** same ADT on different layouts differs in **constants + cache locality** even at identical Big-O.
 
 ## 📝 Core
 ### 1. The Data Structure (Layout, Access)
@@ -29,7 +30,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 > ```python
 > element = array[2]      # address = base + 2 * slot_size  -> O(1), the native op
 > ```
-> 💡 **Exam Pitfall:** **Cache locality is a first-order cost the RAM model hides** ➔ a contiguous scan and a linked scan can both be $O(n)$ yet differ by an order of magnitude (each cache miss ~100× a hit) — see [[Algorithmic Complexity|RAM model]].
+> 💡 **Common Mistake:** **Cache locality is a first-order cost the RAM model hides** ➔ a contiguous scan and a linked scan can both be $O(n)$ yet differ by an order of magnitude (each cache miss ~100× a hit) — see [[Algorithmic Complexity|RAM model]].
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | Access | Insert/delete at position | Growth | Cache / Memory Impact |
@@ -37,7 +38,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 | **Contiguous** ([[Array (Data Structure)]]) | $O(1)$ | $O(n)$ (shift) | fixed (realloc) | **friendly** (spatial locality) |
 | **Linked** ([[Node]]/[[List (ADT)|LinkList]]) | $O(n)$ (traverse) | $O(1)$ (relink) | free | **hostile** (pointer chasing) |
 
-> [!NOTE] **Crossover Invariant:** layout ≠ ADT — the same ADT on different structures differs in real-world performance even at identical Big-O (cache + constants). [[Tree]]s/graphs extend the linked layout to multi-child pointer nodes.
+> [!NOTE] **When It Flips:** layout ≠ ADT — the same ADT on different structures differs in real-world performance even at identical Big-O (cache + constants). [[Tree]]s/graphs extend the linked layout to multi-child pointer nodes.
 
 ## 📊 Exam Execution Trace
 
@@ -66,19 +67,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Contrast contiguous and linked data structures across access, insertion, and cache behaviour.
-> - **Core Insight Requirement:** Opposite optimisation profiles.
+> - **Hint:** Opposite optimisation profiles.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Array** = $O(1)$ access / $O(n)$ insert / cache-friendly; **linked** = $O(n)$ access / $O(1)$ insert / cache-hostile.
-> > - **Technical Justification:** **Trade** ➔ random-access speed + locality vs flexible growth + cheap structural edits.
+> > - **Short answer:** **Array** = $O(1)$ access / $O(n)$ insert / cache-friendly; **linked** = $O(n)$ access / $O(1)$ insert / cache-hostile.
+> > - **Why:** **Trade** ➔ random-access speed + locality vs flexible growth + cheap structural edits.
 
 > [!FAQ]- Two structures have identical Big-O for an operation yet very different real performance — why?
-> - **Core Insight Requirement:** Big-O omits constants + memory hierarchy.
+> - **Hint:** Big-O omits constants + memory hierarchy.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A contiguous traversal hits sequential cache lines; a linked traversal chases pointers (many misses, ~100× slower).
-> > - **Technical Justification:** **Hidden assumption** ➔ the RAM model's unit-cost access ignores the order-of-magnitude cache gap.
+> > - **Short answer:** A contiguous traversal hits sequential cache lines; a linked traversal chases pointers (many misses, ~100× slower).
+> > - **Why:** **Hidden assumption** ➔ the RAM model's unit-cost access ignores the order-of-magnitude cache gap.
 
 > [!FAQ]- Why does the unit say a data structure's only operation is "access", and where does richer behaviour come from?
-> - **Core Insight Requirement:** Layout vs layered algorithms.
+> - **Hint:** Layout vs layered algorithms.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A data structure is a memory layout; the hardware only reads/writes a location (`array[i]`).
-> > - **Technical Justification:** **Layering** ➔ `push`/`search`/`sort` are algorithms an ADT implementation layers on top, not properties of the layout.
+> > - **Short answer:** A data structure is a memory layout; the hardware only reads/writes a location (`array[i]`).
+> > - **Why:** **Layering** ➔ `push`/`search`/`sort` are algorithms an ADT implementation layers on top, not properties of the layout.

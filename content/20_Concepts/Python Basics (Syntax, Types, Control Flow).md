@@ -8,11 +8,11 @@ aliases: [Python Syntax, Python Data Types, Python List, Python Control Flow]
 # [[Python Basics (Syntax, Types, Control Flow)]]
 
 **Context:** [[FIT1043_MOC]] · the language fundamentals of [[Python for Data Science|Python]] · precede [[Pandas DataFrame Basics|pandas]] · lab: `30_Projects/FIT1043_Labs/Week1-Python-Basics.ipynb`
-**Task signature:** assign variables, use the core types, and branch/loop in Python.
+**Problem it solves:** assign variables, use the core types, and branch/loop in Python.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** any Python snippet ➔ assign with =, pick a type (number/string/list), branch/loop with if/for.
-> - **⚡ Critical Bottleneck:** list indexing is **0-based**; `remove()` deletes the first matching **value**, `del`/index deletes by **position**.
+> - **⚡ Key Constraint:** list indexing is **0-based**; `remove()` deletes the first matching **value**, `del`/index deletes by **position**.
 
 ## 🔧 Minimal Working Example
 ```python
@@ -37,8 +37,8 @@ len(lst)                          # 2
 - **Input + dynamic year** ➔ avoid hard-coding: `import datetime; now = datetime.datetime.now(); now.year - int(input('age: '))`.
 - **Membership branch** ➔ `if currentYear in [2019, 2018]: ...` tests several values at once.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Ask for a birth year and print the person's age using the *current* year (not a hard-coded 2019).
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Ask for a birth year and print the person's age using the *current* year (not a hard-coded 2019).
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > import datetime
@@ -48,6 +48,6 @@ len(lst)                          # 2
 > > ```
 > > - **Key move:** `datetime.now().year` makes it dynamic; `int()` converts the string from `input()`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`remove(v)` ≠ `del lst[i]`** ➔ `remove` deletes the first element equal to `v`; `del`/indexing deletes by position.
 - 💡 **`input()` returns a string** ➔ wrap with `int()`/`float()` before arithmetic; and concatenation needs `str()` on numbers.

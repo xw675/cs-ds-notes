@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 6
 parent: "[[Sequence (Mathematics)]]"
 tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\sum_{i=1}^n s_i$ = add a sequence's terms ➔ partial sums $(S_n)$ form a new sequence.
 > - **📦 Core Components:** index ➔ range ➔ summand ➔ bound local variable.
-> - **⚡ Critical Bottleneck:** math fixes no order (associative/commutative); code's finite arithmetic is order-sensitive.
+> - **⚡ Key Constraint:** math fixes no order (associative/commutative); code's finite arithmetic is order-sensitive.
 
 ## 📝 Core
 ### 1. The Notation
@@ -39,7 +40,7 @@ $$S_n=\sum_{i=1}^{n}s_i=s_1+s_2+\dots+s_n,\qquad \sum_{i=1}^n s_i=\sum_{j=1}^n s
 | arithmetic | exact | finite precision |
 | rounding | n/a | order-dependent |
 
-> [!NOTE] **Crossover Invariant:** studying the partial-sum sequence $(S_n)$ is often the goal; its closed form comes from [[Arithmetic Series|arithmetic]] / [[Geometric Series|geometric]] series formulas. Mathematically the sum is unique; in floating-point, order changes accumulated error.
+> [!NOTE] **When It Flips:** studying the partial-sum sequence $(S_n)$ is often the goal; its closed form comes from [[Arithmetic Series|arithmetic]] / [[Geometric Series|geometric]] series formulas. Mathematically the sum is unique; in floating-point, order changes accumulated error.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $\sum_{i=1}^5(2i-1)$:
 | 3 | 3 | 5 | 9 |
 | 4 | 4,5 | 7,9 | 16,25 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Reindex everywhere** ➔ change both limits and the summand together, and avoid a name already used outside; the index is a bound, local variable.
 
 ## 🧠 Active Recall
 > [!FAQ]- Name every part of $\sum_{i=1}^n s_i$ and why the letter $i$ doesn't matter.
-> - **Core Insight Requirement:** Bound local index.
+> - **Hint:** Bound local index.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $i$ index, $i=1$ initial, $n$ final, $[1,n]$ range, $s_i$ summand; renaming consistently leaves the value unchanged.
-> > - **Technical Justification:** **Scope** ➔ the index is local, like a quantifier-bound variable.
+> > - **Short answer:** $i$ index, $i=1$ initial, $n$ final, $[1,n]$ range, $s_i$ summand; renaming consistently leaves the value unchanged.
+> > - **Why:** **Scope** ➔ the index is local, like a quantifier-bound variable.
 
 > [!FAQ]- Why does summation impose no order, yet a program's sum can be order-dependent?
-> - **Core Insight Requirement:** Exact vs finite precision.
+> - **Hint:** Exact vs finite precision.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Addition is associative/commutative, so $\sum$ is a single value; a program fixes order and uses finite precision.
-> > - **Technical Justification:** **Rounding** ➔ different orders accumulate error differently.
+> > - **Short answer:** Addition is associative/commutative, so $\sum$ is a single value; a program fixes order and uses finite precision.
+> > - **Why:** **Rounding** ➔ different orders accumulate error differently.

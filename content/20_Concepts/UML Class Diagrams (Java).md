@@ -8,11 +8,11 @@ aliases: [class diagram, UML class diagram, generalisation, realization, visibil
 # [[UML Class Diagrams (Java)]]
 
 **Context:** [[FIT2099_MOC]] · the **static** structure diagram (classes + relationships) · the consolidated notation reference for every `classDiagram` in the vault · the counterpart to the dynamic [[UML Sequence Diagrams (Java)|sequence diagram]]
-**Task signature:** draw the classes of a design and the relationships between them, with correct arrows, visibility and multiplicity.
+**Problem it solves:** draw the classes of a design and the relationships between them, with correct arrows, visibility and multiplicity.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** you need to show the **structure** of a design — what classes exist and how they relate ➔ a class diagram (static), not a sequence diagram (dynamic).
-> - **⚡ Critical Bottleneck:** the **arrow type encodes the relationship** — inheritance, realization, association and dependency are all different lines; getting the arrowhead/line-style wrong changes the meaning.
+> - **⚡ Key Constraint:** the **arrow type encodes the relationship** — inheritance, realization, association and dependency are all different lines; getting the arrowhead/line-style wrong changes the meaning.
 
 ## 📦 The Class Box (three compartments)
 ```
@@ -75,8 +75,8 @@ classDiagram
 ```
 **Reads as:** `Player` **is-a** `Actor` (solid hollow triangle) and **implements** `Behaviour` (dashed hollow triangle); `Player` **has a** `Weapon` field (solid arrow, multiplicity 1); `AttackAction` **uses** an `Actor` only as a method parameter (dashed «use» arrow).
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: `Enemy` is an abstract class; `Goblin` extends it. A `Dungeon` stores many `Enemy` objects. A `SpawnAction` receives an `Enemy` as a parameter but never stores it. Draw it — which arrow for each link?
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: `Enemy` is an abstract class; `Goblin` extends it. A `Dungeon` stores many `Enemy` objects. A `SpawnAction` receives an `Enemy` as a parameter but never stores it. Draw it — which arrow for each link?
 > > [!SUCCESS]- Reference solution
 > > ```mermaid
 > > classDiagram
@@ -90,7 +90,7 @@ classDiagram
 > > ```
 > > - **Key move:** extends ⇒ `<|--`; **stored** many ⇒ association `-->` with `*`; **parameter-only** ⇒ dependency `..>`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Wrong line style = wrong relationship** ➔ inheritance/realization use a **hollow triangle** (solid vs dashed line); association/dependency use an **open arrow** (solid vs dashed). Don't mix them.
 - 💡 **Association vs dependency** ➔ stored **field** ⇒ association (`-->`); **method parameter/return/local** only ⇒ dependency (`..>`).
 - 💡 **Class diagram ≠ sequence diagram** ➔ this shows **static structure** (types & relationships); runtime call order is the [[UML Sequence Diagrams (Java)|sequence diagram]]'s job. Abstractions **belong** here but **not** in a sequence diagram.

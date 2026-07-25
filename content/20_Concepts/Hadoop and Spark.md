@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 10
 parent: "[[Distributed Processing and Map-Reduce]]"
 tags: [DataScience/BigData, DataScience/DistributedProcessing, Monash/CS_DS]
 aliases: [Hadoop, Spark, Apache Spark]
@@ -10,9 +11,9 @@ aliases: [Hadoop, Spark, Apache Spark]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** choose a big-data engine ➔ Hadoop for cheap **batch/offline** Map-Reduce; Spark for fast **in-memory/real-time**.
-> - **⚡ Critical Bottleneck:** Hadoop writes to disk between steps (not suited to streaming); Spark keeps data **in memory**, so it's much faster and handles real-time.
+> - **⚡ Key Constraint:** Hadoop writes to disk between steps (not suited to streaming); Spark keeps data **in memory**, so it's much faster and handles real-time.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Hadoop
 - **What** ➔ open-source **Java** implementation of **Map-Reduce** (Doug Cutting @ Yahoo!).
 - **Architecture** ➔ **Common** (Java libraries/utilities) + **MapReduce** (the core paradigm); a huge tool ecosystem.
@@ -31,14 +32,14 @@ aliases: [Hadoop, Spark, Apache Spark]
 | **Processing** | batch / offline | real-time / streaming + batch |
 | **Interfaces** | Java (MapReduce) | Java, Scala, Python, R |
 
-> [!NOTE] **Crossover Invariant:** the difference is **where data lives between steps** — Hadoop spills to disk (cheap, batch), Spark keeps it in RAM (fast, real-time). For **real-time** processing, choose **Spark**.
+> [!NOTE] **When It Flips:** the difference is **where data lives between steps** — Hadoop spills to disk (cheap, batch), Spark keeps it in RAM (fast, real-time). For **real-time** processing, choose **Spark**.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Hadoop can't stream** ➔ its disk-based Map-Reduce suits offline batch; use Spark (or a streaming platform like Kafka) for real-time.
 - 💡 **Spark ⊃ Map-Reduce** ➔ Spark isn't a rejection of Map-Reduce; it includes those capabilities and adds in-memory speed.
 
 ## 🧠 Active Recall
 > [!FAQ]- Differentiate Hadoop and Spark, and say which suits real-time processing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Hadoop is a disk-based Java Map-Reduce platform for cheap batch/offline processing; Spark is an in-memory engine built on Hadoop infra that is much faster and supports real-time — so **Spark** for real-time.
-> > - **Technical Justification:** **In-memory vs disk** ➔ Spark avoids Hadoop's between-step disk writes, enabling streaming/interactive speed.
+> > - **Short answer:** Hadoop is a disk-based Java Map-Reduce platform for cheap batch/offline processing; Spark is an in-memory engine built on Hadoop infra that is much faster and supports real-time — so **Spark** for real-time.
+> > - **Why:** **In-memory vs disk** ➔ Spark avoids Hadoop's between-step disk writes, enabling streaming/interactive speed.

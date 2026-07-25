@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Relationship (Conceptual Modelling)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** bridge two entities in an M:N ➔ split into two 1:M, carrying the association's attributes.
 > - **📦 Core Components:** composite key (both parents' keys) ➔ two identifying relationships.
-> - **⚡ Critical Bottleneck:** the only way Crow's Foot stores relationship attributes.
+> - **⚡ Key Constraint:** the only way Crow's Foot stores relationship attributes.
 
 ![[associative-entity.png]]
 
@@ -39,7 +40,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >   PRODUCT ||--o{ ORDER_PRODUCT : appears_on
 > ```
 > $$\text{ORDER\_PRODUCT}(\underline{\text{orderno}}^{*}, \underline{\text{prodno}}^{*}, \text{op\_qtyordered}, \text{op\_lineprice})$$
-> 💡 **Exam Pitfall:** **Composite key needs both parents** ➔ to find one line's `op_qtyordered` you need *both* orderno and prodno (e.g. order 61384, product M128).
+> 💡 **Common Mistake:** **Composite key needs both parents** ➔ to find one line's `op_qtyordered` you need *both* orderno and prodno (e.g. order 61384, product M128).
 
 ## ⚖️ Core Decision Matrix
 | Stage | M:N handling | Trigger |
@@ -49,7 +50,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | logical (relational) | always resolve | no relational M:N |
 | key | composite PK + 2 FKs | both parents |
 
-> [!NOTE] **Crossover Invariant:** the bridging entity inherits **both** parents' keys, so it joins them by two identifying relationships and is itself a weak entity. A bridge table is an [[n-ary Relation]] over the parents' keys.
+> [!NOTE] **When It Flips:** the bridging entity inherits **both** parents' keys, so it joins them by two identifying relationships and is itself a weak entity. A bridge table is an [[n-ary Relation]] over the parents' keys.
 
 ## 📊 Exam Execution Trace
 
@@ -76,13 +77,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What problem does an associative entity solve, and how is its key formed?
-> - **Core Insight Requirement:** Attributes on an M:N.
+> - **Hint:** Attributes on an M:N.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Crow's Foot can't put attributes on a line, so a bridge splits the M:N into two 1:M; its key is the composite of both parents' keys.
-> > - **Technical Justification:** **Both keys needed** ➔ e.g. $(\text{orderno},\text{prodno})$ to retrieve a line.
+> > - **Short answer:** Crow's Foot can't put attributes on a line, so a bridge splits the M:N into two 1:M; its key is the composite of both parents' keys.
+> > - **Why:** **Both keys needed** ➔ e.g. $(\text{orderno},\text{prodno})$ to retrieve a line.
 
 > [!FAQ]- When should an associative entity be introduced — conceptually vs logically?
-> - **Core Insight Requirement:** Attributes vs relational limit.
+> - **Hint:** Attributes vs relational limit.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Conceptually only when attributes exist; logically always (relational DBs can't do M:N).
-> > - **Technical Justification:** **Composite PK + two FKs** ➔ the bridge becomes a relation on both parents.
+> > - **Short answer:** Conceptually only when attributes exist; logically always (relational DBs can't do M:N).
+> > - **Why:** **Composite PK + two FKs** ➔ the bridge becomes a relation on both parents.

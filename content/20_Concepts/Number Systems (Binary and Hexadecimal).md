@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 1
 parent: "[[Computer Fundamentals (Bits, Bytes, Words)]]"
 tags: [CS/Systems, CS/Foundations, Math/Discrete]
 aliases: [Binary Numbers, Hexadecimal, Base Conversion]
@@ -11,7 +12,7 @@ aliases: [Binary Numbers, Hexadecimal, Base Conversion]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** each digit is worth (digit) × (base)$^{\text{position}}$ ➔ convert any direction between binary/decimal/hex + add binary by hand.
 > - **📦 Core Components:** weights table (binary→dec) ➔ repeated division (dec→binary) ➔ 4-bits-per-hex-digit (binary↔hex).
-> - **⚡ Critical Bottleneck:** $n$ bits represent $2^n$ values ($0$ to $2^n-1$) — the counting question examiners love.
+> - **⚡ Key Constraint:** $n$ bits represent $2^n$ values ($0$ to $2^n-1$) — the counting question examiners love.
 
 ## 📝 Core
 - **Positional notation** ➔ $2396_{10} = 2{\times}10^3 + 3{\times}10^2 + 9{\times}10^1 + 6{\times}10^0$; same idea in base 2: $2396_{10} = 100101011100_2$.
@@ -40,7 +41,7 @@ aliases: [Binary Numbers, Hexadecimal, Base Conversion]
 | 4 | $2^3$ | $1+0$ | $1$ | $0$ |
 **Result:** $1110_2 = 14_{10}$ ✓ ($9+5$).
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- (a) Convert $174_{10}$ to binary and hex. (b) How many different values can 6 bits represent, and what is the largest? (c) Add $10111_2 + 1101_2$.
 > > [!SUCCESS]- Answer
 > > - (a) $174 = 10101110_2 = AE_{16}$ (check: $128{+}32{+}8{+}4{+}2 = 174$).
@@ -48,7 +49,7 @@ aliases: [Binary Numbers, Hexadecimal, Base Conversion]
 > > - (c) $10111_2 + 1101_2 = 100100_2$ ($23 + 13 = 36$ ✓).
 > > - **Key move:** always verify by converting back to decimal.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$2^n$ values vs largest value** ➔ $n$ bits give $2^n$ values but the max is $2^n - 1$ (zero occupies a slot).
 - 💡 **Group hex from the RIGHT** ➔ padding goes on the left; grouping from the left mangles the number.
 - 💡 **Write the base subscript** ➔ $101$ is ambiguous; $101_2 \neq 101_{10} \neq 101_{16}$ — unlabeled bases lose marks.

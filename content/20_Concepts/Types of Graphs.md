@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** simple graph = no loops, no parallel edges ➔ the default.
 > - **📦 Core Components:** loop / multi-edge / weighted / directed generalisations.
-> - **⚡ Critical Bottleneck:** edges-as-sets *force* simplicity; directed = ordered pairs (non-symmetric).
+> - **⚡ Key Constraint:** edges-as-sets *force* simplicity; directed = ordered pairs (non-symmetric).
 
 ## 📝 Core
 ### 1. The Simple Graph
@@ -36,7 +37,7 @@ $$E\ \text{a set},\ \{v,w\}=\{w,v\} \Rightarrow \text{no parallel edges}$$
 | multi | repeated pairs | multiplicities |
 | directed | ordered $(v,w)$ | possibly non-symmetric |
 
-> [!NOTE] **Crossover Invariant:** simple undirected graphs capture the main computational issues, so theorems transfer broadly; weights/directions add modelling power (road cost, one-way, flow) at the cost of more complex algorithms.
+> [!NOTE] **When It Flips:** simple undirected graphs capture the main computational issues, so theorems transfer broadly; weights/directions add modelling power (road cost, one-way, flow) at the cost of more complex algorithms.
 
 ## 📊 Exam Execution Trace
 
@@ -50,18 +51,18 @@ Allowed in a simple graph?
 | 2 | $\{a,b\},\{b,a\}$ | parallel — no (one edge) |
 | 3 | $(a,b)$ | directed — no |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Directed ≠ undirected** ➔ a digraph uses ordered pairs, so adjacency need not be symmetric ($(a,b)$ without $(b,a)$) — the general [[Binary Relation]] case.
 
 ## 🧠 Active Recall
 > [!FAQ]- What is a simple graph, and why do "edges are sets" force its two conditions?
-> - **Core Insight Requirement:** Sets forbid duplicates.
+> - **Hint:** Sets forbid duplicates.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** No loops, no parallel edges; edge $\{v,w\}$ has distinct vertices, $E$ has no repeat.
-> > - **Technical Justification:** **$\{v,w\}=\{w,v\}$** ➔ counts once.
+> > - **Short answer:** No loops, no parallel edges; edge $\{v,w\}$ has distinct vertices, $E$ has no repeat.
+> > - **Why:** **$\{v,w\}=\{w,v\}$** ➔ counts once.
 
 > [!FAQ]- How is a directed graph modelled, and how does it differ from a simple graph?
-> - **Core Insight Requirement:** Ordered pairs.
+> - **Hint:** Ordered pairs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Arcs are ordered pairs $(v,w)$; $(v,w)\neq(w,v)$, adjacency need not be symmetric.
-> > - **Technical Justification:** **Modelling power** ➔ digraphs/weights capture one-way streets, costs, flows.
+> > - **Short answer:** Arcs are ordered pairs $(v,w)$; $(v,w)\neq(w,v)$, adjacency need not be symmetric.
+> > - **Why:** **Modelling power** ➔ digraphs/weights capture one-way streets, costs, flows.

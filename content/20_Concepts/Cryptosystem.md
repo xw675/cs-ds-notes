@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Function Composition]]"
 tags: [Math/Functions, CS/Cryptography, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Functions, CS/Cryptography, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a key-indexed family of invertible functions ➔ encrypt with $e_k$, decrypt with $d_k=e_k^{-1}$.
 > - **📦 Core Components:** five-tuple $(M,C,K,e,d)$ ➔ each $e_k$ a bijection ➔ cascade via composition.
-> - **⚡ Critical Bottleneck:** every $e_k$ must be bijective (lossless), or decryption is ambiguous.
+> - **⚡ Key Constraint:** every $e_k$ must be bijective (lossless), or decryption is ambiguous.
 
 ## 📝 Core
 ### 1. The Model
@@ -31,7 +32,7 @@ tags: [Math/Functions, CS/Cryptography, Monash/CS_DS]
 $$d_k = e_k^{-1},\qquad d_k(e_k(m))=m\ \forall m$$
 $$e_{(k,k')}=e'_{k'}\circ e_k,\qquad d_{(k,k')}=d_k\circ d'_{k'}$$
 
-> [!NOTE] **Crossover Invariant:** security comes from hardness, not secrecy of method; cascading independently-hard layers is harder to break, but poorly chosen layers can **cancel** — more layers ≠ guaranteed stronger.
+> [!NOTE] **When It Flips:** security comes from hardness, not secrecy of method; cascading independently-hard layers is harder to break, but poorly chosen layers can **cancel** — more layers ≠ guaranteed stronger.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ Caesar shift $k=3$ on $\mathbb Z_{26}$, "HAL" $=(7,0,11)$:
 | 2 | 0 (A) | 3 (D) | 0 |
 | 3 | 11 (L) | 14 (O) | 11 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Self-inverse cancels** ➔ a cipher with $e_k\circ e_k=i_M$ composed with the *same* key an even number of times returns the plaintext — repeating one key adds **no** security.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the cryptosystem axiom and why each $e_k$ must be a bijection.
-> - **Core Insight Requirement:** Invertible = bijective.
+> - **Hint:** Invertible = bijective.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $d_k=e_k^{-1}$ (so $d_k(e_k(m))=m$); $e_k^{-1}$ exists iff $e_k$ is bijective.
-> > - **Technical Justification:** **Lossless** ➔ injective avoids ambiguous decryption; surjective ensures every ciphertext decrypts.
+> > - **Short answer:** $d_k=e_k^{-1}$ (so $d_k(e_k(m))=m$); $e_k^{-1}$ exists iff $e_k$ is bijective.
+> > - **Why:** **Lossless** ➔ injective avoids ambiguous decryption; surjective ensures every ciphertext decrypts.
 
 > [!FAQ]- How are two cryptosystems composed, and why might composing add little security?
-> - **Core Insight Requirement:** Reverse-order + cancellation.
+> - **Hint:** Reverse-order + cancellation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $e_{(k,k')}=e'_{k'}\circ e_k$, $d_{(k,k')}=d_k\circ d'_{k'}$, key space $K\times K'$.
-> > - **Technical Justification:** **Self-inverse cancels** ➔ same key even times returns plaintext; layers must be independently hard and non-cancelling.
+> > - **Short answer:** $e_{(k,k')}=e'_{k'}\circ e_k$, $d_{(k,k')}=d_k\circ d'_{k'}$, key space $K\times K'$.
+> > - **Why:** **Self-inverse cancels** ➔ same key even times returns plaintext; layers must be independently hard and non-cancelling.

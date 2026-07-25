@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 1
 parent: "[[Conjunctive Normal Form]]"
 tags: [Math/Logic, Math/Theory, CS/Computation, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [encoding, propositional encoding, modelling in logic, seating problem,
 # [[Encoding Problems in Propositional Logic]]
 
 **Context:** [[FIT2014_MOC]] · turning a **real-world problem** into a logical formula · the clause recipes live in [[CNF Encoding Patterns (At Least, At Most, Exactly)]]
-**Task signature:** given an English scenario, define propositions and write a CNF formula whose satisfying assignments are exactly the valid solutions.
+**Problem it solves:** given an English scenario, define propositions and write a CNF formula whose satisfying assignments are exactly the valid solutions.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "write a Boolean expression representing …" ➔ run the four-step pipeline: **choose propositions → state constraints in English → formalise each → convert to CNF**.
-> - **⚡ Critical Bottleneck:** you **cannot assume physical common sense** — with $v$ propositions all $2^{v}$ assignments are candidates, so every "obvious" impossibility (one person in two seats) must be **explicitly forbidden** by a clause.
+> - **⚡ Key Constraint:** you **cannot assume physical common sense** — with $v$ propositions all $2^{v}$ assignments are candidates, so every "obvious" impossibility (one person in two seats) must be **explicitly forbidden** by a clause.
 
 ## 🔧 The four-step pipeline
 1. **Choose propositions** ➔ strip extraneous detail; index by the things that matter. *Seating example:* $P_{F,s}$ = "friend $F$ is seated in seat $s$" for $F\in\{A,B,C\}$, $s\in\{13,14,15,16\}$ ⟹ $3\times 4=12$ propositions, hence $2^{12}$ truth assignments.
@@ -46,8 +47,8 @@ $$(\neg P_{A,s}\vee\neg P_{B,s})\wedge(\neg P_{A,s}\vee\neg P_{C,s})\wedge(\neg 
 | **none or both** of $P,Q$ | $P\Leftrightarrow Q$ | $(\neg P\vee Q)\wedge(P\vee\neg Q)$ |
 | **no more than one** of $P,Q,R$ | pairwise not-both | $(\neg P\vee\neg Q)\wedge(\neg P\vee\neg R)\wedge(\neg Q\vee\neg R)$ |
 
-## 🥋 Kata
-> [!QUESTION]- Kata: A guest list must include at least one of $\{H,R,He,G\}$; may include Hagrid only if it includes Norberta; includes none or both of Fred and George; and no more than one of $\{V,B,D\}$. Write the whole thing in CNF.
+## ✍️ Practice
+> [!QUESTION]- Practice: A guest list must include at least one of $\{H,R,He,G\}$; may include Hagrid only if it includes Norberta; includes none or both of Fred and George; and no more than one of $\{V,B,D\}$. Write the whole thing in CNF.
 > > [!SUCCESS]- Reference solution
 > > $$
 > > \begin{aligned}
@@ -59,7 +60,7 @@ $$(\neg P_{A,s}\vee\neg P_{B,s})\wedge(\neg P_{A,s}\vee\neg P_{C,s})\wedge(\neg 
 > > $$
 > > - **Key move:** rewrite $\Rightarrow$ and $\Leftrightarrow$ into clauses **before** claiming CNF; "no more than one" expands **pairwise**, never as one big negated clause.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Nothing is implied by physics** ➔ $P_{A,13}\wedge P_{A,14}$ (Alice in two seats) is a perfectly legal truth assignment unless a clause forbids it; enumerate the impossibilities.
 - 💡 **$\Rightarrow$ and $\Leftrightarrow$ are not CNF** ➔ a formula containing them is not yet in CNF; rewrite as $(\neg P\vee Q)$ and $(\neg P\vee Q)\wedge(P\vee\neg Q)$.
 - 💡 **"No more than one" $\neq$ one negated clause** ➔ $(\neg V\vee\neg B\vee\neg D)$ merely forbids all three together; the correct encoding is **pairwise**.
@@ -68,5 +69,5 @@ $$(\neg P_{A,s}\vee\neg P_{B,s})\wedge(\neg P_{A,s}\vee\neg P_{C,s})\wedge(\neg 
 ## 🧠 Active Recall
 > [!FAQ]- Why must an encoding explicitly forbid "Alice sits in seats 13 and 14", when that is physically impossible?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the formula's meaning is fixed entirely by its **truth assignments** — all $2^{12}$ of them are candidates, and many assign True to both $P_{A,13}$ and $P_{A,14}$. Logic imports no physical knowledge.
-> > - **Technical Justification:** **Constraints define validity** ➔ only clauses distinguish valid seatings from nonsense, so every real-world impossibility must appear as an explicit "at most one" clause set.
+> > - **Short answer:** the formula's meaning is fixed entirely by its **truth assignments** — all $2^{12}$ of them are candidates, and many assign True to both $P_{A,13}$ and $P_{A,14}$. Logic imports no physical knowledge.
+> > - **Why:** **Constraints define validity** ➔ only clauses distinguish valid seatings from nonsense, so every real-world impossibility must appear as an explicit "at most one" clause set.

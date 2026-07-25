@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Sample Space and Events]]"
 tags: [Math/Probability, Math/Combinatorics, Math/Discrete]
 aliases: [Equally Likely Outcomes, Laplace Probability]
@@ -11,7 +12,7 @@ aliases: [Equally Likely Outcomes, Laplace Probability]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\mathrm{Pr}(A)\in[0,1]$ measures likelihood ➔ $\mathrm{Pr}(A)=\sum_{x\in A}\mathrm{Pr}(x)$; uniform finite ⟹ $|A|/|U|$.
 > - **📦 Core Components:** axioms (normalised weights) ➔ event = sum over outcomes ➔ Laplace ratio when equally likely.
-> - **⚡ Critical Bottleneck:** $|A|/|U|$ requires finiteness **and** uniformity; no uniform distribution on $\mathbb N$ exists.
+> - **⚡ Key Constraint:** $|A|/|U|$ requires finiteness **and** uniformity; no uniform distribution on $\mathbb N$ exists.
 
 ## 📝 Core
 
@@ -32,25 +33,25 @@ aliases: [Equally Likely Outcomes, Laplace Probability]
 - **Infinite $U$** ➔ needs a convergent sum: $\mathrm{Pr}(n)=\tfrac1{2^n}$ on $\mathbb N$ sums to $1$ ([[Geometric Series]]).
 - **No uniform on $\mathbb N$** ➔ constant $c>0$ sums to $\infty$, $c=0$ sums to $0$ — uniformity over an infinite set is impossible.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Only if equally likely** ➔ dice totals are non-uniform, so $|A|/|U|$ is wrong on the 11 totals — refine to the uniform 36-pair space.
 - 💡 **No uniform distribution on $\mathbb N$** ➔ any constant weight fails normalisation; state finiteness before using Laplace.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the axioms of a probability assignment and the equally-likely special case.
-> - **Core Insight Requirement:** Normalise, then sum.
+> - **Hint:** Normalise, then sum.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $0\le\mathrm{Pr}(x)\le1$, $\sum\mathrm{Pr}(x)=1$, $\mathrm{Pr}(A)=\sum_{x\in A}\mathrm{Pr}(x)$; uniform finite ⟹ $|A|/|U|$.
-> > - **Technical Justification:** **Counting ratio** ➔ uniform probability is favourable ÷ total (Laplace).
+> > - **Short answer:** $0\le\mathrm{Pr}(x)\le1$, $\sum\mathrm{Pr}(x)=1$, $\mathrm{Pr}(A)=\sum_{x\in A}\mathrm{Pr}(x)$; uniform finite ⟹ $|A|/|U|$.
+> > - **Why:** **Counting ratio** ➔ uniform probability is favourable ÷ total (Laplace).
 
 > [!FAQ]- Show $\mathrm{Pr}(n)=1/2^n$ on $\mathbb N$ is valid, and why no uniform distribution on $\mathbb N$ exists.
-> - **Core Insight Requirement:** Normalisation.
+> - **Hint:** Normalisation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\sum_{n\ge1}\tfrac1{2^n}=1$ (geometric); a constant $c$ gives $\infty$ or $0$.
-> > - **Technical Justification:** **Fails normalisation** ➔ positive integers cannot be made equally likely.
+> > - **Short answer:** $\sum_{n\ge1}\tfrac1{2^n}=1$ (geometric); a constant $c$ gives $\infty$ or $0$.
+> > - **Why:** **Fails normalisation** ➔ positive integers cannot be made equally likely.
 
 > [!FAQ]- Two fair dice: why is $\mathrm{Pr}(\text{total}=7)$ not $\tfrac1{11}$, and what is it?
-> - **Core Insight Requirement:** Refine to the uniform substrate.
+> - **Hint:** Refine to the uniform substrate.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Totals are non-uniform; on the 36 equally-likely ordered pairs, six give 7 ⟹ $\mathrm{Pr}=\tfrac6{36}=\tfrac16$.
-> > - **Technical Justification:** **Uniformity check** ➔ Laplace applies only where outcomes are interchangeable — pairs, not totals.
+> > - **Short answer:** Totals are non-uniform; on the 36 equally-likely ordered pairs, six give 7 ⟹ $\mathrm{Pr}=\tfrac6{36}=\tfrac16$.
+> > - **Why:** **Uniformity check** ➔ Laplace applies only where outcomes are interchangeable — pairs, not totals.

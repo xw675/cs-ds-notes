@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 3
 parent: "[[Kleene's Theorem]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [regexp to NFA, regex to NFA, Thompson construction, edge rewriting, ex
 # [[Converting Regular Expressions to NFA]]
 
 **Context:** [[FIT2014_MOC]] · leg 1 of the [[Kleene's Theorem]] cycle · **Assignment 1 hand skill**
-**Task signature:** given a regular expression, build an NFA recognising the same language.
+**Problem it solves:** given a regular expression, build an NFA recognising the same language.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a regex to turn into a machine ➔ start with **one edge** labelled the whole expression, then **rewrite edges** until every label is a **single letter or $\varepsilon$**.
-> - **⚡ Critical Bottleneck:** the $R^{*}$ rule needs **two $\varepsilon$-transitions and a fresh middle state** — putting the $R$-loop on the left or right node is wrong in general.
+> - **⚡ Key Constraint:** the $R^{*}$ rule needs **two $\varepsilon$-transitions and a fresh middle state** — putting the $R$-loop on the left or right node is wrong in general.
 
 ## 🔧 The procedure
 **Start with:** a Start state and a Final state joined by a single edge labelled with the **entire** regular expression.
@@ -50,8 +51,8 @@ stateDiagram-v2
 
 - **Order is free** ➔ any rule may be applied to any eligible edge; the resulting NFAs differ in shape but all recognise the same language.
 
-## 🥋 Kata
-> [!QUESTION]- Kata: Convert $\mathtt{a}(\mathtt{aa}\cup\mathtt{bb})^{*}\mathtt{b}$ into an NFA with only letter/$\varepsilon$ labels.
+## ✍️ Practice
+> [!QUESTION]- Practice: Convert $\mathtt{a}(\mathtt{aa}\cup\mathtt{bb})^{*}\mathtt{b}$ into an NFA with only letter/$\varepsilon$ labels.
 > > [!SUCCESS]- Reference solution
 > > 1. **Concatenation** ⟹ three edges in series: $\mathtt{a}$, then $(\mathtt{aa}\cup\mathtt{bb})^{*}$, then $\mathtt{b}$.
 > > 2. **Star** on the middle edge ⟹ $\varepsilon$ into a **fresh** state, a self-loop labelled $\mathtt{aa}\cup\mathtt{bb}$, $\varepsilon$ out.
@@ -59,7 +60,7 @@ stateDiagram-v2
 > > 4. **Concatenation** on each ⟹ $\mathtt{a}\!\cdot\!\mathtt{a}$ and $\mathtt{b}\!\cdot\!\mathtt{b}$ through new middle states.
 > > - **Key move:** apply **star before union** here, so the two $\varepsilon$-edges seal the loop before it is split into branches.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\emptyset$ deletes, it does not become a state** ➔ an edge labelled $\emptyset$ is removable because no string matches it.
 - 💡 **Don't skip the middle state for $R^{*}$** ➔ attaching the loop directly to an existing node lets neighbouring edges leak into the loop.
 - 💡 **Union means parallel, not sequential** ➔ $R\cup S$ becomes two edges **between the same pair** of states; chaining them would encode $RS$.
@@ -68,5 +69,5 @@ stateDiagram-v2
 ## 🧠 Active Recall
 > [!FAQ]- Why does the $R^{*}$ rule introduce a new state and two $\varepsilon$-transitions rather than looping on an existing node?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** an existing node may have **other incoming or outgoing edges** ($P,Q$ on the left; $S,T$ on the right). A loop attached there could be entered from those edges, so the machine would accept strings like $PR^{*}Q$ that the original expression does not describe.
-> > - **Technical Justification:** **Isolation of the loop** ➔ the fresh middle state is reachable only through the two $\varepsilon$-edges, guaranteeing that repetitions of $R$ occur exactly where the star sits in the expression.
+> > - **Short answer:** an existing node may have **other incoming or outgoing edges** ($P,Q$ on the left; $S,T$ on the right). A loop attached there could be entered from those edges, so the machine would accept strings like $PR^{*}Q$ that the original expression does not describe.
+> > - **Why:** **Isolation of the loop** ➔ the fresh middle state is reachable only through the two $\varepsilon$-edges, guaranteeing that repetitions of $R$ occur exactly where the star sits in the expression.

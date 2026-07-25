@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 7
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [INSERT, TO_DATE, SEQUENCE, NEXTVAL, CURRVAL]
 # [[DML INSERT (Oracle)]]
 
 **Context:** [[FIT2094_MOC]] · add rows to a populated schema · the first [[SQL Sublanguages (DDL, DML, DCL)|DML]] verb · dates and numeric PKs need helpers
-**Task signature:** add a new row, supplying a typed [[Oracle Data Types|DATE]], a generated numeric PK, and NULLs for optional columns.
+**Problem it solves:** add a new row, supplying a typed [[Oracle Data Types|DATE]], a generated numeric PK, and NULLs for optional columns.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** new row to add ➔ INSERT with a **column list** (positional pairing) + TO_DATE for dates + a SEQUENCE for numeric PKs.
-> - **⚡ Critical Bottleneck:** a date literal `'10/Dec/2022'` is a **string, not a date** — always wrap with TO_DATE; and call NEXTVAL before CURRVAL.
+> - **⚡ Key Constraint:** a date literal `'10/Dec/2022'` is a **string, not a date** — always wrap with TO_DATE; and call NEXTVAL before CURRVAL.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -30,8 +31,8 @@ VALUES (200, TO_DATE('10 Dec 2022','DD Mon YYYY'), 1200.10, 0, 120, 'DIN2');
 - **No column list** ➔ `INSERT INTO drone VALUES (200, TO_DATE(...), 1200.10, 0, 120, NULL, 'DIN2');` — all columns, NULL placed positionally.
 - **Reuse a generated key** ➔ parent uses `seq.NEXTVAL`, child reuses `seq.CURRVAL` for the same value within the session.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Insert manufacturer `'Monash Drones'` with a sequence-generated PK, then a `drone_type` row reusing that same manufacturer id.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Insert manufacturer `'Monash Drones'` with a sequence-generated PK, then a `drone_type` row reusing that same manufacturer id.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > INSERT INTO manufacturer VALUES (manuf_seq.NEXTVAL, 'Monash Drones');
@@ -39,6 +40,6 @@ VALUES (200, TO_DATE('10 Dec 2022','DD Mon YYYY'), 1200.10, 0, 120, 'DIN2');
 > > ```
 > > - **Key move:** NEXTVAL first (creates the current value), CURRVAL reuses it — never hardcode the id.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Date strings silently misparse** ➔ `'10/12/2026'` is DD/MM or MM/DD depending on locale; TO_DATE with an explicit picture clause removes the ambiguity.
 - 💡 **CURRVAL before NEXTVAL errors** ➔ CURRVAL only echoes an already-generated value; NEXTVAL must run first in the session. Sequence values may have **gaps** (caching/restart) but are always unique, and are not reliable after COMMIT/ROLLBACK.

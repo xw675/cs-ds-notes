@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Conceptual vs Logical Model]]"
 tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** represent data as mathematical relations (Codd 1970) ➔ access by content, not navigation.
 > - **📦 Core Components:** [[Relation (Database)|relation]] ➔ [[Domain (Relational Model)|domain]] ➔ [[Relational Algebra]].
-> - **⚡ Critical Bottleneck:** a relation is an abstract **set**, not a table; classical model assumes complete info (no NULLs).
+> - **⚡ Key Constraint:** a relation is an abstract **set**, not a table; classical model assumes complete info (no NULLs).
 
 ## 📝 Core
 ### 1. The Model
@@ -35,7 +36,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 | **relational** | by content | set of relations |
 | logical vs physical | portable | vendor storage differs |
 
-> [!NOTE] **Crossover Invariant:** the logical relation is independent of the physical binary storage — the separation that makes relational designs portable across vendors. A relation *is* the FIT1058 [[n-ary Relation]]; the ER design becomes relations in the [[Conceptual vs Logical Model|logical model]].
+> [!NOTE] **When It Flips:** the logical relation is independent of the physical binary storage — the separation that makes relational designs portable across vendors. A relation *is* the FIT1058 [[n-ary Relation]]; the ER design becomes relations in the [[Conceptual vs Logical Model|logical model]].
 
 ## 📊 Exam Execution Trace
 
@@ -49,18 +50,18 @@ Classifying access:
 | 2 | network | navigate multi-parent |
 | 3 | relational | condition on values |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Relation ≠ table** ➔ a relation is a *set* of tuples (no duplicates, unordered, atomic); a table is a display that may have duplicate/ordered rows.
 
 ## 🧠 Active Recall
 > [!FAQ]- What does the relational model represent data with, and how does it differ from hierarchical/network models?
-> - **Core Insight Requirement:** Content vs navigation.
+> - **Hint:** Content vs navigation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Data as mathematical relations (Codd 1970); earlier models were navigational (pointer traversal).
-> > - **Technical Justification:** **By content** ➔ relational access states conditions on attribute values.
+> > - **Short answer:** Data as mathematical relations (Codd 1970); earlier models were navigational (pointer traversal).
+> > - **Why:** **By content** ➔ relational access states conditions on attribute values.
 
 > [!FAQ]- Why is it wrong to treat a relation and a table as the same thing?
-> - **Core Insight Requirement:** Set vs display.
+> - **Hint:** Set vs display.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A relation is a *set* of tuples (no duplicates, unordered, atomic); a table is a visual display.
-> > - **Technical Justification:** **Integrity rules** ➔ the relation carries the [[Relation Properties]]; a table may not.
+> > - **Short answer:** A relation is a *set* of tuples (no duplicates, unordered, atomic); a table is a visual display.
+> > - **Why:** **Integrity rules** ➔ the relation carries the [[Relation Properties]]; a table may not.

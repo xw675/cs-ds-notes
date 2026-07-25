@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 12
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, CS/Ethics, Monash/CS_DS]
 aliases: [privacy, PETs, privacy enhancing technologies, you are the product, cookie pop-ups, ring signatures, data profiling, tracking]
@@ -10,7 +11,7 @@ aliases: [privacy, PETs, privacy enhancing technologies, you are the product, co
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** in the **big-data** age companies build vast **cross-linked profiles** ➔ minimise what you expose; **privacy** and **cybersecurity** reinforce each other.
-> - **⚡ Critical Bottleneck:** strong **PETs exist but are rarely used** (enterprises **want** the data), and **cookie pop-ups target compliance, not traceability** — the protection gap is by design.
+> - **⚡ Key Constraint:** strong **PETs exist but are rarely used** (enterprises **want** the data), and **cookie pop-ups target compliance, not traceability** — the protection gap is by design.
 
 ## 📝 The privacy problem
 - **Big data** ➔ companies build **large user profiles**; **cross-company linking** amplifies them; **one photo** can identify you and link profiles.
@@ -30,12 +31,12 @@ aliases: [privacy, PETs, privacy enhancing technologies, you are the product, co
 ## 🔗 Privacy ⟷ cybersecurity
 - **Same direction** ➔ many privacy choices **also improve security** — **smaller attack surface**, **less data to misuse/leak**.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Compliance ≠ protection** ➔ a cookie banner satisfies the law but **doesn't reduce traceability**; don't mistake consent theatre for privacy.
 - 💡 **Privacy is not opposed to security** ➔ data minimisation shrinks both the **privacy** exposure and the **breach** impact — they align, not conflict.
 
 ## 🧠 Active Recall
 > [!FAQ]- How can privacy-protecting choices simultaneously improve an organisation's cybersecurity?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** collecting and retaining **less personal data** means a **smaller attack surface** and **less data available to be stolen or misused** if a breach occurs — a privacy win *is* a security win.
-> > - **Technical Justification:** **Data minimisation** ➔ every profile field not stored is one an attacker cannot exfiltrate; PETs (e.g. **ring signatures**) further limit linkable identity, reducing both privacy harm and breach impact.
+> > - **Short answer:** collecting and retaining **less personal data** means a **smaller attack surface** and **less data available to be stolen or misused** if a breach occurs — a privacy win *is* a security win.
+> > - **Why:** **Data minimisation** ➔ every profile field not stored is one an attacker cannot exfiltrate; PETs (e.g. **ring signatures**) further limit linkable identity, reducing both privacy harm and breach impact.

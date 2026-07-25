@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 10
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [CASE, DECODE]
 # [[SQL Conditional Expressions (CASE, DECODE)]]
 
 **Context:** [[FIT2094_MOC]] · if/else inside a [[SQL SELECT and WHERE|SELECT]] list · map coded values to readable labels · alias the result column
-**Task signature:** return a different output value per row depending on a column's value.
+**Problem it solves:** return a different output value per row depending on a column's value.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "show X as a label" / decode a status code ➔ CASE in the SELECT list; DECODE for pure equality.
-> - **⚡ Critical Bottleneck:** CASE returns the **first** matching WHEN; DECODE handles **equality only** — ranges need CASE.
+> - **⚡ Key Constraint:** CASE returns the **first** matching WHEN; DECODE handles **equality only** — ranges need CASE.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -37,8 +38,8 @@ ORDER BY emp_no;
 - **DECODE equivalent** ➔ `DECODE(emp_type,'F','Full time','C','Contract')` ≡ a simple CASE on equality.
 - **Range needs searched CASE** ➔ `CASE WHEN mark >= 50 THEN 'Pass' ELSE 'Fail' END` — DECODE can't do `>=`.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Label employees `'Full time'`/`'Contract'` for type F/C using DECODE; show name (fname + space + lname) and the label.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Label employees `'Full time'`/`'Contract'` for type F/C using DECODE; show name (fname + space + lname) and the label.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT emp_fname || ' ' || emp_lname AS employee_fullname,
@@ -47,6 +48,6 @@ ORDER BY emp_no;
 > > ```
 > > - **Key move:** DECODE lists value→result pairs; a trailing arg would be the default.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **DECODE can't do ranges** ➔ for `>`/`<`/`BETWEEN` logic use a searched CASE; DECODE only matches exact values.
 - 💡 **Order matters in CASE** ➔ the first true WHEN wins, so put narrower conditions before broader ones.

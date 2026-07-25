@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relational Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** rules keeping relational data consistent ➔ entity / referential / column integrity.
 > - **📦 Core Components:** entity (PK) ➔ referential (FK) ➔ column/domain (attribute values).
-> - **⚡ Critical Bottleneck:** declared once in the schema, enforced automatically on every DML operation.
+> - **⚡ Key Constraint:** declared once in the schema, enforced automatically on every DML operation.
 
 ## 📝 Core
 ### 1. The Three Rules
@@ -32,7 +33,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > student_id  NUMBER      REFERENCES STUDENT,   -- referential: match PK or NULL
 > age         NUMBER(3)   CHECK (age BETWEEN 0 AND 120)  -- column/domain
 > ```
-> 💡 **Exam Pitfall:** **Entity integrity ⟹ usable PK** ➔ a NULL PK can't identify a tuple, a duplicate PK makes two tuples indistinguishable ([[Relation Properties]]); NULL FKs are allowed (optional participation).
+> 💡 **Common Mistake:** **Entity integrity ⟹ usable PK** ➔ a NULL PK can't identify a tuple, a duplicate PK makes two tuples indistinguishable ([[Relation Properties]]); NULL FKs are allowed (optional participation).
 
 ## ⚖️ Core Decision Matrix
 | Rule | Guards | Constraint |
@@ -41,7 +42,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | referential | relationships | FK matches PK or NULL |
 | column/domain | attribute values | one domain per attribute |
 
-> [!NOTE] **Crossover Invariant:** constraints are part of the schema, so the DBMS rejects any insert/update/delete that would violate them — no per-operation application code. Referential integrity constrains deletes (block or cascade). NULL allowances are SQL/RDBMS features (classical algebra has none).
+> [!NOTE] **When It Flips:** constraints are part of the schema, so the DBMS rejects any insert/update/delete that would violate them — no per-operation application code. Referential integrity constrains deletes (block or cascade). NULL allowances are SQL/RDBMS features (classical algebra has none).
 
 ## 📊 Exam Execution Trace
 
@@ -68,13 +69,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- State the three data-integrity rules and what each protects.
-> - **Core Insight Requirement:** Identity / relationships / values.
+> - **Hint:** Identity / relationships / values.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Entity (PK unique+non-NULL) → identity; referential (FK matches PK or NULL) → relationships; column/domain (same domain) → values.
-> > - **Technical Justification:** **RDBMS-enforced** ➔ declared in the schema, applied automatically.
+> > - **Short answer:** Entity (PK unique+non-NULL) → identity; referential (FK matches PK or NULL) → relationships; column/domain (same domain) → values.
+> > - **Why:** **RDBMS-enforced** ➔ declared in the schema, applied automatically.
 
 > [!FAQ]- Why does entity integrity forbid a NULL or duplicate primary key?
-> - **Core Insight Requirement:** PK is the identifier.
+> - **Hint:** PK is the identifier.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** NULL PK → unidentifiable tuple; duplicate PK → indistinguishable tuples.
-> > - **Technical Justification:** **Uniqueness** ➔ enforced by a unique index, making the PK a reliable handle.
+> > - **Short answer:** NULL PK → unidentifiable tuple; duplicate PK → indistinguishable tuples.
+> > - **Why:** **Uniqueness** ➔ enforced by a unique index, making the PK a reliable handle.

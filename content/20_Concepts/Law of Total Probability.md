@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Conditional Probability]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** partition $U=\bigsqcup A_i$ ⟹ $\mathrm{Pr}(B)=\sum_i\mathrm{Pr}(B\mid A_i)\mathrm{Pr}(A_i)$ ➔ weighted sum of conditionals.
 > - **📦 Core Components:** distribute over the partition ➔ additivity ➔ multiplication rule.
-> - **⚡ Critical Bottleneck:** partition must be disjoint + exhaustive; supplies Bayes' denominator.
+> - **⚡ Key Constraint:** partition must be disjoint + exhaustive; supplies Bayes' denominator.
 
 ## 📝 Core
 ### 1. The Law
@@ -30,7 +31,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 
 $$\mathrm{Pr}(B)=\sum_{i=1}^n\mathrm{Pr}(B\mid A_i)\,\mathrm{Pr}(A_i),\qquad U=\bigsqcup_i A_i$$
 
-> [!NOTE] **Crossover Invariant:** the sum $\sum_i\mathrm{Pr}(B\mid A_i)\mathrm{Pr}(A_i)$ is exactly the **denominator** (normaliser) of the extended [[Bayes' Theorem]].
+> [!NOTE] **When It Flips:** the sum $\sum_i\mathrm{Pr}(B\mid A_i)\mathrm{Pr}(A_i)$ is exactly the **denominator** (normaliser) of the extended [[Bayes' Theorem]].
 
 ## 📊 Exam Execution Trace
 
@@ -44,18 +45,18 @@ Three coins (Fair, DoubleHead, DoubleTail), $\mathrm{Pr}(\text{Heads})$:
 | 2 | DoubleHead | $\tfrac13$ | 1 | $\tfrac13$ |
 | 3 | DoubleTail | $\tfrac13$ | 0 | 0 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Partition must cover with no overlap** ➔ a gap or overlap breaks the equality; each $\mathrm{Pr}(A_i)>0$ so the conditionals exist.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the law of total probability and derive it from additivity.
-> - **Core Insight Requirement:** Distribute + add + multiply.
+> - **Hint:** Distribute + add + multiply.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(B)=\sum_i\mathrm{Pr}(B\mid A_i)\mathrm{Pr}(A_i)$ over a partition.
-> > - **Technical Justification:** **$B=\bigsqcup(B\cap A_i)$** ➔ additivity then the multiplication rule.
+> > - **Short answer:** $\mathrm{Pr}(B)=\sum_i\mathrm{Pr}(B\mid A_i)\mathrm{Pr}(A_i)$ over a partition.
+> > - **Why:** **$B=\bigsqcup(B\cap A_i)$** ➔ additivity then the multiplication rule.
 
 > [!FAQ]- Why is the law useful, and where does it appear in Bayes' Theorem?
-> - **Core Insight Requirement:** Easy conditionals; the normaliser.
+> - **Hint:** Easy conditionals; the normaliser.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Converts a hard $\mathrm{Pr}(B)$ into a sum of simple conditionals over causes $A_i$.
-> > - **Technical Justification:** **Bayes' denominator** ➔ the same sum normalises the posteriors to sum to 1.
+> > - **Short answer:** Converts a hard $\mathrm{Pr}(B)$ into a sum of simple conditionals over causes $A_i$.
+> > - **Why:** **Bayes' denominator** ➔ the same sum normalises the posteriors to sum to 1.

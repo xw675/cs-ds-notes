@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $v,w$ connected iff a path/walk joins them ➔ graph connected iff every pair is.
 > - **📦 Core Components:** walk relation ➔ [[Equivalence Relation]] ➔ classes = components.
-> - **⚡ Critical Bottleneck:** a component is a **maximal** connected [[Subgraph]]; "connected" ≠ "adjacent".
+> - **⚡ Key Constraint:** a component is a **maximal** connected [[Subgraph]]; "connected" ≠ "adjacent".
 
 ## 📝 Core
 ### 1. The Definitions
@@ -33,7 +34,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 $$v\,R\,w \iff \text{a walk joins } v,w$$
 $$\text{refl (0-walk)},\ \text{sym (reverse)},\ \text{trans (concatenate)} \Rightarrow \text{classes partition } V = \text{components}$$
 
-> [!NOTE] **Crossover Invariant:** because the walk relation is an [[Equivalence Relation]], components are automatically disjoint and cover $V$ ([[Set Partition]]) — no overlaps, nothing left out. Walk- and path-connectivity coincide.
+> [!NOTE] **When It Flips:** because the walk relation is an [[Equivalence Relation]], components are automatically disjoint and cover $V$ ([[Set Partition]]) — no overlaps, nothing left out. Walk- and path-connectivity coincide.
 
 ## 📊 Exam Execution Trace
 
@@ -47,18 +48,18 @@ $G$: $E=\{ab,ac,bc,cd,fg\}$:
 | 2 | 2 | $\{e\}$ | $\emptyset$ |
 | 3 | 3 | $\{f,g\}$ | $fg$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A component must be maximal** ➔ the triangle $\{a,b,c\}$ inside $\{a,b,c,d\}$ is connected but not a component; an isolated vertex is its own component.
 
 ## 🧠 Active Recall
 > [!FAQ]- Show connectivity is an equivalence relation and that its classes are the components.
-> - **Core Insight Requirement:** Reflexive/symmetric/transitive.
+> - **Hint:** Reflexive/symmetric/transitive.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** 0-walk (refl), reverse (sym), concatenate (trans) ⟹ classes partition $V$.
-> > - **Technical Justification:** **Maximal reachable set** ➔ each class is a component's vertex set.
+> > - **Short answer:** 0-walk (refl), reverse (sym), concatenate (trans) ⟹ classes partition $V$.
+> > - **Why:** **Maximal reachable set** ➔ each class is a component's vertex set.
 
 > [!FAQ]- Why is a connected subgraph not always a component, and why isn't "connected" the same as "adjacent"?
-> - **Core Insight Requirement:** Maximality + path length.
+> - **Hint:** Maximality + path length.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A component must be maximal connected; connected = path of any length, adjacent = one edge.
-> > - **Technical Justification:** **Adjacent ⟹ connected** ➔ but not conversely; a sub-triangle isn't maximal.
+> > - **Short answer:** A component must be maximal connected; connected = path of any length, adjacent = one edge.
+> > - **Why:** **Adjacent ⟹ connected** ➔ but not conversely; a sub-triangle isn't maximal.

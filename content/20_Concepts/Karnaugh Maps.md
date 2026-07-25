@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 2
 parent: "[[Sum-of-Products (Functions to Circuits)]]"
 tags: [CS/Systems, Math/Logic]
 aliases: [K-Maps, K-Map Simplification]
@@ -11,7 +12,7 @@ aliases: [K-Maps, K-Map Simplification]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** plot the truth table on a grid whose neighbours differ in ONE variable ➔ circle maximal power-of-2 groups of 1s ➔ read each group as a product dropping every variable that varies inside it.
 > - **📦 Core Components:** Gray-code column order ($00,01,\mathbf{11},\mathbf{10}$) ➔ grouping rules ➔ read-off.
-> - **⚡ Critical Bottleneck:** column order is NOT binary counting — $11$ before $10$; wrap-around groups are legal.
+> - **⚡ Key Constraint:** column order is NOT binary counting — $11$ before $10$; wrap-around groups are legal.
 
 ## 📝 Core
 - **Layout** ➔ variables split across axes; adjacent cells (including **wrap-around** edges) differ in exactly one variable — that's what makes grouping = simplification.
@@ -44,14 +45,14 @@ Truth table ($F=1$ on $010,011,100,110,111$) plotted with columns $XY = 00,01,11
 | 2 | pair (columns $11,10$, row $Z{=}0$) | $X{=}1$, $Z{=}0$ ($Y$ varies) | $X\overline{Z}$ |
 **Result:** $F = Y + X\overline{Z}$ — versus the 5-term raw SOP from [[Sum-of-Products (Functions to Circuits)]].
 
-## 🥋 Kata
+## ✍️ Practice
 > [!QUESTION]- Plot $F(X,Y,Z)$ with 1s at $000, 010, 100, 110$ (i.e. all rows with $Z=0$)… but draw the map first without reading ahead. Group and simplify.
 > > [!SUCCESS]- Answer
 > > - Map: entire $Z{=}0$ row is 1s ➔ one group of 4 (wrapping across all columns).
 > > - $X,Y$ both vary ⟹ dropped; $Z$ constantly $0$ ⟹ $F = \overline{Z}$.
 > > - **Key move:** the bigger the group, the fewer the surviving variables — a 4-group in a 3-var map leaves exactly one.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$00,01,11,10$ — not $00,01,10,11$** ➔ binary-counting order breaks single-bit adjacency and every grouping after it.
 - 💡 **Maximal beats multiple** ➔ two 2-groups where one 4-group fits gives a correct but NON-minimal answer — marked down.
 - 💡 **Forgetting wrap-around** ➔ leftmost and rightmost columns are neighbours; missing edge groups leaves redundant terms.

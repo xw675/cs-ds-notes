@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: [10, 11]
 parent: "[[Dictionary (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** map keys directly to array indices ➔ expected $O(1)$ add/search/delete, beating sorted-list $O(\log n)$, but unordered.
 > - **📦 Core Components:** **Hash Function** ➔ uniform spread | **Collision Resolution** ➔ chaining vs open addressing | **Load Factor** $\alpha$ ➔ cost dial + rehash trigger.
-> - **⚡ Critical Bottleneck:** expected $\Theta(1+\alpha)$, worst-case $O(n)$ on collisions ➔ hinges on a uniform hash + bounded $\alpha$.
+> - **⚡ Key Constraint:** expected $\Theta(1+\alpha)$, worst-case $O(n)$ on collisions ➔ hinges on a uniform hash + bounded $\alpha$.
 
 ## 📝 Core
 ### 1. The Hash Table (Expected $O(1)$)
@@ -58,7 +59,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >     PRIME = 7
 >     return PRIME - (ord(key[0]) % PRIME)
 > ```
-> 💡 **Exam Pitfall:** **Summing chars ignores position** ➔ anagrams collide; a multiplier sharing a factor with $m$ (`*1024 % 128`) keeps only the last char — prime base + prime $m$, coprime.
+> 💡 **Common Mistake:** **Summing chars ignores position** ➔ anagrams collide; a multiplier sharing a factor with $m$ (`*1024 % 128`) keeps only the last char — prime base + prime $m$, coprime.
 
 ### 🔹 Separate Chaining — a LinkList per cell
 > [!code]- chained `add` / `search`
@@ -76,7 +77,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >             if k == key: return v
 >     raise KeyError(key)
 > ```
-> 💡 **Exam Pitfall:** **Cost is $\Theta(1+\alpha)$** ➔ expected chain length $\alpha$ ⟹ unsuccessful search $\alpha$, successful $1+\alpha/2$; $O(1)$ only while $\alpha$ is bounded.
+> 💡 **Common Mistake:** **Cost is $\Theta(1+\alpha)$** ➔ expected chain length $\alpha$ ⟹ unsuccessful search $\alpha$, successful $1+\alpha/2$; $O(1)$ only while $\alpha$ is bounded.
 
 ### 🔹 Linear Probing — `+1` probe, rehash-on-full, correct delete
 > [!code]- `__linear_probe`, `__setitem__`, `__delitem__`
@@ -111,7 +112,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >         self[str(item[0])] = item[1]
 >         pos = (pos + 1) % len(self.table)
 > ```
-> 💡 **Exam Pitfall:** **Scan the whole table before rehashing** ➔ the add might be an **update**; in practice rehash much earlier, once $\alpha$ passes the threshold.
+> 💡 **Common Mistake:** **Scan the whole table before rehashing** ➔ the add might be an **update**; in practice rehash much earlier, once $\alpha$ passes the threshold.
 
 ### 🔹 Quadratic & Double Hashing — breaking clusters
 > [!code]- `__quadratic_probe` and `__double_hashing`
@@ -135,7 +136,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 >         else: position = (position + step) % len(self.table)
 >     raise KeyError(key)
 > ```
-> 💡 **Exam Pitfall:** **Quadratic may never find an empty slot** even when one exists; double hashing's step must be non-zero and coprime to $m$ to visit *every* slot.
+> 💡 **Common Mistake:** **Quadratic may never find an empty slot** even when one exists; double hashing's step must be non-zero and coprime to $m$ to visit *every* slot.
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | Trigger Condition | Advantage (Pro) | Disadvantage (Con) / Complexity Bound | Cache / Memory Impact |
@@ -145,7 +146,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
 | **Quadratic probing** | Avoid primary clustering | cures primary | secondary remains; may miss slots | none |
 | **Double hashing** | Near-uniform probing | cures both clusterings | awkward delete; cache-missing jumps | none |
 
-> [!NOTE] **Crossover Invariant:** dictionary backings — unsorted [[List (ADT)]] $O(N)$, [[Sorted List (ADT)]] $O(\log N)$ search/$O(N)$ add, balanced [[Binary Tree]] $O(\log N)$ + **ordered**, **Hash Table** $O(1)^*$ but **unordered**. Use a hash table for big $N$ + no ordering; a BST for range/successor/worst-case guarantees.
+> [!NOTE] **When It Flips:** dictionary backings — unsorted [[List (ADT)]] $O(N)$, [[Sorted List (ADT)]] $O(\log N)$ search/$O(N)$ add, balanced [[Binary Tree]] $O(\log N)$ + **ordered**, **Hash Table** $O(1)^*$ but **unordered**. Use a hash table for big $N$ + no ordering; a BST for range/successor/worst-case guarantees.
 
 ## 📊 Exam Execution Trace
 
@@ -175,31 +176,31 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive the expected search cost of a chained hash table and state the assumption it relies on.
-> - **Core Insight Requirement:** Apply SUHA to chain length.
+> - **Hint:** Apply SUHA to chain length.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Unsuccessful = $\alpha$; successful = $1+\alpha/2$ ➔ both $\Theta(1+\alpha)$.
-> > - **Technical Justification:** **Bounded load** ➔ $\Theta(1+\alpha)=\Theta(1)$ iff $\alpha=O(1)$, assuming uniform independent hashing.
+> > - **Short answer:** Unsuccessful = $\alpha$; successful = $1+\alpha/2$ ➔ both $\Theta(1+\alpha)$.
+> > - **Why:** **Bounded load** ➔ $\Theta(1+\alpha)=\Theta(1)$ iff $\alpha=O(1)$, assuming uniform independent hashing.
 
 > [!FAQ]- A hash table is "$O(1)$" yet rehashing is "$O(n)$" — reconcile this.
-> - **Core Insight Requirement:** Amortise the geometric rehash.
+> - **Hint:** Amortise the geometric rehash.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Rehash (double $m$, reinsert $n$) is an occasional $O(n)$ event, geometrically rare.
-> > - **Technical Justification:** **Doubling argument** ➔ summed and divided over the $n$ inserts, per-insert cost is $O(1)$ amortised (same as [[Dynamic Array Resizing|dynamic arrays]]).
+> > - **Short answer:** Rehash (double $m$, reinsert $n$) is an occasional $O(n)$ event, geometrically rare.
+> > - **Why:** **Doubling argument** ➔ summed and divided over the $n$ inserts, per-insert cost is $O(1)$ amortised (same as [[Dynamic Array Resizing|dynamic arrays]]).
 
 > [!FAQ]- State the linear-probing invariant and use it to explain why naïve deletion is incorrect.
-> - **Core Insight Requirement:** Connect the probe-run invariant to deletion.
+> - **Hint:** Connect the probe-run invariant to deletion.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A key with `hash=N` lies between `N` and the first empty slot ➔ search stops at the first empty.
-> > - **Technical Justification:** **Severed run** ➔ blanking a slot mid-run hides later keys behind an empty ⟹ reported absent; correct delete reinserts the cluster or uses tombstones.
+> > - **Short answer:** A key with `hash=N` lies between `N` and the first empty slot ➔ search stops at the first empty.
+> > - **Why:** **Severed run** ➔ blanking a slot mid-run hides later keys behind an empty ⟹ reported absent; correct delete reinserts the cluster or uses tombstones.
 
 > [!FAQ]- Distinguish primary clustering, secondary clustering, and which scheme cures each.
-> - **Core Insight Requirement:** Map probe step to clustering type.
+> - **Hint:** Map probe step to clustering type.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Primary** (linear) = one growing run; **secondary** (quadratic) = same-home keys share a path; **double hashing** cures both.
-> > - **Technical Justification:** **Key-dependent step** ➔ $h_2(k)$ varies per key, so even same-home keys diverge, approximating uniform probing.
+> > - **Short answer:** **Primary** (linear) = one growing run; **secondary** (quadratic) = same-home keys share a path; **double hashing** cures both.
+> > - **Why:** **Key-dependent step** ➔ $h_2(k)$ varies per key, so even same-home keys diverge, approximating uniform probing.
 
 > [!FAQ]- Why does open addressing demand a far stricter load-factor cap than chaining, and can low $\alpha$ still give $O(n)$?
-> - **Core Insight Requirement:** Distinguish average load from worst-case distribution.
+> - **Hint:** Distinguish average load from worst-case distribution.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Chaining $\Theta(1+\alpha)$ tolerates $\alpha>1$; open addressing caps $\alpha<1/2$–$2/3$ (probes climb steeply as $\alpha\to1$).
-> > - **Technical Justification:** **Average ≠ distribution** ➔ a poor/adversarial hash piles keys into one chain/cluster ⟹ $O(n)$ worst-case even at low load.
+> > - **Short answer:** Chaining $\Theta(1+\alpha)$ tolerates $\alpha>1$; open addressing caps $\alpha<1/2$–$2/3$ (probes climb steeply as $\alpha\to1$).
+> > - **Why:** **Average ≠ distribution** ➔ a poor/adversarial hash piles keys into one chain/cluster ⟹ $O(n)$ worst-case even at low load.

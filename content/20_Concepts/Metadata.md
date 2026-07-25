@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 9
 parent: "[[Data Sources and Open Data]]"
 tags: [DataScience/DataManagement, Monash/CS_DS]
 aliases: [Metadata, Data about Data, EXIF]
@@ -10,7 +11,7 @@ aliases: [Metadata, Data about Data, EXIF]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** describe a data resource so it can be found, understood, and reused ➔ structured **data about data**.
-> - **⚡ Critical Bottleneck:** it must be **machine-processable** (structured), not just a human note — that's what enables discovery/interpretation.
+> - **⚡ Key Constraint:** it must be **machine-processable** (structured), not just a human note — that's what enables discovery/interpretation.
 
 ## 📝 Core
 - **Definition** ➔ structured information that describes, explains, locates, or otherwise makes it easier to retrieve/use/manage an information resource — **data about data**.
@@ -20,12 +21,12 @@ aliases: [Metadata, Data about Data, EXIF]
 - **Why** ➔ facilitate **discovery**, judge **applicability**, enable **interpretation/reuse**, and clarify **ownership/restrictions**.
 - **Examples** ➔ a book's catalogue record; **EXIF** data embedded in a photo; IPTC/USGS standards.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Must be structured** ➔ metadata is machine-readable by design; free-form notes a computer can't parse don't do the job.
 - 💡 **Three flavours, not one** ➔ describing content (descriptive) ≠ documenting structure (structural) ≠ managing lifecycle (administrative).
 
 ## 🧠 Active Recall
 > [!FAQ]- Define metadata and classify: a book's author, its chapter list, and its archiving date.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Metadata is structured data about data that aids retrieval/use/management; author = **descriptive**, chapter list = **structural**, archiving date = **administrative**.
-> > - **Technical Justification:** **Discovery/interpretation/management** ➔ each type serves a different purpose — finding, linking, or governing the resource.
+> > - **Short answer:** Metadata is structured data about data that aids retrieval/use/management; author = **descriptive**, chapter list = **structural**, archiving date = **administrative**.
+> > - **Why:** **Discovery/interpretation/management** ➔ each type serves a different purpose — finding, linking, or governing the resource.

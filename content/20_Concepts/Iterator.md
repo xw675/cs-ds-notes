@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 5
 parent: "[[Iterable]]"
 tags: [CS/DataStructures, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a bookmark object remembering where you are ➔ yields the next element on request.
 > - **📦 Core Components:** `__next__` (next or `StopIteration`) + `__iter__` (returns self) ➔ external (pull) vs internal (push).
-> - **⚡ Critical Bottleneck:** $O(1)$ per `next`, $O(1)$ space (stores only the cursor); **single-use** and invalid if the collection mutates (fail-fast).
+> - **⚡ Key Constraint:** $O(1)$ per `next`, $O(1)$ space (stores only the cursor); **single-use** and invalid if the collection mutates (fail-fast).
 
 ## 📝 Core
 ### 1. The Iterator (Cursor Object)
@@ -38,9 +39,9 @@ tags: [CS/DataStructures, OOP/Python]
 >             return item
 >         raise StopIteration                          # exhausted -> stop the for-loop
 > ```
-> 💡 **Exam Pitfall:** **Use `is not None`, not `!= None`** ➔ `!=` calls the item type's (possibly redefined/slow) `__eq__`; identity `is` is safe and $O(1)$.
+> 💡 **Common Mistake:** **Use `is not None`, not `!= None`** ➔ `!=` calls the item type's (possibly redefined/slow) `__eq__`; identity `is` is safe and $O(1)$.
 
-> [!NOTE] **Crossover Invariant:** external (pull) is flexible — `for x in it`, early break, interleave with `zip`; internal (push) encapsulates order — `map(f, xs)`, tree callback. For deliberate mutation during traversal use a **modifying iterator** ([[List (ADT)|LinkListIterator]]), not a fail-fast read-only one.
+> [!NOTE] **When It Flips:** external (pull) is flexible — `for x in it`, early break, interleave with `zip`; internal (push) encapsulates order — `map(f, xs)`, tree callback. For deliberate mutation during traversal use a **modifying iterator** ([[List (ADT)|LinkListIterator]]), not a fail-fast read-only one.
 
 ## 📊 Exam Execution Trace
 
@@ -68,19 +69,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Contrast external (pull) and internal (push) iteration and give a Python example of each.
-> - **Core Insight Requirement:** Who drives the loop.
+> - **Hint:** Who drives the loop.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** External: client calls `next(it)` (`for x in it`); internal: collection pushes to a callback (`map(f, xs)`, tree traversal `f`).
-> > - **Technical Justification:** **Control vs encapsulation** ➔ external allows early break / interleaving; internal hides traversal order.
+> > - **Short answer:** External: client calls `next(it)` (`for x in it`); internal: collection pushes to a callback (`map(f, xs)`, tree traversal `f`).
+> > - **Why:** **Control vs encapsulation** ➔ external allows early break / interleaving; internal hides traversal order.
 
 > [!FAQ]- What is a fail-fast iterator and what problem does it prevent?
-> - **Core Insight Requirement:** Detect concurrent modification.
+> - **Hint:** Detect concurrent modification.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** It detects structural modification during iteration (via a mod counter) and raises immediately.
-> > - **Technical Justification:** **Prevents silent corruption** ➔ skipping/double-visiting or stale links; deliberate mutation needs a modifying iterator.
+> > - **Short answer:** It detects structural modification during iteration (via a mod counter) and raises immediately.
+> > - **Why:** **Prevents silent corruption** ➔ skipping/double-visiting or stale links; deliberate mutation needs a modifying iterator.
 
 > [!FAQ]- Why is an iterator a separate object from its collection, and what two properties follow?
-> - **Core Insight Requirement:** Holds position without mutating data.
+> - **Hint:** Holds position without mutating data.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (1) Multiple independent iterators can traverse one iterable; (2) it's single-use and $O(1)$ space.
-> > - **Technical Justification:** **Cursor, not copy** ➔ re-iterating needs a fresh one; mutating the collection invalidates it.
+> > - **Short answer:** (1) Multiple independent iterators can traverse one iterable; (2) it's single-use and $O(1)$ space.
+> > - **Why:** **Cursor, not copy** ➔ re-iterating needs a fresh one; mutating the collection invalidates it.

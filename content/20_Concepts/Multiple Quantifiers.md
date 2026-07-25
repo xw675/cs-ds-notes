@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 5
 parent: "[[Quantifiers (Existential and Universal)]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** prefix an expression with several quantifiers, each binding a distinct variable ➔ mixed order changes meaning.
 > - **📦 Core Components:** four $\exists/\forall$ patterns ➔ distinctness needs $\neg(X{=}Y)$ ➔ instantiation + distribution laws.
-> - **⚡ Critical Bottleneck:** $\exists\forall\Rightarrow\forall\exists$ but **not** conversely; like quantifiers commute, mixed do not.
+> - **⚡ Key Constraint:** $\exists\forall\Rightarrow\forall\exists$ but **not** conversely; like quantifiers commute, mixed do not.
 
 ## 📝 Core
 ### 1. Stacking Quantifiers
@@ -36,7 +37,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 | $(\forall p)\vee(\forall q)\Rightarrow\forall X(p\vee q)$ | one way | ⚠️ no converse |
 | $\exists X(p\wedge q)\Rightarrow(\exists p)\wedge(\exists q)$ | one way | ⚠️ no converse |
 
-> [!NOTE] **Crossover Invariant:** counterexample to the missing converse — on $\mathbb Z$ every number satisfies $\text{even}\vee\text{odd}$, so $\forall X(p\vee q)$ holds, yet $(\forall X\,p)\vee(\forall X\,q)$ (all even or all odd) fails.
+> [!NOTE] **When It Flips:** counterexample to the missing converse — on $\mathbb Z$ every number satisfies $\text{even}\vee\text{odd}$, so $\forall X(p\vee q)$ holds, yet $(\forall X\,p)\vee(\forall X\,q)$ (all even or all odd) fails.
 
 ## 📊 Exam Execution Trace
 
@@ -52,18 +53,18 @@ $$
 $$
 **Final Extracted Output:** both hold here ($K_2$ is complete); in general $\exists\forall$ is the stronger form.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Mixed $\exists/\forall$ do not commute** ➔ $\exists X\forall Y$ (one witness for all) is strictly stronger than $\forall Y\exists X$ (witness may vary); only like quantifiers merge to $\exists(X,Y)$/$\forall(X,Y)$.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does the order of mixed quantifiers matter — $\exists X\forall Y\,\text{adj}$ vs $\forall Y\exists X\,\text{adj}$?
-> - **Core Insight Requirement:** Witness dependence.
+> - **Hint:** Witness dependence.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\exists X\forall Y$ = one $X$ for every $Y$; $\forall Y\exists X$ = $X$ may depend on $Y$.
-> > - **Technical Justification:** **One-way implication** ➔ the universal witness serves everyone, so $\exists\forall\Rightarrow\forall\exists$ but not conversely; like quantifiers commute/merge.
+> > - **Short answer:** $\exists X\forall Y$ = one $X$ for every $Y$; $\forall Y\exists X$ = $X$ may depend on $Y$.
+> > - **Why:** **One-way implication** ➔ the universal witness serves everyone, so $\exists\forall\Rightarrow\forall\exists$ but not conversely; like quantifiers commute/merge.
 
 > [!FAQ]- Which quantifier/connective distributions are equivalences, and which are one-directional?
-> - **Core Insight Requirement:** $\forall$–$\wedge$, $\exists$–$\vee$ full; cross-pairs one way.
+> - **Hint:** $\forall$–$\wedge$, $\exists$–$\vee$ full; cross-pairs one way.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\forall(p\wedge q)\equiv\forall p\wedge\forall q$, $\exists(p\vee q)\equiv\exists p\vee\exists q$; the $\forall$–$\vee$ / $\exists$–$\wedge$ pairs hold one way only.
-> > - **Technical Justification:** **Even/odd** ➔ $\forall X(\text{even}\vee\text{odd})$ true but not all-even-or-all-odd.
+> > - **Short answer:** $\forall(p\wedge q)\equiv\forall p\wedge\forall q$, $\exists(p\vee q)\equiv\exists p\vee\exists q$; the $\forall$–$\vee$ / $\exists$–$\wedge$ pairs hold one way only.
+> > - **Why:** **Even/odd** ➔ $\forall X(\text{even}\vee\text{odd})$ true but not all-even-or-all-odd.

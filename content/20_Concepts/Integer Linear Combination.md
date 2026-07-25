@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Greatest Common Divisor]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $xm+yn$ for $x,y\in\mathbb Z$ ➔ Bézout: $\gcd$ = smallest positive one.
 > - **📦 Core Components:** the set $m\mathbb Z+n\mathbb Z$ ➔ $=\gcd(m,n)\mathbb Z$ ➔ closed under differences.
-> - **⚡ Critical Bottleneck:** Bézout guarantees $x,y$ exist; **finding** them needs the [[Extended Euclidean Algorithm]].
+> - **⚡ Key Constraint:** Bézout guarantees $x,y$ exist; **finding** them needs the [[Extended Euclidean Algorithm]].
 
 ## 📝 Core
 ### 1. The Combinations
@@ -32,7 +33,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 $$m\mathbb Z+n\mathbb Z=\gcd(m,n)\,\mathbb Z,\qquad \gcd(m,n)=\min\{xm+yn>0\}$$
 $$12\mathbb Z+20\mathbb Z=4\mathbb Z:\ 2\cdot12-1\cdot20=4$$
 
-> [!NOTE] **Crossover Invariant:** the crucial corollary — $\gcd(m,n)=1$ iff some $xm+yn=1$ — is the definition-level link to [[Coprimality]] and [[Modular Inverse|inverses mod $n$]]. Closure under differences underlies $m\mathbb Z+n\mathbb Z=\Delta\mathbb Z$.
+> [!NOTE] **When It Flips:** the crucial corollary — $\gcd(m,n)=1$ iff some $xm+yn=1$ — is the definition-level link to [[Coprimality]] and [[Modular Inverse|inverses mod $n$]]. Closure under differences underlies $m\mathbb Z+n\mathbb Z=\Delta\mathbb Z$.
 
 ## 📊 Exam Execution Trace
 
@@ -46,18 +47,18 @@ Combinations of 12, 20:
 | 2 | $(-1,1)$ | 8 |
 | 3 | $(-5,3)$ | 0 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Existence ≠ construction** ➔ Bézout guarantees $x,y$; the [[Extended Euclidean Algorithm]] actually finds them, and they are non-unique.
 
 ## 🧠 Active Recall
 > [!FAQ]- State Bézout's identity and why $\gcd(m,n)$ is the smallest positive $xm+yn$.
-> - **Core Insight Requirement:** Shared greatest element.
+> - **Hint:** Shared greatest element.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\gcd(m,n)=\min\{xm+yn>0\}$ and $m\mathbb Z+n\mathbb Z=\gcd\cdot\mathbb Z$.
-> > - **Technical Justification:** **Same divisors** ➔ $d\mid m,n\Rightarrow d\mid xm+yn$; the least positive combination generates and divides the set.
+> > - **Short answer:** $\gcd(m,n)=\min\{xm+yn>0\}$ and $m\mathbb Z+n\mathbb Z=\gcd\cdot\mathbb Z$.
+> > - **Why:** **Same divisors** ➔ $d\mid m,n\Rightarrow d\mid xm+yn$; the least positive combination generates and divides the set.
 
 > [!FAQ]- What is $12\mathbb Z+20\mathbb Z$, and what coprimality corollary follows?
-> - **Core Insight Requirement:** Multiples of the gcd.
+> - **Hint:** Multiples of the gcd.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $=4\mathbb Z$ (all multiples of 4); in general $\gcd=1$ iff 1 is a combination.
-> > - **Technical Justification:** **Coprimality link** ➔ $xm+yn=1$ yields [[Modular Inverse|modular inverses]].
+> > - **Short answer:** $=4\mathbb Z$ (all multiples of 4); in general $\gcd=1$ iff 1 is a combination.
+> > - **Why:** **Coprimality link** ➔ $xm+yn=1$ yields [[Modular Inverse|modular inverses]].

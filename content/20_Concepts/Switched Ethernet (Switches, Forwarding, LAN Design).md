@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 8
 parent: "[[Physical and Data Link Layers (Signals, Ethernet, CSMA-CD)]]"
 tags: [CS/Networks]
 aliases: [Switches, Forwarding Table, Store and Forward, LAN Design]
@@ -11,7 +12,7 @@ aliases: [Switches, Forwarding Table, Store and Forward, LAN Design]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a switch is a **layer-2 device** that reads frame MAC addresses and forwards ONLY to the destination socket — learning its forwarding table by watching sender addresses.
 > - **📦 Core Components:** learn-by-observing ➔ flood-when-unknown ➔ store-and-forward buffering ➔ switch vs router ➔ design levers (standards, segmentation).
-> - **⚡ Critical Bottleneck:** an EMPTY forwarding table makes a switch behave exactly like a hub (flood to all except source) — the learning story is the exam story.
+> - **⚡ Key Constraint:** an EMPTY forwarding table makes a switch behave exactly like a hub (flood to all except source) — the learning story is the exam story.
 
 ## 📝 Core
 ### 1. How a Switch Works
@@ -34,7 +35,7 @@ aliases: [Switches, Forwarding Table, Store and Forward, LAN Design]
 - **Standard kit** ➔ switched 1000BASE-T + Cat 6/6a (10 Gbps upgrade path); optic fibre where traffic is extreme or future-proofing pays.
 - **Throughput thinking** ➔ find the **bottleneck** (congestion point ⟹ dropped packets); fix by (1) upgrading the standard (new NICs+switches, e.g. 16×100BASE-T + 2×1000BASE-T uplink ports for servers) or (2) **segmentation** — second server NIC, split into two LANs, router between them.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Learning uses SENDER addresses** ➔ the table fills from who *talks*, not who is talked to; silent devices stay unknown and keep being flooded.
 - 💡 **Switch ≠ hub despite looks** ➔ hub repeats blindly (one collision domain); switch forwards selectively (no collisions) — the W7↔W8 contrast question.
 - 💡 **No collisions ≠ no queuing** ➔ two frames to one destination still serialise; store-and-forward hides it, latency shows it.
@@ -42,10 +43,10 @@ aliases: [Switches, Forwarding Table, Store and Forward, LAN Design]
 ## 🧠 Active Recall
 > [!FAQ]- A frame from A (socket 0) to new device D arrives at a fresh switch. Trace table growth over A→D, D→A, A→D again.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A→D: learn A=0, flood; D→A (say socket 3): learn D=3, deliver direct to 0; A→D: both known — direct to 3.
-> > - **Technical Justification:** **Symmetric traffic teaches fastest** ➔ each direction's first frame registers its sender; two exchanges complete the pair.
+> > - **Short answer:** A→D: learn A=0, flood; D→A (say socket 3): learn D=3, deliver direct to 0; A→D: both known — direct to 3.
+> > - **Why:** **Symmetric traffic teaches fastest** ➔ each direction's first frame registers its sender; two exchanges complete the pair.
 
 > [!FAQ]- Your file server saturates its link on a 100BASE-T switched LAN. Give both remedies from the design lecture with their costs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Upgrade the path (gigabit uplink ports/NIC/cabling to the server) or segment (second NIC / split LANs joined by a router) to parallelise paths.
-> > - **Technical Justification:** **Bottleneck relief, not average speed** ➔ throughput rises by widening or multiplying the congested link only.
+> > - **Short answer:** Upgrade the path (gigabit uplink ports/NIC/cabling to the server) or segment (second NIC / split LANs joined by a router) to parallelise paths.
+> > - **Why:** **Bottleneck relief, not average speed** ➔ throughput rises by widening or multiplying the congested link only.

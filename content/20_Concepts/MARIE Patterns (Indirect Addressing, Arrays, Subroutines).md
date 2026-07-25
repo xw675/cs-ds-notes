@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 4
 parent: "[[MARIE Assembly (Instruction Set and Patterns)]]"
 tags: [CS/Systems, CS/Assembly]
 type: pattern
@@ -8,12 +9,12 @@ aliases: [Indirect Addressing, JnS, MARIE Subroutines, MARIE Arrays]
 # [[MARIE Patterns (Indirect Addressing, Arrays, Subroutines)]]
 
 **Context:** [[FIT1047_MOC]] · Week 4's three task shapes, all powered by ONE mechanism: *interpret a stored value as an address* · ISA in [[MARIE Assembly (Instruction Set and Patterns)]] · **the heart of Assignment 2**
-**Task signature:** walk variable-length data (arrays/strings) and call/return from subroutines in MARIE.
+**Problem it solves:** walk variable-length data (arrays/strings) and call/return from subroutines in MARIE.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** fixed address in code ➔ inflexible; `LoadI/StoreI/AddI` deref a **pointer** ($M[M[X]]$) ➔ loops over sequences become possible.
 > - **📦 Core Components:** pointer walk (load ptr → `Add One` → store ptr) ➔ termination (counter `SkipCond 400` or 0-terminator `SkipCond 800`... note: skip fires while $AC>0$) ➔ call/return (`JnS`/`JumpI`).
-> - **⚡ Critical Bottleneck:** `JnS X` stores the RETURN PC **at X itself** and jumps to $X{+}1$ — so every subroutine starts with a `HEX 0` slot; returning is `JumpI X`.
+> - **⚡ Key Constraint:** `JnS X` stores the RETURN PC **at X itself** and jumps to $X{+}1$ — so every subroutine starts with a `HEX 0` slot; returning is `JumpI X`.
 
 ## 🔧 Pattern 1 — Direct vs Indirect (the mechanism)
 - **Direct** ➔ `Load X`: $\text{AC} \leftarrow M[X]$ — the address is frozen into the program.
@@ -80,7 +81,7 @@ Double,    HEX 0            / RESERVED: return address lands here
 ```
 - **Calling convention** ➔ argument in a labelled cell · `JnS` deposits return PC in the `HEX 0` slot · body runs · `JumpI` jumps *through* that slot.
 
-## 🥋 Kata
+## ✍️ Practice
 > [!QUESTION]- Write a subroutine `Triple` that triples `TripleArg`, and a main program that inputs a number, calls it, outputs the result. No peeking at Pattern 4.
 > > [!SUCCESS]- Reference solution
 > > Same skeleton as `Double` with `Load TripleArg / Add TripleArg / Add TripleArg / Store TripleArg / JumpI Triple`, and `Triple, HEX 0` heading the subroutine.
@@ -92,7 +93,7 @@ Double,    HEX 0            / RESERVED: return address lands here
 > > - A negative "char" fails the $>0$ test and terminates early — sentinel loops assume data is strictly positive.
 > > - **Key move:** choose the SkipCond constant from the loop's *invariant*, not habit.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`Adr` vs `DEC`** ➔ `Start, Adr Array` stores Array's ADDRESS (a pointer); `DEC` stores a value — mixing them up dereferences garbage.
 - 💡 **`JnS` clobbers $M[X]$** ➔ the subroutine label's cell is *live storage* for the return PC; recursive calls therefore break (no stack in MARIE).
 - 💡 **Pointer increment is 3 instructions** ➔ `Load ptr / Add One / Store ptr` — there is no `Inc`; forgetting the `Store` loops forever on element 0.

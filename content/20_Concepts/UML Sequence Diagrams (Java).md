@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 7
 parent: "[[UML Associations and Dependencies (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [sequence diagram, interaction diagram, communication diagram, dynamic 
 # [[UML Sequence Diagrams (Java)]]
 
 **Context:** [[FIT2099_MOC]] · the **dynamic** counterpart to the static [[UML Associations and Dependencies (Java)|class diagram]] · shows the runtime order of method calls · a visual aid for the [[Design Rationale (FIT2099)|design rationale]] / Assignment
-**Task signature:** model *how objects interact over time* for one specific scenario — who calls what, in what order, with what returns.
+**Problem it solves:** model *how objects interact over time* for one specific scenario — who calls what, in what order, with what returns.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** you need to show the **chronological** flow of a method chain (A calls B calls C) at runtime ➔ draw a sequence diagram (an **interaction** diagram).
-> - **⚡ Critical Bottleneck:** objects are runtime instances, so use **concrete classes only** — never an abstract class or interface (they can't be instantiated); and scope to **one narrow scenario**, not every branch.
+> - **⚡ Key Constraint:** objects are runtime instances, so use **concrete classes only** — never an abstract class or interface (they can't be instantiated); and scope to **one narrow scenario**, not every branch.
 
 ## 🔧 Minimal Working Example
 *Scenario: a Player attacks a Huntsman Spider with an intrinsic weapon (concrete classes only).*
@@ -71,8 +72,8 @@ sequenceDiagram
 - **Guard** ➔ the condition in **square brackets** `[amt <= balance]` on the left of the fragment.
 - **Nesting** ➔ legal to nest (`opt` in `loop` in `alt`), but heavy nesting becomes **illegible** — for complex/recursive logic use **pseudocode** instead.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: A `:Bank` calls `withdraw(amt:int)` on `account:Account`. If `amt <= balance` the account returns `success` and sets its balance; otherwise it returns `failure`. Sketch it (which fragment?).
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: A `:Bank` calls `withdraw(amt:int)` on `account:Account`. If `amt <= balance` the account returns `success` and sets its balance; otherwise it returns `failure`. Sketch it (which fragment?).
 > > [!SUCCESS]- Reference solution
 > > ```mermaid
 > > sequenceDiagram
@@ -88,7 +89,7 @@ sequenceDiagram
 > > ```
 > > - **Key move:** two outcomes ➔ **`alt`** (not `opt`); the self-call `setBalance` is a **reflexive** message; guards go in `[...]`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **No abstractions in a sequence diagram** ➔ only concrete, instantiable classes (`AttackAction`, `Player`, `IntrinsicWeapon`) — never `Action`, `Actor`, or `Weapon` (abstract/interface).
 - 💡 **Scope creep** ➔ don't cram every attack type (sword/bow/magic) into one diagram; fix a single scenario in a `Note` and model just that.
 - 💡 **Sequence vs communication** ➔ both carry the **same** information; sequence diagrams read more easily (use these), communication diagrams number the calls and can be easier to draw by hand.

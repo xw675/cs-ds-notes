@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 6
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** an ordered list = a function on $\mathbb N$ ➔ $n$-th term $f_n$.
 > - **📦 Core Components:** ordered + may repeat ➔ closed form vs recurrence.
-> - **⚡ Critical Bottleneck:** must be pinned by a rule, not an informal "$\dots$"; contrast the unordered [[Set (Mathematics)|set]].
+> - **⚡ Key Constraint:** must be pinned by a rule, not an informal "$\dots$"; contrast the unordered [[Set (Mathematics)|set]].
 
 ## 📝 Core
 ### 1. The Definition
@@ -41,7 +42,7 @@ $$\text{recurrence: } f_1=1,\ f_n=n f_{n-1}\ (\text{factorials})$$
 | formalism | function on $\mathbb N$ | collection |
 | finite form | $n$-tuple | — |
 
-> [!NOTE] **Crossover Invariant:** sequences are fundamental to computation — memory is laid out in order, and time-vs-input-size is the sequence [[Big-O Notation]] analyses. Closed form gives any term in one step; a recurrence is often more natural but hides growth until unrolled.
+> [!NOTE] **When It Flips:** sequences are fundamental to computation — memory is laid out in order, and time-vs-input-size is the sequence [[Big-O Notation]] analyses. Closed form gives any term in one step; a recurrence is often more natural but hides growth until unrolled.
 
 ## 📊 Exam Execution Trace
 
@@ -56,18 +57,18 @@ f(1..5) = 1,4,9,16,25,\quad f(4)=16
 $$
 **Final Extracted Output:** an infinite sequence (function on $\mathbb N$); repetition allowed but here all distinct.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"$f_1,f_2,\dots$" is not a definition** ➔ many sequences share any finite prefix; pin it with a closed form or a recurrence + base case.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a sequence precisely, and how it differs from a set.
-> - **Core Insight Requirement:** Ordered + repeatable.
+> - **Hint:** Ordered + repeatable.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A function $f:\mathbb N\to A$ (or $[1,n]$); ordered and may repeat, unlike a set.
-> > - **Technical Justification:** **$n$-tuple** ➔ a finite sequence is a tuple; length = domain size.
+> > - **Short answer:** A function $f:\mathbb N\to A$ (or $[1,n]$); ordered and may repeat, unlike a set.
+> > - **Why:** **$n$-tuple** ➔ a finite sequence is a tuple; length = domain size.
 
 > [!FAQ]- Why is "$f_1,f_2,f_3,\dots$" not a definition, and what are the two valid ways?
-> - **Core Insight Requirement:** Rule required.
+> - **Hint:** Rule required.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An "$\dots$" list only hints a pattern; define by closed form or recurrence + base case.
-> > - **Technical Justification:** **Ambiguity** ➔ many sequences share any prefix.
+> > - **Short answer:** An "$\dots$" list only hints a pattern; define by closed form or recurrence + base case.
+> > - **Why:** **Ambiguity** ➔ many sequences share any prefix.

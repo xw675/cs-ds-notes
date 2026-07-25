@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 2
 parent: "[[Client-Supplier Relationship (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [association, dependency, multiplicity, aggregation, composition, has-a, uses-a, UML relationships]
@@ -12,9 +13,9 @@ aliases: [association, dependency, multiplicity, aggregation, composition, has-a
 > [!abstract] Quick Revision
 > - **🎯 Objective:** distinguish **association** (has-a, a stored field) from **dependency** (uses-a, a transient method parameter/return) ➔ draw the right arrow.
 > - **📦 Core Components:** association (solid `-->`, an attribute) | dependency (dashed `..>` «use», a parameter) | multiplicity (1, `*`, ranges).
-> - **⚡ Critical Bottleneck:** **FIT2099 will NOT ask you to *use* Aggregation or Composition** — focus your modelling on **Association, Dependency, and [[Inheritance (Java)|Inheritance]]**. Know aggregation/composition only to *read* diagrams.
+> - **⚡ Key Constraint:** **FIT2099 will NOT ask you to *use* Aggregation or Composition** — focus your modelling on **Association, Dependency, and [[Inheritance (Java)|Inheritance]]**. Know aggregation/composition only to *read* diagrams.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Association — "has-a" (persistent)
 - **Definition** ➔ one class **holds another as a field** and uses it over its lifetime.
 - **UML** ➔ solid line / arrow `A --> B`; label with a role and **multiplicity**.
@@ -50,17 +51,17 @@ aliases: [association, dependency, multiplicity, aggregation, composition, has-a
 >   SmartHomeDriver --> "1" SmartSwitch : has-a (association)
 >   SmartHomeDriver ..> SmartBulb : «use» (dependency)
 > ```
-> 💡 **Exam Pitfall:** **stored field `-SmartSwitch theSwitch` = association (`-->`)**, but `SmartBulb` only appears as a **method parameter** of `run(...)` ➔ dependency (`..>`), never an attribute.
+> 💡 **Common Mistake:** **stored field `-SmartSwitch theSwitch` = association (`-->`)**, but `SmartBulb` only appears as a **method parameter** of `run(...)` ➔ dependency (`..>`), never an attribute.
 
-> [!NOTE] **Crossover Invariant:** more associations and dependencies = more **coupling**. Judge a design on Domain-B metrics — prefer fewer, thinner links to small public interfaces; a dependency (transient) is looser coupling than an association (stored) for the same collaboration.
+> [!NOTE] **When It Flips:** more associations and dependencies = more **coupling**. Judge a design on Domain-B metrics — prefer fewer, thinner links to small public interfaces; a dependency (transient) is looser coupling than an association (stored) for the same collaboration.
 
 ## 🧠 Active Recall
 > [!FAQ]- A `Printer` receives a `Document` as a method parameter and prints it, but never stores it. Association or dependency? Draw the arrow.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Dependency** — `Printer ..> Document` (dashed, «use»). Because the `Document` is only used transiently inside a method and is **not held as a field**.
-> > - **Technical Justification:** **Field vs parameter** ➔ stored attribute ⇒ association (`-->`); passing-through method argument/return ⇒ dependency (`..>`).
+> > - **Short answer:** **Dependency** — `Printer ..> Document` (dashed, «use»). Because the `Document` is only used transiently inside a method and is **not held as a field**.
+> > - **Why:** **Field vs parameter** ➔ stored attribute ⇒ association (`-->`); passing-through method argument/return ⇒ dependency (`..>`).
 
 > [!FAQ]- Why does FIT2099 tell you to model with association/dependency rather than composition/aggregation?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Aggregation especially is often a **semantic placebo** — it rarely changes the code and invites unproductive debate; the assessable, code-visible distinction is has-a-field (association) vs uses-in-a-method (dependency).
-> > - **Technical Justification:** **Design clarity** ➔ the unit judges Coupling/Cohesion/Extensibility, which the association/dependency split expresses cleanly.
+> > - **Short answer:** Aggregation especially is often a **semantic placebo** — it rarely changes the code and invites unproductive debate; the assessable, code-visible distinction is has-a-field (association) vs uses-in-a-method (dependency).
+> > - **Why:** **Design clarity** ➔ the unit judges Coupling/Cohesion/Extensibility, which the association/dependency split expresses cleanly.

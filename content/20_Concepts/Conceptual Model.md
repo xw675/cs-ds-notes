@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Database Design Life Cycle]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** describe *which* data matter, not how stored ➔ technology-independent, stakeholder-readable.
 > - **📦 Core Components:** technology independence ➔ stakeholder readability ➔ built with [[Entity Relationship Diagram (ERD)|ER]].
-> - **⚡ Critical Bottleneck:** capture **exactly** the brief — nothing missing, nothing invented.
+> - **⚡ Key Constraint:** capture **exactly** the brief — nothing missing, nothing invented.
 
 ## 📝 Core
 ### 1. The Model
@@ -38,7 +39,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >   STUDENT { string student_id }
 >   UNIT { string unit_code }
 > ```
-> 💡 **Exam Pitfall:** **Conceptual ≠ logical** ➔ keep M:N relationships and multivalued attributes at the conceptual stage; surrogate keys are **banned** here — resolve only in [[Conceptual vs Logical Model|logical modelling]].
+> 💡 **Common Mistake:** **Conceptual ≠ logical** ➔ keep M:N relationships and multivalued attributes at the conceptual stage; surrogate keys are **banned** here — resolve only in [[Conceptual vs Logical Model|logical modelling]].
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Conceptual | Logical |
@@ -48,7 +49,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | M:N | kept | resolved to bridge table |
 | audience | all stakeholders | designers |
 
-> [!NOTE] **Crossover Invariant:** abstraction lets stakeholders agree on *meaning* before choosing a platform. The rule "all-and-only the brief" is absolute — even a real-world-plausible relationship not in the brief must not be added.
+> [!NOTE] **When It Flips:** abstraction lets stakeholders agree on *meaning* before choosing a platform. The rule "all-and-only the brief" is absolute — even a real-world-plausible relationship not in the brief must not be added.
 
 ## 📊 Exam Execution Trace
 
@@ -75,13 +76,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What are the two key characteristics of a conceptual model, and why do they matter?
-> - **Core Insight Requirement:** Common language before platform.
+> - **Hint:** Common language before platform.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Technology independence + stakeholder readability.
-> > - **Technical Justification:** **Agree on meaning early** ➔ non-technical + technical stakeholders align before any vendor commitment, cutting late redesign.
+> > - **Short answer:** Technology independence + stakeholder readability.
+> > - **Why:** **Agree on meaning early** ➔ non-technical + technical stakeholders align before any vendor commitment, cutting late redesign.
 
 > [!FAQ]- State the rule a valid conceptual model must satisfy, and a consequence.
-> - **Core Insight Requirement:** Both directions.
+> - **Hint:** Both directions.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** All that is in the brief is included, and all that is included was in the brief.
-> > - **Technical Justification:** **No invention** ➔ a plausible relationship not in the brief (or derivable from existing ones) must not be added.
+> > - **Short answer:** All that is in the brief is included, and all that is included was in the brief.
+> > - **Why:** **No invention** ➔ a plausible relationship not in the brief (or derivable from existing ones) must not be added.

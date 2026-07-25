@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 4
 parent: "[[Python for Data Science]]"
 tags: [DataScience/Wrangling, Python/Pandas, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [groupby, agg, Split-Apply-Combine]
 # [[Groupby-Aggregate Pipeline (Pandas)]]
 
 **Context:** [[FIT1043_MOC]] · per-group summaries in pandas · the SQL [[SQL Aggregate Functions and GROUP BY|GROUP BY]] of Python · often feeds a [[Plotting with Matplotlib (Pandas)|plot]] · lab: `30_Projects/FIT1043_Labs/Week3-Aggregation-Solution.pdf`
-**Task signature:** collapse rows into per-group statistics via split → apply → combine.
+**Problem it solves:** collapse rows into per-group statistics via split → apply → combine.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "for each group, compute…" ➔ df.groupby(key)[col].func(), or .agg({...}) for several at once.
-> - **⚡ Critical Bottleneck:** groupby is **split → apply → combine**; the result is indexed by the group key, one row per group.
+> - **⚡ Key Constraint:** groupby is **split → apply → combine**; the result is indexed by the group key, one row per group.
 
 ## 🔧 Minimal Working Example
 ```python
@@ -41,8 +42,8 @@ g.columns = g.columns.droplevel(0)        # drop the top ('age') level
 g.rename(columns={'count':'passengers','mean':'avg age'}, inplace=True)
 ```
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: For each `class` in `titanic`, return the passenger **count** (`who`) and **mean** `age` in one call.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: For each `class` in `titanic`, return the passenger **count** (`who`) and **mean** `age` in one call.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > fun = {'who': 'count', 'age': 'mean'}
@@ -50,7 +51,7 @@ g.rename(columns={'count':'passengers','mean':'avg age'}, inplace=True)
 > > ```
 > > - **Key move:** `.agg({col: func})` runs several aggregations at once, one row per class.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Result is indexed by the group key** ➔ `(G, k)` not `(N, D)`; use `.reset_index()` if you need the key back as a column (e.g. before plotting).
 - 💡 **`lambda x:` defines an anonymous function** ➔ `x` is each group's Series; use it for custom aggregators `agg()` doesn't provide by name.
 - 💡 **Multi-function agg makes 2-level columns** ➔ `reset_index()` + `droplevel(0)` + `rename()` to flatten before further use or plotting; flattening loses the key's name, so rename `''` → the key.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 3
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/DataSources, Monash/CS_DS]
 aliases: [Open Data, Linked Open Data, LOD, Data Sources]
@@ -10,7 +11,7 @@ aliases: [Open Data, Linked Open Data, LOD, Data Sources]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** find and combine data sources ➔ existing sources, creative multi-source use, and access to **new** sources.
-> - **⚡ Critical Bottleneck:** open data must be **machine-readable AND publicly available**; Linked Open Data adds value by **connecting** datasets.
+> - **⚡ Key Constraint:** open data must be **machine-readable AND publicly available**; Linked Open Data adds value by **connecting** datasets.
 
 ## 📝 Core
 ### 1. The Data Landscape
@@ -28,12 +29,12 @@ aliases: [Open Data, Linked Open Data, LOD, Data Sources]
 - **Premise** ➔ data has more value when **connected** to other data.
 - **Triples** ➔ subject–verb–object; e.g. **DBpedia** (extracted Wikipedia, ~3.4M concepts, ~1B triples) — lets sources be connected and queried.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Open ≠ just public** ➔ it must be *machine-readable* too; a PDF of a table is public but not readily usable open data.
 - 💡 **"CSV" hides its separator** ➔ always check the actual delimiter (tab/semicolon/colon) before parsing.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define open data and explain what Linked Open Data adds via triples.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Open data is machine-readable *and* publicly available; LOD connects datasets by encoding facts as subject–verb–object triples (e.g. DBpedia) so different sources can be linked and queried.
-> > - **Technical Justification:** **Value from connection** ➔ triples give a shared structure that joins otherwise-isolated open datasets.
+> > - **Short answer:** Open data is machine-readable *and* publicly available; LOD connects datasets by encoding facts as subject–verb–object triples (e.g. DBpedia) so different sources can be linked and queried.
+> > - **Why:** **Value from connection** ➔ triples give a shared structure that joins otherwise-isolated open datasets.

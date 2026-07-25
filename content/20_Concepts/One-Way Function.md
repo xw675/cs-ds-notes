@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Modular Exponentiation]]"
 tags: [Math/NumberTheory, CS/Cryptography, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, CS/Cryptography, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** easy to compute, hard to invert "usually" ➔ candidate: $x\mapsto a^x\bmod n$.
 > - **📦 Core Components:** easy forward ([[Modular Exponentiation]]) ➔ hard inverse (Discrete Log).
-> - **⚡ Critical Bottleneck:** believed to exist, **none proven**; security rests on assumed hardness.
+> - **⚡ Key Constraint:** believed to exist, **none proven**; security rests on assumed hardness.
 
 ## 📝 Core
 ### 1. One-Wayness
@@ -40,7 +41,7 @@ $$\text{inverse: } \text{given } y, \text{ find } x=\log_a y\ (\text{Discrete Lo
 | base choice | primitive root | maximises search |
 | modulus | large prime | $\phi(p)=p-1$ largest |
 
-> [!NOTE] **Crossover Invariant:** the asymmetry (cheap forward, infeasible backward) is the whole point — protecting information that must stay quickly verifiable. Password hashing is keyless (no recipient recovers $P_i$), unlike a [[Cryptosystem]].
+> [!NOTE] **When It Flips:** the asymmetry (cheap forward, infeasible backward) is the whole point — protecting information that must stay quickly verifiable. Password hashing is keyless (no recipient recovers $P_i$), unlike a [[Cryptosystem]].
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ $$
 $$
 **Final Extracted Output:** forward is one squaring chain; inverting needs a table search giving $x=9$ — infeasible for a large prime.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Belief, not proof** ➔ security rests on the *assumed* hardness of Discrete Log/factorisation; a fast algorithm would break these schemes.
 
 ## 🧠 Active Recall
 > [!FAQ]- What makes a function one-way, and why is modular exponentiation with a primitive-root base a candidate?
-> - **Core Insight Requirement:** Easy/hard asymmetry.
+> - **Hint:** Easy/hard asymmetry.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Easy forward, hard inverse; $a^x\bmod n$ easy but discrete log believed hard.
-> > - **Technical Justification:** **Primitive root** ➔ powers cover all of $\mathbb Z_n^*$, maximising the search space.
+> > - **Short answer:** Easy forward, hard inverse; $a^x\bmod n$ easy but discrete log believed hard.
+> > - **Why:** **Primitive root** ➔ powers cover all of $\mathbb Z_n^*$, maximising the search space.
 
 > [!FAQ]- How do one-way functions make password storage safer, and why is it not encryption?
-> - **Core Insight Requirement:** Store the hash, not the password.
+> - **Hint:** Store the hash, not the password.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Store $f(P_i)$; verify $f(P)=f(P_i)$; stealing $f(P_i)$ needs inverting $f$ (infeasible).
-> > - **Technical Justification:** **No key/recipient** ➔ $f$ is a fixed non-invertible transform, not a reversible cipher.
+> > - **Short answer:** Store $f(P_i)$; verify $f(P)=f(P_i)$; stealing $f(P_i)$ needs inverting $f$ (infeasible).
+> > - **Why:** **No key/recipient** ➔ $f$ is a fixed non-invertible transform, not a reversible cipher.

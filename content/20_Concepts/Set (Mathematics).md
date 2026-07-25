@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Power Set]]"
 tags: [Math/SetTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/SetTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** an unordered, duplicate-free collection determined solely by membership ➔ $\{1,2,3\}=\{3,1,2\}=\{1,1,2,3\}$.
 > - **📦 Core Components:** **Roster** ➔ list | **Condition** ➔ filter a superset | **Construction rule** ➔ generate members.
-> - **⚡ Critical Bottleneck:** cardinality $|A|$ drives all counting — $|\mathcal P(A)|=2^{|A|}$, $|A\times B|=|A||B|$.
+> - **⚡ Key Constraint:** cardinality $|A|$ drives all counting — $|\mathcal P(A)|=2^{|A|}$, $|A\times B|=|A||B|$.
 
 ## 📝 Core
 ### 1. The Set (Membership Only)
@@ -41,7 +42,7 @@ $$|\{\text{Harry},\text{Ron},\text{Hermione}\}|=3,\quad |\emptyset|=0,\quad |\ma
 | **By construction** | $\{f(n) : n\in D\}$ | generating members by a rule |
 | **Informal $\dots$** | $\{0,2,4,\dots\}$ | illustration only — **not** a definition |
 
-> [!NOTE] **Crossover Invariant:** order and repetition carry no information ($\{1,2,3\}=\{1,1,2,3\}$) — this is exactly what separates a **set** from a **tuple/sequence**, where $(1,2,3)\neq(3,2,1)$ (the domain of the [[Cartesian Product]]). The computational counterpart is the [[Set (ADT)]] with `add`/`contains`/`remove`.
+> [!NOTE] **When It Flips:** order and repetition carry no information ($\{1,2,3\}=\{1,1,2,3\}$) — this is exactly what separates a **set** from a **tuple/sequence**, where $(1,2,3)\neq(3,2,1)$ (the domain of the [[Cartesian Product]]). The computational counterpart is the [[Set (ADT)]] with `add`/`contains`/`remove`.
 
 ## 📊 Exam Execution Trace
 
@@ -55,24 +56,24 @@ Testing membership of $A=\{n\in\mathbb Z : -2\le n<3\}$:
 | 2 | $-1,0,1,2$ | all satisfy | ✓ |
 | 3 | $3$ | $3<3$ false | ✗ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"$\{0,2,-2,4,\dots\}$" is an informal description, not a definition** ➔ it relies on guessing the pattern and never states the membership condition; use the condition/construction forms.
 
 ## 🧠 Active Recall
 > [!FAQ]- Specify the even integers two formal ways, and explain why $\{0,2,-2,4,\dots\}$ is not one.
-> - **Core Insight Requirement:** Predicate vs generator vs pattern-guessing.
+> - **Hint:** Predicate vs generator vs pattern-guessing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** By condition $\{x\in\mathbb Z : x\text{ even}\}$; by construction $\{2n : n\in\mathbb Z\}$.
-> > - **Technical Justification:** **No stated condition** ➔ the "$\dots$" list only relies on inferring a pattern, so it never formally determines membership.
+> > - **Short answer:** By condition $\{x\in\mathbb Z : x\text{ even}\}$; by construction $\{2n : n\in\mathbb Z\}$.
+> > - **Why:** **No stated condition** ➔ the "$\dots$" list only relies on inferring a pattern, so it never formally determines membership.
 
 > [!FAQ]- Why are $\{1,2,3\}$, $\{3,2,1\}$ and $\{1,1,2,3\}$ the same set, and what structure distinguishes them?
-> - **Core Insight Requirement:** Membership alone matters.
+> - **Hint:** Membership alone matters.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** All have members exactly $1,2,3$; order and multiplicity carry no information.
-> > - **Technical Justification:** **Use a tuple/multiset** ➔ if order matters, $(1,2,3)\neq(3,2,1)$ ([[Cartesian Product]]); if multiplicity matters, a multiset.
+> > - **Short answer:** All have members exactly $1,2,3$; order and multiplicity carry no information.
+> > - **Why:** **Use a tuple/multiset** ➔ if order matters, $(1,2,3)\neq(3,2,1)$ ([[Cartesian Product]]); if multiplicity matters, a multiset.
 
 > [!FAQ]- What is $|\emptyset|$, and where does cardinality reappear in this unit?
-> - **Core Insight Requirement:** Size underlies counting.
+> - **Hint:** Size underlies counting.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $|\emptyset|=0$.
-> > - **Technical Justification:** **Counting laws** ➔ $|\mathcal P(A)|=2^{|A|}$ ([[Power Set]]), $\binom nk$ ([[Binomial Coefficient]]), $|A\times B|=|A||B|$ ([[Cartesian Product]]), $|\overline A|=|U|-|A|$ ([[Set Operations (Mathematics)|Set Complement and Difference]]).
+> > - **Short answer:** $|\emptyset|=0$.
+> > - **Why:** **Counting laws** ➔ $|\mathcal P(A)|=2^{|A|}$ ([[Power Set]]), $\binom nk$ ([[Binomial Coefficient]]), $|A\times B|=|A||B|$ ([[Cartesian Product]]), $|\overline A|=|U|-|A|$ ([[Set Operations (Mathematics)|Set Complement and Difference]]).

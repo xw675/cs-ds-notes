@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: [0, 4]
 parent: "[[Types of Data (Numeric and Categorical)]]"
 tags: [DataScience/Statistics, Monash/CS_DS]
 aliases: [Descriptive Statistics, Mean, Median, Mode, Skewness]
@@ -12,9 +13,9 @@ aliases: [Descriptive Statistics, Mean, Median, Mode, Skewness]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** summarise a sample's centre ➔ mean, median, mode.
 > - **📦 Core Components:** mean (all values) | median (middle value) | mode (most frequent).
-> - **⚡ Critical Bottleneck:** the **mean is sensitive** to every value (outliers drag it); the **median is resistant** — their gap reveals skew.
+> - **⚡ Key Constraint:** the **mean is sensitive** to every value (outliers drag it); the **median is resistant** — their gap reveals skew.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. What is a Statistic?
 - **Descriptive statistics** ➔ numerically interpret key features of a dataset; usually **lose information** but gain comprehension (contrast **inferential** statistics).
 - **Statistic** ➔ for a sample $y=(y_1,\dots,y_n)$, any function $s(y)$ of the data.
@@ -36,17 +37,17 @@ aliases: [Descriptive Statistics, Mean, Median, Mode, Skewness]
 | **Positively skewed** | mean $>$ median | long right tail |
 | **Negatively skewed** | mean $<$ median | long left tail |
 
-> [!NOTE] **Crossover Invariant:** the **sign of (mean − median)** diagnoses skew — the mean chases the long tail while the median stays put; equal ⇒ symmetric.
+> [!NOTE] **When It Flips:** the **sign of (mean − median)** diagnoses skew — the mean chases the long tail while the median stays put; equal ⇒ symmetric.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does changing one value from 5 to 50 move the mean from 3 to 12 but leave the median at 3?
-> - **Core Insight Requirement:** All-values vs middle-value.
+> - **Hint:** All-values vs middle-value.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The mean sums all values, so a large outlier inflates it; the median depends only on the middle position, unchanged when a non-middle value grows.
-> > - **Technical Justification:** **Resistance** ➔ median uses at most two central values, so it's robust to outliers; the mean is not.
+> > - **Short answer:** The mean sums all values, so a large outlier inflates it; the median depends only on the middle position, unchanged when a non-middle value grows.
+> > - **Why:** **Resistance** ➔ median uses at most two central values, so it's robust to outliers; the mean is not.
 
 > [!FAQ]- How do you read skew from the mean and median?
-> - **Core Insight Requirement:** Mean chases the tail.
+> - **Hint:** Mean chases the tail.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** mean > median ⇒ positively skewed (right tail); mean < median ⇒ negatively skewed (left tail); mean ≈ median ⇒ symmetric.
-> > - **Technical Justification:** **Tail pull** ➔ extreme values in the tail drag the mean toward that tail.
+> > - **Short answer:** mean > median ⇒ positively skewed (right tail); mean < median ⇒ negatively skewed (left tail); mean ≈ median ⇒ symmetric.
+> > - **Why:** **Tail pull** ➔ extreme values in the tail drag the mean toward that tail.

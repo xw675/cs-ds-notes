@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: [0, 8]
 parent: "[[R for Data Science]]"
 tags: [DataScience/Tools, R/Basics, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [R Syntax, R Data Types, R Control Flow, R for loop]
 # [[R Basics (Syntax, Types, Control Flow)]]
 
 **Context:** [[FIT1043_MOC]] · the language fundamentals of [[R for Data Science|R]] · assignment, types, and control flow before [[R Vectors|vectors]]/[[R Data Frames and IO|data frames]]
-**Task signature:** write and read basic R — assign variables, check/convert types, and branch/loop.
+**Problem it solves:** write and read basic R — assign variables, check/convert types, and branch/loop.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** any R snippet ➔ assign with the arrow operator, inspect type with class(), branch/loop with if/for/while.
-> - **⚡ Critical Bottleneck:** R's assignment is `<-` (not `=`), and a bare number like `10` is **numeric**, not integer — use `as.integer()` to force it.
+> - **⚡ Key Constraint:** R's assignment is `<-` (not `=`), and a bare number like `10` is **numeric**, not integer — use `as.integer()` to force it.
 
 ## 🔧 Minimal Working Example
 ```r
@@ -34,8 +35,8 @@ as.character(y)    # [1] "8"   (type conversion)
 - **for / while** ➔ `for(i in 1:3) print(i^2)` → 1,4,9; a `while(i<=6)` loop with `i = i+1` prints squares.
 - **break vs next** ➔ in `for(i in 1:5)`, `if(i==3) break` prints 1,2; `if(i==3) next` prints 1,2,4,5.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Print the squares of 1..5 but **skip** 3, using a for loop.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Print the squares of 1..5 but **skip** 3, using a for loop.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > for (i in 1:5) {
@@ -46,6 +47,6 @@ as.character(y)    # [1] "8"   (type conversion)
 > > ```
 > > - **Key move:** `next` skips the current iteration; `break` would stop the loop entirely.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Use `<-`, and numbers default to numeric** ➔ `10` is `"numeric"`, not integer; wrap with `as.integer()` when you truly need an integer.
 - 💡 **`break` ≠ `next`** ➔ `break` exits the loop; `next` only skips the rest of the current pass.

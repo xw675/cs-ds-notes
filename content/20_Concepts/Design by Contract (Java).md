@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 8
 parent: "[[Client-Supplier Relationship (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [design by contract, DbC, precondition, postcondition, invariant, subcontracting, fail fast, Bertrand Meyer]
@@ -11,9 +12,9 @@ aliases: [design by contract, DbC, precondition, postcondition, invariant, subco
 > [!abstract] Quick Revision
 > - **🎯 Objective:** specify each method as a **contract** — what the client must guarantee (precondition) and what the supplier then guarantees (postcondition) ➔ confidence the code is correct.
 > - **📦 Core Components:** **precondition** (client's duty, before) · **postcondition** (supplier's duty, after) · **invariant** (true always, before & after every method).
-> - **⚡ Critical Bottleneck:** who's to blame on a breach — a broken **precondition** is the **client's** bug (throw an exception); a broken **postcondition/invariant** (when preconditions held) is the **supplier's** bug (an assertion).
+> - **⚡ Key Constraint:** who's to blame on a breach — a broken **precondition** is the **client's** bug (throw an exception); a broken **postcondition/invariant** (when preconditions held) is the **supplier's** bug (an assertion).
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. The three assertions
 - **Precondition** ➔ what the client must ensure is **true before** calling the supplier's method; violated ⇒ the **client has a bug**.
 - **Postcondition** ➔ what the supplier **guarantees is true after** the method runs (if the precondition held); violated ⇒ usually the **supplier has a bug** (but not always — transient causes: network outage, server down, disk/memory).
@@ -37,7 +38,7 @@ aliases: [design by contract, DbC, precondition, postcondition, invariant, subco
 >  */
 > static int find(int[] array, int value) { /* ... */ }
 > ```
-> 💡 **Exam Pitfall:** **precondition broken ⇒ throw an exception** (client's fault — don't rescue them, let it propagate to the caller); **postcondition/invariant broken ⇒ an assertion** (supplier's fault).
+> 💡 **Common Mistake:** **precondition broken ⇒ throw an exception** (client's fault — don't rescue them, let it propagate to the caller); **postcondition/invariant broken ⇒ an assertion** (supplier's fault).
 
 - **Fail Fast** ➔ if code detects something wrong, **fail immediately** so the developer sees *where and when*; code that ignores warnings fails later, far from the cause, and is very hard to debug.
 - **Cost curve** ➔ the cost of fixing a bug rises **exponentially** the later it's found (requirements → design → test → live) — DbC catches breaches early.
@@ -53,10 +54,10 @@ aliases: [design by contract, DbC, precondition, postcondition, invariant, subco
 ## 🧠 Active Recall
 > [!FAQ]- A supplier method's postcondition fails even though the client met every precondition. Whose bug is it, and how should it surface — exception or assertion?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it's the **supplier's** bug (the client held up its end), so it should surface as an **assertion** (a broken internal guarantee) — unless a transient external cause (network/disk) is responsible.
-> > - **Technical Justification:** **Blame follows the contract** ➔ precondition breach = client's exception; postcondition/invariant breach with valid preconditions = supplier's assertion.
+> > - **Short answer:** it's the **supplier's** bug (the client held up its end), so it should surface as an **assertion** (a broken internal guarantee) — unless a transient external cause (network/disk) is responsible.
+> > - **Why:** **Blame follows the contract** ➔ precondition breach = client's exception; postcondition/invariant breach with valid preconditions = supplier's assertion.
 
 > [!FAQ]- Why can a subclass **weaken** a precondition but not **strengthen** it?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** client code was written against the base's precondition; a subclass that demands **more** would reject inputs the client legitimately sends, breaking substitutability. Demanding **less** never surprises the client.
-> > - **Technical Justification:** **LSP via DbC** ➔ safe substitution requires preconditions no stronger and postconditions no weaker than the base's.
+> > - **Short answer:** client code was written against the base's precondition; a subclass that demands **more** would reject inputs the client legitimately sends, breaking substitutability. Demanding **less** never surprises the client.
+> > - **Why:** **LSP via DbC** ➔ safe substitution requires preconditions no stronger and postconditions no weaker than the base's.

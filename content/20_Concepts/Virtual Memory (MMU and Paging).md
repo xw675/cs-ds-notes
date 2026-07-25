@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 5
 parent: "[[Operating Systems and Multi-Processing]]"
 tags: [CS/Systems, CS/OS]
 aliases: [Virtual Memory, MMU, Page Fault, Swapping]
@@ -11,7 +12,7 @@ aliases: [Virtual Memory, MMU, Page Fault, Swapping]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** each process gets its own **virtual address space**; the OS + **MMU** map virtual → physical addresses ➔ no process can touch another's memory.
 > - **📦 Core Components:** virtual addresses ➔ MMU translation + ownership check ➔ page fault interrupt ➔ swap blocks to/from disk.
-> - **⚡ Critical Bottleneck:** the MMU checks EVERY access; a foreign address triggers an interrupt (OS kills the process); an on-disk block triggers a **page fault** (OS swaps it in).
+> - **⚡ Key Constraint:** the MMU checks EVERY access; a foreign address triggers an interrupt (OS kills the process); an on-disk block triggers a **page fault** (OS swaps it in).
 
 ## 📝 Core
 ### 1. Safety (why the browser's passwords survive)
@@ -29,7 +30,7 @@ aliases: [Virtual Memory, MMU, Page Fault, Swapping]
 - **Page fault path** ➔ process touches a swapped-out block → MMU raises the fault interrupt → OS evicts some other block to disk, loads the needed one, resumes the process — transparent to the program.
 - **Performance cliff** ➔ works well only while swapping is rare; constant faulting (thrashing) hits [[Memory and the Memory Hierarchy|disk speeds]], ~$1000\times$ slower.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Two jobs, one mechanism** ➔ exam answers often give only safety OR only overcommit; virtual memory delivers both through the same MMU mapping.
 - 💡 **Page fault ≠ crash** ➔ it's a *normal* interrupt the OS services by swapping; an ownership violation is the fatal one.
 - 💡 **Swapping direction** ➔ cache pulls hot data toward the CPU; swapping pushes cold data out to disk — keep the arrows straight.
@@ -37,10 +38,10 @@ aliases: [Virtual Memory, MMU, Page Fault, Swapping]
 ## 🧠 Active Recall
 > [!FAQ]- Two processes both `Load A300`. Explain why they read different values and name every component involved.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `A300` is virtual; the MMU holds a per-process mapping set up by the OS, translating to different physical addresses.
-> > - **Technical Justification:** **Per-access translation** ➔ isolation is enforced on every single memory reference in hardware, not by compile-time checks.
+> > - **Short answer:** `A300` is virtual; the MMU holds a per-process mapping set up by the OS, translating to different physical addresses.
+> > - **Why:** **Per-access translation** ➔ isolation is enforced on every single memory reference in hardware, not by compile-time checks.
 
 > [!FAQ]- Walk the full page-fault sequence from `Load X` to the instruction completing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** MMU finds X's block not in RAM → interrupt → kernel mode → OS writes a victim block to disk, reads X's block into the freed RAM, updates the MMU → process resumes and the `Load` retries successfully.
-> > - **Technical Justification:** **Hardware detects, software decides** ➔ the MMU can only signal; eviction choice and disk traffic are kernel policy.
+> > - **Short answer:** MMU finds X's block not in RAM → interrupt → kernel mode → OS writes a victim block to disk, reads X's block into the freed RAM, updates the MMU → process resumes and the `Load` retries successfully.
+> > - **Why:** **Hardware detects, software decides** ➔ the MMU can only signal; eviction choice and disk traffic are kernel policy.

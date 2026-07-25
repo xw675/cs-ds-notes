@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 6
 parent: "[[Dependency Inversion Principle (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [dependency injection, DI, constructor injection, setter injection, int
 # [[Dependency Injection (Java)]]
 
 **Context:** [[FIT2099_MOC]] · the technique that *implements* [[Dependency Inversion Principle (Java)|DIP]] · a class is **given** its collaborators instead of `new`-ing them · enables swapping and testing
-**Task signature:** a class that hard-codes `new ConcreteService()` — hand the service in from outside so the class depends only on the abstraction.
+**Problem it solves:** a class that hard-codes `new ConcreteService()` — hand the service in from outside so the class depends only on the abstraction.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a class constructs its own dependency with **new** (even a concrete subclass of an interface) ➔ inject the dependency from an external **injector**.
-> - **⚡ Critical Bottleneck:** DIP alone still leaves the client **creating** the concrete service (`this.mt = new MoodleMessager()`) — DI removes even that by having an outside class supply it.
+> - **⚡ Key Constraint:** DIP alone still leaves the client **creating** the concrete service (`this.mt = new MoodleMessager()`) — DI removes even that by having an outside class supply it.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -64,8 +65,8 @@ classDiagram
   MyApp ..> PetrolEngine : creates
 ```
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: A `WeatherApp` `new`s a real `HttpApi` internally, so tests hit the network. Use constructor injection so a test can pass a mock.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: A `WeatherApp` `new`s a real `HttpApi` internally, so tests hit the network. Use constructor injection so a test can pass a mock.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > interface WeatherSource { String forecast(); }
@@ -80,7 +81,7 @@ classDiagram
 > > ```
 > > - **Key move:** inject the abstraction so a **mock** (stub returning preprogrammed responses) replaces the slow/unavailable real service in tests.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **DI ≠ DIP** ➔ DIP is the *principle* (depend on abstractions); DI is the *technique* (an injector supplies them) — a class can obey DIP yet still `new` its service (not DI).
 - 💡 **Setter injection leaks state** ➔ a public setter needed for injection also lets any caller mutate the service — a mild information-hiding cost.
 - 💡 **Frameworks do this for you** ➔ Spring / Guice supply the injector (and manage persistence, REST, web wiring) — everywhere in industry, beyond this unit's scope.

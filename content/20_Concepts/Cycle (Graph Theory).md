@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Walks, Trails, and Paths]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a closed trail, no vertex repeated except start=end ➔ a "closed path".
 > - **📦 Core Components:** length $\ge3$ (triangle $K_3$) ➔ strictest closed traversal.
-> - **⚡ Critical Bottleneck:** odd closed walk ⟺ odd cycle; odd cycles block [[Bipartite Graph|2-colouring]].
+> - **⚡ Key Constraint:** odd closed walk ⟺ odd cycle; odd cycles block [[Bipartite Graph|2-colouring]].
 
 ## 📝 Core
 ### 1. The Cycle
@@ -33,7 +34,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 | cycle | no | **no** |
 | cycle graph $C_n$ | — | prototype |
 
-> [!NOTE] **Crossover Invariant:** odd cycles are exactly what stop a graph being [[Bipartite Graph|2-colourable]]; the cycle/closed-walk equivalence converts the easy "odd closed walk" into the structural "odd cycle". A [[Tree]] is a connected acyclic graph.
+> [!NOTE] **When It Flips:** odd cycles are exactly what stop a graph being [[Bipartite Graph|2-colourable]]; the cycle/closed-walk equivalence converts the easy "odd closed walk" into the structural "odd cycle". A [[Tree]] is a connected acyclic graph.
 
 ## 📊 Exam Execution Trace
 
@@ -48,18 +49,18 @@ a,b,a &: \{a,b\} \text{ twice} \Rightarrow \textbf{not a trail}
 $$
 **Final Extracted Output:** $a,b,c,a$ is an odd 3-cycle (so $G$ non-bipartite); $a,b,a$ is only a closed walk.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Odd" is essential** ➔ $K_2$ has the even closed walk $v,w,v$ (reuses the edge) but no cycle; even closed walks need not contain cycles.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a cycle and prove an odd closed walk implies an odd cycle.
-> - **Core Insight Requirement:** Minimal counterexample.
+> - **Hint:** Minimal counterexample.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A cycle is a closed trail with no interior repeat; shortest odd closed walk must be a cycle.
-> > - **Technical Justification:** **Split at a repeat** ➔ yields a shorter odd closed walk, contradicting minimality.
+> > - **Short answer:** A cycle is a closed trail with no interior repeat; shortest odd closed walk must be a cycle.
+> > - **Why:** **Split at a repeat** ➔ yields a shorter odd closed walk, contradicting minimality.
 
 > [!FAQ]- Why does the equivalence fail for even lengths?
-> - **Core Insight Requirement:** Back-and-forth reuse.
+> - **Hint:** Back-and-forth reuse.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $K_2$'s $v,w,v$ is an even closed walk but reuses the edge — no cycle exists.
-> > - **Technical Justification:** **Not a trail** ➔ even closed walks needn't contain cycles.
+> > - **Short answer:** $K_2$'s $v,w,v$ is an even closed walk but reuses the edge — no cycle exists.
+> > - **Why:** **Not a trail** ➔ even closed walks needn't contain cycles.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 4
 parent: "[[Types of Data (Numeric and Categorical)]]"
 tags: [DataScience/Visualisation, Monash/CS_DS]
 aliases: [Data Visualisation, Histogram, Bar Chart, Pie Chart, Motion Chart]
@@ -11,9 +12,9 @@ aliases: [Data Visualisation, Histogram, Bar Chart, Pie Chart, Motion Chart]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** choose the chart that matches the data type ➔ numeric → histogram/boxplot; categorical → bar/pie/frequency table.
 > - **📦 Core Components:** histogram (continuous) vs bar chart (categorical) | pie (≤6 categories) | motion chart (5-D).
-> - **⚡ Critical Bottleneck:** visualisation is *preliminary* — it gives a "feel" and reveals patterns, but a flat screen limits you to ~2 dimensions.
+> - **⚡ Key Constraint:** visualisation is *preliminary* — it gives a "feel" and reveals patterns, but a flat screen limits you to ~2 dimensions.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Purpose
 - **Preliminary analysis** ➔ get a "feel" for the data; can quickly reveal patterns.
 - **Dimension limit** ➔ paper/screen is 2-D; tricks push to 5–7 dims (colour/size/time), but readability drops.
@@ -42,7 +43,7 @@ aliases: [Data Visualisation, Histogram, Bar Chart, Pie Chart, Motion Chart]
 | **Categorical** | bar graph, frequency table | bar compares groups |
 | **Categorical (proportions)** | pie chart | ≤6 categories only |
 
-> [!NOTE] **Crossover Invariant:** a **histogram** and a **bar chart** look alike but differ by data type — histograms bin *continuous* numeric data (bars touch, order matters), bar charts show *categorical* counts (bars separate, order free).
+> [!NOTE] **When It Flips:** a **histogram** and a **bar chart** look alike but differ by data type — histograms bin *continuous* numeric data (bars touch, order matters), bar charts show *categorical* counts (bars separate, order free).
 
 ## 📊 Exam Execution Trace
 
@@ -59,13 +60,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- A histogram and a bar chart look identical — what actually distinguishes them?
-> - **Core Insight Requirement:** Continuous vs categorical.
+> - **Hint:** Continuous vs categorical.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A histogram bins **continuous** numeric data (adjacent, ordered bins); a bar chart shows **categorical** counts (separate bars, no inherent order).
-> > - **Technical Justification:** **Binning** ➔ histogram bars represent ranges $w=(\max-\min)/K$; bar-chart bars represent discrete categories.
+> > - **Short answer:** A histogram bins **continuous** numeric data (adjacent, ordered bins); a bar chart shows **categorical** counts (separate bars, no inherent order).
+> > - **Why:** **Binning** ➔ histogram bars represent ranges $w=(\max-\min)/K$; bar-chart bars represent discrete categories.
 
 > [!FAQ]- Why cap pie charts at ~6 categories, and what five dimensions can a motion chart show?
-> - **Core Insight Requirement:** Readability + encoding channels.
+> - **Hint:** Readability + encoding channels.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Beyond ~6 sectors the eye can't compare relative sizes; a motion chart encodes x, y, bubble size, bubble colour, and time.
-> > - **Technical Justification:** **Perceptual limits** ➔ too many sectors/dimensions overwhelm interpretation.
+> > - **Short answer:** Beyond ~6 sectors the eye can't compare relative sizes; a motion chart encodes x, y, bubble size, bubble colour, and time.
+> > - **Why:** **Perceptual limits** ➔ too many sectors/dimensions overwhelm interpretation.

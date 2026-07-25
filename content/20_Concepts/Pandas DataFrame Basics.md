@@ -8,11 +8,11 @@ aliases: [Pandas DataFrame, Boolean Filtering, read_fwf, loc]
 # [[Pandas DataFrame Basics]]
 
 **Context:** [[FIT1043_MOC]] · create/select/filter a [[Python for Data Science|pandas]] table · precedes [[Data Auditing in Pandas|auditing]] and [[Groupby-Aggregate Pipeline (Pandas)|groupby]] · labs: `30_Projects/FIT1043_Labs/Week2-Pandas-Solution.pdf`, `Week4-Wrangling-Viz-Solution.pdf`
-**Task signature:** build a DataFrame, select rows/columns, filter by a boolean mask, and add/fix values.
+**Problem it solves:** build a DataFrame, select rows/columns, filter by a boolean mask, and add/fix values.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** tabular data in Python ➔ build with pd.DataFrame; filter with a boolean mask df[mask]; add a column by assignment.
-> - **⚡ Critical Bottleneck:** compound masks need **parentheses** — `(a) & (b)`; and to *edit* selected cells use **df.loc[mask, col] = val** (not chained indexing).
+> - **⚡ Key Constraint:** compound masks need **parentheses** — `(a) & (b)`; and to *edit* selected cells use **df.loc[mask, col] = val** (not chained indexing).
 
 ## 🔧 Minimal Working Example
 ```python
@@ -36,8 +36,8 @@ df['Total'] = df['Math'] + df['English']   # add a computed column
 - **Fix inconsistent values (conditional assign)** ➔ `df.loc[df['Gender']=='f', 'Gender'] = 'F'` — the correct, copy-safe way to edit selected cells.
 - **Stack DataFrames** ➔ `pd.concat([df1, df2]).reset_index()` (renumber the combined index).
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: From patient `df`, keep rows with `SBP` ≤ 370 **and** `HR` ≥ 30, then report the shape.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: From patient `df`, keep rows with `SBP` ≤ 370 **and** `HR` ≥ 30, then report the shape.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > newDf = df[df['SBP'] <= 370]
@@ -46,6 +46,6 @@ df['Total'] = df['Math'] + df['English']   # add a computed column
 > > ```
 > > - **Key move:** chain two boolean filters (or combine with `&` and parentheses).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Parenthesise compound masks** ➔ `df['a']>0 & df['b']<9` misparses; write `(df['a']>0) & (df['b']<9)`.
 - 💡 **Edit with `df.loc[mask, col] = …`** ➔ `df[mask][col] = …` sets on a copy (SettingWithCopyWarning) and silently fails; `.loc` writes in place.

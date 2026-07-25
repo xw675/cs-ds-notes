@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Cartesian Product]]"
 tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a subset $R\subseteq A\times B$ recording which elements are related ➔ pairs, not single-valued.
 > - **📦 Core Components:** domain/codomain ➔ forward/backward lookup ➔ inverse relation.
-> - **⚡ Critical Bottleneck:** a function is the single-valued + total special case; the inverse **relation** always exists.
+> - **⚡ Key Constraint:** a function is the single-valued + total special case; the inverse **relation** always exists.
 
 ## 📝 Core
 ### 1. The Relation (Subset of a Product)
@@ -40,7 +41,7 @@ $$R(x)=\{y:x\,R\,y\},\qquad R^{-1}(y)=\{x:x\,R\,y\},\qquad y\,R^{-1}x\iff x\,R\,
 | inverse relation | swap pairs | always exists |
 | inverse function | bijection required | conditional |
 
-> [!NOTE] **Crossover Invariant:** relations model orders ($=,<,\le,\subseteq$), graph edges, and database rows; they are sets of pairs, so $R\cup S$, $R\cap S$ apply. The [[Function (Mathematics)]] is the single-valued, total specialisation.
+> [!NOTE] **When It Flips:** relations model orders ($=,<,\le,\subseteq$), graph edges, and database rows; they are sets of pairs, so $R\cup S$, $R\cap S$ apply. The [[Function (Mathematics)]] is the single-valued, total specialisation.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $A=\{1,2,3\}$, $R=\{(1,2),(2,3),(1,3)\}$ ("$<$"):
 | 2 | $R(2)$ | $\{3\}$ |
 | 3 | $R^{-1}$ | $\{(2,1),(3,2),(3,1)\}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Inverse relation ≠ inverse function** ➔ $R^{-1}$ exists for *any* relation (swap pairs); it's a function only if $R$ is a bijection.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a binary relation, and the extra constraint that makes one a function.
-> - **Core Insight Requirement:** Subset + functional constraint.
+> - **Hint:** Subset + functional constraint.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A relation is any $R\subseteq A\times B$; a function requires exactly one $b$ per $a$ (total + single-valued).
-> > - **Technical Justification:** **Every function is a relation** ➔ not conversely; general relations allow 0/1/many.
+> > - **Short answer:** A relation is any $R\subseteq A\times B$; a function requires exactly one $b$ per $a$ (total + single-valued).
+> > - **Why:** **Every function is a relation** ➔ not conversely; general relations allow 0/1/many.
 
 > [!FAQ]- Why does the inverse *relation* always exist while an inverse *function* may not?
-> - **Core Insight Requirement:** Swap vs bijection.
+> - **Hint:** Swap vs bijection.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $R^{-1}$ swaps pairs — always valid; an inverse function needs $R$ bijective.
-> > - **Technical Justification:** **Single-valued/total** ➔ non-injective ⟹ many preimages; non-surjective ⟹ missing preimages.
+> > - **Short answer:** $R^{-1}$ swaps pairs — always valid; an inverse function needs $R$ bijective.
+> > - **Why:** **Single-valued/total** ➔ non-injective ⟹ many preimages; non-surjective ⟹ missing preimages.

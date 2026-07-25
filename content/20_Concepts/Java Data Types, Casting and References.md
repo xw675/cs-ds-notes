@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: [1, 4]
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 aliases: [Primitive Types, Reference Types, Type Casting, Value vs Reference, Java Scope]
@@ -11,9 +12,9 @@ aliases: [Primitive Types, Reference Types, Type Casting, Value vs Reference, Ja
 > [!abstract] Quick Revision
 > - **🎯 Objective:** classify a variable as primitive or reference ➔ primitives store a **value**, references store a **pointer** to a heap object.
 > - **📦 Core Components:** 8 primitives + `String`/classes | value vs reference | widening (auto) vs narrowing (manual) casts | class vs local scope.
-> - **⚡ Critical Bottleneck:** the value-vs-reference distinction — `int i = 5` holds 5; `Integer i = new Integer(5)` holds an **address** to a heap block.
+> - **⚡ Key Constraint:** the value-vs-reference distinction — `int i = 5` holds 5; `Integer i = new Integer(5)` holds an **address** to a heap block.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Primitive Types (store a value directly)
 - **Integers** ➔ `byte`(8) · `short`(16) · `int`(32) · `long`(64) bits.
 - **Floating point** ➔ `float`(32-bit IEEE) · `double`(64-bit IEEE).
@@ -46,20 +47,20 @@ aliases: [Primitive Types, Reference Types, Type Casting, Value vs Reference, Ja
 | **has methods?** | no | yes (it's an object) |
 | **default** | `0`/`false` | `null` |
 
-> [!NOTE] **Crossover Invariant:** widening is safe (no data loss) so Java does it automatically; narrowing can truncate, so Java forces you to *ask* for it with `(type)` — the cast is you accepting the risk.
+> [!NOTE] **When It Flips:** widening is safe (no data loss) so Java does it automatically; narrowing can truncate, so Java forces you to *ask* for it with `(type)` — the cast is you accepting the risk.
 
 ## 🧠 Active Recall
 > [!FAQ]- What's the difference in what an `int` variable and an `Integer` variable actually store?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An `int` (primitive) stores the value `5` directly in its memory slot; an `Integer` (reference type) stores an **address** pointing to a heap block that holds the object's data.
-> > - **Technical Justification:** **Value vs reference** ➔ primitives are the value; objects are reached through a pointer, which matters for aliasing and equality later.
+> > - **Short answer:** An `int` (primitive) stores the value `5` directly in its memory slot; an `Integer` (reference type) stores an **address** pointing to a heap block that holds the object's data.
+> > - **Why:** **Value vs reference** ➔ primitives are the value; objects are reached through a pointer, which matters for aliasing and equality later.
 
 > [!FAQ]- Why is `double d = anInt;` allowed automatically but `int i = aDouble;` is not?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** int→double is **widening** (no data lost), so it's automatic; double→int is **narrowing** (fraction lost), so it needs an explicit cast `(int)`.
-> > - **Technical Justification:** **Safe vs lossy** ➔ Java auto-converts only when the larger type can hold every value of the smaller.
+> > - **Short answer:** int→double is **widening** (no data lost), so it's automatic; double→int is **narrowing** (fraction lost), so it needs an explicit cast `(int)`.
+> > - **Why:** **Safe vs lossy** ➔ Java auto-converts only when the larger type can hold every value of the smaller.
 
 > [!FAQ]- `new String("test") == new String("test")` is `false`, but `.equals()` is `true`. Why?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `==` compares **addresses**; `new` forces two separate heap objects, so their addresses differ. `.equals()` compares the **character values**, which are identical.
-> > - **Technical Justification:** **Identity vs value** ➔ literal strings are pooled (shared address, so `==` is `true`), but `new` bypasses the pool — always use `.equals()` for string value comparison.
+> > - **Short answer:** `==` compares **addresses**; `new` forces two separate heap objects, so their addresses differ. `.equals()` compares the **character values**, which are identical.
+> > - **Why:** **Identity vs value** ➔ literal strings are pooled (shared address, so `==` is `true`), but `new` bypasses the pool — always use `.equals()` for string value comparison.

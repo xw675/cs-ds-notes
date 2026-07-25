@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: [3, 5]
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** FIFO front-only access ➔ the ADT behind BFS, scheduling, buffering, producer–consumer.
 > - **📦 Core Components:** **Contract** ➔ `append`/`serve`, two moving ends | **LinearQueue** ➔ leaks space | **CircularQueue** ➔ ring, no waste | **LinkQueue** ➔ two-pointer chain, unbounded.
-> - **⚡ Critical Bottleneck:** all ops $O(1)$ ➔ **two ends move** ⟹ array versions need `front`+`rear`, creating the wasted-space flaw the ring fixes.
+> - **⚡ Key Constraint:** all ops $O(1)$ ➔ **two ends move** ⟹ array versions need `front`+`rear`, creating the wasted-space flaw the ring fixes.
 
 ## 📝 Core
 ### 1. Queue Contract (FIFO)
@@ -46,7 +47,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >     def __len__(self): return self.length
 >     def is_empty(self): return len(self) == 0
 > ```
-> 💡 **Exam Pitfall:** **Two indices, not one** ➔ `front` drifts right, so a single `length` can't locate the rear; array queues need `front`+`rear` with `rear - front == length`.
+> 💡 **Common Mistake:** **Two indices, not one** ➔ `front` drifts right, so a single `length` can't locate the rear; array queues need `front`+`rear` with `rear - front == length`.
 
 ### 🔹 LinearQueue — the wasted-space flaw
 > [!code]- `LinearQueue(Queue[T])`
@@ -65,7 +66,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >     def is_full(self):
 >         return self.rear == len(self.array)        # rear ran off the end — the flaw
 > ```
-> 💡 **Exam Pitfall:** **`is_full` is `rear == len(array)`** ➔ three ranked fixes: wrap modulo → CircularQueue ($O(1)$) | linked LinkQueue (unbounded) | shift-to-front ($O(n)$, worst).
+> 💡 **Common Mistake:** **`is_full` is `rear == len(array)`** ➔ three ranked fixes: wrap modulo → CircularQueue ($O(1)$) | linked LinkQueue (unbounded) | shift-to-front ($O(n)$, worst).
 
 ### 🔹 CircularQueue — the ring
 > [!code]- `CircularQueue(Queue[T])`
@@ -82,7 +83,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >         self.front = (self.front + 1) % len(self.array)      # wrap
 >         return item
 > ```
-> 💡 **Exam Pitfall:** **Iterate from `front` with `% len`** ➔ live elements may straddle the array end (indices 4,5,0,1); iterating raw from 0 visits garbage out of order.
+> 💡 **Common Mistake:** **Iterate from `front` with `% len`** ➔ live elements may straddle the array end (indices 4,5,0,1); iterating raw from 0 visits garbage out of order.
 
 ### 🔹 LinkQueue — two pointers
 > [!code]- `LinkQueue(Queue[T])`
@@ -101,7 +102,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >         if self.is_empty(): self.rear = None      # removed the last -> reset rear
 >         return item
 > ```
-> 💡 **Exam Pitfall:** **Empty-boundary transitions** ➔ append-to-empty must set `front` too; serve-the-last must reset `rear = None`, preserving `front is None ⇔ rear is None`.
+> 💡 **Common Mistake:** **Empty-boundary transitions** ➔ append-to-empty must set `front` too; serve-the-last must reset `rear = None`, preserving `front is None ⇔ rear is None`.
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | Trigger Condition | Advantage (Pro) | Disadvantage (Con) / Complexity Bound | Cache / Memory Impact |
@@ -110,7 +111,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 | **CircularQueue** | Bounded, perf-critical | $O(1)$, full array usable | fixed capacity | contiguous, cache-friendly |
 | **LinkQueue** | Variable / unbounded | $O(1)$, never full | $+1$ pointer/node | scattered, poor locality |
 
-> [!NOTE] **Crossover Invariant:** circular = linear's $O(1)$ **without** the space leak (used in network rings, audio buffers, OS run-queues); choose **linked** only when size is genuinely unbounded — doubly-link for an $O(1)$ deque, Michael–Scott CAS for lock-free concurrency.
+> [!NOTE] **When It Flips:** circular = linear's $O(1)$ **without** the space leak (used in network rings, audio buffers, OS run-queues); choose **linked** only when size is genuinely unbounded — doubly-link for an $O(1)$ deque, Michael–Scott CAS for lock-free concurrency.
 
 ## 📊 Exam Execution Trace
 
@@ -143,25 +144,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does an array-backed queue need two indices while a stack needs one, and what problem does that create?
-> - **Core Insight Requirement:** Connect "both ends move" to the wasted-space flaw.
+> - **Hint:** Connect "both ends move" to the wasted-space flaw.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `serve` advances `front`, `append` advances `rear` ➔ **both ends move**, so one `length` can't locate the rear.
-> > - **Technical Justification:** **Rightward drift** ➔ `front` abandons left cells ⟹ false-full; the **CircularQueue** wrap reclaims them.
+> > - **Short answer:** `serve` advances `front`, `append` advances `rear` ➔ **both ends move**, so one `length` can't locate the rear.
+> > - **Why:** **Rightward drift** ➔ `front` abandons left cells ⟹ false-full; the **CircularQueue** wrap reclaims them.
 
 > [!FAQ]- In a circular queue `rear == front` could mean full *or* empty — give two disambiguations and a context for each.
-> - **Core Insight Requirement:** Resolve the ring's position ambiguity.
+> - **Hint:** Resolve the ring's position ambiguity.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Count-based** (`len == capacity`/`0`) or **sacrifice-a-slot** (full = `(rear+1)%n == front`).
-> > - **Technical Justification:** **Concurrency cost** ➔ sacrifice-a-slot avoids a shared counter ⟹ preferred in lock-free ring buffers where atomic length updates are expensive.
+> > - **Short answer:** **Count-based** (`len == capacity`/`0`) or **sacrifice-a-slot** (full = `(rear+1)%n == front`).
+> > - **Why:** **Concurrency cost** ➔ sacrifice-a-slot avoids a shared counter ⟹ preferred in lock-free ring buffers where atomic length updates are expensive.
 
 > [!FAQ]- What does LinkQueue's `rear` pointer buy, and what invariant must `append`/`serve` preserve?
-> - **Core Insight Requirement:** Tail-append cost + pointer synchronisation.
+> - **Hint:** Tail-append cost + pointer synchronisation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `rear` makes **tail-append $O(1)$** (vs $O(n)$ traversal).
-> > - **Technical Justification:** **`front is None ⇔ rear is None`** ➔ append-to-empty sets both; serve-the-last resets `rear = None` so it can't dangle.
+> > - **Short answer:** `rear` makes **tail-append $O(1)$** (vs $O(n)$ traversal).
+> > - **Why:** **`front is None ⇔ rear is None`** ➔ append-to-empty sets both; serve-the-last resets `rear = None` so it can't dangle.
 
 > [!FAQ]- Three problem domains where a queue (not a stack) is correct, and why?
-> - **Core Insight Requirement:** Map FIFO to arrival-order processing.
+> - **Hint:** Map FIFO to arrival-order processing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **BFS/shortest paths**, **scheduling/buffering**, **producer–consumer**.
-> > - **Technical Justification:** **"Oldest first"** ➔ FIFO guarantees arrival-order exploration, fair service, and a bounded buffer decoupling fast producer from slow consumer.
+> > - **Short answer:** **BFS/shortest paths**, **scheduling/buffering**, **producer–consumer**.
+> > - **Why:** **"Oldest first"** ➔ FIFO guarantees arrival-order exploration, fair service, and a bounded buffer decoupling fast producer from slow consumer.

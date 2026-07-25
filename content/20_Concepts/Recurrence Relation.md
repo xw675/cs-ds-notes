@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2004]
+week: [1, 6]
 parent: "[[Sequence (Mathematics)]]"
 tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 ---
@@ -11,7 +12,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** each term as an expression in previous terms ➔ base case(s) + general case.
 > - **📦 Core Components:** base case + general rule ➔ must determine every term uniquely.
-> - **⚡ Critical Bottleneck:** a $k$-step rule needs $k$ base cases; closed form via explore–formulate–prove.
+> - **⚡ Key Constraint:** a $k$-step rule needs $k$ base cases; closed form via explore–formulate–prove.
 
 ## 📝 Core
 ### 1. The Definition
@@ -29,7 +30,7 @@ tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
 - **Formulate** ➔ guess a pattern.
 - **Prove** ➔ by [[Mathematical Induction]].
 
-> [!NOTE] **Crossover Invariant:** the recurrence is easiest to *write*; the closed form reveals **growth** and gives any term directly. When no closed form exists (e.g. [[Fibonacci Sequence|Fibonacci]] at first), bounds can still be proved by induction. The programming analogue is [[Recursion]].
+> [!NOTE] **When It Flips:** the recurrence is easiest to *write*; the closed form reveals **growth** and gives any term directly. When no closed form exists (e.g. [[Fibonacci Sequence|Fibonacci]] at first), bounds can still be proved by induction. The programming analogue is [[Recursion]].
 
 ## 📊 Exam Execution Trace
 
@@ -43,18 +44,18 @@ $f_1=1,\ f_n=2f_{n-1}+1$:
 | 2 | 3 | 3 | 7 |
 | 3 | 4 | 7 | 15 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$k$-step rule needs $k$ base cases** ➔ $f_n=4f_{n-2}$ with only $f_1$ fixes just odd positions; add $f_2$ for the even ones.
 
 ## 🧠 Active Recall
 > [!FAQ]- What are the two ingredients of a recurrence, and why does $f_n=4f_{n-2}$ need two base cases?
-> - **Core Insight Requirement:** Depth = base count.
+> - **Hint:** Depth = base count.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Base case(s) + general rule, determining every term; $f_n=4f_{n-2}$ reaches two back, so $f_1,f_2$ both needed.
-> > - **Technical Justification:** **$k$-step ⟹ $k$ bases** ➔ fewer leaves terms undefined.
+> > - **Short answer:** Base case(s) + general rule, determining every term; $f_n=4f_{n-2}$ reaches two back, so $f_1,f_2$ both needed.
+> > - **Why:** **$k$-step ⟹ $k$ bases** ➔ fewer leaves terms undefined.
 
 > [!FAQ]- Describe explore–formulate–prove and apply it to $f_1=1,\ f_n=2f_{n-1}+1$.
-> - **Core Insight Requirement:** Guess then induct.
+> - **Hint:** Guess then induct.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Explore $1,3,7,15$; formulate $2^n-1$; prove by induction (basis + step).
-> > - **Technical Justification:** **Closed form** ➔ converts a backward-looking rule to a formula valid for all $n$.
+> > - **Short answer:** Explore $1,3,7,15$; formulate $2^n-1$; prove by induction (basis + step).
+> > - **Why:** **Closed form** ➔ converts a backward-looking rule to a formula valid for all $n$.

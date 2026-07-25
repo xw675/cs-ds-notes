@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: [9, 10]
 parent: "[[Design Smells (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [refactoring, two hats, refactor first, when to refactor, meta-technique, Fowler]
@@ -10,7 +11,7 @@ aliases: [refactoring, two hats, refactor first, when to refactor, meta-techniqu
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** restructure existing code to **improve internal structure without changing external behaviour** ➔ reduce a smell while the program still does exactly the same thing.
-> - **⚡ Critical Bottleneck:** the invariant is **behaviour-preserving** — if outputs change, it is *not* refactoring, it's a rewrite. **Automated unit tests** are what make it safe: change → test → repeat.
+> - **⚡ Key Constraint:** the invariant is **behaviour-preserving** — if outputs change, it is *not* refactoring, it's a rewrite. **Automated unit tests** are what make it safe: change → test → repeat.
 
 ## 📝 Core
 - **Fowler's definition** ➔ "a **disciplined technique** for restructuring an existing body of code, **altering its internal structure without changing its external behavior**."
@@ -27,7 +28,7 @@ aliases: [refactoring, two hats, refactor first, when to refactor, meta-techniqu
 - **Introduced ➔ Detected ➔ act** ➔ once a smell is spotted you choose: **Refactor** (remove it now), **No action** (tolerate it — cost > benefit right now), or **Discard** (the code is going away anyway).
 - **"It depends"** ➔ whether to refactor weighs the smell's cost against effort and risk; not every smell must be fixed immediately.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Behaviour must not change** ➔ if a "refactor" alters outputs it is a bug or a redesign — mixing the two hats hides which one broke things.
 - 💡 **No tests = no safe refactor** ➔ restructuring without a test suite risks silent behavioural drift; write/enable tests first.
 - 💡 **Big-bang refactor** ➔ one huge restructuring edit is hard to verify; prefer the small-change→test→repeat loop so any regression is caught immediately.
@@ -35,5 +36,5 @@ aliases: [refactoring, two hats, refactor first, when to refactor, meta-techniqu
 ## 🧠 Active Recall
 > [!FAQ]- Why must you wear only one "hat" at a time when refactoring vs adding a feature?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** refactoring **preserves behaviour** (tests stay green) while adding a feature **changes behaviour** (tests move red→green); doing both at once makes it impossible to tell whether a failing test is the new feature or a broken restructure.
-> > - **Technical Justification:** **Behaviour-preserving invariant** ➔ separating the activities keeps the test suite a valid oracle for each change, so regressions are localised.
+> > - **Short answer:** refactoring **preserves behaviour** (tests stay green) while adding a feature **changes behaviour** (tests move red→green); doing both at once makes it impossible to tell whether a failing test is the new feature or a broken restructure.
+> > - **Why:** **Behaviour-preserving invariant** ➔ separating the activities keeps the test suite a valid oracle for each change, so regressions are localised.

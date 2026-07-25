@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 5
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [CFG, context-free grammar, context-free language, CFL, terminal, nonterminal, production rule, BNF, Backus-Naur Form, start symbol]
@@ -10,7 +11,7 @@ aliases: [CFG, context-free grammar, context-free language, CFL, terminal, nonte
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a finite set of **production rules** rewrites nonterminals into strings of terminals/nonterminals ➔ the **language generated** is every terminal string derivable from the **start symbol** $S$.
-> - **⚡ Critical Bottleneck:** rules replace **one nonterminal at a time regardless of context** (hence "context-free"); a rule's left side is always a **single nonterminal**.
+> - **⚡ Key Constraint:** rules replace **one nonterminal at a time regardless of context** (hence "context-free"); a rule's left side is always a **single nonterminal**.
 
 ## 📝 The three ingredients
 A context-free grammar consists of:
@@ -45,7 +46,7 @@ $$
 - **Chomsky** ➔ formalised grammars for **natural languages**.
 - **Backus** ➔ applied them to **programming languages** (ALGOL).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Left side is a single nonterminal** ➔ that restriction is what makes a grammar *context-free*; a rule like $aA\to\dots$ (context on the left) is a different, more powerful class.
 - 💡 **$\varepsilon$-rules are allowed** ➔ $S\to\varepsilon$ is a legitimate production and is how the empty word enters a language.
 - 💡 **Terminals vs nonterminals** ➔ terminals appear in the **final** string; nonterminals are scaffolding that must **all be rewritten away**. A "derivation" isn't finished while a nonterminal remains.
@@ -54,10 +55,10 @@ $$
 ## 🧠 Active Recall
 > [!FAQ]- What are the three components of a CFG, and what does "context-free" refer to?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** an alphabet of **terminals**, a set of **nonterminals** (one being the start symbol $S$), and a finite set of **production rules** each rewriting **one nonterminal** into a string of terminals and/or nonterminals.
-> > - **Technical Justification:** **Single-nonterminal left side** ➔ "context-free" means a nonterminal may be replaced **wherever** it occurs, independent of surrounding symbols — the left-hand side is always exactly one nonterminal, never a nonterminal flanked by context.
+> > - **Short answer:** an alphabet of **terminals**, a set of **nonterminals** (one being the start symbol $S$), and a finite set of **production rules** each rewriting **one nonterminal** into a string of terminals and/or nonterminals.
+> > - **Why:** **Single-nonterminal left side** ➔ "context-free" means a nonterminal may be replaced **wherever** it occurs, independent of surrounding symbols — the left-hand side is always exactly one nonterminal, never a nonterminal flanked by context.
 
 > [!FAQ]- Why does the existence of a CFG for EQUAL matter, given EQUAL is non-regular?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it demonstrates that the **context-free languages strictly contain the regular languages** — EQUAL cannot be described by any regex or finite automaton, yet a three-nonterminal CFG generates it.
-> > - **Technical Justification:** **Grammars have unbounded memory via recursion** ➔ nonterminals like $A\to\mathtt{b}AA$ can track arbitrary counts that a finite automaton's fixed states cannot, which is exactly the counting power the pumping lemma showed regular languages lack.
+> > - **Short answer:** it demonstrates that the **context-free languages strictly contain the regular languages** — EQUAL cannot be described by any regex or finite automaton, yet a three-nonterminal CFG generates it.
+> > - **Why:** **Grammars have unbounded memory via recursion** ➔ nonterminals like $A\to\mathtt{b}AA$ can track arbitrary counts that a finite automaton's fixed states cannot, which is exactly the counting power the pumping lemma showed regular languages lack.

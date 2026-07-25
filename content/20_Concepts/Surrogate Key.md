@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 5
 parent: "[[Primary Key]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a system-generated meaningless PK replacing a natural key ➔ simplifies composite keys.
 > - **📦 Core Components:** added only logically ➔ natural key kept via UNIQUE constraint.
-> - **⚡ Critical Bottleneck:** without the UNIQUE constraint, the natural-key business rule is lost.
+> - **⚡ Key Constraint:** without the UNIQUE constraint, the natural-key business rule is lost.
 
 ## 📝 Core
 ### 1. The Surrogate
@@ -38,7 +39,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >     CONSTRAINT et_nk UNIQUE (emp_no, training_code, et_date_completed)
 > );
 > ```
-> 💡 **Exam Pitfall:** **Keep the natural key as UNIQUE** ➔ without it, the same employee could record the same training on the same date twice — violating the business rules the [[Normalisation]] captured.
+> 💡 **Common Mistake:** **Keep the natural key as UNIQUE** ➔ without it, the same employee could record the same training on the same date twice — violating the business rules the [[Normalisation]] captured.
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Natural PK | Surrogate PK |
@@ -48,7 +49,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | child FKs | bloated | simple |
 | natural key | is the PK | kept as UNIQUE |
 
-> [!NOTE] **Crossover Invariant:** the natural key encodes the [[Normalisation]] rules, so it must be kept and enforced; the surrogate only replaces it *as the PK*, not the rule. Added at the **end** of logical design, after 3NF and ER mapping.
+> [!NOTE] **When It Flips:** the natural key encodes the [[Normalisation]] rules, so it must be kept and enforced; the surrogate only replaces it *as the PK*, not the rule. Added at the **end** of logical design, after 3NF and ER mapping.
 
 ## 📊 Exam Execution Trace
 
@@ -75,13 +76,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What is a surrogate key, when may it be added, and why?
-> - **Core Insight Requirement:** Simplify composite keys.
+> - **Hint:** Simplify composite keys.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A system-generated meaningless PK; added only at logical design; to simplify unwieldy composite keys.
-> > - **Technical Justification:** **Index per attribute** ➔ composite keys cost storage/performance and bloat FKs.
+> > - **Short answer:** A system-generated meaningless PK; added only at logical design; to simplify unwieldy composite keys.
+> > - **Why:** **Index per attribute** ➔ composite keys cost storage/performance and bloat FKs.
 
 > [!FAQ]- After adding a surrogate, how is the natural key protected, and why necessary?
-> - **Core Insight Requirement:** UNIQUE constraint.
+> - **Hint:** UNIQUE constraint.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A UNIQUE (NOT NULL) constraint on the former composite key.
-> > - **Technical Justification:** **Carries the rule** ➔ without it, duplicate natural-key combinations violate the business rules.
+> > - **Short answer:** A UNIQUE (NOT NULL) constraint on the former composite key.
+> > - **Why:** **Carries the rule** ➔ without it, duplicate natural-key combinations violate the business rules.

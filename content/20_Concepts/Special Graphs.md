@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** named graph families on $n$ vertices ➔ complete / null / path / cycle.
 > - **📦 Core Components:** $K_n$ (all edges) ➔ $\overline{K_n}$ (none) ➔ $P_{n-1}$ (line) ➔ $C_n$ (loop).
-> - **⚡ Critical Bottleneck:** $K_n$ densest, $\overline{K_n}$ sparsest — the degree extremes $n-1$ and $0$.
+> - **⚡ Key Constraint:** $K_n$ densest, $\overline{K_n}$ sparsest — the degree extremes $n-1$ and $0$.
 
 ## 📝 Core
 ### 1. The Four Families
@@ -23,7 +24,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 - **$C_n=P_{n-1}$ + one edge** ➔ joining first and last vertex.
 - **Naming by length** ➔ path length $n-1$, cycle length $n$.
 
-> [!NOTE] **Crossover Invariant:** larger graphs are analysed by the special [[Subgraph|subgraphs]] they contain. $C_n$ has an [[Euler Tour]] (every degree 2) for all $n\ge3$; $C_n$ is [[Bipartite Graph|bipartite]] iff $n$ even.
+> [!NOTE] **When It Flips:** larger graphs are analysed by the special [[Subgraph|subgraphs]] they contain. $C_n$ has an [[Euler Tour]] (every degree 2) for all $n\ge3$; $C_n$ is [[Bipartite Graph|bipartite]] iff $n$ even.
 
 ## 📊 Exam Execution Trace
 
@@ -37,18 +38,18 @@ $n=4$:
 | 2 | $P_3$ | 3 | 1,2,2,1 |
 | 3 | $C_4$ | 4 | all 2 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$K_n$ maximal, $\overline{K_n}$ minimal** ➔ they bound the average degree $2m/n$ between 0 and $n-1$; a triangle is a $K_3$, an odd cycle blocks bipartiteness.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the vertex/edge counts and degrees of $K_n,\overline{K_n},P_{n-1},C_n$.
-> - **Core Insight Requirement:** Four benchmarks.
+> - **Hint:** Four benchmarks.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $K_n$: $\binom n2$ edges, deg $n-1$; $\overline{K_n}$: 0, deg 0; $P_{n-1}$: $n-1$ edges, ends deg 1; $C_n$: $n$ edges, all deg 2.
-> > - **Technical Justification:** **$C_n=P_{n-1}+$ edge** ➔ joins the ends.
+> > - **Short answer:** $K_n$: $\binom n2$ edges, deg $n-1$; $\overline{K_n}$: 0, deg 0; $P_{n-1}$: $n-1$ edges, ends deg 1; $C_n$: $n$ edges, all deg 2.
+> > - **Why:** **$C_n=P_{n-1}+$ edge** ➔ joins the ends.
 
 > [!FAQ]- Why is $K_n$ densest, and how do these bound the average degree?
-> - **Core Insight Requirement:** Extremes.
+> - **Hint:** Extremes.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $K_n$ joins every pair (max $\binom n2$, degree $n-1$); $\overline{K_n}$ has none.
-> > - **Technical Justification:** **$2m/n$** ➔ any simple graph's average degree lies in $[0,n-1]$.
+> > - **Short answer:** $K_n$ joins every pair (max $\binom n2$, degree $n-1$); $\overline{K_n}$ has none.
+> > - **Why:** **$2m/n$** ➔ any simple graph's average degree lies in $[0,n-1]$.

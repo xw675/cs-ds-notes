@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 5
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** any object you can loop over ➔ produces a fresh [[Iterator]] on demand via __iter__.
 > - **📦 Core Components:** the **Iterator design pattern** — separate *what to traverse* from *how*.
-> - **⚡ Critical Bottleneck:** `__iter__` is $O(1)$; traversal is the iterator's $O(n)$ — and can be **lazy/infinite**.
+> - **⚡ Key Constraint:** `__iter__` is $O(1)$; traversal is the iterator's $O(n)$ — and can be **lazy/infinite**.
 
 ## 📝 Core
 ### 1. The Iterable (`__iter__`)
@@ -35,7 +36,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 > for item in a_list: ...      # Python calls __iter__ once, then next() until StopIteration
 > [x for x in a_list]; max(a_list); 5 in a_list   # all consume an iterable
 > ```
-> 💡 **Exam Pitfall:** **`__iter__` must return a fresh iterator** ➔ so two loops don't interfere — *unless* the object is itself an iterator, in which case `__iter__` returns the same (exhausting) object.
+> 💡 **Common Mistake:** **`__iter__` must return a fresh iterator** ➔ so two loops don't interfere — *unless* the object is itself an iterator, in which case `__iter__` returns the same (exhausting) object.
 
 ## ⚖️ Core Decision Matrix
 | Property | Iterable | [[Iterator]] |
@@ -46,7 +47,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
 | can be lazy/infinite? | yes (via its iterator) | yes |
 | example | LinkList, str, range | LinkListIterator, generator |
 
-> [!NOTE] **Crossover Invariant:** encapsulation (traverse without internals) + uniformity (one syntax over lists, strings, ranges, trees, custom classes). Because elements come from the iterator's `__next__` on demand, an iterable can represent an unbounded sequence in $O(1)$ memory.
+> [!NOTE] **When It Flips:** encapsulation (traverse without internals) + uniformity (one syntax over lists, strings, ranges, trees, custom classes). Because elements come from the iterator's `__next__` on demand, an iterable can represent an unbounded sequence in $O(1)$ memory.
 
 ## 📊 Exam Execution Trace
 
@@ -73,19 +74,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish an iterable from an iterator precisely, and why is a `LinkList` one but not the other?
-> - **Core Insight Requirement:** `__iter__` vs `__iter__`+`__next__`.
+> - **Hint:** `__iter__` vs `__iter__`+`__next__`.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Iterable has `__iter__` (fresh iterator, re-loopable); iterator adds `__next__` (holds position, single-use).
-> > - **Technical Justification:** **No `__next__`** ➔ LinkList returns a new `LinkListIterator` each call, so multiple independent loops run over one list.
+> > - **Short answer:** Iterable has `__iter__` (fresh iterator, re-loopable); iterator adds `__next__` (holds position, single-use).
+> > - **Why:** **No `__next__`** ➔ LinkList returns a new `LinkListIterator` each call, so multiple independent loops run over one list.
 
 > [!FAQ]- How does the iterator protocol let an iterable be infinite or lazy?
-> - **Core Insight Requirement:** On-demand production.
+> - **Hint:** On-demand production.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Elements come from the iterator's `__next__` only when asked, so nothing materialises.
-> > - **Technical Justification:** **$O(1)$ memory** ➔ `itertools.count()`, a file, a generator expression represent unbounded sequences a list could not.
+> > - **Short answer:** Elements come from the iterator's `__next__` only when asked, so nothing materialises.
+> > - **Why:** **$O(1)$ memory** ➔ `itertools.count()`, a file, a generator expression represent unbounded sequences a list could not.
 
 > [!FAQ]- What design pattern does making a class iterable implement, and what does it decouple?
-> - **Core Insight Requirement:** What vs how.
+> - **Hint:** What vs how.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The **Iterator pattern** (GoF) — decouples what a collection holds from how it's traversed.
-> > - **Technical Justification:** **Representation-agnostic** ➔ clients depend only on `__iter__`/`__next__`, so array/linked/tree internals can change without breaking loops.
+> > - **Short answer:** The **Iterator pattern** (GoF) — decouples what a collection holds from how it's traversed.
+> > - **Why:** **Representation-agnostic** ➔ clients depend only on `__iter__`/`__next__`, so array/linked/tree internals can change without breaking loops.

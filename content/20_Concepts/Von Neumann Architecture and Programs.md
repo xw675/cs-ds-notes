@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 3
 parent: "[[Computer Fundamentals (Bits, Bytes, Words)]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [Von Neumann, Machine Code, ISA, Assembly Language]
@@ -11,7 +12,7 @@ aliases: [Von Neumann, Machine Code, ISA, Assembly Language]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** Von Neumann = **CPU (ALU + registers + control) + memory + I/O**, with memory holding **both data AND program code**.
 > - **📦 Core Components:** machine code ➔ ISA ➔ assembly (mnemonics) ➔ compilers/interpreters bridge to high-level languages.
-> - **⚡ Critical Bottleneck:** "stored program" is THE idea — instructions live in the same addressed memory as data, moved over a bus.
+> - **⚡ Key Constraint:** "stored program" is THE idea — instructions live in the same addressed memory as data, moved over a bus.
 
 ## 📝 Core
 ### 1. The Architecture
@@ -34,17 +35,17 @@ aliases: [Von Neumann, Machine Code, ISA, Assembly Language]
 | assembly | `Load 0xA003, R0` | assembler → machine code | no (per-ISA) |
 | machine code | `0001000110001110` | CPU directly | no (per-ISA) |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Assembly ≠ high-level** ➔ 1-to-1 with machine instructions; a compiler does real translation, an assembler only renames.
 - 💡 **Data vs code is a convention** ➔ the same 16-bit word in memory is an instruction OR a number depending on how execution reaches it — the stored-program idea's double edge.
 
 ## 🧠 Active Recall
 > [!FAQ]- Draw the Von Neumann block diagram from memory and state each component's one-line job.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** CPU {ALU: compute · registers: fast temporaries · control: orchestrate} ↔ bus ↔ memory (code + data) ↔ I/O.
-> > - **Technical Justification:** **Stored program** ➔ keeping instructions in general memory is what makes the machine *re-programmable* rather than re-wired.
+> > - **Short answer:** CPU {ALU: compute · registers: fast temporaries · control: orchestrate} ↔ bus ↔ memory (code + data) ↔ I/O.
+> > - **Why:** **Stored program** ➔ keeping instructions in general memory is what makes the machine *re-programmable* rather than re-wired.
 
 > [!FAQ]- Trace "Hello World" in Python down to silicon: name every translation layer.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Python source → interpreter (itself machine code) executes it; compiled languages: C++ source → compiler → ISA-specific machine code → fetch-decode-execute.
-> > - **Technical Justification:** **ISA as contract** ➔ all software ultimately becomes instructions from the CPU's instruction set — the meeting point of software and hardware.
+> > - **Short answer:** Python source → interpreter (itself machine code) executes it; compiled languages: C++ source → compiler → ISA-specific machine code → fetch-decode-execute.
+> > - **Why:** **ISA as contract** ➔ all software ultimately becomes instructions from the CPU's instruction set — the meeting point of software and hardware.

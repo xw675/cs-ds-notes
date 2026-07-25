@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 11
 parent: "[[Software Design in the Lifecycle (FIT2099)]]"
 tags: [SWE/Design, SWE/Process, Monash/CS_DS]
 aliases: [design process, brainstorming, model storming, top-down, bottom-up, scenario-based design, use cases, design approaches, creative design]
@@ -10,7 +11,7 @@ aliases: [design process, brainstorming, model storming, top-down, bottom-up, sc
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** treat design as a **creative act with many valid solutions** ➔ start by **understanding the problem domain**, then evolve models toward a design using a fitting approach.
-> - **⚡ Critical Bottleneck:** technique **doesn't guarantee** a good design (like art lessons don't guarantee good paintings) — it takes **practice**; and unlike art, design has an **audience of many** (clients/stakeholders), so it must **communicate**, not just satisfy the author.
+> - **⚡ Key Constraint:** technique **doesn't guarantee** a good design (like art lessons don't guarantee good paintings) — it takes **practice**; and unlike art, design has an **audience of many** (clients/stakeholders), so it must **communicate**, not just satisfy the author.
 
 ## 📝 Design as a creative act
 - **Art vs design** ➔ an artist has an **audience of one** (works until *they're* satisfied); a designer has an **audience of many** and works until it **communicates to the target**. *"Clients are the difference between design and art."* (Bierut)
@@ -33,6 +34,6 @@ aliases: [design process, brainstorming, model storming, top-down, bottom-up, sc
 - **Loop** ➔ take a **scenario** the design must support (storyboard / **use case** / activity diagram / journey map / plain text) → **work through** it, tracing the design as it stands → **modify/rework** the design to support it (keeping quality properties in mind) → **repeat** with more scenarios.
 - **Use cases** ➔ structured actor-action / system-response scripts. **Disadvantages:** natural-language text allows **ambiguity**, and reviewing any non-trivial use case can become **tedious**.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Following a technique ≠ good design** ➔ approaches structure the work but guarantee nothing; keep the [[SOLID Principles (Java)|design principles]] in mind and expect to **practise**.
 - 💡 **Skipping problem understanding** ➔ jumping to a solution before modelling the domain produces designs that miss the real requirements.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 2
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [encapsulation, information hiding, access modifiers, public, private, protected, package-private, getter, setter]
@@ -12,9 +13,9 @@ aliases: [encapsulation, information hiding, access modifiers, public, private, 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** hide internal state behind **private** fields and expose only a deliberate public interface ➔ encapsulation / information hiding.
 > - **📦 Core Components:** `public` (world) | `protected` (package + subclasses) | *default* (package) | `private` (this class only).
-> - **⚡ Critical Bottleneck:** encapsulation ≠ "getter + setter for everything" — expose **only** the accessors a client genuinely needs; a write-only or read-only field is often correct.
+> - **⚡ Key Constraint:** encapsulation ≠ "getter + setter for everything" — expose **only** the accessors a client genuinely needs; a write-only or read-only field is often correct.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Encapsulation
 - **Private fields** ➔ mark data `private` so no outside class can read/write it directly.
 - **Selective accessors** ➔ add a getter and/or setter **only where needed** — not always both (a field may be read-only).
@@ -40,7 +41,7 @@ aliases: [encapsulation, information hiding, access modifiers, public, private, 
 - **default (package-private)** ➔ no keyword ➔ visible only within the same package.
 - **`private`** ➔ visible only inside the **declaring class**; the default for fields.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`protected` on attributes** ➔ discouraged (esp. fields) — it leaks state to every subclass and the whole package, weakening encapsulation; prefer `private` + a `protected`/`public` accessor.
 - 💡 **Reflex getters+setters** ➔ auto-generating both for every field re-exposes the state you just hid; add an accessor only when a client needs it.
 - 💡 **default ≠ public** ➔ omitting a modifier is **package-private**, not public — a subtle source of "why can't another package see it?".
@@ -48,5 +49,5 @@ aliases: [encapsulation, information hiding, access modifiers, public, private, 
 ## 🧠 Active Recall
 > [!FAQ]- Why is making a field `private` with a getter better than just making the field `public`?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** a `private` field + accessor lets the class **mediate** every read/write (validate in a setter, compute in a getter) and change its internal representation later without breaking clients; a `public` field hard-wires the representation into every caller.
-> > - **Technical Justification:** **Information hiding ➔ loose coupling** ➔ clients depend on the method signature, not the storage, so internals stay free to change.
+> > - **Short answer:** a `private` field + accessor lets the class **mediate** every read/write (validate in a setter, compute in a getter) and change its internal representation later without breaking clients; a `public` field hard-wires the representation into every caller.
+> > - **Why:** **Information hiding ➔ loose coupling** ➔ clients depend on the method signature, not the storage, so internals stay free to change.

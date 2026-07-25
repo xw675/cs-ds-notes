@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Entity Relationship Diagram (ERD)]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a logical association between entities ➔ the only way entities connect on a conceptual model.
 > - **📦 Core Components:** degree unary/binary/ternary ➔ verb label ➔ min/max cardinalities.
-> - **⚡ Critical Bottleneck:** ternary resolved by a composite entity; two entities may share multiple distinct relationships.
+> - **⚡ Key Constraint:** ternary resolved by a composite entity; two entities may share multiple distinct relationships.
 
 ![[binary-relationship.png]]
 ![[unary-relationship.png]]
@@ -40,7 +41,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > erDiagram
 >   CUSTOMER ||--o{ ORDER : places
 > ```
-> 💡 **Exam Pitfall:** **Model only the brief's relationships** ➔ a derivable/redundant association (already implied by existing relationships) must **not** be added; the brief decides, not intuition.
+> 💡 **Common Mistake:** **Model only the brief's relationships** ➔ a derivable/redundant association (already implied by existing relationships) must **not** be added; the brief decides, not intuition.
 
 ## ⚖️ Core Decision Matrix
 | Degree | Entities | Resolution |
@@ -50,7 +51,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | ternary+ | ≥3 | composite entity |
 | M:N binary | 2 | [[Associative Entity]] (if attributes) |
 
-> [!NOTE] **Crossover Invariant:** M:N is **kept** on the conceptual model (simpler/desirable) and resolved into an [[Associative Entity]] only when attributes must be stored or at the [[Conceptual vs Logical Model|logical stage]]. A relationship here is the ER counterpart of a [[Binary Relation]].
+> [!NOTE] **When It Flips:** M:N is **kept** on the conceptual model (simpler/desirable) and resolved into an [[Associative Entity]] only when attributes must be stored or at the [[Conceptual vs Logical Model|logical stage]]. A relationship here is the ER counterpart of a [[Binary Relation]].
 
 ## 📊 Exam Execution Trace
 
@@ -77,13 +78,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Define relationship degree and give unary/binary/ternary examples.
-> - **Core Insight Requirement:** Entity count.
+> - **Hint:** Entity count.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Degree = entities involved; unary (EMPLOYEE manages EMPLOYEE), binary (CUSTOMER places ORDER), ternary (doctor–drug–patient).
-> > - **Technical Justification:** **Ternary resolution** ➔ add a composite entity (`PRESCRIPTION`).
+> > - **Short answer:** Degree = entities involved; unary (EMPLOYEE manages EMPLOYEE), binary (CUSTOMER places ORDER), ternary (doctor–drug–patient).
+> > - **Why:** **Ternary resolution** ➔ add a composite entity (`PRESCRIPTION`).
 
 > [!FAQ]- If two entities have two real-world associations, how are they modelled, and may you add a relationship not in the brief?
-> - **Core Insight Requirement:** Separate lines; brief-only.
+> - **Hint:** Separate lines; brief-only.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Two separate relationships; distinct associations can't merge; no unstated relationship added.
-> > - **Technical Justification:** **Exactly the brief** ➔ even a derivable/redundant relationship is excluded.
+> > - **Short answer:** Two separate relationships; distinct associations can't merge; no unstated relationship added.
+> > - **Why:** **Exactly the brief** ➔ even a derivable/redundant relationship is excluded.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Power Set]]"
 tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\binom{n}{k}$ = number of $k$-subsets of an $n$-set ➔ "n choose k".
 > - **📦 Core Components:** closed form $\frac{n!}{(n-k)!k!}$ ➔ symmetry ➔ Pascal's identity.
-> - **⚡ Critical Bottleneck:** $\sum_k\binom{n}{k}=2^n$ (size-layers of the [[Power Set]]).
+> - **⚡ Key Constraint:** $\sum_k\binom{n}{k}=2^n$ (size-layers of the [[Power Set]]).
 
 ## 📝 Core
 ### 1. The Coefficient
@@ -38,7 +39,7 @@ $$\binom{n}{k}=\binom{n}{n-k},\qquad \binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k
 | $\binom{n}{1}$ | $n$ | single elements |
 | $\binom{n}{n-1}$ | $n$ | leave one out |
 
-> [!NOTE] **Crossover Invariant:** two computation routes — closed form (direct) or Pascal's identity (recursive, no large factorials, good for many coefficients). Outside $0\le k\le n$, $\binom{n}{k}=0$.
+> [!NOTE] **When It Flips:** two computation routes — closed form (direct) or Pascal's identity (recursive, no large factorials, good for many coefficients). Outside $0\le k\le n$, $\binom{n}{k}=0$.
 
 ## 📊 Exam Execution Trace
 
@@ -52,24 +53,24 @@ Pascal's triangle rows:
 | 2 | 2 | 1 2 1 |
 | 3 | 3 | 1 3 3 1 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Divide by $k!$** ➔ ordered selection $\frac{n!}{(n-k)!}$ counts each subset $k!$ times; forgetting the division confuses permutations with combinations.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive $\binom{n}{k}=\frac{n!}{(n-k)!\,k!}$ from first principles.
-> - **Core Insight Requirement:** Order then correct.
+> - **Hint:** Order then correct.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Ordered $k$-selections number $\frac{n!}{(n-k)!}$; each subset arises from $k!$ orderings, so divide by $k!$.
-> > - **Technical Justification:** **Overcount** ➔ combinations = permutations ÷ $k!$.
+> > - **Short answer:** Ordered $k$-selections number $\frac{n!}{(n-k)!}$; each subset arises from $k!$ orderings, so divide by $k!$.
+> > - **Why:** **Overcount** ➔ combinations = permutations ÷ $k!$.
 
 > [!FAQ]- State and justify Pascal's identity combinatorially.
-> - **Core Insight Requirement:** Contains vs omits an element.
+> - **Hint:** Contains vs omits an element.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$: subsets with $b$ ($\binom{n-1}{k-1}$) + subsets without $b$ ($\binom{n-1}{k}$).
-> > - **Technical Justification:** **Disjoint + exhaustive** ➔ the two cases add; the rule builds Pascal's triangle.
+> > - **Short answer:** $\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$: subsets with $b$ ($\binom{n-1}{k-1}$) + subsets without $b$ ($\binom{n-1}{k}$).
+> > - **Why:** **Disjoint + exhaustive** ➔ the two cases add; the rule builds Pascal's triangle.
 
 > [!FAQ]- Why does $\binom{n}{k}=\binom{n}{n-k}$, and what are $\binom{n}{0}$ and $\binom{n}{n}$?
-> - **Core Insight Requirement:** Include ⟺ exclude.
+> - **Hint:** Include ⟺ exclude.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Choosing $k$ to include = choosing $n-k$ to exclude; $\binom{n}{0}=\binom{n}{n}=1$.
-> > - **Technical Justification:** **Bijection** ➔ one way to choose nothing/everything.
+> > - **Short answer:** Choosing $k$ to include = choosing $n-k$ to exclude; $\binom{n}{0}=\binom{n}{n}=1$.
+> > - **Why:** **Bijection** ➔ one way to choose nothing/everything.

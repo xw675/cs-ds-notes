@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT2004]
+week: [1, 7]
 parent: "[[Recursion]]"
 tags: [CS/Algorithms, CS/Complexity]
 ---
@@ -11,7 +12,7 @@ tags: [CS/Algorithms, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** divide into subproblems, conquer recursively, combine ➔ most efficient when splits are roughly equal.
 > - **📦 Core Components:** **split** ➔ recurse on parts ➔ **combine** | split **balance** sets the depth.
-> - **⚡ Critical Bottleneck:** balanced halves → $\Theta(n\log n)$; lopsided → $\Theta(n^2)$; single-half search → $\Theta(\log n)$.
+> - **⚡ Key Constraint:** balanced halves → $\Theta(n\log n)$; lopsided → $\Theta(n^2)$; single-half search → $\Theta(\log n)$.
 
 ## 📝 Core
 ### 1. The Strategy (Divide / Conquer / Combine)
@@ -40,7 +41,7 @@ tags: [CS/Algorithms, CS/Complexity]
 >         sort(second_part)
 >         combine(first_part, second_part)
 > ```
-> 💡 **Exam Pitfall:** **Shrink by factor vs by one** ➔ halving gives depth $\log n$, peeling one element gives depth $n$ — the $\Theta(n\log n)$ vs $\Theta(n^2)$ divide and quicksort's bad-pivot degeneration.
+> 💡 **Common Mistake:** **Shrink by factor vs by one** ➔ halving gives depth $\log n$, peeling one element gives depth $n$ — the $\Theta(n\log n)$ vs $\Theta(n^2)$ divide and quicksort's bad-pivot degeneration.
 
 ## ⚖️ Core Decision Matrix
 | Split balance | Levels × work/level | Result | Example |
@@ -50,7 +51,7 @@ tags: [CS/Algorithms, CS/Complexity]
 | Single half, $\Theta(1)$ work | $\log_2 n$ × $\Theta(1)$ | $\Theta(\log n)$ | [[Binary Search]] |
 | Overlapping subproblems | recompute | exponential → DP | naive [[Recursion|Fibonacci]] |
 
-> [!NOTE] **Crossover Invariant:** balanced splits give depth $\log_b n$; lopsided ones push depth toward $n$, collapsing $\Theta(n\log n)$ to $\Theta(n^2)$. Space: recursion stack $\Theta(\text{depth})$; merge-style combine adds $\Theta(n)$ scratch, partition-style is in-place.
+> [!NOTE] **When It Flips:** balanced splits give depth $\log_b n$; lopsided ones push depth toward $n$, collapsing $\Theta(n\log n)$ to $\Theta(n^2)$. Space: recursion stack $\Theta(\text{depth})$; merge-style combine adds $\Theta(n)$ scratch, partition-style is in-place.
 
 ## 📊 Exam Execution Trace
 
@@ -79,19 +80,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is merge sort $\Theta(n\log n)$ but a naïve "process one element then recurse on the rest" is $\Theta(n^2)$?
-> - **Core Insight Requirement:** Factor-shrink vs one-element-shrink.
+> - **Hint:** Factor-shrink vs one-element-shrink.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Halving ⟹ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$; peeling one ⟹ $n$ levels × $\Theta(n)$ = $\Theta(n^2)$.
-> > - **Technical Justification:** **Depth** ➔ shrinking by a constant *factor* vs by *one element* is the whole difference ($\sum_k k = \Theta(n^2)$).
+> > - **Short answer:** Halving ⟹ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$; peeling one ⟹ $n$ levels × $\Theta(n)$ = $\Theta(n^2)$.
+> > - **Why:** **Depth** ➔ shrinking by a constant *factor* vs by *one element* is the whole difference ($\sum_k k = \Theta(n^2)$).
 
 > [!FAQ]- Divide and conquer assumes independent subproblems — what breaks when they overlap, and what replaces it?
-> - **Core Insight Requirement:** Redundant recomputation.
+> - **Hint:** Redundant recomputation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Overlapping subproblems ⟹ redundant work ⟹ exponential ($O(2^n)$).
-> > - **Technical Justification:** **Caching** ➔ memoisation / dynamic programming stores each subresult once, restoring polynomial time.
+> > - **Short answer:** Overlapping subproblems ⟹ redundant work ⟹ exponential ($O(2^n)$).
+> > - **Why:** **Caching** ➔ memoisation / dynamic programming stores each subresult once, restoring polynomial time.
 
 > [!FAQ]- Why does the *balance* of the split determine whether a D&C sort is $\Theta(n\log n)$ or $\Theta(n^2)$?
-> - **Core Insight Requirement:** Balance sets recursion depth.
+> - **Hint:** Balance sets recursion depth.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Even halving ⟹ depth $\log_2 n$; maximally lopsided ⟹ depth $n$.
-> > - **Technical Justification:** **Per-level $\Theta(n)$** ➔ $\log_2 n$ × $\Theta(n) = \Theta(n\log n)$ vs $n$ × $\Theta(n) = \Theta(n^2)$ — quicksort's bad pivot realises the latter.
+> > - **Short answer:** Even halving ⟹ depth $\log_2 n$; maximally lopsided ⟹ depth $n$.
+> > - **Why:** **Per-level $\Theta(n)$** ➔ $\log_2 n$ × $\Theta(n) = \Theta(n\log n)$ vs $n$ × $\Theta(n) = \Theta(n^2)$ — quicksort's bad pivot realises the latter.

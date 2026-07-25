@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 6
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** reduce to smaller subproblems of the same kind until a base case ➔ cost via recurrence, correctness via induction.
 > - **📦 Core Components:** base + call + **convergence** + combine | **classified** by count/route/tail | reshaped by **accumulator**/**auxiliary function**.
-> - **⚡ Critical Bottleneck:** $\Theta(\text{depth})$ **stack frames** (no Python TCO) ➔ overflow; removed by an **accumulator** (forward) or explicit **[[Stack (ADT)]]** (backward).
+> - **⚡ Key Constraint:** $\Theta(\text{depth})$ **stack frames** (no Python TCO) ➔ overflow; removed by an **accumulator** (forward) or explicit **[[Stack (ADT)]]** (backward).
 
 ## 📝 Core
 ### 1. Recursion (Four Components)
@@ -58,7 +59,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 > def fib_aux(n, fm2, fm1):
 >     return fm2 if n == 0 else fib_aux(n - 1, fm1, fm2 + fm1)
 > ```
-> 💡 **Exam Pitfall:** **Accumulator kills recomputation regardless of TCO** ➔ the time win ($\Theta(\varphi^n)\to\Theta(n)$) is independent of the space win; the tail form maps mechanically onto a `while` loop.
+> 💡 **Common Mistake:** **Accumulator kills recomputation regardless of TCO** ➔ the time win ($\Theta(\varphi^n)\to\Theta(n)$) is independent of the space win; the tail form maps mechanically onto a `while` loop.
 
 ### 🔹 Auxiliary Function over a LinkList
 > [!code]- `len_aux` / `contains_aux` (driver + worker)
@@ -74,7 +75,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 >     if current is None: return False                                   # base 1: not found
 >     return current.item == item or self.contains_aux(current.link, item)  # 'or' short-circuits
 > ```
-> 💡 **Exam Pitfall:** **Recurse on the `Node`, not `self`** ➔ a list-minus-head isn't a new `LinkList`; `len_aux` is still $\Theta(n)$ stack frames ⟹ a long list overflows where a loop wouldn't.
+> 💡 **Common Mistake:** **Recurse on the `Node`, not `self`** ➔ a list-minus-head isn't a new `LinkList`; `len_aux` is still $\Theta(n)$ stack frames ⟹ a long list overflows where a loop wouldn't.
 
 ### 🔹 Explicit-Stack de-recursification (`power`)
 > [!code]- recursive `power` → `power_iter`
@@ -95,7 +96,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 >         tmp = tmp * tmp if st.pop() % 2 == 0 else tmp * tmp * x
 >     return tmp
 > ```
-> 💡 **Exam Pitfall:** **LIFO order is the trick** ➔ print-reverse pushes all items then pops; the explicit stack on the heap dodges Python's ~1000-frame `RecursionError`.
+> 💡 **Common Mistake:** **LIFO order is the trick** ➔ print-reverse pushes all items then pops; the explicit stack on the heap dodges Python's ~1000-frame `RecursionError`.
 
 ## ⚖️ Core Decision Matrix
 | Recursion shape | Convert via | Recurrence → cost | Example |
@@ -105,7 +106,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
 | **Multiple calls (balanced)** | explicit stack of work items | $T(n)=2T(n/2)+\Theta(n)=\Theta(n\log n)$ | [[Merge Sort]] |
 | **Multiple calls (overlapping)** | accumulator **or** memoisation/DP | $T(n)=T(n-1)+T(n-2)+\Theta(1)=\Theta(\varphi^n)$ | naive Fibonacci |
 
-> [!NOTE] **Crossover Invariant:** same time Big-O, but recursion uses $\Theta(\text{depth})$ space vs iteration's $\Theta(1)$ — TCO would erase it (Python/Java lack it). The equivalence is to *general* iteration; the primitive-recursive / bounded-`for` fragment can't express **Ackermann**.
+> [!NOTE] **When It Flips:** same time Big-O, but recursion uses $\Theta(\text{depth})$ space vs iteration's $\Theta(1)$ — TCO would erase it (Python/Java lack it). The equivalence is to *general* iteration; the primitive-recursive / bounded-`for` fragment can't express **Ackermann**.
 
 ## 📊 Exam Execution Trace
 
@@ -134,31 +135,31 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- How do you prove a recursive algorithm correct, and how does it differ from proving a loop correct?
-> - **Core Insight Requirement:** Map recursion to induction, loops to invariants.
+> - **Hint:** Map recursion to induction, loops to invariants.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Structural induction** — base proved directly; step assumes calls correct on smaller inputs; convergence proves termination.
-> > - **Technical Justification:** **Same induction** ➔ a loop uses a [[Invariant|loop invariant]] (init/maintenance/termination) + variant — iterative and recursive forms of the same argument.
+> > - **Short answer:** **Structural induction** — base proved directly; step assumes calls correct on smaller inputs; convergence proves termination.
+> > - **Why:** **Same induction** ➔ a loop uses a [[Invariant|loop invariant]] (init/maintenance/termination) + variant — iterative and recursive forms of the same argument.
 
 > [!FAQ]- Why can a *correct* recursive function still crash in Python, and what are the fixes?
-> - **Core Insight Requirement:** No TCO + a depth cap.
+> - **Hint:** No TCO + a depth cap.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Python caps depth (~1000) and does **no tail-call optimisation** ➔ deep recursion overflows.
-> > - **Technical Justification:** **De-recursify** ➔ convert to iteration, an explicit heap stack (no cap), or an accumulator + loop; raising the limit only delays it.
+> > - **Short answer:** Python caps depth (~1000) and does **no tail-call optimisation** ➔ deep recursion overflows.
+> > - **Why:** **De-recursify** ➔ convert to iteration, an explicit heap stack (no cap), or an accumulator + loop; raising the limit only delays it.
 
 > [!FAQ]- Naive Fibonacci is exponential — compare the accumulator fix and the memoisation fix.
-> - **Core Insight Requirement:** Forward-accumulation vs general caching.
+> - **Hint:** Forward-accumulation vs general caching.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Both reach $\Theta(n)$; accumulator is $\Theta(1)$ extra state, memoisation $\Theta(n)$ table.
-> > - **Technical Justification:** **Generality** ➔ accumulation works only for forward-building results; memoisation handles *any* overlapping-subproblem structure.
+> > - **Short answer:** Both reach $\Theta(n)$; accumulator is $\Theta(1)$ extra state, memoisation $\Theta(n)$ table.
+> > - **Why:** **Generality** ➔ accumulation works only for forward-building results; memoisation handles *any* overlapping-subproblem structure.
 
 > [!FAQ]- For factorial-as-tail, `power`, and Tower of Hanoi — does converting to iteration need nothing, an accumulator, or an explicit stack?
-> - **Core Insight Requirement:** Match recursion shape to conversion device.
+> - **Hint:** Match recursion shape to conversion device.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Tail factorial ➔ plain loop; `power` ➔ explicit stack of args; **[[Tower of Hanoi]]** ➔ explicit stack of *work items*.
-> > - **Technical Justification:** **Pending state** ➔ Hanoi's two recursive calls must remember which sub-move to resume, exactly like call frames.
+> > - **Short answer:** Tail factorial ➔ plain loop; `power` ➔ explicit stack of args; **[[Tower of Hanoi]]** ➔ explicit stack of *work items*.
+> > - **Why:** **Pending state** ➔ Hanoi's two recursive calls must remember which sub-move to resume, exactly like call frames.
 
 > [!FAQ]- Why does recursing over a `LinkList` need an auxiliary function, and what three jobs can its parameter do?
-> - **Core Insight Requirement:** The public type can't shrink itself.
+> - **Hint:** The public type can't shrink itself.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A driver seeds a worker recursing on the next **`Node`** (a valid smaller argument).
-> > - **Technical Justification:** **Parameter roles** ➔ **converge** (`current.link`), **accumulate** a forward result, or **carry context** (`item`, `lo/hi`) — behind a clean public method.
+> > - **Short answer:** A driver seeds a worker recursing on the next **`Node`** (a valid smaller argument).
+> > - **Why:** **Parameter roles** ➔ **converge** (`current.link`), **accumulate** a forward result, or **carry context** (`item`, `lo/hi`) — behind a clean public method.

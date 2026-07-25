@@ -11,7 +11,7 @@ aliases: [UML Toolkit, UML Cheatsheet, UML reference, class diagram cheatsheet, 
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** capture a design two ways ➔ **class diagram** = *static* structure (classes + relationships), **sequence diagram** = *dynamic* behaviour (messages over time).
-> - **⚡ Critical Bottleneck:** get the **relationship arrow** right on the class diagram (generalisation vs realization vs association vs dependency) and remember diagrams are an **aid to shared understanding**, not the deliverable — see [[Software Design in the Lifecycle (FIT2099)]].
+> - **⚡ Key Constraint:** get the **relationship arrow** right on the class diagram (generalisation vs realization vs association vs dependency) and remember diagrams are an **aid to shared understanding**, not the deliverable — see [[Software Design in the Lifecycle (FIT2099)]].
 
 ## 📐 Class diagram — box anatomy
 ```mermaid
@@ -108,8 +108,8 @@ sequenceDiagram
 | **CRC card** | Class · Responsibilities · Collaborators (collaborators → associations) | [[CRC Cards (FIT2099)]] |
 | **Package diagram** | group classes into namespaces | [[Java Packages and Imports]] |
 
-## 🥋 Integration Kata (≥3 diagram tools — draw from blank)
-> [!QUESTION]- Kata: A `Player` runs `AttackAction` on an `Enemy`; `Enemy implements Actor`; the action only strikes if the enemy is alive. Produce (a) a class diagram with realization + association + dependency and (b) a sequence diagram with an `alt`. (uses: class diagram arrows + multiplicity + sequence + fragment)
+## ✍️ Integration Practice (≥3 diagram tools — draw from blank)
+> [!QUESTION]- Practice: A `Player` runs `AttackAction` on an `Enemy`; `Enemy implements Actor`; the action only strikes if the enemy is alive. Produce (a) a class diagram with realization + association + dependency and (b) a sequence diagram with an `alt`. (uses: class diagram arrows + multiplicity + sequence + fragment)
 > > [!SUCCESS]- Reference solution
 > > ```mermaid
 > > classDiagram
@@ -139,7 +139,7 @@ sequenceDiagram
 > > ```
 > > - **Key move:** `implements` → **dashed hollow-triangle** (`<|..`), stored field → **solid** association (`-->`), method param → **dashed** dependency (`..>`); the runtime "only if alive" check is an **`alt`** fragment on the sequence diagram.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Association vs dependency** ➔ field = solid `-->`; parameter-only = dashed `..>`. Mixing them is the most common class-diagram deduction.
 - 💡 **Generalisation vs realization** ➔ `extends` = **solid** hollow triangle (`<|--`); `implements` = **dashed** hollow triangle (`<|..`).
 - 💡 **Unbalanced fragments** ➔ each `alt`/`opt`/`loop` must close with `end`, or the sequence diagram won't render.

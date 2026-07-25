@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every integer in $[a,b]$ equally likely ➔ $\mathrm{Pr}(X=x)=\frac1{b-a+1}$.
 > - **📦 Core Components:** $E=\frac{a+b}2$ ➔ $\mathrm{Var}=\frac{(b-a+1)^2-1}{12}$.
-> - **⚡ Critical Bottleneck:** models genuine fairness **or** pure ignorance (maximally uninformative).
+> - **⚡ Key Constraint:** models genuine fairness **or** pure ignorance (maximally uninformative).
 
 ## 📝 Core
 ### 1. The Distribution
@@ -37,7 +38,7 @@ $$\mathrm{Pr}(X=x)=\tfrac1{b-a+1}\ (a\le x\le b),\quad E=\tfrac{a+b}2,\quad \mat
 | $\mathrm{Unif}(1,6)$ | 3.5 | $\tfrac{35}{12}$ |
 | general | $\frac{a+b}2$ | $\frac{(b-a+1)^2-1}{12}$ |
 
-> [!NOTE] **Crossover Invariant:** uniform over a sample space = [[Probability|Equally Likely Outcomes]]; $\mathrm{Unif}(0,1)$ is a fair [[Binomial Distribution|Bernoulli Trial]]. It is the natural prior when the distribution's shape is entirely unknown.
+> [!NOTE] **When It Flips:** uniform over a sample space = [[Probability|Equally Likely Outcomes]]; $\mathrm{Unif}(0,1)$ is a fair [[Binomial Distribution|Bernoulli Trial]]. It is the natural prior when the distribution's shape is entirely unknown.
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ $\mathrm{Unif}(1,6)$:
 | 2 | $E$ | 3.5 |
 | 3 | $\mathrm{Var}$ | $\tfrac{35}{12}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Count is $b-a+1$, not $b-a$** ➔ inclusive endpoints; the uniform is the maximally non-committal choice given only the range.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the pmf, mean, and variance of $\mathrm{Unif}(a,b)$ and verify on a fair die.
-> - **Core Insight Requirement:** Inclusive count.
+> - **Hint:** Inclusive count.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\tfrac1{b-a+1}$; $E=\tfrac{a+b}2$; $\mathrm{Var}=\tfrac{(b-a+1)^2-1}{12}$; die → $3.5,\tfrac{35}{12}$.
-> > - **Technical Justification:** **Symmetry** ➔ mean at the midpoint.
+> > - **Short answer:** $\tfrac1{b-a+1}$; $E=\tfrac{a+b}2$; $\mathrm{Var}=\tfrac{(b-a+1)^2-1}{12}$; die → $3.5,\tfrac{35}{12}$.
+> > - **Why:** **Symmetry** ➔ mean at the midpoint.
 
 > [!FAQ]- What two situations call for a uniform distribution?
-> - **Core Insight Requirement:** Fairness or ignorance.
+> - **Hint:** Fairness or ignorance.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Known symmetry (die/coin), or modelling ignorance (only the range known).
-> > - **Technical Justification:** **Non-committal** ➔ assumes nothing beyond $[a,b]$.
+> > - **Short answer:** Known symmetry (die/coin), or modelling ignorance (only the range known).
+> > - **Why:** **Non-committal** ➔ assumes nothing beyond $[a,b]$.

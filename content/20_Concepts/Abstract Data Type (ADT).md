@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Data Type]]"
 tags: [CS/DataStructures, CS/Abstraction, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/Abstraction, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** specify what a type does (values, meaning, operations), not how ➔ program against the interface, swap implementations freely.
 > - **📦 Core Components:** a **contract** ➔ operations + pre/post-conditions + [[Invariant|invariant]], hardened by **encapsulation**.
-> - **⚡ Critical Bottleneck:** decouples interface from **cost** ➔ the same ADT has implementations with different complexity profiles.
+> - **⚡ Key Constraint:** decouples interface from **cost** ➔ the same ADT has implementations with different complexity profiles.
 
 ## 📝 Core
 ### 1. The ADT (What, Not How)
@@ -34,7 +35,7 @@ tags: [CS/DataStructures, CS/Abstraction, OOP/Python]
 >     while not s.is_empty(): out += s.pop()   # LIFO contract only
 >     return out
 > ```
-> 💡 **Exam Pitfall:** **WHAT decoupled from HOW** ➔ `reverse` works unchanged for **any** Stack implementation; swapping `ArrayStack(n)` for a linked stack changes only the constructor call.
+> 💡 **Common Mistake:** **WHAT decoupled from HOW** ➔ `reverse` works unchanged for **any** Stack implementation; swapping `ArrayStack(n)` for a linked stack changes only the constructor call.
 
 ## ⚖️ Core Decision Matrix
 | Advantage | What it buys | Trade-off |
@@ -44,7 +45,7 @@ tags: [CS/DataStructures, CS/Abstraction, OOP/Python]
 | **Flexibility** | swap array ↔ linked freely | requires honouring the contract |
 | **Portability** | one interface across machines/langs | — |
 
-> [!NOTE] **Crossover Invariant:** interface ≠ cost — a [[Priority Queue (ADT)]] is $O(1)$/$O(n)$ as a sorted list but $O(\log n)$/$O(\log n)$ as a [[Heap]]; choosing the implementation to fit the workload is the central design act.
+> [!NOTE] **When It Flips:** interface ≠ cost — a [[Priority Queue (ADT)]] is $O(1)$/$O(n)$ as a sorted list but $O(\log n)$/$O(\log n)$ as a [[Heap]]; choosing the implementation to fit the workload is the central design act.
 
 ## 📊 Exam Execution Trace
 
@@ -71,19 +72,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why can you swap one implementation of an ADT for another without changing client code?
-> - **Core Insight Requirement:** Clients depend on the contract, not internals.
+> - **Hint:** Clients depend on the contract, not internals.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Any implementation honouring the same operations + pre/post-conditions + invariants behaves identically from outside.
-> > - **Technical Justification:** **Encapsulation** ➔ stops clients coupling to internals, so a linked stack replaces an array stack with no client change.
+> > - **Short answer:** Any implementation honouring the same operations + pre/post-conditions + invariants behaves identically from outside.
+> > - **Why:** **Encapsulation** ➔ stops clients coupling to internals, so a linked stack replaces an array stack with no client change.
 
 > [!FAQ]- The same ADT can have wildly different complexities — give an example and the design lesson.
-> - **Core Insight Requirement:** Interface fixes ops, not cost.
+> - **Hint:** Interface fixes ops, not cost.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A [[Priority Queue (ADT)]]: sorted list ($O(1)$ get_max / $O(n)$ add) vs [[Heap]] ($O(\log n)$ both).
-> > - **Technical Justification:** **Workload-fit** ➔ choose the implementation whose complexity profile matches your operation mix.
+> > - **Short answer:** A [[Priority Queue (ADT)]]: sorted list ($O(1)$ get_max / $O(n)$ add) vs [[Heap]] ($O(\log n)$ both).
+> > - **Why:** **Workload-fit** ➔ choose the implementation whose complexity profile matches your operation mix.
 
 > [!FAQ]- "Abstraction is ignoring, not hiding" — how do encapsulation and design-by-contract sharpen this?
-> - **Core Insight Requirement:** Convention vs guaranteed boundary.
+> - **Hint:** Convention vs guaranteed boundary.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** "Ignoring" = relying only on the interface; encapsulation enforces it; design-by-contract makes it precise.
-> > - **Technical Justification:** **Guaranteed boundary** ➔ pre/post-conditions + invariants turn convention into an enforced boundary, enabling safe swaps and independent reasoning.
+> > - **Short answer:** "Ignoring" = relying only on the interface; encapsulation enforces it; design-by-contract makes it precise.
+> > - **Why:** **Guaranteed boundary** ➔ pre/post-conditions + invariants turn convention into an enforced boundary, enabling safe swaps and independent reasoning.

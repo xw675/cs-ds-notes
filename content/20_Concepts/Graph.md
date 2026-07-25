@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Binary Relation]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $G=(V,E)$: vertices + edges (unordered pairs) ➔ models which pairs interact.
 > - **📦 Core Components:** adjacency ($\sim$) ➔ incidence ➔ isolated/leaf vertices.
-> - **⚡ Critical Bottleneck:** adjacency is a symmetric irreflexive [[Binary Relation]]; specify both $V$ **and** $E$.
+> - **⚡ Key Constraint:** adjacency is a symmetric irreflexive [[Binary Relation]]; specify both $V$ **and** $E$.
 
 ## 📝 Core
 ### 1. The Graph
@@ -37,7 +38,7 @@ $$v\sim w \iff \{v,w\}\in E,\qquad \{v,w\}=\{w,v\}\ (\text{undirected, no self-l
 | isolated | degree 0 | $e$ |
 | leaf | degree 1 | $d,f,g$ |
 
-> [!NOTE] **Crossover Invariant:** adjacency $\sim$ is a symmetric, irreflexive [[Binary Relation]] on $V$ — the bridge to relation theory; [[Connectivity]] turns the *walk* relation into an [[Equivalence Relation]]. Here graphs are **simple** unless stated ([[Types of Graphs]]).
+> [!NOTE] **When It Flips:** adjacency $\sim$ is a symmetric, irreflexive [[Binary Relation]] on $V$ — the bridge to relation theory; [[Connectivity]] turns the *walk* relation into an [[Equivalence Relation]]. Here graphs are **simple** unless stated ([[Types of Graphs]]).
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ $G=(\{a,\dots,g\},\{ab,ac,bc,cd,fg\})$:
 | 2 | edges incident with $c$ | $\{a,c\},\{b,c\},\{c,d\}$ |
 | 3 | classify $e$ | isolated |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Must give both $V$ and $E$** ➔ an isolated vertex leaves no trace in the edge list; edges are *sets*, so no vertex is adjacent to itself.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a graph, and distinguish adjacency from incidence.
-> - **Core Insight Requirement:** Vertex–vertex vs vertex–edge.
+> - **Hint:** Vertex–vertex vs vertex–edge.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $G=(V,E)$, edges unordered pairs; adjacency relates two vertices, incidence a vertex to an edge.
-> > - **Technical Justification:** **$v\sim w\Leftrightarrow\{v,w\}\in E$** ➔ "$c$ incident with $\{a,c\}$" is a vertex–edge link.
+> > - **Short answer:** $G=(V,E)$, edges unordered pairs; adjacency relates two vertices, incidence a vertex to an edge.
+> > - **Why:** **$v\sim w\Leftrightarrow\{v,w\}\in E$** ➔ "$c$ incident with $\{a,c\}$" is a vertex–edge link.
 
 > [!FAQ]- Why specify the vertex set separately, and what are isolated and leaf vertices?
-> - **Core Insight Requirement:** Isolated vertices vanish from edges.
+> - **Hint:** Isolated vertices vanish from edges.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An isolated vertex is in no edge, so $V$ must be recorded; isolated = degree 0, leaf = degree 1.
-> > - **Technical Justification:** **Both $V,E$** ➔ the edge list alone loses isolated vertices.
+> > - **Short answer:** An isolated vertex is in no edge, so $V$ must be recorded; isolated = degree 0, leaf = degree 1.
+> > - **Why:** **Both $V,E$** ➔ the edge list alone loses isolated vertices.

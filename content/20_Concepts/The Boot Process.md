@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 5
 parent: "[[Motherboard and IO Interfaces]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [Boot, BIOS, UEFI, POST]
@@ -10,7 +11,7 @@ aliases: [Boot, BIOS, UEFI, POST]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** RAM is volatile ➔ boot code must live in **ROM** ➔ chain: power-good → CPU reset → ROM code → POST → hardware init → find OS (boot sector) → load boot code → kernel → drivers → GUI.
-> - **⚡ Critical Bottleneck:** each stage loads the NEXT, bigger stage — a bootstrap chain; know the 12 steps in order.
+> - **⚡ Key Constraint:** each stage loads the NEXT, bigger stage — a bootstrap chain; know the 12 steps in order.
 
 ## 📝 Core
 - **The problem** ➔ programs run from RAM, RAM loses everything without power ⟹ where does the FIRST program come from, and what does it do?
@@ -39,17 +40,17 @@ aliases: [Boot, BIOS, UEFI, POST]
 
 - **Non-PC systems** ➔ Raspberry Pi boots from ROM code executed by the **GPU**; some microcontrollers never "boot" — code runs from non-volatile memory directly.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **ROM starts it, RAM runs it** ➔ the ROM only bootstraps; the OS executes from RAM — "the OS is in ROM" is a classic wrong answer.
 - 💡 **POST before OS search** ➔ hardware must be verified before anything is loaded; beep codes exist because video may not work yet.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why can't a computer boot from RAM alone, and how does the ROM solve it?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** RAM is volatile — empty at power-on; ROM is non-volatile and wired to the CPU's reset vector, providing the first instructions.
-> > - **Technical Justification:** **Bootstrap chain** ➔ tiny ROM code loads bigger boot code, which loads the kernel — each stage just capable enough to fetch the next.
+> > - **Short answer:** RAM is volatile — empty at power-on; ROM is non-volatile and wired to the CPU's reset vector, providing the first instructions.
+> > - **Why:** **Bootstrap chain** ➔ tiny ROM code loads bigger boot code, which loads the kernel — each stage just capable enough to fetch the next.
 
 > [!FAQ]- Give three concrete UEFI advantages over BIOS and the security feature's purpose.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** >2.2 TB disks, full-speed 32/64-bit execution, GUI + network remote control; secure boot loads only authenticated drivers/OS.
-> > - **Technical Justification:** **Firmware as attack surface** ➔ pre-OS code owns the machine, so verifying signatures blocks boot-level malware.
+> > - **Short answer:** >2.2 TB disks, full-speed 32/64-bit execution, GUI + network remote control; secure boot loads only authenticated drivers/OS.
+> > - **Why:** **Firmware as attack surface** ➔ pre-OS code owns the machine, so verifying signatures blocks boot-level malware.

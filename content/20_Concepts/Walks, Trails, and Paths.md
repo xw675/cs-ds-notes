@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** traverse a graph ➔ walk (anything) ⊇ trail (no repeat edge) ⊇ path (no repeat vertex).
 > - **📦 Core Components:** length = edge count ➔ closed if $v_0=v_k$.
-> - **⚡ Critical Bottleneck:** shortest walk = shortest path (defines distance); a path can't be closed.
+> - **⚡ Key Constraint:** shortest walk = shortest path (defines distance); a path can't be closed.
 
 ## 📝 Core
 ### 1. The Three Levels
@@ -40,7 +41,7 @@ $$\text{distance}(v,w)=\text{length of shortest path}=\text{length of shortest w
 | path | no | **no** |
 | cycle | no | only endpoints |
 
-> [!NOTE] **Crossover Invariant:** whenever a walk from $v$ to $w$ exists, a path does too (cut the loops) — the basis of [[Connectivity]]. A length-0 walk (single vertex) is the reflexive case making connectivity an [[Equivalence Relation]].
+> [!NOTE] **When It Flips:** whenever a walk from $v$ to $w$ exists, a path does too (cut the loops) — the basis of [[Connectivity]]. A length-0 walk (single vertex) is the reflexive case making connectivity an [[Equivalence Relation]].
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $G$ ($ab,ac,bc,cd$), classify sequences:
 | 2 | $a,b,c,a$ | vertex $a$ (closed) | closed trail (cycle) |
 | 3 | $a,b,c,d$ | none | path (length 3) |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A path can't be closed** ➔ closing repeats the start vertex; that role belongs to a [[Cycle (Graph Theory)|cycle]] (closed trail, no interior repeat).
 
 ## 🧠 Active Recall
 > [!FAQ]- Define walk, trail, and path, and how they nest.
-> - **Core Insight Requirement:** Repetition rules.
+> - **Hint:** Repetition rules.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Walk allows all repeats; trail bans edge reuse; path bans vertex reuse; path ⊆ trail ⊆ walk.
-> > - **Technical Justification:** **Closed** ➔ $v_0=v_k$; a path can't be closed.
+> > - **Short answer:** Walk allows all repeats; trail bans edge reuse; path bans vertex reuse; path ⊆ trail ⊆ walk.
+> > - **Why:** **Closed** ➔ $v_0=v_k$; a path can't be closed.
 
 > [!FAQ]- Why does "shortest walk = shortest path", and how is distance defined?
-> - **Core Insight Requirement:** Cut the detours.
+> - **Hint:** Cut the detours.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Any walk shortens to a path by deleting the loop between repeated vertices; distance = shortest-path length.
-> > - **Technical Justification:** **No repeats in the minimum** ➔ so shortest-walk = shortest-path length.
+> > - **Short answer:** Any walk shortens to a path by deleting the loop between repeated vertices; distance = shortest-path length.
+> > - **Why:** **No repeats in the minimum** ➔ so shortest-walk = shortest-path length.

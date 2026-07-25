@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 8
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [SELECT, WHERE, BETWEEN, IN, LIKE, IS NULL]
 # [[SQL SELECT and WHERE]]
 
 **Context:** [[FIT2094_MOC]] · the read verb of [[SQL Sublanguages (DDL, DML, DCL)|SQL]] · SQL realisation of [[Select and Project (σ, π)|σ (select) and π (project)]] · every query starts here
-**Task signature:** retrieve chosen columns from a table, keeping only rows whose predicate evaluates TRUE.
+**Problem it solves:** retrieve chosen columns from a table, keeping only rows whose predicate evaluates TRUE.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "show rows where…" ➔ SELECT cols FROM schema.table WHERE predicate.
-> - **⚡ Critical Bottleneck:** three-valued logic (TRUE/FALSE/UNKNOWN) — a NULL comparison is UNKNOWN, so only TRUE rows return; and AND binds tighter than OR.
+> - **⚡ Key Constraint:** three-valued logic (TRUE/FALSE/UNKNOWN) — a NULL comparison is UNKNOWN, so only TRUE rows return; and AND binds tighter than OR.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -31,8 +32,8 @@ WHERE  drone_pur_price > 2000;
 - **Range two ways** ➔ `BETWEEN 50 AND 100` ≡ `col >= 50 AND col <= 100`.
 - **NOT over a bracket** ➔ `NOT(dt_model='DJI' OR dt_model='PARROT')` ≡ `dt_model!='DJI' AND dt_model!='PARROT'` (De Morgan).
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Drones whose model is DJI **or** Parrot (case-insensitive) **and** priced over 500 — show id, model, price.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Drones whose model is DJI **or** Parrot (case-insensitive) **and** priced over 500 — show id, model, price.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT drone_id, dt_model, drone_pur_price
@@ -42,6 +43,6 @@ WHERE  drone_pur_price > 2000;
 > > ```
 > > - **Key move:** bracket the OR so it resolves before the AND price filter.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ NULL is UNKNOWN, not a value; test absence with `IS NULL` / `IS NOT NULL`.
 - 💡 **AND before OR bites** ➔ `WHERE y=2025 OR y=2026 AND id=5` reads as `y=2025 OR (y=2026 AND id=5)`; bracket to force `(y=2025 OR y=2026) AND id=5`.

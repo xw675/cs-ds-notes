@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 8
 parent: "[[Binary Tree]]"
 tags: [CS/DataStructures, OOP/Python, CS/Complexity]
 aliases: [BST]
@@ -11,7 +12,7 @@ aliases: [BST]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** left < node < right invariant ➔ search becomes halving, cost $= O(\text{depth})$ — binary search made dynamic.
 > - **📦 Core Components:** **search** ➔ go left/right | **insert** ➔ return-and-relink | **delete** ➔ three cases via in-order successor.
-> - **⚡ Critical Bottleneck:** $O(\log N)$ balanced, $O(N)$ degenerate ➔ good at search **and** insert/delete, and **ordered** (unlike a hash table).
+> - **⚡ Key Constraint:** $O(\log N)$ balanced, $O(N)$ degenerate ➔ good at search **and** insert/delete, and **ordered** (unlike a hash table).
 
 ## 📝 Core
 ### 1. The BST (Ordering Invariant)
@@ -56,7 +57,7 @@ aliases: [BST]
 >         raise ValueError("Inserting duplicate item")
 >     return current                                 # <-- the crucial return
 > ```
-> 💡 **Exam Pitfall:** **`current = Node(...)` only rebinds the local** ➔ the new node is never attached; you must **return `current`** and re-assign the parent's link on the way back up.
+> 💡 **Common Mistake:** **`current = Node(...)` only rebinds the local** ➔ the new node is never attached; you must **return `current`** and re-assign the parent's link on the way back up.
 
 ### 🔹 Iterating a tree — explicit-stack preorder
 > [!code]- stack-driven `__next__`
@@ -68,7 +69,7 @@ aliases: [BST]
 >     if node.left:  self.stack.push(node.left)    # so left is processed first
 >     return node
 > ```
-> 💡 **Exam Pitfall:** **A tree has no single "next" link** ➔ an external [[Iterator]] keeps its own [[Stack (ADT)]]; push right then left to emit **preorder** (the [[Recursion|recursion→explicit-stack]] conversion).
+> 💡 **Common Mistake:** **A tree has no single "next" link** ➔ an external [[Iterator]] keeps its own [[Stack (ADT)]]; push right then left to emit **preorder** (the [[Recursion|recursion→explicit-stack]] conversion).
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | search | insert / delete | Ordered? | Cache / Note |
@@ -79,7 +80,7 @@ aliases: [BST]
 | sorted [[List (ADT)|linked list]] | $O(N)$ | $O(1)$ positioned | yes | fast insert, slow search |
 | [[Hash Table]] | $O(1)$ expected | $O(1)$ expected | **no** | fastest, no order/range |
 
-> [!NOTE] **Crossover Invariant:** a BST is good at **both** search and insert/delete (binary search + constant re-link), unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).
+> [!NOTE] **When It Flips:** a BST is good at **both** search and insert/delete (binary search + constant re-link), unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).
 
 ## 📊 Exam Execution Trace
 
@@ -110,19 +111,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- A recursive `insert_aux` that does `current = Node(key, item)` "finishes without modifying the tree" — why, and how is it fixed?
-> - **Core Insight Requirement:** Local rebinding vs parent-link update.
+> - **Hint:** Local rebinding vs parent-link update.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Assigning `current` only rebinds the local parameter ➔ the new node is never attached.
-> > - **Technical Justification:** **Return-and-relink** ➔ return `current` from every branch and re-assign `current.left`/`self.root` on the way back up.
+> > - **Short answer:** Assigning `current` only rebinds the local parameter ➔ the new node is never attached.
+> > - **Why:** **Return-and-relink** ➔ return `current` from every branch and re-assign `current.left`/`self.root` on the way back up.
 
 > [!FAQ]- How do you delete a two-child node while keeping the BST invariant, and why is the successor convenient?
-> - **Core Insight Requirement:** The in-order successor's structure.
+> - **Hint:** The in-order successor's structure.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Replace key/item with the **in-order successor** (min of the right subtree), then delete it.
-> > - **Technical Justification:** **No left child** ➔ the successor (next-largest key) preserves ordering and can't have a left child, so its removal is the easy leaf/single-child case.
+> > - **Short answer:** Replace key/item with the **in-order successor** (min of the right subtree), then delete it.
+> > - **Why:** **No left child** ➔ the successor (next-largest key) preserves ordering and can't have a left child, so its removal is the easy leaf/single-child case.
 
 > [!FAQ]- BST ops are $O(\log N)$ best but $O(N)$ worst — what decides which, and how does a BST compare to a sorted array, sorted linked list, and hash table?
-> - **Core Insight Requirement:** Cost = depth; compare structural strengths.
+> - **Hint:** Cost = depth; compare structural strengths.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Cost $= O(\text{depth})$ — balanced $\log N$, sorted-insert stick $O(N)$; a BST is good at **both** search and insert/delete.
-> > - **Technical Justification:** **Ordered vs hash** ➔ sorted array (fast search/slow insert) and linked list (fast insert/slow search) each win one; a hash table is $O(1)$ but unordered, while a BST is traversable in sorted order with range queries.
+> > - **Short answer:** Cost $= O(\text{depth})$ — balanced $\log N$, sorted-insert stick $O(N)$; a BST is good at **both** search and insert/delete.
+> > - **Why:** **Ordered vs hash** ➔ sorted array (fast search/slow insert) and linked list (fast insert/slow search) each win one; a hash table is $O(1)$ but unordered, while a BST is traversable in sorted order with range queries.

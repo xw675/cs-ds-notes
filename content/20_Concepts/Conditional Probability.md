@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Probability]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A\cap B)/\mathrm{Pr}(B)$ ➔ treat $B$ as the new sample space.
 > - **📦 Core Components:** restrict to $B$ ➔ rescale by $1/\mathrm{Pr}(B)$ ➔ multiplication rule.
-> - **⚡ Critical Bottleneck:** requires $\mathrm{Pr}(B)>0$; independence ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$.
+> - **⚡ Key Constraint:** requires $\mathrm{Pr}(B)>0$; independence ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$.
 
 ## 📝 Core
 ### 1. The Definition
@@ -31,7 +32,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 
 $$\mathrm{Pr}(A\mid B)=\frac{\mathrm{Pr}(A\cap B)}{\mathrm{Pr}(B)},\qquad \mathrm{Pr}(A\cap B)=\mathrm{Pr}(B)\mathrm{Pr}(A\mid B)$$
 
-> [!NOTE] **Crossover Invariant:** independence ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$ ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$; the symmetric multiplication rule yields [[Bayes' Theorem]].
+> [!NOTE] **When It Flips:** independence ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$ ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$; the symmetric multiplication rule yields [[Bayes' Theorem]].
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ Scrabble: $\mathrm{Pr}(\text{vowel})=0.42$, $\mathrm{Pr}(\text{non-blank})=0.98$
 | 2 | $\mathrm{Pr}(\text{non-blank})$ | 0.98 |
 | 3 | $\mathrm{Pr}(\text{vowel}\mid\text{non-blank})$ | $\approx0.43$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Numerator is $A\cap B$, not $A$** ➔ $\mathrm{Pr}(X)/\mathrm{Pr}(B)$ only when $X\subseteq B$; otherwise use $A\cap B$. Conditioning on an impossible event is undefined.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define $\mathrm{Pr}(A\mid B)$ and justify the division by $\mathrm{Pr}(B)$.
-> - **Core Insight Requirement:** Renormalise on $B$.
+> - **Hint:** Renormalise on $B$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A\cap B)/\mathrm{Pr}(B)$; $B$ is the new sample space.
-> > - **Technical Justification:** **Sum to 1** ➔ retained masses sum to $\mathrm{Pr}(B)$; dividing renormalises.
+> > - **Short answer:** $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A\cap B)/\mathrm{Pr}(B)$; $B$ is the new sample space.
+> > - **Why:** **Sum to 1** ➔ retained masses sum to $\mathrm{Pr}(B)$; dividing renormalises.
 
 > [!FAQ]- How does conditional probability characterise independence, and what is the multiplication rule?
-> - **Core Insight Requirement:** Unchanged conditional.
+> - **Hint:** Unchanged conditional.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Independent ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$ ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$.
-> > - **Technical Justification:** **Symmetric rule** ➔ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(B)\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)\mathrm{Pr}(B\mid A)$ gives Bayes.
+> > - **Short answer:** Independent ⟺ $\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)$ ⟺ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(A)\mathrm{Pr}(B)$.
+> > - **Why:** **Symmetric rule** ➔ $\mathrm{Pr}(A\cap B)=\mathrm{Pr}(B)\mathrm{Pr}(A\mid B)=\mathrm{Pr}(A)\mathrm{Pr}(B\mid A)$ gives Bayes.

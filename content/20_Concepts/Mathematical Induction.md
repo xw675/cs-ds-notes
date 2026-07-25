@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [2, 3]
 parent: "[[Proof Techniques]]"
 tags: [Math/Proof, Math/Induction, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Proof, Math/Induction, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** prove $\forall n\in\mathbb N,\ S(n)$ ➔ discharge basis $S(1)$ + step $S(k)\Rightarrow S(k+1)$.
 > - **📦 Core Components:** **Basis** ➔ $S(1)$ | **Hypothesis** ➔ assume $S(k)$ | **Step** ➔ derive $S(k+1)$.
-> - **⚡ Critical Bottleneck:** both obligations mandatory — no basis ⟹ chain never starts; no step ⟹ dominoes don't propagate.
+> - **⚡ Key Constraint:** both obligations mandatory — no basis ⟹ chain never starts; no step ⟹ dominoes don't propagate.
 
 ## 📝 Core
 ### 1. The Principle (Domino Cascade)
@@ -46,7 +47,7 @@ $$\begin{aligned}\textbf{Basis }(n{=}1)&:\ 1=\tfrac{1\cdot2}{2}=1\ \checkmark \\
 | **Step** $S(k)\Rightarrow S(k+1)$ | each domino topples next | truth can't propagate |
 | **Hypothesis** $S(k)$ | assumed *inside* the step | (not a separate obligation) |
 
-> [!NOTE] **Crossover Invariant:** basis + step together are equivalent to the well-ordering of $\mathbb N$ — neither alone proves anything. Application: the nested loop `for i=1..N, for j=i+1..N` runs $\sum_{i=1}^{N-1}(N-i)=\tfrac{N(N-1)}{2}$ times, an [[Arithmetic Series]] proved by this very formula.
+> [!NOTE] **When It Flips:** basis + step together are equivalent to the well-ordering of $\mathbb N$ — neither alone proves anything. Application: the nested loop `for i=1..N, for j=i+1..N` runs $\sum_{i=1}^{N-1}(N-i)=\tfrac{N(N-1)}{2}$ times, an [[Arithmetic Series]] proved by this very formula.
 
 ## 📊 Exam Execution Trace
 
@@ -60,24 +61,24 @@ Discharging both obligations for $\sum_{i=1}^n i=\tfrac{n(n+1)}{2}$:
 | 2 | Hypothesis $S(k)$ | assume $\sum_{i=1}^k i=\tfrac{k(k+1)}{2}$ | assumed |
 | 3 | Step $S(k){\Rightarrow}S(k+1)$ | $\sum_{i=1}^{k+1} i=\tfrac{(k+1)(k+2)}{2}$ | ✓ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Induction is deductive, not empirical** ➔ the basis + implication *force* $S(n)$ for every $n$ with zero error; statistical "induction" from sampled data is probabilistic and **cannot** be a proof step.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the two obligations of an induction proof and why both are necessary (domino analogy).
-> - **Core Insight Requirement:** Start the chain *and* propagate it.
+> - **Hint:** Start the chain *and* propagate it.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Prove basis $S(1)$ and step $S(k)\Rightarrow S(k+1)$ for arbitrary $k$.
-> > - **Technical Justification:** **Dominoes** ➔ basis knocks over the first, step topples each next; [[Modus Ponens]] cascades over all $n$. No basis ⟹ nothing starts; no step ⟹ chain stalls.
+> > - **Short answer:** Prove basis $S(1)$ and step $S(k)\Rightarrow S(k+1)$ for arbitrary $k$.
+> > - **Why:** **Dominoes** ➔ basis knocks over the first, step topples each next; [[Modus Ponens]] cascades over all $n$. No basis ⟹ nothing starts; no step ⟹ chain stalls.
 
 > [!FAQ]- Prove $1+2+\cdots+n=\frac{n(n+1)}{2}$ by induction.
-> - **Core Insight Requirement:** Add $(k+1)$ to the hypothesis.
+> - **Hint:** Add $(k+1)$ to the hypothesis.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Basis $1=\tfrac{1\cdot2}{2}$; step $\tfrac{k(k+1)}{2}+(k+1)=\tfrac{(k+1)(k+2)}{2}$.
-> > - **Technical Justification:** **Factor out $(k+1)$** ➔ $(k+1)(\tfrac k2+1)=\tfrac{(k+1)(k+2)}{2}$, the formula at $n=k+1$. $\square$
+> > - **Short answer:** Basis $1=\tfrac{1\cdot2}{2}$; step $\tfrac{k(k+1)}{2}+(k+1)=\tfrac{(k+1)(k+2)}{2}$.
+> > - **Why:** **Factor out $(k+1)$** ➔ $(k+1)(\tfrac k2+1)=\tfrac{(k+1)(k+2)}{2}$, the formula at $n=k+1$. $\square$
 
 > [!FAQ]- Why is "mathematical induction" deductive rather than the empirical "induction" of data science?
-> - **Core Insight Requirement:** Certainty vs probability.
+> - **Hint:** Certainty vs probability.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Base case + $S(k)\Rightarrow S(k+1)$ logically force $S(n)$ for every $n$ with certainty.
-> > - **Technical Justification:** **Opposite epistemics** ➔ empirical induction generalises from samples (probabilistic, error-prone) and cannot be a proof step.
+> > - **Short answer:** Base case + $S(k)\Rightarrow S(k+1)$ logically force $S(n)$ for every $n$ with certainty.
+> > - **Why:** **Opposite epistemics** ➔ empirical induction generalises from samples (probabilistic, error-prone) and cannot be a proof step.

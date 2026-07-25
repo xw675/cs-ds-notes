@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 2
 parent: "[[Boolean Algebra Laws]]"
 tags: [CS/Systems, Math/Logic]
 aliases: [SOP, Minterms, Sum of Products]
@@ -10,7 +11,7 @@ aliases: [SOP, Minterms, Sum of Products]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** read the **rows where $F=1$** ➔ one AND-product per row (complement the 0-variables) ➔ OR the products together ➔ build the circuit gate-for-gate.
-> - **⚡ Critical Bottleneck:** SOP is correct but usually NOT minimal — simplification ([[Karnaugh Maps]]) comes after extraction.
+> - **⚡ Key Constraint:** SOP is correct but usually NOT minimal — simplification ([[Karnaugh Maps]]) comes after extraction.
 
 ## 📝 Core
 - **Truth table = the function** ➔ a truth table *uniquely defines* a Boolean function; SOP answers "how do I get an expression back out?"
@@ -29,13 +30,13 @@ F(X,Y,Z) &= \overline{X}Y\overline{Z} + \overline{X}YZ + X\overline{Y}\,\overlin
 $$
 **Final Extracted Output:** valid SOP; [[Karnaugh Maps]] reduces the same table to $Y + X\overline{Z}$.
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- $G(A,B)$ is $1$ exactly when the inputs differ (rows $01$ and $10$). Extract the SOP and name the function.
 > > [!SUCCESS]- Answer
 > > - $G = \overline{A}B + A\overline{B}$ — this is XOR ([[Exclusive-or]]).
 > > - Circuit: two NOTs, two 2-input ANDs, one OR.
 > > - **Key move:** complement exactly the variables that read $0$ in each selected row.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Products come only from 1-rows** ➔ using 0-rows builds the complement $\overline{F}$ (that's the product-of-sums path instead).
 - 💡 **Complement the 0s, not the 1s** ➔ the product must evaluate to 1 on its row; a bar on the wrong variable kills the row.

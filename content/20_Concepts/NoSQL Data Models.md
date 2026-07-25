@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 11
 parent: "[[NoSQL Databases]]"
 tags: [CS/Databases, BigData/NoSQL, Monash/CS_DS]
 aliases: [Key-Value Store, Document Store, Column Family, Graph Database]
@@ -12,7 +13,7 @@ aliases: [Key-Value Store, Document Store, Column Family, Graph Database]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** pick a model by access pattern ➔ key-value, document, column-family (aggregation-oriented) or graph (traversal-oriented).
 > - **📦 Core Components:** key-value ➔ opaque blob by key | document ➔ queryable JSON | column-family ➔ wide/time-series | graph ➔ nodes+edges.
-> - **⚡ Critical Bottleneck:** aggregation models fetch a whole record fast but can't cheaply follow relationships — that's the graph model's job.
+> - **⚡ Key Constraint:** aggregation models fetch a whole record fast but can't cheaply follow relationships — that's the graph model's job.
 
 ## 📝 Core
 ### 1. Key-value store
@@ -38,17 +39,17 @@ aliases: [Key-Value Store, Document Store, Column Family, Graph Database]
 | **Column-family** | wide rows, families | many rows × few columns; time-series | ✅ by column |
 | **Graph** | nodes + edges | relationship traversal | ✅ via edges |
 
-> [!NOTE] **Crossover Invariant:** the first three are **aggregation-oriented** (group one entity's data together, retrieve as a unit); the graph model is **traversal-oriented** (follow relationships across entities) — the opposite optimisation.
+> [!NOTE] **When It Flips:** the first three are **aggregation-oriented** (group one entity's data together, retrieve as a unit); the graph model is **traversal-oriented** (follow relationships across entities) — the opposite optimisation.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why can't a key-value store answer "find all customers with balance 0", but a document store can?
-> - **Core Insight Requirement:** Opaque value vs understood structure.
+> - **Hint:** Opaque value vs understood structure.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A key-value store treats the value as an opaque blob keyed by id, so filtering on a field means reading/parsing every value; a document store understands the document's fields and can query them directly.
-> > - **Technical Justification:** **Structure awareness** ➔ documents expose queryable fields; key-value exposes only the key.
+> > - **Short answer:** A key-value store treats the value as an opaque blob keyed by id, so filtering on a field means reading/parsing every value; a document store understands the document's fields and can query them directly.
+> > - **Why:** **Structure awareness** ➔ documents expose queryable fields; key-value exposes only the key.
 
 > [!FAQ]- When is a graph database the right model over a relational design?
-> - **Core Insight Requirement:** Traversal vs JOIN cost.
+> - **Hint:** Traversal vs JOIN cost.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** When queries follow chains of relationships (social networks, recommendations, fraud) — traversal is native and fast, whereas relational needs many expensive JOINs.
-> > - **Technical Justification:** **Edges as first-class** ➔ navigation is following stored edges, not recomputing joins.
+> > - **Short answer:** When queries follow chains of relationships (social networks, recommendations, fraud) — traversal is native and fast, whereas relational needs many expensive JOINs.
+> > - **Why:** **Edges as first-class** ➔ navigation is following stored edges, not recomputing joins.

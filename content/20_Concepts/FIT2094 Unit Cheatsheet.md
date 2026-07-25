@@ -11,7 +11,7 @@ aliases: [FIT2094 Exam Crib, Databases Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the assignment IS the unit ➔ every deliverable is a pipeline stage: brief → conceptual ERD → logical schema → normalised 3NF → Oracle DDL/DML/SELECT.
-> - **⚡ Critical Bottleneck:** M:N cannot exist relationally; every FK matches a FULL PK or is NULL; DDL auto-commits — three rules behind most lost marks.
+> - **⚡ Key Constraint:** M:N cannot exist relationally; every FK matches a FULL PK or is NULL; DDL auto-commits — three rules behind most lost marks.
 
 ## 1️⃣ Design Pipeline (requirements → physical)
 - **Life cycle** ➔ requirements → conceptual → logical → physical; technology-independence DECREASES down the stages; requirements errors cascade — capture EXACTLY the brief, nothing missing, nothing invented.

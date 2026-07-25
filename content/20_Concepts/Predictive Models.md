@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 5
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/Modelling, ML/Concepts, Monash/CS_DS]
 aliases: [Model, Predictive Model, Classifier, Feature Space]
@@ -11,9 +12,9 @@ aliases: [Model, Predictive Model, Classifier, Feature Space]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** map input **features** → an output prediction ➔ classifier (categorical) or regression (real-valued).
 > - **📦 Core Components:** model (understand + predict) | prediction type (binary/categorical/real/vector) | train vs test.
-> - **⚡ Critical Bottleneck:** a model is only as good as its performance on **unseen test** data — never the training data it memorised.
+> - **⚡ Key Constraint:** a model is only as good as its performance on **unseen test** data — never the training data it memorised.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. What is a Model?
 - **Two purposes** ➔ (1) help us **understand** how something works, (2) help us **predict** the unknown.
 - **Predictive model** ➔ any model that makes a prediction, usually from a set of **features** describing an object.
@@ -39,17 +40,17 @@ aliases: [Model, Predictive Model, Classifier, Feature Space]
 | **real value** | regression | fish age; car price |
 | **vector of reals** | (prob.) classifier | P(bass), P(tuna) |
 
-> [!NOTE] **Crossover Invariant:** more **training data** improves test performance, and (with enough data) more **features** helps too — but only up to a limit; beyond it, extra features stop paying off.
+> [!NOTE] **When It Flips:** more **training data** improves test performance, and (with enough data) more **features** helps too — but only up to a limit; beyond it, extra features stop paying off.
 
 ## 🧠 Active Recall
 > [!FAQ]- What separates a classifier from a regression model, and why evaluate on test (not training) data?
-> - **Core Insight Requirement:** Output type + generalisation.
+> - **Hint:** Output type + generalisation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A classifier predicts a category (binary/categorical); regression predicts a real value. We test on unseen instances because performance on training data doesn't show whether the model **generalises**.
-> > - **Technical Justification:** **Held-out test** ➔ a model can memorise training points; only new data reveals true predictive quality.
+> > - **Short answer:** A classifier predicts a category (binary/categorical); regression predicts a real value. We test on unseen instances because performance on training data doesn't show whether the model **generalises**.
+> > - **Why:** **Held-out test** ➔ a model can memorise training points; only new data reveals true predictive quality.
 
 > [!FAQ]- How do a classifier's decisions relate to the feature space?
-> - **Core Insight Requirement:** Region partitioning.
+> - **Hint:** Region partitioning.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each instance is a point in feature space; classification algorithms divide that space into regions of the same class, so a new point is labelled by the region it lands in.
-> > - **Technical Justification:** **Overlap + dimensionality** ➔ real classes overlap and span many features, making clean separation hard.
+> > - **Short answer:** Each instance is a point in feature space; classification algorithms divide that space into regions of the same class, so a new point is labelled by the region it lands in.
+> > - **Why:** **Overlap + dimensionality** ➔ real classes overlap and span many features, making clean separation hard.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relational Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a marker that a value is absent/not applicable ➔ not a value itself.
 > - **📦 Core Components:** four reasons ➔ not applicable / unknown / does not exist / undefined.
-> - **⚡ Critical Bottleneck:** NULL ≠ 0 ≠ empty string; an SQL feature, **outside** classical [[Relational Algebra]].
+> - **⚡ Key Constraint:** NULL ≠ 0 ≠ empty string; an SQL feature, **outside** classical [[Relational Algebra]].
 
 ## 📝 Core
 ### 1. The Marker
@@ -36,9 +37,9 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > -- warehouse employee: commission IS NULL   (not applicable, NOT 0)
 > -- new employee Joe:    salary IS NULL       (unknown)
 > ```
-> 💡 **Exam Pitfall:** **NULL ≠ 0** ➔ a non-sales employee has *no* commission (NULL), not commission `= 0`; entity integrity bans NULL PKs but referential integrity allows NULL FKs.
+> 💡 **Common Mistake:** **NULL ≠ 0** ➔ a non-sales employee has *no* commission (NULL), not commission `= 0`; entity integrity bans NULL PKs but referential integrity allows NULL FKs.
 
-> [!NOTE] **Crossover Invariant:** [[Data Integrity|entity integrity]] forbids a NULL **primary key**; [[Foreign Key and Referential Integrity|referential integrity]] permits a NULL **foreign key** (optional participation). Comparisons/aggregates over NULLs need three-valued logic — an extension of FIT1058 [[Proposition and Truth Value|two-valued logic]].
+> [!NOTE] **When It Flips:** [[Data Integrity|entity integrity]] forbids a NULL **primary key**; [[Foreign Key and Referential Integrity|referential integrity]] permits a NULL **foreign key** (optional participation). Comparisons/aggregates over NULLs need three-valued logic — an extension of FIT1058 [[Proposition and Truth Value|two-valued logic]].
 
 ## 📊 Exam Execution Trace
 
@@ -65,13 +66,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Is NULL a value? Give the four reasons a NULL can arise.
-> - **Core Insight Requirement:** Absence marker.
+> - **Hint:** Absence marker.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** No — a marker of absence (SQL, not classical algebra); reasons: not applicable, unknown, does not exist, undefined.
-> > - **Technical Justification:** **NULL ≠ 0/''** ➔ 0 and empty string are actual values.
+> > - **Short answer:** No — a marker of absence (SQL, not classical algebra); reasons: not applicable, unknown, does not exist, undefined.
+> > - **Why:** **NULL ≠ 0/''** ➔ 0 and empty string are actual values.
 
 > [!FAQ]- How do the integrity rules treat NULLs for primary vs foreign keys?
-> - **Core Insight Requirement:** PK ban, FK allow.
+> - **Hint:** PK ban, FK allow.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Entity integrity forbids a NULL PK; referential integrity allows a NULL FK (optional participation).
-> > - **Technical Justification:** **Identifier vs relationship** ➔ never NULL as an identifier, allowed to signal an absent relationship.
+> > - **Short answer:** Entity integrity forbids a NULL PK; referential integrity allows a NULL FK (optional participation).
+> > - **Why:** **Identifier vs relationship** ➔ never NULL as an identifier, allowed to signal an absent relationship.

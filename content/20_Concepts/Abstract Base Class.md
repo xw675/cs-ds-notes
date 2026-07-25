@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [OOP/Python, CS/Abstraction]
 ---
@@ -10,7 +11,7 @@ tags: [OOP/Python, CS/Abstraction]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** encode a contract in code ➔ some methods shared, others abstract; cannot be instantiated.
 > - **📦 Core Components:** inherit `ABC` + `@abstractmethod` | storage-**independent** concrete vs storage-**dependent** abstract.
-> - **⚡ Critical Bottleneck:** instantiation **fails** until every abstract method is implemented ➔ early, checked guarantees.
+> - **⚡ Key Constraint:** instantiation **fails** until every abstract method is implemented ➔ early, checked guarantees.
 
 ## 📝 Core
 ### 1. The ABC (Enforced Contract)
@@ -40,7 +41,7 @@ tags: [OOP/Python, CS/Abstraction]
 > # Stack()       -> TypeError (abstract)
 > # ArrayStack(6) -> OK (implements the abstract methods)
 > ```
-> 💡 **Exam Pitfall:** **Instantiation blocked until all abstract methods exist** ➔ `Generic[T]` parameterises by element type (`Stack[int]`) for consistent checking without per-type duplication.
+> 💡 **Common Mistake:** **Instantiation blocked until all abstract methods exist** ➔ `Generic[T]` parameterises by element type (`Stack[int]`) for consistent checking without per-type duplication.
 
 ## ⚖️ Core Decision Matrix
 | | Abstract method | Concrete method |
@@ -50,7 +51,7 @@ tags: [OOP/Python, CS/Abstraction]
 | Subclass must override? | ✅ | optional |
 | Blocks instantiation? | ✅ until implemented | ❌ |
 
-> [!NOTE] **Crossover Invariant:** three ways to satisfy an interface — **ABC** (nominal, enforced, allows shared code), **pure interface** (Java `interface`, contract only), **duck typing** (structural, flexible but unchecked until call time). ABCs trade flexibility for early, checked guarantees.
+> [!NOTE] **When It Flips:** three ways to satisfy an interface — **ABC** (nominal, enforced, allows shared code), **pure interface** (Java `interface`, contract only), **duck typing** (structural, flexible but unchecked until call time). ABCs trade flexibility for early, checked guarantees.
 
 ## 📊 Exam Execution Trace
 
@@ -78,19 +79,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Compare an ABC, a pure interface, and duck typing as ways to satisfy an ADT's contract.
-> - **Core Insight Requirement:** Nominal-enforced vs structural-deferred.
+> - **Hint:** Nominal-enforced vs structural-deferred.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **ABC** = nominal + enforced (+ shared code); **pure interface** = contract only; **duck typing** = structural, unverified until call time.
-> > - **Technical Justification:** **Trade-off** ➔ ABCs give early checked guarantees at the cost of rigid hierarchies; duck typing is flexible but defers errors to run time.
+> > - **Short answer:** **ABC** = nominal + enforced (+ shared code); **pure interface** = contract only; **duck typing** = structural, unverified until call time.
+> > - **Why:** **Trade-off** ➔ ABCs give early checked guarantees at the cost of rigid hierarchies; duck typing is flexible but defers errors to run time.
 
 > [!FAQ]- Which methods belong concrete in the base class and which stay abstract?
-> - **Core Insight Requirement:** Storage-independent vs storage-dependent.
+> - **Hint:** Storage-independent vs storage-dependent.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Concrete** = `__len__`/`is_empty`/`clear` (shared `length`); **abstract** = `push`/`pop`/`peek`/`is_full` (backing store).
-> > - **Technical Justification:** **Knowledge boundary** ➔ only a concrete subclass that knows its storage can implement the storage-dependent ops.
+> > - **Short answer:** **Concrete** = `__len__`/`is_empty`/`clear` (shared `length`); **abstract** = `push`/`pop`/`peek`/`is_full` (backing store).
+> > - **Why:** **Knowledge boundary** ➔ only a concrete subclass that knows its storage can implement the storage-dependent ops.
 
 > [!FAQ]- Why does inheriting from an ABC and honouring its contract make subclasses safely interchangeable?
-> - **Core Insight Requirement:** Full operation set + invariant preservation.
+> - **Hint:** Full operation set + invariant preservation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Every subclass implements all abstract operations with the specified behaviour and preserves the class [[Invariant]].
-> > - **Technical Justification:** **ADT promise** ➔ a client coded against the base behaves correctly with any subclass — swap array-backed for linked with no client change.
+> > - **Short answer:** Every subclass implements all abstract operations with the specified behaviour and preserves the class [[Invariant]].
+> > - **Why:** **ADT promise** ➔ a client coded against the base behaves correctly with any subclass — swap array-backed for linked with no client change.

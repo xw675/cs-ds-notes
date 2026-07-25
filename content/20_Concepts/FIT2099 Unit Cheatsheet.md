@@ -11,7 +11,7 @@ aliases: [FIT2099 Exam Crib, OO Design Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every design answer = decision + RATIONALE in Coupling / Cohesion / Extensibility terms — WHY, never a restated WHAT.
-> - **⚡ Critical Bottleneck:** branching on type (`instanceof`/`switch(type)`) is THE exam smell; its fix is almost always Replace Conditional with Polymorphism.
+> - **⚡ Key Constraint:** branching on type (`instanceof`/`switch(type)`) is THE exam smell; its fix is almost always Replace Conditional with Polymorphism.
 
 ## 1️⃣ Design Process & Rationale
 - **Design's place** ➔ between requirements (WHAT) and implementation (the build); answers "HOW should we build it?"; phases overlap in practice — **Lean: decide as late as responsibly possible**, on fact not speculation.

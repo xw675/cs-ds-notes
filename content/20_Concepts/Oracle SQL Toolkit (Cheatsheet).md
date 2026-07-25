@@ -8,11 +8,11 @@ aliases: [SQL Cheatsheet, SELECT Anatomy]
 # [[Oracle SQL Toolkit (Cheatsheet)]]
 
 **Context:** [[FIT2094_MOC]] · the ONE pre-lab/pre-exam re-read — every clause, predicate and function from Topics 8–10 in one place · depth lives in the linked pattern notes
-**Read protocol:** scan anatomy → scan tables → attempt both katas from a blank editor → follow links only where you failed.
+**Read protocol:** scan anatomy → scan tables → attempt both practice from a blank editor → follow links only where you failed.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** assemble any query from the fixed skeleton ➔ SELECT → FROM(+JOIN) → WHERE → GROUP BY → HAVING → ORDER BY.
-> - **⚡ Critical Bottleneck:** *logical execution order* ≠ writing order: **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY** — explains why aliases work in ORDER BY but not GROUP BY/WHERE.
+> - **⚡ Key Constraint:** *logical execution order* ≠ writing order: **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY** — explains why aliases work in ORDER BY but not GROUP BY/WHERE.
 
 ## 🧩 Statement Anatomy
 ```sql
@@ -80,8 +80,8 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | date part / format | `EXTRACT(YEAR FROM d)` (number) · `TO_CHAR(d,'yyyy')` (string) | filter/group by a date part |
 | text align | `LPAD/RPAD(s,n,'*')` · `LTRIM/TRIM(s)` | monospace-only bar charts |
 
-## 🥋 Integration Katas
-> [!QUESTION]- Kata 1 (Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
+## ✍️ Integration Practice
+> [!QUESTION]- Practice 1 (Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT   c.cust_fname || ' ' || c.cust_lname AS fullname, c.cust_phone
@@ -93,7 +93,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > ```
 > > - **Key moves:** `\|\|` concat + two ANSI ONs + alias reused in ORDER BY (legal — runs after SELECT).
 
-> [!QUESTION]- Kata 2 (Topic 9, Q10-style): drones cheaper than the average price of all DJI-manufactured drones; show id, type code, price, purchase YEAR, manufacturer name; order by id.
+> [!QUESTION]- Practice 2 (Topic 9, Q10-style): drones cheaper than the average price of all DJI-manufactured drones; show id, type code, price, purchase YEAR, manufacturer name; order by id.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT   drone_id, dt_code, drone_pur_price,
@@ -107,7 +107,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > ```
 > > - **Key moves:** scalar subquery with its own join chain + `TO_CHAR` year extraction + `UPPER` case-blind match.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
 - 💡 **"not A or B" trap** ➔ `emp_no <> 3 OR emp_no <> 8` is TRUE for every row; exclusion needs `AND`.
 - 💡 **Alias in GROUP BY** ➔ illegal (GROUP BY runs before SELECT); repeat the full expression.

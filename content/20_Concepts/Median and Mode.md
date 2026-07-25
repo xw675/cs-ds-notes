@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** median = middle, mode = most likely value ➔ location measures beside [[Expectation|mean]].
 > - **📦 Core Components:** median (half mass each side) ➔ mode ($\arg\max\mathrm{Pr}$).
-> - **⚡ Critical Bottleneck:** median is outlier-robust but has **no linearity**; all three locate, none spread.
+> - **⚡ Key Constraint:** median is outlier-robust but has **no linearity**; all three locate, none spread.
 
 ## 📝 Core
 ### 1. The Measures
@@ -39,7 +40,7 @@ $$\text{mode } g = \arg\max_k \mathrm{Pr}(X=k)$$
 | mode | most likely value | bounds probabilities |
 | all three | location | none measures spread |
 
-> [!NOTE] **Crossover Invariant:** median is robust to outliers ($1,2,3,4,90$: median 3, mean 20) but has **no linearity**, so expectation is preferred for arithmetic. Spread needs [[Variance and Standard Deviation]], not location.
+> [!NOTE] **When It Flips:** median is robust to outliers ($1,2,3,4,90$: median 3, mean 20) but has **no linearity**, so expectation is preferred for arithmetic. Spread needs [[Variance and Standard Deviation]], not location.
 
 ## 📊 Exam Execution Trace
 
@@ -53,18 +54,18 @@ Scrabble points CDF:
 | 2 | 1 | 0.68 | 0.70 ≥½ |
 | 3 | ≥2 | 0.30 | 1.00 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Median ≠ mid-range** ➔ mid-range ignores all probabilities; the median's balance point need not be halfway between extremes.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define the median and contrast it with the mid-range and the mean.
-> - **Core Insight Requirement:** Balance point, robust.
+> - **Hint:** Balance point, robust.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(X\le m)\ge\tfrac12$ and $\mathrm{Pr}(X\ge m)\ge\tfrac12$; mid-range ignores probabilities; median is outlier-robust.
-> > - **Technical Justification:** **No linearity** ➔ median of $X+Y$ ≠ sum of medians, so mean preferred for arithmetic.
+> > - **Short answer:** $\mathrm{Pr}(X\le m)\ge\tfrac12$ and $\mathrm{Pr}(X\ge m)\ge\tfrac12$; mid-range ignores probabilities; median is outlier-robust.
+> > - **Why:** **No linearity** ➔ median of $X+Y$ ≠ sum of medians, so mean preferred for arithmetic.
 
 > [!FAQ]- What is the mode, and what does its probability tell you?
-> - **Core Insight Requirement:** Argmax + upper bound.
+> - **Hint:** Argmax + upper bound.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The most likely value; $\mathrm{Pr}(X=\text{mode})$ upper-bounds all others.
-> > - **Technical Justification:** **Shape-blind** ➔ says nothing else; the mode can be far from mean/median.
+> > - **Short answer:** The most likely value; $\mathrm{Pr}(X=\text{mode})$ upper-bounds all others.
+> > - **Why:** **Shape-blind** ➔ says nothing else; the mode can be far from mean/median.

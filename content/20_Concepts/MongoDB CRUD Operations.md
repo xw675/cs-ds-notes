@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 11
 parent: "[[MongoDB Document Model]]"
 tags: [CS/Databases, BigData/NoSQL, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [CRUD, insertOne, find, updateOne, deleteMany, $set, $elemMatch]
 # [[MongoDB CRUD Operations]]
 
 **Context:** [[FIT2094_MOC]] · query/modify a [[MongoDB Document Model|MongoDB]] collection · the NoSQL counterpart of [[SQL SELECT and WHERE|SQL DML/SELECT]]
-**Task signature:** create, read, update, or delete documents by a filter, using `$`-prefixed operators.
+**Problem it solves:** create, read, update, or delete documents by a filter, using `$`-prefixed operators.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** operate on documents ➔ db.collection.command( {filter}, {action} ); an omitted or {} filter = **all** documents.
-> - **⚡ Critical Bottleneck:** update needs `$set` (else it **replaces the whole document**); there is **no ROLLBACK** — a bad `updateMany`/`deleteMany({})` is permanent.
+> - **⚡ Key Constraint:** update needs `$set` (else it **replaces the whole document**); there is **no ROLLBACK** — a bad `updateMany`/`deleteMany({})` is permanent.
 
 ## 🔧 Minimal Working Example
 ```javascript
@@ -50,8 +51,8 @@ db.dronerent.deleteOne({ "drone_id": { "$eq": 103 } });   // DELETE
 | `DELETE … WHERE …` | `db.t.deleteMany({filter})` |
 | `DROP TABLE t` | `db.t.drop()` |
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Raise `cost_per_hour` to 55 for **all** PAPR-type drones.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Raise `cost_per_hour` to 55 for **all** PAPR-type drones.
 > > [!SUCCESS]- Reference solution
 > > ```javascript
 > > db.dronerent.updateMany(
@@ -61,7 +62,7 @@ db.dronerent.deleteOne({ "drone_id": { "$eq": 103 } });   // DELETE
 > > ```
 > > - **Key move:** `updateMany` + `$set`; dot-notation `type.code` reaches into the sub-document.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **No `$set` = full replacement** ➔ `{ "cost_per_hour": 55 }` alone as the action replaces the entire document; always wrap in `$set`/`$inc`.
 - 💡 **Empty filter hits everything, no ROLLBACK** ➔ `deleteMany({})` empties the collection; there is no undo — verify the filter first.
 - 💡 **`modifiedCount = 0` with `matchedCount > 0`** ➔ the document exists but already held that value (nothing changed) — not an error.

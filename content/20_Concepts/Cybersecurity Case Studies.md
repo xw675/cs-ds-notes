@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 12
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, Monash/CS_DS]
 aliases: [case studies, Stuxnet, F5 BIG-IP, CVE-2022-1388, Bangladesh Bank, SWIFT, Turkey pipeline, air gap, RCE, management plane]
@@ -10,7 +11,7 @@ aliases: [case studies, Stuxnet, F5 BIG-IP, CVE-2022-1388, Bangladesh Bank, SWIF
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** four real attacks ➔ exposed management interfaces, jumped air gaps, hijacked control systems, and abused trusted banking networks.
-> - **⚡ Critical Bottleneck:** the recurring lesson — **exposure + default/insecure configuration** is the killer; **minimise services reachable from the Internet *and* internally**, and assume patches alone don't fix an already-compromised device.
+> - **⚡ Key Constraint:** the recurring lesson — **exposure + default/insecure configuration** is the killer; **minimise services reachable from the Internet *and* internally**, and assume patches alone don't fix an already-compromised device.
 
 ## 📝 The incidents
 | Incident | Year | Mechanism | Impact / Lesson |
@@ -26,12 +27,12 @@ aliases: [case studies, Stuxnet, F5 BIG-IP, CVE-2022-1388, Bangladesh Bank, SWIF
 - **Secure the defaults** ➔ most appliances are **insecure out of the box**; follow hardening guidelines and **read security newsletters/advisories**.
 - **Patching ≠ clean** ➔ a device compromised before patching can remain compromised.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Air gap ≠ invulnerable** ➔ Stuxnet crossed a physically isolated network via **USB during configuration** — removable media and human process are the bridge.
 - 💡 **Cyber attacks cause physical harm** ➔ Turkey/Stuxnet show OT/ICS attacks destroy equipment; this is not only a data-confidentiality problem.
 
 ## 🧠 Active Recall
 > [!FAQ]- The F5 vulnerability was patched quickly — why did experts still consider exposed devices high-risk?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the flaw was only exploitable via the **management plane**, which **should never be Internet-facing**; a patch doesn't undo a device **already compromised**, and an exposed interface invites the **next** vulnerability.
-> > - **Technical Justification:** **Reduce exposure, not just patch** ➔ the durable fix is architectural — keep management/control interfaces off the public Internet and minimise reachable services, so a future zero-day has no path in.
+> > - **Short answer:** the flaw was only exploitable via the **management plane**, which **should never be Internet-facing**; a patch doesn't undo a device **already compromised**, and an exposed interface invites the **next** vulnerability.
+> > - **Why:** **Reduce exposure, not just patch** ➔ the durable fix is architectural — keep management/control interfaces off the public Internet and minimise reachable services, so a future zero-day has no path in.

@@ -8,11 +8,11 @@ aliases: [Pandas Cheatsheet, Python Aggregation]
 # [[Pandas Toolkit (Cheatsheet)]]
 
 **Context:** [[FIT1043_MOC]] · Weeks 1–5 pandas in one place — create → audit → clean → groupby/agg → plot → fit · depth in [[Python Basics (Syntax, Types, Control Flow)]], [[Pandas DataFrame Basics]], [[Data Auditing in Pandas]], [[Groupby-Aggregate Pipeline (Pandas)]], [[Plotting with Matplotlib (Pandas)]]
-**Read protocol:** scan tables → attempt the kata blank → follow links only where you failed. Shapes annotated as $(N,D)$. Lab code: `30_Projects/FIT1043_Labs/`.
+**Read protocol:** scan tables → attempt the practice blank → follow links only where you failed. Shapes annotated as $(N,D)$. Lab code: `30_Projects/FIT1043_Labs/`.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** raw CSV ➔ audited df ➔ cleaned ➔ **split–apply–combine** ➔ chart, in one chain.
-> - **⚡ Critical Bottleneck:** groupby mechanics: `groupby('g')` splits $(N,D)$ into $G$ sub-frames ➔ apply (e.g. `.mean()`) collapses each ➔ combine into $(G,k)$.
+> - **⚡ Key Constraint:** groupby mechanics: `groupby('g')` splits $(N,D)$ into $G$ sub-frames ➔ apply (e.g. `.mean()`) collapses each ➔ combine into $(G,k)$.
 
 ## 🧱 Create & Build — [[Pandas DataFrame Basics]]
 | Task | Micro-syntax | Note |
@@ -78,7 +78,7 @@ g.rename(columns={'count':'passengers'}, inplace=True)
 Always label: `plt.xlabel/ylabel/title` then `plt.show()`. Encode a 3rd var: `plt.scatter(x, y, c=df['g'], s=40, cmap='hot')`.
 - **Fit a trend line** ➔ FIT1043 uses `scipy.stats.linregress(x, y)` → `slope, intercept, r, p, std_err`; see [[Linear Regression in Python (scipy)]].
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- Titanic-style df `(891, 12)`: audit missing values; drop rows lacking `age`; then per `class` report passenger count, mean age, and the number of passengers older than 50; plot mean age per class as a bar chart.
 > > [!SUCCESS]- Reference solution
 > > ```python
@@ -90,7 +90,7 @@ Always label: `plt.xlabel/ylabel/title` then `plt.show()`. Encode a 3rd var: `pl
 > > ```
 > > - **Key moves:** dict-form `agg` mixing string + lambda; shape tracking at each step.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Chained indexing writes** ➔ `df[df.a>5]['b'] = 0` silently edits a copy (SettingWithCopy) — write via `df.loc[mask, 'b'] = 0`.
 - 💡 **Aggregating wrong dtype** ➔ numbers stored as strings make `.mean()` fail/garbage — `df.info()` first, always.
 - 💡 **`count` vs `size`** ➔ `count` skips NaN, `size` doesn't — mirrors SQL `COUNT(col)` vs `COUNT(*)` ([[SQL Aggregate Functions and GROUP BY]]).

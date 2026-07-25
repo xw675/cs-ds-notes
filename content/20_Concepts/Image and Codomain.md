@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** codomain = declared output set; image = values actually produced ➔ image $\subseteq$ codomain.
 > - **📦 Core Components:** codomain (promise) ➔ image $\{f(x)\}$ (truth).
-> - **⚡ Critical Bottleneck:** image = codomain **iff** surjective; the exact image is often intractable.
+> - **⚡ Key Constraint:** image = codomain **iff** surjective; the exact image is often intractable.
 
 ## 📝 Core
 ### 1. Two Output Sets
@@ -40,7 +41,7 @@ $$\text{surjective}\iff \text{Image}(f)=\text{codomain}$$
 | relation | image $\subseteq$ codomain | always |
 | equality | image = codomain | surjective |
 
-> [!NOTE] **Crossover Invariant:** the codomain is chosen for convenience; the image is forced by the rule. "Surjective" is exactly "the codomain promise is met with nothing unused". The preimages $f^{-1}(y)$ partition the domain ([[Equivalence Relation]]).
+> [!NOTE] **When It Flips:** the codomain is chosen for convenience; the image is forced by the rule. "Surjective" is exactly "the codomain promise is met with nothing unused". The preimages $f^{-1}(y)$ partition the domain ([[Equivalence Relation]]).
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ $f:\{-1,0,1,2\}\to\mathbb Z$, $f(x)=x^2$:
 | 2 | 0 | 0 | $\{0,1\}$ |
 | 3 | 2 | 4 | $\{0,1,4\}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Codomain must contain all values** ➔ a set smaller than the image is not a valid codomain; a generous codomain (e.g. $\mathbb Z$) is chosen because the exact image may be intractable.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish codomain and image, and why do we usually specify a codomain rather than the image?
-> - **Core Insight Requirement:** Promise vs truth.
+> - **Hint:** Promise vs truth.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Codomain = declared output set (promise); image = exact values produced.
-> > - **Technical Justification:** **Intractable image** ➔ a clean superset like $\mathbb Z$ is easy to state and still valid (sum-of-four-cubes is open).
+> > - **Short answer:** Codomain = declared output set (promise); image = exact values produced.
+> > - **Why:** **Intractable image** ➔ a clean superset like $\mathbb Z$ is easy to state and still valid (sum-of-four-cubes is open).
 
 > [!FAQ]- Why avoid "range", and when does image equal codomain?
-> - **Core Insight Requirement:** Surjectivity.
+> - **Hint:** Surjectivity.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** "Range" is ambiguous (image or codomain); image = codomain exactly when surjective.
-> > - **Technical Justification:** **Onto** ➔ every codomain element is some $f(x)$, no unused elements.
+> > - **Short answer:** "Range" is ambiguous (image or codomain); image = codomain exactly when surjective.
+> > - **Why:** **Onto** ➔ every codomain element is some $f(x)$, no unused elements.

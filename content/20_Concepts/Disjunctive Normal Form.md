@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [1, 4]
 parent: "[[Boolean Algebra Laws]]"
 tags: [Math/Logic, Math/Discrete, Math/Theory, Monash/CS_DS]
 aliases: [DNF, disjunctive normal form, literal]
@@ -11,7 +12,7 @@ aliases: [DNF, disjunctive normal form, literal]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a disjunction (OR) of parts, each a conjunction (AND) of literals ➔ readable row-by-row from a truth table.
 > - **📦 Core Components:** literal (plain $X$ / negated $\neg X$) ➔ one implicant per True row ➔ OR them.
-> - **⚡ Critical Bottleneck:** up to $2^k$ parts (exponential blow-up); but satisfiability is trivial. **In FIT2014, DNF is mainly a stepping stone to [[Conjunctive Normal Form|CNF]].**
+> - **⚡ Key Constraint:** up to $2^k$ parts (exponential blow-up); but satisfiability is trivial. **In FIT2014, DNF is mainly a stepping stone to [[Conjunctive Normal Form|CNF]].**
 
 ## 🔁 The two-table routine (FIT2014)
 - **DNF** ➔ take the **True** rows; one conjunction per row; **OR** them.
@@ -44,7 +45,7 @@ $$P=(\neg X\wedge\neg Y)\vee(\neg X\wedge Y)\vee(X\wedge Y)$$
 | size | up to $2^k$ parts | exponential blow-up |
 | natural for | listing solutions | not for stating rules ([[Conjunctive Normal Form|CNF]] better) |
 
-> [!NOTE] **Crossover Invariant:** DNF makes satisfiability trivial (inspect the parts — a part with no $X\wedge\neg X$ names a satisfying assignment), but real specifications list conditions that hold *together* (a conjunction), which suits CNF.
+> [!NOTE] **When It Flips:** DNF makes satisfiability trivial (inspect the parts — a part with no $X\wedge\neg X$ names a satisfying assignment), but real specifications list conditions that hold *together* (a conjunction), which suits CNF.
 
 ## 📊 Exam Execution Trace
 
@@ -59,18 +60,18 @@ $P$ with output T,T,F,T:
 | 3 | T | F | F | — |
 | 4 | T | T | T | $X\wedge Y$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **DNF keeps row-true literals plain** ➔ opposite of CNF's False-row negation; reduce $\neg\neg X$ to $X$ before calling it a literal.
 
 ## 🧠 Active Recall
 > [!FAQ]- Construct the DNF of an expression from its truth table.
-> - **Core Insight Requirement:** True rows → implicants.
+> - **Hint:** True rows → implicants.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** For each True row, AND the literals (plain if True, negated if False); OR the rows.
-> > - **Technical Justification:** **Row-exact** ➔ each conjunction is true only in its own row, so the disjunction matches $P$ exactly.
+> > - **Short answer:** For each True row, AND the literals (plain if True, negated if False); OR the rows.
+> > - **Why:** **Row-exact** ➔ each conjunction is true only in its own row, so the disjunction matches $P$ exactly.
 
 > [!FAQ]- Why can DNF be impractical, yet make satisfiability easy?
-> - **Core Insight Requirement:** $2^k$ rows vs part inspection.
+> - **Hint:** $2^k$ rows vs part inspection.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Many True rows ⟹ exponentially many parts (impractical); but any internally-consistent part is a satisfying assignment.
-> > - **Technical Justification:** **No search** ➔ satisfiability is a scan of the parts for one without $X$ and $\neg X$.
+> > - **Short answer:** Many True rows ⟹ exponentially many parts (impractical); but any internally-consistent part is a satisfying assignment.
+> > - **Why:** **No search** ➔ satisfiability is a scan of the parts for one without $X$ and $\neg X$.

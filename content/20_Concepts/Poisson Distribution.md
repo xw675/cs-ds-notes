@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** count of rare independent events in an interval ➔ $\mathrm{Pr}(X=k)=e^{-\mu}\mu^k/k!$.
 > - **📦 Core Components:** one parameter $\mu$ ➔ $E=\mathrm{Var}=\mu$ ➔ unbounded support.
-> - **⚡ Critical Bottleneck:** approximates $\mathrm{Bin}(n,p)$ for large $n$, small $np$ ($\mu=np$).
+> - **⚡ Key Constraint:** approximates $\mathrm{Bin}(n,p)$ for large $n$, small $np$ ($\mu=np$).
 
 ## 📝 Core
 ### 1. The Distribution
@@ -38,7 +39,7 @@ $$\sum_{k=0}^{\infty}\frac{e^{-\mu}\mu^k}{k!}=e^{-\mu}\sum_{k=0}^{\infty}\frac{\
 | support | unbounded | $\{0,\dots,n\}$ |
 | relation | $\approx\mathrm{Bin}$ large $n$ | $\mu=np$ |
 
-> [!NOTE] **Crossover Invariant:** Poisson suits "could be any count" of rare independent events; it is the unbounded limit of the binomial. The $e^x$-series normalisation mirrors the geometric-series argument for other pmfs.
+> [!NOTE] **When It Flips:** Poisson suits "could be any count" of rare independent events; it is the unbounded limit of the binomial. The $e^x$-series normalisation mirrors the geometric-series argument for other pmfs.
 
 ## 📊 Exam Execution Trace
 
@@ -53,18 +54,18 @@ E(X) &= \mu = 2,\qquad \mathrm{Var}(X) = \mu = 2
 $$
 **Final Extracted Output:** $\approx0.135$, $\approx0.271$; mean and variance both 2.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\mu$ is mean AND variance** ➔ the single parameter does double duty; the binomial→Poisson swap needs large $n$ with small $np$.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the Poisson pmf, show it sums to 1, and give mean and variance.
-> - **Core Insight Requirement:** $e^x$ series.
+> - **Hint:** $e^x$ series.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(X=k)=e^{-\mu}\mu^k/k!$; $\sum=e^{-\mu}e^{\mu}=1$; $E=\mathrm{Var}=\mu$.
-> > - **Technical Justification:** **Power series** ➔ $\sum_k\mu^k/k!=e^{\mu}$.
+> > - **Short answer:** $\mathrm{Pr}(X=k)=e^{-\mu}\mu^k/k!$; $\sum=e^{-\mu}e^{\mu}=1$; $E=\mathrm{Var}=\mu$.
+> > - **Why:** **Power series** ➔ $\sum_k\mu^k/k!=e^{\mu}$.
 
 > [!FAQ]- When does the Poisson distribution arise, and how does it relate to the binomial?
-> - **Core Insight Requirement:** Rare independent counts.
+> - **Hint:** Rare independent counts.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Counts of independent occurrences in a fixed interval; $\mathrm{Bin}(n,p)\approx\mathrm{Poisson}(np)$ for large $n$, small $np$.
-> > - **Technical Justification:** **Unbounded limit** ➔ one parameter replaces two.
+> > - **Short answer:** Counts of independent occurrences in a fixed interval; $\mathrm{Bin}(n,p)\approx\mathrm{Poisson}(np)$ for large $n$, small $np$.
+> > - **Why:** **Unbounded limit** ➔ one parameter replaces two.

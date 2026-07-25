@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 3
 parent: "[[Von Neumann Architecture and Programs]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [Fetch-Decode-Execute, RTL, Control Unit, Clock]
@@ -11,7 +12,7 @@ aliases: [Fetch-Decode-Execute, RTL, Control Unit, Clock]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every instruction = **fetch (steps 1–4) → decode (5–6 as needed) → execute (instruction-specific)**, one register transfer per clock cycle.
 > - **📦 Core Components:** clock (oscillator, cycles, GHz) ➔ RTL steps ➔ control signals (which register/memory/ALU mode per step).
-> - **⚡ Critical Bottleneck:** fetch is ALWAYS the same 4 steps; decode steps 5–6 vary by instruction (both / only 5 / neither) — knowing which is where marks are won.
+> - **⚡ Key Constraint:** fetch is ALWAYS the same 4 steps; decode steps 5–6 vary by instruction (both / only 5 / neither) — knowing which is where marks are won.
 
 ## 📝 Core
 - **Control unit** ➔ coordinates registers, ALU, memory per instruction via three phases: fetch → decode → execute.
@@ -43,13 +44,13 @@ aliases: [Fetch-Decode-Execute, RTL, Control Unit, Clock]
 | 6 | $\text{MBR} \leftarrow M[\text{MAR}]$ | decode |
 | 7 | $\text{AC} \leftarrow \text{AC}+\text{MBR}$ | execute |
 
-## 🥋 Kata
+## ✍️ Practice
 > [!QUESTION]- Write the full RTL sequence for `Jump X`, and state how many cycles it takes under the unit's one-transfer-per-cycle convention.
 > > [!SUCCESS]- Answer
 > > - Steps 1–4 (fetch, identical always) → 5: $\text{MAR} \leftarrow X$ → 6: $\text{PC} \leftarrow \text{MAR}$ — **6 cycles**, and memory is NOT read for an operand.
 > > - **Key move:** Jump manipulates PC, so decode step 6 ($\text{MBR} \leftarrow M[\text{MAR}]$) is skipped — no data needed.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **PC increments during FETCH (step 4)** ➔ before execute; a Jump then *overwrites* the incremented PC — tracing PC wrongly is the classic error.
 - 💡 **MBR is the only door to memory** ➔ all reads/writes pass MAR (address) + MBR (data); RTL that moves memory straight into AC is invalid.
 - 💡 **Clock speed ≠ instructions/second** ➔ one instruction spans several cycles (Add = 7 here); GHz counts cycles.

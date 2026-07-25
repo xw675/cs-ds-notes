@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 6
 parent: "[[Recursion]]"
 tags: [CS/Algorithms, OOP/Python, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** move $n$ discs source→destination (never larger-on-smaller) ➔ canonical binary recursion whose exponential cost is intrinsic.
 > - **📦 Core Components:** move top $n-1$ aside ➔ move bottom disc ➔ restack the $n-1$.
-> - **⚡ Critical Bottleneck:** exactly $2^n-1$ moves $=\Theta(2^n)$ (provably optimal for 3 pegs); only $\Theta(n)$ stack.
+> - **⚡ Key Constraint:** exactly $2^n-1$ moves $=\Theta(2^n)$ (provably optimal for 3 pegs); only $\Theta(n)$ stack.
 
 ## 📝 Core
 ### 1. The Problem & Recursive Solution
@@ -38,7 +39,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity]
 >         print(f"{from_peg} -> {to_peg}")           # 2. move the bottom disc
 >         tower_Hanoi(n-1, via, to_peg)              # 3. restack the n-1
 > ```
-> 💡 **Exam Pitfall:** **Exponential time/output ≠ exponential space** ➔ the call tree has $2^n-1$ nodes but only one path is live, so stack is $\Theta(n)$; an iterative version emits the identical sequence with $\Theta(1)$ control state.
+> 💡 **Common Mistake:** **Exponential time/output ≠ exponential space** ➔ the call tree has $2^n-1$ nodes but only one path is live, so stack is $\Theta(n)$; an iterative version emits the identical sequence with $\Theta(1)$ control state.
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Tower of Hanoi | naive [[Recursion|Fibonacci]] |
@@ -49,7 +50,7 @@ tags: [CS/Algorithms, OOP/Python, CS/Complexity]
 | Memoisation helps? | **No** — output is exponential | **Yes** → $\Theta(n)$ |
 | Space (stack) | $\Theta(n)$ | $\Theta(n)$ |
 
-> [!NOTE] **Crossover Invariant:** vs [[Divide and Conquer]] — Hanoi divides into two subproblems + a $\Theta(1)$ combine, but the subproblems are size $n-1$ (not $n/2$), hence exponential not log-linear.
+> [!NOTE] **When It Flips:** vs [[Divide and Conquer]] — Hanoi divides into two subproblems + a $\Theta(1)$ combine, but the subproblems are size $n-1$ (not $n/2$), hence exponential not log-linear.
 
 ## 📊 Exam Execution Trace
 
@@ -80,19 +81,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive the exact move count and prove it is optimal.
-> - **Core Insight Requirement:** Recurrence + a matching lower bound.
+> - **Hint:** Recurrence + a matching lower bound.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $T(n)=2T(n-1)+1 = 2^n-1$ (geometric series / induction).
-> > - **Technical Justification:** **Forced moves** ➔ moving the bottom disc forces all $n-1$ onto the spare and back ($\ge 2T(n-1)+1$), so $2^n-1$ is minimal.
+> > - **Short answer:** $T(n)=2T(n-1)+1 = 2^n-1$ (geometric series / induction).
+> > - **Why:** **Forced moves** ➔ moving the bottom disc forces all $n-1$ onto the spare and back ($\ge 2T(n-1)+1$), so $2^n-1$ is minimal.
 
 > [!FAQ]- Hanoi and naive Fibonacci are both exponential binary recursions — why can memoisation rescue one but not the other?
-> - **Core Insight Requirement:** Distinct vs overlapping subproblems.
+> - **Hint:** Distinct vs overlapping subproblems.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Fibonacci recomputes the same subproblems (cacheable → $\Theta(n)$); Hanoi's subproblems are distinct.
-> > - **Technical Justification:** **Exponential output** ➔ Hanoi must *emit* $2^n-1$ moves — no caching can reduce the output size.
+> > - **Short answer:** Fibonacci recomputes the same subproblems (cacheable → $\Theta(n)$); Hanoi's subproblems are distinct.
+> > - **Why:** **Exponential output** ➔ Hanoi must *emit* $2^n-1$ moves — no caching can reduce the output size.
 
 > [!FAQ]- Hanoi's time is $\Theta(2^n)$ — why is its space only $\Theta(n)$, and what does an iterative version reveal?
-> - **Core Insight Requirement:** One live root-to-leaf path.
+> - **Hint:** One live root-to-leaf path.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The call tree has $2^n-1$ nodes but only one path is active ⟹ stack $\Theta(n)$.
-> > - **Technical Justification:** **Inherent to the moves** ➔ an iterative version emits the same sequence with $\Theta(1)$ control state — the exponential is in the moves, not the recursion.
+> > - **Short answer:** The call tree has $2^n-1$ nodes but only one path is active ⟹ stack $\Theta(n)$.
+> > - **Why:** **Inherent to the moves** ➔ an iterative version emits the same sequence with $\Theta(1)$ control state — the exponential is in the moves, not the recursion.

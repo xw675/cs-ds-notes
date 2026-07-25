@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Divisibility]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\gcd(a,b)$ = greatest $d$ with $d\mid a$ and $d\mid b$ ➔ symmetric, computable by reduction.
 > - **📦 Core Components:** easy cases ➔ reduction $\gcd(a,b)=\gcd(b,a-b)$ ➔ smallest positive $xa+yb$.
-> - **⚡ Critical Bottleneck:** reduction preserves common divisors, driving numbers down to a base case.
+> - **⚡ Key Constraint:** reduction preserves common divisors, driving numbers down to a base case.
 
 ## 📝 Core
 ### 1. The GCD
@@ -31,7 +32,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 $$\gcd(a,b)=\gcd(b,\,a-b)$$
 $$\gcd(20,12)=\gcd(12,8)=\gcd(8,4)=4\ (4\mid8)$$
 
-> [!NOTE] **Crossover Invariant:** $\gcd(a,b)$ is also the **smallest positive** $xa+yb$ — the bridge to coprimality and modular inverses. Order is irrelevant to the value but convenient (larger first) for the algorithm.
+> [!NOTE] **When It Flips:** $\gcd(a,b)$ is also the **smallest positive** $xa+yb$ — the bridge to coprimality and modular inverses. Order is irrelevant to the value but convenient (larger first) for the algorithm.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ $$
 $$
 **Final Extracted Output:** $\gcd(20,12)=4$; each step preserves the common divisors.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Subtraction = slow mod** ➔ repeatedly subtracting $b$ until $<b$ computes $a\bmod b$; one $\bmod$ replaces many subtractions (the Euclidean speed-up).
 
 ## 🧠 Active Recall
 > [!FAQ]- State and justify $\gcd(a,b)=\gcd(b,a-b)$, and use it for $\gcd(20,12)$.
-> - **Core Insight Requirement:** Same common divisors.
+> - **Hint:** Same common divisors.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $d\mid a,b\Rightarrow d\mid(a-b)$ and conversely, so the two pairs share divisors; $\gcd(20,12)=\gcd(12,8)=\gcd(8,4)=4$.
-> > - **Technical Justification:** **Identical divisor sets** ➔ same maximum.
+> > - **Short answer:** $d\mid a,b\Rightarrow d\mid(a-b)$ and conversely, so the two pairs share divisors; $\gcd(20,12)=\gcd(12,8)=\gcd(8,4)=4$.
+> > - **Why:** **Identical divisor sets** ➔ same maximum.
 
 > [!FAQ]- Give three quick gcd cases and the deeper linear-combination characterisation.
-> - **Core Insight Requirement:** Bézout.
+> - **Hint:** Bézout.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\gcd(a,1)=1$; $b\mid a\Rightarrow b$; $\gcd(a,p)=p$ or 1; and $\gcd$ = smallest positive $xa+yb$.
-> > - **Technical Justification:** **Coprimality** ➔ $\gcd=1$ characterises coprime pairs and inverses mod $n$.
+> > - **Short answer:** $\gcd(a,1)=1$; $b\mid a\Rightarrow b$; $\gcd(a,p)=p$ or 1; and $\gcd$ = smallest positive $xa+yb$.
+> > - **Why:** **Coprimality** ➔ $\gcd=1$ characterises coprime pairs and inverses mod $n$.

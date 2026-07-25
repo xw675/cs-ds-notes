@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 10
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 aliases: [Query Processing, Cost-Based Optimiser, CBO, Explain Plan, Access Plan]
@@ -10,7 +11,7 @@ aliases: [Query Processing, Cost-Based Optimiser, CBO, Explain Plan, Access Plan
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** trace SQL through parse → analyse → optimise → execute ➔ understand relative query cost.
-> - **⚡ Critical Bottleneck:** the Explain-Plan COST is a **relative** unit — meaningful only when comparing two versions of the same query.
+> - **⚡ Key Constraint:** the Explain-Plan COST is a **relative** unit — meaningful only when comparing two versions of the same query.
 
 ## 📝 Core
 - **1. SQL Parser** ➔ checks syntax (grammar) and semantics (do the tables/columns exist?).
@@ -19,12 +20,12 @@ aliases: [Query Processing, Cost-Based Optimiser, CBO, Explain Plan, Access Plan
 - **4. Execution engine** ➔ runs the plan, pulling data blocks into cache, returns the result set.
 - **Cost depends on statistics** ➔ CBO estimates rely on gathered stats (`user_tab_col_statistics`, `user_ind_statistics`).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **COST has no absolute meaning** ➔ a plan cost of 9 vs 39 only says the second is ~4× costlier *for that query*; it is not seconds or rows.
 - 💡 **Correctness ≠ efficiency** ➔ a correlated subquery gives the same answer as a nested one but re-scans per row; you are **not penalised** for it in this unit.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does the correlated version of the "min price per type" query cost ~4× the nested version?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The correlated subquery references the outer row, so `RENTAL`/`DRONE` is scanned once **per outer row**; the nested version runs once as a hash-based semi-join (scanning the table ~twice total).
-> > - **Technical Justification:** **Re-execution vs single pass** ➔ repeated inner scans (cost 39) vs one hash semi-join (cost 9).
+> > - **Short answer:** The correlated subquery references the outer row, so `RENTAL`/`DRONE` is scanned once **per outer row**; the nested version runs once as a hash-based semi-join (scanning the table ~twice total).
+> > - **Why:** **Re-execution vs single pass** ➔ repeated inner scans (cost 39) vs one hash semi-join (cost 9).

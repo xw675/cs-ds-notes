@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [1, 4]
 parent: "[[Boolean Algebra Laws]]"
 tags: [Math/Logic, Math/Discrete, Math/Theory, Monash/CS_DS]
 aliases: [CNF, clause, conjunctive normal form]
@@ -12,7 +13,7 @@ aliases: [CNF, clause, conjunctive normal form]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a conjunction (AND) of clauses, each a disjunction (OR) of literals ➔ the natural target when encoding rules.
 > - **📦 Core Components:** clause = "satisfy at least one literal" ➔ whole CNF = "satisfy every clause".
-> - **⚡ Critical Bottleneck:** De Morgan **dual** of [[Disjunctive Normal Form]]; the standard SAT-solver input. **In FIT2014 CNF matters far more than DNF** — it is the uniform encoding used in complexity theory.
+> - **⚡ Key Constraint:** De Morgan **dual** of [[Disjunctive Normal Form]]; the standard SAT-solver input. **In FIT2014 CNF matters far more than DNF** — it is the uniform encoding used in complexity theory.
 
 ## 🎓 FIT2014 emphasis
 - **CNF ≫ DNF in this unit** ➔ real specifications are conditions that must **all** hold, so CNF is written **directly from the stated conditions** — faster and less error-prone than the truth-table route.
@@ -46,7 +47,7 @@ $$\text{only False row TF} \to (\neg X\vee Y) \;\Rightarrow\; P=(\neg X\vee Y)\ 
 | natural for | rule/constraint modelling, SAT | listing satisfying assignments |
 | conversion | De Morgan dual of the other | De Morgan dual |
 
-> [!NOTE] **Crossover Invariant:** because rule sets decompose as "this $\wedge$ that $\wedge$ …", CNF is usually written **directly** from the problem, not via the truth-table route; each clause encodes one constraint.
+> [!NOTE] **When It Flips:** because rule sets decompose as "this $\wedge$ that $\wedge$ …", CNF is usually written **directly** from the problem, not via the truth-table route; each clause encodes one constraint.
 
 ## 📊 Exam Execution Trace
 
@@ -61,18 +62,18 @@ $P$ with output T,T,F,T (rows FF,FT,TF,TT):
 | 3 | T | F | F | $(\neg X\vee Y)$ |
 | 4 | T | T | T | — |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Clause literals are flipped vs DNF** ➔ CNF negates the row-true literals (False rows); DNF keeps them (True rows). Both can blow up to $2^k$ rows.
 
 ## 🧠 Active Recall
 > [!FAQ]- What is CNF, and why is it preferred over DNF for modelling real rules?
-> - **Core Insight Requirement:** Rule sets are conjunctions of disjunctions.
+> - **Hint:** Rule sets are conjunctions of disjunctions.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** CNF = conjunction of clauses (each a disjunction of literals), e.g. $(\neg P\vee Q)\wedge(P\vee\neg Q)$.
-> > - **Technical Justification:** **Direct transcription** ➔ "all conditions hold, each 'at least one option'" *is* CNF — the standard SAT form.
+> > - **Short answer:** CNF = conjunction of clauses (each a disjunction of literals), e.g. $(\neg P\vee Q)\wedge(P\vee\neg Q)$.
+> > - **Why:** **Direct transcription** ➔ "all conditions hold, each 'at least one option'" *is* CNF — the standard SAT form.
 
 > [!FAQ]- How are CNF and DNF related, and how do you get CNF from a truth table?
-> - **Core Insight Requirement:** De Morgan duality.
+> - **Hint:** De Morgan duality.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Negate the output (→$\neg P$), read DNF of $\neg P$, negate, apply De Morgan → CNF.
-> > - **Technical Justification:** **Duality** ➔ negating an AND-of-ORs and distributing $\neg$ gives an OR-of-ANDs; proves every expression has a CNF.
+> > - **Short answer:** Negate the output (→$\neg P$), read DNF of $\neg P$, negate, apply De Morgan → CNF.
+> > - **Why:** **Duality** ➔ negating an AND-of-ORs and distributing $\neg$ gives an OR-of-ANDs; proves every expression has a CNF.

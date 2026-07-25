@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: 3
 parent: "[[Theorem and Proof]]"
 tags: [Math/Proof, Math/Logic, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Proof, Math/Logic, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** discover and structure a proof by matching a blueprint to the goal's shape ➔ no mechanical algorithm exists.
 > - **📦 Core Components:** $\subseteq$ → element chasing | set $=$ → double containment | numeric $=$ → direct / mutual inequality.
-> - **⚡ Critical Bottleneck:** Gödel + Church–Turing forbid a general proof-finding algorithm.
+> - **⚡ Key Constraint:** Gödel + Church–Turing forbid a general proof-finding algorithm.
 
 ## 📝 Core
 ### 1. No Algorithm, Only Blueprints
@@ -33,7 +34,7 @@ tags: [Math/Proof, Math/Logic, Monash/CS_DS]
 | $A=B$ (sets) | double containment | prove both inclusions |
 | $A=B$ (numbers) | direct / mutual inequality | transform or $A\le B, A\ge B$ |
 
-> [!NOTE] **Crossover Invariant:** blueprints are heuristics, not recipes — they organise the argument, but choosing *which* definition to unpack or *which* bound to use is the creative content. Double containment / mutual inequality splits one hard equality into two easier one-directional arguments.
+> [!NOTE] **When It Flips:** blueprints are heuristics, not recipes — they organise the argument, but choosing *which* definition to unpack or *which* bound to use is the creative content. Double containment / mutual inequality splits one hard equality into two easier one-directional arguments.
 
 ## 📊 Exam Execution Trace
 
@@ -47,18 +48,18 @@ Element-chasing $A\cap B\subseteq A$:
 | 2 | $x\in A$ | conjunction elimination |
 | 3 | $A\cap B\subseteq A$ | $\square$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Match blueprint to goal shape** ➔ $\subseteq$ → element chasing; set $=$ → double containment; the two-sided inequality is the fallback when direct transformation stalls.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is there no general algorithm for finding proofs?
-> - **Core Insight Requirement:** Foundational limits.
+> - **Hint:** Foundational limits.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Gödel (true-but-unprovable statements) and Church–Turing (undecidable *Entscheidungsproblem*).
-> > - **Technical Justification:** **Not a gap** ➔ these are theorems; proof discovery relies on insight, not mechanisation.
+> > - **Short answer:** Gödel (true-but-unprovable statements) and Church–Turing (undecidable *Entscheidungsproblem*).
+> > - **Why:** **Not a gap** ➔ these are theorems; proof discovery relies on insight, not mechanisation.
 
 > [!FAQ]- Give the blueprint for set equality $A=B$ and the two routes for numeric $A=B$.
-> - **Core Insight Requirement:** Split into one-directional arguments.
+> - **Hint:** Split into one-directional arguments.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Sets: double containment ($A\subseteq B$ and $B\subseteq A$); numbers: direct manipulation or mutual inequality ($A\le B$, $A\ge B$).
-> > - **Technical Justification:** **Fallback** ➔ two-sided inequality when direct transformation stalls.
+> > - **Short answer:** Sets: double containment ($A\subseteq B$ and $B\subseteq A$); numbers: direct manipulation or mutual inequality ($A\le B$, $A\ge B$).
+> > - **Why:** **Fallback** ➔ two-sided inequality when direct transformation stalls.

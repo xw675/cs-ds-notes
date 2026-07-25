@@ -1,5 +1,6 @@
 ---
 unit: FIT2004
+week: 1
 parent: "[[Big-O Notation]]"
 tags:
   - CS/Algorithms
@@ -21,7 +22,7 @@ aliases:
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a recursive algorithm's running time obeys a **recurrence** ($T(N)=T(N-1)+c$, $T(N)=T(N/2)+c$, $T(n)=aT(n/b)+f(n)$, …) ➔ solve it for a closed-form growth class by **telescoping**.
-> - **⚡ Critical Bottleneck:** the method the unit uses is **repeated substitution (telescoping)**: expand a few steps, spot the **general form** in $k$, then fix $k$ from the **base case** and back-substitute. The Master Theorem below is a shortcut, **not** part of the Week 1 lecture.
+> - **⚡ Key Constraint:** the method the unit uses is **repeated substitution (telescoping)**: expand a few steps, spot the **general form** in $k$, then fix $k$ from the **base case** and back-substitute. The Master Theorem below is a shortcut, **not** part of the Week 1 lecture.
 
 ## 📝 Telescoping — the lecture method (5 steps)
 1. **Write** the recurrence and its base case (e.g. $T(N)=T(N-1)+c$, $T(1)=b$).
@@ -81,7 +82,7 @@ For $T(n)=a\,T(n/b)+\Theta(n^{d})$ compare $d$ with the critical exponent $\log_
 
 Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹ $\Theta(n\log n)$; Karatsuba $a{=}3,b{=}2,d{=}1$, $\log_2 3\approx1.585{>}1$ = Case 1 ⟹ $\Theta(n^{1.585})$ — matching the telescoping results above.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Fix $k$ from the base case** ➔ the general form has an unknown depth $k$; you must set it so the recursion reaches the base (e.g. $N-k=1$ or $n/2^{k}=1$) before reading off the complexity.
 - 💡 **Subtract vs divide changes the class** ➔ $T(N)=T(N-1)+c\Rightarrow O(N)$ but $T(N)=T(N/2)+c\Rightarrow O(\log N)$; check whether the argument shrinks additively or multiplicatively.
 - 💡 **With ≥2 calls, sum the level totals** ➔ don't forget the $2^{i}$ (or $a^{i}$) multiplier on each level's work when telescoping a divide-and-conquer recurrence.
@@ -90,10 +91,10 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 ## 🧠 Active Recall
 > [!FAQ]- Solve $T(N)=T(N/2)+c$ by telescoping and give the complexity.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** expanding gives $T(N)=T(N/2^{k})+kc$; the base case $N/2^{k}=1$ fixes $k=\log_2 N$, so $T(N)=T(1)+c\log_2 N=O(\log N)$.
-> > - **Technical Justification:** **Halving depth is logarithmic** ➔ each step divides the argument by $2$ and adds constant work, so it takes $\log_2 N$ steps to reach the base and the total is $\Theta(\log N)$ — this is why `power_better` is exponentially faster than the $O(N)$ `power`.
+> > - **Short answer:** expanding gives $T(N)=T(N/2^{k})+kc$; the base case $N/2^{k}=1$ fixes $k=\log_2 N$, so $T(N)=T(1)+c\log_2 N=O(\log N)$.
+> > - **Why:** **Halving depth is logarithmic** ➔ each step divides the argument by $2$ and adds constant work, so it takes $\log_2 N$ steps to reach the base and the total is $\Theta(\log N)$ — this is why `power_better` is exponentially faster than the $O(N)$ `power`.
 
 > [!FAQ]- Why does `power` cost $O(N)$ but `power_better` only $O(\log N)$, in terms of their recurrences?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `power` recurses on $N-1$ ($T(N)=T(N-1)+c$), telescoping to $T(N)=T(1)+(N-1)c=O(N)$; `power_better` recurses on $N/2$ ($T(N)=T(N/2)+c$), telescoping to $O(\log N)$.
-> > - **Technical Justification:** **Additive vs multiplicative shrink** ➔ subtracting $1$ needs $\sim N$ steps to reach the base, while halving needs only $\sim\log_2 N$; the constant per-step work then sums to $O(N)$ vs $O(\log N)$.
+> > - **Short answer:** `power` recurses on $N-1$ ($T(N)=T(N-1)+c$), telescoping to $T(N)=T(1)+(N-1)c=O(N)$; `power_better` recurses on $N/2$ ($T(N)=T(N/2)+c$), telescoping to $O(\log N)$.
+> > - **Why:** **Additive vs multiplicative shrink** ➔ subtracting $1$ needs $\sim N$ steps to reach the base, while halving needs only $\sim\log_2 N$; the constant per-step work then sums to $O(N)$ vs $O(\log N)$.

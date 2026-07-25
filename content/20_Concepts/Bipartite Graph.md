@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $V=A\sqcup B$, every edge crosses ➔ two-sided graph.
 > - **📦 Core Components:** three equivalent views — parts / 2-colouring / no odd cycle.
-> - **⚡ Critical Bottleneck:** a single odd cycle disproves it; the triangle $K_3$ is the smallest non-bipartite graph.
+> - **⚡ Key Constraint:** a single odd cycle disproves it; the triangle $K_3$ is the smallest non-bipartite graph.
 
 ## 📝 Core
 ### 1. The Definition
@@ -30,7 +31,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 
 $$\text{bipartite} \iff \text{2-colourable} \iff \text{no odd closed walk} \iff \text{no odd cycle}$$
 
-> [!NOTE] **Crossover Invariant:** the distance-parity colouring works per component (pick a ground vertex in each); the no-odd-walk hypothesis guarantees consistency. Odd cycles are the sole obstruction (via the odd-closed-walk ⟺ odd-cycle equivalence).
+> [!NOTE] **When It Flips:** the distance-parity colouring works per component (pick a ground vertex in each); the no-odd-walk hypothesis guarantees consistency. Odd cycles are the sole obstruction (via the odd-closed-walk ⟺ odd-cycle equivalence).
 
 ## 📊 Exam Execution Trace
 
@@ -44,18 +45,18 @@ $$\text{bipartite} \iff \text{2-colourable} \iff \text{no odd closed walk} \iff 
 | 2 | 3 | even | Black |
 | 3 | 4 | odd | White |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **One odd cycle disproves it** ➔ to prove bipartite exhibit the parts / 2-colouring; to disprove, exhibit an odd cycle (e.g. a triangle).
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the three equivalent characterisations of a bipartite graph.
-> - **Core Insight Requirement:** Parts / colouring / odd cycle.
+> - **Hint:** Parts / colouring / odd cycle.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (1) $V=A\sqcup B$ edges crossing; (2) 2-colourable; (3) no odd cycle.
-> > - **Technical Justification:** **Distance parity** ➔ colour by distance parity; odd cycle is the obstruction.
+> > - **Short answer:** (1) $V=A\sqcup B$ edges crossing; (2) 2-colourable; (3) no odd cycle.
+> > - **Why:** **Distance parity** ➔ colour by distance parity; odd cycle is the obstruction.
 
 > [!FAQ]- How do you prove/disprove bipartiteness, and what's the smallest non-bipartite graph?
-> - **Core Insight Requirement:** Colouring vs odd cycle.
+> - **Hint:** Colouring vs odd cycle.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Prove by exhibiting parts/2-colouring; disprove with one odd cycle; smallest non-bipartite is $K_3$.
-> > - **Technical Justification:** **Three mutually adjacent** ➔ a triangle needs three colours.
+> > - **Short answer:** Prove by exhibiting parts/2-colouring; disprove with one odd cycle; smallest non-bipartite is $K_3$.
+> > - **Why:** **Three mutually adjacent** ➔ a triangle needs three colours.

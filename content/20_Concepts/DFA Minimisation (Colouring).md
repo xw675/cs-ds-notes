@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 4
 parent: "[[Finite Automata (DFA and NFA)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [DFA minimisation, minimum DFA, state minimisation, colouring algorithm
 # [[DFA Minimisation (Colouring)]]
 
 **Context:** [[FIT2014_MOC]] · step 3 of the pipeline **regex → NFA → DFA → simplify** · shrinks the [[NFA to DFA (Subset Construction)|subset-construction]] blow-up back down
-**Task signature:** given a DFA, produce an equivalent DFA with the **fewest possible states**.
+**Problem it solves:** given a DFA, produce an equivalent DFA with the **fewest possible states**.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a DFA (usually one that came out of the subset construction with redundant states) ➔ **colour** states, then repeatedly **split** colours whose rows disagree.
-> - **⚡ Critical Bottleneck:** **different colours ⟹ definitely different states; same colour ⟹ only *possibly* mergeable.** Sameness is provisional and must survive every refinement round.
+> - **⚡ Key Constraint:** **different colours ⟹ definitely different states; same colour ⟹ only *possibly* mergeable.** Sameness is provisional and must survive every refinement round.
 
 ## 🎨 The colouring principle
 - **Seed** ➔ a Final state and a non-Final state are **fundamentally different** and can never be combined. Give all Final states **one colour** and all non-Final states **a different colour**.
@@ -67,8 +68,8 @@ Once minimised, the machine is trivial to run from its table:
 - **Finish** by reporting a **match** if `currentState` is a Final state, otherwise no match.
 - **Note** ➔ better algorithms exist: some build a **minimum-state DFA directly from a regular expression** without an intermediate NFA, and there are more compact table encodings than the plain two-dimensional array.
 
-## 🥋 Kata
-> [!QUESTION]- Kata: A 4-state DFA has Start $A$; $A\xrightarrow{\mathtt{a}}B$, $A\xrightarrow{\mathtt{b}}A$; $B\xrightarrow{\mathtt{a}}B$, $B\xrightarrow{\mathtt{b}}C$; $C$ Final with $C\xrightarrow{\mathtt{a}}B$, $C\xrightarrow{\mathtt{b}}A$; $D$ Final, unreachable, with $D\xrightarrow{\mathtt{a}}B$, $D\xrightarrow{\mathtt{b}}A$. Minimise.
+## ✍️ Practice
+> [!QUESTION]- Practice: A 4-state DFA has Start $A$; $A\xrightarrow{\mathtt{a}}B$, $A\xrightarrow{\mathtt{b}}A$; $B\xrightarrow{\mathtt{a}}B$, $B\xrightarrow{\mathtt{b}}C$; $C$ Final with $C\xrightarrow{\mathtt{a}}B$, $C\xrightarrow{\mathtt{b}}A$; $D$ Final, unreachable, with $D\xrightarrow{\mathtt{a}}B$, $D\xrightarrow{\mathtt{b}}A$. Minimise.
 > > [!SUCCESS]- Reference solution
 > > 1. **Colour** ➔ Finals $\{C,D\}$ blue; non-Finals $\{A,B\}$ red.
 > > 2. **Rows by colour** ➔ $A$: (red, red) · $B$: (red, **blue**) · $C$: (red, red) · $D$: (red, red).
@@ -76,7 +77,7 @@ Once minimised, the machine is trivial to run from its table:
 > > 4. **Result** ➔ 3 states: $\{A\}$, $\{B\}$, $\{C,D\}$.
 > > - **Key move:** $C$ and $D$ have identical rows *and* the same Final status, so they merge — this is exactly how unreachable or duplicated states are absorbed.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Compare colour patterns, not destination names** ➔ two rows count as matching when they lead to the **same colours**, even if the named target states differ. This is what lets distinct states merge.
 - 💡 **Never merge a Final with a non-Final** ➔ that distinction is the seed of the whole algorithm and is preserved by every refinement.
 - 💡 **Re-examine every colour each round** ➔ a split can make a previously-agreeing colour disagree; keep iterating until a **full pass** adds nothing.
@@ -85,10 +86,10 @@ Once minimised, the machine is trivial to run from its table:
 ## 🧠 Active Recall
 > [!FAQ]- Why does the algorithm start by separating Final from non-Final states?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** they are **behaviourally distinguishable by the empty string**: from a Final state $\varepsilon$ is accepted, from a non-Final state it is not. Merging them would change the language, so they must carry different colours from the outset.
-> > - **Technical Justification:** **Seeding the partition** ➔ every later split is derived from this one: if two states send some letter into differently-coloured states, they too are distinguishable, and refinement propagates that difference backwards until the partition stabilises.
+> > - **Short answer:** they are **behaviourally distinguishable by the empty string**: from a Final state $\varepsilon$ is accepted, from a non-Final state it is not. Merging them would change the language, so they must carry different colours from the outset.
+> > - **Why:** **Seeding the partition** ➔ every later split is derived from this one: if two states send some letter into differently-coloured states, they too are distinguishable, and refinement propagates that difference backwards until the partition stabilises.
 
 > [!FAQ]- Two states have the same colour after the algorithm terminates. What does that license, and why?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** they can be **merged into a single state** of the minimal DFA — the algorithm has stabilised, so **no string** distinguishes them: every input drives them through identically-coloured states and they agree on acceptance.
-> > - **Technical Justification:** **Fixpoint = indistinguishability** ➔ termination means no row-pattern disagreement remains, so the colours are exactly the equivalence classes of the "same behaviour on all inputs" relation, and merging each class yields the fewest possible states.
+> > - **Short answer:** they can be **merged into a single state** of the minimal DFA — the algorithm has stabilised, so **no string** distinguishes them: every input drives them through identically-coloured states and they agree on acceptance.
+> > - **Why:** **Fixpoint = indistinguishability** ➔ termination means no row-pattern disagreement remains, so the colours are exactly the equivalence classes of the "same behaviour on all inputs" relation, and merging each class yields the fewest possible states.

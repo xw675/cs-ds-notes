@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
 aliases: [regular grammar, semiword, NFA to CFG, Chomsky hierarchy, regular subset of CFL, right-linear grammar]
@@ -10,7 +11,7 @@ aliases: [regular grammar, semiword, NFA to CFG, Chomsky hierarchy, regular subs
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a **regular grammar** is a CFG whose rules are restricted to a special shape ➔ it generates **exactly** the regular languages, so **{regular} ⊆ {CFL}**.
-> - **⚡ Critical Bottleneck:** the containment is **proper**: EQUAL, HALF-AND-HALF, PALINDROME are context-free but **not** regular. Regular = "a nonterminal remembers only a *state*"; context-free = "a nonterminal can spawn *more* nonterminals" (unbounded memory).
+> - **⚡ Key Constraint:** the containment is **proper**: EQUAL, HALF-AND-HALF, PALINDROME are context-free but **not** regular. Regular = "a nonterminal remembers only a *state*"; context-free = "a nonterminal can spawn *more* nonterminals" (unbounded memory).
 
 ## 📝 Regular grammars
 - **Semiword** ➔ a string of the form $\text{terminal}\,\text{terminal}\dots\text{terminal}\ \text{Nonterminal}$ (some terminals then **one** nonterminal at the end).
@@ -44,7 +45,7 @@ stateDiagram-v2
     cfl --> reg: ⊋ (proper)
 ```
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Regular grammar ≠ any grammar for a regular language** ➔ a regular *language* can be given a non-regular-**shaped** CFG; "regular grammar" is about the **rule form** (semiwords), not the language.
 - 💡 **One rightmost nonterminal only** ➔ a rule like $A\to\mathtt{b}AA$ (two nonterminals) is **not** regular — it is what lifts EQUAL out of the regular class.
 - 💡 **The NFA→grammar map needs the arc direction** ➔ $X\xrightarrow{z}Y$ gives $X\to zY$ (not $Y\to zX$); getting the direction wrong generates the reversed language.
@@ -53,10 +54,10 @@ stateDiagram-v2
 ## 🧠 Active Recall
 > [!FAQ]- What rule shape defines a regular grammar, and why does it force the language to be regular?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** every production is $\text{Nonterminal}\to\text{semiword}$ (terminals then **one rightmost** nonterminal) or $\text{Nonterminal}\to\text{terminals}$. With at most one nonterminal, always at the right end, a derivation is a **single growing prefix chasing one nonterminal**.
-> > - **Technical Justification:** **Nonterminal ≈ automaton state** ➔ that single trailing nonterminal behaves exactly like the "current state" of an NFA; the NFA→grammar construction ($X\xrightarrow{z}Y \Rightarrow X\to zY$, Final $\Rightarrow X\to\varepsilon$) makes the correspondence explicit, so the generated language is recognised by a finite automaton.
+> > - **Short answer:** every production is $\text{Nonterminal}\to\text{semiword}$ (terminals then **one rightmost** nonterminal) or $\text{Nonterminal}\to\text{terminals}$. With at most one nonterminal, always at the right end, a derivation is a **single growing prefix chasing one nonterminal**.
+> > - **Why:** **Nonterminal ≈ automaton state** ➔ that single trailing nonterminal behaves exactly like the "current state" of an NFA; the NFA→grammar construction ($X\xrightarrow{z}Y \Rightarrow X\to zY$, Final $\Rightarrow X\to\varepsilon$) makes the correspondence explicit, so the generated language is recognised by a finite automaton.
 
 > [!FAQ]- Justify that the regular languages form a *proper* subset of the context-free languages.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **⊆** because every regular grammar is a CFG (so every regular language is context-free). **Proper** because HALF-AND-HALF $=\{\mathtt{a}^{n}\mathtt{b}^{n}\}$ has the CFG $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$ but is **non-regular** by the pumping lemma.
-> > - **Technical Justification:** **Recursion beats finite state** ➔ context-free rules with multiple/embedded nonterminals give unbounded matched memory (counting $n$), which finite automata provably lack — so at least one CFL escapes the regular class, making the inclusion strict.
+> > - **Short answer:** **⊆** because every regular grammar is a CFG (so every regular language is context-free). **Proper** because HALF-AND-HALF $=\{\mathtt{a}^{n}\mathtt{b}^{n}\}$ has the CFG $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$ but is **non-regular** by the pumping lemma.
+> > - **Why:** **Recursion beats finite state** ➔ context-free rules with multiple/embedded nonterminals give unbounded matched memory (counting $n$), which finite automata provably lack — so at least one CFL escapes the regular class, making the inclusion strict.

@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT1058]
+week: [1, 6]
 parent: "[[Algorithmic Complexity]]"
 tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** sum a constant-difference sequence ➔ $S_n = n\times$ (average of first and last term).
 > - **📦 Core Components:** general $S_n=na+\tfrac{n(n-1)}{2}d$ ➔ the $\sum k=\tfrac{n(n-1)}{2}$ case.
-> - **⚡ Critical Bottleneck:** $\sum_{k=1}^{n-1}k=\Theta(n^2)$ ➔ why a "shrinking" nested loop is quadratic, not linear.
+> - **⚡ Key Constraint:** $\sum_{k=1}^{n-1}k=\Theta(n^2)$ ➔ why a "shrinking" nested loop is quadratic, not linear.
 
 ## 📝 Core
 ### 1. The Series (Constant Difference)
@@ -35,7 +36,7 @@ tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 | $\sum_{i=0}^{k} 2^i$ ([[Geometric Series]]) | $2^{k+1}-1$ | $\Theta(2^k)$ |
 | $\sum_{k=1}^{n} k^2$ | $\dfrac{n(n+1)(2n+1)}{6}$ | $\Theta(n^3)$ |
 
-> [!NOTE] **Crossover Invariant:** the constant $\tfrac12$ and lower-order $-\tfrac n2$ drop under [[Big-O Notation]], leaving $\Theta(n^2)$ — but the **exact** closed form is needed for tight constants or off-by-one correctness.
+> [!NOTE] **When It Flips:** the constant $\tfrac12$ and lower-order $-\tfrac n2$ drop under [[Big-O Notation]], leaving $\Theta(n^2)$ — but the **exact** closed form is needed for tight constants or off-by-one correctness.
 
 ## 📊 Exam Execution Trace
 
@@ -50,24 +51,24 @@ Counting a shrinking nested loop, $n=5$:
 | 3 | 3 | 2 | 9 |
 | 4 | 4 | 1 | $10=\frac{5\cdot4}{2}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Shrinking inner count is still $\Theta(n^2)$** ➔ not $\Theta(n)$; a sum of $\Theta(n)$ terms each averaging $\Theta(n)$ is quadratic.
 
 ## 🧠 Active Recall
 > [!FAQ]- A nested loop's inner count shrinks by one each pass — why is it $\Theta(n^2)$, not $\Theta(n)$, and what is the exact count?
-> - **Core Insight Requirement:** A shrinking sum is still quadratic.
+> - **Hint:** A shrinking sum is still quadratic.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Total iterations $=(n-1)+\dots+1=\frac{n(n-1)}{2}=\Theta(n^2)$.
-> > - **Technical Justification:** **Averaging** ➔ $\Theta(n)$ terms each averaging $\Theta(n)$ ⟹ quadratic, even though no single pass does $n$ work.
+> > - **Short answer:** Total iterations $=(n-1)+\dots+1=\frac{n(n-1)}{2}=\Theta(n^2)$.
+> > - **Why:** **Averaging** ➔ $\Theta(n)$ terms each averaging $\Theta(n)$ ⟹ quadratic, even though no single pass does $n$ work.
 
 > [!FAQ]- Match each series to the algorithm class it powers: arithmetic vs geometric.
-> - **Core Insight Requirement:** Series shape ↔ cost shape.
+> - **Hint:** Series shape ↔ cost shape.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Arithmetic $\sum k=\Theta(n^2)$ → quadratic sorts; geometric $\sum 2^i=2^{k+1}-1$ → tree node counts / $\log n$ height.
-> > - **Technical Justification:** **Loop geometry** ➔ linear-shrink inner loops sum arithmetically; branching structures sum geometrically.
+> > - **Short answer:** Arithmetic $\sum k=\Theta(n^2)$ → quadratic sorts; geometric $\sum 2^i=2^{k+1}-1$ → tree node counts / $\log n$ height.
+> > - **Why:** **Loop geometry** ➔ linear-shrink inner loops sum arithmetically; branching structures sum geometrically.
 
 > [!FAQ]- When is the *closed form* needed rather than just the $\Theta$ order?
-> - **Core Insight Requirement:** Constants and off-by-one.
+> - **Hint:** Constants and off-by-one.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** For exact constants, tight proof bounds, or off-by-one loop reasoning.
-> > - **Technical Justification:** **Order hides constants** ➔ two $\Theta(n^2)$ algorithms differ by leading coefficient; whether a sum runs to $n$ or $n-1$ changes the exact count.
+> > - **Short answer:** For exact constants, tight proof bounds, or off-by-one loop reasoning.
+> > - **Why:** **Order hides constants** ➔ two $\Theta(n^2)$ algorithms differ by leading coefficient; whether a sum runs to $n$ or $n-1$ changes the exact count.

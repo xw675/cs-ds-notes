@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 2
 parent: "[[Conceptual Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 aliases: [ERD]
@@ -11,7 +12,7 @@ aliases: [ERD]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** graphical conceptual data model (Chen 1976) ➔ entities + attributes + relationships.
 > - **📦 Core Components:** Chen (rectangles/ovals/diamonds) vs **Crow's Foot** (three-partition boxes + cardinality lines).
-> - **⚡ Critical Bottleneck:** Crow's Foot can't attach attributes to a relationship → forces an [[Associative Entity]].
+> - **⚡ Key Constraint:** Crow's Foot can't attach attributes to a relationship → forces an [[Associative Entity]].
 
 ## 📝 Core
 ### 1. The Diagram
@@ -37,7 +38,7 @@ aliases: [ERD]
 >   ORDER ||--|{ ORDER_PRODUCT : has
 >   PRODUCT ||--o{ ORDER_PRODUCT : appears_on
 > ```
-> 💡 **Exam Pitfall:** **Standards matter** ➔ singular entity names (no spaces/hyphens, underscores ok), key attributes flagged `Key`, every relationship has a verb label + **both** cardinalities, lines straight and non-crossing.
+> 💡 **Common Mistake:** **Standards matter** ➔ singular entity names (no spaces/hyphens, underscores ok), key attributes flagged `Key`, every relationship has a verb label + **both** cardinalities, lines straight and non-crossing.
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Chen | Crow's Foot |
@@ -47,7 +48,7 @@ aliases: [ERD]
 | relationship | diamond | labelled line |
 | attributes on relationship | **yes** | no → [[Associative Entity]] |
 
-> [!NOTE] **Crossover Invariant:** Chen is expressive but bulky; Crow's Foot is compact and implementation-friendly but pushes relationship-attributes into an [[Associative Entity]]. The ERD lets stakeholders agree on structure before implementation.
+> [!NOTE] **When It Flips:** Chen is expressive but bulky; Crow's Foot is compact and implementation-friendly but pushes relationship-attributes into an [[Associative Entity]]. The ERD lets stakeholders agree on structure before implementation.
 
 ## 📊 Exam Execution Trace
 
@@ -74,13 +75,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Contrast Chen and Crow's Foot notation, and a consequence of Crow's Foot's limitation.
-> - **Core Insight Requirement:** Attributes on relationships.
+> - **Hint:** Attributes on relationships.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Chen = rectangles/ovals/diamonds (attrs on relationships ok); Crow's Foot = boxes + cardinality lines (no attrs on relationships).
-> > - **Technical Justification:** **Associative entity** ➔ an M:N needing attributes must become a bridge entity.
+> > - **Short answer:** Chen = rectangles/ovals/diamonds (attrs on relationships ok); Crow's Foot = boxes + cardinality lines (no attrs on relationships).
+> > - **Why:** **Associative entity** ➔ an M:N needing attributes must become a bridge entity.
 
 > [!FAQ]- How may two entities connect on a conceptual model, and the one exception about shared keys?
-> - **Core Insight Requirement:** Only via relationships.
+> - **Hint:** Only via relationships.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Only through a relationship — never by listing one entity's attributes in another.
-> > - **Technical Justification:** **Weak entity** ➔ a child may include the parent's key as part of its identifier (identifying relationship).
+> > - **Short answer:** Only through a relationship — never by listing one entity's attributes in another.
+> > - **Why:** **Weak entity** ➔ a child may include the parent's key as part of its identifier (identifying relationship).

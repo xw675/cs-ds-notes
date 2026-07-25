@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 1
 parent: "[[Computational Problem]]"
 tags: [CS/Algorithms, CS/Foundations]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Foundations]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** finite well-defined instruction sequence ➔ maps each valid input to the correct output and always halts.
 > - **📦 Core Components:** **Termination** ➔ variant | **Correct I/O** ➔ invariant | **Total correctness** = both.
-> - **⚡ Critical Bottleneck:** graded by [[Big-O Notation|asymptotic cost]] ➔ polynomial (tractable, P) vs exponential (intractable, NP-hard).
+> - **⚡ Key Constraint:** graded by [[Big-O Notation|asymptotic cost]] ➔ polynomial (tractable, P) vs exponential (intractable, NP-hard).
 
 ## 📝 Core
 ### 1. The Algorithm (Finite, Halting, Correct)
@@ -38,7 +39,7 @@ tags: [CS/Algorithms, CS/Foundations]
 >     return a                   # invariant: gcd(a,b) preserved each step
 > # gcd(45, 30) -> 15
 > ```
-> 💡 **Exam Pitfall:** **Variant ≠ invariant** ➔ termination needs a strictly-decreasing non-negative measure (here `b`); partial correctness alone does **not** prove halting.
+> 💡 **Common Mistake:** **Variant ≠ invariant** ➔ termination needs a strictly-decreasing non-negative measure (here `b`); partial correctness alone does **not** prove halting.
 
 ## ⚖️ Core Decision Matrix
 | Concept | What it is | Owns | Example |
@@ -47,7 +48,7 @@ tags: [CS/Algorithms, CS/Foundations]
 | **Algorithm** | finite, correct recipe solving it | **upper** bounds | Euclid's algorithm |
 | Instance | one concrete input | $-$ | $\gcd(45,30)$ |
 
-> [!NOTE] **Crossover Invariant:** a *specific* algorithm sets an **upper** bound; the *problem* sets the **lower** bound ($\Omega$). When the algorithm's $O$ meets the problem's $\Omega$ ➔ **provably optimal**.
+> [!NOTE] **When It Flips:** a *specific* algorithm sets an **upper** bound; the *problem* sets the **lower** bound ($\Omega$). When the algorithm's $O$ meets the problem's $\Omega$ ➔ **provably optimal**.
 
 ## 📊 Exam Execution Trace
 
@@ -75,19 +76,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish partial correctness, termination, and total correctness, and name the proof device for each.
-> - **Core Insight Requirement:** Separate "correct-if-halts" from "halts", and combine them.
+> - **Hint:** Separate "correct-if-halts" from "halts", and combine them.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Partial = loop **invariant**; termination = strictly-decreasing **variant**; total = both.
-> > - **Technical Justification:** **Hoare logic** ➔ $\{\text{Pre}\}\,\text{prog}\,\{\text{Post}\}$ + a well-founded measure ⟹ from any pre-state it halts in a valid post-state.
+> > - **Short answer:** Partial = loop **invariant**; termination = strictly-decreasing **variant**; total = both.
+> > - **Why:** **Hoare logic** ➔ $\{\text{Pre}\}\,\text{prog}\,\{\text{Post}\}$ + a well-founded measure ⟹ from any pre-state it halts in a valid post-state.
 
 > [!FAQ]- "Solvable" and "efficiently solvable" differ — explain via tractability.
-> - **Core Insight Requirement:** Decidability vs polynomial-time feasibility.
+> - **Hint:** Decidability vs polynomial-time feasibility.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An algorithm proves **solvable**; **efficiency** depends on asymptotic cost.
-> > - **Technical Justification:** **P vs NP-hard** ➔ polynomial = tractable; only-exponential-known = intractable — a correct but exponential algorithm shows solvability without tractability.
+> > - **Short answer:** An algorithm proves **solvable**; **efficiency** depends on asymptotic cost.
+> > - **Why:** **P vs NP-hard** ➔ polynomial = tractable; only-exponential-known = intractable — a correct but exponential algorithm shows solvability without tractability.
 
 > [!FAQ]- Why can one problem have many algorithms, and why does it matter?
-> - **Core Insight Requirement:** The problem fixes the relation, not the method.
+> - **Hint:** The problem fixes the relation, not the method.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A [[Computational Problem]] fixes only input→output ➔ many finite procedures satisfy it.
-> > - **Technical Justification:** **Asymptotic divergence** ➔ linear vs binary search are both correct but $O(n)$ vs $O(\log n)$ — algorithm choice, not problem choice, drives scalability.
+> > - **Short answer:** A [[Computational Problem]] fixes only input→output ➔ many finite procedures satisfy it.
+> > - **Why:** **Asymptotic divergence** ➔ linear vs binary search are both correct but $O(n)$ vs $O(\log n)$ — algorithm choice, not problem choice, drives scalability.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 9
 parent: "[[Internet Structure and Governance]]"
 tags: [CS/Networks, CS/Internet, Monash/CS_DS]
 aliases: [Internet access, dial-up modem, ADSL, DSLAM, VDSL, FTTN, NBN, GPON, fibre to the premises, 4G, 5G, mobile data, last mile]
@@ -10,7 +11,7 @@ aliases: [Internet access, dial-up modem, ADSL, DSLAM, VDSL, FTTN, NBN, GPON, fi
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** end user makes a **physical** connection to an ISP ➔ ISP **authenticates**, **assigns an IP**, and tells the device its **router + DNS** ➔ device can send/receive packets.
-> - **⚡ Critical Bottleneck:** know each technology's medium + rough speed and the two key acronyms — **ADSL is asymmetric** (more download than upload, ends at a **DSLAM**); **NBN** uses a **GPON** fibre backbone with several last-mile options.
+> - **⚡ Key Constraint:** know each technology's medium + rough speed and the two key acronyms — **ADSL is asymmetric** (more download than upload, ends at a **DSLAM**); **NBN** uses a **GPON** fibre backbone with several last-mile options.
 
 ## 📝 Access basics
 - **Physical connection** ➔ to the ISP network via ADSL / NBN / 4G etc.
@@ -40,7 +41,7 @@ aliases: [Internet access, dial-up modem, ADSL, DSLAM, VDSL, FTTN, NBN, GPON, fi
 - **5G** ➔ up to **10 Gbit/s** (usually ~1 Gbit/s); **higher frequencies (24–54 GHz)** → more bandwidth but **shorter range → smaller cells**; aims: fast + **low-latency, reliable**, massive device counts (**[[Internet of Things (IoT)|IoT]]**); competes with fixed NBN.
 - **Growth** ➔ mobile is ~**⅓ of Internet traffic**, driven by smartphone apps + video.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Asymmetric" = the A in ADSL** ➔ download bandwidth ≫ upload; the asymmetry is caused by **crosstalk at the DSLAM**, not a marketing choice.
 - 💡 **DSLAM vs filter** ➔ the **filter/splitter** is at the *home* (separates voice+data); the **DSLAM** is at the *exchange* (aggregates many lines). Don't swap them.
 - 💡 **Higher 5G frequency ⇒ shorter range** ➔ more bandwidth but needs **more, smaller cells** — a direct physics trade-off.
@@ -48,5 +49,5 @@ aliases: [Internet access, dial-up modem, ADSL, DSLAM, VDSL, FTTN, NBN, GPON, fi
 ## 🧠 Active Recall
 > [!FAQ]- Why did ADSL win the early broadband market despite fibre being faster?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the **last mile** is the most expensive part of any rollout, and ADSL **reused the copper telephone cables already installed to every home**, avoiding new cabling.
-> > - **Technical Justification:** **Full-bandwidth reuse** ➔ ADSL exploits the whole 0–1104 kHz range of existing copper (splitting into 4 kHz sub-bands) instead of laying fibre to each premises.
+> > - **Short answer:** the **last mile** is the most expensive part of any rollout, and ADSL **reused the copper telephone cables already installed to every home**, avoiding new cabling.
+> > - **Why:** **Full-bandwidth reuse** ➔ ADSL exploits the whole 0–1104 kHz range of existing copper (splitting into 4 kHz sub-bands) instead of laying fibre to each premises.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Set (Mathematics)]]"
 tags: [Math/SetTheory, Math/Combinatorics, Math/Discrete]
 ---
@@ -10,7 +11,7 @@ tags: [Math/SetTheory, Math/Combinatorics, Math/Discrete]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\mathcal P(B)$ = all subsets of $B$ ➔ including $\emptyset$ and $B$.
 > - **📦 Core Components:** $\lvert\mathcal P(B)\rvert=2^{\lvert B\rvert}$ ➔ binary-choice argument ➔ $\sum_k\binom{n}{k}=2^n$.
-> - **⚡ Critical Bottleneck:** exponential blow-up — $\lvert B\rvert=20$ gives over a million subsets.
+> - **⚡ Key Constraint:** exponential blow-up — $\lvert B\rvert=20$ gives over a million subsets.
 
 ## 📝 Core
 ### 1. The Power Set (All Subsets)
@@ -40,7 +41,7 @@ $$\mathcal P(\{a,b\})=\{\emptyset,\{a\},\{b\},\{a,b\}\}$$
 | minimum | smallest size | — |
 | minimal | can't be shrunk | — |
 
-> [!NOTE] **Crossover Invariant:** subsets split by size — $\binom{n}{k}$ per layer, summing to $2^n$ ([[Binomial Coefficient]]). Contrast the [[Cartesian Product]]: its size $\lvert A\rvert\lvert B\rvert$ multiplies, whereas the power set's $2^{\lvert B\rvert}$ is exponential.
+> [!NOTE] **When It Flips:** subsets split by size — $\binom{n}{k}$ per layer, summing to $2^n$ ([[Binomial Coefficient]]). Contrast the [[Cartesian Product]]: its size $\lvert A\rvert\lvert B\rvert$ multiplies, whereas the power set's $2^{\lvert B\rvert}$ is exponential.
 
 ## 📊 Exam Execution Trace
 
@@ -55,24 +56,24 @@ $\mathcal P(\{a,b,c\})$ by size:
 | 3 | 2 | $\{a,b\},\{a,c\},\{b,c\}$ | 3 |
 | 4 | 3 | $\{a,b,c\}$ | 1 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Elements of $\mathcal P(B)$ are sets** ➔ $\emptyset$ and $B$ are members; and enumerating $\mathcal P(B)$ is infeasible for large $B$ (over $10^6$ subsets at $\lvert B\rvert=20$).
 
 ## 🧠 Active Recall
 > [!FAQ]- Prove that a set with $n$ elements has exactly $2^n$ subsets.
-> - **Core Insight Requirement:** Independent binary choice.
+> - **Hint:** Independent binary choice.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each element is independently "in" or "out" ⟹ $2^n$ subsets by the product rule.
-> > - **Technical Justification:** **Edge check** ➔ $\emptyset$ gives $2^0=1$, $\mathcal P(\emptyset)=\{\emptyset\}$.
+> > - **Short answer:** Each element is independently "in" or "out" ⟹ $2^n$ subsets by the product rule.
+> > - **Why:** **Edge check** ➔ $\emptyset$ gives $2^0=1$, $\mathcal P(\emptyset)=\{\emptyset\}$.
 
 > [!FAQ]- Distinguish a *maximal* subset from a *maximum* subset (clique example).
-> - **Core Insight Requirement:** Local vs global.
+> - **Hint:** Local vs global.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Maximal = can't be enlarged; maximum = largest anywhere.
-> > - **Technical Justification:** **Maximum ⟹ maximal** ➔ a maximal clique may be far smaller than the maximum clique.
+> > - **Short answer:** Maximal = can't be enlarged; maximum = largest anywhere.
+> > - **Why:** **Maximum ⟹ maximal** ➔ a maximal clique may be far smaller than the maximum clique.
 
 > [!FAQ]- How do the binomial coefficients relate to the power-set size?
-> - **Core Insight Requirement:** Layer by size.
+> - **Hint:** Layer by size.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\binom{n}{k}$ subsets of each size $k$; disjoint layers cover $\mathcal P(B)$.
-> > - **Technical Justification:** **Sum** ➔ $\sum_{k=0}^{n}\binom{n}{k}=2^n$.
+> > - **Short answer:** $\binom{n}{k}$ subsets of each size $k$; disjoint layers cover $\mathcal P(B)$.
+> > - **Why:** **Sum** ➔ $\sum_{k=0}^{n}\binom{n}{k}=2^n$.

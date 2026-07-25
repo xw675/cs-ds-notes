@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 12
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** drawable with no edge crossings ➔ edges meet only at shared endpoints.
 > - **📦 Core Components:** plane graph ➔ faces (incl. outer) ➔ each edge borders ≤2 faces.
-> - **⚡ Critical Bottleneck:** edge bounds $m\le3n-6$ (or $2n-4$ triangle-free) disprove planarity; $K_5,K_{3,3}$ minimal obstructions.
+> - **⚡ Key Constraint:** edge bounds $m\le3n-6$ (or $2n-4$ triangle-free) disprove planarity; $K_5,K_{3,3}$ minimal obstructions.
 
 ## 📝 Core
 ### 1. Planarity
@@ -37,7 +38,7 @@ $$m\le 3n-6\ (n\ge3),\qquad m\le 2n-4\ (\text{triangle-free})$$
 | $K_{3,3}$ | 6,9 | $2n-4=8$ (bipartite) | no |
 | trees/paths/cycles | — | — | always |
 
-> [!NOTE] **Crossover Invariant:** $K_5$ and $K_{3,3}$ are the smallest nonplanar graphs (utilities puzzle = $K_{3,3}$). A [[Bipartite Graph|bipartite]] graph is triangle-free, so the stronger $2n-4$ bound applies. Bounds come from [[Euler's Formula (Planar Graphs)|Euler's formula]].
+> [!NOTE] **When It Flips:** $K_5$ and $K_{3,3}$ are the smallest nonplanar graphs (utilities puzzle = $K_{3,3}$). A [[Bipartite Graph|bipartite]] graph is triangle-free, so the stronger $2n-4$ bound applies. Bounds come from [[Euler's Formula (Planar Graphs)|Euler's formula]].
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ Edge-bound test:
 | 2 | $K_5$ | $10>9$ | nonplanar |
 | 3 | $K_{3,3}$ | $9>8$ (triangle-free) | nonplanar |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Violating a bound proves nonplanarity; passing it does not prove planarity** ➔ $K_{3,3}$ passes $3n-6$ but, being bipartite (triangle-free), breaks $2n-4$.
 
 ## 🧠 Active Recall
 > [!FAQ]- What does planarity mean, and what are faces, boundaries, and sides?
-> - **Core Insight Requirement:** Existence of a crossing-free drawing.
+> - **Hint:** Existence of a crossing-free drawing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Some drawing has no crossings; faces are the regions (incl. outer), boundary = closed walk of surrounding edges.
-> > - **Technical Justification:** **Two sides** ➔ each edge borders ≤2 faces, appears twice among boundaries.
+> > - **Short answer:** Some drawing has no crossings; faces are the regions (incl. outer), boundary = closed walk of surrounding edges.
+> > - **Why:** **Two sides** ➔ each edge borders ≤2 faces, appears twice among boundaries.
 
 > [!FAQ]- How do edge bounds prove nonplanarity, and which settle $K_5$ and $K_{3,3}$?
-> - **Core Insight Requirement:** $3n-6$ / $2n-4$.
+> - **Hint:** $3n-6$ / $2n-4$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $K_5$ breaks $m\le3n-6$ ($10>9$); $K_{3,3}$ (triangle-free) breaks $m\le2n-4$ ($9>8$).
-> > - **Technical Justification:** **Minimal obstructions** ➔ the two smallest nonplanar graphs.
+> > - **Short answer:** $K_5$ breaks $m\le3n-6$ ($10>9$); $K_{3,3}$ (triangle-free) breaks $m\le2n-4$ ($9>8$).
+> > - **Why:** **Minimal obstructions** ➔ the two smallest nonplanar graphs.

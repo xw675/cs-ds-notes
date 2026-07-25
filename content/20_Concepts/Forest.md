@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 12
 parent: "[[Tree]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** an acyclic graph, not required connected ➔ a disjoint union of trees.
 > - **📦 Core Components:** each [[Connectivity|component]] a [[Tree]] ➔ $n-k$ edges for $k$ components.
-> - **⚡ Critical Bottleneck:** generalises the tree's $n-1$; acyclicity is componentwise.
+> - **⚡ Key Constraint:** generalises the tree's $n-1$; acyclicity is componentwise.
 
 ## 📝 Core
 ### 1. The Forest
@@ -38,7 +39,7 @@ $$m=\sum_{i=1}^k m_i=\sum_{i=1}^k(n_i-1)=\Bigl(\sum n_i\Bigr)-k=n-k$$
 | isolated vertex | — | 0 (1-vertex tree) |
 | acyclic | yes (defining) | — |
 
-> [!NOTE] **Crossover Invariant:** a forest relaxes the [[Tree]]'s connectivity but keeps acyclicity; [[Kruskal's Greedy Algorithm]]'s partial result is always a forest, becoming a [[Spanning Tree]] once it connects up.
+> [!NOTE] **When It Flips:** a forest relaxes the [[Tree]]'s connectivity but keeps acyclicity; [[Kruskal's Greedy Algorithm]]'s partial result is always a forest, becoming a [[Spanning Tree]] once it connects up.
 
 ## 📊 Exam Execution Trace
 
@@ -52,18 +53,18 @@ Forest, 10 vertices, components 4,3,3:
 | 2 | $F_2$ | 3 | 2 |
 | 3 | $F_3$ | 3 | 2 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Each extra component costs one fewer edge** ➔ $n-1$ (tree) → $n-k$; edges are exactly what would merge the $k$ trees into one.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a forest and prove it has $n-k$ edges.
-> - **Core Insight Requirement:** Sum of tree edge counts.
+> - **Hint:** Sum of tree edge counts.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Acyclic graph; each component a tree with $n_i-1$ edges ⟹ $m=\sum(n_i-1)=n-k$.
-> > - **Technical Justification:** **$k=1$** ➔ recovers the tree formula $n-1$.
+> > - **Short answer:** Acyclic graph; each component a tree with $n_i-1$ edges ⟹ $m=\sum(n_i-1)=n-k$.
+> > - **Why:** **$k=1$** ➔ recovers the tree formula $n-1$.
 
 > [!FAQ]- How are trees and forests related, and why is acyclicity componentwise?
-> - **Core Insight Requirement:** Cycles live in one component.
+> - **Hint:** Cycles live in one component.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A tree is a connected forest ($k=1$); a forest is acyclic iff every component is.
-> > - **Technical Justification:** **Connected cycle** ➔ any cycle lies entirely in one component.
+> > - **Short answer:** A tree is a connected forest ($k=1$); a forest is acyclic iff every component is.
+> > - **Why:** **Connected cycle** ➔ any cycle lies entirely in one component.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 3
 parent: "[[Transistors and Logic Gates]]"
 tags: [CS/Systems, CS/Hardware]
 aliases: [Half Adder, Full Adder, Multiplexer, Decoder, ALU]
@@ -10,7 +11,7 @@ aliases: [Half Adder, Full Adder, Multiplexer, Decoder, ALU]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** four building blocks ➔ **adder** (arithmetic), **decoder** (1-of-$2^n$ activation), **MUX** (input selection), **ALU** (all ops in parallel + MUX picks by op-code).
-> - **⚡ Critical Bottleneck:** half adder = XOR (result) + AND (carry); full adder adds a carry-IN — chaining $n$ full adders = ripple-carry adder.
+> - **⚡ Key Constraint:** half adder = XOR (result) + AND (carry); full adder adds a carry-IN — chaining $n$ full adders = ripple-carry adder.
 
 ## 📝 Core
 ### 1. Adders
@@ -32,17 +33,17 @@ aliases: [Half Adder, Full Adder, Multiplexer, Decoder, ALU]
 - **Interface** ➔ inputs: two $n$-bit operands + an **op-code**; outputs: $n$-bit result + status (overflow/error).
 - **Trick** ➔ compute ALL operations in parallel, then a MUX selects the wanted result by op-code (lecture example: $00{:}A{+}B$, $01{:}A{-}B$, $10{:}A{+}1$, $11$: comparison).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Half vs full adder** ➔ the difference is exactly the carry-IN input; a ripple chain needs FULL adders everywhere except (optionally) position 0.
 - 💡 **ALU doesn't "choose then compute"** ➔ it computes everything and *selects* — that's why the MUX is the punchline of the whole week.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive the half-adder gates from the 2-bit addition table, then explain what the full adder adds and why ripple-carry needs it.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Result column matches XOR, carry column matches AND; the full adder's third input accepts the previous position's carry-out — without it, chained addition can't propagate carries.
-> > - **Technical Justification:** **$1{+}1{+}1 = 11_2$** ➔ three-input rows force both a result and a carry, satisfied by two half adders + OR.
+> > - **Short answer:** Result column matches XOR, carry column matches AND; the full adder's third input accepts the previous position's carry-out — without it, chained addition can't propagate carries.
+> > - **Why:** **$1{+}1{+}1 = 11_2$** ➔ three-input rows force both a result and a carry, satisfied by two half adders + OR.
 
 > [!FAQ]- How does an ALU use a decoder/MUX to execute the right operation?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** All operation circuits run in parallel on the operands; the op-code drives a MUX that forwards exactly one result.
-> > - **Technical Justification:** **Selection beats gating computation** ➔ combinational logic is always-on; correctness comes from choosing outputs, not switching circuits off.
+> > - **Short answer:** All operation circuits run in parallel on the operands; the op-code drives a MUX that forwards exactly one result.
+> > - **Why:** **Selection beats gating computation** ➔ combinational logic is always-on; correctness comes from choosing outputs, not switching circuits off.

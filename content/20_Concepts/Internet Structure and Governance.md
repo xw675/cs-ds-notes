@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 9
 parent: "[[Computer Networks (Components and Types)]]"
 tags: [CS/Networks, CS/Internet, Monash/CS_DS]
 aliases: [network of networks, ISP, Autonomous System, AS, BGP, border router, IXP, Internet Exchange Point, peering, transit, Tier 1 ISP, RIR, APNIC, ICANN, IETF, ISOC, Internet governance]
@@ -10,7 +11,7 @@ aliases: [network of networks, ISP, Autonomous System, AS, BGP, border router, I
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the Internet = interconnected **Autonomous Systems** (mostly ISPs) that exchange traffic via **border routers** running **BGP** ➔ decentralised, no single owner.
-> - **⚡ Critical Bottleneck:** distinguish **interior** routing (inside one AS: RIP/OSPF/EIGRP, admin's choice) from **exterior** routing (**between** ASes: BGP only) — and **peering** (free, mutual) from **transit** (paid, smaller→larger ISP).
+> - **⚡ Key Constraint:** distinguish **interior** routing (inside one AS: RIP/OSPF/EIGRP, admin's choice) from **exterior** routing (**between** ASes: BGP only) — and **peering** (free, mutual) from **transit** (paid, smaller→larger ISP).
 
 ## 📝 Core
 - **Network of networks** ➔ no central Internet; each participating network is owned/run by an organisation (ISP LANs, backbones), interconnected.
@@ -32,7 +33,7 @@ aliases: [network of networks, ISP, Autonomous System, AS, BGP, border router, I
 - **IGF** ➔ Internet Governance Forum — annual multi-stakeholder meetings.
 - **ITU** ➔ International Telecommunication Union — mostly **hardware standards** (e.g. DSL).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **BGP is exterior-only** ➔ RIP/OSPF/EIGRP route *inside* an AS; **BGP** routes *between* ASes. Naming an interior protocol for inter-AS routing loses the mark.
 - 💡 **Peering ≠ transit** ➔ **peering** is settlement-free and mutual; **transit** is a paid customer→provider relationship. Similar-sized ISPs peer; small ISPs buy transit.
 - 💡 **"Who owns the Internet?"** ➔ *no one* — ASes are individually owned; standards come from many bodies (ISOC/IETF, ICANN, ITU…), not a single governor.
@@ -40,5 +41,5 @@ aliases: [network of networks, ISP, Autonomous System, AS, BGP, border router, I
 ## 🧠 Active Recall
 > [!FAQ]- Why do two Tier-1 ISPs peer for free while a small ISP pays for transit?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** peering is worthwhile when both parties exchange **roughly equal** traffic, so settlement-free swapping benefits both; a small ISP sends/receives far less and **depends on** the larger network, so it buys **transit** to reach the rest of the Internet.
-> > - **Technical Justification:** **Reciprocity vs dependence** ➔ peers connect as equals at an **IXP** (no charge); transit is an asymmetric customer→provider link (paid), reflecting who needs whom.
+> > - **Short answer:** peering is worthwhile when both parties exchange **roughly equal** traffic, so settlement-free swapping benefits both; a small ISP sends/receives far less and **depends on** the larger network, so it buys **transit** to reach the rest of the Internet.
+> > - **Why:** **Reciprocity vs dependence** ➔ peers connect as equals at an **IXP** (no charge); transit is an asymmetric customer→provider link (paid), reflecting who needs whom.

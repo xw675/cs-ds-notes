@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: [1, 4]
 parent: "[[Proposition and Truth Value]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build a new proposition from existing ones, defined by a truth table ➔ the logic gates of reasoning.
 > - **📦 Core Components:** unary $\neg$ ➔ binary $\wedge,\vee,\Rightarrow,\Leftrightarrow,\oplus$.
-> - **⚡ Critical Bottleneck:** $\wedge\leftrightarrow\cap$, $\vee\leftrightarrow\cup$, $\neg\leftrightarrow$ complement — set laws reappear as [[Boolean Algebra Laws|De Morgan]].
+> - **⚡ Key Constraint:** $\wedge\leftrightarrow\cap$, $\vee\leftrightarrow\cup$, $\neg\leftrightarrow$ complement — set laws reappear as [[Boolean Algebra Laws|De Morgan]].
 
 ## 📝 Core
 ### 1. The Connectives (Truth-Table Defined)
@@ -38,7 +39,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 | $\Leftrightarrow$ | binary | values equal | $A=B$ |
 | $\oplus$ | binary | values differ | symmetric difference |
 
-> [!NOTE] **Crossover Invariant:** inclusive $\vee$ is T when either *or both* hold; exclusive $\oplus$ excludes the both-true case — they agree on three rows and differ only at TT. "and"/"or" are narrower than English: defined *solely* by the truth tables, no temporal/causal meaning.
+> [!NOTE] **When It Flips:** inclusive $\vee$ is T when either *or both* hold; exclusive $\oplus$ excludes the both-true case — they agree on three rows and differ only at TT. "and"/"or" are narrower than English: defined *solely* by the truth tables, no temporal/causal meaning.
 
 ## 📊 Exam Execution Trace
 
@@ -53,18 +54,18 @@ Evaluate $(P\wedge\neg Q)\vee Q$:
 | 3 | T | F | T | T | T |
 | 4 | T | T | F | F | T |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\Rightarrow$ is F only on T→F** ➔ every other row is T (including F→anything, "vacuously true"); and "or" means **inclusive** $\vee$, not $\oplus$.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the truth tables of $\wedge$, $\vee$, $\Rightarrow$, and the one row separating inclusive from exclusive or.
-> - **Core Insight Requirement:** Row-by-row values.
+> - **Hint:** Row-by-row values.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\wedge$: F,F,F,T; $\vee$: F,T,T,T; $\Rightarrow$: T,T,F,T (for FF,FT,TF,TT).
-> > - **Technical Justification:** **TT row** ➔ $\vee$ gives T, $\oplus$ gives F — the sole distinguishing row.
+> > - **Short answer:** $\wedge$: F,F,F,T; $\vee$: F,T,T,T; $\Rightarrow$: T,T,F,T (for FF,FT,TF,TT).
+> > - **Why:** **TT row** ➔ $\vee$ gives T, $\oplus$ gives F — the sole distinguishing row.
 
 > [!FAQ]- How do $\wedge,\vee,\neg$ correspond to set operations, and what does the correspondence buy you?
-> - **Core Insight Requirement:** Logic ↔ set algebra.
+> - **Hint:** Logic ↔ set algebra.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\wedge$ = intersection, $\vee$ = union, $\neg$ = complement (via "$x\in A$").
-> > - **Technical Justification:** **Law transfer** ➔ every set law (De Morgan, distributive, double complement) has an identical logical form, so results move freely between sets and logic.
+> > - **Short answer:** $\wedge$ = intersection, $\vee$ = union, $\neg$ = complement (via "$x\in A$").
+> > - **Why:** **Law transfer** ➔ every set law (De Morgan, distributive, double complement) has an identical logical form, so results move freely between sets and logic.

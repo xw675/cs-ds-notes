@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 4
 parent: "[[Abstract Classes (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [interface, implements, default method, realization, multiple inheritan
 # [[Interfaces (Java)]]
 
 **Context:** [[FIT2099_MOC]] · a **pure** contract — a capability a class promises to provide · escapes single-inheritance to enable [[Polymorphism (Java)|polymorphism]] across unrelated classes
-**Task signature:** declare *what* a class must be able to do (fly, swim, compare) without dictating *how*, and let any class opt in.
+**Problem it solves:** declare *what* a class must be able to do (fly, swim, compare) without dictating *how*, and let any class opt in.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** you need a **capability** many unrelated classes can share (or a class needs "more than one type") ➔ define an interface and **implement** it.
-> - **⚡ Critical Bottleneck:** a class `extends` **one** class but `implements` **many** interfaces — this is Java's answer to multiple inheritance (of *type*, not state); every abstract interface method **must** be implemented.
+> - **⚡ Key Constraint:** a class `extends` **one** class but `implements` **many** interfaces — this is Java's answer to multiple inheritance (of *type*, not state); every abstract interface method **must** be implemented.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -68,8 +69,8 @@ classDiagram
 
 - **Default method** ➔ (Java 8+) `default void show() { ... }` gives an interface a *concrete* method, adding functionality **without breaking** existing implementers (aka "defender" / "virtual extension" method).
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Define a `Comparable`-style interface `Rankable` with `int rank()`. Make `Player` implement it. Why prefer an interface here over extending a `Rankable` base class?
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Define a `Comparable`-style interface `Rankable` with `int rank()`. Make `Player` implement it. Why prefer an interface here over extending a `Rankable` base class?
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > interface Rankable { int rank(); }
@@ -81,7 +82,7 @@ classDiagram
 > > ```
 > > - **Key move:** `Player` already `extends Character`; an interface adds the `Rankable` capability **without** consuming its single `extends` slot.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`implements` vs `extends`** ➔ classes `implement` interfaces; an interface can itself `extend` other interfaces — mixing the keywords won't compile.
 - 💡 **No instance state** ➔ interfaces can't hold ordinary (non-static, non-final) attributes or constructors — they're contracts, not objects.
 - 💡 **Why interfaces** ➔ abstraction + runtime dynamic dispatch + **loose coupling**: they separate a method's *definition* from the inheritance hierarchy, so unrelated classes share a type.

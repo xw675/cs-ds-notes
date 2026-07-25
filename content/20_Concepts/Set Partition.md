@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 1
 parent: "[[Set (Mathematics)]]"
 tags: [Math/SetTheory, Math/Combinatorics, Math/Discrete]
 ---
@@ -10,7 +11,7 @@ tags: [Math/SetTheory, Math/Combinatorics, Math/Discrete]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** carve $A$ into nonempty disjoint parts whose union is $A$ ➔ each element in exactly one part.
 > - **📦 Core Components:** nonempty ➔ pairwise disjoint ➔ covering ➔ coarsest/finest.
-> - **⚡ Critical Bottleneck:** counted by **Bell numbers** $B_n$; correspond to equivalence relations.
+> - **⚡ Key Constraint:** counted by **Bell numbers** $B_n$; correspond to equivalence relations.
 
 ## 📝 Core
 ### 1. The Partition (Three Conditions)
@@ -40,7 +41,7 @@ $$\{\{a,b,c\}\},\ \{\{a,b\},\{c\}\},\ \{\{a,c\},\{b\}\},\ \{\{b,c\},\{a\}\},\ \{
 | coarsest partition | one block | 1 |
 | finest partition | all singletons | 1 |
 
-> [!NOTE] **Crossover Invariant:** partitions correspond exactly to **equivalence relations** on $A$ (each part = an equivalence class). A partition is a *restricted* subcollection of $\mathcal P(A)$, so $B_n\ll 2^n$ but still grows super-exponentially.
+> [!NOTE] **When It Flips:** partitions correspond exactly to **equivalence relations** on $A$ (each part = an equivalence class). A partition is a *restricted* subcollection of $\mathcal P(A)$, so $B_n\ll 2^n$ but still grows super-exponentially.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ Partitions of $\{1,2,3\}$ by block count:
 | 2 | 2 | $\{\{1,2\},\{3\}\},\{\{1,3\},\{2\}\},\{\{2,3\},\{1\}\}$ |
 | 3 | 3 | $\{\{1\},\{2\},\{3\}\}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Each element in exactly one part** ➔ $\{\{a,b\},\{c\},\emptyset\}$ fails (1); $\{\{a,b\},\{b,c\}\}$ fails (2); $\{\{a\},\{b\}\}$ fails (3).
 
 ## 🧠 Active Recall
 > [!FAQ]- State the three conditions for a partition and a counter-example violating each ($A=\{a,b,c\}$).
-> - **Core Insight Requirement:** Nonempty / disjoint / covering.
+> - **Hint:** Nonempty / disjoint / covering.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\{\{a,b\},\{c\},\emptyset\}$ breaks nonempty; $\{\{a,b\},\{b,c\}\}$ breaks disjoint; $\{\{a\},\{b\}\}$ breaks covering.
-> > - **Technical Justification:** **Exactly one** ➔ all three hold iff each element is in exactly one part.
+> > - **Short answer:** $\{\{a,b\},\{c\},\emptyset\}$ breaks nonempty; $\{\{a,b\},\{b,c\}\}$ breaks disjoint; $\{\{a\},\{b\}\}$ breaks covering.
+> > - **Why:** **Exactly one** ➔ all three hold iff each element is in exactly one part.
 
 > [!FAQ]- How many partitions does a 3-element set have, and what counts partitions in general?
-> - **Core Insight Requirement:** Bell numbers.
+> - **Hint:** Bell numbers.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** 5 partitions of a 3-set; in general the Bell number $B_n$ ($1,2,5,15,52,\dots$).
-> > - **Technical Justification:** **Smaller than $2^n$** ➔ partitions are a restricted subcollection of subsets.
+> > - **Short answer:** 5 partitions of a 3-set; in general the Bell number $B_n$ ($1,2,5,15,52,\dots$).
+> > - **Why:** **Smaller than $2^n$** ➔ partitions are a restricted subcollection of subsets.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relation (Database)]]"
 tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** super key uniquely identifies a tuple; candidate key is a minimal super key ➔ the PK pool.
 > - **📦 Core Components:** super key (unique) ➔ candidate key (unique + minimal) ➔ primary/alternate.
-> - **⚡ Critical Bottleneck:** minimality is the discriminator — every CK is a super key, not vice versa.
+> - **⚡ Key Constraint:** minimality is the discriminator — every CK is a super key, not vice versa.
 
 ## 📝 Core
 ### 1. The Two Keys
@@ -40,7 +41,7 @@ $$\text{candidate keys (minimal)}: \{\text{StudentID}\}, \{\text{Email}\}$$
 | $\{$StudentID, Name$\}$ | yes | no | super key only |
 | $\{$Name$\}$ | no | — | not a key |
 
-> [!NOTE] **Crossover Invariant:** keys are maximal [[Functional Dependency|functional dependencies]] — a super key determines all attributes, a CK is a minimal determinant. Design procedure: super keys → candidate keys → [[Primary Key]]. Minimality echoes the FIT1058 [[Subset and Superset|minimal-set]] idea.
+> [!NOTE] **When It Flips:** keys are maximal [[Functional Dependency|functional dependencies]] — a super key determines all attributes, a CK is a minimal determinant. Design procedure: super keys → candidate keys → [[Primary Key]]. Minimality echoes the FIT1058 [[Subset and Superset|minimal-set]] idea.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ Classifying STUDENT sets:
 | 2 | $\{$StudentID, Email$\}$ | super key (not minimal) |
 | 3 | $\{$Email$\}$ | candidate key |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **The full attribute set is always a super key** ➔ tuples are unique ([[Relation Properties]]); candidate keys are only the *minimal* ones.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish a super key from a candidate key, with the STUDENT example.
-> - **Core Insight Requirement:** Minimality.
+> - **Hint:** Minimality.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Super key = uniquely identifies; candidate key = minimal super key; STUDENT CKs are $\{$StudentID$\}$, $\{$Email$\}$.
-> > - **Technical Justification:** **Redundant attribute** ➔ any other super key contains a droppable attribute.
+> > - **Short answer:** Super key = uniquely identifies; candidate key = minimal super key; STUDENT CKs are $\{$StudentID$\}$, $\{$Email$\}$.
+> > - **Why:** **Redundant attribute** ➔ any other super key contains a droppable attribute.
 
 > [!FAQ]- What is the relationship between candidate, primary, and alternate keys?
-> - **Core Insight Requirement:** Choose one CK.
+> - **Hint:** Choose one CK.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** One candidate key becomes the primary key; the rest become alternate keys.
-> > - **Technical Justification:** **Desirable-key criteria** ➔ the PK is picked by unique/stable/single/numeric.
+> > - **Short answer:** One candidate key becomes the primary key; the rest become alternate keys.
+> > - **Why:** **Desirable-key criteria** ➔ the PK is picked by unique/stable/single/numeric.

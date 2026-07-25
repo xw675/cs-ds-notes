@@ -8,9 +8,9 @@ Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit
 
 ## 📅 Year 1 — Semester 1
 
+- [[FIT1047_MOC|📘 FIT1047 — Introduction to Computer Systems, Networks and Security]] · MARIE, Boolean logic, OS, networks, security → [[FIT1047 Unit Cheatsheet|📄 Cheatsheet]]
 - [[FIT1058_MOC|📘 FIT1058 — Foundations of Computing]] · discrete maths, logic, proofs, combinatorics, number theory, graphs → [[FIT1058 Unit Cheatsheet|📄 Cheatsheet]]
 - [[FIT1043_MOC|📘 FIT1043 — Introduction to Data Science]] · DS lifecycle, pandas, models, Big Data, ethics → [[FIT1043 Unit Cheatsheet|📄 Cheatsheet]]
-- [[FIT1047_MOC|📘 FIT1047 — Computer Systems, Networks & Security]] · MARIE, Boolean logic, OS, networks, security → [[FIT1047 Unit Cheatsheet|📄 Cheatsheet]]
 
 ## 📅 Year 1 — Semester 2
 
@@ -20,10 +20,10 @@ Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit
 
 ## 📅 Year 2 — Semester 1
 
-- [[FIT2014_MOC|📘 FIT2014 — Theory of Computation]]
-- [[FIT2086_MOC|📘 FIT2086 — Modelling for Data Analysis]]
-- [[FIT2004_MOC|📘 FIT2004 — Algorithms and Data Structures]]
-- FIT3003
+- [[FIT2004_MOC|📘 FIT2004 — Algorithms and Data Structures]] · dynamic programming, greedy algorithms, graph algorithms, network flows, string matching
+- [[FIT2014_MOC|📘 FIT2014 — Theory of Computation]] · automata theory, regular expressions, grammars, Turing machines, decidability
+- [[FIT2086_MOC|📘 FIT2086 — Modelling for Data Analysis]] · probability, distributions, statistical inference, hypothesis testing, regression
+- [[FIT3003_MOC|📘 FIT3003 — Business Intelligence and Data Warehousing]] · data warehousing, dimensional modelling, star schemas, ETL, OLAP
 
 ## 🧰 Toolkit Cheatsheets
 

@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 1
 parent: "[[Java Program Structure]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [if-else, ternary, switch, for loop, while loop, for-each]
 # [[Java Control Flow (Conditionals and Loops)]]
 
 **Context:** [[FIT2099_MOC]] · make decisions and repeat work in a [[Java Program Structure|Java method]] · branch (if/switch) and loop (while/for)
-**Task signature:** choose a branch by condition, or repeat a block a known or unknown number of times.
+**Problem it solves:** choose a branch by condition, or repeat a block a known or unknown number of times.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** decide → if/else, ternary, or switch; repeat → for/for-each (count known) or while/do-while (count unknown).
-> - **⚡ Critical Bottleneck:** `switch` cases **fall through** without `break`; `while` loops need the loop variable **updated** or they run forever.
+> - **⚡ Key Constraint:** `switch` cases **fall through** without `break`; `while` loops need the loop variable **updated** or they run forever.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -41,8 +42,8 @@ switch (operator) {
 - **for vs for-each** ➔ `for (int i = 0; i < xs.length; i++)` when you need the **index**; `for (String s : xs)` to just visit each element.
 - **do-while** ➔ runs the body **before** testing — ideal for "keep asking until valid input".
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Print every divisor of 100 (numbers that divide it evenly), using a `for` loop.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Print every divisor of 100 (numbers that divide it evenly), using a `for` loop.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > int number = 100;
@@ -52,7 +53,7 @@ switch (operator) {
 > > ```
 > > - **Key move:** `for` bundles init/condition/update in one line, so the loop variable can't be forgotten.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Missing `break` = fall-through** ➔ without `break`, a matched `case` runs into every case below it.
 - 💡 **Infinite `while`** ➔ forget to update the loop variable (`i++`) and the condition never becomes false.
 - 💡 **Which loop?** ➔ count known ➔ `for`/`for-each`; count unknown (wait for a condition) ➔ `while`/`do-while`.

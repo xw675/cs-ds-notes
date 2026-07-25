@@ -11,7 +11,7 @@ aliases: [FIT1058 Exam Crib, Discrete Maths Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** match the claim's logical SHAPE to a formula or proof blueprint ➔ derive in $\begin{aligned}$ blocks, seal with Q.E.D.
-> - **⚡ Critical Bottleneck:** hypothesis discipline — every rule here has a precondition (disjointness, independence, coprimality, connectedness); marks die when a rule fires without its hypothesis.
+> - **⚡ Key Constraint:** hypothesis discipline — every rule here has a precondition (disjointness, independence, coprimality, connectedness); marks die when a rule fires without its hypothesis.
 
 ## 1️⃣ Logic
 - **Proposition** ➔ exactly one truth value (bivalence); questions/commands/self-reference are NOT propositions.

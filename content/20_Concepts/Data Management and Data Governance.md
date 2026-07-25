@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 11
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/DataManagement, DataScience/Governance, Monash/CS_DS]
 aliases: [Data Management, Data Governance, DAMA]
@@ -11,9 +12,9 @@ aliases: [Data Management, Data Governance, DAMA]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** manage and govern data as a valuable asset ➔ management = the **internal lifecycle**; governance = **external usage/value**.
 > - **📦 Core Components:** management (plans/policies/practices over the lifecycle) | governance (access, protection, compliance, usage).
-> - **⚡ Critical Bottleneck:** the exam split — **data management = internal data lifecycle**; **data governance = usage/value with legal & ethical considerations**.
+> - **⚡ Key Constraint:** the exam split — **data management = internal data lifecycle**; **data governance = usage/value with legal & ethical considerations**.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Why Manage Data
 - **Value** ➔ data is valuable; collection is time-consuming and hard.
 - **Scale** ➔ large volumes generated at high growth rate, from **multiple sources** (business docs, **ERP** systems).
@@ -35,10 +36,10 @@ aliases: [Data Management, Data Governance, DAMA]
 | **Concern** | store, protect, deliver, enhance value | access, protection, compliance, accountability |
 | **Question** | *how do we handle the data?* | *who may use it, and under what rules?* |
 
-> [!NOTE] **Crossover Invariant:** the two are complementary — management runs the lifecycle **inside** the organisation; governance decides **who uses the data and how**, balancing business value against legal/ethical constraints (the "conflicting objectives").
+> [!NOTE] **When It Flips:** the two are complementary — management runs the lifecycle **inside** the organisation; governance decides **who uses the data and how**, balancing business value against legal/ethical constraints (the "conflicting objectives").
 
 ## 🧠 Active Recall
 > [!FAQ]- Differentiate data management from data governance (internal vs external perspective).
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Data management is the management of the internal data **lifecycle** (architectures, policies, practices to control/protect/deliver/enhance value); data governance focuses on **usage** — access, protection, compliance, and accountability — to maximise business value within legal/ethical limits.
-> > - **Technical Justification:** **Lifecycle vs value chain** ➔ management is inward (handling the data); governance is outward (who uses it and under what rules).
+> > - **Short answer:** Data management is the management of the internal data **lifecycle** (architectures, policies, practices to control/protect/deliver/enhance value); data governance focuses on **usage** — access, protection, compliance, and accountability — to maximise business value within legal/ethical limits.
+> > - **Why:** **Lifecycle vs value chain** ➔ management is inward (handling the data); governance is outward (who uses it and under what rules).

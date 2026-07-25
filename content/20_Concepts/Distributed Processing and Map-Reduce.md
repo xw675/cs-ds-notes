@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 10
 parent: "[[Big Data and the Vs]]"
 tags: [DataScience/BigData, DataScience/DistributedProcessing, Monash/CS_DS]
 aliases: [Distributed Processing, Map-Reduce, MapReduce, Batch, Streaming]
@@ -11,9 +12,9 @@ aliases: [Distributed Processing, Map-Reduce, MapReduce, Batch, Streaming]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** scale computation by splitting it across machines ➔ Map-Reduce = data-parallel **map** then a **reduce** (merge).
 > - **📦 Core Components:** processing modes (interactive / streaming / batch) | data-parallel map | key-based reduce.
-> - **⚡ Critical Bottleneck:** it only works when the work is **data-parallel** — independent chunks that can be processed separately, then merged.
+> - **⚡ Key Constraint:** it only works when the work is **data-parallel** — independent chunks that can be processed separately, then merged.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Processing Modes
 - **Interactive** ➔ humans in the loop.
 - **Streaming** ➔ massive data flows **through** the system with little storage (real-time).
@@ -43,15 +44,15 @@ aliases: [Distributed Processing, Map-Reduce, MapReduce, Batch, Streaming]
 
 **Final Extracted Output:** per-word counts, computed data-parallel then merged — scales to huge corpora on commodity machines.
 
-> [!NOTE] **Crossover Invariant:** streaming vs batch is the axis behind [[Hadoop and Spark]] — Netflix's pipeline handles **~500 billion events / 1.3 PB per day** (≈8M events/sec at peak) by **streaming** (Kafka + Spark), not overnight batch.
+> [!NOTE] **When It Flips:** streaming vs batch is the axis behind [[Hadoop and Spark]] — Netflix's pipeline handles **~500 billion events / 1.3 PB per day** (≈8M events/sec at peak) by **streaming** (Kafka + Spark), not overnight batch.
 
 ## 🧠 Active Recall
 > [!FAQ]- Walk through Map-Reduce on a word-count task, and state its precondition.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Divide the text across machines; `map` emits `(word, 1)` pairs; sort/shuffle groups identical keys; `reduce` sums the counts per word. Precondition: the work must be **data-parallel** (independent chunks).
-> > - **Technical Justification:** **Map (parallel) + reduce (merge)** ➔ independent mapping scales horizontally, then a keyed merge combines partial results.
+> > - **Short answer:** Divide the text across machines; `map` emits `(word, 1)` pairs; sort/shuffle groups identical keys; `reduce` sums the counts per word. Precondition: the work must be **data-parallel** (independent chunks).
+> > - **Why:** **Map (parallel) + reduce (merge)** ➔ independent mapping scales horizontally, then a keyed merge combines partial results.
 
 > [!FAQ]- Distinguish batch, streaming, and interactive processing.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Batch stores data and analyses it in large blocks (offline); streaming processes a massive flow in real time with little storage; interactive brings a human into the loop.
-> > - **Technical Justification:** **Storage vs latency** ➔ batch trades latency for simplicity; streaming trades storage for real-time results.
+> > - **Short answer:** Batch stores data and analyses it in large blocks (offline); streaming processes a massive flow in real time with little storage; interactive brings a human into the loop.
+> > - **Why:** **Storage vs latency** ➔ batch trades latency for simplicity; streaming trades storage for real-time results.

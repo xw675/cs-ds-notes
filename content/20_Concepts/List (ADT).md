@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: [3, 4, 5]
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** ordered, any-position collection ➔ the general linear ADT; stacks/queues are one-end-restricted cases.
 > - **📦 Core Components:** **Contract** ➔ `__getitem__`/`insert`/`delete_at_index` | **ArrayList** ➔ $O(1)$ access, $O(n)$ shift | **LinkList** ➔ $O(1)$ relink, $O(n)$ walk | **LinkListIterator** ➔ $O(1)$ mutate-in-traversal.
-> - **⚡ Critical Bottleneck:** array vs linked are **mirror images** ➔ bottleneck = whichever of *random access* vs *structural edit* the workload hits.
+> - **⚡ Key Constraint:** array vs linked are **mirror images** ➔ bottleneck = whichever of *random access* vs *structural edit* the workload hits.
 
 ## 📝 Core
 ### 1. List Contract (Ordered, Positional)
@@ -51,7 +52,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >             if item == self.array[k]: return k
 >         raise ValueError
 > ```
-> 💡 **Exam Pitfall:** **`append` is amortised $O(1)$** ([[Dynamic Array Resizing]]); a *gap buffer* (array + movable gap) is the hybrid giving localised-edit $O(1)$ while keeping $O(1)$ random access.
+> 💡 **Common Mistake:** **`append` is amortised $O(1)$** ([[Dynamic Array Resizing]]); a *gap buffer* (array + movable gap) is the hybrid giving localised-edit $O(1)$ while keeping $O(1)$ random access.
 
 ### 🔹 LinkList — $O(1)$ relink, $O(n)$ walk
 > [!code]- `LinkList(List[T])`
@@ -74,7 +75,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >             prev.link = new                         # 2. prev -> new (order matters!)
 >         self.length += 1
 > ```
-> 💡 **Exam Pitfall:** **Reverse the two assignments = tail leak** ➔ `prev.link` is overwritten before `X` captures the rest; a **sentinel head** removes the `index == 0` special-case.
+> 💡 **Common Mistake:** **Reverse the two assignments = tail leak** ➔ `prev.link` is overwritten before `X` captures the rest; a **sentinel head** removes the `index == 0` special-case.
 
 ### 🔹 LinkListIterator — mutate while traversing
 > [!code]- `LinkListIterator` (modifying) + `__iter__`
@@ -99,7 +100,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >
 > def __iter__(self): return LinkListIterator(self)   # pass the LIST, so it can mutate head/length
 > ```
-> 💡 **Exam Pitfall:** **Modifying iterator needs `previous` + the list** ➔ to rewire the predecessor and reset `head`/`length` when the first node goes; a read-only iterator needs only `current`.
+> 💡 **Common Mistake:** **Modifying iterator needs `previous` + the list** ➔ to rewire the predecessor and reset `head`/`length` when the first node goes; a read-only iterator needs only `current`.
 
 ## ⚖️ Core Decision Matrix
 | Operation | **ArrayList** | **LinkList** | Cause |
@@ -111,7 +112,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 | `index` (search) | $O(n\cdot\text{comp})$ | $O(n\cdot\text{comp})$ | linear scan either way |
 | memory / locality | contiguous, cache-friendly | $+1$ pointer/node, scattered | — |
 
-> [!NOTE] **Crossover Invariant:** array = $O(1)$ access / $O(n)$ edit; linked = the exact inverse ➔ choose **array** for index-heavy/read-heavy, **linked** for frequent insert/delete at known positions. In-place delete = $O(1)$ (LinkListIterator relink) vs $O(n)$ (ArrayList shift).
+> [!NOTE] **When It Flips:** array = $O(1)$ access / $O(n)$ edit; linked = the exact inverse ➔ choose **array** for index-heavy/read-heavy, **linked** for frequent insert/delete at known positions. In-place delete = $O(1)$ (LinkListIterator relink) vs $O(n)$ (ArrayList shift).
 
 ## 📊 Exam Execution Trace
 
@@ -141,25 +142,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Array-backed and linked-backed lists implement the same ADT — give random-access and head-insertion costs and the design rule.
-> - **Core Insight Requirement:** Recognise the mirror-image cost profile.
+> - **Hint:** Recognise the mirror-image cost profile.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Array** $O(1)$ access / $O(n)$ head insert; **Linked** $O(n)$ access / $O(1)$ head insert.
-> > - **Technical Justification:** **Opposite optimisation** ➔ array for index-heavy/read-heavy, linked for frequent insert/delete at known positions.
+> > - **Short answer:** **Array** $O(1)$ access / $O(n)$ head insert; **Linked** $O(n)$ access / $O(1)$ head insert.
+> > - **Why:** **Opposite optimisation** ➔ array for index-heavy/read-heavy, linked for frequent insert/delete at known positions.
 
 > [!FAQ]- Why is `remove(item)` $\Theta(N)$ for an ArrayList regardless of position?
-> - **Core Insight Requirement:** Decompose into `index` + `delete_at_index`.
+> - **Hint:** Decompose into `index` + `delete_at_index`.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** One of the two components is always $\Theta(N)$ ➔ sum $\Theta(N)$.
-> > - **Technical Justification:** **Complementary costs** ➔ head item = cheap `index` + full shift; end item = full scan + $O(1)$ delete.
+> > - **Short answer:** One of the two components is always $\Theta(N)$ ➔ sum $\Theta(N)$.
+> > - **Why:** **Complementary costs** ➔ head item = cheap `index` + full shift; end item = full scan + $O(1)$ delete.
 
 > [!FAQ]- In LinkList `insert` at index > 0, why must the assignments be new→rest then prev→new?
-> - **Core Insight Requirement:** Preserve the reference to the tail.
+> - **Hint:** Preserve the reference to the tail.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Point `new.link = prev.link` **while `prev.link` still references the rest**, then `prev.link = new`.
-> > - **Technical Justification:** **Order dependence** ➔ reversing overwrites `prev.link` first, leaking everything after the insertion point.
+> > - **Short answer:** Point `new.link = prev.link` **while `prev.link` still references the rest**, then `prev.link = new`.
+> > - **Why:** **Order dependence** ➔ reversing overwrites `prev.link` first, leaking everything after the insertion point.
 
 > [!FAQ]- Mid-traversal delete is $O(1)$ via LinkListIterator but $O(n)$ in an ArrayList — and how does that differ from a fail-fast iterator?
-> - **Core Insight Requirement:** Relink vs shift, and forbid vs provide mutation.
+> - **Hint:** Relink vs shift, and forbid vs provide mutation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Linked delete = relink `previous.link` ($O(1)$); array delete = shift later elements ($O(n)$).
-> > - **Technical Justification:** **Forbid vs engineer** ➔ a fail-fast iterator *raises* on modification; a modifying iterator *supports* controlled $O(1)$ mutation.
+> > - **Short answer:** Linked delete = relink `previous.link` ($O(1)$); array delete = shift later elements ($O(n)$).
+> > - **Why:** **Forbid vs engineer** ➔ a fail-fast iterator *raises* on modification; a modifying iterator *supports* controlled $O(1)$ mutation.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 2
 parent: "[[Data Science]]"
 tags: [DataScience/Foundations, DataScience/Business, Monash/CS_DS]
 aliases: [Data Business Models, Information Broker, Information Provider]
@@ -10,7 +11,7 @@ aliases: [Data Business Models, Information Broker, Information Provider]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** classify how a data business makes money ➔ four data-specific models plus the traditional IT ones.
-> - **⚡ Critical Bottleneck:** many DS firms reuse traditional IT models (SaaS/consulting/CRM); only **four** models are genuinely unique to the data world.
+> - **⚡ Key Constraint:** many DS firms reuse traditional IT models (SaaS/consulting/CRM); only **four** models are genuinely unique to the data world.
 
 ## 📝 Core
 - **Business model** ➔ the rationale of how an organisation **creates, delivers, and captures value** (economic/social/cultural).
@@ -30,12 +31,12 @@ aliases: [Data Business Models, Information Broker, Information Provider]
 | **Info-based delivery network** | deliver data for others | Reuters |
 | **Information provider** | sell data it collects | Nielsen |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Most DS firms aren't novel business-wise** ➔ they run traditional IT models (SaaS/consulting/CRM); only the four above are unique to data.
 - 💡 **One firm can span models** ➔ Amazon is both differentiation *and* a delivery network; classify by the value move, not the company.
 
 ## 🧠 Active Recall
 > [!FAQ]- Name the four data-specific business models and place Amazon.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Information brokering, information-based differentiation, information-based delivery network, information provider. Amazon = differentiation (superior reviews/range) plus a delivery network (routing customers to marketplace sellers).
-> > - **Technical Justification:** **Create/deliver/capture value** ➔ each model differs in *how* the data itself is monetised.
+> > - **Short answer:** Information brokering, information-based differentiation, information-based delivery network, information provider. Amazon = differentiation (superior reviews/range) plus a delivery network (routing customers to marketplace sellers).
+> > - **Why:** **Create/deliver/capture value** ➔ each model differs in *how* the data itself is monetised.

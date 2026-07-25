@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 1
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Constructor, this keyword, Declaration Instantiation Initialisation]
 # [[Java Constructors]]
 
 **Context:** [[FIT2099_MOC]] · how an [[OOP Building Blocks (Class, Object, Field, Method)|object]] is built and initialised · runs on `new` · sets the [[Java Data Types, Casting and References|fields]]
-**Task signature:** create an object and initialise its fields, optionally offering several ways to construct it.
+**Problem it solves:** create an object and initialise its fields, optionally offering several ways to construct it.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** need to build/initialise an object ➔ define a constructor (same name as the class, **no return type**).
-> - **⚡ Critical Bottleneck:** a constructor runs **every time** you `new` an object; if you write none, Java gives a **default zero-argument** one that does nothing.
+> - **⚡ Key Constraint:** a constructor runs **every time** you `new` an object; if you write none, Java gives a **default zero-argument** one that does nothing.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -39,8 +40,8 @@ CoffeeMachine nespresso = new CoffeeMachine("Nespresso"); // calls #2
 - **The three D's** ➔ **Declaration** (`Integer x;` — name + type), **Instantiation** (`new Integer(42)` — build the object), **Initialisation** (assign it: `x = new Integer(42)`).
 - **All in one line** ➔ `Integer theAnswer = new Integer(42);`.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: A `Student` has a `name` and an `id`. Provide a no-arg constructor and one that sets both fields.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: A `Student` has a `name` and an `id`. Provide a no-arg constructor and one that sets both fields.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > class Student {
@@ -55,6 +56,6 @@ CoffeeMachine nespresso = new CoffeeMachine("Nespresso"); // calls #2
 > > ```
 > > - **Key move:** overloaded constructors; `this.field = param` to store the arguments.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **No return type on a constructor** ➔ writing `void CoffeeMachine()` makes it a *method*, not a constructor — the object won't initialise as expected.
 - 💡 **Declared but not initialised = crash/error** ➔ `Integer x; System.out.println(x);` fails ("might not have been initialized"); declaration alone reserves the name, not a value.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 4
 parent: "[[Normalisation]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 aliases: [2NF]
@@ -11,7 +12,7 @@ aliases: [2NF]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** 1NF with no partial dependencies ➔ every non-key fully depends on any candidate key.
 > - **📦 Core Components:** remove partial deps ➔ new relation + FK ➔ list transitive deps.
-> - **⚡ Critical Bottleneck:** general (candidate-key) definition; single-attribute key ⟹ already 2NF.
+> - **⚡ Key Constraint:** general (candidate-key) definition; single-attribute key ⟹ already 2NF.
 
 ## 📝 Core
 ### 1. The 2NF Condition
@@ -27,7 +28,7 @@ aliases: [2NF]
 - **Example** ➔ $\text{cat\_code}\to\text{cat\_name}$ in PART.
 - **Removed at** ➔ [[Third Normal Form (3NF)|3NF]].
 
-> [!NOTE] **Crossover Invariant:** partial dependencies are judged against **any** candidate key (general definition), not only the chosen PK. The ENROLMENT example produced two new relations (STUDENT, UNIT) from two partial dependencies.
+> [!NOTE] **When It Flips:** partial dependencies are judged against **any** candidate key (general definition), not only the chosen PK. The ENROLMENT example produced two new relations (STUDENT, UNIT) from two partial dependencies.
 
 ## 📊 Exam Execution Trace
 
@@ -42,18 +43,18 @@ $$
 $$
 **Final Extracted Output:** VENDOR spun off; vendor_no remains as FK — RESTOCK now 2NF.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Single-attribute keys are automatically 2NF** ➔ no "part" to depend on; PART (key part_no) had no partial dependency and is unchanged.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the 2NF condition (general definition) and the 1NF→2NF steps.
-> - **Core Insight Requirement:** Full dependence on a candidate key.
+> - **Hint:** Full dependence on a candidate key.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** 1NF + every non-key fully depends on any candidate key (no partial deps); move each partial dep to a new relation, leave an FK.
-> > - **Technical Justification:** **Candidate keys** ➔ the general definition, not just the PK.
+> > - **Short answer:** 1NF + every non-key fully depends on any candidate key (no partial deps); move each partial dep to a new relation, leave an FK.
+> > - **Why:** **Candidate keys** ➔ the general definition, not just the PK.
 
 > [!FAQ]- Why does a single-attribute-key relation automatically satisfy 2NF, and what do you list at 2NF?
-> - **Core Insight Requirement:** No "part" of a single key.
+> - **Hint:** No "part" of a single key.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** With one key attribute there's no part to depend on ⟹ no partial dependency; list all transitive dependencies.
-> > - **Technical Justification:** **3NF removes them** ➔ e.g. $\text{cat\_code}\to\text{cat\_name}$.
+> > - **Short answer:** With one key attribute there's no part to depend on ⟹ no partial dependency; list all transitive dependencies.
+> > - **Why:** **3NF removes them** ➔ e.g. $\text{cat\_code}\to\text{cat\_name}$.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 3
 parent: "[[Higher-Order Function]]"
 tags: [OOP/Python, CS/DataStructures]
 ---
@@ -10,7 +11,7 @@ tags: [OOP/Python, CS/DataStructures]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build a new list with set-builder syntax [expr for x in iterable if cond] ➔ Python's declarative map/filter.
 > - **📦 Core Components:** transform (`expr`) + optional filter (`if`) ➔ nests.
-> - **⚡ Critical Bottleneck:** $O(n)$ time, **$O(n)$ memory** (materialises) — the [[Generator Expression|generator]] is the $O(1)$-memory lazy alternative.
+> - **⚡ Key Constraint:** $O(n)$ time, **$O(n)$ memory** (materialises) — the [[Generator Expression|generator]] is the $O(1)$-memory lazy alternative.
 
 ## 📝 Core
 ### 1. The Comprehension (Set-Builder Syntax)
@@ -30,7 +31,7 @@ tags: [OOP/Python, CS/DataStructures]
 > list(map(f, filter(p, xs)))          # HOF form — same result
 > (f(x) for x in xs if p(x))           # GENERATOR expr — lazy, O(1) space, single-pass
 > ```
-> 💡 **Exam Pitfall:** **All three are $O(n)$ *time*** ➔ the comprehension uses $O(n)$ memory (materialised, reusable, indexable), the [[Generator Expression]] $O(1)$ (lazy, single-pass) — pick the generator when you iterate once or the source is huge.
+> 💡 **Common Mistake:** **All three are $O(n)$ *time*** ➔ the comprehension uses $O(n)$ memory (materialised, reusable, indexable), the [[Generator Expression]] $O(1)$ (lazy, single-pass) — pick the generator when you iterate once or the source is huge.
 
 ## ⚖️ Core Decision Matrix
 | Form | Time | Space | When |
@@ -39,7 +40,7 @@ tags: [OOP/Python, CS/DataStructures]
 | [[Generator Expression]] | $O(n)$ | $O(1)$ | single pass / huge or infinite source |
 | explicit `for` loop | $O(n)$ | $O(n)$ | side effects, complex control flow |
 
-> [!NOTE] **Crossover Invariant:** comprehensions are concise and faster than an equivalent `append` loop (C-optimised list-building) but materialise everything; deeply nested comprehensions hurt readability — fall back to loops.
+> [!NOTE] **When It Flips:** comprehensions are concise and faster than an equivalent `append` loop (C-optimised list-building) but materialise everything; deeply nested comprehensions hurt readability — fall back to loops.
 
 ## 📊 Exam Execution Trace
 
@@ -65,19 +66,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the same transform as a list comprehension and a generator expression, and state when each is correct.
-> - **Core Insight Requirement:** Materialise vs stream.
+> - **Hint:** Materialise vs stream.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `[f(x) for x in xs if p(x)]` vs `(f(x) for x in xs if p(x))`; both $O(n)$ time.
-> > - **Technical Justification:** **Reuse vs one-pass** ➔ comprehension when you index/reuse/`len`; generator when you iterate once or the source is huge/infinite ($O(1)$ memory).
+> > - **Short answer:** `[f(x) for x in xs if p(x)]` vs `(f(x) for x in xs if p(x))`; both $O(n)$ time.
+> > - **Why:** **Reuse vs one-pass** ➔ comprehension when you index/reuse/`len`; generator when you iterate once or the source is huge/infinite ($O(1)$ memory).
 
 > [!FAQ]- How does a comprehension relate to `map`/`filter`, and why is it usually preferred in Python?
-> - **Core Insight Requirement:** Same semantics, better readability.
+> - **Hint:** Same semantics, better readability.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `[f(x) for x in xs if p(x)]` = `map(f, filter(p, xs))` materialised.
-> > - **Technical Justification:** **Left-to-right + no lambda** ➔ reads in one expression, avoids lambda overhead; `map`/`filter` win when `f`/`p` are named and laziness is wanted.
+> > - **Short answer:** `[f(x) for x in xs if p(x)]` = `map(f, filter(p, xs))` materialised.
+> > - **Why:** **Left-to-right + no lambda** ➔ reads in one expression, avoids lambda overhead; `map`/`filter` win when `f`/`p` are named and laziness is wanted.
 
 > [!FAQ]- When should you *not* use a comprehension and use a plain loop instead?
-> - **Core Insight Requirement:** Side effects / complex control.
+> - **Hint:** Side effects / complex control.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** For side effects (printing, mutating external state), complex control flow (break, try/except, accumulation), or unreadable nesting.
-> > - **Technical Justification:** **Purpose-built** ➔ comprehensions build a collection by transform/filter; everything else is clearer as a loop.
+> > - **Short answer:** For side effects (printing, mutating external state), complex control flow (break, try/except, accumulation), or unreadable nesting.
+> > - **Why:** **Purpose-built** ➔ comprehensions build a collection by transform/filter; everything else is clearer as a loop.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Divisibility]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** an integer $>1$ with no proper divisors ➔ the multiplicative atoms of $\mathbb N$.
 > - **📦 Core Components:** proper divisor ➔ prime vs composite ➔ existence of prime factorisation.
-> - **⚡ Critical Bottleneck:** existence (strong induction) is separate from **uniqueness** (Fundamental Theorem).
+> - **⚡ Key Constraint:** existence (strong induction) is separate from **uniqueness** (Fundamental Theorem).
 
 ## 📝 Core
 ### 1. The Definition
@@ -36,7 +37,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 | factorisation | product of primes | hardest |
 | $\phi(p)$ | $p-1$ | from primality |
 
-> [!NOTE] **Crossover Invariant:** primality is a property of *one* number; coprimality a relation between *two*. Testing coprimality is easy; testing primality is harder and *factorising* harder still — the gap cryptography depends on.
+> [!NOTE] **When It Flips:** primality is a property of *one* number; coprimality a relation between *two*. Testing coprimality is easy; testing primality is harder and *factorising* harder still — the gap cryptography depends on.
 
 ## 📊 Exam Execution Trace
 
@@ -50,18 +51,18 @@ Factoring 84:
 | 2 | 21 | 3 | 7 |
 | 3 | 7 | 7 | 1 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Existence ≠ uniqueness** ➔ this proves a factorisation *exists*; that it is *unique* is the Fundamental Theorem, proved separately.
 
 ## 🧠 Active Recall
 > [!FAQ]- Prove every integer $\ge2$ is a product of primes, and why *strong* induction is needed.
-> - **Core Insight Requirement:** Factor into smaller parts.
+> - **Hint:** Factor into smaller parts.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Basis $n=2$; composite $n=ab$ ($1<a,b<n$) factors by hypothesis, so $n$ does.
-> > - **Technical Justification:** **Strong** ➔ $a,b$ can be far below $n-1$, so all smaller $k$ must be assumed.
+> > - **Short answer:** Basis $n=2$; composite $n=ab$ ($1<a,b<n$) factors by hypothesis, so $n$ does.
+> > - **Why:** **Strong** ➔ $a,b$ can be far below $n-1$, so all smaller $k$ must be assumed.
 
 > [!FAQ]- Distinguish "prime" from "coprime" and their test difficulty.
-> - **Core Insight Requirement:** One number vs a pair.
+> - **Hint:** One number vs a pair.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Prime = one integer with no proper divisor; coprime = two integers with $\gcd=1$ (e.g. 21, 25).
-> > - **Technical Justification:** **Euclid is easy** ➔ coprimality is fast; primality/factorisation are hard.
+> > - **Short answer:** Prime = one integer with no proper divisor; coprime = two integers with $\gcd=1$ (e.g. 21, 25).
+> > - **Why:** **Euclid is easy** ➔ coprimality is fast; primality/factorisation are hard.

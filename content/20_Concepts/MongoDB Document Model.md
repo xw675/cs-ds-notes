@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 11
 parent: "[[NoSQL Data Models]]"
 tags: [CS/Databases, BigData/NoSQL, SQL/Oracle, Monash/CS_DS]
 aliases: [MongoDB, BSON, ObjectId, Embedded Document]
@@ -12,7 +13,7 @@ aliases: [MongoDB, BSON, ObjectId, Embedded Document]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** store related data together as one flexible JSON/BSON document ➔ no JOIN to read a whole entity.
 > - **📦 Core Components:** database → collection → document → field | `_id`/ObjectId | embedded vs referenced.
-> - **⚡ Critical Bottleneck:** the embed-vs-reference choice — embed when read together and stable; reference when large, shared, or independently updated.
+> - **⚡ Key Constraint:** the embed-vs-reference choice — embed when read together and stable; reference when large, shared, or independently updated.
 
 ## 📝 Core
 ### 1. Hierarchy & Terminology
@@ -47,7 +48,7 @@ aliases: [MongoDB, BSON, ObjectId, Embedded Document]
 >   ]
 > }
 > ```
-> 💡 **Exam Pitfall:** **Embedding collapses three Oracle tables into one document** ➔ great for "read the whole drone" but duplicates shared data (type/manufacturer) across drones.
+> 💡 **Common Mistake:** **Embedding collapses three Oracle tables into one document** ➔ great for "read the whole drone" but duplicates shared data (type/manufacturer) across drones.
 
 ### 🔹 Generate the JSON from Oracle
 > [!code]- JSON_OBJECT / JSON_ARRAYAGG
@@ -64,7 +65,7 @@ aliases: [MongoDB, BSON, ObjectId, Embedded Document]
 >      NATURAL JOIN drone.drone_type NATURAL JOIN drone.manufacturer
 > GROUP BY drone_id, dt_code, dt_model, manuf_name;
 > ```
-> 💡 **Exam Pitfall:** **`JSON_ARRAYAGG` needs GROUP BY** ➔ it aggregates child rows (rentals) into one array per parent (drone); non-aggregated columns must be grouped.
+> 💡 **Common Mistake:** **`JSON_ARRAYAGG` needs GROUP BY** ➔ it aggregates child rows (rentals) into one array per parent (drone); non-aggregated columns must be grouped.
 
 ## ⚖️ Core Decision Matrix
 | Approach | Store | Best when | Cost |
@@ -72,11 +73,11 @@ aliases: [MongoDB, BSON, ObjectId, Embedded Document]
 | **Embedded (denormalised)** | nested sub-docs | always read together; rarely changes alone | duplication across parents |
 | **Reference (normalised)** | ObjectId pointer | large / shared / independently updated | app must do the "join" |
 
-> [!NOTE] **Crossover Invariant:** references mimic a [[Foreign Key and Referential Integrity|foreign key]] but are **not enforced** by the engine — integrity is the application's responsibility, unlike Oracle's referential integrity.
+> [!NOTE] **When It Flips:** references mimic a [[Foreign Key and Referential Integrity|foreign key]] but are **not enforced** by the engine — integrity is the application's responsibility, unlike Oracle's referential integrity.
 
 ## 🧠 Active Recall
 > [!FAQ]- When would you embed rental history in the drone document vs reference it in a separate collection?
-> - **Core Insight Requirement:** Read-together + change-independently.
+> - **Hint:** Read-together + change-independently.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Embed when the rentals are always read with the drone and rarely change alone; reference when rentals are large, shared, or updated independently of the drone.
-> > - **Technical Justification:** **No enforced FK** ➔ a reference is just a stored ObjectId; the application performs and protects the join.
+> > - **Short answer:** Embed when the rentals are always read with the drone and rarely change alone; reference when rentals are large, shared, or updated independently of the drone.
+> > - **Why:** **No enforced FK** ➔ a reference is just a stored ObjectId; the application performs and protects the join.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 6
 parent: "[[Database Design Life Cycle]]"
 tags: [CS/Databases, SWE/Design, Ethics/Privacy, Monash/CS_DS]
 aliases: [Data Minimisation, Privacy by Design]
@@ -10,7 +11,7 @@ aliases: [Data Minimisation, Privacy by Design]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** collect only what the business purpose requires ➔ minimise personal-data attributes and justify each one.
-> - **⚡ Critical Bottleneck:** the **client/business owner decides** what is stored — the designer advises but does not unilaterally add personal fields.
+> - **⚡ Key Constraint:** the **client/business owner decides** what is stored — the designer advises but does not unilaterally add personal fields.
 
 ## 📝 Core
 - **Data minimisation** ➔ only store attributes a stated business purpose needs; every personal field must have a *why*.
@@ -19,12 +20,12 @@ aliases: [Data Minimisation, Privacy by Design]
 - **Interrogate each field** ➔ title/gender (title may imply gender) · date of birth (maybe only age check needed) · language (marketing use vs bias/discrimination risk).
 - **Necessity over convenience** ➔ e.g. drones rental: name/contact/email justified by rentals; DOB only if an age requirement exists.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Useful for marketing" ≠ justified** ➔ a field that enables profiling (e.g. language, gender) can introduce bias/discrimination; weigh benefit vs harm, don't collect by default.
 - 💡 **Designer ≠ decision-maker** ➔ do not add sensitive attributes on your own judgement; confirm the business need with the client.
 
 ## 🧠 Active Recall
 > [!FAQ]- A client asks to store customers' date of birth. What must you establish before adding the column?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The specific business purpose — if only age verification is needed, storing full DOB may be unnecessary; collect the minimum that satisfies the purpose.
-> > - **Technical Justification:** **Data minimisation** ➔ personal data is regulated; each attribute needs a documented, disclosed reason, and the client owns that decision.
+> > - **Short answer:** The specific business purpose — if only age verification is needed, storing full DOB may be unnecessary; collect the minimum that satisfies the purpose.
+> > - **Why:** **Data minimisation** ➔ personal data is regulated; each attribute needs a documented, disclosed reason, and the client owns that decision.

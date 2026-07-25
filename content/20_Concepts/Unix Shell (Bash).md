@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2014]
+week: 9
 parent: "[[Data Wrangling]]"
 tags: [DataScience/Tools, Unix/Shell, Monash/CS_DS]
 type: pattern
@@ -9,12 +10,12 @@ aliases: [Unix Shell, Unix Shell for Data Science, Bash, Shell Commands, grep, a
 
 **Context:** [[FIT1043_MOC]], [[FIT2014_MOC]] · a CLI to explore/[[Data Wrangling|wrangle]] **large** data files before [[Python for Data Science|Python]]/[[R for Data Science|R]] · pipes let you process files too big for memory · labs: `30_Projects/FIT1043_Labs/Week9-Shell-Twitter.pdf`, `Week10-Shell-BigFiles-Solution.txt`
 **FIT2014 (Lab 0):** all assignment work runs in Linux (Ed Workspaces); `grep` patterns are **regular expressions**, and text-transform tooling (`sed`, `tr`) lives in [[Text Processing with sed and tr]].
-**Task signature:** inspect, search, sort, filter and reshape a big text/CSV file from the command line.
+**Problem it solves:** inspect, search, sort, filter and reshape a big text/CSV file from the command line.
 **Command reference:** [[Shell Toolkit (Cheatsheet)]] — the full `tool | micro-syntax | gotcha` tables for code-from-blank revision.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a big text/CSV file to peek at or clean fast ➔ shell commands + pipes, no loading into Python/R.
-> - **⚡ Critical Bottleneck:** the **pipe `|` is buffered** — each stage produces data only as the next needs it, so memory stays bounded and processing **scales to enormous files**.
+> - **⚡ Key Constraint:** the **pipe `|` is buffered** — each stage produces data only as the next needs it, so memory stays bounded and processing **scales to enormous files**.
 
 ## 🔧 Minimal Working Example
 ```bash
@@ -42,8 +43,8 @@ cat hourly_44201_2014-06.csv.gz | gunzip | less
 - **Setup** ➔ Windows: install **Cygwin**; MacOS (Big Sur+): `chsh -s /bin/bash` (default is now zsh).
 - **Parallel / scripts** ➔ run a program in the background with `myprogram &`; Python scripts can be used as shell programs too.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Count how many lines in `data.csv` contain "ERROR", and save just those lines to `errors.txt`.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Count how many lines in `data.csv` contain "ERROR", and save just those lines to `errors.txt`.
 > > [!SUCCESS]- Reference solution
 > > ```bash
 > > grep "ERROR" data.csv | wc -l          # count matching lines
@@ -51,7 +52,7 @@ cat hourly_44201_2014-06.csv.gz | gunzip | less
 > > ```
 > > - **Key move:** `grep` filters lines; pipe to `wc -l` to count, or `>` to save.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`>` overwrites, `|` chains** ➔ `>` redirects output to a file (replacing it); `|` feeds output to the next program — don't confuse them.
 - 💡 **Why it scales** ➔ buffered pipes and line-at-a-time tools (`awk`) never hold the whole file in memory, so they handle files far larger than RAM.
 - 💡 **`wc`/`sort` are slower than `less`/`head`** ➔ counting or sorting must read the **whole** file into memory; `less`/`head` only read the start, so they return instantly on huge files.

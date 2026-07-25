@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: [3, 4]
 parent: "[[Relation (Database)]]"
 tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $A\to B$: each $A$ value fixes exactly one $B$ value ➔ the determinant–dependent relationship.
 > - **📦 Core Components:** directional ➔ composite determinant ➔ full/partial/transitive/total.
-> - **⚡ Critical Bottleneck:** partial/transitive FDs signal redundancy that [[Normalisation]] removes.
+> - **⚡ Key Constraint:** partial/transitive FDs signal redundancy that [[Normalisation]] removes.
 
 ## 📝 Core
 ### 1. The Dependency
@@ -37,7 +38,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 | transitive | non-key | [[Third Normal Form (3NF)|3NF]] |
 | total (mutual) | both candidate keys | — |
 
-> [!NOTE] **Crossover Invariant:** keys are special FDs — a [[Super Key and Candidate Key|super key]] determines the whole tuple. "Bad" FDs (non-key determined by part of a key, or by another non-key) signal the redundancy [[Normalisation]] removes.
+> [!NOTE] **When It Flips:** keys are special FDs — a [[Super Key and Candidate Key|super key]] determines the whole tuple. "Bad" FDs (non-key determined by part of a key, or by another non-key) signal the redundancy [[Normalisation]] removes.
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ Classifying ASSIGNMENT FDs, key $(\text{proj\_num},\text{emp\_num})$:
 | 2 | $\text{proj\_num}\to\text{proj\_name}$ | partial |
 | 3 | $\text{job\_class}\to\text{chg\_hour}$ | transitive |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **FDs hold for ALL valid data, not one instance** ➔ $A\to B$ is a business rule over every allowed row, not a coincidence in current data.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a functional dependency and explain why it is directional.
-> - **Core Insight Requirement:** Single-valued mapping.
+> - **Hint:** Single-valued mapping.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $A\to B$ iff each $A$ value has exactly one $B$ value; $\text{orderno}\to\text{orderdate}$ but not reverse.
-> > - **Technical Justification:** **Composite** ➔ $(\text{orderno},\text{prodno})\to\text{qtyordered}$ needs both.
+> > - **Short answer:** $A\to B$ iff each $A$ value has exactly one $B$ value; $\text{orderno}\to\text{orderdate}$ but not reverse.
+> > - **Why:** **Composite** ➔ $(\text{orderno},\text{prodno})\to\text{qtyordered}$ needs both.
 
 > [!FAQ]- Distinguish full, partial, and transitive dependency.
-> - **Core Insight Requirement:** Whole key / part / non-key.
+> - **Hint:** Whole key / part / non-key.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Full = whole composite key; partial = part of key; transitive = non-key → non-key.
-> > - **Technical Justification:** **2NF/3NF** ➔ 2NF removes partial, 3NF removes transitive dependencies.
+> > - **Short answer:** Full = whole composite key; partial = part of key; transitive = non-key → non-key.
+> > - **Why:** **2NF/3NF** ➔ 2NF removes partial, 3NF removes transitive dependencies.

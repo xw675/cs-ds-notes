@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 7
 parent: "[[Predictive Models]]"
 tags: [DataScience/Modelling, ML/Classification, Monash/CS_DS]
 aliases: [Confusion Matrix, Accuracy, Precision, Recall, Sensitivity, Specificity]
@@ -11,9 +12,9 @@ aliases: [Confusion Matrix, Accuracy, Precision, Recall, Sensitivity, Specificit
 > [!abstract] Quick Revision
 > - **🎯 Objective:** score a classifier ➔ build a confusion matrix (TP/FP/FN/TN), then compute the metric that matches the task.
 > - **📦 Core Components:** accuracy | sensitivity/recall | specificity | precision | false-positive rate.
-> - **⚡ Critical Bottleneck:** accuracy alone misleads — choose the metric by **which error is worse** (a missed fraud vs a blocked good email).
+> - **⚡ Key Constraint:** accuracy alone misleads — choose the metric by **which error is worse** (a missed fraud vs a blocked good email).
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. The Confusion Matrix
 |  | **Predicted Positive** | **Predicted Negative** |
 | :--- | :--- | :--- |
@@ -40,7 +41,7 @@ aliases: [Confusion Matrix, Accuracy, Precision, Recall, Sensitivity, Specificit
 | **Specificity** | of actual −, how many correct? | $TN/(TN{+}FP)$ |
 | **Precision** | of predicted +, how many right? | $TP/(TP{+}FP)$ |
 
-> [!NOTE] **Crossover Invariant:** recall and precision pull apart — flagging **everything** positive gives perfect recall but poor precision; flagging **only sure** cases gives high precision but poor recall. The task's error costs pick which to favour.
+> [!NOTE] **When It Flips:** recall and precision pull apart — flagging **everything** positive gives perfect recall but poor precision; flagging **only sure** cases gives high precision but poor recall. The task's error costs pick which to favour.
 
 ## 📊 Exam Execution Trace
 
@@ -58,13 +59,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- For a fraud detector, which metric matters most and why — precision or recall?
-> - **Core Insight Requirement:** Cost of a false negative.
+> - **Hint:** Cost of a false negative.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Recall (sensitivity)** — a missed fraud (false negative) is far costlier than a false alarm (false positive), so you maximise the fraction of actual frauds caught.
-> > - **Technical Justification:** **Error asymmetry** ➔ recall $=TP/(TP+FN)$ penalises misses; the tolerable error (FP) is what precision would protect.
+> > - **Short answer:** **Recall (sensitivity)** — a missed fraud (false negative) is far costlier than a false alarm (false positive), so you maximise the fraction of actual frauds caught.
+> > - **Why:** **Error asymmetry** ➔ recall $=TP/(TP+FN)$ penalises misses; the tolerable error (FP) is what precision would protect.
 
 > [!FAQ]- Why can a 95%-accurate classifier still be useless?
-> - **Core Insight Requirement:** Class imbalance.
+> - **Hint:** Class imbalance.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** If 95% of cases are negative, always predicting "negative" scores 95% accuracy yet catches **zero** positives (recall 0); accuracy hides this.
-> > - **Technical Justification:** **Imbalance** ➔ inspect recall/precision on the positive class, not overall accuracy.
+> > - **Short answer:** If 95% of cases are negative, always predicting "negative" scores 95% accuracy yet catches **zero** positives (recall 0); accuracy hides this.
+> > - **Why:** **Imbalance** ➔ inspect recall/precision on the positive class, not overall accuracy.

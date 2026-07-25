@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 5
 parent: "[[Conceptual vs Logical Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** transform a conceptual ER model to a relational schema ➔ Step 2 of design.
 > - **📦 Core Components:** entity→relation ➔ identifier→PK ➔ relationship→FK.
-> - **⚡ Critical Bottleneck:** relationships are **not** relations; database-type-dependent (vendor-free).
+> - **⚡ Key Constraint:** relationships are **not** relations; database-type-dependent (vendor-free).
 
 ## 📝 Core
 ### 1. The Mapping
@@ -35,7 +36,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | physical | vendor-specific | schema file |
 | relationship | — | FK, not a relation |
 
-> [!NOTE] **Crossover Invariant:** bottom-up [[Normalisation|3NF]] relations integrate with this top-down ER mapping (unify attribute names). The relationship **line is kept** even after the FK — it carries optionality developers need. Surrogate keys may now be introduced ([[Surrogate Key]]).
+> [!NOTE] **When It Flips:** bottom-up [[Normalisation|3NF]] relations integrate with this top-down ER mapping (unify attribute names). The relationship **line is kept** even after the FK — it carries optionality developers need. Surrogate keys may now be introduced ([[Surrogate Key]]).
 
 ## 📊 Exam Execution Trace
 
@@ -49,18 +50,18 @@ Mapping CUSTOMER places ORDER:
 | 2 | ORDER entity | ORDERS relation, PK orderno |
 | 3 | places | ORDERS.custno FK |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Relationships are not relations** ➔ realised by placing the parent's PK as an FK in the child; only entities become relations.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the conceptual→logical→physical terminology, and the general ER-to-relational rule.
-> - **Core Insight Requirement:** Entity→relation, relationship→FK.
+> - **Hint:** Entity→relation, relationship→FK.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Entity→Relation→Table; Attribute→Attribute→Column; Instance→Tuple→Row; Key→PK; Relationship→FK.
-> > - **Technical Justification:** **Not relations** ➔ relationships become FKs (parent PK in child).
+> > - **Short answer:** Entity→Relation→Table; Attribute→Attribute→Column; Instance→Tuple→Row; Key→PK; Relationship→FK.
+> > - **Why:** **Not relations** ➔ relationships become FKs (parent PK in child).
 
 > [!FAQ]- After mapping a relationship to a PK/FK pair, why keep the relationship line?
-> - **Core Insight Requirement:** Optionality info.
+> - **Hint:** Optionality info.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The PK/FK gives connectivity, but the line conveys optionality/cardinality.
-> > - **Technical Justification:** **Business rules** ➔ e.g. a customer may exist without orders.
+> > - **Short answer:** The PK/FK gives connectivity, but the line conveys optionality/cardinality.
+> > - **Why:** **Business rules** ➔ e.g. a customer may exist without orders.

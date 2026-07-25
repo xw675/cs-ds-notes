@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 5
 parent: "[[Predicate]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the inputs a predicate consumes ➔ constant / variable / function-applied-to-terms.
 > - **📦 Core Components:** variable (domain-ranging) ➔ constant (fixed) ➔ term (recursive).
-> - **⚡ Critical Bottleneck:** a predicate becomes a [[Proposition and Truth Value|proposition]] only when every **free** variable is assigned or bound.
+> - **⚡ Key Constraint:** a predicate becomes a [[Proposition and Truth Value|proposition]] only when every **free** variable is assigned or bound.
 
 ## 📝 Core
 ### 1. The Three Objects
@@ -41,7 +42,7 @@ $$\text{Parent}(\text{Turing},X)\ (\text{free }X) \xrightarrow{X:=\text{Sara Tur
 | term | names an object | — | predicate input |
 | predicate application | a statement | — | has a truth value |
 
-> [!NOTE] **Crossover Invariant:** math favours single letters ($x,\theta$) because juxtaposition means multiplication (`myVar` reads as a product). Term ≠ formula: a term names an object; a predicate application is a statement.
+> [!NOTE] **When It Flips:** math favours single letters ($x,\theta$) because juxtaposition means multiplication (`myVar` reads as a product). Term ≠ formula: a term names an object; a predicate application is a statement.
 
 ## 📊 Exam Execution Trace
 
@@ -56,18 +57,18 @@ Classify expressions and variable occurrences:
 | 3 | $x\wedge y$ | not (connective) | — |
 | 4 | $\forall x\,(x<y)$ | — | $x$ bound, $y$ free |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$x\wedge y$ is not a term** ➔ $\wedge$ combines *statements*, not objects; and constants can't be quantified ($\exists 5$, $\forall\text{Annie}$ are errors).
 
 ## 🧠 Active Recall
 > [!FAQ]- What is a term, and which of $3\times x+1$, $\log x$, $x\wedge y$ qualify?
-> - **Core Insight Requirement:** Constant/variable/function-applied.
+> - **Hint:** Constant/variable/function-applied.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A term is a constant, variable, or function applied to terms; only $3\times x+1$ qualifies.
-> > - **Technical Justification:** **Object vs statement** ➔ $\log$ is unavailable; $\wedge$ combines statements, not objects.
+> > - **Short answer:** A term is a constant, variable, or function applied to terms; only $3\times x+1$ qualifies.
+> > - **Why:** **Object vs statement** ➔ $\log$ is unavailable; $\wedge$ combines statements, not objects.
 
 > [!FAQ]- Distinguish free vs bound variables, and when does a predicate become a proposition?
-> - **Core Insight Requirement:** Assignment / binding.
+> - **Hint:** Assignment / binding.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Free = open to assignment (no truth value); bound = captured by a quantifier; a predicate becomes a proposition when every free variable is assigned or bound.
-> > - **Technical Justification:** **No truth value while free** ➔ $\text{Parent}(\text{Turing},X)$ is not a proposition until $X$ is given a person.
+> > - **Short answer:** Free = open to assignment (no truth value); bound = captured by a quantifier; a predicate becomes a proposition when every free variable is assigned or bound.
+> > - **Why:** **No truth value while free** ➔ $\text{Parent}(\text{Turing},X)$ is not a proposition until $X$ is given a person.

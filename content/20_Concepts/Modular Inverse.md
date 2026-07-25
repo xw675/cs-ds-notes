@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Modular Arithmetic]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $x^{-1}$ with $x\,x^{-1}\equiv1\pmod n$ ➔ division in $\mathbb Z_n$ = multiply by the inverse.
 > - **📦 Core Components:** exists iff $\gcd(x,n)=1$ ➔ $\mathbb Z_n^*$ ➔ computed by [[Extended Euclidean Algorithm]].
-> - **⚡ Critical Bottleneck:** prime modulus ⟹ every nonzero element invertible (a field).
+> - **⚡ Key Constraint:** prime modulus ⟹ every nonzero element invertible (a field).
 
 ## 📝 Core
 ### 1. The Inverse
@@ -35,7 +36,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 | $x$, $\gcd(x,n)=1$ | yes | Bézout |
 | $x$ sharing a factor | no | $\gcd>1$ |
 
-> [!NOTE] **Crossover Invariant:** invertibility is governed entirely by [[Coprimality]] with $n$; $\lvert\mathbb Z_n^*\rvert=\phi(n)$ ([[Euler Totient Function]]). The inverse, when it exists, is unique in $\mathbb Z_n$.
+> [!NOTE] **When It Flips:** invertibility is governed entirely by [[Coprimality]] with $n$; $\lvert\mathbb Z_n^*\rvert=\phi(n)$ ([[Euler Totient Function]]). The inverse, when it exists, is unique in $\mathbb Z_n$.
 
 ## 📊 Exam Execution Trace
 
@@ -49,18 +50,18 @@ $3^{-1}$ in $\mathbb Z_7$:
 | 2 | 3 | 2 | no |
 | 3 | 5 | 1 | **yes** |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$0$ never invertible, prime modulus special** ➔ if $n=p$ prime, every nonzero element is coprime to $p$ ⟹ all invertible ($\mathbb Z_p^*=\{1,\dots,p-1\}$, a field); composite $n$ leaves some elements non-invertible.
 
 ## 🧠 Active Recall
 > [!FAQ]- For which $x$ does an inverse exist in $\mathbb Z_n$, and why does $\mathbb Z_6$ lack one for 2 while $\mathbb Z_7$ has one for every nonzero element?
-> - **Core Insight Requirement:** Coprimality condition.
+> - **Hint:** Coprimality condition.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Invertible iff $\gcd(x,n)=1$; $\gcd(2,6)=2$ (none), but every nonzero mod 7 is coprime.
-> > - **Technical Justification:** **Prime field** ➔ $\mathbb Z_p^*=\{1,\dots,p-1\}$.
+> > - **Short answer:** Invertible iff $\gcd(x,n)=1$; $\gcd(2,6)=2$ (none), but every nonzero mod 7 is coprime.
+> > - **Why:** **Prime field** ➔ $\mathbb Z_p^*=\{1,\dots,p-1\}$.
 
 > [!FAQ]- How do you actually compute $x^{-1}$ in $\mathbb Z_n$?
-> - **Core Insight Requirement:** Extended Euclid.
+> - **Hint:** Extended Euclid.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Run EEA on $x,n$; if $\gcd=1$ it gives $yx+zn=1$, so $x^{-1}=y\bmod n$.
-> > - **Technical Justification:** **Constructive Bézout** ➔ turns the existence proof into an algorithm.
+> > - **Short answer:** Run EEA on $x,n$; if $\gcd=1$ it gives $yx+zn=1$, so $x^{-1}=y\bmod n$.
+> > - **Why:** **Constructive Bézout** ➔ turns the existence proof into an algorithm.

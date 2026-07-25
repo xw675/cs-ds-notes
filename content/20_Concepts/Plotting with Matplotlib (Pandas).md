@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 4
 parent: "[[Data Visualisation (Chart Types)]]"
 tags: [DataScience/Visualisation, Python/Matplotlib, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Matplotlib, plt, df.plot, hist, boxplot]
 # [[Plotting with Matplotlib (Pandas)]]
 
 **Context:** [[FIT1043_MOC]] · render the [[Data Visualisation (Chart Types)|chart types]] in Python · matplotlib + pandas `.plot` · often after a [[Groupby-Aggregate Pipeline (Pandas)|groupby]] · lab: `30_Projects/FIT1043_Labs/Week4-Wrangling-Viz-Solution.pdf`
-**Task signature:** turn a DataFrame column (or two) into the chart appropriate for its data type.
+**Problem it solves:** turn a DataFrame column (or two) into the chart appropriate for its data type.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** need a chart ➔ import matplotlib.pyplot as plt; call plt.<kind> or df.plot.<kind> matched to the data type.
-> - **⚡ Critical Bottleneck:** match plot to [[Types of Data (Numeric and Categorical)|type]] — `bar`/`pie` for categorical, `hist`/`boxplot`/`scatter` for numeric.
+> - **⚡ Key Constraint:** match plot to [[Types of Data (Numeric and Categorical)|type]] — `bar`/`pie` for categorical, `hist`/`boxplot`/`scatter` for numeric.
 
 ## 🔧 Minimal Working Example
 ```python
@@ -35,8 +36,8 @@ plt.show()
 - **Control histogram detail** ➔ raise/lower `bins=` (few = coarse shape, many = ragged).
 - **Encode a 3rd/4th variable on a scatter** ➔ colour by a column and size the points: `plt.scatter(df['HR'], df['SBP'], c=df['DBP'], s=40, cmap='hot')` — `c=` colours, `cmap=` the palette, `s=` the marker size.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: For numeric column `price`, draw a histogram with 20 bins and a boxplot to inspect its spread/outliers.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: For numeric column `price`, draw a histogram with 20 bins and a boxplot to inspect its spread/outliers.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > df['price'].hist(bins=20)          # distribution shape
@@ -44,6 +45,6 @@ plt.show()
 > > ```
 > > - **Key move:** histogram + boxplot are the numeric-continuous pair; both need a numeric column.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Wrong chart for the type** ➔ a bar chart is for categorical counts; use a histogram for *continuous* data (it bins the values).
 - 💡 **`plt.show()` renders it** ➔ in scripts the figure won't display until `plt.show()` (notebooks may auto-render).

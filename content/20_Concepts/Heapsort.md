@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 9
 parent: "[[Heap]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** heapify the array, repeatedly extract-max to the shrinking tail ➔ selection sort with a fast find_max.
 > - **📦 Core Components:** **build heap** ➔ $\Theta(n)$ bottom-up | **extract-max ×$n$** ➔ $O(\log n)$ `sink` each.
-> - **⚡ Critical Bottleneck:** **guaranteed $\Theta(n\log n)$** + **$O(1)$ space** (in-place) ➔ but **unstable** and cache-unfriendly.
+> - **⚡ Key Constraint:** **guaranteed $\Theta(n\log n)$** + **$O(1)$ space** (in-place) ➔ but **unstable** and cache-unfriendly.
 
 ## 📝 Core
 ### 1. The Algorithm (Heapify → Extract)
@@ -55,7 +56,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >         sink(1, size)                           #    restore over the shrunk heap: O(log n)
 >     return a[1:]
 > ```
-> 💡 **Exam Pitfall:** **`2*k == size` guard is essential** ➔ without it a node with only a left child reads `a[2*k+1]` past the heap (`IndexError`); defend with testing, code review, proofs.
+> 💡 **Common Mistake:** **`2*k == size` guard is essential** ➔ without it a node with only a left child reads `a[2*k+1]` past the heap (`IndexError`); defend with testing, code review, proofs.
 
 ## ⚖️ Core Decision Matrix
 *(Domain A complexity table — Best / Average / Worst Time, Space, Stability.)*
@@ -66,7 +67,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 | [[Quick Sort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n^2)$ | $O(\log n)$ | No | faster in practice (cache) |
 | [[Merge Sort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n)$ | **Yes** | guaranteed + stable |
 
-> [!NOTE] **Crossover Invariant:** pick **heapsort** when the worst-case *bound* + $O(1)$ space matter (real-time); **quicksort** when average speed wins (its `sink`'s non-local $k\to2k$ jumps thrash cache); **merge sort** when **stability** is required.
+> [!NOTE] **When It Flips:** pick **heapsort** when the worst-case *bound* + $O(1)$ space matter (real-time); **quicksort** when average speed wins (its `sink`'s non-local $k\to2k$ jumps thrash cache); **merge sort** when **stability** is required.
 
 ## 📊 Exam Execution Trace
 
@@ -94,19 +95,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Heapsort and quicksort are both in-place. Given a hard real-time deadline, which and why?
-> - **Core Insight Requirement:** Trade guaranteed bound against average speed.
+> - **Hint:** Trade guaranteed bound against average speed.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Heapsort** — its $\Theta(n\log n)$ is a *guaranteed worst case*.
-> > - **Technical Justification:** **Bound over average** ➔ [[Quick Sort]] degrades to $\Theta(n^2)$ on adversarial pivots (deadline blown); quicksort wins on average (cache-friendly) but not when the bound is the constraint.
+> > - **Short answer:** **Heapsort** — its $\Theta(n\log n)$ is a *guaranteed worst case*.
+> > - **Why:** **Bound over average** ➔ [[Quick Sort]] degrades to $\Theta(n^2)$ on adversarial pivots (deadline blown); quicksort wins on average (cache-friendly) but not when the bound is the constraint.
 
 > [!FAQ]- Explain heapsort as "selection sort, improved." What is improved, and how does the complexity change?
-> - **Core Insight Requirement:** Identify the `find_max` upgrade.
+> - **Hint:** Identify the `find_max` upgrade.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Selection sort's $O(n)$ linear `find_max` becomes an $O(\log n)$ heap `sink`.
-> > - **Technical Justification:** **Structure swap** ➔ $\sum O(n)=O(n^2)$ becomes $n\times O(\log n)=O(n\log n)$ — the heap makes the max cheap to retrieve.
+> > - **Short answer:** Selection sort's $O(n)$ linear `find_max` becomes an $O(\log n)$ heap `sink`.
+> > - **Why:** **Structure swap** ➔ $\sum O(n)=O(n^2)$ becomes $n\times O(\log n)=O(n\log n)$ — the heap makes the max cheap to retrieve.
 
 > [!FAQ]- Why is heapsort's total $\Theta(n\log n)$ and not $\Theta(n\log n)$ *plus* a dominating build term?
-> - **Core Insight Requirement:** Compare bottom-up build vs $n$ inserts.
+> - **Hint:** Compare bottom-up build vs $n$ inserts.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Bottom-up build is $\Theta(n)$, dominated by the $\Theta(n\log n)$ extraction phase.
-> > - **Technical Justification:** **Sum of heights** ➔ build is $\Theta(n)$ ([[Heap|Bottom-Up Heap Construction]]); $n$ successive `add`s would pay $\Theta(n\log n)$ to build — same total, but bottom-up is strictly cheaper.
+> > - **Short answer:** Bottom-up build is $\Theta(n)$, dominated by the $\Theta(n\log n)$ extraction phase.
+> > - **Why:** **Sum of heights** ➔ build is $\Theta(n)$ ([[Heap|Bottom-Up Heap Construction]]); $n$ successive `add`s would pay $\Theta(n\log n)$ to build — same total, but bottom-up is strictly cheaper.

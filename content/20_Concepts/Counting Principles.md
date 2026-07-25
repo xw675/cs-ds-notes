@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 8
 parent: "[[Set (Mathematics)]]"
 tags: [Math/Combinatorics, Math/Discrete]
 aliases: [Addition Principle, Multiplication Principle, Sum Rule, Product Rule]
@@ -11,7 +12,7 @@ aliases: [Addition Principle, Multiplication Principle, Sum Rule, Product Rule]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** parse the problem's "or"/"and" structure ➔ disjoint alternatives ⟹ add; independent stages ⟹ multiply.
 > - **📦 Core Components:** Addition ➔ $|A\cup B|=|A|+|B|$ (disjoint) | Multiplication ➔ $|A\times B|=|A||B|$ (independent).
-> - **⚡ Critical Bottleneck:** each rule has a hypothesis — overlap breaks addition, dependence breaks multiplication.
+> - **⚡ Key Constraint:** each rule has a hypothesis — overlap breaks addition, dependence breaks multiplication.
 
 ## 📝 Core
 
@@ -33,21 +34,21 @@ aliases: [Addition Principle, Multiplication Principle, Sum Rule, Product Rule]
 | repeated independent choice | $n^r$ | $r$ equal factors | without replacement ⟹ $n^{\underline r}$ |
 | disjoint covering classes | sum of class sizes | casework | classes overlap |
 
-> [!NOTE] **Crossover Invariant:** add for "or", multiply for "and". All of [[Selection (Counting Framework)]] (permutations, falling factorials, [[Binomial Coefficient|combinations]]) is built by composing these two rules.
+> [!NOTE] **When It Flips:** add for "or", multiply for "and". All of [[Selection (Counting Framework)]] (permutations, falling factorials, [[Binomial Coefficient|combinations]]) is built by composing these two rules.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Overlap breaks addition** ➔ $A\cap B\neq\emptyset$ ⟹ use $|A|+|B|-|A\cap B|$; the addition principle is the disjoint special case of inclusion–exclusion.
 - 💡 **Dependence breaks multiplication** ➔ if stage 2's options shrink with stage 1 (selection without replacement), factors aren't constant — that's the falling factorial, not $n^r$.
 
 ## 🧠 Active Recall
 > [!FAQ]- A password is 2 letters then 2 digits, or 4 digits. How do the two principles combine, and which hypotheses are you invoking?
-> - **Core Insight Requirement:** Parse and/or structure into multiply/add.
+> - **Hint:** Parse and/or structure into multiply/add.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $(26\cdot26\cdot10\cdot10)+(10^4)$ — multiply within each format (independent stages), add across formats (disjoint alternatives).
-> > - **Technical Justification:** **Hypotheses** ➔ character slots are independent (constant factor counts); the two formats share no string (different lengths ⟹ disjoint).
+> > - **Short answer:** $(26\cdot26\cdot10\cdot10)+(10^4)$ — multiply within each format (independent stages), add across formats (disjoint alternatives).
+> > - **Why:** **Hypotheses** ➔ character slots are independent (constant factor counts); the two formats share no string (different lengths ⟹ disjoint).
 
 > [!FAQ]- Why do sequential loops add but nested loops multiply?
-> - **Core Insight Requirement:** Map control flow to set structure.
+> - **Hint:** Map control flow to set structure.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Sequential loops enumerate a disjoint union ($r+c$ iterations); nested loops enumerate a Cartesian product ($rc$ iterations).
-> > - **Technical Justification:** **Or vs and** ➔ each iteration of the outer loop *and* each of the inner ⟹ pairs; loop A *then* loop B ⟹ disjoint alternatives in time.
+> > - **Short answer:** Sequential loops enumerate a disjoint union ($r+c$ iterations); nested loops enumerate a Cartesian product ($rc$ iterations).
+> > - **Why:** **Or vs and** ➔ each iteration of the outer loop *and* each of the inner ⟹ pairs; loop A *then* loop B ⟹ disjoint alternatives in time.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Super Key and Candidate Key]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the one candidate key chosen as the relation's identifier ➔ underlined in schema notation.
 > - **📦 Core Components:** desirable-key criteria ➔ natural vs surrogate PK.
-> - **⚡ Critical Bottleneck:** carry the natural key through the whole design; add a surrogate only at the last step.
+> - **⚡ Key Constraint:** carry the natural key through the whole design; add a surrogate only at the last step.
 
 ![[primary-key-rules.png]]
 
@@ -42,7 +43,7 @@ $$\text{surrogate: } \text{ENROLMENT}(\underline{\text{enrolment\_id}}, \text{un
 | stable | yes | no (changes on marriage) |
 | single/numeric | yes | no |
 
-> [!NOTE] **Crossover Invariant:** composite natural keys are valid but bloat FKs in children — the motivation for a single numeric surrogate. The PK functionally determines all attributes ([[Functional Dependency]]); it must reflect future data, not just current rows.
+> [!NOTE] **When It Flips:** composite natural keys are valid but bloat FKs in children — the motivation for a single numeric surrogate. The PK functionally determines all attributes ([[Functional Dependency]]); it must reflect future data, not just current rows.
 
 ## 📊 Exam Execution Trace
 
@@ -56,18 +57,18 @@ Testing name as PK:
 | 2 | stable | no (marriage) |
 | 3 | non-intelligent | no |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Carry the natural key through the design** ➔ it encodes the business rules; a surrogate is added only at the final step (and is banned at the [[Conceptual Model|conceptual stage]]).
 
 ## 🧠 Active Recall
 > [!FAQ]- List the desirable characteristics of a primary key and why a name is poor.
-> - **Core Insight Requirement:** Unique/stable/non-intelligent.
+> - **Hint:** Unique/stable/non-intelligent.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Unique, non-NULL, non-intelligent, stable, preferably single/numeric, security-compliant; a name fails uniqueness, stability, non-intelligence.
-> > - **Technical Justification:** **PK change cascades** ➔ altering a PK changes identity and forces FK updates.
+> > - **Short answer:** Unique, non-NULL, non-intelligent, stable, preferably single/numeric, security-compliant; a name fails uniqueness, stability, non-intelligence.
+> > - **Why:** **PK change cascades** ➔ altering a PK changes identity and forces FK updates.
 
 > [!FAQ]- Contrast a natural and a surrogate primary key, and when each is introduced.
-> - **Core Insight Requirement:** Rules vs convenience.
+> - **Hint:** Rules vs convenience.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Natural = from scenario (captures rules); surrogate = artificial id; natural carried through, surrogate added at the last step.
-> > - **Technical Justification:** **Banned conceptually** ➔ surrogate replaces an unwieldy composite only at logical/physical design.
+> > - **Short answer:** Natural = from scenario (captures rules); surrogate = artificial id; natural carried through, surrogate added at the last step.
+> > - **Why:** **Banned conceptually** ➔ surrogate replaces an unwieldy composite only at logical/physical design.

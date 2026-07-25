@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relational Model]]"
 tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a procedural, relationally complete query language over relations ➔ states *how*.
 > - **📦 Core Components:** unary [[Select and Project (σ, π)|σ/π]] ➔ binary [[Set Operations in Relational Algebra|set ops]] / [[Relational Algebra Joins|joins]] / product / division.
-> - **⚡ Critical Bottleneck:** **closure** — every result is a relation, so operators compose; no NULLs in pure form.
+> - **⚡ Key Constraint:** **closure** — every result is a relation, so operators compose; no NULLs in pure form.
 
 ![[relational-algebra-multiple.png]]
 ![[relational-algebra-translation.png]]
@@ -40,7 +41,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 > WHERE project_code = '25-5A';
 > ```
 > $$\pi_{\text{project\_manager}}\bigl(\sigma_{\text{project\_code}=\text{'25-5A'}}(\text{PRDETAIL})\bigr)$$
-> 💡 **Exam Pitfall:** **Pure algebra has no NULLs** ➔ it assumes complete information; NULLs are an SQL addition. Algebra's explicit operation order is what enables optimisation.
+> 💡 **Common Mistake:** **Pure algebra has no NULLs** ➔ it assumes complete information; NULLs are an SQL addition. Algebra's explicit operation order is what enables optimisation.
 
 ## ⚖️ Core Decision Matrix
 | Language | Procedural? | Role |
@@ -50,7 +51,7 @@ tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
 | SQL | no (declarative) | user queries |
 | graphical | no | visual |
 
-> [!NOTE] **Crossover Invariant:** algebra prescribes an operation order (good for the optimiser); calculus/SQL state only the result — the DBMS bridges them by compiling SQL to algebra. Relational join generalises FIT1058 [[Properties of Binary Relations|relational composition]] to data.
+> [!NOTE] **When It Flips:** algebra prescribes an operation order (good for the optimiser); calculus/SQL state only the result — the DBMS bridges them by compiling SQL to algebra. Relational join generalises FIT1058 [[Properties of Binary Relations|relational composition]] to data.
 
 ## 📊 Exam Execution Trace
 
@@ -67,13 +68,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- What does the closure property mean, and why does it matter?
-> - **Core Insight Requirement:** Result is a relation.
+> - **Hint:** Result is a relation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Every query result is itself a relation, so outputs feed back as inputs and operators compose.
-> > - **Technical Justification:** **Building blocks** ➔ a complex query is nested operations; the DBMS chains operators.
+> > - **Short answer:** Every query result is itself a relation, so outputs feed back as inputs and operators compose.
+> > - **Why:** **Building blocks** ➔ a complex query is nested operations; the DBMS chains operators.
 
 > [!FAQ]- How does an SQL query relate to relational algebra inside a DBMS?
-> - **Core Insight Requirement:** Declarative vs procedural.
+> - **Hint:** Declarative vs procedural.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The query processor compiles declarative SQL into procedural algebra, then optimises/executes.
-> > - **Technical Justification:** **Operation order** ➔ algebra's explicit ordering enables optimisation.
+> > - **Short answer:** The query processor compiles declarative SQL into procedural algebra, then optimises/executes.
+> > - **Why:** **Operation order** ➔ algebra's explicit ordering enables optimisation.

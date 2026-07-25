@@ -7,11 +7,11 @@ aliases: [HTML CSS Cheatsheet, HTML Cheatsheet, CSS Cheatsheet, Flexbox Grid che
 # [[HTML & CSS Toolkit (Cheatsheet)]]
 
 **Context:** Full-Stack Roadmap Chapters 1–5 in one place — HTML structure (Ch 1–3) → CSS styling (Ch 4) → layout & responsive (Ch 5) · covers everything needed to build a styled, responsive, multi-page static site before JavaScript begins.
-**Read protocol:** scan tables → attempt the katas blank → re-read only the section where you failed.
+**Read protocol:** scan tables → attempt the practice blank → re-read only the section where you failed.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build a complete, responsive, multi-page website from scratch ➔ semantic HTML structure + CSS styling + Flexbox/Grid layout + mobile-first media queries.
-> - **⚡ Critical Bottleneck:** the **box model** is the root of 80% of CSS confusion — `width` means *content* width by default (padding + border added on top); always start with `* { box-sizing: border-box; }`. Second biggest source of bugs: **specificity** — an ID beats a class beats an element selector, and the browser silently picks the winner with no error.
+> - **⚡ Key Constraint:** the **box model** is the root of 80% of CSS confusion — `width` means *content* width by default (padding + border added on top); always start with `* { box-sizing: border-box; }`. Second biggest source of bugs: **specificity** — an ID beats a class beats an element selector, and the browser silently picks the winner with no error.
 
 ## 🌐 How the web works (mental model)
 | Concept | One-liner | Gotcha |
@@ -326,8 +326,8 @@ body {
 }
 ```
 
-## 🥋 Integration Katas
-> [!QUESTION]- Kata 1: Build a responsive card grid — 6 cards with a title, image, and description. 1 column on mobile, 2 on tablet, 3 on desktop. Cards have rounded borders, padding, and a subtle shadow. Include viewport meta tag. (uses: semantic HTML + Grid `auto-fit` or media queries + box model + responsive images)
+## ✍️ Integration Practice
+> [!QUESTION]- Practice 1: Build a responsive card grid — 6 cards with a title, image, and description. 1 column on mobile, 2 on tablet, 3 on desktop. Cards have rounded borders, padding, and a subtle shadow. Include viewport meta tag. (uses: semantic HTML + Grid `auto-fit` or media queries + box model + responsive images)
 > > [!SUCCESS]- Reference solution
 > > ```html
 > > <!DOCTYPE html>
@@ -365,7 +365,7 @@ body {
 > > ```
 > > - **Key move:** `repeat(auto-fit, minmax(280px, 1fr))` handles all breakpoints in one line — no media queries needed. `box-shadow` adds depth without a heavier border.
 
-> [!QUESTION]- Kata 2: Build a page with a Flexbox navbar (logo left, links right), a Grid main area (content + 250px sidebar), and a footer. Style the nav links to highlight on hover. Mobile: nav stacks vertically, sidebar disappears. (uses: Flexbox nav + Grid page layout + semantic elements + media query + pseudo-class)
+> [!QUESTION]- Practice 2: Build a page with a Flexbox navbar (logo left, links right), a Grid main area (content + 250px sidebar), and a footer. Style the nav links to highlight on hover. Mobile: nav stacks vertically, sidebar disappears. (uses: Flexbox nav + Grid page layout + semantic elements + media query + pseudo-class)
 > > [!SUCCESS]- Reference solution
 > > ```html
 > > <style>
@@ -400,7 +400,7 @@ body {
 > > ```
 > > - **Key move:** outer `body` Grid handles vertical stacking (header/nav/content/footer with `1fr` on the content row to push the footer down); inner `.page` Grid handles the horizontal content + sidebar split. `display: none` + media query for the sidebar keeps mobile clean.
 
-> [!QUESTION]- Kata 3: Build a styled registration form — name (required), email (required), password (required), age (number, min 13), country (dropdown, 4 options), terms checkbox (required), submit button. Style inputs with consistent width, focus glow, and a coloured button that darkens on hover. Wrap in semantic elements. (uses: form elements + validation attributes + label linking + CSS selectors + pseudo-classes + box model)
+> [!QUESTION]- Practice 3: Build a styled registration form — name (required), email (required), password (required), age (number, min 13), country (dropdown, 4 options), terms checkbox (required), submit button. Style inputs with consistent width, focus glow, and a coloured button that darkens on hover. Wrap in semantic elements. (uses: form elements + validation attributes + label linking + CSS selectors + pseudo-classes + box model)
 > > [!SUCCESS]- Reference solution
 > > ```html
 > > <main>
@@ -454,7 +454,7 @@ body {
 > > ```
 > > - **Key move:** `label { display: block }` replaces `<br>` tags; attribute selector `input[type="email"]` targets specific types; `:focus` pseudo-class + `box-shadow` replaces the browser's default outline with a softer glow.
 
-## ⚠️ Pitfalls (top debugging targets)
+## ⚠️ Common Mistakes (top debugging targets)
 - 💡 **Forgot `* { box-sizing: border-box; }`** ➔ `width: 300px` + `padding: 20px` + `border: 5px` = 350px actual. Boxes overflow everywhere.
 - 💡 **Forgot viewport meta tag** ➔ page looks perfect on laptop, tiny text on phones.
 - 💡 **Styles don't apply — no error shown** ➔ check in order: (1) typo in class name, (2) missing `<link>` to stylesheet, (3) specificity conflict (ID beats class), (4) browser cache (Ctrl+Shift+R to hard refresh).

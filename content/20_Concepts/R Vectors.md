@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: 8
 parent: "[[R Basics (Syntax, Types, Control Flow)]]"
 tags: [DataScience/Tools, R/Basics, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [R Vector, c(), Vectorised, anyNA, is.na]
 # [[R Vectors]]
 
 **Context:** [[FIT1043_MOC]] · R's core 1-D structure · columns of a [[R Data Frames and IO|data frame]] are vectors · built with `c()`
-**Task signature:** create a vector, index its elements, do element-wise arithmetic, and test for missing values.
+**Problem it solves:** create a vector, index its elements, do element-wise arithmetic, and test for missing values.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** store/operate on many values ➔ build with c(); index with square brackets; arithmetic is **element-wise**.
-> - **⚡ Critical Bottleneck:** R indexing is **1-based**, and negative indices **exclude** (they don't count from the end).
+> - **⚡ Key Constraint:** R indexing is **1-based**, and negative indices **exclude** (they don't count from the end).
 
 ## 🔧 Minimal Working Example
 ```r
@@ -34,8 +35,8 @@ x[1:3]                      # "Jan" "Feb" "Mar"    (range)
 - **Element-wise ops** ➔ `v1 * v2`, `v1 + v2`, etc., require equal length; each position is computed independently.
 - **NA detection** ➔ `is.na(c("Java", NA, "R", NA))` → `FALSE TRUE FALSE TRUE`.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Given `x <- c("Java", NA, "Python", "R", NA)`, check whether it has any missing values and flag which elements are missing.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Given `x <- c("Java", NA, "Python", "R", NA)`, check whether it has any missing values and flag which elements are missing.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > anyNA(x)     # [1] TRUE
@@ -43,6 +44,6 @@ x[1:3]                      # "Jan" "Feb" "Mar"    (range)
 > > ```
 > > - **Key move:** `anyNA` gives one TRUE/FALSE; `is.na` gives a per-element logical vector.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Negative index = exclude, not from-the-end** ➔ `x[-1]` drops the first element (unlike Python's `x[-1]`).
 - 💡 **Recycling on unequal lengths** ➔ element-wise ops assume equal length; mismatched lengths recycle the shorter one (often a bug).

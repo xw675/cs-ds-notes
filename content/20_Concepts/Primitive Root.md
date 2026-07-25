@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Euler's Theorem and Fermat's Little Theorem]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $x$ whose powers reach 1 no earlier than $k=\phi(n)$ ➔ a generator of $\mathbb Z_n^*$.
 > - **📦 Core Components:** order $\phi(n)$ ➔ powers exhaust $\mathbb Z_n^*$ ➔ $\phi(\phi(n))$ of them.
-> - **⚡ Critical Bottleneck:** exists only for $n=1,2,4,p^k,2p^k$; no efficient algorithm to find one.
+> - **⚡ Key Constraint:** exists only for $n=1,2,4,p^k,2p^k$; no efficient algorithm to find one.
 
 ## 📝 Core
 ### 1. The Definition
@@ -40,7 +41,7 @@ $$3 \bmod 7:\ 3,2,6,4,5,1\ (\text{first }1\text{ at }k=6=\phi(7)) \Rightarrow \t
 | 8 ($=2^3$) | no | excluded form |
 | count | $\phi(\phi(n))$ | if any exist |
 
-> [!NOTE] **Crossover Invariant:** a primitive root's powers cover *all* of $\mathbb Z_n^*$ — the widest spread — making $x\mapsto a^x$ hardest to invert, so a primitive root of a large prime is chosen for the [[One-Way Function]] behind [[Diffie-Hellman Key Agreement]].
+> [!NOTE] **When It Flips:** a primitive root's powers cover *all* of $\mathbb Z_n^*$ — the widest spread — making $x\mapsto a^x$ hardest to invert, so a primitive root of a large prime is chosen for the [[One-Way Function]] behind [[Diffie-Hellman Key Agreement]].
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ Powers of 2 mod 11 ($\phi=10$):
 | 2 | 6–10 | 9,7,3,6,1 |
 | 3 | first 1 | $k=10=\phi(11)$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Existence restricted** ➔ only $n=1,2,4,p^k,2p^k$ have primitive roots; 8 does not (all of $\mathbb Z_8^*$ have order $\le2<4$).
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a primitive root and verify 3 is one mod 7 but 2 is not.
-> - **Core Insight Requirement:** Order = $\phi(n)$.
+> - **Hint:** Order = $\phi(n)$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Powers reach 1 only at $k=\phi(n)$; $3\bmod7$ gives all six, $2$ hits 1 at $k=3<6$.
-> > - **Technical Justification:** **Generator** ➔ 3's powers exhaust $\mathbb Z_7^*$; 2's cover only $\{1,2,4\}$.
+> > - **Short answer:** Powers reach 1 only at $k=\phi(n)$; $3\bmod7$ gives all six, $2$ hits 1 at $k=3<6$.
+> > - **Why:** **Generator** ➔ 3's powers exhaust $\mathbb Z_7^*$; 2's cover only $\{1,2,4\}$.
 
 > [!FAQ]- Why does 8 have no primitive root, and why are primitive roots wanted in cryptography?
-> - **Core Insight Requirement:** Existence form + max range.
+> - **Hint:** Existence form + max range.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathbb Z_8^*$ each square to 1 (order $\le2<4$); only $1,2,4,p^k,2p^k$ have roots.
-> > - **Technical Justification:** **Widest spread** ➔ powers span all of $\mathbb Z_n^*$, making $a^x$ hardest to invert.
+> > - **Short answer:** $\mathbb Z_8^*$ each square to 1 (order $\le2<4$); only $1,2,4,p^k,2p^k$ have roots.
+> > - **Why:** **Widest spread** ➔ powers span all of $\mathbb Z_n^*$, making $a^x$ hardest to invert.

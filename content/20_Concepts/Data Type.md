@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, CS/Abstraction]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** values + meaning + operations + a concrete implementation ➔ an ADT made concrete.
 > - **📦 Core Components:** **ADT** (no impl) ➔ **Data Type** (ADT + impl) ➔ **[[Data Structure]]** (layout).
-> - **⚡ Critical Bottleneck:** the implementation a data type pins down **fixes the operations' complexity**.
+> - **⚡ Key Constraint:** the implementation a data type pins down **fixes the operations' complexity**.
 
 ## 📝 Core
 ### 1. The Data Type (ADT + Implementation)
@@ -31,7 +32,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 > y = x // 2          # the operation's result depends on the implementation
 > s: str = "abcd"     # a different data type with its own values/ops/impl
 > ```
-> 💡 **Exam Pitfall:** **Value vs reference semantics** ➔ value copies on assignment (mutation can't affect the original); reference shares the object (mutation affects all names) — the classic Python-mutable-aliasing bug.
+> 💡 **Common Mistake:** **Value vs reference semantics** ➔ value copies on assignment (mutation can't affect the original); reference shares the object (mutation affects all names) — the classic Python-mutable-aliasing bug.
 
 ## ⚖️ Core Decision Matrix
 | Concept | Values + meaning | Operations | Implementation |
@@ -40,7 +41,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 | **Data Type** | ✅ | ✅ | ✅ |
 | [[Data Structure]] | values only | *access* only | ✅ (layout) |
 
-> [!NOTE] **Crossover Invariant:** complexity follows implementation — the same ADT realised as different data types has different costs (the implementation is what a data type adds). Static-vs-dynamic trade-off: early error detection + optimisation vs flexibility + development speed.
+> [!NOTE] **When It Flips:** complexity follows implementation — the same ADT realised as different data types has different costs (the implementation is what a data type adds). Static-vs-dynamic trade-off: early error detection + optimisation vs flexibility + development speed.
 
 ## 📊 Exam Execution Trace
 
@@ -68,19 +69,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- In the unit's terms, distinguish an ADT, a data type, and a data structure, and place `list` in each role.
-> - **Core Insight Requirement:** Three rungs of the abstraction ladder.
+> - **Hint:** Three rungs of the abstraction ladder.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** ADT = interface only; data type = ADT + implementation; data structure = physical layout.
-> > - **Technical Justification:** **`list`** ➔ data type; "ordered sequence with index access" = ADT; the resizable [[Array (Data Structure)]] = data structure.
+> > - **Short answer:** ADT = interface only; data type = ADT + implementation; data structure = physical layout.
+> > - **Why:** **`list`** ➔ data type; "ordered sequence with index access" = ADT; the resizable [[Array (Data Structure)]] = data structure.
 
 > [!FAQ]- Contrast static vs dynamic typing and name the core trade-off.
-> - **Core Insight Requirement:** When type checking happens.
+> - **Hint:** When type checking happens.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Static** = compile-time (errors early, optimisable); **dynamic** = run-time (flexible, concise).
-> > - **Technical Justification:** **Trade-off** ➔ early safety/performance vs flexibility/development speed.
+> > - **Short answer:** **Static** = compile-time (errors early, optimisable); **dynamic** = run-time (flexible, concise).
+> > - **Why:** **Trade-off** ➔ early safety/performance vs flexibility/development speed.
 
 > [!FAQ]- Why do value semantics and reference semantics matter for a data type?
-> - **Core Insight Requirement:** What assignment/passing does.
+> - **Hint:** What assignment/passing does.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Value copies (mutation can't affect the original); reference shares (mutation affects all references).
-> > - **Technical Justification:** **Aliasing** ➔ governs whether a mutable object is unexpectedly shared — a frequent bug source.
+> > - **Short answer:** Value copies (mutation can't affect the original); reference shares (mutation affects all references).
+> > - **Why:** **Aliasing** ➔ governs whether a mutable object is unexpectedly shared — a frequent bug source.

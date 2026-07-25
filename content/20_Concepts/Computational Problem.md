@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 1
 parent: "[[Algorithm]]"
 tags: [CS/Foundations, CS/Algorithms]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Foundations, CS/Algorithms]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** specify a correct input→output relationship ➔ states *what* is correct for any input, not *how* to compute it.
 > - **📦 Core Components:** **problem** (general spec) vs **instance** (one input) ➔ decision / search / optimisation.
-> - **⚡ Critical Bottleneck:** problems own **lower bounds** (comparison sorting $\Omega(n\log n)$); reductions transfer hardness.
+> - **⚡ Key Constraint:** problems own **lower bounds** (comparison sorting $\Omega(n\log n)$); reductions transfer hardness.
 
 ## 📝 Core
 ### 1. The Problem (Spec, Not Method)
@@ -34,7 +35,7 @@ tags: [CS/Foundations, CS/Algorithms]
 | Instance | one specific input | — |
 | [[Algorithm]] | finite procedure solving every instance | upper bounds |
 
-> [!NOTE] **Crossover Invariant:** tractability classes — **P** (poly-time solvable) vs **NP-hard/NP-complete** (no known poly algorithm). Reductions propagate both hardness ($A\le_p B$, $A$ hard ⟹ $B$ hard) and tractability (an efficient $B$-solver solves $A$).
+> [!NOTE] **When It Flips:** tractability classes — **P** (poly-time solvable) vs **NP-hard/NP-complete** (no known poly algorithm). Reductions propagate both hardness ($A\le_p B$, $A$ hard ⟹ $B$ hard) and tractability (an efficient $B$-solver solves $A$).
 
 ## 📊 Exam Execution Trace
 
@@ -48,24 +49,24 @@ Classifying three problems:
 | 2 | "Shortest $v\to u$ path" | **search** | a path object |
 | 3 | "Minimum spanning tree" | **optimisation** | best feasible tree |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Lower bound = about the problem** ➔ no algorithm beats it; an **upper bound** is exhibited by a *specific* [[Algorithm]] — matching the two proves optimal complexity.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish decision, search, and optimisation problems and say which underpins P vs NP.
-> - **Core Insight Requirement:** Output shape defines the class.
+> - **Hint:** Output shape defines the class.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Decision (yes/no) defines P and NP; search outputs a witness; optimisation outputs the best feasible solution.
-> > - **Technical Justification:** **Reduce to decision** ➔ complexity theory is built on decision problems, to which the others reduce.
+> > - **Short answer:** Decision (yes/no) defines P and NP; search outputs a witness; optimisation outputs the best feasible solution.
+> > - **Why:** **Reduce to decision** ➔ complexity theory is built on decision problems, to which the others reduce.
 
 > [!FAQ]- Why is a *lower bound* a statement about a problem rather than an algorithm?
-> - **Core Insight Requirement:** Quantifies intrinsic difficulty.
+> - **Hint:** Quantifies intrinsic difficulty.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\Omega(n\log n)$ for comparison sorting asserts *no* correct algorithm can do better in the model.
-> > - **Technical Justification:** **Match bounds** ➔ an upper bound is one algorithm's; equal upper and lower bounds prove optimal complexity.
+> > - **Short answer:** $\Omega(n\log n)$ for comparison sorting asserts *no* correct algorithm can do better in the model.
+> > - **Why:** **Match bounds** ➔ an upper bound is one algorithm's; equal upper and lower bounds prove optimal complexity.
 
 > [!FAQ]- What does $A$ reducing to $B$ mean, and why is it useful?
-> - **Core Insight Requirement:** Transform-and-transfer.
+> - **Hint:** Transform-and-transfer.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Efficiently map $A$'s instances to $B$'s so $B$'s answer yields $A$'s.
-> > - **Technical Justification:** **Two-way flow** ➔ $A$ hard, $A\le_p B$ ⟹ $B$ hard; an efficient $B$-solver solves $A$ — propagates hardness and tractability.
+> > - **Short answer:** Efficiently map $A$'s instances to $B$'s so $B$'s answer yields $A$'s.
+> > - **Why:** **Two-way flow** ➔ $A$ hard, $A\le_p B$ ⟹ $B$ hard; an efficient $B$-solver solves $A$ — propagates hardness and tractability.

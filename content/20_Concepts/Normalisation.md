@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 4
 parent: "[[Relational Model]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** refine relations by keys + FDs to remove [[Database Anomalies|anomalies]] ➔ bottom-up design.
 > - **📦 Core Components:** UNF → 1NF (repeating groups) → 2NF (partial) → 3NF (transitive).
-> - **⚡ Critical Bottleneck:** each removal spins off a new relation with a PK/FK pair; minimal (not zero) redundancy.
+> - **⚡ Key Constraint:** each removal spins off a new relation with a PK/FK pair; minimal (not zero) redundancy.
 
 ## 📝 Core
 ### 1. The Process
@@ -40,7 +41,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 >   VENDOR ||--o{ RESTOCK : supplies
 > ```
 > $$\text{PART}(\underline{\text{part\_no}}, \text{part\_name}, \text{cat\_code}^{*}, \dots)\quad \text{RESTOCK}(\underline{\text{part\_no}^{*}, \text{vendor\_no}^{*}, \text{restock\_date}}, \dots)$$
-> 💡 **Exam Pitfall:** **Minimal, not zero, redundancy** ➔ PK/FK columns repeat by design; the goal is each *fact* stored once, not every value unique.
+> 💡 **Common Mistake:** **Minimal, not zero, redundancy** ➔ PK/FK columns repeat by design; the goal is each *fact* stored once, not every value unique.
 
 ## ⚖️ Core Decision Matrix
 | Step | Removes | Creates |
@@ -50,7 +51,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | 2NF→3NF | transitive dependencies | new relation |
 | result | anomalies | single-subject relations |
 
-> [!NOTE] **Crossover Invariant:** normalise each supplied form independently UNF→3NF, then [[Synthesis (Normalisation)|synthesise]] (merge overlapping 3NF relations). It both *builds* a schema from forms and *validates* one from an ER model — the two design directions meet at 3NF.
+> [!NOTE] **When It Flips:** normalise each supplied form independently UNF→3NF, then [[Synthesis (Normalisation)|synthesise]] (merge overlapping 3NF relations). It both *builds* a schema from forms and *validates* one from an ER model — the two design directions meet at 3NF.
 
 ## 📊 Exam Execution Trace
 
@@ -77,13 +78,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- State the normalisation progression and what is removed at each step.
-> - **Core Insight Requirement:** Repeating / partial / transitive.
+> - **Hint:** Repeating / partial / transitive.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** UNF→1NF (PK + repeating groups); 1NF→2NF (partial); 2NF→3NF (transitive).
-> > - **Technical Justification:** **New relation each step** ➔ moved key stays as an FK.
+> > - **Short answer:** UNF→1NF (PK + repeating groups); 1NF→2NF (partial); 2NF→3NF (transitive).
+> > - **Why:** **New relation each step** ➔ moved key stays as an FK.
 
 > [!FAQ]- What are the goals of normalisation, and what does "minimal redundancy" mean?
-> - **Core Insight Requirement:** Single subject; fact stored once.
+> - **Hint:** Single subject; fact stored once.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Valid relations (integrity, no M:N, atomic), single-subject tables, anomaly-free.
-> > - **Technical Justification:** **FK columns repeat** ➔ each *fact* once; unavoidable PK/FK duplication remains.
+> > - **Short answer:** Valid relations (integrity, no M:N, atomic), single-subject tables, anomaly-free.
+> > - **Why:** **FK columns repeat** ➔ each *fact* once; unavoidable PK/FK duplication remains.

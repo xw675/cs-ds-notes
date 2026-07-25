@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 7
 parent: "[[Database Transaction]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 aliases: [Recovery, Transaction Log, Checkpoint, REDO, UNDO, Forward Recovery]
@@ -12,7 +13,7 @@ aliases: [Recovery, Transaction Log, Checkpoint, REDO, UNDO, Forward Recovery]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** return the DB to a consistent state after a crash ➔ replay/undo work from the transaction log.
 > - **📦 Core Components:** transaction log ➔ before/after images | checkpoint ➔ recovery start point | REDO committed / UNDO uncommitted.
-> - **⚡ Critical Bottleneck:** which transactions to REDO vs UNDO depends on the **write policy** and whether each transaction had COMMITted at crash time.
+> - **⚡ Key Constraint:** which transactions to REDO vs UNDO depends on the **write policy** and whether each transaction had COMMITted at crash time.
 
 ## 📝 Core
 ### 1. Failures & Log
@@ -38,7 +39,7 @@ aliases: [Recovery, Transaction Log, Checkpoint, REDO, UNDO, Forward Recovery]
 | **Write-through** | immediately, before COMMIT | UNDO uncommitted (newest→oldest) **+** REDO committed (oldest→newest) |
 | **Deferred-write** | only after COMMIT | REDO committed only |
 
-> [!NOTE] **Crossover Invariant:** deferred-write never has uncommitted data on disk, so it needs **no UNDO** — the write policy alone determines whether before-images are ever replayed.
+> [!NOTE] **When It Flips:** deferred-write never has uncommitted data on disk, so it needs **no UNDO** — the write policy alone determines whether before-images are ever replayed.
 
 ## 📊 Exam Execution Trace
 
@@ -55,13 +56,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does deferred-write recovery need no UNDO list, while write-through needs both?
-> - **Core Insight Requirement:** Uncommitted data on disk or not.
+> - **Hint:** Uncommitted data on disk or not.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Deferred-write only writes to disk *after* COMMIT, so the disk never holds uncommitted changes to undo; write-through writes before COMMIT, so a crash can leave partial writes needing UNDO.
-> > - **Technical Justification:** **Timing of the write** ➔ before-images are only needed when uncommitted data may already be on disk.
+> > - **Short answer:** Deferred-write only writes to disk *after* COMMIT, so the disk never holds uncommitted changes to undo; write-through writes before COMMIT, so a crash can leave partial writes needing UNDO.
+> > - **Why:** **Timing of the write** ➔ before-images are only needed when uncommitted data may already be on disk.
 
 > [!FAQ]- What does a checkpoint achieve for recovery time?
-> - **Core Insight Requirement:** Bounded log scan.
+> - **Hint:** Bounded log scan.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** It marks a known-consistent point with committed changes flushed, so recovery replays only from the last checkpoint, not the whole log.
-> > - **Technical Justification:** **Force-write + marker** ➔ everything before the checkpoint is already safely on disk.
+> > - **Short answer:** It marks a known-consistent point with committed changes flushed, so recovery replays only from the last checkpoint, not the whole log.
+> > - **Why:** **Force-write + marker** ➔ everything before the checkpoint is already safely on disk.

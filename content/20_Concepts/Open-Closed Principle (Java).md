@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 5
 parent: "[[SOLID Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [OCP, open-closed, open for extension closed for modification]
 # [[Open-Closed Principle (Java)]]
 
 **Context:** [[SOLID Principles (Java)|SOLID]] · the **O** · add features by writing new classes, not editing old ones · powered by [[Abstract Classes (Java)|abstraction]] + [[Polymorphism (Java)|polymorphism]]
-**Task signature:** a growing `if/instanceof` ladder that you edit every time a new type is added — replace it with polymorphic dispatch.
+**Problem it solves:** a growing `if/instanceof` ladder that you edit every time a new type is added — replace it with polymorphic dispatch.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** you must **edit existing code** to add a new case ➔ violates OCP; push the behaviour behind an abstract method.
-> - **⚡ Critical Bottleneck:** "closed for modification" means the *existing, tested* class shouldn't change; "open for extension" means new behaviour arrives as **new subclasses**.
+> - **⚡ Key Constraint:** "closed for modification" means the *existing, tested* class shouldn't change; "open for extension" means new behaviour arrives as **new subclasses**.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -58,8 +59,8 @@ classDiagram
   Player --> "*" ConsumableItem : inventory
 ```
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: A `Renderer` has `if (shape instanceof Circle) ... else if (shape instanceof Square) ...` to compute area. Refactor to obey OCP.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: A `Renderer` has `if (shape instanceof Circle) ... else if (shape instanceof Square) ...` to compute area. Refactor to obey OCP.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > abstract class Shape { abstract double area(); }
@@ -70,7 +71,7 @@ classDiagram
 > > ```
 > > - **Key move:** move behaviour onto the type; the consumer calls one polymorphic method.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Extending at the cost of modifying** ➔ if adding a feature forces edits to a tested class, OCP is broken — even if it "works".
 - 💡 **Don't over-abstract** ➔ too many abstract layers "for future-proofing" adds complexity; abstract the axis that actually varies.
 - 💡 **OCP ↔ `instanceof`** ➔ a growing `instanceof` chain is the classic OCP (and [[Liskov Substitution Principle (Java)|LSP]]) smell.

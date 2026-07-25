@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 5
 parent: "[[Quantifiers (Existential and Universal)]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** move $\neg$ across a quantifier, flipping $\exists\leftrightarrow\forall$ ➔ the first-order De Morgan.
 > - **📦 Core Components:** $\neg\forall Y\,P\equiv\exists Y\,\neg P$ ➔ $\neg\exists Y\,P\equiv\forall Y\,\neg P$.
-> - **⚡ Critical Bottleneck:** to negate, push $\neg$ through **every** quantifier then De Morgan the body.
+> - **⚡ Key Constraint:** to negate, push $\neg$ through **every** quantifier then De Morgan the body.
 
 ## 📝 Core
 ### 1. The Two Laws
@@ -32,7 +33,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 $$
 $$
 
-> [!NOTE] **Crossover Invariant:** negation = disproof — $\neg\forall x\,P(x)=\exists x\,\neg P(x)$ is exactly why one counterexample disproves a universal, and $\neg\exists=\forall\neg$ why disproving an existential needs all cases.
+> [!NOTE] **When It Flips:** negation = disproof — $\neg\forall x\,P(x)=\exists x\,\neg P(x)$ is exactly why one counterexample disproves a universal, and $\neg\exists=\forall\neg$ why disproving an existential needs all cases.
 
 ## 📊 Exam Execution Trace
 
@@ -46,18 +47,18 @@ Negating $\forall X\,(\text{dog}(X)\Rightarrow\text{happy}(X))$:
 | 2 | $\exists X\,\neg(\neg\text{dog}\vee\text{happy})$ | $\Rightarrow$ rewrite |
 | 3 | $\exists X\,(\text{dog}\wedge\neg\text{happy})$ | De Morgan + $\neg\neg$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$\Rightarrow$ negates to $\wedge$** ➔ a restricted universal's implication becomes the existential's conjunction; a double flip $\neg\forall Y\neg P\equiv\exists Y\,P$ returns the original.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the two quantifier-negation laws and show "not all dogs are happy" = "there is an unhappy dog".
-> - **Core Insight Requirement:** Flip + De Morgan the body.
+> - **Hint:** Flip + De Morgan the body.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\neg\forall Y\,P\equiv\exists Y\,\neg P$; $\neg\exists Y\,P\equiv\forall Y\,\neg P$; the dog case reduces to $\exists X(\text{dog}\wedge\neg\text{happy})$.
-> > - **Technical Justification:** **$\Rightarrow\to\wedge$** ➔ rewriting $\neg\text{dog}\vee\text{happy}$ and applying De Morgan.
+> > - **Short answer:** $\neg\forall Y\,P\equiv\exists Y\,\neg P$; $\neg\exists Y\,P\equiv\forall Y\,\neg P$; the dog case reduces to $\exists X(\text{dog}\wedge\neg\text{happy})$.
+> > - **Why:** **$\Rightarrow\to\wedge$** ➔ rewriting $\neg\text{dog}\vee\text{happy}$ and applying De Morgan.
 
 > [!FAQ]- How do you negate $\forall X\exists Y\,\text{adj}(X,Y)$, and what does $\neg\forall Y\neg P(Y)$ simplify to?
-> - **Core Insight Requirement:** Flip each quantifier.
+> - **Hint:** Flip each quantifier.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\neg\forall X\exists Y\,\text{adj}\equiv\exists X\forall Y\,\neg\text{adj}$; $\neg\forall Y\neg P\equiv\exists Y\,P$.
-> > - **Technical Justification:** **Double flip cancels** ➔ two negations and two quantifier-flips return a plain existential.
+> > - **Short answer:** $\neg\forall X\exists Y\,\text{adj}\equiv\exists X\forall Y\,\neg\text{adj}$; $\neg\forall Y\neg P\equiv\exists Y\,P$.
+> > - **Why:** **Double flip cancels** ➔ two negations and two quantifier-flips return a plain existential.

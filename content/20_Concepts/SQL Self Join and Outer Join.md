@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 10
 parent: "[[SQL Joins (ANSI)]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Self Join, Outer Join, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN]
 # [[SQL Self Join and Outer Join]]
 
 **Context:** [[FIT2094_MOC]] · advanced forms of the [[SQL Joins (ANSI)|ANSI join]] · a table joined to itself, and joins that **keep unmatched rows**
-**Task signature:** resolve a recursive FK (manager) or return rows that have no match on the other side.
+**Problem it solves:** resolve a recursive FK (manager) or return rows that have no match on the other side.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a table's FK points to its own PK ➔ self-join with two aliases; must keep unmatched rows ➔ OUTER join.
-> - **⚡ Critical Bottleneck:** an INNER/NATURAL join **drops** rows with no match (e.g. a manager-less employee whose `mgrno` is NULL); use LEFT/RIGHT/FULL OUTER to retain them.
+> - **⚡ Key Constraint:** an INNER/NATURAL join **drops** rows with no match (e.g. a manager-less employee whose `mgrno` is NULL); use LEFT/RIGHT/FULL OUTER to retain them.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -39,8 +40,8 @@ ORDER BY e1.empname;
 
 - **Keep KING** ➔ swap to `LEFT OUTER JOIN payroll.employee e2 ON e1.mgrno = e2.empno` so the manager-less employee is retained (manager shows NULL).
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: List every employee with their manager's name, **including** those with no manager.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: List every employee with their manager's name, **including** those with no manager.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT e1.empname, e2.empname AS manager
@@ -50,6 +51,6 @@ ORDER BY e1.empname;
 > > ```
 > > - **Key move:** LEFT OUTER keeps every `e1` row even when `mgrno` has no match (KING → NULL manager).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Self join needs distinct aliases** ➔ without `e1`/`e2` Oracle can't tell which copy a column belongs to.
 - 💡 **INNER silently hides unmatched rows** ➔ if a "list everyone" query is missing people, a NULL FK was dropped — switch to an OUTER join.

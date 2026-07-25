@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 3
 parent: "[[Java Arrays]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [ArrayList, List, HashSet, Set, HashMap, Map, TreeMap, collections, gen
 # [[Java Collections (List, Set, Map)]]
 
 **Context:** [[FIT2099_MOC]] · dynamic, resizable alternatives to a fixed [[Java Arrays|array]] · store objects and look them up by index / uniqueness / key
-**Task signature:** hold a growing collection of objects and add/find/remove them without managing a fixed size.
+**Problem it solves:** hold a growing collection of objects and add/find/remove them without managing a fixed size.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** need a resizable collection ➔ **List** (ordered, duplicates, index) · **Set** (unique, unordered) · **Map** (key→value).
-> - **⚡ Critical Bottleneck:** collections hold **objects only** — use wrapper types (**Integer**, **Long**) not primitives inside `<>`; declare to the **interface** (`List`) not the concrete class (`ArrayList`) for flexibility.
+> - **⚡ Key Constraint:** collections hold **objects only** — use wrapper types (**Integer**, **Long**) not primitives inside `<>`; declare to the **interface** (`List`) not the concrete class (`ArrayList`) for flexibility.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -54,8 +55,8 @@ books.get(9780393634990L);                // "Hello World"
 - **Map iteration** ➔ `for (Long k : books.keySet())` (keys), `for (String v : books.values())` (values), or `books.entrySet().forEach(e -> ... e.getKey() ... e.getValue())`.
 - **LinkedList vs ArrayList** ➔ `LinkedList` faster for end insert/delete; `ArrayList` faster for generic store/index access.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: Count how many times each word appears in a `String[] words`, using a `Map<String,Integer>`. Print each word and its count.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Count how many times each word appears in a `String[] words`, using a `Map<String,Integer>`. Print each word and its count.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > Map<String,Integer> counts = new HashMap<>();
@@ -68,7 +69,7 @@ books.get(9780393634990L);                // "Hello World"
 > > ```
 > > - **Key move:** `getOrDefault(key, 0)` seeds unseen keys so `+1` always works; `keySet()` to walk the map.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Primitives in `<>`** ➔ `List<int>` won't compile — use `List<Integer>` (wrapper class).
 - 💡 **`get(index)` on a Set/Map** ➔ Sets are unordered (no index); use `contains()`; Maps use `get(key)`.
 - 💡 **Declaring the concrete type** ➔ `ArrayList<X> v` locks you in; prefer `List<X> v` so the implementation can change.

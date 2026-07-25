@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 4
 parent: "[[Normalisation]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** merge 3NF relations from multiple forms representing the same subject ➔ final integration.
 > - **📦 Core Components:** normalise each form independently ➔ merge same-PK relations (union of attributes).
-> - **⚡ Critical Bottleneck:** only for multiple forms; done **last**, after every form is at 3NF.
+> - **⚡ Key Constraint:** only for multiple forms; done **last**, after every form is at 3NF.
 
 ## 📝 Core
 ### 1. The Step
@@ -26,7 +27,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 - **Same PK ⟹ same subject** ➔ merge candidates.
 - **Single form** ➔ no synthesis needed.
 
-> [!NOTE] **Crossover Invariant:** without synthesis, the same subject persists as two near-duplicate relations across forms — reintroducing cross-form redundancy and the [[Database Anomalies|anomalies]] normalisation removed. It reconciles bottom-up results, complementing top-down ER design.
+> [!NOTE] **When It Flips:** without synthesis, the same subject persists as two near-duplicate relations across forms — reintroducing cross-form redundancy and the [[Database Anomalies|anomalies]] normalisation removed. It reconciles bottom-up results, complementing top-down ER design.
 
 ## 📊 Exam Execution Trace
 
@@ -40,18 +41,18 @@ Merging DRONE:
 | 2 | Rental DRONE | drone_pur_date |
 | 3 | merged | union of both |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Do it last** ➔ merging before every form is at 3NF risks combining partially-normalised structure and reintroducing partial/transitive dependencies.
 
 ## 🧠 Active Recall
 > [!FAQ]- What is synthesis, when is it needed, and how do you decide which relations to merge?
-> - **Core Insight Requirement:** Same PK + subject.
+> - **Hint:** Same PK + subject.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Merge 3NF relations from multiple forms that model the same subject (same PK), keeping the union of attributes; only needed for multiple forms.
-> > - **Technical Justification:** **Overlap** ➔ two `DRONE(drone_id, …)` become one with all attributes.
+> > - **Short answer:** Merge 3NF relations from multiple forms that model the same subject (same PK), keeping the union of attributes; only needed for multiple forms.
+> > - **Why:** **Overlap** ➔ two `DRONE(drone_id, …)` become one with all attributes.
 
 > [!FAQ]- Why is synthesis performed last, and what happens without it?
-> - **Core Insight Requirement:** After 3NF; cross-form redundancy.
+> - **Hint:** After 3NF; cross-form redundancy.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Done after every form is at 3NF; without it the same subject persists as near-duplicate relations.
-> > - **Technical Justification:** **Reintroduces anomalies** ➔ merging early risks partial/transitive dependencies.
+> > - **Short answer:** Done after every form is at 3NF; without it the same subject persists as near-duplicate relations.
+> > - **Why:** **Reintroduces anomalies** ➔ merging early risks partial/transitive dependencies.

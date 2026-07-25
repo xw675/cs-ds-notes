@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/BitManipulation, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/BitManipulation, CS/Com
 > [!abstract] Quick Revision
 > - **🎯 Objective:** membership + algebra (∪,∩,∖) over unordered, duplicate-free elements ➔ a characteristic function $\chi_S(x)=[x\in S]$.
 > - **📦 Core Components:** **Contract** ➔ `add`/`remove`/`__contains__`/`union` | **ArraySet** ➔ any type, $O(N)$ scan | **BVSet** ➔ integers only, $O(1)$ word-parallel.
-> - **⚡ Critical Bottleneck:** same interface, **opposite cost profiles** ➔ the implementation, not the ADT, sets complexity (ArraySet $O(N)$ vs BVSet $O(1)$).
+> - **⚡ Key Constraint:** same interface, **opposite cost profiles** ➔ the implementation, not the ADT, sets complexity (ArraySet $O(N)$ vs BVSet $O(1)$).
 
 ## 📝 Core
 ### 1. Set Contract (Membership + Algebra)
@@ -48,7 +49,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/BitManipulation, CS/Com
 >                 self.size -= 1; break
 >         else: raise KeyError(item)
 > ```
-> 💡 **Exam Pitfall:** **True cost is $O(N\cdot\text{comp})$** ➔ `comp` is $O(1)$ for ints, $O(m)$ for $m$-char strings; swap-with-last delete is $O(1)$ **only because the set is unordered**.
+> 💡 **Common Mistake:** **True cost is $O(N\cdot\text{comp})$** ➔ `comp` is $O(1)$ for ints, $O(m)$ for $m$-char strings; swap-with-last delete is $O(1)$ **only because the set is unordered**.
 
 ### 🔹 BVSet — word-parallel bit algebra
 > [!code]- `BVSet(Set[T])`
@@ -64,7 +65,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/BitManipulation, CS/Com
 >     def __len__(self):                                       # O(|elems|) — the catch
 >         return bin(self.elems).count("1")                    # popcount
 > ```
-> 💡 **Exam Pitfall:** **`__len__` is popcount $O(|\text{elems}|)$** ➔ governed by the largest value, not the count (a lone $10^6$ scans ~$10^6$ bits); use `int.bit_count()`/Kernighan, never a bit-by-bit loop.
+> 💡 **Common Mistake:** **`__len__` is popcount $O(|\text{elems}|)$** ➔ governed by the largest value, not the count (a lone $10^6$ scans ~$10^6$ bits); use `int.bit_count()`/Kernighan, never a bit-by-bit loop.
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | Trigger Condition | member / add / remove | union / ∩ / ∖ | `__len__` | Element types |
@@ -75,7 +76,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/BitManipulation, CS/Com
 | hash set | General-purpose point queries | $O(1)$ expected | $O(N{+}M)$ expected | $O(1)$ | hashable |
 | balanced BST | Ordered iteration / range | $O(\log N)$ | $O(N{+}M)$ | $O(1)$ | comparable |
 
-> [!NOTE] **Crossover Invariant:** ArraySet and BVSet are exact inverses (any-type/$O(1)$-size vs ints-only/$O(1)$-membership). BVSet's $O(1)$ union is really $O(\lceil u/64\rceil)$ — a ~64× constant-factor speedup, valid only for integer universes that aren't enormous/sparse.
+> [!NOTE] **When It Flips:** ArraySet and BVSet are exact inverses (any-type/$O(1)$-size vs ints-only/$O(1)$-membership). BVSet's $O(1)$ union is really $O(\lceil u/64\rceil)$ — a ~64× constant-factor speedup, valid only for integer universes that aren't enormous/sparse.
 
 ## 📊 Exam Execution Trace
 
@@ -104,25 +105,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- The same Set ADT yields $O(1)$ on one implementation and $O(N)$ on another — state the design lesson.
-> - **Core Insight Requirement:** Separate interface from cost.
+> - **Hint:** Separate interface from cost.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The interface fixes *what*; the **implementation** sets the cost.
-> > - **Technical Justification:** **Inverse profiles** ➔ ArraySet $O(N)$ membership / any type / $O(1)$ size; BVSet $O(1)$ membership / ints only / $O(|\text{elems}|)$ size — match implementation to element type + op mix.
+> > - **Short answer:** The interface fixes *what*; the **implementation** sets the cost.
+> > - **Why:** **Inverse profiles** ➔ ArraySet $O(N)$ membership / any type / $O(1)$ size; BVSet $O(1)$ membership / ints only / $O(|\text{elems}|)$ size — match implementation to element type + op mix.
 
 > [!FAQ]- BVSet does union in $O(1)$ but ArraySet in $O(M(N+M))$ — what hardware property explains the gap, and its limit?
-> - **Core Insight Requirement:** Word-parallelism as a constant factor.
+> - **Hint:** Word-parallelism as a constant factor.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** One machine `OR` combines **64 membership bits** at once ➔ $O(\lceil u/64\rceil)$.
-> > - **Technical Justification:** **Constant-factor limit** ➔ the ~64× speedup applies only to **integer** elements over a not-too-large universe.
+> > - **Short answer:** One machine `OR` combines **64 membership bits** at once ➔ $O(\lceil u/64\rceil)$.
+> > - **Why:** **Constant-factor limit** ➔ the ~64× speedup applies only to **integer** elements over a not-too-large universe.
 
 > [!FAQ]- A set is "a characteristic function" — explain, and how a bit-vector vs a Bloom filter realise it.
-> - **Core Insight Requirement:** Exact vs lossy $\chi_S$.
+> - **Hint:** Exact vs lossy $\chi_S$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\chi_S(x)=1$ iff $x\in S$; bit-vector stores it literally (bit $i$), Bloom filter stores it lossily via $k$ hashes.
-> > - **Technical Justification:** **One-sided error** ➔ Bloom membership is $O(k)$ with **false positives, never false negatives**, trading exactness for sub-linear space.
+> > - **Short answer:** $\chi_S(x)=1$ iff $x\in S$; bit-vector stores it literally (bit $i$), Bloom filter stores it lossily via $k$ hashes.
+> > - **Why:** **One-sided error** ➔ Bloom membership is $O(k)$ with **false positives, never false negatives**, trading exactness for sub-linear space.
 
 > [!FAQ]- One scenario where BVSet is clearly right, and one where it is clearly wrong.
-> - **Core Insight Requirement:** Dense small-universe vs sparse large-universe.
+> - **Hint:** Dense small-universe vs sparse large-universe.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Right** = small integer IDs with heavy membership/algebra (graph adjacency); **wrong** = strings or large/sparse integers.
-> > - **Technical Justification:** **Universe-driven cost** ➔ BVSet is 1 bit/element + ~64× algebra for dense ints, but allocates a bit per *possible* value ⟹ a lone $10^6$ wastes space and makes `__len__` linear; use a hash set.
+> > - **Short answer:** **Right** = small integer IDs with heavy membership/algebra (graph adjacency); **wrong** = strings or large/sparse integers.
+> > - **Why:** **Universe-driven cost** ➔ BVSet is 1 bit/element + ~64× algebra for dense ints, but allocates a bit per *possible* value ⟹ a lone $10^6$ wastes space and makes `__len__` linear; use a hash set.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Probability]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** set operations on events ⟹ probability identities ➔ complement / difference / union.
 > - **📦 Core Components:** $\mathrm{Pr}(\overline A)=1-\mathrm{Pr}(A)$ ➔ difference ➔ two-event inclusion–exclusion.
-> - **⚡ Critical Bottleneck:** these mirror the set-size laws divided by $|U|$; complement is the workhorse shortcut.
+> - **⚡ Key Constraint:** these mirror the set-size laws divided by $|U|$; complement is the workhorse shortcut.
 
 ## 📝 Core
 ### 1. The Three Rules
@@ -40,7 +41,7 @@ $$\mathrm{Pr}(A\cup B)=\mathrm{Pr}(A)+\mathrm{Pr}(B)-\mathrm{Pr}(A\cap B)$$
 | $A\cup B$ | union | $\mathrm{Pr}A+\mathrm{Pr}B-\mathrm{Pr}(A\cap B)$ |
 | $A\cap B$ | intersection | $\mathrm{Pr}A+\mathrm{Pr}B-\mathrm{Pr}(A\cup B)$ |
 
-> [!NOTE] **Crossover Invariant:** these mirror the set-size laws over $|U|$ — dividing $|A\cup B|=|A|+|B|-|A\cap B|$ by $|U|$ gives the probability rule in the uniform case; the general-union rule is two-event [[Inclusion-Exclusion Principle|inclusion–exclusion]].
+> [!NOTE] **When It Flips:** these mirror the set-size laws over $|U|$ — dividing $|A\cup B|=|A|+|B|-|A\cap B|$ by $|U|$ gives the probability rule in the uniform case; the general-union rule is two-event [[Inclusion-Exclusion Principle|inclusion–exclusion]].
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ $$
 $$
 **Final Extracted Output:** 0.98 (complement); 0.56 (difference, since vowels $\subseteq$ non-blanks).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Difference needs $A\cap B$, not $A$** ➔ $\mathrm{Pr}(B)-\mathrm{Pr}(A)$ only holds when $A\subseteq B$; in general subtract $\mathrm{Pr}(A\cap B)$.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive $\mathrm{Pr}(A)=1-\mathrm{Pr}(\overline A)$ and $\mathrm{Pr}(A\cup B)=\mathrm{Pr}(A)+\mathrm{Pr}(B)-\mathrm{Pr}(A\cap B)$.
-> - **Core Insight Requirement:** Disjoint decomposition.
+> - **Hint:** Disjoint decomposition.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $A\sqcup\overline A=U$ ⟹ complement; $A\cup B=(A\setminus B)\sqcup(A\cap B)\sqcup(B\setminus A)$ ⟹ union.
-> > - **Technical Justification:** **Double-count fix** ➔ adding $\mathrm{Pr}(A)+\mathrm{Pr}(B)$ counts $A\cap B$ twice.
+> > - **Short answer:** $A\sqcup\overline A=U$ ⟹ complement; $A\cup B=(A\setminus B)\sqcup(A\cap B)\sqcup(B\setminus A)$ ⟹ union.
+> > - **Why:** **Double-count fix** ➔ adding $\mathrm{Pr}(A)+\mathrm{Pr}(B)$ counts $A\cap B$ twice.
 
 > [!FAQ]- Why does $A\subseteq B$ imply $\mathrm{Pr}(A)\le\mathrm{Pr}(B)$, and what replaces $\mathrm{Pr}(B)-\mathrm{Pr}(A)$ otherwise?
-> - **Core Insight Requirement:** Monotonicity.
+> - **Hint:** Monotonicity.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $B=A\sqcup(B\setminus A)$ with nonnegative parts ⟹ $\mathrm{Pr}(B)\ge\mathrm{Pr}(A)$; general form uses $\mathrm{Pr}(A\cap B)$.
-> > - **Technical Justification:** **Special case** ➔ $A\subseteq B$ makes $A=A\cap B$.
+> > - **Short answer:** $B=A\sqcup(B\setminus A)$ with nonnegative parts ⟹ $\mathrm{Pr}(B)\ge\mathrm{Pr}(A)$; general form uses $\mathrm{Pr}(A\cap B)$.
+> > - **Why:** **Special case** ➔ $A\subseteq B$ makes $A=A\cap B$.

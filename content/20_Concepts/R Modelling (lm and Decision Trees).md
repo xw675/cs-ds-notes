@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 8
 parent: "[[R for Data Science]]"
 tags: [DataScience/Tools, ML/Regression, R/Modelling, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [lm, R linear regression, ctree, R decision tree]
 # [[R Modelling (lm and Decision Trees)]]
 
 **Context:** [[FIT1043_MOC]] · fit models in [[R for Data Science|R]] · R's `lm` = [[Linear and Polynomial Regression|linear regression]]; `ctree` = a [[Decision Trees and Regression Trees|decision tree]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
-**Task signature:** fit a linear model or a decision tree to a data frame, then read its parameters/structure.
+**Problem it solves:** fit a linear model or a decision tree to a data frame, then read its parameters/structure.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** model a relationship in R ➔ lm(y ~ x) for regression; ctree(y ~ features) for a tree.
-> - **⚡ Critical Bottleneck:** the R **formula** is `response ~ predictor(s)` — the dependent variable goes on the **left** of `~`.
+> - **⚡ Key Constraint:** the R **formula** is `response ~ predictor(s)` — the dependent variable goes on the **left** of `~`.
 
 ## 🔧 Minimal Working Example
 ```r
@@ -39,8 +40,8 @@ plot(outputTree)
 ```
 - **Predict form** ➔ `lm(height ~ weight)` builds a model to predict `height` (response) from `weight` (predictor).
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Fit a linear model predicting `height` from `weight`, then print just the slope.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Fit a linear model predicting `height` from `weight`, then print just the slope.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > fit <- lm(height ~ weight)
@@ -48,6 +49,6 @@ plot(outputTree)
 > > ```
 > > - **Key move:** response on the left of `~`; `coefficients[2]` is the slope, `[1]` the intercept.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Formula direction** ➔ `lm(y ~ x)` predicts `y` from `x`; writing it backwards fits the wrong model.
 - 💡 **`ctree` needs the `party` package** ➔ `install.packages("party")` once, then `library(party)` each session before calling `ctree`.

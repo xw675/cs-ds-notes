@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $F=(U,D)$ inside $G=(V,E)$ ➔ $U\subseteq V$ and $D\subseteq E$, written $F\le G$.
 > - **📦 Core Components:** double containment ➔ validity (endpoints retained) ➔ proper $<$.
-> - **⚡ Critical Bottleneck:** $F$ must itself be a graph — can't keep an edge while dropping an endpoint.
+> - **⚡ Key Constraint:** $F$ must itself be a graph — can't keep an edge while dropping an endpoint.
 
 ## 📝 Core
 ### 1. The Subgraph
@@ -29,7 +30,7 @@ tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
 
 $$F\le G \iff U\subseteq V \wedge D\subseteq E \wedge (\forall\{v,w\}\in D:\ v,w\in U)$$
 
-> [!NOTE] **Crossover Invariant:** $\le$ is a [[Subset and Superset|partial order]] — it *is* double containment. Proper $<$ excludes $G$ itself, used to define a **maximal** connected subgraph = a [[Connectivity|component]]. Special graphs appear as subgraphs ("$G$ contains a $K_3$").
+> [!NOTE] **When It Flips:** $\le$ is a [[Subset and Superset|partial order]] — it *is* double containment. Proper $<$ excludes $G$ itself, used to define a **maximal** connected subgraph = a [[Connectivity|component]]. Special graphs appear as subgraphs ("$G$ contains a $K_3$").
 
 ## 📊 Exam Execution Trace
 
@@ -43,18 +44,18 @@ Is $F=(\{a,b,c\},\{ab,ac,bc\})\le G$?
 | 2 | $D\subseteq E$ | ✅ |
 | 3 | endpoints in $U$ | ✅ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **$D\subseteq E$ alone is not enough** ➔ every retained edge needs both endpoints retained, else $F$ isn't a graph.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a subgraph and proper subgraph, and the extra validity condition.
-> - **Core Insight Requirement:** Double containment + graph.
+> - **Hint:** Double containment + graph.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $F\le G$ iff $U\subseteq V$ and $D\subseteq E$; proper if $F\neq G$; each edge's endpoints in $U$.
-> > - **Technical Justification:** **Partial order** ➔ $\le$ behaves like $\subseteq$.
+> > - **Short answer:** $F\le G$ iff $U\subseteq V$ and $D\subseteq E$; proper if $F\neq G$; each edge's endpoints in $U$.
+> > - **Why:** **Partial order** ➔ $\le$ behaves like $\subseteq$.
 
 > [!FAQ]- Why can't you keep an edge while dropping one of its endpoints?
-> - **Core Insight Requirement:** $F$ must be a graph.
+> - **Hint:** $F$ must be a graph.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** An edge $\{v,w\}\in D$ needs both $v,w\in U$.
-> > - **Technical Justification:** **No orphan edges** ➔ an edge with a missing endpoint isn't a graph.
+> > - **Short answer:** An edge $\{v,w\}\in D$ needs both $v,w\in U$.
+> > - **Why:** **No orphan edges** ➔ an edge with a missing endpoint isn't a graph.

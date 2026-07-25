@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 2
 parent: "[[Proof Techniques]]"
 tags: [Math/Proof, Math/Theory, Monash/CS_DS]
 aliases: [bad proofs, faulty induction, spot the error, ex falso quodlibet, proof style, ugly proofs, four colour theorem]
@@ -10,7 +11,7 @@ aliases: [bad proofs, faulty induction, spot the error, ex falso quodlibet, proo
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** classify proofs as **good** (correct + illuminating), **bad** (invalid) or **ugly** (valid but graceless) ➔ and, for bad ones, name the exact broken step.
-> - **⚡ Critical Bottleneck:** most faulty inductions break in one of two places — a **missing/false base case**, or an **inductive step that fails at the smallest $k$** even though it looks fine in general.
+> - **⚡ Key Constraint:** most faulty inductions break in one of two places — a **missing/false base case**, or an **inductive step that fails at the smallest $k$** even though it looks fine in general.
 
 ## ✅ Good proofs — the hallmarks
 - **Correct, short, illuminating** ➔ classic exemplars: **Euclid** (infinitely many primes), **$\sqrt{2}$ is irrational**, **Cantor** (the set of all languages is uncountable — see [[Countability and Cantor Diagonalisation]]).
@@ -43,7 +44,7 @@ aliases: [bad proofs, faulty induction, spot the error, ex falso quodlibet, proo
 - **Enormous / computer-assisted proofs** ➔ the **Four Colour Theorem** (every planar graph has a 4-colouring) was proved by checking 1476 configurations by computer across ~400 pages (Appel–Haken 1977), later reduced to 633 configurations (Robertson et al. 1997) and finally **formally machine-verified** (Gonthier 2008). Valid, but hard for a human to *understand*.
 - **Proofs that shrink over time** ➔ **Abel–Ruffini** (no general algebraic formula for polynomial roots of degree $\ge5$): Ruffini's incomplete proof ran >500 pages (1799), his complete one 140 pages (1813), and Abel's just **six pages** (1824).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A locally-valid step is not a valid induction** ➔ always test the step at the **smallest** $k$ it must cover; the graph-cycle and uniform-string "proofs" both look fine for large $n$.
 - 💡 **The inductive hypothesis must fix an arbitrary $k$** ➔ "for all $k$" begs the question; "for some $k$" is too weak. Write "**Let $k\ge1$. Assume $S(k)$.**"
 - 💡 **Contradiction is not a default wrapper** ➔ reach for it when the direct route is hard; otherwise it obscures the argument (an *ugly* proof).
@@ -52,10 +53,10 @@ aliases: [bad proofs, faulty induction, spot the error, ex falso quodlibet, proo
 ## 🧠 Active Recall
 > [!FAQ]- The "every string is uniform" induction has a correct-looking step. Where exactly does it break?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** the step deletes the first and last letters of a length-$(n{+}1)$ string to get $w_1,w_2$ of length $n$, then argues they **overlap in $n-1$ letters** and so must use the same letter. That requires $n-1>0$, i.e. $n\ge2$ — at **$n=1$** the two pieces don't overlap and nothing forces them to agree.
-> > - **Technical Justification:** **The chain breaks at the first link** ➔ the base case covers $n=1$, but the step only works from $n\ge2$ onward, so $S(1)\Rightarrow S(2)$ is never established and the cascade never propagates.
+> > - **Short answer:** the step deletes the first and last letters of a length-$(n{+}1)$ string to get $w_1,w_2$ of length $n$, then argues they **overlap in $n-1$ letters** and so must use the same letter. That requires $n-1>0$, i.e. $n\ge2$ — at **$n=1$** the two pieces don't overlap and nothing forces them to agree.
+> > - **Why:** **The chain breaks at the first link** ➔ the base case covers $n=1$, but the step only works from $n\ge2$ onward, so $S(1)\Rightarrow S(2)$ is never established and the cascade never propagates.
 
 > [!FAQ]- Why is "assume that for all $k$, $S(k)$ is true" a fatal way to open an inductive step?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it assumes the **conclusion** ($\forall n\,S(n)$) as the hypothesis — circular reasoning. The correct opening fixes an **arbitrary but particular** $k$: "Let $k\ge1$. Assume $S(k)$."
-> > - **Technical Justification:** **Arbitrary, not universal** ➔ induction proves the *implication* $S(k)\Rightarrow S(k+1)$ for an unspecified $k$; assuming the universal statement outright makes the argument prove nothing, while "for some $k$" merely restates the base case.
+> > - **Short answer:** it assumes the **conclusion** ($\forall n\,S(n)$) as the hypothesis — circular reasoning. The correct opening fixes an **arbitrary but particular** $k$: "Let $k\ge1$. Assume $S(k)$."
+> > - **Why:** **Arbitrary, not universal** ➔ induction proves the *implication* $S(k)\Rightarrow S(k+1)$ for an unspecified $k$; assuming the universal statement outright makes the argument prove nothing, while "for some $k$" merely restates the base case.

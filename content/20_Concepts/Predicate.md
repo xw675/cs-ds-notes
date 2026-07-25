@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [1, 5]
 parent: "[[Binary Relation]]"
 tags: [Math/Logic, Math/Discrete, Math/Theory, Monash/CS_DS]
 aliases: [predicate, free variable, bound variable, arity, k-ary, truth-valued function, domain]
@@ -11,7 +12,7 @@ aliases: [predicate, free variable, bound variable, arity, k-ary, truth-valued f
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a truth-valued function of its arguments ➔ extends propositional logic to assertions *about objects*.
 > - **📦 Core Components:** arity ➔ unary (property) / binary (infix $<$) / higher ➔ yields a proposition once arguments fixed.
-> - **⚡ Critical Bottleneck:** binds variables via [[Quantifiers (Existential and Universal)|quantifiers]]; only $=$ is available by default.
+> - **⚡ Key Constraint:** binds variables via [[Quantifiers (Existential and Universal)|quantifiers]]; only $=$ is available by default.
 
 ## 📝 Core
 ### 1. The Predicate (Relation as Truth-Function)
@@ -51,7 +52,7 @@ $$\text{Parent}(\text{Plato},\text{Ariston})\wedge\text{Parent}(\text{Hypatia},\
 | 2 | $x<y$ / $R(x,y)$ | binary relation | $\text{Parent}(x,y)$ |
 | $n$ | $R(x_1,\dots,x_n)$ | [[n-ary Relation]] | $\text{knows}(x,y,t)$ |
 
-> [!NOTE] **Crossover Invariant:** predicates beat plain propositions because a variable-carrying statement generalises over a whole domain; a fixed proposition is just a predicate with all arguments bound. Equality is the sole assumed predicate; all others need declared arity + domains.
+> [!NOTE] **When It Flips:** predicates beat plain propositions because a variable-carrying statement generalises over a whole domain; a fixed proposition is just a predicate with all arguments bound. Equality is the sole assumed predicate; all others need declared arity + domains.
 
 ## 📊 Exam Execution Trace
 
@@ -65,18 +66,18 @@ Domain $\{2,3,4\}$, predicates $\text{Even}(x)$, $\text{Lt}(x,y)\equiv x<y$:
 | 2 | $\text{Lt}(2,3)$ | $2<3$ | T |
 | 3 | $\neg\text{Even}(3)\wedge\text{Lt}(3,4)$ | $\text{T}\wedge\text{T}$ | T |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Arguments must fit the domains** ➔ a predicate's arguments are [[Term, Variable, and Constant|terms]] whose types match each slot ($<$ on $\mathbb R$ needs real arguments); a bare predicate with a free variable is *not yet* a proposition until fixed or quantified.
 
 ## 🧠 Active Recall
 > [!FAQ]- How is a predicate related to a relation, and what does calling it a "predicate" add?
-> - **Core Insight Requirement:** Relation as truth-function.
+> - **Hint:** Relation as truth-function.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A predicate *is* a relation viewed as a truth-valued function; "predicate" signals intent to form logical statements.
-> > - **Technical Justification:** **Property = unary** ➔ $\text{Parent}(x,y)$ returns True iff $(x,y)$ is in the relation; connectives and quantifiers then apply.
+> > - **Short answer:** A predicate *is* a relation viewed as a truth-valued function; "predicate" signals intent to form logical statements.
+> > - **Why:** **Property = unary** ➔ $\text{Parent}(x,y)$ returns True iff $(x,y)$ is in the relation; connectives and quantifiers then apply.
 
 > [!FAQ]- Why is $=$ always available when no other predicate is assumed?
-> - **Core Insight Requirement:** Identity is prerequisite to reasoning.
+> - **Hint:** Identity is prerequisite to reasoning.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** You cannot reason about a class without deciding when two objects are the same.
-> > - **Technical Justification:** **Sole built-in** ➔ every other predicate must be declared with arity + argument domains.
+> > - **Short answer:** You cannot reason about a class without deciding when two objects are the same.
+> > - **Why:** **Sole built-in** ➔ every other predicate must be declared with arity + argument domains.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** restrict how a function maps to its codomain ➔ injective (distinct outputs), surjective (full coverage), bijective (both).
 > - **📦 Core Components:** injective = lossless ➔ surjective = image=codomain ➔ bijective = permutation (finite).
-> - **⚡ Critical Bottleneck:** on a finite same-set map, injective ⟺ surjective ⟺ bijective (pigeonhole).
+> - **⚡ Key Constraint:** on a finite same-set map, injective ⟺ surjective ⟺ bijective (pigeonhole).
 
 ## 📝 Core
 ### 1. The Three Classifications
@@ -39,7 +40,7 @@ $$\textbf{Surjective: } \forall y\in B\ \exists x\in A:\ f(x)=y \iff \text{Image
 | $x\mapsto x^2$ on $\mathbb R$ | no | no | lossy |
 | finite $f:A\to A$ | inj ⟺ surj ⟺ bij | | pigeonhole |
 
-> [!NOTE] **Crossover Invariant:** for finite $f:A\to A$, injective ⟺ surjective ⟺ bijective — no repeats among $\lvert A\rvert$ outputs fills all $\lvert A\rvert$ slots, and vice versa. Infinite sets have "room" to be one without the other.
+> [!NOTE] **When It Flips:** for finite $f:A\to A$, injective ⟺ surjective ⟺ bijective — no repeats among $\lvert A\rvert$ outputs fills all $\lvert A\rvert$ slots, and vice versa. Infinite sets have "room" to be one without the other.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ g &: \text{outputs distinct + all hit} \Rightarrow \text{bijective}
 $$
 **Final Extracted Output:** (a) injective only; (b) bijective (permutation of a 3-set).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Surjectivity is codomain-relative** ➔ the same rule can be onto a tight codomain but not a larger one; injective ⟹ inverse on the image, bijective ⟹ inverse on the whole codomain.
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the formal definitions of injective and surjective, and explain "lossless" vs "lossy".
-> - **Core Insight Requirement:** Distinct outputs / full image.
+> - **Hint:** Distinct outputs / full image.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Injective: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$; surjective: image = codomain.
-> > - **Technical Justification:** **Recoverability** ➔ injective outputs trace to unique inputs (lossless); $x^2$ loses the sign (lossy).
+> > - **Short answer:** Injective: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$; surjective: image = codomain.
+> > - **Why:** **Recoverability** ➔ injective outputs trace to unique inputs (lossless); $x^2$ loses the sign (lossy).
 
 > [!FAQ]- For a finite same-set function, why are the three notions equivalent, and why does this fail for infinite sets?
-> - **Core Insight Requirement:** Pigeonhole vs room.
+> - **Hint:** Pigeonhole vs room.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** With $\lvert A\rvert$ inputs into $\lvert A\rvert$ slots, no collision ⟺ all slots filled.
-> > - **Technical Justification:** **Infinite room** ➔ $x\mapsto2x$ on $\mathbb N$ is injective but not surjective.
+> > - **Short answer:** With $\lvert A\rvert$ inputs into $\lvert A\rvert$ slots, no collision ⟺ all slots filled.
+> > - **Why:** **Infinite room** ➔ $x\mapsto2x$ on $\mathbb N$ is injective but not surjective.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 9
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Aggregate Functions, GROUP BY, HAVING, COUNT, AVG, SUM]
 # [[SQL Aggregate Functions and GROUP BY]]
 
 **Context:** [[FIT2094_MOC]] · collapse many rows into per-group summaries · extends a plain [[SQL SELECT and WHERE|SELECT]] · pairs with [[SQL Subquery (Nested SELECT)|subqueries]] for "compare to the aggregate" queries
-**Task signature:** compute MIN/MAX/AVG/SUM/COUNT overall or per group, then filter the groups.
+**Problem it solves:** compute MIN/MAX/AVG/SUM/COUNT overall or per group, then filter the groups.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** "for each …" / "average/total/count of …" ➔ aggregate function + GROUP BY the category + HAVING to filter groups.
-> - **⚡ Critical Bottleneck:** every SELECT/ORDER BY column must be **either** in GROUP BY **or** inside an aggregate — otherwise Oracle errors.
+> - **⚡ Key Constraint:** every SELECT/ORDER BY column must be **either** in GROUP BY **or** inside an aggregate — otherwise Oracle errors.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -32,8 +33,8 @@ ORDER BY dt_code;
 - **Filter rows first (WHERE)** ➔ `WHERE drone_flight_time > 50 GROUP BY dt_code` — drops rows, then groups.
 - **Filter groups after (HAVING)** ➔ `GROUP BY dt_code HAVING AVG(drone_flight_time) > 50` — keeps only group means over 50.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: For each `dt_code`, show the average flight time, but only for types whose average exceeds 50; order by `dt_code`.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: For each `dt_code`, show the average flight time, but only for types whose average exceeds 50; order by `dt_code`.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT   dt_code, AVG(drone_flight_time) AS average_drone_flight
@@ -44,7 +45,7 @@ ORDER BY dt_code;
 > > ```
 > > - **Key move:** the group-level condition goes in HAVING (uses the aggregate), not WHERE.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Bare non-grouped column errors** ➔ selecting `drone_flight_time` (raw) alongside an aggregate without grouping it fails; put it in GROUP BY or wrap it in an aggregate. A `TO_CHAR(...)` expression must appear **verbatim** in GROUP BY too.
 - 💡 **No alias in GROUP BY (Monash Oracle)** ➔ `GROUP BY year` (an alias) is rejected on the marked Oracle version; repeat the full expression `GROUP BY TO_CHAR(drone_pur_date,'yyyy')`.
 - 💡 **Aggregates can't live in WHERE** ➔ a condition on an aggregate (`AVG(...) > 50`) belongs in HAVING; WHERE runs before aggregation exists.

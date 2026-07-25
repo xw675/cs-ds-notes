@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 3
 parent: "[[List (ADT)]]"
 tags: [CS/DataStructures, CS/Complexity, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, CS/Complexity, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** let an ArrayList exceed capacity ➔ allocate a bigger array, copy across, replace, insert.
 > - **📦 Core Components:** grow by a **constant factor** ➔ `append` is **$O(1)$ amortised** (so no `is_full`).
-> - **⚡ Critical Bottleneck:** a single `append` can be $O(N)$ (resize copy), but factor growth makes the sequence $O(1)$ each; **additive** growth fails ($\Theta(n^2)$).
+> - **⚡ Key Constraint:** a single `append` can be $O(N)$ (resize copy), but factor growth makes the sequence $O(1)$ each; **additive** growth fails ($\Theta(n^2)$).
 
 ## 📝 Core
 ### 1. The Resize (Allocate → Copy → Replace → Insert)
@@ -34,7 +35,7 @@ tags: [CS/DataStructures, CS/Complexity, OOP/Python]
 >         self.array = new_array
 >     self.array[len(self)] = item; self.length += 1
 > ```
-> 💡 **Exam Pitfall:** **Growth must be multiplicative** ➔ a constant *additive* (+$k$) growth makes $n$ appends $\Theta(n^2)$; the multiplicative factor is exactly what makes resizes geometrically rare.
+> 💡 **Common Mistake:** **Growth must be multiplicative** ➔ a constant *additive* (+$k$) growth makes $n$ appends $\Theta(n^2)$; the multiplicative factor is exactly what makes resizes geometrically rare.
 
 ## ⚖️ Core Decision Matrix
 | Situation | `append` | Why |
@@ -43,7 +44,7 @@ tags: [CS/DataStructures, CS/Complexity, OOP/Python]
 | full (resize) | $O(N)$ | allocate + copy $N$ |
 | **amortised** | $O(1)$ | factor growth spreads rare copies |
 
-> [!NOTE] **Crossover Invariant:** three proofs of amortised $O(1)$ (doubling) — **Aggregate:** copies cost $1+2+4+\dots+n<2n$ ⟹ $O(1)$ each. **Accounting:** charge 3 credits/append (1 write + 2 banked); never negative. **Potential:** $\Phi=2\cdot\text{len}-\text{capacity}$; normal append amortised $1+\Delta\Phi=3$, resize's $O(n)$ copy cancelled by the drop in $\Phi$. Same argument powers [[Hash Table]] rehashing; **amortised ≠ average** — a worst-case-sequence guarantee with no probability.
+> [!NOTE] **When It Flips:** three proofs of amortised $O(1)$ (doubling) — **Aggregate:** copies cost $1+2+4+\dots+n<2n$ ⟹ $O(1)$ each. **Accounting:** charge 3 credits/append (1 write + 2 banked); never negative. **Potential:** $\Phi=2\cdot\text{len}-\text{capacity}$; normal append amortised $1+\Delta\Phi=3$, resize's $O(n)$ copy cancelled by the drop in $\Phi$. Same argument powers [[Hash Table]] rehashing; **amortised ≠ average** — a worst-case-sequence guarantee with no probability.
 
 ## 📊 Exam Execution Trace
 
@@ -71,19 +72,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Prove doubling-on-overflow makes append $O(1)$ amortised, and show why additive growth fails.
-> - **Core Insight Requirement:** Geometric vs arithmetic copy totals.
+> - **Hint:** Geometric vs arithmetic copy totals.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Doubling: copies total $1+2+\dots+n<2n$ ⟹ $O(1)$ amortised; additive (+$k$): copies $k+2k+\dots+n=\Theta(n^2/k)=\Theta(n^2)$ ⟹ $\Theta(n)$ each.
-> > - **Technical Justification:** **Geometric rarity** ➔ a multiplicative factor makes resizes exponentially spaced.
+> > - **Short answer:** Doubling: copies total $1+2+\dots+n<2n$ ⟹ $O(1)$ amortised; additive (+$k$): copies $k+2k+\dots+n=\Theta(n^2/k)=\Theta(n^2)$ ⟹ $\Theta(n)$ each.
+> > - **Why:** **Geometric rarity** ➔ a multiplicative factor makes resizes exponentially spaced.
 
 > [!FAQ]- Contrast growth factor 2 vs 1.5 on memory, and explain the shrinking subtlety.
-> - **Core Insight Requirement:** Slack vs reuse; hysteresis.
+> - **Hint:** Slack vs reuse; hysteresis.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** ×2 = fewest resizes but up to 2× slack, no block reuse; ×1.5 = more copies, less slack, freed blocks reusable.
-> > - **Technical Justification:** **Shrink at ¼** ➔ halving only at quarter-full stops alternating append/pop from triggering an $O(n)$ resize every op (thrashing).
+> > - **Short answer:** ×2 = fewest resizes but up to 2× slack, no block reuse; ×1.5 = more copies, less slack, freed blocks reusable.
+> > - **Why:** **Shrink at ¼** ➔ halving only at quarter-full stops alternating append/pop from triggering an $O(n)$ resize every op (thrashing).
 
 > [!FAQ]- A single append can be $O(N)$ yet we call it $O(1)$ — which measure, and how does it differ from average-case?
-> - **Core Insight Requirement:** Amortised vs expected.
+> - **Hint:** Amortised vs expected.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Amortised** — worst-case sequence cost ÷ length.
-> > - **Technical Justification:** **No probability** ➔ even an adversary's worst append sequence gets $O(1)$ each; average-case is an expectation over an assumed distribution.
+> > - **Short answer:** **Amortised** — worst-case sequence cost ÷ length.
+> > - **Why:** **No probability** ➔ even an adversary's worst append sequence gets $O(1)$ each; average-case is an expectation over an assumed distribution.

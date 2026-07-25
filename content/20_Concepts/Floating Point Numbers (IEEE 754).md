@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 1
 parent: "[[Number Systems (Binary and Hexadecimal)]]"
 tags: [CS/Systems, CS/Foundations]
 aliases: [IEEE 754, Floating Point]
@@ -11,7 +12,7 @@ aliases: [IEEE 754, Floating Point]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** represent $s \times 2^e$ with fixed-size fields ➔ IEEE 754 double: **52-bit significand + 11-bit exponent + 1 sign bit** $= 64$ bits.
 > - **📦 Core Components:** binary point ➔ normalise to $1.xxxx \times 2^e$ ➔ store fraction + exponent (excess-$K$).
-> - **⚡ Critical Bottleneck:** finite bits ⟹ rounding — $0.1_{10}$ has **no exact binary form**; errors accumulate.
+> - **⚡ Key Constraint:** finite bits ⟹ rounding — $0.1_{10}$ has **no exact binary form**; errors accumulate.
 
 ## 📝 Core
 - **Motivation** ➔ integers can't hold $c=3{\times}10^5$ km/s and $t=15{\times}10^{-5}$ s in one scheme (scaling is ad-hoc; rounding gives $t=0$) ➔ scientific notation makes it easy: $t \times c = 45 \times 10^{5-5} = 45$ km.
@@ -32,14 +33,14 @@ s &= 001001, \quad e = 2 && \text{(exponent stored in excess-}K\text{ in real IE
 $$
 **Final Extracted Output:** significand $001001$, exponent $2$, sign $0$.
 
-## 🥋 Kata
+## ✍️ Practice
 > [!QUESTION]- Convert $10.75_{10}$ to binary, normalise it, and state the significand and exponent. Then explain in one sentence why a banking system must not store balances as floats.
 > > [!SUCCESS]- Answer
 > > - $10.75 = 1010.11_2 = 1.01011 \times 2^3$ ⟹ significand $01011\dots$, exponent $3$.
 > > - Money: decimal fractions like $0.10$ are inexact in binary ⟹ rounding errors accumulate across millions of transactions — use integer cents.
 > > - **Key move:** normalise until exactly one $1$ precedes the point; the shift count IS the exponent.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Looks exact" isn't** ➔ printed $0.1$ hides the stored $0.100000000000000005\dots$; equality tests on floats (`a == 0.3`) fail unpredictably.
 - 💡 **Floats don't replace ints** ➔ same 64 bits, but floats trade exactness for range; big integers silently round.
 - 💡 **Exponent isn't 2's complement** ➔ IEEE 754 uses excess-$K$ bias — don't decode exponent fields with the signed-integer rules.

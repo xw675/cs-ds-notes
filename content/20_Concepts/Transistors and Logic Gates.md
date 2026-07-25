@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: [1, 2]
 parent: "[[Computer Fundamentals (Bits, Bytes, Words)]]"
 tags: [CS/Systems, CS/Hardware]
 aliases: [Logic Gates, Transistors, Moore's Law]
@@ -10,7 +11,7 @@ aliases: [Logic Gates, Transistors, Moore's Law]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a transistor is a **switch triggered by a small current** ➔ gates are circuits of switches computing simple functions on 0/1 ➔ chips are billions of gates.
-> - **⚡ Critical Bottleneck:** gate behaviour = truth table; NOT/OR/AND are the primitive vocabulary for every Week 2 circuit.
+> - **⚡ Key Constraint:** gate behaviour = truth table; NOT/OR/AND are the primitive vocabulary for every Week 2 circuit.
 
 ## 📝 Core
 - **Digital = two states** ➔ high/low voltage ⟹ 1/0; all digital electronics builds on the *electronic switch*.
@@ -34,22 +35,22 @@ aliases: [Logic Gates, Transistors, Moore's Law]
 - **Minimal sets** ➔ any Boolean function needs only $\{$NOT, AND$\}$ or $\{$NOT, OR$\}$ — since $A+B = \overline{\overline{A}\,\overline{B}}$ (De Morgan, [[Boolean Algebra Laws]]).
 - **NAND alone suffices** ➔ NAND is a *universal gate*: $X$ AND $Y = (X$ NAND $Y)$ NAND $(X$ NAND $Y)$; NOT and OR follow — one gate type builds a whole computer.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Moore's law is empirical** ➔ calling it a physical law in prose costs precision marks; it's a trend observation about integration density.
 - 💡 **Gate ≠ transistor** ➔ a gate is a small *circuit of* transistors; the transistor alone is just the switch.
 
 ## 🧠 Active Recall
 > [!FAQ]- Trace the chain from vacuum tube to modern CPU, naming what each step improved.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** triode (switch, but big/hot/fragile) → transistor (solid-state, small, reliable) → integrated circuit (many gates, one chip) → VLSI CPU (billions of transistors).
-> > - **Technical Justification:** **Same abstraction throughout** ➔ every generation implements the identical primitive — a current-controlled switch — just smaller and denser (Moore's law).
+> > - **Short answer:** triode (switch, but big/hot/fragile) → transistor (solid-state, small, reliable) → integrated circuit (many gates, one chip) → VLSI CPU (billions of transistors).
+> > - **Why:** **Same abstraction throughout** ➔ every generation implements the identical primitive — a current-controlled switch — just smaller and denser (Moore's law).
 
 > [!FAQ]- Write the truth table for AND and OR from memory and state the one-line rule for each.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** AND ➔ $1$ only on $(1,1)$; OR ➔ $0$ only on $(0,0)$.
-> > - **Technical Justification:** **Truth table = gate spec** ➔ Week 2 Boolean algebra manipulates exactly these functions symbolically.
+> > - **Short answer:** AND ➔ $1$ only on $(1,1)$; OR ➔ $0$ only on $(0,0)$.
+> > - **Why:** **Truth table = gate spec** ➔ Week 2 Boolean algebra manipulates exactly these functions symbolically.
 
 > [!FAQ]- Why is NAND called a universal gate? Show AND built from NANDs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Every Boolean function can be built from NAND alone: $(X \text{ NAND } Y) \text{ NAND } (X \text{ NAND } Y) = XY$ (a NAND fed into itself acts as NOT).
-> > - **Technical Justification:** **Functional completeness** ➔ NAND yields NOT (tie inputs), hence AND (invert NAND) and OR (De Morgan) — so $\{$NAND$\}$ generates $\{\neg,\wedge,\vee\}$ ([[Universal Sets of Operations]]).
+> > - **Short answer:** Every Boolean function can be built from NAND alone: $(X \text{ NAND } Y) \text{ NAND } (X \text{ NAND } Y) = XY$ (a NAND fed into itself acts as NOT).
+> > - **Why:** **Functional completeness** ➔ NAND yields NOT (tie inputs), hence AND (invert NAND) and OR (De Morgan) — so $\{$NAND$\}$ generates $\{\neg,\wedge,\vee\}$ ([[Universal Sets of Operations]]).

@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+week: 8
 parent: "[[R Vectors]]"
 tags: [DataScience/Tools, R/Wrangling, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [R Data Frame, data.frame, read.csv, aggregate, R wrangling, R Data Fra
 # [[R Data Frames and IO]]
 
 **Context:** [[FIT1043_MOC]] · R's table = bound [[R Vectors|vectors]] · the [[Data Wrangling|wrangling]]/exploration workhorse · R's answer to a [[Data Auditing in Pandas|pandas DataFrame]]
-**Task signature:** build/read a data frame, audit it, extract/sort/merge/aggregate rows and columns, and write it back.
+**Problem it solves:** build/read a data frame, audit it, extract/sort/merge/aggregate rows and columns, and write it back.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** tabular data in R ➔ data.frame(); audit with str/summary; slice with [row, col] and the $ operator.
-> - **⚡ Critical Bottleneck:** `df[i]` selects a **column**; a **row** needs the trailing comma `df[i, ]` — the comma placement changes everything.
+> - **⚡ Key Constraint:** `df[i]` selects a **column**; a **row** needs the trailing comma `df[i, ]` — the comma placement changes everything.
 
 ## 🔧 Minimal Working Example
 ```r
@@ -36,8 +37,8 @@ summary(myTable)  # per-column summary stats
 - **I/O** ➔ `getwd()` / `setwd("D:/Folder")`; `write.csv(df, "F.csv")`; `df <- read.csv("F.csv")`.
 - **Libraries & datasets** ➔ `install.packages("moments")` once, then `library(moments)`; `data()` lists built-ins, `data(mtcars)` loads one.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Load `mtcars`, show its first rows, and the mean of every numeric column grouped by `cyl` and `vs`.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Load `mtcars`, show its first rows, and the mean of every numeric column grouped by `cyl` and `vs`.
 > > [!SUCCESS]- Reference solution
 > > ```r
 > > data(mtcars)
@@ -46,7 +47,7 @@ summary(myTable)  # per-column summary stats
 > > ```
 > > - **Key move:** `aggregate(..., by=list(...), FUN=mean)` is R's group-by-then-summarise.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Comma = row vs column** ➔ `df[2]` is column 2; `df[2, ]` is row 2; `df[2,3]` is one cell.
 - 💡 **`setwd` before read/write** ➔ relative filenames resolve against the working directory; set it (or pass a full path) first.
 - 💡 **`str` may show `Factor`** ➔ character columns can load as factors; check with `str()` before treating them as plain text.

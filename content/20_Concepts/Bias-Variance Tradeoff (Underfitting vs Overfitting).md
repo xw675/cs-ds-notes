@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 6
 parent: "[[Linear and Polynomial Regression]]"
 tags: [DataScience/Modelling, ML/Theory, Monash/CS_DS]
 aliases: [Underfitting, Overfitting, Bias, Variance, Bias-Variance Tradeoff, Train Test Split]
@@ -11,9 +12,9 @@ aliases: [Underfitting, Overfitting, Bias, Variance, Bias-Variance Tradeoff, Tra
 > [!abstract] Quick Revision
 > - **🎯 Objective:** balance model complexity ➔ too simple **underfits** (high bias), too complex **overfits** (high variance).
 > - **📦 Core Components:** bias = distance from the true function | variance = how much predictions swing across datasets.
-> - **⚡ Critical Bottleneck:** you can't minimise both at once — reducing bias (more complexity) raises variance; the sweet spot is the **tradeoff**.
+> - **⚡ Key Constraint:** you can't minimise both at once — reducing bias (more complexity) raises variance; the sweet spot is the **tradeoff**.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Underfitting vs Overfitting
 - **Underfitting** ➔ the model is **too simple** to capture the underlying structure (a straight line for a curve); poor fit due to **high bias**.
 - **Overfitting** ➔ the model is **too complex** for the data (many parameters, little data) ➔ it fits the **noise** and makes wild predictions (a 25th-degree polynomial contorts wildly).
@@ -36,21 +37,21 @@ aliases: [Underfitting, Overfitting, Bias, Variance, Bias-Variance Tradeoff, Tra
 | **balanced** | moderate | moderate | good |
 | **too high** (e.g. 25th-degree) | low | high | **overfit** |
 
-> [!NOTE] **Crossover Invariant:** the truth's shape decides the winner — for a near-straight truth a linear model beats a 3rd-order (lower variance, similar bias); for a curved truth linear underfits (high MSE) and higher-order polynomials win. There is no single best complexity ([[No Free Lunch Theorem]]).
+> [!NOTE] **When It Flips:** the truth's shape decides the winner — for a near-straight truth a linear model beats a 3rd-order (lower variance, similar bias); for a curved truth linear underfits (high MSE) and higher-order polynomials win. There is no single best complexity ([[No Free Lunch Theorem]]).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Evaluating on training data hides overfitting** ➔ an overfit model scores great on train, poorly on test; always judge on the held-out test set.
 - 💡 **Overfitting wastes a close fit** ➔ if the data has known noise, chasing every point fits the noise, not the signal.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define bias and variance, and link each to underfitting or overfitting.
-> - **Core Insight Requirement:** Accuracy vs stability.
+> - **Hint:** Accuracy vs stability.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Bias = distance of predictions from the true function (high bias ⇒ underfitting, inaccurate); variance = spread of predictions across datasets (high variance ⇒ overfitting, unstable).
-> > - **Technical Justification:** **Complexity dial** ➔ raising complexity lowers bias but raises variance; the tradeoff picks the balance that minimises test error.
+> > - **Short answer:** Bias = distance of predictions from the true function (high bias ⇒ underfitting, inaccurate); variance = spread of predictions across datasets (high variance ⇒ overfitting, unstable).
+> > - **Why:** **Complexity dial** ➔ raising complexity lowers bias but raises variance; the tradeoff picks the balance that minimises test error.
 
 > [!FAQ]- Why must you evaluate on a separate test set, not the training set?
-> - **Core Insight Requirement:** Generalisation.
+> - **Hint:** Generalisation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A model can memorise the training data (overfit) and score well on it while failing on new data; the held-out test set measures genuine generalisation.
-> > - **Technical Justification:** **Non-overlapping split** ➔ test points were never seen in fitting, so test error reflects real predictive quality.
+> > - **Short answer:** A model can memorise the training data (overfit) and score well on it while failing on new data; the held-out test set measures genuine generalisation.
+> > - **Why:** **Non-overlapping split** ➔ test points were never seen in fitting, so test error reflects real predictive quality.

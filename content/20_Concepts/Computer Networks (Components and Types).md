@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 6
 parent: "[[FIT1047_MOC]]"
 tags: [CS/Networks]
 aliases: [LAN, WAN, Clients and Servers, Transmission Rate]
@@ -10,7 +11,7 @@ aliases: [LAN, WAN, Clients and Servers, Transmission Rate]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** four components ➔ **client** (user access) · **server** (stores data/software for clients) · **switch** (connects computers within a LAN) · **router** (connects two or more networks).
-> - **⚡ Critical Bottleneck:** transfer-time arithmetic — mind **GByte vs Gbit** ($\times 8$) and the unit ladder M→G→T.
+> - **⚡ Key Constraint:** transfer-time arithmetic — mind **GByte vs Gbit** ($\times 8$) and the unit ladder M→G→T.
 
 ## 📝 Core
 - **Network types by reach** ➔ **LAN** (room/building; clients+servers sharing a circuit) → **BN** backbone (< few km; high-speed LAN interconnect) → **MAN** (> few km, across locations) → **WAN** (same idea, longer distances).
@@ -27,17 +28,17 @@ $$
 \end{aligned}
 $$
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Bytes ≠ bits** ➔ rates are in *bits*/s, file sizes in *bytes* — forgetting ×8 is the classic mark-loss.
 - 💡 **Switch vs router** ➔ switch joins computers *inside* one LAN; router joins *networks* — the boundary word decides.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define the four network components and place them in the LAN/BN/MAN/WAN ladder.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Client = user access; server = shared data/software; switch = intra-LAN connector; router = inter-network connector; reach ladder LAN → BN → MAN → WAN by distance.
-> > - **Technical Justification:** **Internet = network of networks** ➔ routers are precisely the glue points between the ladder's rungs.
+> > - **Short answer:** Client = user access; server = shared data/software; switch = intra-LAN connector; router = inter-network connector; reach ladder LAN → BN → MAN → WAN by distance.
+> > - **Why:** **Internet = network of networks** ➔ routers are precisely the glue points between the ladder's rungs.
 
 > [!FAQ]- How long does a 10 GB file take at 100 Mbps? Show the unit chain.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $10$ GB $= 80$ Gbit $= 80\,000$ Mbit ÷ $100$ Mbps $= 800$ s ≈ $13$ min $20$ s.
-> > - **Technical Justification:** **bits ÷ bits/s** ➔ convert bytes→bits first, then divide by the rate; keep units visible at every step.
+> > - **Short answer:** $10$ GB $= 80$ Gbit $= 80\,000$ Mbit ÷ $100$ Mbps $= 800$ s ≈ $13$ min $20$ s.
+> > - **Why:** **bits ÷ bits/s** ➔ convert bytes→bits first, then divide by the rate; keep units visible at every step.

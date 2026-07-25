@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 10
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
 aliases: [key establishment, key agreement, Diffie-Hellman, DH key exchange, shared secret, discrete logarithm, key exchange]
@@ -10,7 +11,7 @@ aliases: [key establishment, key agreement, Diffie-Hellman, DH key exchange, sha
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** two parties who **never met** derive a **common secret** over a public channel ➔ feed it to [[Symmetric Cryptography|AES]] for fast bulk encryption.
-> - **⚡ Critical Bottleneck:** **DH has no authentication** — it secures the channel against passive eavesdroppers but not an active **man-in-the-middle**, which is why [[Authentication, Certificates and PKI|certificates]] are needed.
+> - **⚡ Key Constraint:** **DH has no authentication** — it secures the channel against passive eavesdroppers but not an active **man-in-the-middle**, which is why [[Authentication, Certificates and PKI|certificates]] are needed.
 
 ## 📝 Why key agreement
 - **Not just public keys** ➔ public-key encryption is **slow** and there is **no global PKI**; we still need a **symmetric** session key.
@@ -35,12 +36,12 @@ $$
 - **Public** ➔ $A=g^{a}\bmod n$ and $B=g^{b}\bmod n$. **Secret** ➔ $a, b, g^{ab}$.
 - **Hard problem** ➔ recovering $a$ from $g^{a}\bmod n$ is the **discrete logarithm** ([[One-Way Function]]) — infeasible for large numbers.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **No authentication** ➔ DH alone gives a shared secret but **not with a verified partner** → man-in-the-middle can agree a key with *each* side. Signing $A, B$ only **shifts** the problem to authenticating the signing keys → certificates.
 - 💡 **$g$ must be a primitive root** ➔ otherwise the reachable values don't cover the group and the exchange weakens.
 
 ## 🧠 Active Recall
 > [!FAQ]- Diffie–Hellman lets strangers agree a secret over a public channel — what does it *not* protect against?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it defends against a **passive eavesdropper** (who faces the discrete-log problem) but **not an active man-in-the-middle**, because the protocol never verifies **who** is on the other end.
-> > - **Technical Justification:** **Missing authentication** ➔ each side would happily complete DH with the attacker; the fix is to **certify public keys** so a party's identity is bound to its key → [[Authentication, Certificates and PKI]].
+> > - **Short answer:** it defends against a **passive eavesdropper** (who faces the discrete-log problem) but **not an active man-in-the-middle**, because the protocol never verifies **who** is on the other end.
+> > - **Why:** **Missing authentication** ➔ each side would happily complete DH with the attacker; the fix is to **certify public keys** so a party's identity is bound to its key → [[Authentication, Certificates and PKI]].

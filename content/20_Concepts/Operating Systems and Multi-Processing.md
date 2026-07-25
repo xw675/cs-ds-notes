@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 5
 parent: "[[Von Neumann Architecture and Programs]]"
 tags: [CS/Systems, CS/OS]
 aliases: [Operating Systems, Timesharing, Process States, Kernel Mode, System Calls]
@@ -11,7 +12,7 @@ aliases: [Operating Systems, Timesharing, Process States, Kernel Mode, System Ca
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the **kernel** manages processes, memory, and I/O ➔ virtualises each resource so every process believes it owns the machine.
 > - **📦 Core Components:** abstraction ➔ timesharing (Running/Ready/Blocked) ➔ user vs kernel mode ➔ system calls ➔ timer interrupts.
-> - **⚡ Critical Bottleneck:** the state cycle — Running →(timer) Ready →(scheduled) Running →(I/O wait) Blocked →(I/O done) Ready — hand-traceable and examined.
+> - **⚡ Key Constraint:** the state cycle — Running →(timer) Ready →(scheduled) Running →(I/O wait) Blocked →(I/O done) Ready — hand-traceable and examined.
 
 ## 📝 Core
 ### 1. What an OS Is
@@ -39,7 +40,7 @@ aliases: [Operating Systems, Timesharing, Process States, Kernel Mode, System Ca
 | 8–9 | Running | Ready | switch back to MP |
 | 10 | Ready | Running | timer switch to WB |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Blocked ≠ Ready** ➔ Blocked waits on I/O (unschedulable); Ready waits only for CPU time — the trace above lives on this distinction.
 - 💡 **User programs can't do I/O directly** ➔ they *must* system-call; "the program reads the disk" is shorthand for "asks the kernel to".
 - 💡 **Preemption needs hardware** ➔ without timer interrupts a loop `while True: pass` would own the CPU forever.
@@ -47,10 +48,10 @@ aliases: [Operating Systems, Timesharing, Process States, Kernel Mode, System Ca
 ## 🧠 Active Recall
 > [!FAQ]- Explain how the illusion of concurrency is created and what breaks if the timer interrupt disappears.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Kernel switches processes rapidly (timesharing); frequency makes it invisible. Without timer interrupts, a non-yielding process runs forever — cooperative-only scheduling.
-> > - **Technical Justification:** **Interrupt ⟹ kernel mode** ➔ the millisecond tick guarantees the scheduler regains control regardless of user code.
+> > - **Short answer:** Kernel switches processes rapidly (timesharing); frequency makes it invisible. Without timer interrupts, a non-yielding process runs forever — cooperative-only scheduling.
+> > - **Why:** **Interrupt ⟹ kernel mode** ➔ the millisecond tick guarantees the scheduler regains control regardless of user code.
 
 > [!FAQ]- Trace the mode switches when a user program saves a file.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** User mode → system call (special instruction) → kernel mode: OS validates + performs I/O → return → user mode; process may sit Blocked while the disk works.
-> > - **Technical Justification:** **Privilege separation** ➔ I/O instructions are kernel-only, so protection is enforced by the CPU itself, not by convention.
+> > - **Short answer:** User mode → system call (special instruction) → kernel mode: OS validates + performs I/O → return → user mode; process may sit Blocked while the disk works.
+> > - **Why:** **Privilege separation** ➔ I/O instructions are kernel-only, so protection is enforced by the CPU itself, not by convention.

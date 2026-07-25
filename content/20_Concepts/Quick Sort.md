@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 7
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** partition around a pivot, recurse both sides ➔ heavy-split / trivial-combine D&C sort, no merge.
 > - **📦 Core Components:** **Partition** ➔ smaller left, larger right | **Pivot** ➔ lands final | **Recurse** ➔ both sides.
-> - **⚡ Critical Bottleneck:** in-place + smallest constant ➔ but $\Theta(n^2)$ on bad pivots; **pivot choice** is the whole game.
+> - **⚡ Key Constraint:** in-place + smallest constant ➔ but $\Theta(n^2)$ on bad pivots; **pivot choice** is the whole game.
 
 ## 📝 Core
 ### 1. The Algorithm (Partition → Recurse)
@@ -52,7 +53,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >     swap(array, start, boundary)                  # pivot to its final slot
 >     return boundary
 > ```
-> 💡 **Exam Pitfall:** **Worst case needs lopsided-at-every-level** ➔ fixed pivot on sorted input ⟹ $\Theta(n^2)$; median-of-three/random makes it improbable. Cut to [[Sorting Problem|Insertion Sort]] for arrays $\lesssim 20$.
+> 💡 **Common Mistake:** **Worst case needs lopsided-at-every-level** ➔ fixed pivot on sorted input ⟹ $\Theta(n^2)$; median-of-three/random makes it improbable. Cut to [[Sorting Problem|Insertion Sort]] for arrays $\lesssim 20$.
 
 ## ⚖️ Core Decision Matrix
 *(Domain A complexity table — Best / Average / Worst Time, Space, Stability.)*
@@ -63,7 +64,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 | [[Merge Sort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n)$ | **Yes** | guaranteed + stable, scratch |
 | [[Heapsort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $O(1)$ | No | in-place + guaranteed |
 
-> [!NOTE] **Crossover Invariant:** quicksort's no-merge, cache-friendly, in-place partition gives the **smallest constant** among $\Theta(n\log n)$ sorts — choose it unless a worst-case *bound* (heapsort) or **stability** (merge sort) is required. A quicksort run mirrors the [[Binary Tree|BST]] shape of inserting the same pivots.
+> [!NOTE] **When It Flips:** quicksort's no-merge, cache-friendly, in-place partition gives the **smallest constant** among $\Theta(n\log n)$ sorts — choose it unless a worst-case *bound* (heapsort) or **stability** (merge sort) is required. A quicksort run mirrors the [[Binary Tree|BST]] shape of inserting the same pivots.
 
 ## 📊 Exam Execution Trace
 
@@ -92,19 +93,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is quicksort $\Theta(n\log n)$ on average despite a $\Theta(n^2)$ worst case?
-> - **Core Insight Requirement:** Tie cost to split balance and pivot policy.
+> - **Hint:** Tie cost to split balance and pivot policy.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A reasonable pivot ➔ two equal halves ➔ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$.
-> > - **Technical Justification:** **Lopsided-at-every-level** ➔ the $\Theta(n^2)$ case needs a maximally bad split each level (fixed pivot on sorted input); random/median-of-three makes it improbable.
+> > - **Short answer:** A reasonable pivot ➔ two equal halves ➔ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$.
+> > - **Why:** **Lopsided-at-every-level** ➔ the $\Theta(n^2)$ case needs a maximally bad split each level (fixed pivot on sorted input); random/median-of-three makes it improbable.
 
 > [!FAQ]- Quicksort is in-place yet can use $O(n)$ stack — how do you guarantee $O(\log n)$ space?
-> - **Core Insight Requirement:** Control recursion depth via ordering.
+> - **Hint:** Control recursion depth via ordering.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Recurse on the smaller partition first, loop on the larger.**
-> > - **Technical Justification:** **Depth halving** ➔ the explicit recursive call always at least halves ⟹ stack depth $\le\log_2 n$ = $O(\log n)$, still fully in-place.
+> > - **Short answer:** **Recurse on the smaller partition first, loop on the larger.**
+> > - **Why:** **Depth halving** ➔ the explicit recursive call always at least halves ⟹ stack depth $\le\log_2 n$ = $O(\log n)$, still fully in-place.
 
 > [!FAQ]- When is merge sort preferable to quicksort, and vice versa?
-> - **Core Insight Requirement:** Map guarantees/stability vs average speed/space.
+> - **Hint:** Map guarantees/stability vs average speed/space.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Merge** for worst-case guarantees, stability, linked lists, external data; **quicksort** for in-memory arrays.
-> > - **Technical Justification:** **Space/stability trade** ➔ merge guarantees $\Theta(n\log n)$ + stable but $\Theta(n)$ scratch; quicksort is in-place with smaller constants, $\Theta(n^2)$ tamed by randomisation.
+> > - **Short answer:** **Merge** for worst-case guarantees, stability, linked lists, external data; **quicksort** for in-memory arrays.
+> > - **Why:** **Space/stability trade** ➔ merge guarantees $\Theta(n\log n)$ + stable but $\Theta(n)$ scratch; quicksort is in-place with smaller constants, $\Theta(n^2)$ tamed by randomisation.

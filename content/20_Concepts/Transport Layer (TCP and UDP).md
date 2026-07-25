@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 7
 parent: "[[Internet Model (Layers, Protocols, Encapsulation)]]"
 tags: [CS/Networks]
 aliases: [TCP, UDP, Three-Way Handshake, ARQ, Sequence Numbers]
@@ -11,7 +12,7 @@ aliases: [TCP, UDP, Three-Way Handshake, ARQ, Sequence Numbers]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** transport identifies applications (ports), splits messages, and — in TCP — repairs the network's unreliability via **ARQ** (seq/ack numbers + retransmit-on-no-ACK).
 > - **📦 Core Components:** TCP = connection-oriented + reliable (3-way open, 4-way close) · UDP = connectionless, compact, unreliable.
-> - **⚡ Critical Bottleneck:** the two numbers per TCP packet — **sequence** = bytes I've sent so far, **acknowledgement** = bytes I've received — everything (handshakes, loss recovery) is arithmetic on these.
+> - **⚡ Key Constraint:** the two numbers per TCP packet — **sequence** = bytes I've sent so far, **acknowledgement** = bytes I've received — everything (handshakes, loss recovery) is arithmetic on these.
 
 ## 📝 Core
 ### TCP (Transmission Control Protocol)
@@ -45,7 +46,7 @@ aliases: [TCP, UDP, Three-Way Handshake, ARQ, Sequence Numbers]
 | overhead | headers + handshakes + state | ~8-byte header |
 | fits | web, mail, SSH — completeness matters | streaming, VoIP, notifications — timeliness matters |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Reliability lives HERE, not below** ➔ the data link only *discards* bad frames; TCP is what retransmits — layer-attribution questions hinge on this.
 - 💡 **Four-way close because full-duplex** ➔ each direction carries its own FIN; "why not two messages?" is the standard exam probe.
 - 💡 **UDP isn't broken TCP** ➔ for live media, retransmitted-late data is useless; unreliability is the correct engineering choice.
@@ -53,10 +54,10 @@ aliases: [TCP, UDP, Three-Way Handshake, ARQ, Sequence Numbers]
 ## 🧠 Active Recall
 > [!FAQ]- Write the 3-way handshake with concrete numbers, starting from client seq $3185$ and server seq $734$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** SYN $3185\mid0$ → SYN,ACK $734 \mid 3186$ → ACK $3186 \mid 735$.
-> > - **Technical Justification:** **Ack = other's seq + 1** ➔ each side proves receipt of the other's opening number, establishing both directions.
+> > - **Short answer:** SYN $3185\mid0$ → SYN,ACK $734 \mid 3186$ → ACK $3186 \mid 735$.
+> > - **Why:** **Ack = other's seq + 1** ➔ each side proves receipt of the other's opening number, establishing both directions.
 
 > [!FAQ]- A segment is lost mid-transfer. How does TCP notice and recover, and which fields drive it?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The receiver's ack number stops advancing; the sender's timeout expires without an ACK covering those bytes → retransmit from the last acknowledged byte.
-> > - **Technical Justification:** **ARQ via byte counting** ➔ seq/ack are cumulative byte counters, so one number pinpoints exactly where the stream must resume.
+> > - **Short answer:** The receiver's ack number stops advancing; the sender's timeout expires without an ACK covering those bytes → retransmit from the last acknowledged byte.
+> > - **Why:** **ARQ via byte counting** ➔ seq/ack are cumulative byte counters, so one number pinpoints exactly where the stream must resume.

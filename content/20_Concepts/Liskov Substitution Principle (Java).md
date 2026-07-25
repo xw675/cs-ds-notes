@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: [5, 8]
 parent: "[[SOLID Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [LSP, Liskov substitution, circle-ellipse problem, is-a]
 # [[Liskov Substitution Principle (Java)]]
 
 **Context:** [[SOLID Principles (Java)|SOLID]] · the **L** · guarantees [[Polymorphism (Java)|polymorphism]] is safe · if a subtype can't stand in for its base, the **abstraction is wrong**
-**Task signature:** a subclass that breaks its parent's contract (throws, does nothing, or needs `instanceof`) — re-model so substitution holds.
+**Problem it solves:** a subclass that breaks its parent's contract (throws, does nothing, or needs `instanceof`) — re-model so substitution holds.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** substituting a subclass for its base **changes behaviour or breaks** ➔ LSP violated; you extended the wrong class.
-> - **⚡ Critical Bottleneck:** formally — if $S$ is a subtype of $T$, any property provable of a $T$ object must hold for an $S$ object; so `T x = new S();` must never surprise the caller.
+> - **⚡ Key Constraint:** formally — if $S$ is a subtype of $T$, any property provable of a $T$ object must hold for an $S$ object; so `T x = new S();` must never surprise the caller.
 
 ## 🔧 Minimal Working Example
 ```java
@@ -56,14 +57,14 @@ classDiagram
 - **Resolutions** ➔ (a) don't make `Circle` extend `Ellipse`; (b) both extend a shared `Shape`/`ConicSection`; the right choice **depends on circumstances**.
 - **Java hint** ➔ extending a **concrete** class often breaks LSP (and OCP) — a `Creature creature = new FlyingCreature();` that can suddenly fly surprises callers.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: `Square extends Rectangle` overrides `setWidth` to also set height (to stay square). Why does this break LSP, and what's a fix?
+## ✍️ Practice
+> [!QUESTION]- Practice 1: `Square extends Rectangle` overrides `setWidth` to also set height (to stay square). Why does this break LSP, and what's a fix?
 > > [!SUCCESS]- Reference solution
 > > - **Why:** code that expects a `Rectangle` can `setWidth(5); setHeight(4)` and assume area 20; a `Square` silently forces 4×4=16 — behaviour changed under substitution.
 > > - **Fix:** don't inherit; give both a common `Shape` supertype (or an immutable `area()` interface) so neither promises independent width/height mutation.
 > > - **Key move:** the is-a must preserve the **base's behavioural contract**, not just its data shape.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`instanceof` in an override = red flag** ➔ branching on the concrete subtype inside a supposedly polymorphic method signals a broken abstraction.
 - 💡 **LSP protects [[Polymorphism (Java)|polymorphism]]** ➔ break it and every client of the base (20+ classes) risks a runtime surprise — high coupling to debug.
 - 💡 **"is-a" in words ≠ safe inheritance** ➔ test the *behaviour*, not the noun (circle/ellipse, square/rectangle).

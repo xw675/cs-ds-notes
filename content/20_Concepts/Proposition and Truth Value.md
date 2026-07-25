@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: [1, 4]
 parent: "[[Logical Connectives]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a statement that is either true or false ➔ the truth-valued atom all of logic is built on.
 > - **📦 Core Components:** proposition ➔ truth value $\{$T,F$\}$ ➔ Boolean variable (a name for one).
-> - **⚡ Critical Bottleneck:** **bivalence** — exactly one truth value; questions, commands, and self-referential paradoxes are **not** propositions.
+> - **⚡ Key Constraint:** **bivalence** — exactly one truth value; questions, commands, and self-referential paradoxes are **not** propositions.
 
 ## 📝 Core
 ### 1. The Proposition (Truth-Valued Atom)
@@ -35,7 +36,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 | command / question | none | **no** | "close the door" |
 | self-referential paradox | none consistent | **no** | "this statement is false" |
 
-> [!NOTE] **Crossover Invariant:** **bivalence** — every proposition has *exactly one* truth value — is the assumption the whole module rests on. A Boolean *variable* ranges over $\{$T,F$\}$; a *proposition* has a fixed (possibly unknown) value.
+> [!NOTE] **When It Flips:** **bivalence** — every proposition has *exactly one* truth value — is the assumption the whole module rests on. A Boolean *variable* ranges over $\{$T,F$\}$; a *proposition* has a fixed (possibly unknown) value.
 
 ## 📊 Exam Execution Trace
 
@@ -50,18 +51,18 @@ Classifying statements:
 | 3 | "This statement is false." | no (paradox) | no | — |
 | 4 | "It will rain tomorrow." | yes | yes | unknown |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Unknown" ≠ "not a proposition"** ➔ "it will rain tomorrow" is a proposition (definite truth value, merely unknown now); only commands, questions, and paradoxes are excluded.
 
 ## 🧠 Active Recall
 > [!FAQ]- What makes a statement a proposition, and why are "Come and work for us!" and "This statement is false" excluded?
-> - **Core Insight Requirement:** Definite truth value required.
+> - **Hint:** Definite truth value required.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A proposition is a declarative statement with exactly one truth value; a command has none, a paradox has no consistent one.
-> > - **Technical Justification:** **Bivalence** ➔ "this statement is false" is T ⟺ F, so no consistent assignment exists.
+> > - **Short answer:** A proposition is a declarative statement with exactly one truth value; a command has none, a paradox has no consistent one.
+> > - **Why:** **Bivalence** ➔ "this statement is false" is T ⟺ F, so no consistent assignment exists.
 
 > [!FAQ]- How do truth values relate to bits, and what is a Boolean variable?
-> - **Core Insight Requirement:** T/F ↔ 1/0.
+> - **Hint:** T/F ↔ 1/0.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\{$T,F$\}$ correspond to bits $\{1,0\}$; a Boolean variable ranges over $\{$T,F$\}$ and often names a proposition.
-> > - **Technical Justification:** **Hardware-independent** ➔ logic operations mirror operations on $1/0$, which is why digital hardware computes logic.
+> > - **Short answer:** $\{$T,F$\}$ correspond to bits $\{1,0\}$; a Boolean variable ranges over $\{$T,F$\}$ and often names a proposition.
+> > - **Why:** **Hardware-independent** ➔ logic operations mirror operations on $1/0$, which is why digital hardware computes logic.

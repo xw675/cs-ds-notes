@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 6
 parent: "[[Data Integrity]]"
 tags: [CS/Databases, SQL/Oracle, SWE/Design, Monash/CS_DS]
 aliases: [Check Constraint, Lookup Table]
@@ -10,7 +11,7 @@ aliases: [Check Constraint, Lookup Table]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** restrict a column to its valid values ➔ inline CHECK for small fixed sets, a lookup table for growing/inclusive sets.
-> - **⚡ Critical Bottleneck:** `CHECK` is simple but **hard to extend** (schema change to add a value); a lookup table trades a join for open extensibility.
+> - **⚡ Key Constraint:** `CHECK` is simple but **hard to extend** (schema change to add a value); a lookup table trades a join for open extensibility.
 
 ## 📝 Core
 - **Nullability first** ➔ optional attribute ➔ allow NULL (omit constraint); mandatory ➔ `... NOT NULL`; decided by **business need**, not the designer alone.
@@ -24,12 +25,12 @@ aliases: [Check Constraint, Lookup Table]
 | **CHECK constraint** | few, unlikely-to-change values | simple; enforces consistency | rigid — new value needs `ALTER` (schema change) |
 | **Lookup table** | diverse / evolving / inclusive values | extend by `INSERT`; supports inclusive design | extra join; list can grow unmanaged |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`CHECK` hard-codes exclusion** ➔ a gender `CHECK ('M','F','U')` cannot represent non-binary/undisclosed without an `ALTER`; a lookup table avoids re-engineering for inclusive design.
 - 💡 **Nullability is a requirement, not a default** ➔ confirm with the client whether an attribute is optional before choosing NULL vs `NOT NULL`.
 
 ## 🧠 Active Recall
 > [!FAQ]- Gender must currently be M/F/U but the client expects to add inclusive options later — CHECK or lookup, and why?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Prefer a **lookup table** — new values are inserted rows, no schema change; `CHECK` would force an `ALTER` each time.
-> > - **Technical Justification:** **Extensibility** ➔ `CHECK` bakes the value set into DDL; a lookup externalises it to data, supporting inclusive design.
+> > - **Short answer:** Prefer a **lookup table** — new values are inserted rows, no schema change; `CHECK` would force an `ALTER` each time.
+> > - **Why:** **Extensibility** ➔ `CHECK` bakes the value set into DDL; a lookup externalises it to data, supporting inclusive design.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 4
 parent: "[[Von Neumann Architecture and Programs]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [RAM, Memory Hierarchy, Caching, Swapping]
@@ -11,7 +12,7 @@ aliases: [RAM, Memory Hierarchy, Caching, Swapping]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** memory = addressed boxes whose interpretation belongs to the PROGRAM ➔ $n$ address bits reach $2^n$ locations ➔ hierarchy trades speed for size (registers → caches → RAM → disk → network).
 > - **📦 Core Components:** byte- vs word-addressable ➔ RAM (random access) ➔ cache (recently-used + prefetch) ➔ swapping (RAM's overflow to disk).
-> - **⚡ Critical Bottleneck:** RAM is up to $100\times$ slower than registers — caching exists because programs reuse and neighbour-access data; a cache miss can cost $100\times$.
+> - **⚡ Key Constraint:** RAM is up to $100\times$ slower than registers — caching exists because programs reuse and neighbour-access data; a cache miss can cost $100\times$.
 
 ## 📝 Core
 ### 1. Addressing
@@ -41,13 +42,13 @@ aliases: [RAM, Memory Hierarchy, Caching, Swapping]
 | Disk/SSD | ~$1000\times$ slower | TBs | external |
 | Network | $10^4\times$–∞ | ? | external |
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- An architecture has 20-bit addresses and is byte-addressable. (a) How much memory can it address? (b) Same bits but word-addressable with 32-bit words — now how much? (c) Why does the array-sum loop from [[MARIE Patterns (Indirect Addressing, Arrays, Subroutines)]] run cache-friendly?
 > > [!SUCCESS]- Answer
 > > - (a) $2^{20}$ bytes $= 1$ MiB. (b) $2^{20}$ words $\times 4$ B $= 4$ MiB. (c) It touches consecutive addresses ⟹ each miss prefetches the following elements — sequential access is the cache's best case.
 > > - **Key move:** capacity $=$ $2^{\text{address bits}} \times$ (bytes per location) — addressability changes the multiplier, not the exponent.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Word- vs byte-addressable changes capacity** ➔ same address width, different total bytes; MARIE's 8 KiB needs BOTH facts ($2^{12}$ AND 2-byte words).
 - 💡 **Caching ≠ swapping** ➔ cache pulls hot data *toward* the CPU; swapping pushes cold data *away* to disk — opposite directions, both transparent.
 - 💡 **"Random access" is about order-independence** ➔ not randomness; the contrast class is sequential media (tape, disk head travel).

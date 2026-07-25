@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: 3
 parent: "[[Logical Implication]]"
 tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** from $P$ and $P\Rightarrow Q$, deduce $Q$ ➔ the engine of every "logical consequence" proof step.
 > - **📦 Core Components:** fact $P$ ➔ implication $P\Rightarrow Q$ ➔ conclusion $Q$.
-> - **⚡ Critical Bottleneck:** **both** premises required; deducing $P$ from $Q$ and $P\Rightarrow Q$ is the converse fallacy.
+> - **⚡ Key Constraint:** **both** premises required; deducing $P$ from $Q$ and $P\Rightarrow Q$ is the converse fallacy.
 
 ## 📝 Core
 ### 1. The Rule (Affirming the Antecedent)
@@ -35,7 +36,7 @@ $$\therefore\ Q:\ X\subseteq A \quad(\text{modus ponens})$$
 | $Q$ and $P\Rightarrow Q$ | (affirming consequent) | $P$ | ❌ converse fallacy |
 | $\neg Q$ and $P\Rightarrow Q$ | modus tollens | $\neg P$ | ✅ |
 
-> [!NOTE] **Crossover Invariant:** so natural it is rarely named in prose — "we have $P$, and $P$ implies $Q$, therefore $Q$" is just "a deduction". Its premises must themselves be established (definition/axiom/prior theorem/earlier step).
+> [!NOTE] **When It Flips:** so natural it is rarely named in prose — "we have $P$, and $P$ implies $Q$, therefore $Q$" is just "a deduction". Its premises must themselves be established (definition/axiom/prior theorem/earlier step).
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ P\Rightarrow Q &:\ 6\mid n \Rightarrow 2\mid n && \text{(given implication)} \\
 $$
 **Final Extracted Output:** $2\mid 12$ by modus ponens; from $Q$ one may not conclude $P$ (converse fallacy).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Don't affirm the consequent** ➔ having $Q$ and $P\Rightarrow Q$ does *not* give $P$ (converse fallacy); you need the antecedent $P$ itself.
 
 ## 🧠 Active Recall
 > [!FAQ]- State modus ponens and explain why both premises are essential.
-> - **Core Insight Requirement:** Fact + conditional.
+> - **Hint:** Fact + conditional.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** From $P$ and $P\Rightarrow Q$ deduce $Q$; the implication is inert without its antecedent holding.
-> > - **Technical Justification:** **Converse fallacy** ➔ deducing $P$ from $Q$ and $P\Rightarrow Q$ is invalid.
+> > - **Short answer:** From $P$ and $P\Rightarrow Q$ deduce $Q$; the implication is inert without its antecedent holding.
+> > - **Why:** **Converse fallacy** ➔ deducing $P$ from $Q$ and $P\Rightarrow Q$ is invalid.
 
 > [!FAQ]- How does modus ponens appear in a power-set subset proof?
-> - **Core Insight Requirement:** Definition as the implication.
+> - **Hint:** Definition as the implication.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** With $P:\ X\in\mathcal P(A)$ and definitional $P\Rightarrow Q$ ($Q:\ X\subseteq A$), modus ponens yields $X\subseteq A$.
-> > - **Technical Justification:** **Membership = subset** ➔ the [[Power Set]] definition supplies the conditional the rule consumes.
+> > - **Short answer:** With $P:\ X\in\mathcal P(A)$ and definitional $P\Rightarrow Q$ ($Q:\ X\subseteq A$), modus ponens yields $X\subseteq A$.
+> > - **Why:** **Membership = subset** ➔ the [[Power Set]] definition supplies the conditional the rule consumes.

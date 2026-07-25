@@ -8,11 +8,11 @@ aliases: [Shell Cheatsheet, Bash Cheatsheet, Unix Cheatsheet, grep awk sort cut 
 # [[Shell Toolkit (Cheatsheet)]]
 
 **Context:** [[FIT1043_MOC]], [[FIT2014_MOC]] · navigate → inspect → search/count → sort → cut columns → pipe → compress → `awk` → **`sed`/`tr`/regex** → hand off · depth in [[Unix Shell (Bash)]]; text-transform detail in [[Text Processing with sed and tr]] · FIT2014 = Lab 0 tooling
-**Read protocol:** scan tables → attempt the katas blank → follow the pattern-note link only where you failed.
+**Read protocol:** scan tables → attempt the practice blank → follow the pattern-note link only where you failed.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** explore/clean a **huge** text/CSV file from the command line without loading it into memory ➔ chain small tools with pipes, then hand the reduced file to [[R for Data Science|R]]/[[Python for Data Science|Python]].
-> - **⚡ Critical Bottleneck:** the **pipe `|` is buffered + line-at-a-time** — memory stays bounded so it scales past RAM; `>` **overwrites a file**, `|` **feeds the next program** — never confuse them.
+> - **⚡ Key Constraint:** the **pipe `|` is buffered + line-at-a-time** — memory stays bounded so it scales past RAM; `>` **overwrites a file**, `|` **feeds the next program** — never confuse them.
 
 ## 🧩 Pipeline Anatomy (execution order)
 ```bash
@@ -107,15 +107,15 @@ cat big.csv.gz | gunzip | awk -F',' 'NR>1 {print $6,$14}' | sort -n | head
 
 *(⚠ POSIX **BRE**: grouping/repetition are escaped — `\(...\)`, `\{n\}`; bare `()` `{}` are literal. Opposite of the theory notation.)*
 
-## 🥋 Integration Katas
-> [!QUESTION]- Kata 1: From gzipped `air.csv.gz` (comma-delimited, header on line 1), print the **10 largest** values of column 14, ignoring the header.
+## ✍️ Integration Practice
+> [!QUESTION]- Practice 1: From gzipped `air.csv.gz` (comma-delimited, header on line 1), print the **10 largest** values of column 14, ignoring the header.
 > > [!SUCCESS]- Reference solution
 > > ```bash
 > > cat air.csv.gz | gunzip | awk -F',' 'NR>1 {print $14}' | sort -nr | head
 > > ```
 > > - **Key move:** decompress → `awk` skips header + selects col → `sort -nr` (numeric, reverse) → `head`. Filter (`NR>1`) sits early so less data flows on.
 
-> [!QUESTION]- Kata 2: Count how many rows in `data.csv` have "ERROR" in them, then save just those rows to `errors.txt`.
+> [!QUESTION]- Practice 2: Count how many rows in `data.csv` have "ERROR" in them, then save just those rows to `errors.txt`.
 > > [!SUCCESS]- Reference solution
 > > ```bash
 > > grep -c "ERROR" data.csv            # count matching rows
@@ -123,7 +123,7 @@ cat big.csv.gz | gunzip | awk -F',' 'NR>1 {print $6,$14}' | sort -n | head
 > > ```
 > > - **Key move:** `grep -c` counts in one step; `>` persists the filtered rows (use `>>` to append instead of overwrite).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`>` overwrites, `|` chains** ➔ redirect **replaces** the target file; pipe **feeds** the next program.
 - 💡 **Mind the delimiter** ➔ `cut -f` assumes **tab**; for CSV use `awk -F','` or `cut -d','`. Check the real delimiter first (`/<tab>` search in `less`).
 - 💡 **`wc`/`sort`/`uniq` read the whole file** ➔ slow + memory-heavy on huge files; `less`/`head` only read the start → instant. Put cheap filters **before** them.

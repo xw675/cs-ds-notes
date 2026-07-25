@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT2004]
+week: [1, 7]
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** cut in half, sort each, merge two sorted halves ➔ trivial-split / heavy-combine D&C sort.
 > - **📦 Core Components:** **Split** ➔ $\Theta(1)$ | **Recurse** ➔ two calls on $n/2$ | **Merge** ➔ $\Theta(n)$, ties left-first ⇒ stable.
-> - **⚡ Critical Bottleneck:** **guaranteed $\Theta(n\log n)$ every case** + **stable** ➔ but needs **$\Theta(n)$ scratch**.
+> - **⚡ Key Constraint:** **guaranteed $\Theta(n\log n)$ every case** + **stable** ➔ but needs **$\Theta(n)$ scratch**.
 
 ## 📝 Core
 ### 1. The Algorithm (Split → Merge)
@@ -53,7 +54,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 >         elif a[ia] <= a[ib]:       tmp[k] = a[ia]; ia += 1   # '<=' => STABLE
 >         else:                      tmp[k] = a[ib]; ib += 1
 > ```
-> 💡 **Exam Pitfall:** **Merge `<=` is load-bearing** ➔ `<` emits the right element first on ties, breaking stability; guard empty input (`mid = -1//2 = -1` recurses forever).
+> 💡 **Common Mistake:** **Merge `<=` is load-bearing** ➔ `<` emits the right element first on ties, breaking stability; guard empty input (`mid = -1//2 = -1` recurses forever).
 
 ## ⚖️ Core Decision Matrix
 *(complexity table — Best / Average / Worst Time, Space, Stability.)*
@@ -64,7 +65,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
 | [[Quick Sort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n^2)$ | $O(\log n)$ | No | in-place, smaller constant |
 | [[Heapsort]] | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $\Theta(n\log n)$ | $O(1)$ | No | in-place + guaranteed |
 
-> [!NOTE] **Crossover Invariant:** merge sort's space/stability trade is the inverse of quicksort's — pick merge for **worst-case guarantees, stability, linked lists, or external data**; quicksort when in-place + smaller constant outweigh the $\Theta(n^2)$ risk.
+> [!NOTE] **When It Flips:** merge sort's space/stability trade is the inverse of quicksort's — pick merge for **worst-case guarantees, stability, linked lists, or external data**; quicksort when in-place + smaller constant outweigh the $\Theta(n^2)$ risk.
 
 ## 📊 Exam Execution Trace
 
@@ -92,19 +93,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Explain merge sort's complexity and why it has no bad case.
-> - **Core Insight Requirement:** Tie the recurrence to order-independence.
+> - **Hint:** Tie the recurrence to order-independence.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\log_2 n$ levels × $\Theta(n)$ merge work = $\Theta(n\log n)$.
-> > - **Technical Justification:** **Order-independent count** ➔ work depends only on $n$, never element order ⟹ best = average = worst, no degrading input.
+> > - **Short answer:** $\log_2 n$ levels × $\Theta(n)$ merge work = $\Theta(n\log n)$.
+> > - **Why:** **Order-independent count** ➔ work depends only on $n$, never element order ⟹ best = average = worst, no degrading input.
 
 > [!FAQ]- Merge sort and quicksort are both $\Theta(n\log n)$ average — two situations where merge sort is correct?
-> - **Core Insight Requirement:** Identify guarantee/stability/access-pattern needs.
+> - **Hint:** Identify guarantee/stability/access-pattern needs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** (1) **Worst-case guarantees** (real-time/adversarial); (2) **stability** (secondary-key sort).
-> > - **Technical Justification:** **No-$O(n^2)$ + linked/external** ➔ quicksort can hit $\Theta(n^2)$; merge also suits linked lists (relink-merge) and external data (sequential access).
+> > - **Short answer:** (1) **Worst-case guarantees** (real-time/adversarial); (2) **stability** (secondary-key sort).
+> > - **Why:** **No-$O(n^2)$ + linked/external** ➔ quicksort can hit $\Theta(n^2)$; merge also suits linked lists (relink-merge) and external data (sequential access).
 
 > [!FAQ]- Prove merge sort is stable and identify the exact line responsible.
-> - **Core Insight Requirement:** Locate the tie-break in the merge.
+> - **Hint:** Locate the tie-break in the merge.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Ties resolve from the **left** subarray via `a[ia] <= a[ib]`.
-> > - **Technical Justification:** **Left-first emission** ➔ the left holds earlier-input elements, so equal keys keep order; `<=` → `<` would emit the right first and break stability.
+> > - **Short answer:** Ties resolve from the **left** subarray via `a[ia] <= a[ib]`.
+> > - **Why:** **Left-first emission** ➔ the left holds earlier-input elements, so equal keys keep order; `<=` → `<` would emit the right first and break stability.

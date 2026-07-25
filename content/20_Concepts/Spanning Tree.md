@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 12
 parent: "[[Tree]]"
 tags: [Math/GraphTheory, CS/Algorithms, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/GraphTheory, CS/Algorithms, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a tree subgraph containing every vertex ➔ a minimal connected skeleton.
 > - **📦 Core Components:** delete-edges or add-edges construction ➔ $n-1$ edges.
-> - **⚡ Critical Bottleneck:** every connected graph has one; disconnected ⟹ spanning forest.
+> - **⚡ Key Constraint:** every connected graph has one; disconnected ⟹ spanning forest.
 
 ## 📝 Core
 ### 1. The Spanning Tree
@@ -32,7 +33,7 @@ tags: [Math/GraphTheory, CS/Algorithms, Monash/CS_DS]
 $$\textbf{Add: } X=\emptyset;\ \text{add edge if no cycle; stop when none} \Rightarrow \text{spanning tree}$$
 $$\textbf{Delete: } \text{remove edges keeping connectivity} \Rightarrow \text{spanning tree}$$
 
-> [!NOTE] **Crossover Invariant:** minimality is the point — drop every redundant edge for the cheapest connectivity ($n-1$ edges). [[Kruskal's Greedy Algorithm]] adds costs, choosing a *minimum-cost* spanning tree.
+> [!NOTE] **When It Flips:** minimality is the point — drop every redundant edge for the cheapest connectivity ($n-1$ edges). [[Kruskal's Greedy Algorithm]] adds costs, choosing a *minimum-cost* spanning tree.
 
 ## 📊 Exam Execution Trace
 
@@ -47,18 +48,18 @@ Add edges to $G$ (4-cycle + diagonal $ac$):
 | 3 | $cd$ | no | ✅ (spans, $n-1=3$) |
 | 4 | $da,ac$ | yes | rejected |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Add-method stays a forest** ➔ acyclic throughout, connected only at the end; the final tree has $n-1$ edges (minimum to connect all).
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a spanning tree and give two methods proving every connected graph has one.
-> - **Core Insight Requirement:** Add / delete.
+> - **Hint:** Add / delete.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A tree subgraph containing all vertices; build by deleting connectivity-preserving edges or adding cycle-free edges.
-> > - **Technical Justification:** **Both terminate** ➔ in a spanning tree for any connected $G$ (disconnected ⟹ forest).
+> > - **Short answer:** A tree subgraph containing all vertices; build by deleting connectivity-preserving edges or adding cycle-free edges.
+> > - **Why:** **Both terminate** ➔ in a spanning tree for any connected $G$ (disconnected ⟹ forest).
 
 > [!FAQ]- Why does the add-method's partial result stay a forest, and how many edges in the final tree?
-> - **Core Insight Requirement:** Acyclic invariant.
+> - **Hint:** Acyclic invariant.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Each added edge avoids a cycle ⟹ acyclic ([[Forest]]); final tree has $n-1$ edges.
-> > - **Technical Justification:** **Connected at end** ➔ becomes a tree once no cycle-free edge remains.
+> > - **Short answer:** Each added edge avoids a cycle ⟹ acyclic ([[Forest]]); final tree has $n-1$ edges.
+> > - **Why:** **Connected at end** ➔ becomes a tree once no cycle-free edge remains.

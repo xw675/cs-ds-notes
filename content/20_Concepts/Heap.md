@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 9
 parent: "[[Priority Queue (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** complete + heap-ordered binary tree ➔ $O(\log n)$ add/get_max — the array-backed priority queue.
 > - **📦 Core Components:** **complete** ➔ balanced, height $\lfloor\log_2 n\rfloor$ | **heap-order** ➔ parent ≥ child | `add`→**rise**, `get_max`→**sink** | **build** bottom-up.
-> - **⚡ Critical Bottleneck:** ops $O(\log n)$, `peek` $O(1)$, **build $\Theta(n)$** (not $n\log n$) ➔ but only min/max, no arbitrary search.
+> - **⚡ Key Constraint:** ops $O(\log n)$, `peek` $O(1)$, **build $\Theta(n)$** (not $n\log n$) ➔ but only min/max, no arbitrary search.
 
 ## 📝 Core
 ### 1. The Heap (Two Invariants)
@@ -43,7 +44,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
 >         if self.a[k] >= self.a[child]: break
 >         self.a[k], self.a[child] = self.a[child], self.a[k]; k = child
 > ```
-> 💡 **Exam Pitfall:** **Swap with the larger child** ➔ the `child += 1` guard (careful at the only-child boundary `child < self.n`); swapping the smaller violates heap-order.
+> 💡 **Common Mistake:** **Swap with the larger child** ➔ the `child += 1` guard (careful at the only-child boundary `child < self.n`); swapping the smaller violates heap-order.
 
 ### 🔹 Bottom-up `build_heap`
 > [!code]- $\Theta(n)$ heapify
@@ -54,7 +55,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
 >         sink(a, i, n)                     # each sink: O(height of i)
 >     return a
 > ```
-> 💡 **Exam Pitfall:** **Start at $\lfloor n/2\rfloor$, go downward** ➔ guarantees both subtrees of node $i$ are valid heaps when sunk, so one sink fixes $i$; inserting one-by-one is $O(n\log n)$.
+> 💡 **Common Mistake:** **Start at $\lfloor n/2\rfloor$, go downward** ➔ guarantees both subtrees of node $i$ are valid heaps when sunk, so one sink fixes $i$; inserting one-by-one is $O(n\log n)$.
 
 ## ⚖️ Core Decision Matrix
 | Operation / Build | Complexity | Trigger / Note |
@@ -66,7 +67,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
 | build ($n$× `add`) | $O(n\log n)$ | each insert rises to the root |
 | [[Heapsort]] | $O(n\log n)$ | in-place, $O(1)$ space, **unstable** |
 
-> [!NOTE] **Crossover Invariant:** a heap is always balanced + constant-space-per-element but supports only **min/max** (`search(x)` is $O(n)$) ➔ use a balanced [[Binary Tree|BST]] when you need search, ordered iteration, or predecessor/successor. Bottom-up build never dominates heapsort: $\Theta(n)+\Theta(n\log n)=\Theta(n\log n)$.
+> [!NOTE] **When It Flips:** a heap is always balanced + constant-space-per-element but supports only **min/max** (`search(x)` is $O(n)$) ➔ use a balanced [[Binary Tree|BST]] when you need search, ordered iteration, or predecessor/successor. Bottom-up build never dominates heapsort: $\Theta(n)+\Theta(n\log n)=\Theta(n\log n)$.
 
 ## 📊 Exam Execution Trace
 
@@ -82,19 +83,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Prove that building a heap from an arbitrary array is $O(n)$, not $O(n\log n)$.
-> - **Core Insight Requirement:** Weight node heights by their counts.
+> - **Hint:** Weight node heights by their counts.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Total $=\sum_h \frac{n}{2^{h+1}}O(h) = O(n\sum_h h/2^h)$, and $\sum_{h\ge0} h/2^h = 2$.
-> > - **Technical Justification:** **Convergent series** ➔ $O(2n)=O(n)$; most nodes are leaves/near-leaves with tiny $h$, only the rare top nodes pay $O(\log n)$.
+> > - **Short answer:** Total $=\sum_h \frac{n}{2^{h+1}}O(h) = O(n\sum_h h/2^h)$, and $\sum_{h\ge0} h/2^h = 2$.
+> > - **Why:** **Convergent series** ➔ $O(2n)=O(n)$; most nodes are leaves/near-leaves with tiny $h$, only the rare top nodes pay $O(\log n)$.
 
 > [!FAQ]- Why start at index $\lfloor n/2\rfloor$ and go downward, and why `sink`?
-> - **Core Insight Requirement:** Subtrees must be heaps before fixing their root.
+> - **Hint:** Subtrees must be heaps before fixing their root.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\lfloor n/2\rfloor$ is the last internal node ➔ everything after is a leaf (trivial heap, skipped).
-> > - **Technical Justification:** **Bottom-up ordering** ➔ iterating $\lfloor n/2\rfloor\to1$ makes both subtrees of $i$ valid heaps when sunk; `sink` (vs `rise`) because $i$ may be too small for its descendants.
+> > - **Short answer:** $\lfloor n/2\rfloor$ is the last internal node ➔ everything after is a leaf (trivial heap, skipped).
+> > - **Why:** **Bottom-up ordering** ➔ iterating $\lfloor n/2\rfloor\to1$ makes both subtrees of $i$ valid heaps when sunk; `sink` (vs `rise`) because $i$ may be too small for its descendants.
 
 > [!FAQ]- Both a heap and a balanced BST give $O(\log n)$ priority operations — when must you use the BST?
-> - **Core Insight Requirement:** Heap-order locates only the extreme.
+> - **Hint:** Heap-order locates only the extreme.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** When you need **search of arbitrary keys**, **ordered iteration**, or **predecessor/successor**.
-> > - **Technical Justification:** **Partial vs total order** ➔ a heap only enforces parent ≥ child ⟹ `search(x)` is $O(n)$; a BST maintains full key order ⟹ $O(\log n)$ search/insert/delete *and* min/max.
+> > - **Short answer:** When you need **search of arbitrary keys**, **ordered iteration**, or **predecessor/successor**.
+> > - **Why:** **Partial vs total order** ➔ a heap only enforces parent ≥ child ⟹ `search(x)` is $O(n)$; a BST maintains full key order ⟹ $O(\log n)$ search/insert/delete *and* min/max.

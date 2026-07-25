@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 3
 parent: "[[Combinational Circuits (Adders, Decoders, MUX, ALU)]]"
 tags: [CS/Systems, CS/Hardware]
 aliases: [SR Latch, D Flip-Flop, Registers, Register File]
@@ -10,7 +11,7 @@ aliases: [SR Latch, D Flip-Flop, Registers, Register File]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** feedback loop ➔ 1-bit memory (SR latch) ➔ clocked storage (D flip-flop) ➔ $n$ flip-flops = a register ➔ registers + select lines = register file.
-> - **⚡ Critical Bottleneck:** SR latch input $S{=}R{=}1$ is **forbidden**; combinational circuits compute, sequential circuits remember — the exam discriminator.
+> - **⚡ Key Constraint:** SR latch input $S{=}R{=}1$ is **forbidden**; combinational circuits compute, sequential circuits remember — the exam discriminator.
 
 ## 📝 Core
 ### 1. From Feedback to the SR Latch
@@ -34,17 +35,17 @@ aliases: [SR Latch, D Flip-Flop, Registers, Register File]
 | $0$ | $1$ | $0$ | reset |
 | $1$ | $1$ | — | **forbidden** |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Combinational vs sequential** ➔ "output = function of inputs" vs "output depends on input SEQUENCE (state)"; adders can't remember, latches can.
 - 💡 **The hold row is the point** ➔ $S{=}R{=}0$ preserving $Q(t)$ IS the memory; students often describe set/reset and forget hold.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why can't a combinational circuit implement memory, and what circuit trick fixes that?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Combinational outputs are pure functions of current inputs — no state; feeding an output BACK into an input creates state.
-> > - **Technical Justification:** **Feedback loop** ➔ the SR latch's cross-coupled structure holds $Q$ stable under $S{=}R{=}0$, storing one bit indefinitely.
+> > - **Short answer:** Combinational outputs are pure functions of current inputs — no state; feeding an output BACK into an input creates state.
+> > - **Why:** **Feedback loop** ➔ the SR latch's cross-coupled structure holds $Q$ stable under $S{=}R{=}0$, storing one bit indefinitely.
 
 > [!FAQ]- Name MARIE's five key registers and their one-line jobs.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** PC → next instruction's address; IR → current instruction; MAR → memory address for load/store; MBR → data buffer to/from memory; AC → arithmetic accumulator.
-> > - **Technical Justification:** **RTL preview** ➔ every [[Fetch-Decode-Execute and RTL (Control)|fetch-decode-execute]] step is a transfer between exactly these registers.
+> > - **Short answer:** PC → next instruction's address; IR → current instruction; MAR → memory address for load/store; MBR → data buffer to/from memory; AC → arithmetic accumulator.
+> > - **Why:** **RTL preview** ➔ every [[Fetch-Decode-Execute and RTL (Control)|fetch-decode-execute]] step is a transfer between exactly these registers.

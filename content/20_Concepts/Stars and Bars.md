@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 8
 parent: "[[Selection (Counting Framework)]]"
 tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** unordered selection with replacement ➔ nonnegative solutions of $x_1+\dots+x_n=r$.
 > - **📦 Core Components:** $r$ stars + $n-1$ bars ➔ $+1$ bijection ➔ $\binom{r+n-1}{r}$.
-> - **⚡ Critical Bottleneck:** reduce with-replacement to without-replacement via an explicit bijection.
+> - **⚡ Key Constraint:** reduce with-replacement to without-replacement via an explicit bijection.
 
 ## 📝 Core
 ### 1. The Problem
@@ -27,7 +28,7 @@ tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
 - **Effect** ➔ at most one bar per gap ⟹ choose $n-1$ of $r+n-1$ gaps without replacement.
 - **Result** ➔ $\binom{r+n-1}{n-1}=\binom{r+n-1}{r}$ (symmetry).
 
-> [!NOTE] **Crossover Invariant:** the key CS move is **reducing a new problem to a solved one** — with-replacement → without-replacement — by an explicit bijection $x_i\mapsto x_i+1$.
+> [!NOTE] **When It Flips:** the key CS move is **reducing a new problem to a solved one** — with-replacement → without-replacement — by an explicit bijection $x_i\mapsto x_i+1$.
 
 ## 📊 Exam Execution Trace
 
@@ -41,18 +42,18 @@ $n=5$, $r=3$; solution $(2,0,0,1,0)$:
 | 2 | bars $n-1$ | 4 |
 | 3 | string | $1\,1\mid\mid\mid1\mid$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **With ≠ without replacement** ➔ without replacement ($x_i\in\{0,1\}$) gives $\binom{n}{r}$; allowing $x_i\ge0$ changes it to $\binom{r+n-1}{r}$.
 
 ## 🧠 Active Recall
 > [!FAQ]- What does $\binom{r+n-1}{r}$ count, and what is the stars-and-bars model?
-> - **Core Insight Requirement:** Solutions of $x_1+\dots+x_n=r$.
+> - **Hint:** Solutions of $x_1+\dots+x_n=r$.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Unordered selections with replacement of $r$ from $n$ types; $r$ stars, $n-1$ bars splitting into groups.
-> > - **Technical Justification:** **Each arrangement** ➔ one selection $= (x_1,\dots,x_n)$.
+> > - **Short answer:** Unordered selections with replacement of $r$ from $n$ types; $r$ stars, $n-1$ bars splitting into groups.
+> > - **Why:** **Each arrangement** ➔ one selection $= (x_1,\dots,x_n)$.
 
 > [!FAQ]- Why introduce $y_i=x_i+1$, and how does it yield $\binom{r+n-1}{n-1}$?
-> - **Core Insight Requirement:** Reduce to without-replacement.
+> - **Hint:** Reduce to without-replacement.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $y_i\ge1$ makes the sum $r+n$ with every group nonempty ⟹ at most one bar per gap.
-> > - **Technical Justification:** **Bijection** ➔ choosing $n-1$ of $r+n-1$ gaps without replacement gives $\binom{r+n-1}{n-1}$.
+> > - **Short answer:** $y_i\ge1$ makes the sum $r+n$ with every group nonempty ⟹ at most one bar per gap.
+> > - **Why:** **Bijection** ➔ choosing $n-1$ of $r+n-1$ gaps without replacement gives $\binom{r+n-1}{n-1}$.

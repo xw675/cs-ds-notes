@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 4
 parent: "[[Conjunctive Normal Form]]"
 tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** turn a set of rules into one Boolean expression ➔ rules hold together ⟹ top-level conjunction ⟹ [[Conjunctive Normal Form|CNF]].
 > - **📦 Core Components:** one Boolean variable per fact ➔ translate each rule ➔ AND them.
-> - **⚡ Critical Bottleneck:** counting constraints (at most/least/exactly $k$) expand to $\binom{n}{\cdot}$-many clauses.
+> - **⚡ Key Constraint:** counting constraints (at most/least/exactly $k$) expand to $\binom{n}{\cdot}$-many clauses.
 
 ## 📝 Core
 ### 1. The Model (Conjunction of Conditions)
@@ -43,7 +44,7 @@ $$(\neg V\vee\neg B)\wedge(\neg V\vee\neg D)\wedge(\neg B\vee\neg D) \quad(\text
 | none or both $A,B$ | $A\Leftrightarrow B$ | $(\neg A\vee B)\wedge(A\vee\neg B)$ |
 | at most one of $A,B,C$ | pairwise not-both | $(\neg A\vee\neg B)\wedge(\neg A\vee\neg C)\wedge(\neg B\vee\neg C)$ |
 
-> [!NOTE] **Crossover Invariant:** the outermost operator is always $\wedge$ — you cannot ignore inconvenient rules. Cardinality constraints use [[Binomial Coefficient|$\binom{n}{k+1}$]]-many clauses, so encodings can grow quickly.
+> [!NOTE] **When It Flips:** the outermost operator is always $\wedge$ — you cannot ignore inconvenient rules. Cardinality constraints use [[Binomial Coefficient|$\binom{n}{k+1}$]]-many clauses, so encodings can grow quickly.
 
 ## 📊 Exam Execution Trace
 
@@ -57,18 +58,18 @@ Encoding three rules:
 | 2 | $A$ only if $C$ | $(\neg A\vee C)$ |
 | 3 | at most one of $A,B,C$ | $(\neg A\vee\neg B)\wedge(\neg A\vee\neg C)\wedge(\neg B\vee\neg C)$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"At most one" = forbid every pair** ➔ a "not both" clause $(\neg a\vee\neg b)$ for each pair; AND-ing all parts gives the single CNF.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is a rule set modelled as a conjunction, and how are "Hagrid only if Norberta" / "none or both of Fred and George" encoded?
-> - **Core Insight Requirement:** All rules hold at once.
+> - **Hint:** All rules hold at once.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Top level is $\wedge$ (can't drop rules) ⟹ CNF; "only if" = $\text{Hagrid}\Rightarrow\text{Norberta}$; "none or both" = $\text{Fred}\Leftrightarrow\text{George}$.
-> > - **Technical Justification:** **Rewrites** ➔ $\Rightarrow=\neg P\vee Q$, $\Leftrightarrow=(\neg P\vee Q)\wedge(P\vee\neg Q)$.
+> > - **Short answer:** Top level is $\wedge$ (can't drop rules) ⟹ CNF; "only if" = $\text{Hagrid}\Rightarrow\text{Norberta}$; "none or both" = $\text{Fred}\Leftrightarrow\text{George}$.
+> > - **Why:** **Rewrites** ➔ $\Rightarrow=\neg P\vee Q$, $\Leftrightarrow=(\neg P\vee Q)\wedge(P\vee\neg Q)$.
 
 > [!FAQ]- How do you express "at most $k$ of $n$ true" and "exactly $k$" as CNF?
-> - **Core Insight Requirement:** Subset clauses.
+> - **Hint:** Subset clauses.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** At most $k$: for every $(k{+}1)$-subset, OR of negations; at least $k$: for every $(n{-}k{+}1)$-subset, OR of plain literals; exactly $k$ = both.
-> > - **Technical Justification:** **$\binom{n}{k+1}$ clauses** ➔ each subset forces the required True/False count.
+> > - **Short answer:** At most $k$: for every $(k{+}1)$-subset, OR of negations; at least $k$: for every $(n{-}k{+}1)$-subset, OR of plain literals; exactly $k$ = both.
+> > - **Why:** **$\binom{n}{k+1}$ clauses** ➔ each subset forces the required True/False count.

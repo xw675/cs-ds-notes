@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 1
 parent: "[[Data Science]]"
 tags: [DataScience/Foundations, DataScience/Lifecycle, Monash/CS_DS]
 aliases: [Data Science Process, Standard Value Chain, Data Science Lifecycle]
@@ -11,7 +12,7 @@ aliases: [Data Science Process, Standard Value Chain, Data Science Lifecycle]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** run a project as an ordered pipeline ➔ Collection → Engineering → Governance → Wrangling → Analysis → Visualisation → Operationalize.
 > - **📦 Core Components:** Wrangling ➔ clean/pre-process | Analysis ➔ learning/discovery | Operationalize ➔ turn results into value.
-> - **⚡ Critical Bottleneck:** a data scientist is familiar with **most** stages but need not be expert in all; some stages come from other fields (engineering, business).
+> - **⚡ Key Constraint:** a data scientist is familiar with **most** stages but need not be expert in all; some stages come from other fields (engineering, business).
 
 ## 📝 Core
 ### 1. The Standard Value Chain (unit model)
@@ -31,12 +32,12 @@ aliases: [Data Science Process, Standard Value Chain, Data Science Lifecycle]
 - **Core loop** ➔ wrangling (inspect/clean) → modelling (conceptual/mathematical/functional; ML/stats) → visualisation → operationalize.
 - **Roles** ➔ different data scientists carry different mixes of skills and domain knowledge (see [[Data Science vs Related Disciplines]]).
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Wrangling ≠ Analysis** ➔ wrangling is cleaning/pre-processing to make data usable; analysis is the discovery/modelling that extracts insight — do not conflate them.
 - 💡 **Not every stage is "data science"** ➔ collection/engineering/governance draw on computer engineering, business, and data management; a data scientist need not master all.
 
 ## 🧠 Active Recall
 > [!FAQ]- List the standard value chain in order and state what separates Wrangling from Analysis.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Collection → Engineering → Governance → Wrangling → Analysis → Visualisation → Operationalize. Wrangling cleans/pre-processes the data; Analysis does the discovery (learning, statistics, visualisation).
-> > - **Technical Justification:** **Prepare vs discover** ➔ you cannot analyse reliably until the data is wrangled; Operationalize then converts insight into value.
+> > - **Short answer:** Collection → Engineering → Governance → Wrangling → Analysis → Visualisation → Operationalize. Wrangling cleans/pre-processes the data; Analysis does the discovery (learning, statistics, visualisation).
+> > - **Why:** **Prepare vs discover** ➔ you cannot analyse reliably until the data is wrangled; Operationalize then converts insight into value.

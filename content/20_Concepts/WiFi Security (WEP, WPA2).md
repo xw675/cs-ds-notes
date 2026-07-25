@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 8
 parent: "[[WiFi (802.11, CSMA-CA, Topologies)]]"
 tags: [CS/Networks, CS/Security]
 aliases: [WEP, WPA2, Open WiFi, 802.11i]
@@ -11,7 +12,7 @@ aliases: [WEP, WPA2, Open WiFi, 802.11i]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** radio leaves the building ⟹ you cannot restrict the physical layer ⟹ encrypt at the data link layer (or higher).
 > - **📦 Core Components:** open WiFi (capture-anything demo) ➔ WEP (shared static key — broken) ➔ WPA/WPA2 (802.11i: per-packet keys, AES, PSK vs Enterprise).
-> - **⚡ Critical Bottleneck:** browser-login hotspots are still **open WiFi** — the web login is application-layer; every frame remains capturable in the air.
+> - **⚡ Key Constraint:** browser-login hotspots are still **open WiFi** — the web login is application-layer; every frame remains capturable in the air.
 
 ## 📝 Core
 - **The threat** ➔ radio penetrates walls and leaves the campus; thicker walls and directional antennas don't fix it (visitors exist) ⟹ eavesdropping is trivial by design.
@@ -27,7 +28,7 @@ aliases: [WEP, WPA2, Open WiFi, 802.11i]
 | encryption | none | static key (40/128-bit) | AES, per-packet keys | AES, per-packet keys |
 | security | zero — capture at will | broken in minutes | good unless weak password | strongest of the four |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"Login page" ≠ secure** ➔ captive-portal hotspots authenticate at the application layer; the radio frames stay unencrypted — classic exam trap.
 - 💡 **WEP's flaw is the STATIC shared key** ➔ every frame under one unchanging key gives cryptanalysis unlimited samples; WPA2's per-packet keys remove exactly that.
 - 💡 **PSK strength = password strength** ➔ AES doesn't save a guessable passphrase; Enterprise moves trust to a server instead.
@@ -35,10 +36,10 @@ aliases: [WEP, WPA2, Open WiFi, 802.11i]
 ## 🧠 Active Recall
 > [!FAQ]- Why can't WiFi security be solved the way wired LAN security is (control the sockets)?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The wired physical layer is access-controlled by walls and sockets; radio waves ignore both ⟹ anyone in range owns layer 1, so protection must move up to encryption.
-> > - **Technical Justification:** **Layer substitution** ➔ WEP/WPA re-create the "wire's" privacy at layer 2 — the name *Wired Equivalent Privacy* states the design goal.
+> > - **Short answer:** The wired physical layer is access-controlled by walls and sockets; radio waves ignore both ⟹ anyone in range owns layer 1, so protection must move up to encryption.
+> > - **Why:** **Layer substitution** ➔ WEP/WPA re-create the "wire's" privacy at layer 2 — the name *Wired Equivalent Privacy* states the design goal.
 
 > [!FAQ]- Rank open / WEP / WPA2-PSK / WPA2-Enterprise and justify each step up.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Open (nothing) < WEP (static shared key, crackable) < WPA2-PSK (AES + per-packet keys, password-limited) < WPA2-Enterprise (adds per-user 802.1X authentication).
-> > - **Technical Justification:** **Key management is the ladder** ➔ each step improves how keys are issued, rotated and authenticated, not just the cipher.
+> > - **Short answer:** Open (nothing) < WEP (static shared key, crackable) < WPA2-PSK (AES + per-packet keys, password-limited) < WPA2-Enterprise (adds per-user 802.1X authentication).
+> > - **Why:** **Key management is the ladder** ➔ each step improves how keys are issued, rotated and authenticated, not just the cipher.

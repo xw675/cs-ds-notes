@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 3
 parent: "[[Relational Model]]"
 tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the set of valid atomic values an attribute may take ➔ fixes type, format, range.
 > - **📦 Core Components:** $\text{dom}(\cdot)$ ➔ atomic values ➔ [[Data Integrity|column integrity]].
-> - **⚡ Critical Bottleneck:** values must be atomic (1NF); union-compatibility needs compatible domains.
+> - **⚡ Key Constraint:** values must be atomic (1NF); union-compatibility needs compatible domains.
 
 ## 📝 Core
 ### 1. The Domain
@@ -31,7 +32,7 @@ tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
 $$\text{dom}(\text{custno})=\text{customer\_number},\quad \text{dom}(\text{custname})=\text{name}$$
 $$\text{dom}(\text{custadd})=\text{address},\quad \text{dom}(\text{custcredlimit})=\text{credit\_limit}$$
 
-> [!NOTE] **Crossover Invariant:** a domain is a *logical* constraint; the DBMS maps it to a concrete column type at physical design. The FIT1058 [[Sets of Numbers|number sets]] are example numeric domains.
+> [!NOTE] **When It Flips:** a domain is a *logical* constraint; the DBMS maps it to a concrete column type at physical design. The FIT1058 [[Sets of Numbers|number sets]] are example numeric domains.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ Validating attribute values:
 | 2 | Age | "twenty" | no (not integer) |
 | 3 | Age | 200 | no (out of range) |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A value outside the domain is rejected** ➔ an `Age` attribute holds integers in $0$–$120$, never the text "twenty" (column/domain integrity).
 
 ## 🧠 Active Recall
 > [!FAQ]- What is a domain, and how does it relate to data integrity?
-> - **Core Insight Requirement:** Valid-value set per attribute.
+> - **Hint:** Valid-value set per attribute.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** The set of valid atomic values (type/format/range); enforces column/domain integrity.
-> > - **Technical Justification:** **Same domain** ➔ `Age` accepts $0$–$120$ integers, not "twenty".
+> > - **Short answer:** The set of valid atomic values (type/format/range); enforces column/domain integrity.
+> > - **Why:** **Same domain** ➔ `Age` accepts $0$–$120$ integers, not "twenty".
 
 > [!FAQ]- Why must domain values be atomic, and where do compatible domains matter?
-> - **Core Insight Requirement:** 1NF + union-compatibility.
+> - **Hint:** 1NF + union-compatibility.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Atomic = one value per cell (1NF); set operations need union-compatible relations (same arity, compatible domains).
-> > - **Technical Justification:** **Forbids multivalued cells** ➔ `dependants={Ali,Sara}` breaks atomicity.
+> > - **Short answer:** Atomic = one value per cell (1NF); set operations need union-compatible relations (same arity, compatible domains).
+> > - **Why:** **Forbids multivalued cells** ➔ `dependants={Ali,Sara}` breaks atomicity.

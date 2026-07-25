@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 1
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
 aliases: [Java Program Structure, main method, HelloWorld]
@@ -10,7 +11,7 @@ aliases: [Java Program Structure, main method, HelloWorld]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** recognise the mandatory anatomy of a Java program ➔ a public class (named like its file) with a main entry point.
-> - **⚡ Critical Bottleneck:** `main` must be `public static void main(String[] args)` — `static` lets the JVM call it **without creating an object first**; every statement ends in `;`.
+> - **⚡ Key Constraint:** `main` must be `public static void main(String[] args)` — `static` lets the JVM call it **without creating an object first**; every statement ends in `;`.
 
 ## 📝 Core
 ```java
@@ -27,12 +28,12 @@ public class HelloWorld {
 - **`void`** ➔ the return type "nothing"; **`System.out.println`** prints to the console.
 - **`;`** ➔ Java is strict — every statement ends with a semicolon.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **File name ≠ class name = won't compile** ➔ a `public` class must live in a file of the same name.
 - 💡 **Non-static `main` = JVM can't start it** ➔ `main` must be `static` so it runs before any object is created.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why must `main` be declared `static`, and what does `String[] args` hold?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `static` lets the JVM invoke `main` without first constructing an object of the class (there is none yet at start-up); `args` holds the command-line arguments passed after the class name.
-> > - **Technical Justification:** **Entry before instances** ➔ a class-level (static) method belongs to the class, so it's callable without `new`.
+> > - **Short answer:** `static` lets the JVM invoke `main` without first constructing an object of the class (there is none yet at start-up); `args` holds the command-line arguments passed after the class name.
+> > - **Why:** **Entry before instances** ➔ a class-level (static) method belongs to the class, so it's callable without `new`.

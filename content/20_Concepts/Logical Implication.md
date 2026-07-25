@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 3
 parent: "[[Theorem and Proof]]"
 tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $P\Rightarrow Q$: whenever $P$ holds, $Q$ holds ➔ forbids exactly one case — $P$ true, $Q$ false.
 > - **📦 Core Components:** $P\Rightarrow Q\equiv\neg P\vee Q$ ➔ $\equiv P\subseteq Q$ ➔ biconditional = both directions.
-> - **⚡ Critical Bottleneck:** **non-symmetric** — the converse $Q\Rightarrow P$ does not follow.
+> - **⚡ Key Constraint:** **non-symmetric** — the converse $Q\Rightarrow P$ does not follow.
 
 ## 📝 Core
 ### 1. The Conditional (One Forbidden Row)
@@ -39,7 +40,7 @@ $$P\Rightarrow Q \equiv \neg P\vee Q, \qquad P\Rightarrow Q \equiv P\subseteq Q$
 | "$P$ iff $Q$" (biconditional) | $P\Leftrightarrow Q$ | $P=Q$ |
 | rewrite | $\neg P\vee Q$ | complement ∪ |
 
-> [!NOTE] **Crossover Invariant:** $P\Rightarrow Q$ asserts neither $P$ nor $Q$ individually — only the conditional link. Implication ↔ subset is the bridge: proving containment proves implication and vice versa; double inclusion is iff.
+> [!NOTE] **When It Flips:** $P\Rightarrow Q$ asserts neither $P$ nor $Q$ individually — only the conditional link. Implication ↔ subset is the bridge: proving containment proves implication and vice versa; double inclusion is iff.
 
 ## 📊 Exam Execution Trace
 
@@ -54,18 +55,18 @@ Verify $P\Rightarrow Q\equiv\neg P\vee Q$ and compare the converse:
 | 3 | T | F | F | F | T |
 | 4 | T | T | T | T | T |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Beware the converse** ➔ $P\Rightarrow Q$ gives *no* information about $Q\Rightarrow P$; seeing the right domino fallen doesn't prove the left fell. "$P$ only if $Q$" = $P\Rightarrow Q$; "$P$ if $Q$" = $Q\Rightarrow P$.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is $P\Rightarrow Q$ equivalent to $P\subseteq Q$, and what is the one forbidden configuration?
-> - **Core Insight Requirement:** Scenario-sets.
+> - **Hint:** Scenario-sets.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** No scenario has $P$ without $Q$ ⟹ $P\setminus Q=\emptyset$ ⟹ $P\subseteq Q$.
-> > - **Technical Justification:** **Forbidden row** ➔ the only impossible case is $P$ true, $Q$ false (left domino falls, right stands).
+> > - **Short answer:** No scenario has $P$ without $Q$ ⟹ $P\setminus Q=\emptyset$ ⟹ $P\subseteq Q$.
+> > - **Why:** **Forbidden row** ➔ the only impossible case is $P$ true, $Q$ false (left domino falls, right stands).
 
 > [!FAQ]- What is the converse of $P\Rightarrow Q$, why can't you assume it, and what does the biconditional add?
-> - **Core Insight Requirement:** Non-symmetry.
+> - **Hint:** Non-symmetry.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Converse is $Q\Rightarrow P$; it doesn't follow from $P\Rightarrow Q$.
-> > - **Technical Justification:** **Double inclusion** ➔ both directions give $P\Leftrightarrow Q$ = $P=Q$ (iff / logical equivalence).
+> > - **Short answer:** Converse is $Q\Rightarrow P$; it doesn't follow from $P\Rightarrow Q$.
+> > - **Why:** **Double inclusion** ➔ both directions give $P\Leftrightarrow Q$ = $P=Q$ (iff / logical equivalence).

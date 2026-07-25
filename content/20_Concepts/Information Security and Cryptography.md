@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 10
 parent: "[[FIT1047_MOC]]"
 tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
 aliases: [information security, CIA, confidentiality integrity availability, security goals, cryptography overview, security mechanisms, non-repudiation]
@@ -10,7 +11,7 @@ aliases: [information security, CIA, confidentiality integrity availability, sec
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every bit is **changeable**, every host **reachable worldwide**, every device **potentially hackable** ➔ security = achieving specific **goals** (confidentiality, integrity, authenticity, non-repudiation) despite an active attacker.
-> - **⚡ Critical Bottleneck:** match the **goal to the mechanism** — encryption ⇒ confidentiality, hashes/MACs/signatures ⇒ integrity + authenticity. Using the wrong primitive (e.g. a plain hash for tamper-proofing) fails.
+> - **⚡ Key Constraint:** match the **goal to the mechanism** — encryption ⇒ confidentiality, hashes/MACs/signatures ⇒ integrity + authenticity. Using the wrong primitive (e.g. a plain hash for tamper-proofing) fails.
 
 ## 📝 Security goals
 - **Confidentiality** ➔ keep data **secret** from eavesdroppers → provided by **encryption** ([[Symmetric Cryptography]], [[Public Key Cryptography]]).
@@ -27,12 +28,12 @@ aliases: [information security, CIA, confidentiality integrity availability, sec
 - **Mechanisms** ➔ **cryptography**, **firewalls**, **multi-factor authentication** — plus knowing risks/threats, building secure systems, designing secure networks, and the **human aspect**.
 - **Roadmap** ➔ W10 crypto + protocols; W11 network security (firewalls, access control, SSO/MFA); W12 threats, risk, attacks, malware.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Goal ≠ mechanism** ➔ encryption alone gives **confidentiality but not integrity** — AES ciphertext can still be reordered/flipped; you need a **MAC** for tamper-detection.
 - 💡 **Non-repudiation is asymmetric-only** ➔ a shared symmetric key can prove *a message came from one of us*, never *which one* — so it cannot bind a signer.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why isn't "encrypt everything" a complete security solution?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** encryption targets **confidentiality** only; it does **not** guarantee integrity, authenticity, or non-repudiation, so an attacker can still **tamper** with ciphertext or **impersonate** a party.
-> > - **Technical Justification:** **Goal decomposition** ➔ each goal needs its own primitive — **MAC/hash** for integrity, **signature + certificate** for authenticity, **public-key signature** for non-repudiation — layered on top of the cipher.
+> > - **Short answer:** encryption targets **confidentiality** only; it does **not** guarantee integrity, authenticity, or non-repudiation, so an attacker can still **tamper** with ciphertext or **impersonate** a party.
+> > - **Why:** **Goal decomposition** ➔ each goal needs its own primitive — **MAC/hash** for integrity, **signature + certificate** for authenticity, **public-key signature** for non-repudiation — layered on top of the cipher.

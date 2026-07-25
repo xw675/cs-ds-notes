@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 8
 parent: "[[Computer Networks (Components and Types)]]"
 tags: [CS/Networks]
 aliases: [Backbone Network, Dedicated Circuits, Metro Ethernet, VPN]
@@ -11,7 +12,7 @@ aliases: [Backbone Network, Dedicated Circuits, Metro Ethernet, VPN]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** LAN (floor/building, owned, switched Ethernet/WiFi) → backbone (campus, owned, fibre) → MAN/WAN (cities+, **leased** from carriers).
 > - **📦 Core Components:** access/distribution/core layer architecture ➔ WAN options: dedicated circuits vs packet-switched carrier vs VPN-over-Internet.
-> - **⚡ Critical Bottleneck:** the WAN trade-off triangle — dedicated (guaranteed, dear) vs carrier packet-switched (shared, simpler) vs VPN (cheapest, no guarantees).
+> - **⚡ Key Constraint:** the WAN trade-off triangle — dedicated (guaranteed, dear) vs carrier packet-switched (shared, simpler) vs VPN (cheapest, no guarantees).
 
 ## 📝 Core
 - **LANs** ➔ switched Ethernet or [[WiFi (802.11, CSMA-CA, Topologies)|WiFi]]; end-user + server access; ≤ ~100 m; fully owned/operated; similar devices grouped.
@@ -28,7 +29,7 @@ aliases: [Backbone Network, Dedicated Circuits, Metro Ethernet, VPN]
 
 - **VPN mechanics** ➔ `Hello!` → VPN gateway encrypts/encapsulates (`$U1&x#3`) → travels the public Internet inside the **tunnel** → far gateway unpacks → delivers into the remote LAN as if local.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **MAN ≈ WAN** ➔ the lecture treats them as the same idea at different distances — don't invent extra differences.
 - 💡 **"Private" in VPN is cryptographic, not physical** ➔ the bits ride the public Internet; privacy comes from encryption + encapsulation only.
 - 💡 **Why not just the Internet?** ➔ the stock answer triple: security, reliability, performance — VPN patches the first, never the last two.
@@ -36,10 +37,10 @@ aliases: [Backbone Network, Dedicated Circuits, Metro Ethernet, VPN]
 ## 🧠 Active Recall
 > [!FAQ]- A company connects Melbourne and Penang offices. Walk the three options and what each buys.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Dedicated leased circuit (guaranteed bandwidth/latency, highest cost) · carrier packet-switched service via POPs (shared, moderate) · VPN over each office's Internet link (cheapest, zero guarantees).
-> > - **Technical Justification:** **Pay for certainty** ➔ the options price exactly one thing — how much performance is contractually yours.
+> > - **Short answer:** Dedicated leased circuit (guaranteed bandwidth/latency, highest cost) · carrier packet-switched service via POPs (shared, moderate) · VPN over each office's Internet link (cheapest, zero guarantees).
+> > - **Why:** **Pay for certainty** ➔ the options price exactly one thing — how much performance is contractually yours.
 
 > [!FAQ]- Sketch the access/distribution/core hierarchy and place switch vs router at each level.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Floor switches (access) → building distribution switches → precinct core switches/routers toward WAN/Internet.
-> > - **Technical Justification:** **Aggregate then route** ➔ cheap layer-2 fan-out at the edge; layer-3 intelligence concentrated where networks meet ([[Switched Ethernet (Switches, Forwarding, LAN Design)|switch vs router]]).
+> > - **Short answer:** Floor switches (access) → building distribution switches → precinct core switches/routers toward WAN/Internet.
+> > - **Why:** **Aggregate then route** ➔ cheap layer-2 fan-out at the edge; layer-3 intelligence concentrated where networks meet ([[Switched Ethernet (Switches, Forwarding, LAN Design)|switch vs router]]).

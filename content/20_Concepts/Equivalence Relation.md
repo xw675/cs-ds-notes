@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Properties of Binary Relations]]"
 tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a reflexive + symmetric + transitive relation ➔ "same for some purpose", generalising equality.
 > - **📦 Core Components:** three properties ➔ equivalence class $[x]$ ➔ Fundamental Partition Theorem.
-> - **⚡ Critical Bottleneck:** classes form a [[Set Partition]] (every element in exactly one); equivalences ⟺ partitions.
+> - **⚡ Key Constraint:** classes form a [[Set Partition]] (every element in exactly one); equivalences ⟺ partitions.
 
 ## 📝 Core
 ### 1. The Relation (Three Properties)
@@ -40,7 +41,7 @@ $$[x]=\{y\in A:x\,R\,y\}$$
 | congruence mod $m$ | equivalence | $m$ residue classes |
 | $\sim_f$ | equivalence | preimages $f^{-1}(y)$ |
 
-> [!NOTE] **Crossover Invariant:** symmetry vs antisymmetry is the dividing line between equivalences and partial orders. The transitive closure of any reflexive + symmetric relation is automatically an equivalence relation.
+> [!NOTE] **When It Flips:** symmetry vs antisymmetry is the dividing line between equivalences and partial orders. The transitive closure of any reflexive + symmetric relation is automatically an equivalence relation.
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ Congruence mod 3 on $\{0,\dots,5\}$:
 | 3 | transitive | sums of multiples of 3 | ✅ |
 | 4 | classes | $[0],[1],[2]$ | $\{0,3\},\{1,4\},\{2,5\}$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **All three are needed** ➔ drop reflexivity (an element in no class), symmetry (one-directional), or transitivity (classes overlap without merging) and the partition breaks.
 
 ## 🧠 Active Recall
 > [!FAQ]- State the three defining properties and what fails if each is dropped.
-> - **Core Insight Requirement:** Partition needs all three.
+> - **Hint:** Partition needs all three.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Reflexive, symmetric, transitive; drop reflexivity → element in no class; symmetry → one-directional; transitivity → overlap without merge.
-> > - **Technical Justification:** **Clean partition** ➔ only all three make the classes a [[Set Partition]].
+> > - **Short answer:** Reflexive, symmetric, transitive; drop reflexivity → element in no class; symmetry → one-directional; transitivity → overlap without merge.
+> > - **Why:** **Clean partition** ➔ only all three make the classes a [[Set Partition]].
 
 > [!FAQ]- State the Fundamental Partition Theorem and the classes of congruence mod $m$.
-> - **Core Insight Requirement:** Equivalence ⟺ partition.
+> - **Hint:** Equivalence ⟺ partition.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Classes partition $A$ (each element in exactly one; distinct classes disjoint); every partition defines an equivalence.
-> > - **Technical Justification:** **Residue classes** ➔ mod $m$ gives $m$ classes $\{km+r:k\in\mathbb Z\}$, $r=0,\dots,m-1$.
+> > - **Short answer:** Classes partition $A$ (each element in exactly one; distinct classes disjoint); every partition defines an equivalence.
+> > - **Why:** **Residue classes** ➔ mod $m$ gives $m$ classes $\{km+r:k\in\mathbb Z\}$, $r=0,\dots,m-1$.

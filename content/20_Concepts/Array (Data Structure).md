@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: 2
 parent: "[[Data Structure]]"
 tags: [CS/DataStructures, OOP/Python]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** fixed-size contiguous block of equal-sized slots ➔ element $k$'s address is pure arithmetic, giving $O(1)$ access.
 > - **📦 Core Components:** address arithmetic ➔ cache locality ➔ row-major multidim layout.
-> - **⚡ Critical Bottleneck:** $O(1)$ access but **fixed capacity** ($O(n)$ grow/copy) + $O(n)$ middle insert — mirror of a [[List (ADT)|LinkList]].
+> - **⚡ Key Constraint:** $O(1)$ access but **fixed capacity** ($O(n)$ grow/copy) + $O(n)$ middle insert — mirror of a [[List (ADT)|LinkList]].
 
 ## 📝 Core
 ### 1. The Array (Contiguous, $O(1)$ Access)
@@ -33,7 +34,7 @@ tags: [CS/DataStructures, OOP/Python]
 > element = array[2]       # ACCESS — O(1): base + 2*slot_size
 > length = len(array)      # capacity — O(1) (stored)
 > ```
-> 💡 **Exam Pitfall:** **Construction is $O(n)$, access is $O(1)$** ➔ `ArrayR(n)` initialises all $n$ slots (linear), but access computes one address; algorithms amortise the allocation over many constant-time accesses.
+> 💡 **Common Mistake:** **Construction is $O(n)$, access is $O(1)$** ➔ `ArrayR(n)` initialises all $n$ slots (linear), but access computes one address; algorithms amortise the allocation over many constant-time accesses.
 
 ## ⚖️ Core Decision Matrix
 | Operation | Complexity | Reason |
@@ -44,7 +45,7 @@ tags: [CS/DataStructures, OOP/Python]
 | insert/delete in middle | $O(n)$ | shift elements |
 | grow beyond capacity | $O(n)$ | reallocate + copy ([[Dynamic Array Resizing]]) |
 
-> [!NOTE] **Crossover Invariant:** $O(1)$ random access + cache-friendliness vs **fixed capacity** (growth = full copy) and $O(n)$ structural edits — the mirror image of a [[List (ADT)|LinkList]]. ADTs built on it: [[Stack (ADT)|ArrayStack]], [[List (ADT)|ArrayList]], [[Hash Table]], [[Heap]].
+> [!NOTE] **When It Flips:** $O(1)$ random access + cache-friendliness vs **fixed capacity** (growth = full copy) and $O(n)$ structural edits — the mirror image of a [[List (ADT)|LinkList]]. ADTs built on it: [[Stack (ADT)|ArrayStack]], [[List (ADT)|ArrayList]], [[Hash Table]], [[Heap]].
 
 ## 📊 Exam Execution Trace
 
@@ -61,19 +62,19 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Two $O(n)$ traversals — array vs linked list — differ several-fold in speed. Explain via the memory hierarchy.
-> - **Core Insight Requirement:** Contiguity vs scatter.
+> - **Hint:** Contiguity vs scatter.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Array elements are contiguous (cache-line fetch brings neighbours); linked nodes scatter ⟹ a cache miss per hop (~100×).
-> > - **Technical Justification:** **Constant factor** ➔ same Big-O, but spatial locality wins big — a constant the asymptotic model omits.
+> > - **Short answer:** Array elements are contiguous (cache-line fetch brings neighbours); linked nodes scatter ⟹ a cache miss per hop (~100×).
+> > - **Why:** **Constant factor** ➔ same Big-O, but spatial locality wins big — a constant the asymptotic model omits.
 
 > [!FAQ]- Why does iterating a 2-D array in the "wrong" order tank performance?
-> - **Core Insight Requirement:** Row-major memory order.
+> - **Hint:** Row-major memory order.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Consecutive $j$ are adjacent; row-by-row (inner $j$) is sequential, column-by-column (inner $i$) jumps `cols` slots.
-> > - **Technical Justification:** **Cache misses** ➔ column-major access misses on nearly every read — often an order-of-magnitude slowdown.
+> > - **Short answer:** Consecutive $j$ are adjacent; row-by-row (inner $j$) is sequential, column-by-column (inner $i$) jumps `cols` slots.
+> > - **Why:** **Cache misses** ➔ column-major access misses on nearly every read — often an order-of-magnitude slowdown.
 
 > [!FAQ]- Why is `ArrayR(n)` construction $O(n)$ but element access $O(1)$?
-> - **Core Insight Requirement:** Initialise-all vs compute-one.
+> - **Hint:** Initialise-all vs compute-one.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Construction initialises all $n$ slots (linear); access computes one address and reads it (constant).
-> > - **Technical Justification:** **Amortisation** ➔ the linear allocation is spread over many $O(1)$ accesses.
+> > - **Short answer:** Construction initialises all $n$ slots (linear); access computes one address and reads it (constant).
+> > - **Why:** **Amortisation** ➔ the linear allocation is spread over many $O(1)$ accesses.

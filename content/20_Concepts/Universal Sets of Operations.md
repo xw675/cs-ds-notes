@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 4
 parent: "[[Boolean Algebra Laws]]"
 tags: [Math/Logic, CS/DigitalLogic, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, CS/DigitalLogic, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** an operation set expressing every Boolean expression ➔ functional completeness.
 > - **📦 Core Components:** $\{\neg,\wedge,\vee\}$ (from DNF/CNF) ➔ shrink via De Morgan to $\{\neg,\wedge\}$ or $\{\neg,\vee\}$.
-> - **⚡ Critical Bottleneck:** $\neg$ alone (unary) and $\{\wedge,\vee\}$ (no negation) are **not** universal; NAND/NOR alone are.
+> - **⚡ Key Constraint:** $\neg$ alone (unary) and $\{\wedge,\vee\}$ (no negation) are **not** universal; NAND/NOR alone are.
 
 ## 📝 Core
 ### 1. Universality (Functional Completeness)
@@ -40,7 +41,7 @@ $$P\vee Q = \neg(\neg P\wedge\neg Q), \qquad P\Rightarrow Q = \neg P\vee Q = \ne
 | $\{\neg\}$ | ❌ | unary — can't combine |
 | $\{$NAND$\}$, $\{$NOR$\}$ | ✅ | each expresses $\neg,\wedge,\vee$ |
 
-> [!NOTE] **Crossover Invariant:** universality guarantees *expressibility*, not minimal *circuit size* — a single-gate realisation may need more gates/longer chains than a mixed set. Trade-off: fewer component types (manufacturing) vs circuit depth.
+> [!NOTE] **When It Flips:** universality guarantees *expressibility*, not minimal *circuit size* — a single-gate realisation may need more gates/longer chains than a mixed set. Trade-off: fewer component types (manufacturing) vs circuit depth.
 
 ## 📊 Exam Execution Trace
 
@@ -55,18 +56,18 @@ P\vee Q &= \neg(\neg P\wedge\neg Q) && \text{(De Morgan)} \\
 $$
 **Final Extracted Output:** $\{\neg,\wedge\}$ universal; $\{\wedge,\vee\}$ not — it cannot flip a value.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **A universal singleton must be binary** ➔ $\{\neg\}$ can't combine two variables; $\{\wedge,\vee\}$ can't flip a value (any $\wedge/\vee$ of $P$ stays T when $P$ is T), so negation is indispensable.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is $\{\neg,\wedge,\vee\}$ universal, and how do you shrink it to two operations?
-> - **Core Insight Requirement:** DNF/CNF + De Morgan.
+> - **Hint:** DNF/CNF + De Morgan.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Every expression has a DNF/CNF over $\neg,\wedge,\vee$; De Morgan rewrites one binary op via the other.
-> > - **Technical Justification:** **Drop $\wedge$ or $\vee$** ➔ $\{\neg,\wedge\}$ and $\{\neg,\vee\}$ each remain universal.
+> > - **Short answer:** Every expression has a DNF/CNF over $\neg,\wedge,\vee$; De Morgan rewrites one binary op via the other.
+> > - **Why:** **Drop $\wedge$ or $\vee$** ➔ $\{\neg,\wedge\}$ and $\{\neg,\vee\}$ each remain universal.
 
 > [!FAQ]- Why can't $\{\neg\}$ or $\{\wedge,\vee\}$ be universal, and why does universality matter for circuits?
-> - **Core Insight Requirement:** Arity and negation.
+> - **Hint:** Arity and negation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\neg$ is unary (can't combine); $\{\wedge,\vee\}$ can't build $\neg P$.
-> > - **Technical Justification:** **Simple hardware** ➔ NAND/NOR are each universal alone, so chips use few, mass-produced gate types.
+> > - **Short answer:** $\neg$ is unary (can't combine); $\{\wedge,\vee\}$ can't build $\neg P$.
+> > - **Why:** **Simple hardware** ➔ NAND/NOR are each universal alone, so chips use few, mass-produced gate types.

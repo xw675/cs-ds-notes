@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 5
 parent: "[[Motherboard and IO Interfaces]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [Memory-Mapped IO, Port-Mapped IO, Polling, Interrupts, DMA]
@@ -11,7 +12,7 @@ aliases: [Memory-Mapped IO, Port-Mapped IO, Polling, Interrupts, DMA]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** devices expose **their own registers** ➔ CPU reaches them via mapped memory addresses or ports ➔ timing solved by poll / interrupt / DMA.
 > - **📦 Core Components:** device registers ➔ address mapping ➔ notification strategy ➔ interrupt handler + context switch.
-> - **⚡ Critical Bottleneck:** interrupts are checked **before each fetch-decode-execute**; handlers must restore CPU state exactly (context switch — shadow registers or careful software).
+> - **⚡ Key Constraint:** interrupts are checked **before each fetch-decode-execute**; handlers must restore CPU state exactly (context switch — shadow registers or careful software).
 
 ## 📝 Core
 ### 1. WHERE: reaching device registers
@@ -33,7 +34,7 @@ aliases: [Memory-Mapped IO, Port-Mapped IO, Polling, Interrupts, DMA]
 | interrupts | near-zero until event | IRQ lines / APIC | keyboards, network — sporadic events |
 | DMA | freed even during transfer | DMA controller | bulk data: disk, graphics, audio |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Memory-mapped costs addresses** ➔ the classic disadvantage pair: reduced addressable memory + accidental device access from buggy code.
 - 💡 **Interrupt timing** ➔ checked between instructions, never mid-instruction — an instruction always completes.
 - 💡 **DMA shares the bus** ➔ CPU and DMA controller can't both transfer simultaneously; "CPU is free" means free to compute, not free to use the bus.
@@ -41,10 +42,10 @@ aliases: [Memory-Mapped IO, Port-Mapped IO, Polling, Interrupts, DMA]
 ## 🧠 Active Recall
 > [!FAQ]- A key is pressed. Walk the full interrupt path from wire to resumed program.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Keyboard raises IRQ → CPU finishes current instruction → detects signal pre-fetch → switches to handler (context saved) → handler reads the mapped register → restores state → resumes exactly where interrupted.
-> > - **Technical Justification:** **State invariance** ➔ shadow registers or save/restore make the interruption invisible to the running program.
+> > - **Short answer:** Keyboard raises IRQ → CPU finishes current instruction → detects signal pre-fetch → switches to handler (context saved) → handler reads the mapped register → restores state → resumes exactly where interrupted.
+> > - **Why:** **State invariance** ➔ shadow registers or save/restore make the interruption invisible to the running program.
 
 > [!FAQ]- Why does a disk read use DMA while a keyboard uses plain interrupts?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Disk moves bulk data (MBs) — routing every byte through the CPU wastes it; a keystroke is one value — an interrupt + one register read is cheapest.
-> > - **Technical Justification:** **Transfer volume decides** ➔ DMA's setup overhead only pays off when the payload is large.
+> > - **Short answer:** Disk moves bulk data (MBs) — routing every byte through the CPU wastes it; a keystroke is one value — an interrupt + one register read is cheapest.
+> > - **Why:** **Transfer volume decides** ➔ DMA's setup overhead only pays off when the payload is large.

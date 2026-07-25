@@ -1,5 +1,6 @@
 ---
 unit: [FIT2094, FIT1043]
+week: [9, 11]
 parent: "[[Relational Model]]"
 tags: [CS/Databases, BigData/NoSQL, DataScience/BigData, Monash/CS_DS]
 aliases: [Big Data, 3Vs, Four Vs, Volume, Velocity, Variety]
@@ -12,7 +13,7 @@ aliases: [Big Data, 3Vs, Four Vs, Volume, Velocity, Variety]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** characterise data too big/fast/varied for a traditional RDBMS ➔ the 3 Vs Volume, Velocity, Variety.
 > - **📦 Core Components:** Volume ➔ scale up vs **out** | Velocity ➔ stream/feedback | Variety ➔ structured/semi/unstructured.
-> - **⚡ Critical Bottleneck:** the two core problems — **receive** data fast enough (write/ingest) and **retrieve** it fast enough (query) — both overwhelm an RDBMS at scale.
+> - **⚡ Key Constraint:** the two core problems — **receive** data fast enough (write/ingest) and **retrieve** it fast enough (query) — both overwhelm an RDBMS at scale.
 
 ## 📝 Core
 ### 1. Volume — how much
@@ -40,7 +41,7 @@ aliases: [Big Data, 3Vs, Four Vs, Volume, Velocity, Variety]
 | **Scale up (vertical)** | bigger single server | simple to manage | hard ceiling; costly |
 | **Scale out (horizontal)** | more commodity nodes | near-unlimited growth | needs distribution (sharding/replication) |
 
-> [!NOTE] **Crossover Invariant:** the original "Big Data" is the **intersection** of all three Vs — large volume, high velocity, *and* variable structure at once; any one alone a classic RDBMS can often still handle.
+> [!NOTE] **When It Flips:** the original "Big Data" is the **intersection** of all three Vs — large volume, high velocity, *and* variable structure at once; any one alone a classic RDBMS can often still handle.
 
 ## 📊 Exam Execution Trace
 
@@ -54,13 +55,13 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does Variety, more than Volume, push organisations off the relational model?
-> - **Core Insight Requirement:** Rigid schema vs varying records.
+> - **Hint:** Rigid schema vs varying records.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Relational storage requires a fixed schema; semi/unstructured data (JSON sensor readings, video) has varying or no fields, so forcing it into normalised tables is impractical.
-> > - **Technical Justification:** **Schema-on-write vs natural capture** ➔ Big Data systems store data in its native shape, deferring structure to read time.
+> > - **Short answer:** Relational storage requires a fixed schema; semi/unstructured data (JSON sensor readings, video) has varying or no fields, so forcing it into normalised tables is impractical.
+> > - **Why:** **Schema-on-write vs natural capture** ➔ Big Data systems store data in its native shape, deferring structure to read time.
 
 > [!FAQ]- Group the V's by what they characterise, and give the one-line "what is Big Data" summary.
-> - **Core Insight Requirement:** Bigness vs problems vs aspirations.
+> - **Hint:** Bigness vs problems vs aspirations.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Laney's Volume/Velocity/Variety characterise **bigness**; Veracity/Variability characterise **analysis problems**; Visualisation/Value are **aspirations**. Big Data = *any attribute that challenges the constraints of a system's capability or a business need*.
-> > - **Technical Justification:** **Moving target** ➔ "big" is relative to current tools, so the definition shifts as capability grows ([[Growth Laws (Moore, Koomey, Bell, Zimmerman)|growth laws]]).
+> > - **Short answer:** Laney's Volume/Velocity/Variety characterise **bigness**; Veracity/Variability characterise **analysis problems**; Visualisation/Value are **aspirations**. Big Data = *any attribute that challenges the constraints of a system's capability or a business need*.
+> > - **Why:** **Moving target** ➔ "big" is relative to current tools, so the definition shifts as capability grows ([[Growth Laws (Moore, Koomey, Bell, Zimmerman)|growth laws]]).

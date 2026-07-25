@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+week: 1
 parent: "[[Number Systems (Binary and Hexadecimal)]]"
 tags: [CS/Systems, CS/Foundations]
 aliases: [Two's Complement, Sign and Magnitude, Ones' Complement, Overflow]
@@ -11,7 +12,7 @@ aliases: [Two's Complement, Sign and Magnitude, Ones' Complement, Overflow]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** negate in 2's complement ➔ **flip all bits, add 1** ➔ regular long addition then works for signed arithmetic.
 > - **📦 Core Components:** sign-magnitude (two zeros) ➔ 1's complement (flip only, still two zeros) ➔ 2's complement (flip+1, one zero, easy hardware).
-> - **⚡ Critical Bottleneck:** overflow rule — same-sign operands producing an opposite-sign result ⟹ overflow; the discarded carry bit is NOT the test.
+> - **⚡ Key Constraint:** overflow rule — same-sign operands producing an opposite-sign result ⟹ overflow; the discarded carry bit is NOT the test.
 
 ## 📝 Core
 ### 1. Sign-and-Magnitude
@@ -43,7 +44,7 @@ aliases: [Two's Complement, Sign and Magnitude, Ones' Complement, Overflow]
 | 1's complement | flip all bits | **two** | medium | $-(2^{n-1}{-}1) \dots 2^{n-1}{-}1$ |
 | **2's complement** | flip + add 1 | one | long addition works | $-2^{n-1} \dots 2^{n-1}{-}1$ |
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- Using 4 bits: (a) write $-6$ in 2's complement; (b) compute $(-6) + (+3)$ and state whether it overflows; (c) compute $(+5) + (+4)$ and state whether it overflows.
 > > [!SUCCESS]- Answer
 > > - (a) $6 = 0110 \to$ flip $1001 \to +1 = 1010 = -6$.
@@ -51,7 +52,7 @@ aliases: [Two's Complement, Sign and Magnitude, Ones' Complement, Overflow]
 > > - (c) $0101 + 0100 = 1001 = -7$ ✗ **overflow** (pos+pos → neg; $9 > 2^3{-}1$).
 > > - **Key move:** verdict comes from the sign pattern, not from any carry.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Discarded carry ≠ overflow** ➔ $(-1)+(-2)$ discards a carry yet is correct; only the sign-pattern rule decides.
 - 💡 **Flip+1 is an involution** ➔ applying it twice returns the original — use that to decode a negative pattern back to magnitude.
 - 💡 **$-2^{n-1}$ has no positive partner** ➔ negating $100\dots0$ overflows; the range is asymmetric by one.

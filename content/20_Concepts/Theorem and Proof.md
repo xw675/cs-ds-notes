@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [1, 3]
 parent: "[[Proof Techniques]]"
 tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a theorem is a proven statement; a proof is its finite, rigorous step sequence ➔ ends in exactly the claim.
 > - **📦 Core Components:** each step ➔ pre-existing knowledge / assumption / logical consequence.
-> - **⚡ Critical Bottleneck:** must be **verifiable** and **sequentially readable** (no forward/circular dependence).
+> - **⚡ Key Constraint:** must be **verifiable** and **sequentially readable** (no forward/circular dependence).
 
 ## 📝 Core
 ### 1. Theorem & Proof (Object + Certificate)
@@ -35,7 +36,7 @@ tags: [Math/Logic, Math/Proof, Monash/CS_DS]
 | **Proposition** | independent lesser result | yes |
 | **Corollary** | immediate consequence of a theorem | yes |
 
-> [!NOTE] **Crossover Invariant:** theorem/lemma/proposition/corollary differ in *role*, not truth — all are proven. A proof must be verifiable (auditable independently) and read strictly top-to-bottom.
+> [!NOTE] **When It Flips:** theorem/lemma/proposition/corollary differ in *role*, not truth — all are proven. A proof must be verifiable (auditable independently) and read strictly top-to-bottom.
 
 ## 📊 Exam Execution Trace
 
@@ -51,18 +52,18 @@ Classifying each proof line:
 | 4 | $X\subseteq B$ | consequence | 1,3 + transitivity |
 | 5 | $X\in\mathcal P(B)$ | consequence | def $\mathcal P$ |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Never depend on a later step** ➔ each line may use *only* what is already established; a step referencing a not-yet-proved fact is circular reasoning.
 
 ## 🧠 Active Recall
 > [!FAQ]- What are the three permissible kinds of step, and the two structural requirements a proof must meet?
-> - **Core Insight Requirement:** Step kinds + verifiability/readability.
+> - **Hint:** Step kinds + verifiability/readability.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Pre-existing knowledge / assumption / logical consequence; must be verifiable and sequentially readable.
-> > - **Technical Justification:** **No look-ahead** ➔ each step depends only on prior ones, forbidding circular reasoning.
+> > - **Short answer:** Pre-existing knowledge / assumption / logical consequence; must be verifiable and sequentially readable.
+> > - **Why:** **No look-ahead** ➔ each step depends only on prior ones, forbidding circular reasoning.
 
 > [!FAQ]- Distinguish theorem, lemma, proposition, and corollary.
-> - **Core Insight Requirement:** Role, not truth.
+> - **Hint:** Role, not truth.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Theorem = significant; lemma = stepping-stone; proposition = independent lesser; corollary = immediate follow-on.
-> > - **Technical Justification:** **All proven** ➔ the label marks importance and position, not validity.
+> > - **Short answer:** Theorem = significant; lemma = stepping-stone; proposition = independent lesser; corollary = immediate follow-on.
+> > - **Why:** **All proven** ➔ the label marks importance and position, not validity.

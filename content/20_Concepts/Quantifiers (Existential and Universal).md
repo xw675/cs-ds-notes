@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+week: [1, 3, 5]
 parent: "[[Theorem and Proof]]"
 tags: [Math/Logic, Math/Proof, Math/Theory, Monash/CS_DS]
 aliases: [quantifier, forall, exists, universal quantifier, existential quantifier, bound variable, quantifier order]
@@ -11,7 +12,7 @@ aliases: [quantifier, forall, exists, universal quantifier, existential quantifi
 > [!abstract] Quick Revision
 > - **🎯 Objective:** state how many of a domain satisfy a predicate ➔ $\exists$ = at least one, $\forall$ = every one.
 > - **📦 Core Components:** bind a variable ➔ open predicate becomes a single proposition ➔ domain can change the truth value.
-> - **⚡ Critical Bottleneck:** $\exists$ proven by one witness; $\forall$ needs every case; **restriction** pairs $\exists$ with $\wedge$, $\forall$ with $\Rightarrow$.
+> - **⚡ Key Constraint:** $\exists$ proven by one witness; $\forall$ needs every case; **restriction** pairs $\exists$ with $\wedge$, $\forall$ with $\Rightarrow$.
 
 ## 📝 Core
 ### 1. The Quantifiers (Bind a Variable)
@@ -61,7 +62,7 @@ $$\neg\forall X\,(\mathrm{dog}(X)\Rightarrow\mathrm{happy}(X))\;=\;\exists X\,(\
 | restriction connective | $\wedge$ | $\Rightarrow$ |
 | connective analogy | $\vee$ (disjunction) | $\wedge$ (conjunction) |
 
-> [!NOTE] **Crossover Invariant:** effort is asymmetric — $\exists$ needs one example to prove, a full argument to disprove; $\forall$ needs a full argument to prove, one counterexample to disprove. Finite vs infinite domain decides exhaustion vs arbitrary-element.
+> [!NOTE] **When It Flips:** effort is asymmetric — $\exists$ needs one example to prove, a full argument to disprove; $\forall$ needs a full argument to prove, one counterexample to disprove. Finite vs infinite domain decides exhaustion vs arbitrary-element.
 
 ## 📊 Exam Execution Trace
 
@@ -76,24 +77,24 @@ $S=\{2,3,4,5,6\}$, $P(x)=$ "$x$ prime":
 | 3 | 4 | F | counterexample ⟹ $\forall$ False |
 | 4 | 6 | F | — |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Wrong restriction connective** ➔ using $\Rightarrow$ for $\exists$ is satisfied by any non-computer (too weak); using $\wedge$ for $\forall$ claims *everything* is a computer (too strong).
 
 ## 🧠 Active Recall
 > [!FAQ]- Contrast proving an existential vs a universal, and why a single example differs in each.
-> - **Core Insight Requirement:** Witness vs every-case.
+> - **Hint:** Witness vs every-case.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\exists$ = one witness; $\forall$ = exhaustion (finite) or arbitrary element (infinite).
-> > - **Technical Justification:** **Illustrate vs prove** ➔ one example proves $\exists$ but only illustrates $\forall$; one counterexample disproves $\forall$.
+> > - **Short answer:** $\exists$ = one witness; $\forall$ = exhaustion (finite) or arbitrary element (infinite).
+> > - **Why:** **Illustrate vs prove** ➔ one example proves $\exists$ but only illustrates $\forall$; one counterexample disproves $\forall$.
 
 > [!FAQ]- How do you negate $\forall x\,P(x)$ and $\exists x\,P(x)$?
-> - **Core Insight Requirement:** Swap quantifier, push negation.
+> - **Hint:** Swap quantifier, push negation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\neg\forall x\,P(x)\equiv\exists x\,\neg P(x)$; $\neg\exists x\,P(x)\equiv\forall x\,\neg P(x)$.
-> > - **Technical Justification:** **Disproof form** ➔ disprove a universal with a counterexample; disprove an existential by failing $P$ everywhere.
+> > - **Short answer:** $\neg\forall x\,P(x)\equiv\exists x\,\neg P(x)$; $\neg\exists x\,P(x)\equiv\forall x\,\neg P(x)$.
+> > - **Why:** **Disproof form** ➔ disprove a universal with a counterexample; disprove an existential by failing $P$ everywhere.
 
 > [!FAQ]- Why does "some computer is human" use $\wedge$ but "every computer is human" use $\Rightarrow$?
-> - **Core Insight Requirement:** Restriction asymmetry.
+> - **Hint:** Restriction asymmetry.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\exists$ needs something that *is* a computer **and** human; $\forall$ needs "*if* computer *then* human".
-> > - **Technical Justification:** **Too weak / too strong** ➔ $\Rightarrow$ under $\exists$ is satisfied by any non-computer; $\wedge$ under $\forall$ claims everything is a computer.
+> > - **Short answer:** $\exists$ needs something that *is* a computer **and** human; $\forall$ needs "*if* computer *then* human".
+> > - **Why:** **Too weak / too strong** ➔ $\Rightarrow$ under $\exists$ is satisfied by any non-computer; $\wedge$ under $\forall$ claims everything is a computer.

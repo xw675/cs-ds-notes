@@ -8,11 +8,11 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 # [[R Toolkit (Cheatsheet)]]
 
 **Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **simulation/distributions** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
-**Read protocol:** scan tables → attempt the kata blank → follow links only where you failed.
+**Read protocol:** scan tables → attempt the practice blank → follow links only where you failed.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** wrangle a data frame end-to-end in base R ➔ create/audit/extract/sort/merge/aggregate → plot → lm.
-> - **⚡ Critical Bottleneck:** indexing semantics — `df["col"]` (data frame) vs `df$col` (vector) vs `df[rows, cols]` (matrix-style); negative index = *drop*.
+> - **⚡ Key Constraint:** indexing semantics — `df["col"]` (data frame) vs `df$col` (vector) vs `df[rows, cols]` (matrix-style); negative index = *drop*.
 
 ## 🧱 Language Core
 | Tool | Micro-syntax | Output / gotcha |
@@ -83,7 +83,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 
 *(the four prefixes `d`/`p`/`q`/`r` attach to every distribution suffix: `norm`, `binom`, `pois`, `unif`, `exp`, …)*
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.
 > > [!SUCCESS]- Reference solution
 > > ```r
@@ -97,7 +97,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 > > ```
 > > - **Key moves:** `order()` wrapped in `df[ , ]`; `$out` for outliers; formula syntax in `lm`.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **1-based indexing** ➔ `x[1]` is the first element; muscle-memory from Python costs marks.
 - 💡 **Negative index drops** ➔ `x[-1]` = everything EXCEPT first (Python: last element).
 - 💡 **`order` returns indices** ➔ sorting is `df[order(df$col), ]` — forgetting the outer `df[ , ]` returns numbers, not rows.

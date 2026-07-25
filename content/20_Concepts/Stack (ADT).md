@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+week: [2, 5]
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 ---
@@ -10,7 +11,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** LIFO top-only access ➔ the ADT behind the call stack, recursion/DFS, expression evaluation.
 > - **📦 Core Components:** **Contract** ➔ ABC `push`/`pop`/`peek` | **ArrayStack** ➔ contiguous, fixed/growable | **LinkStack** ➔ [[Node]] chain, never full.
-> - **⚡ Critical Bottleneck:** all ops $O(1)$ ➔ decision is **space**: wasted array slack vs one pointer/node (crossover ≈ half-full).
+> - **⚡ Key Constraint:** all ops $O(1)$ ➔ decision is **space**: wasted array slack vs one pointer/node (crossover ≈ half-full).
 
 ## 📝 Core
 ### 1. Stack Contract (LIFO)
@@ -43,7 +44,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >     def __len__(self) -> int: return self.length   # shared -> concrete
 >     def is_empty(self) -> bool: return len(self) == 0
 > ```
-> 💡 **Exam Pitfall:** **`is_full` is abstract** ➔ fullness depends on storage capacity, which only a concrete subclass knows; `is_empty` reads shared `length` so it is concrete.
+> 💡 **Common Mistake:** **`is_full` is abstract** ➔ fullness depends on storage capacity, which only a concrete subclass knows; `is_empty` reads shared `length` so it is concrete.
 
 ### 🔹 ArrayStack
 > [!code]- `ArrayStack(Stack[T])`
@@ -65,7 +66,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >         if self.is_empty(): raise Exception("Stack is empty")
 >         return self.array[self.length - 1]
 > ```
-> 💡 **Exam Pitfall:** **Growable `push` is amortised** ➔ doubling pays the $O(n)$ copy via geometric series ($<3n$); constant growth ➔ $\Theta(n^2)$. Guard with **exceptions**, not `assert` (`-O` strips it).
+> 💡 **Common Mistake:** **Growable `push` is amortised** ➔ doubling pays the $O(n)$ copy via geometric series ($<3n$); constant growth ➔ $\Theta(n^2)$. Guard with **exceptions**, not `assert` (`-O` strips it).
 
 ### 🔹 LinkStack
 > [!code]- `LinkStack(Stack[T])`
@@ -89,7 +90,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 >         self.length -= 1  # old node GC'd
 >         return item
 > ```
-> 💡 **Exam Pitfall:** **Reassign `top` before unreachable** ➔ `pop` must set `top=top.link` so GC reclaims the old node; cost is one pointer/element + poor locality.
+> 💡 **Common Mistake:** **Reassign `top` before unreachable** ➔ `pop` must set `top=top.link` so GC reclaims the old node; cost is one pointer/element + poor locality.
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | Trigger Condition | Advantage (Pro) | Disadvantage (Con) / Complexity Bound | Cache / Memory Impact |
@@ -98,7 +99,7 @@ tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
 | **ArrayStack** (growable) | Unknown but bounded | $O(1)$ amortised push | resize copy $O(n)$ worst | contiguous, doubles on grow |
 | **LinkStack** | Variable / unbounded | true $O(1)$, never full | $+1$ pointer/node; no random access | scattered, poor locality |
 
-> [!NOTE] **Crossover Invariant:** array of capacity $C$ holding $n$ uses $\approx Cw$; LinkStack uses $\approx 2nw$ ➔ **LinkStack wins when $n < C/2$** (array under half-full), ArrayStack wins when nearly full.
+> [!NOTE] **When It Flips:** array of capacity $C$ holding $n$ uses $\approx Cw$; LinkStack uses $\approx 2nw$ ➔ **LinkStack wins when $n < C/2$** (array under half-full), ArrayStack wins when nearly full.
 
 ## 📊 Exam Execution Trace
 
@@ -127,25 +128,25 @@ $$
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does a stack underlie both recursion and DFS, and what does that imply for converting recursion to iteration?
-> - **Core Insight Requirement:** Identify the LIFO ⟷ call-stack equivalence and its de-recursification consequence.
+> - **Hint:** Identify the LIFO ⟷ call-stack equivalence and its de-recursification consequence.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Both resolve the **most-recently-started** task first ➔ LIFO discipline *is* a stack.
-> > - **Technical Justification:** **Call-stack simulation** ➔ any [[Recursion]] becomes iterative via an explicit [[Stack (ADT)]] ([[Recursion|Recursion to Iteration via Stack]]) — push pending work, pop in reverse.
+> > - **Short answer:** Both resolve the **most-recently-started** task first ➔ LIFO discipline *is* a stack.
+> > - **Why:** **Call-stack simulation** ➔ any [[Recursion]] becomes iterative via an explicit [[Stack (ADT)]] ([[Recursion|Recursion to Iteration via Stack]]) — push pending work, pop in reverse.
 
 > [!FAQ]- ArrayStack vs LinkStack are both $O(1)$ per op — on what grounds do you choose?
-> - **Core Insight Requirement:** Discriminate by space/cache, not asymptotic time.
+> - **Hint:** Discriminate by space/cache, not asymptotic time.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** **Array** for dense/bounded/perf-critical; **Linked** for highly variable/unbounded size.
-> > - **Technical Justification:** **Memory crossover** ➔ array $\approx Cw$ wastes slack; LinkStack $\approx 2nw$ pays a pointer/element — array wins near full, linked wins below half-full.
+> > - **Short answer:** **Array** for dense/bounded/perf-critical; **Linked** for highly variable/unbounded size.
+> > - **Why:** **Memory crossover** ➔ array $\approx Cw$ wastes slack; LinkStack $\approx 2nw$ pays a pointer/element — array wins near full, linked wins below half-full.
 
 > [!FAQ]- A growable ArrayStack occasionally does an $O(n)$ resize, yet `push` is "$O(1)$" — justify, and why does the growth *factor* matter?
-> - **Core Insight Requirement:** Apply amortised (aggregate) analysis and contrast multiplicative vs additive growth.
+> - **Hint:** Apply amortised (aggregate) analysis and contrast multiplicative vs additive growth.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Doubling ➔ total of $n$ pushes $< 3n$ ➔ $O(1)$ **amortised**.
-> > - **Technical Justification:** **Geometric vs arithmetic** ➔ multiplicative growth sums copies to $<2n$; constant growth $c$ resizes every $c$ pushes ➔ $\Theta(n^2)$.
+> > - **Short answer:** Doubling ➔ total of $n$ pushes $< 3n$ ➔ $O(1)$ **amortised**.
+> > - **Why:** **Geometric vs arithmetic** ➔ multiplicative growth sums copies to $<2n$; constant growth $c$ resizes every $c$ pushes ➔ $\Theta(n^2)$.
 
 > [!FAQ]- Why is `is_empty` concrete in the base class but `is_full` abstract?
-> - **Core Insight Requirement:** Separate storage-independent from storage-dependent operations.
+> - **Hint:** Separate storage-independent from storage-dependent operations.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** `is_empty` reads shared `length` ➔ written once, inherited; `is_full` needs storage capacity ➔ abstract.
-> > - **Technical Justification:** **ABC contract** ➔ a fixed array has a capacity, a LinkStack never fills, so only a concrete subclass can define `is_full` ([[Abstract Base Class]]).
+> > - **Short answer:** `is_empty` reads shared `length` ➔ written once, inherited; `is_full` needs storage capacity ➔ abstract.
+> > - **Why:** **ABC contract** ➔ a fixed array has a capacity, a LinkStack never fills, so only a concrete subclass can define `is_full` ([[Abstract Base Class]]).

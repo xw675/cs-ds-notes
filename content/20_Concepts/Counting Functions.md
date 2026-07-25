@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 2
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Combinatorics, Math/Functions, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Combinatorics, Math/Functions, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** count functions $f:A\to B$ by type ($\lvert A\rvert=m$, $\lvert B\rvert=n$) ➔ all / injective / bijective.
 > - **📦 Core Components:** all $=n^m$ ➔ injections $=\tfrac{n!}{(n-m)!}$ ➔ bijections $=n!$.
-> - **⚡ Critical Bottleneck:** injections vanish if $m>n$ (pigeonhole); surjections need inclusion–exclusion.
+> - **⚡ Key Constraint:** injections vanish if $m>n$ (pigeonhole); surjections need inclusion–exclusion.
 
 ## 📝 Core
 ### 1. The Counts
@@ -38,7 +39,7 @@ $$\#\{f:A\to B\}=n^m,\qquad \#\text{injections}=\frac{n!}{(n-m)!},\qquad \#\text
 | bijections ($m=n$) | $n!$ | permutations |
 | surjections | inclusion–exclusion | not a plain product |
 
-> [!NOTE] **Crossover Invariant:** every bijection is an injection with $m=n$: $\tfrac{n!}{0!}=n!$ (consistent). Relations ($2^{mn}$, [[n-ary Relation]]) vastly outnumber functions ($n^m$) because they drop single-valuedness.
+> [!NOTE] **When It Flips:** every bijection is an injection with $m=n$: $\tfrac{n!}{0!}=n!$ (consistent). Relations ($2^{mn}$, [[n-ary Relation]]) vastly outnumber functions ($n^m$) because they drop single-valuedness.
 
 ## 📊 Exam Execution Trace
 
@@ -52,18 +53,18 @@ $\lvert A\rvert=2$, $\lvert B\rvert=3$:
 | 2 | injections | $3!/1!$ | 6 |
 | 3 | bijections ($m=n=3$) | $3!$ | 6 |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Injections keep order, subsets don't** ➔ $\tfrac{n!}{(n-m)!}$ is the *ordered* selection; dividing by $m!$ gives $\binom{n}{m}$ ([[Binomial Coefficient]]). Injections vanish when $m>n$.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive the number of functions and injections from a size-$m$ to a size-$n$ set.
-> - **Core Insight Requirement:** Independent vs shrinking choices.
+> - **Hint:** Independent vs shrinking choices.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Functions $n^m$; injections $n(n-1)\cdots(n-m+1)=\tfrac{n!}{(n-m)!}$.
-> > - **Technical Justification:** **Pigeonhole** ➔ $m>n$ makes a factor $\le0$, count $0$.
+> > - **Short answer:** Functions $n^m$; injections $n(n-1)\cdots(n-m+1)=\tfrac{n!}{(n-m)!}$.
+> > - **Why:** **Pigeonhole** ➔ $m>n$ makes a factor $\le0$, count $0$.
 
 > [!FAQ]- Why is the number of bijections on an $n$-set $n!$, and what are they called?
-> - **Core Insight Requirement:** $m=n$ injection count.
+> - **Hint:** $m=n$ injection count.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\tfrac{n!}{0!}=n!$; these are the **permutations**.
-> > - **Technical Justification:** **Falling product** ➔ $n,n-1,\dots,1$ distinct image choices.
+> > - **Short answer:** $\tfrac{n!}{0!}=n!$; these are the **permutations**.
+> > - **Why:** **Falling product** ➔ $n,n-1,\dots,1$ distinct image choices.

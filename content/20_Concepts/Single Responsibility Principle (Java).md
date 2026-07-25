@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 5
 parent: "[[SOLID Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [SRP, single responsibility, God class, separation of concerns]
 # [[Single Responsibility Principle (Java)]]
 
 **Context:** [[SOLID Principles (Java)|SOLID]] · the **S** · "separation of concerns" made concrete · raises [[Three Core Design Principles (Java)|cohesion]]
-**Task signature:** spot a class doing several unrelated jobs and split it so each class changes for exactly one reason.
+**Problem it solves:** spot a class doing several unrelated jobs and split it so each class changes for exactly one reason.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a class has methods/fields that change for **different reasons** ➔ split it, one responsibility per class.
-> - **⚡ Critical Bottleneck:** the test is **"reason to change"**, not line count — *gather things that change for the same reason, separate those that change for different reasons* (Martin).
+> - **⚡ Key Constraint:** the test is **"reason to change"**, not line count — *gather things that change for the same reason, separate those that change for different reasons* (Martin).
 
 ## 🔧 Minimal Working Example
 ```java
@@ -55,8 +56,8 @@ classDiagram
 - **`Employee` example** ➔ `computePay()` (finance's concern) and `reportHours()` (operations' concern) change for different stakeholders ➔ belong in **different classes**.
 - **Over-applying SRP** ➔ splitting until classes are trivially tiny **overcomplicates** the design; Martin targeted the common tendency to make classes *too large*, not to atomise everything.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: A `Report` class both computes figures and formats them as HTML. Name the two responsibilities and refactor into two classes.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: A `Report` class both computes figures and formats them as HTML. Name the two responsibilities and refactor into two classes.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > class ReportCalculator { double[] compute() { /* numbers */ return new double[0]; } }
@@ -64,7 +65,7 @@ classDiagram
 > > ```
 > > - **Key move:** calculation changes for *business-rule* reasons; formatting changes for *presentation* reasons — different reasons ⇒ different classes.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **"One responsibility" ≠ "one method"** ➔ a class may have many methods **as long as they serve one reason to change**.
 - 💡 **Measure with [[SOLID Principles (Java)|LCOM]]** ➔ a class whose methods split into field-clusters that don't overlap has low cohesion ➔ SRP candidate.
 - 💡 **Cohesion payoff (Domain B)** ➔ good SRP means when a responsibility changes, everything you need is in one place and nothing extra gets in the way.

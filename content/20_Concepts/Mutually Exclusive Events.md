@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 9
 parent: "[[Probability]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** disjoint events ($A\cap B=\emptyset$) ⟹ probability adds ➔ $\mathrm{Pr}(A\sqcup B)=\mathrm{Pr}(A)+\mathrm{Pr}(B)$.
 > - **📦 Core Components:** pairwise disjoint ➔ additive ➔ decomposition tactic.
-> - **⚡ Critical Bottleneck:** add **only** when disjoint; mutually exclusive ≠ independent.
+> - **⚡ Key Constraint:** add **only** when disjoint; mutually exclusive ≠ independent.
 
 ## 📝 Core
 ### 1. The Definition
@@ -39,7 +40,7 @@ $$\mathrm{Pr}(A_1\sqcup\cdots\sqcup A_n)=\sum_i\mathrm{Pr}(A_i)$$
 | independent | $\mathrm{Pr}(A)\mathrm{Pr}(B)$ | multiply |
 | disjoint + positive | dependent | — |
 
-> [!NOTE] **Crossover Invariant:** this is the [[Counting Principles|Addition Principle]] for measures — disjoint "or" adds, mirroring $|A\sqcup B|=|A|+|B|$. "Separate on a Venn diagram" ≠ independent; disjoint positive-probability events are in fact dependent.
+> [!NOTE] **When It Flips:** this is the [[Counting Principles|Addition Principle]] for measures — disjoint "or" adds, mirroring $|A\sqcup B|=|A|+|B|$. "Separate on a Venn diagram" ≠ independent; disjoint positive-probability events are in fact dependent.
 
 ## 📊 Exam Execution Trace
 
@@ -53,18 +54,18 @@ Two dice, total $\le5$ or $\ge10$:
 | 2 | total $\ge10$ | $\tfrac{6}{36}$ | yes |
 | 3 | union | $\tfrac{16}{36}=\tfrac49$ | — |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Add only when disjoint** ➔ $\mathrm{Pr}(A\cup B)=\mathrm{Pr}(A)+\mathrm{Pr}(B)$ iff $A\cap B=\emptyset$; else subtract $\mathrm{Pr}(A\cap B)$.
 
 ## 🧠 Active Recall
 > [!FAQ]- When is $\mathrm{Pr}(A\cup B)=\mathrm{Pr}(A)+\mathrm{Pr}(B)$, and how does it define probability itself?
-> - **Core Insight Requirement:** Disjoint additivity.
+> - **Hint:** Disjoint additivity.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Exactly when $A\cap B=\emptyset$; generalises to pairwise-disjoint families.
-> > - **Technical Justification:** **Singletons** ➔ $\mathrm{Pr}(A)=\sum_{x\in A}\mathrm{Pr}(x)$ is additivity over disjoint $\{x\}$.
+> > - **Short answer:** Exactly when $A\cap B=\emptyset$; generalises to pairwise-disjoint families.
+> > - **Why:** **Singletons** ➔ $\mathrm{Pr}(A)=\sum_{x\in A}\mathrm{Pr}(x)$ is additivity over disjoint $\{x\}$.
 
 > [!FAQ]- Why are two mutually exclusive events (both positive) necessarily not independent?
-> - **Core Insight Requirement:** Zero vs product.
+> - **Hint:** Zero vs product.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\mathrm{Pr}(A\cap B)=0$ but independence needs $\mathrm{Pr}(A)\mathrm{Pr}(B)>0$.
-> > - **Technical Justification:** **Prevention** ➔ $A$ occurring rules out $B$ — the opposite of no influence.
+> > - **Short answer:** $\mathrm{Pr}(A\cap B)=0$ but independence needs $\mathrm{Pr}(A)\mathrm{Pr}(B)>0$.
+> > - **Why:** **Prevention** ➔ $A$ occurring rules out $B$ — the opposite of no influence.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 4
 parent: "[[Normalisation]]"
 tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** data problems from poor relation structure ➔ redundancy → inconsistency.
 > - **📦 Core Components:** insert ➔ update ➔ delete anomalies.
-> - **⚡ Critical Bottleneck:** root cause is one table mixing independent subjects; cured by [[Normalisation]].
+> - **⚡ Key Constraint:** root cause is one table mixing independent subjects; cured by [[Normalisation]].
 
 ## 📝 Core
 ### 1. The Anomalies
@@ -31,7 +32,7 @@ tags: [CS/Databases, SWE/Design, Monash/CS_DS]
 | delete | remove last co-located row | data loss |
 | cause | mixed subjects | redundancy |
 
-> [!NOTE] **Crossover Invariant:** update anomalies directly threaten consistency (two mobile numbers for one rep). Diagnosis guides design: which anomaly a table suffers points to the [[Functional Dependency|partial/transitive dependency]] to remove.
+> [!NOTE] **When It Flips:** update anomalies directly threaten consistency (two mobile numbers for one rep). Diagnosis guides design: which anomaly a table suffers points to the [[Functional Dependency|partial/transitive dependency]] to remove.
 
 ## 📊 Exam Execution Trace
 
@@ -45,18 +46,18 @@ Diagnosing DRUG/SLSREP:
 | 2 | change rep mobile | update |
 | 3 | delete rep's only drug | delete |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Anomalies are structural, not data-entry errors** ➔ they persist regardless of care until the schema is normalised.
 
 ## 🧠 Active Recall
 > [!FAQ]- Describe the insert, update, and delete anomalies with an example each.
-> - **Core Insight Requirement:** Redundancy-driven failures.
+> - **Hint:** Redundancy-driven failures.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** Insert (can't add a rep without a drug); update (rep mobile in many rows); delete (removing last drug loses the rep).
-> > - **Technical Justification:** **Redundancy** ➔ the same fact repeated makes DML go wrong.
+> > - **Short answer:** Insert (can't add a rep without a drug); update (rep mobile in many rows); delete (removing last drug loses the rep).
+> > - **Why:** **Redundancy** ➔ the same fact repeated makes DML go wrong.
 
 > [!FAQ]- What is the root cause of anomalies, and how does normalisation address it?
-> - **Core Insight Requirement:** One subject per relation.
+> - **Hint:** One subject per relation.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** A relation storing more than one subject, repeating facts; normalisation decomposes into single-subject relations.
-> > - **Technical Justification:** **PK–FK links** ➔ each fact stored once, keeping only minimal redundancy.
+> > - **Short answer:** A relation storing more than one subject, repeating facts; normalisation decomposes into single-subject relations.
+> > - **Why:** **PK–FK links** ➔ each fact stored once, keeping only minimal redundancy.

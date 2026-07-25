@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 10
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $E(X)=\sum_k k\,\mathrm{Pr}(X=k)$ ➔ probability-weighted average.
 > - **📦 Core Components:** weighted sum ➔ linearity ➔ product needs independence.
-> - **⚡ Critical Bottleneck:** $E(X+Y)=E(X)+E(Y)$ **always**; $E(XY)=E(X)E(Y)$ **only** if independent.
+> - **⚡ Key Constraint:** $E(X+Y)=E(X)+E(Y)$ **always**; $E(XY)=E(X)E(Y)$ **only** if independent.
 
 ## 📝 Core
 ### 1. The Mean
@@ -31,7 +32,7 @@ tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
 $$E(X)=\sum_k k\,\mathrm{Pr}(X=k),\qquad E(X+Y)=E(X)+E(Y)\ (\text{any }X,Y)$$
 $$E(XY)=E(X)E(Y)\ (\text{independent only})$$
 
-> [!NOTE] **Crossover Invariant:** linearity splits a complex variable into simple summands — a [[Binomial Distribution|binomial]] $Z=\sum X_i$ of [[Binomial Distribution|Bernoullis]] gives $E(Z)=np$ instantly. $E$ can lie far from every value (skewed data), where the median is more representative.
+> [!NOTE] **When It Flips:** linearity splits a complex variable into simple summands — a [[Binomial Distribution|binomial]] $Z=\sum X_i$ of [[Binomial Distribution|Bernoullis]] gives $E(Z)=np$ instantly. $E$ can lie far from every value (skewed data), where the median is more representative.
 
 ## 📊 Exam Execution Trace
 
@@ -46,18 +47,18 @@ E(Z) &= E(X)+E(Y) = 3.5+3.5 = 7\ (\text{no independence needed})
 $$
 **Final Extracted Output:** $E(X)=3.5$, $E(Z)=7$ without touching $Z$'s triangular distribution.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Linearity needs no independence** ➔ $E(X+Y)=E(X)+E(Y)$ holds even for dependent variables; only the *product* rule requires independence.
 
 ## 🧠 Active Recall
 > [!FAQ]- Define $E(X)$ and state linearity — does it need independence?
-> - **Core Insight Requirement:** Additive always.
+> - **Hint:** Additive always.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $E(X)=\sum_k k\,\mathrm{Pr}(X=k)$; $E(X+Y)=E(X)+E(Y)$ for any variables.
-> > - **Technical Justification:** **Product differs** ➔ $E(XY)=E(X)E(Y)$ needs independence.
+> > - **Short answer:** $E(X)=\sum_k k\,\mathrm{Pr}(X=k)$; $E(X+Y)=E(X)+E(Y)$ for any variables.
+> > - **Why:** **Product differs** ➔ $E(XY)=E(X)E(Y)$ needs independence.
 
 > [!FAQ]- When is expectation a poor "typical" value, and what is better?
-> - **Core Insight Requirement:** Skew/outliers.
+> - **Hint:** Skew/outliers.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** With outliers $E$ can lie far from every value ($1,2,3,4,90$ → $E=20$).
-> > - **Technical Justification:** **Median robust** ➔ barely moves with extremes (but has no linearity).
+> > - **Short answer:** With outliers $E$ can lie far from every value ($1,2,3,4,90$ → $E=20$).
+> > - **Why:** **Median robust** ➔ barely moves with extremes (but has no linearity).

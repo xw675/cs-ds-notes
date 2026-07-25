@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 5
 parent: "[[Three Core Design Principles (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 aliases: [SOLID, SRP, OCP, LSP, ISP, DIP, design principles, ReD, downcasting, instanceof, LCOM]
@@ -11,7 +12,7 @@ aliases: [SOLID, SRP, OCP, LSP, ISP, DIP, design principles, ReD, downcasting, i
 > [!abstract] Quick Revision
 > - **🎯 Objective:** judge and justify a design against five principles ➔ low coupling, high cohesion, easy extension.
 > - **📦 Core Components:** [[Single Responsibility Principle (Java)|S]] · [[Open-Closed Principle (Java)|O]] · [[Liskov Substitution Principle (Java)|L]] · [[Interface Segregation Principle (Java)|I]] · [[Dependency Inversion Principle (Java)|D]].
-> - **⚡ Critical Bottleneck:** SOLID = **guidelines**, not laws — over-applying (too many tiny classes/abstractions) adds complexity; apply where it reduces real dependency pain.
+> - **⚡ Key Constraint:** SOLID = **guidelines**, not laws — over-applying (too many tiny classes/abstractions) adds complexity; apply where it reduces real dependency pain.
 
 ## 📝 The Five Principles
 | | Principle | One-line | Smell | Fix |
@@ -39,5 +40,5 @@ aliases: [SOLID, SRP, OCP, LSP, ISP, DIP, design principles, ReD, downcasting, i
 ## 🧠 Active Recall
 > [!FAQ]- Why are SOLID principles called "guidelines, not laws", and what goes wrong if you over-apply them?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** They are heuristics for reducing dependency, not absolute rules; over-applying (e.g. SRP splitting classes until they're trivially small, or DIP adding an interface for everything) **overcomplicates** the design and adds its own coupling/complexity.
-> > - **Technical Justification:** **Cost-benefit** ➔ each abstraction has a cost; apply a principle where it removes real change-pain, and stop when the abstraction costs more than the coupling it removes.
+> > - **Short answer:** They are heuristics for reducing dependency, not absolute rules; over-applying (e.g. SRP splitting classes until they're trivially small, or DIP adding an interface for everything) **overcomplicates** the design and adds its own coupling/complexity.
+> > - **Why:** **Cost-benefit** ➔ each abstraction has a cost; apply a principle where it removes real change-pain, and stop when the abstraction costs more than the coupling it removes.

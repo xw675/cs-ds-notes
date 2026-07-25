@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+week: 2
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [inheritance, extends, super, generalisation, method overriding, Overri
 # [[Inheritance (Java)]]
 
 **Context:** [[FIT2099_MOC]] · reuse a class's fields/methods in a more specific class · UML **generalisation** · basis for [[Polymorphism (Java)|polymorphism]] and [[Abstract Classes (Java)|abstract classes]] · an alternative axis of coupling to [[UML Associations and Dependencies (Java)|association]]
-**Task signature:** a subclass **is-a** kind of a superclass — reuse the parent's members, add/override its own.
+**Problem it solves:** a subclass **is-a** kind of a superclass — reuse the parent's members, add/override its own.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** a class *is-a* specialisation of another (Book **is-a** Document, Car **is-a** Vehicle) ➔ **class Sub extends Super**.
-> - **⚡ Critical Bottleneck:** a subclass **does not inherit constructors** and cannot see the superclass's **`private`** members — reach the parent via `super(...)` (constructor) and `super.method()` / `protected` (members).
+> - **⚡ Key Constraint:** a subclass **does not inherit constructors** and cannot see the superclass's **`private`** members — reach the parent via `super(...)` (constructor) and `super.method()` / `protected` (members).
 
 ## 🔧 Minimal Working Example
 ```java
@@ -71,8 +72,8 @@ class Child extends Parent {
 - **`final` blocks inheritance** ➔ [[Static and Final (Java)|`final class`]] can't be extended; a `final` method can't be overridden.
 - **Implicit constructor chaining** ➔ if a child constructor omits `super(...)`, Java inserts a call to the **no-arg** `super()`; a class with no constructor gets a default one that just calls `super()`.
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: `Vehicle` stores a `private int registration` set in its constructor. Write `Car extends Vehicle` adding a `private String brand`, whose constructor takes `(int rego, String brand)` and initialises both.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: `Vehicle` stores a `private int registration` set in its constructor. Write `Car extends Vehicle` adding a `private String brand`, whose constructor takes `(int rego, String brand)` and initialises both.
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > public class Vehicle {
@@ -89,7 +90,7 @@ class Child extends Parent {
 > > ```
 > > - **Key move:** `super(rego)` as the first line — the subclass **must** initialise the superclass part before its own.
 
-> [!QUESTION]- Kata 2: `Parent.display()` is `protected`. Override it in `Child` so it prints the child message then the parent's. What is the tightest legal access modifier on the override?
+> [!QUESTION]- Practice 2: `Parent.display()` is `protected`. Override it in `Child` so it prints the child message then the parent's. What is the tightest legal access modifier on the override?
 > > [!SUCCESS]- Reference solution
 > > ```java
 > > class Child extends Parent {
@@ -102,7 +103,7 @@ class Child extends Parent {
 > > ```
 > > - **Key move:** an override may allow **more, but not less** access — `protected` → `public` is legal; `protected` → `private` will not compile.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Constructors are not inherited** ➔ the subclass must define its own and call `super(...)` first; forgetting it (when no no-arg parent constructor exists) is a compile error.
 - 💡 **Overriding narrows access** ➔ an override may **widen** (`protected`→`public`) but **never narrow** (`public`→`protected`/`private`).
 - 💡 **Signature mismatch = overload, not override** ➔ different params make a **new** method (overloading), silently not overriding; `@Override` catches this at compile time.

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+week: 3
 parent: "[[Data Wrangling]]"
 tags: [DataScience/Wrangling, Python/Pandas, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [Data Auditing, df.describe, df.info, df.corr]
 # [[Data Auditing in Pandas]]
 
 **Context:** [[FIT1043_MOC]] · first pass over a new dataset · surfaces [[Data Quality Problems]] before [[Data Wrangling|wrangling]] · pandas on a DataFrame `df`
-**Task signature:** given a freshly loaded DataFrame, profile its shape, types, distributions, and relationships to spot quality issues.
+**Problem it solves:** given a freshly loaded DataFrame, profile its shape, types, distributions, and relationships to spot quality issues.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** just read data into a DataFrame ➔ run the audit sequence: shape → head/tail → info → describe → corr.
-> - **⚡ Critical Bottleneck:** `describe()` defaults to **numeric** columns only; audit object/categorical columns separately, and remember `df.shape` is an **attribute** (no parentheses).
+> - **⚡ Key Constraint:** `describe()` defaults to **numeric** columns only; audit object/categorical columns separately, and remember `df.shape` is an **attribute** (no parentheses).
 
 ## 🔧 Minimal Working Example
 ```python
@@ -33,8 +34,8 @@ df.describe()       # numeric summary: count, mean, std, min, quartiles, max
 - **Categorical audit** ➔ `df.describe(include=['O'])`; per-column `df["suburb"].unique()` and `df["suburb"].value_counts()` to find inconsistent/misspelled values.
 - **Numeric vs categorical split** ➔ use `info()` dtypes to decide which columns get `describe()` vs `describe(include=['O'])`.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: You've loaded a housing dataset into `df`. Write the initial audit that would reveal its size, dtypes/nulls, numeric ranges, and the distinct values of the `suburb` column.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: You've loaded a housing dataset into `df`. Write the initial audit that would reveal its size, dtypes/nulls, numeric ranges, and the distinct values of the `suburb` column.
 > > [!SUCCESS]- Reference solution
 > > ```python
 > > df.shape                       # (N, D)
@@ -44,7 +45,7 @@ df.describe()       # numeric summary: count, mean, std, min, quartiles, max
 > > ```
 > > - **Key move:** `info()` for nulls/types, `describe()` for numeric ranges, `value_counts()` for categorical cleanliness.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **`df.shape` has no parentheses** ➔ it is an attribute; `df.shape()` raises `TypeError`.
 - 💡 **`describe()` hides text columns** ➔ by default it profiles numeric only; add `include=['O']` to audit object/categorical columns.
 - 💡 **View-vs-copy / chained indexing** ➔ fixing values via `df[df.a>0]["b"] = x` may hit a `SettingWithCopyWarning` and silently fail; assign with a single `df.loc[mask, "b"] = x`.

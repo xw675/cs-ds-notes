@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: [8, 10]
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [NVL, TO_CHAR, TO_DATE, sysdate, dual, EXTRACT, LPAD, RPAD, LTRIM, TRIM
 # [[SQL Formatting Functions (NVL, TO_CHAR, TO_DATE)]]
 
 **Context:** [[FIT2094_MOC]] · clean a [[SQL SELECT and WHERE|SELECT]]'s output · substitute [[NULL Value|NULLs]], convert text↔[[Oracle Data Types|DATE]], extract date parts, pad/trim text
-**Task signature:** replace NULLs with readable defaults, render/compare dates and numbers, extract date components, and align text output.
+**Problem it solves:** replace NULLs with readable defaults, render/compare dates and numbers, extract date components, and align text output.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** blank cells, raw dates, or messy numbers in output ➔ NVL / TO_CHAR; comparing a DATE column ➔ TO_DATE.
-> - **⚡ Critical Bottleneck:** NVL's replacement value **must match the column's data type** — swap a DATE for text only after TO_CHAR.
+> - **⚡ Key Constraint:** NVL's replacement value **must match the column's data type** — swap a DATE for text only after TO_CHAR.
 
 ## 🔧 Minimal Working Example
 ```sql
@@ -37,8 +38,8 @@ FROM   uni.enrolment;
 - **Filter by date part** ➔ `WHERE EXTRACT(MONTH FROM ds_date_serviced) BETWEEN 1 AND 3` (Q1) — no TO_CHAR needed.
 - **Text bar chart** ➔ `LPAD(LTRIM(TO_CHAR(pct,'990.99')), 15, '*')` renders `**********22.73` (LTRIM removes TO_CHAR's sign space, LPAD pads to width). Only aligns in a **monospaced** font / "Run Script".
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: For each rental show `rent_no` and a return date as `dd-Mon-yyyy`, or `'Still out'` when not yet returned.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: For each rental show `rent_no` and a return date as `dd-Mon-yyyy`, or `'Still out'` when not yet returned.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT rent_no,
@@ -47,7 +48,7 @@ FROM   uni.enrolment;
 > > ```
 > > - **Key move:** TO_CHAR converts the DATE to text *first*, so NVL's `'Still out'` matches type.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **NVL type mismatch errors** ➔ the default must share the column's type; convert dates with TO_CHAR before substituting text.
 - 💡 **Never compare/display a raw DATE** ➔ this unit **requires** TO_DATE (compare) and TO_CHAR (display) for every date attribute, to kill locale ambiguity.
 - 💡 **Padding only aligns in monospace** ➔ LPAD/RPAD output looks correct in "Run Script"/fixed-width fonts, not the proportional query-result grid.

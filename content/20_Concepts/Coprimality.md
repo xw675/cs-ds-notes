@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+week: 7
 parent: "[[Greatest Common Divisor]]"
 tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 ---
@@ -10,7 +11,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $a,b$ coprime iff $\gcd(a,b)=1$ ➔ share no factor but 1.
 > - **📦 Core Components:** not primality ➔ Bézout $xm+yn=1$ ➔ tested by [[Euclidean Algorithm]].
-> - **⚡ Critical Bottleneck:** $x$ invertible in $\mathbb Z_n$ **iff** $\gcd(x,n)=1$; coprimality is pairwise, not transitive.
+> - **⚡ Key Constraint:** $x$ invertible in $\mathbb Z_n$ **iff** $\gcd(x,n)=1$; coprimality is pairwise, not transitive.
 
 ## 📝 Core
 ### 1. The Relation
@@ -23,7 +24,7 @@ tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
 - **Why** ➔ $\gcd=1$ = smallest positive [[Integer Linear Combination]] = 1 achievable.
 - **Test** ➔ [[Euclidean Algorithm]] for gcd; [[Extended Euclidean Algorithm]] for $x,y$.
 
-> [!NOTE] **Crossover Invariant:** the payoff theorem — $x$ has a [[Modular Inverse]] in $\mathbb Z_n$ **iff** $\gcd(x,n)=1$; the Bézout coefficient is the inverse. Coprimality sidesteps factorisation entirely, so it is far easier than primality.
+> [!NOTE] **When It Flips:** the payoff theorem — $x$ has a [[Modular Inverse]] in $\mathbb Z_n$ **iff** $\gcd(x,n)=1$; the Bézout coefficient is the inverse. Coprimality sidesteps factorisation entirely, so it is far easier than primality.
 
 ## 📊 Exam Execution Trace
 
@@ -37,18 +38,18 @@ $\gcd(25,21)$:
 | 2 | $(4,1)$ | $21\bmod4=1$ |
 | 3 | gcd | $1$ → coprime |
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Coprime ≠ prime** ➔ 21, 25 are coprime with neither prime; the Bézout coefficient $x$ *is* the modular inverse ($\gcd(x,n)=1$).
 
 ## 🧠 Active Recall
 > [!FAQ]- Prove $m,n$ coprime iff $xm+yn=1$ for some integers $x,y$.
-> - **Core Insight Requirement:** gcd = smallest positive combination.
+> - **Hint:** gcd = smallest positive combination.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** coprime ⟺ $\gcd=1$ ⟺ 1 is the smallest positive $xm+yn$ ⟺ $1\in m\mathbb Z+n\mathbb Z$.
-> > - **Technical Justification:** **Least positive** ➔ 1 is minimal, so attaining it forces gcd 1.
+> > - **Short answer:** coprime ⟺ $\gcd=1$ ⟺ 1 is the smallest positive $xm+yn$ ⟺ $1\in m\mathbb Z+n\mathbb Z$.
+> > - **Why:** **Least positive** ➔ 1 is minimal, so attaining it forces gcd 1.
 
 > [!FAQ]- Why is coprimality easier than primality, and what does it determine in $\mathbb Z_n$?
-> - **Core Insight Requirement:** No factorisation needed.
+> - **Hint:** No factorisation needed.
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** $\gcd=1$ is testable by Euclid without factorising; $x$ invertible in $\mathbb Z_n$ iff $\gcd(x,n)=1$.
-> > - **Technical Justification:** **$\mathbb Z_n^*$** ➔ the invertible elements are exactly those coprime to $n$, counted by $\phi(n)$.
+> > - **Short answer:** $\gcd=1$ is testable by Euclid without factorising; $x$ invertible in $\mathbb Z_n$ iff $\gcd(x,n)=1$.
+> > - **Why:** **$\mathbb Z_n^*$** ➔ the invertible elements are exactly those coprime to $n$, counted by $\phi(n)$.

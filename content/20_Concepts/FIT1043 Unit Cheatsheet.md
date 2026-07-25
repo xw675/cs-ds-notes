@@ -11,7 +11,7 @@ aliases: [FIT1043 Exam Crib, Data Science Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** exam answers = definition + the DISCRIMINATOR ➔ which role/model/metric/engine, and the one criterion that decides.
-> - **⚡ Critical Bottleneck:** evaluation discipline — unseen test data, metric matched to error cost, correlation ≠ causation; most written marks hang on these three.
+> - **⚡ Key Constraint:** evaluation discipline — unseen test data, metric matched to error cost, correlation ≠ causation; most written marks hang on these three.
 
 ## 1️⃣ Lifecycle, Roles, Business
 - **Data science** ➔ extraction of knowledge/value from data — lifecycle-wide, not "ML on big data". **Danger zone** = skills + domain but NO maths/stats ⟹ plausible analysis without rigour.

@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 10
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [UNION, UNION ALL, INTERSECT, MINUS, Set Operators]
 # [[SQL Set Operators]]
 
 **Context:** [[FIT2094_MOC]] · combine whole result sets vertically · the SQL form of [[Set Operations in Relational Algebra|∪ ∩ − set algebra]] · needs union-compatible queries
-**Task signature:** merge, intersect, or subtract the row sets of two SELECTs into one result.
+**Problem it solves:** merge, intersect, or subtract the row sets of two SELECTs into one result.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** combine rows of two queries ➔ UNION / UNION ALL (∪), INTERSECT (∩), MINUS (−).
-> - **⚡ Critical Bottleneck:** both queries must be **union-compatible** — same column count, compatible types; output names come from the **first** query.
+> - **⚡ Key Constraint:** both queries must be **union-compatible** — same column count, compatible types; output names come from the **first** query.
 
 ![[relational-algebra-set-operation.png]]
 
@@ -42,8 +43,8 @@ ORDER BY drone_id;                    -- result: drones NEVER rented
 - **UNION with labels** ➔ combine `WHERE emp_type='F'` (label `'Full Time'`) with `WHERE emp_type='C'` (label `'Casual'`), then `ORDER BY emp_no`.
 - **INTERSECT** ➔ `SELECT emp_lname FROM drone.employee INTERSECT SELECT cust_lname FROM drone.customer` — surnames in both.
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: List surnames that appear in **both** `EMPLOYEE` (`emp_lname`) and `CUSTOMER` (`cust_lname`), ordered.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: List surnames that appear in **both** `EMPLOYEE` (`emp_lname`) and `CUSTOMER` (`cust_lname`), ordered.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > SELECT emp_lname  FROM drone.employee
@@ -53,6 +54,6 @@ ORDER BY drone_id;                    -- result: drones NEVER rented
 > > ```
 > > - **Key move:** INTERSECT keeps the overlap; both sides are single, type-compatible columns.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Not union-compatible = error** ➔ mismatched column counts or incompatible types are rejected; align the SELECT lists.
 - 💡 **One ORDER BY, at the very end** ➔ ordering belongs to the combined result, using the first query's column names.

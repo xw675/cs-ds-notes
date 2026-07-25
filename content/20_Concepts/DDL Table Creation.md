@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+week: 6
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
 tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [CREATE TABLE, ALTER ADD CONSTRAINT]
 # [[DDL Table Creation]]
 
 **Context:** [[FIT2094_MOC]] · turn a [[Logical Modelling (ER Mapping)|logical model]] into Oracle tables · the physical-design deliverable
-**Task signature:** given relations with PKs/FKs, emit `CREATE TABLE` + `ALTER TABLE` DDL that builds them in a valid order with named constraints.
+**Problem it solves:** given relations with PKs/FKs, emit `CREATE TABLE` + `ALTER TABLE` DDL that builds them in a valid order with named constraints.
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** any schema $\text{TABLE}(\underline{\text{PK}},\text{Attr},\text{FK}^{*})$ to implement ➔ columns + NOT NULL inline, **every other constraint via ALTER**.
-> - **⚡ Critical Bottleneck:** creation order — a table referenced by an FK must exist first; circular references force the split-then-`ALTER` method.
+> - **⚡ Key Constraint:** creation order — a table referenced by an FK must exist first; circular references force the split-then-`ALTER` method.
 
 ## 🔧 Minimal Working Example
 *(Unit-required method: `CREATE` holds only columns + `NOT NULL`; `PRIMARY KEY`, `UNIQUE`, `FOREIGN KEY` are all named table constraints added by `ALTER`.)*
@@ -46,8 +47,8 @@ ALTER TABLE rental ADD CONSTRAINT cust_train_rental_fk
     REFERENCES cust_train (train_code, cust_id, ct_date_start);
 ```
 
-## 🥋 Kata 
-> [!QUESTION]- Kata 1: Implement $\text{TRAINING}(\underline{\text{train\_code}},\text{train\_desc},\text{train\_hrs})$ then $\text{CUST\_TRAIN}(\underline{\text{ct\_id}},\text{train\_code}^{*},\dots)$ using the unit method, in a valid order.
+## ✍️ Practice 
+> [!QUESTION]- Practice 1: Implement $\text{TRAINING}(\underline{\text{train\_code}},\text{train\_desc},\text{train\_hrs})$ then $\text{CUST\_TRAIN}(\underline{\text{ct\_id}},\text{train\_code}^{*},\dots)$ using the unit method, in a valid order.
 > > [!SUCCESS]- Reference solution
 > > ```sql
 > > CREATE TABLE training (
@@ -62,6 +63,6 @@ ALTER TABLE rental ADD CONSTRAINT cust_train_rental_fk
 > > ```
 > > - **Key move:** parent (`training`) exists before the child's FK is added.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **Constraints via `ALTER`, not inline** ➔ this unit requires every constraint except `NOT NULL` to be a **named table constraint** added by `ALTER TABLE` — inline PK/FK loses marks.
 - 💡 **Child before parent = error** ➔ referencing a table that does not yet exist fails; order parents first, or use the split-then-`ALTER` method for cycles.

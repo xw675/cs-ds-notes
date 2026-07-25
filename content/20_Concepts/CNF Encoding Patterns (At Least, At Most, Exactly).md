@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+week: 1
 parent: "[[Conjunctive Normal Form]]"
 tags: [Math/Logic, Math/Theory, CS/Computation, Monash/CS_DS]
 type: pattern
@@ -8,11 +9,11 @@ aliases: [at least k, at most k, exactly k, cardinality constraints, CNF recipe,
 # [[CNF Encoding Patterns (At Least, At Most, Exactly)]]
 
 **Context:** [[FIT2014_MOC]] · turning a **counting condition** into [[Conjunctive Normal Form|CNF]] mechanically · the reusable half of [[Encoding Problems in Propositional Logic]]
-**Task signature:** given $n$ options, write CNF for "**pick at least / at most / exactly $k$** of them".
+**Problem it solves:** given $n$ options, write CNF for "**pick at least / at most / exactly $k$** of them".
 
 > [!abstract] Quick Revision
 > - **🎯 Trigger:** any phrase reducible to "at least $x$ / at most $y$ / exactly $z$ from $n$ options" ➔ apply the clause-size formula, then enumerate combinations.
-> - **⚡ Critical Bottleneck:** the formula is on **clause size**, not clause count — for *at least $x$ from $n$*, every clause has $m=n-x+1$ literals, and you write **all** $\binom{n}{m}$ of them.
+> - **⚡ Key Constraint:** the formula is on **clause size**, not clause count — for *at least $x$ from $n$*, every clause has $m=n-x+1$ literals, and you write **all** $\binom{n}{m}$ of them.
 
 ## 📐 The master formula
 - **At least $x$ from $n$** ➔ literals per clause $m=n-(x-1)=n-x+1$; clauses = **all combinations** of size $m$, i.e. $\binom{n}{m}$ clauses; literals **unnegated**.
@@ -48,20 +49,20 @@ $$\text{exactly } z \;=\; (\text{at least } z)\ \wedge\ (\text{at most } z)$$
 | $P\Rightarrow Q$ | $(\neg P\vee Q)$ | rewrite implication |
 | $P\Leftrightarrow Q$ | $(\neg P\vee Q)\wedge(P\vee\neg Q)$ | two clauses |
 
-## 🥋 Kata
-> [!QUESTION]- Kata 1: A mouse is on the clock, the floor, or the bread, and can be in only one place at once. Write this in CNF.
+## ✍️ Practice
+> [!QUESTION]- Practice 1: A mouse is on the clock, the floor, or the bread, and can be in only one place at once. Write this in CNF.
 > > [!SUCCESS]- Reference solution
 > > This is "**exactly one** of three options" with $S=\{C,F,B\}$:
 > > $$(C\vee F\vee B)\wedge(\neg C\vee\neg F)\wedge(\neg C\vee\neg B)\wedge(\neg F\vee\neg B)$$
 > > - **Key move:** *exactly one* $=$ *at least one* (single clause) $\wedge$ *at most one* (all pairwise negated pairs).
 
-> [!QUESTION]- Kata 2: Write "at least two of $\{a,b,c,d\}$" in CNF, and state the clause count before writing it.
+> [!QUESTION]- Practice 2: Write "at least two of $\{a,b,c,d\}$" in CNF, and state the clause count before writing it.
 > > [!SUCCESS]- Reference solution
 > > $m=n-x+1=4-2+1=3$ literals per clause; $\binom{4}{3}=4$ clauses:
 > > $$(a\vee b\vee c)\wedge(a\vee b\vee d)\wedge(a\vee c\vee d)\wedge(b\vee c\vee d)$$
 > > - **Key move:** compute $m$ **first**, then mechanically enumerate every size-$m$ subset in alphabetical order so none is missed.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **The formula sizes the clause, not the count** ➔ $m=n-x+1$ is **literals per clause**; the number of clauses is then $\binom{n}{m}$. Swapping these is the standard error.
 - 💡 **"At most" needs negated literals** ➔ it is *at least $n-y$ of the **complements***; forgetting to negate produces a formula asserting the opposite.
 - 💡 **A single big negated clause is wrong for "at most one"** ➔ $(\neg V\vee\neg B\vee\neg D)$ only forbids *all three*; "no more than one" needs **pairwise** clauses.
@@ -70,5 +71,5 @@ $$\text{exactly } z \;=\; (\text{at least } z)\ \wedge\ (\text{at most } z)$$
 ## 🧠 Active Recall
 > [!FAQ]- For "at least $x$ of $n$", why does each clause have $n-x+1$ literals?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** a clause of size $m$ says "**not all $m$ of these are false**". If we omitted $x-1$ options, $n-(x-1)$ remain; forcing at least one of *every* such subset to be true makes it impossible to leave $x-1$ or fewer chosen.
-> > - **Technical Justification:** **Blocking the shortfall** ➔ suppose only $x-1$ were picked; then some size-$(n-x+1)$ subset would be entirely unpicked, violating its clause. Requiring **all** $\binom{n}{n-x+1}$ such clauses therefore forces at least $x$ picks.
+> > - **Short answer:** a clause of size $m$ says "**not all $m$ of these are false**". If we omitted $x-1$ options, $n-(x-1)$ remain; forcing at least one of *every* such subset to be true makes it impossible to leave $x-1$ or fewer chosen.
+> > - **Why:** **Blocking the shortfall** ➔ suppose only $x-1$ were picked; then some size-$(n-x+1)$ subset would be entirely unpicked, violating its clause. Requiring **all** $\binom{n}{n-x+1}$ such clauses therefore forces at least $x$ picks.

@@ -12,7 +12,7 @@ aliases: [Sklearn Cheatsheet, ML Workflow]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every sklearn model, same four verbs ➔ Estimator() → fit(X_train, y_train) → predict(X_test) → evaluate.
-> - **⚡ Critical Bottleneck:** shapes — $X\in\mathbb{R}^{N\times D}$ (2-D, even for one feature via `df.loc[:, ['weight']]`), $y\in\mathbb{R}^{N}$ (1-D); most beginner errors are a 1-D $X$.
+> - **⚡ Key Constraint:** shapes — $X\in\mathbb{R}^{N\times D}$ (2-D, even for one feature via `df.loc[:, ['weight']]`), $y\in\mathbb{R}^{N}$ (1-D); most beginner errors are a 1-D $X$.
 
 ## 🧩 The Universal Skeleton
 ```python
@@ -54,7 +54,7 @@ y_pred = model.predict(X_test)      # apply to UNSEEN data
 - **Metric choice is the exam question** ➔ spam filter wants precision, disease screen wants recall — derive from the confusion matrix, don't memorise ([[Classification Evaluation (Confusion Matrix and Metrics)]]).
 - **Read coefficients** ➔ `model.coef_`, `model.intercept_` — same quantities as R's `fit$coefficients` ([[R Toolkit (Cheatsheet)]]).
 
-## 🥋 Kata 
+## ✍️ Practice 
 > [!QUESTION]- df has `hours`, `attendance` → `passed` (0/1). Build an 80/20 split, fit a decision tree, print the confusion matrix and accuracy, and state which metric you'd report if failing students are rare and missing one is costly.
 > > [!SUCCESS]- Reference solution
 > > ```python
@@ -70,7 +70,7 @@ y_pred = model.predict(X_test)      # apply to UNSEEN data
 > > ```
 > > - **Key moves:** 2-D X; fit on train only; metric justified by cost structure.
 
-## ⚠️ Pitfalls
+## ⚠️ Common Mistakes
 - 💡 **1-D X crash** ➔ a single-bracket `df['w']` is $(N,)$; estimators need 2-D $(N,1)$ — use `df.loc[:, ['w']]` or `df.iloc[:, [0]]`.
 - 💡 **Fitting on everything** ➔ split FIRST; any statistic learned from test rows (even `StandardScaler`) is leakage — `fit_transform` train, `transform` test.
 - 💡 **Accuracy on imbalance** ➔ 95% accuracy on a 95/5 class split is the majority-class baseline, not skill.
