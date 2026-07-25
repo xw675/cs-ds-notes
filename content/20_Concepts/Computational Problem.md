@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 1
 parent: "[[Algorithm]]"
 tags: [CS/Foundations, CS/Algorithms]

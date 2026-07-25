@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 4
 parent: "[[MARIE Assembly (Instruction Set and Patterns)]]"
 tags: [CS/Systems, CS/Assembly]

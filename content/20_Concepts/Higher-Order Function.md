@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: B
 week: 5
 parent: "[[Iterator]]"
 tags: [CS/Programming, SWE/OOP]

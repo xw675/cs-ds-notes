@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: 1
 parent: "[[Java Program Structure]]"
 tags: [SWE/Java, SWE/OOP]

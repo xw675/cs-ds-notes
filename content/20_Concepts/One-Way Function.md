@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [D, F]
 week: 7
 parent: "[[Modular Exponentiation]]"
 tags: [Math/NumberTheory, CS/Cryptography]

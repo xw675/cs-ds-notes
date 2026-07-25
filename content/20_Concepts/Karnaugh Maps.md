@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: [D, F]
 week: 2
 parent: "[[Sum-of-Products (Functions to Circuits)]]"
 tags: [CS/Systems, Math/Logic]

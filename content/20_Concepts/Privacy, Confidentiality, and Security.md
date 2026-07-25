@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 11
 parent: "[[Data Management and Data Governance]]"
 tags: [DataScience/Governance, Ethics/Data]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 7
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]

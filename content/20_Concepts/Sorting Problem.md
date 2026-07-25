@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 1
 parent: "[[Computational Problem]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]

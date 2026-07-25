@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 5
 parent: "[[Conceptual vs Logical Model]]"
 tags: [CS/Databases, SWE/Design]

@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+domain: G
 week: [0, 4]
 parent: "[[Measures of Centrality]]"
 tags: [DataScience/Statistics, DataScience/Visualisation]

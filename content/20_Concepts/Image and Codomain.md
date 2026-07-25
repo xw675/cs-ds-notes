@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 2
 parent: "[[Function (Mathematics)]]"
 tags: [Math/Functions, Math/Discrete]

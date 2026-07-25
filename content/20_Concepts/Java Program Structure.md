@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: 1
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
 tags: [SWE/Java, SWE/OOP]

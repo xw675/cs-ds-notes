@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: G
 week: 4
 parent: "[[Types of Data (Numeric and Categorical)]]"
 tags: [DataScience/Visualisation]

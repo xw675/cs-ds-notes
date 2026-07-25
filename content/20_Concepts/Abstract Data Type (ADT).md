@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 2
 parent: "[[Data Type]]"
 tags: [CS/DataStructures, CS/Abstraction, SWE/OOP]

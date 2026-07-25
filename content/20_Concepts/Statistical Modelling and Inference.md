@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+domain: E
 week: 1
 parent: "[[FIT2086_MOC]]"
 tags: [DataScience/Modelling, DataScience/Theory]

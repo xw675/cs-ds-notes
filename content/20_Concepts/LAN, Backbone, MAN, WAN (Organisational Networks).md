@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 8
 parent: "[[Computer Networks (Components and Types)]]"
 tags: [CS/Networks]

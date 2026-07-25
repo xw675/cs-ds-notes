@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+domain: [D, E]
 week: 0
 parent: "[[Statistical Modelling and Inference]]"
 tags: [Math/Calculus, DataScience/Modelling]

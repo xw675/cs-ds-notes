@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[Linear and Polynomial Regression]]"
 tags: [DataScience/Tools, DataScience/ML, Tool/Pandas]
 type: pattern

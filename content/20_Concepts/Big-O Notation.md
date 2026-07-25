@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT1058, FIT2004]
+domain: [A, D]
 week: [1, 6]
 parent: "[[Algorithmic Complexity]]"
 tags: [CS/Complexity, Math/Analysis, CS/Algorithms, Math/Sequences]

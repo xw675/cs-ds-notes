@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 7
 parent: "[[Modular Arithmetic]]"
 tags: [Math/NumberTheory, Math/Discrete]

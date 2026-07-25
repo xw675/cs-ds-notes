@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+domain: D
 week: [1, 5]
 parent: "[[Binary Relation]]"
 tags: [Math/Logic, Math/Discrete, Math/Theory]

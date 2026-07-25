@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 8
 parent: "[[R for Data Science]]"
 tags: [DataScience/Tools, DataScience/ML, Tool/R]

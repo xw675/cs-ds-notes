@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 3
 parent: "[[List (ADT)]]"
 tags: [SWE/OOP, CS/DataStructures]

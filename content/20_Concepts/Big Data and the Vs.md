@@ -1,5 +1,6 @@
 ---
 unit: [FIT2094, FIT1043]
+domain: [C, F]
 week: [9, 11]
 parent: "[[Relational Model]]"
 tags: [CS/Databases, DataScience/BigData]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 10
 parent: "[[Binomial Distribution]]"
 tags: [Math/Probability, Math/Discrete]

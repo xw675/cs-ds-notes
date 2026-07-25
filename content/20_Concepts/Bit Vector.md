@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: [A, F]
 week: 2
 parent: "[[Data Structure]]"
 tags: [CS/DataStructures, CS/BitManipulation]

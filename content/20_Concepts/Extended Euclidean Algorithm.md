@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [A, D]
 week: 7
 parent: "[[Euclidean Algorithm]]"
 tags: [Math/NumberTheory, CS/Algorithms]

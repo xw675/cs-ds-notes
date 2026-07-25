@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 4
 parent: "[[Logical Connectives]]"
 tags: [Math/Logic, Math/Discrete]

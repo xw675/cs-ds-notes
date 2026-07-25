@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [D, E]
 week: 9
 parent: "[[Conditional Probability]]"
 tags: [Math/Probability, DataScience/ML]

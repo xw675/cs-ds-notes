@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 10
 parent: "[[SQL Subquery (Nested SELECT)]]"
 tags: [CS/Databases, Tool/SQL]

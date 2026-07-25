@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[Python for Data Science]]"
 tags: [DataScience/Tools, Tool/Pandas]
 type: pattern

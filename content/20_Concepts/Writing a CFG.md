@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+domain: D
 week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 7
 parent: "[[Coprimality]]"
 tags: [Math/NumberTheory, Math/Discrete]

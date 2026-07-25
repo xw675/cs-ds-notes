@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[FIT1043_MOC]]"
 tags: [DataScience/Foundations, DataScience/ML]
 type: cheatsheet

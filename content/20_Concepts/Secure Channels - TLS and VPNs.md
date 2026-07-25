@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 10
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, CS/Networks, CS/Cryptography]

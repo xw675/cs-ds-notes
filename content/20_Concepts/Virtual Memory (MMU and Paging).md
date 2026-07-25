@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 5
 parent: "[[Operating Systems and Multi-Processing]]"
 tags: [CS/Systems, CS/OS]

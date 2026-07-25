@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 10
 parent: "[[SQL Joins (ANSI)]]"
 tags: [CS/Databases, Tool/SQL]

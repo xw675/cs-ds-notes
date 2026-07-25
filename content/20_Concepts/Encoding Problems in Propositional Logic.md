@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+domain: D
 week: 1
 parent: "[[Conjunctive Normal Form]]"
 tags: [Math/Logic, Math/Theory, CS/Computation]

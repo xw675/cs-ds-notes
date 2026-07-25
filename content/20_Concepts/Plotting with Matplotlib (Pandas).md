@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: G
 week: 4
 parent: "[[Data Visualisation (Chart Types)]]"
 tags: [DataScience/Visualisation, Tool/Matplotlib]

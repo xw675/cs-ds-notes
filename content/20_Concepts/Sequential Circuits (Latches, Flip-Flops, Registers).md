@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 3
 parent: "[[Combinational Circuits (Adders, Decoders, MUX, ALU)]]"
 tags: [CS/Systems, CS/Hardware]

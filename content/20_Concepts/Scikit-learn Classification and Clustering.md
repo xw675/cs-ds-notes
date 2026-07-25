@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[Predictive Models]]"
 tags: [DataScience/Tools, DataScience/ML, Tool/Sklearn]
 type: pattern

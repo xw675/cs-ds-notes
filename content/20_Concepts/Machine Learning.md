@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: [1, 5]
 parent: "[[Data Science]]"
 tags: [DataScience/Foundations, DataScience/ML]

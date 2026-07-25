@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 10
 parent: "[[FIT1047_MOC]]"
 tags: [CS/Security, CS/Cryptography]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [A, D]
 week: 12
 parent: "[[Spanning Tree]]"
 tags: [Math/GraphTheory, CS/Algorithms]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 1
 parent: "[[Number Systems (Binary and Hexadecimal)]]"
 tags: [CS/Systems, CS/Foundations]

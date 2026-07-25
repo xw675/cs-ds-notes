@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2014]
+domain: E
 week: 9
 parent: "[[Data Wrangling]]"
 tags: [DataScience/Tools, Tool/Shell]

@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+domain: G
 week: 8
 parent: "[[R for Data Science]]"
 tags: [DataScience/Tools, DataScience/Visualisation, Tool/R]

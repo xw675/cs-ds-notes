@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 7
 parent: "[[Ensemble Models]]"
 tags: [DataScience/Modelling, DataScience/ML]

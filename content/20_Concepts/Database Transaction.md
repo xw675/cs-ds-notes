@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 7
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
 tags: [CS/Databases, SWE/Design]

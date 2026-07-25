@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 7
 parent: "[[Machine Learning Styles (Supervised vs Unsupervised)]]"
 tags: [DataScience/Modelling, DataScience/ML]

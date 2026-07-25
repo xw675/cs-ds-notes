@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+domain: D
 week: [1, 3, 5]
 parent: "[[Theorem and Proof]]"
 tags: [Math/Logic, Math/Proof, Math/Theory]

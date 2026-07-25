@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 7
 parent: "[[Greatest Common Divisor]]"
 tags: [Math/NumberTheory, Math/Discrete]

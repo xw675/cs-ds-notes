@@ -1,5 +1,6 @@
 ---
 unit: FIT2086
+domain: [D, E]
 week: 1
 parent: "[[R for Data Science]]"
 tags: [Tool/R, Math/Probability]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[Machine Learning]]"
 tags: [DataScience/ML, Tool/Sklearn]
 type: cheatsheet

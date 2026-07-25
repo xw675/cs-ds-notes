@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+domain: D
 week: 4
 parent: "[[Finite Automata (DFA and NFA)]]"
 tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages]

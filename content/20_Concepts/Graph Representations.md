@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [A, D]
 week: 11
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, CS/DataStructures]

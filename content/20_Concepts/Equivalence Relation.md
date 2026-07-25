@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 2
 parent: "[[Properties of Binary Relations]]"
 tags: [Math/Relations, Math/Discrete]

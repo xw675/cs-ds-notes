@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 3
 parent: "[[Computer Fundamentals (Bits, Bytes, Words)]]"
 tags: [CS/Systems, CS/Architecture]

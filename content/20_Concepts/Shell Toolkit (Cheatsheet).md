@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2014]
+domain: [D, E]
 parent: "[[Data Wrangling]]"
 tags: [Tool/Shell, DataScience/Wrangling, CS/Languages]
 type: cheatsheet

@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 6
 parent: "[[Internet Model (Layers, Protocols, Encapsulation)]]"
 tags: [CS/Networks]

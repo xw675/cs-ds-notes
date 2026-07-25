@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 2
 parent: "[[Data Science vs Related Disciplines]]"
 tags: [DataScience/Foundations, DataScience/Roles]

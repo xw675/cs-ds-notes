@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+domain: E
 parent: "[[Data Science]]"
 tags: [Tool/R, DataScience/Wrangling, DataScience/Modelling]
 type: cheatsheet

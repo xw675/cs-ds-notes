@@ -1,5 +1,6 @@
 ---
 unit: FIT2004
+domain: A
 week: 1
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Complexity, CS/DivideConquer]

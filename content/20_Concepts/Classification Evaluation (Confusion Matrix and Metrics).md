@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 7
 parent: "[[Predictive Models]]"
 tags: [DataScience/Modelling, DataScience/ML]

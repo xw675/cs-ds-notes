@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 1
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/Foundations]

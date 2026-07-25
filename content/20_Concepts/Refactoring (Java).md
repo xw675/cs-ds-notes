@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: [9, 10]
 parent: "[[Design Smells (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP]

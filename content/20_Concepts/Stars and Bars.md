@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 8
 parent: "[[Selection (Counting Framework)]]"
 tags: [Math/Combinatorics, Math/Discrete]

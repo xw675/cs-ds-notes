@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: [8, 9]
 parent: "[[Set Operations (Mathematics)]]"
 tags: [Math/Combinatorics, Math/Probability, Math/Discrete]

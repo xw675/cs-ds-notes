@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: [A, F]
 week: 2
 parent: "[[Abstract Data Type (ADT)]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Abstraction, CS/BitManipulation, CS/Complexity]

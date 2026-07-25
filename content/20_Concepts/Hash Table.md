@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: [10, 11]
 parent: "[[Dictionary (ADT)]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Algorithms, CS/Complexity]

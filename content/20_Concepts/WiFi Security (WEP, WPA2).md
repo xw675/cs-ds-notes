@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 8
 parent: "[[WiFi (802.11, CSMA-CA, Topologies)]]"
 tags: [CS/Networks, CS/Security]

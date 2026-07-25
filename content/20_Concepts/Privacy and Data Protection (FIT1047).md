@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 12
 parent: "[[Information Security and Cryptography]]"
 tags: [CS/Security, Ethics/Professional]

@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [D, F]
 week: [7, 10]
 parent: "[[One-Way Function]]"
 tags: [Math/NumberTheory, CS/Cryptography]

@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: 3
 parent: "[[Java Arrays]]"
 tags: [SWE/Java, SWE/OOP]

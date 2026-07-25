@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+domain: E
 week: [0, 4]
 parent: "[[Types of Data (Numeric and Categorical)]]"
 tags: [DataScience/Statistics]

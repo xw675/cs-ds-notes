@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 5
 parent: "[[Predicate]]"
 tags: [Math/Logic, Math/Discrete]

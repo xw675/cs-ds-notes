@@ -1,5 +1,6 @@
 ---
 unit: [FIT1008, FIT2004]
+domain: A
 week: [1, 7]
 parent: "[[Recursion]]"
 tags: [CS/Algorithms, CS/Complexity]

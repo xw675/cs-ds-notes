@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: 6
 parent: "[[Dependency Inversion Principle (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP]

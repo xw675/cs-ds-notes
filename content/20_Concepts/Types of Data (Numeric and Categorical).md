@@ -1,5 +1,6 @@
 ---
 unit: [FIT1043, FIT2086]
+domain: G
 week: 4
 parent: "[[Data Science Process (Standard Value Chain)]]"
 tags: [DataScience/Statistics, DataScience/Visualisation]

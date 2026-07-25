@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 11
 parent: "[[Walks, Trails, and Paths]]"
 tags: [Math/GraphTheory, Math/Discrete]

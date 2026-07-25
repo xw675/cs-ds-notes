@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 4
 parent: "[[Normalisation]]"
 tags: [CS/Databases, SWE/Design]

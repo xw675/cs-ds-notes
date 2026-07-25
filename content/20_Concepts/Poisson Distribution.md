@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 10
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete]

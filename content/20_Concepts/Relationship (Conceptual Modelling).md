@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 2
 parent: "[[Entity Relationship Diagram (ERD)]]"
 tags: [CS/Databases, SWE/Design]

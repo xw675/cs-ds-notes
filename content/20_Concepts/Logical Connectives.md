@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: [1, 4]
 parent: "[[Proposition and Truth Value]]"
 tags: [Math/Logic, Math/Discrete]

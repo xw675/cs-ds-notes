@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 9
 parent: "[[Sample Space and Events]]"
 tags: [Math/Probability, Math/Combinatorics, Math/Discrete]

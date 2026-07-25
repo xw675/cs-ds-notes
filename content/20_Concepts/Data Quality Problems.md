@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 3
 parent: "[[Data Wrangling]]"
 tags: [DataScience/Wrangling, DataScience/DataQuality]

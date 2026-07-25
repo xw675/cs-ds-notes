@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 6
 parent: "[[Recurrence Relation]]"
 tags: [Math/Discrete, Math/Sequences]

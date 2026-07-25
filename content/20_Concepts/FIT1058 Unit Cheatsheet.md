@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 parent: "[[FIT1058_MOC]]"
 tags: [Math/Discrete, Math/Logic, Math/Probability]
 type: cheatsheet

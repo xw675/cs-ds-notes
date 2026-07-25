@@ -1,5 +1,6 @@
 ---
 unit: [FIT2014, FIT1043]
+domain: [D, E]
 parent: "[[Unix Shell (Bash)]]"
 tags: [Tool/Shell, CS/Languages]
 type: pattern

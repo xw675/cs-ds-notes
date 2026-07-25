@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 9
 parent: "[[Data Sources and Open Data]]"
 tags: [DataScience/DataManagement]

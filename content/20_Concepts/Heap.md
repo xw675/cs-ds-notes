@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: [A, D]
 week: 9
 parent: "[[Priority Queue (ADT)]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Complexity, Math/Discrete]

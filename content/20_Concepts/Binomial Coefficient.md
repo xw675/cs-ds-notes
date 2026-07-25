@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 1
 parent: "[[Power Set]]"
 tags: [Math/Combinatorics, Math/Discrete]

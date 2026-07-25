@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: [B, F]
 week: 6
 parent: "[[Computer Networks (Components and Types)]]"
 tags: [CS/Networks, SWE/Design]

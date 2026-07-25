@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 11
 parent: "[[Binary Relation]]"
 tags: [Math/GraphTheory, Math/Discrete]

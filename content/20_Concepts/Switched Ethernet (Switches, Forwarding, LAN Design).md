@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 8
 parent: "[[Physical and Data Link Layers (Signals, Ethernet, CSMA-CD)]]"
 tags: [CS/Networks]

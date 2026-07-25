@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 parent: "[[UML Associations and Dependencies (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern

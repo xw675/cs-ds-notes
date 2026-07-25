@@ -1,5 +1,6 @@
 ---
 unit: FIT2004
+domain: [A, D]
 week: 1
 parent: "[[Big-O Notation]]"
 tags:

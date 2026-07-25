@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: [8, 10]
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, Tool/SQL]

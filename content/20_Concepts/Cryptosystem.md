@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: [D, F]
 week: 2
 parent: "[[Function Composition]]"
 tags: [Math/Functions, CS/Cryptography]

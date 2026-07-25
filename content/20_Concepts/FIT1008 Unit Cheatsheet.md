@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 parent: "[[FIT1008_MOC]]"
 tags: [CS/Algorithms, CS/DataStructures]
 type: cheatsheet

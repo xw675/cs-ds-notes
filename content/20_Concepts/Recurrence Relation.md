@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2004]
+domain: D
 week: [1, 6]
 parent: "[[Sequence (Mathematics)]]"
 tags: [Math/Discrete, Math/Sequences]

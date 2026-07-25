@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 6
 parent: "[[Relational Model]]"
 tags: [CS/Databases, Tool/SQL]

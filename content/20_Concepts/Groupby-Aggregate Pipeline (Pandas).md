@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 week: 4
 parent: "[[Python for Data Science]]"
 tags: [DataScience/Wrangling, Tool/Pandas]

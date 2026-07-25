@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: [C, F]
 week: 11
 parent: "[[NoSQL Data Models]]"
 tags: [CS/Databases, DataScience/BigData, Tool/SQL]

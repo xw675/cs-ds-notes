@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
 tags: [CS/Databases, Tool/SQL]
 type: cheatsheet

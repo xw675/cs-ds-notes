@@ -1,5 +1,6 @@
 ---
 unit: FIT1043
+domain: E
 parent: "[[Data Wrangling]]"
 tags: [Tool/Pandas, DataScience/Wrangling]
 type: cheatsheet

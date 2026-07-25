@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: [D, F]
 week: 2
 parent: "[[Boolean Algebra Laws]]"
 tags: [CS/Systems, Math/Logic]

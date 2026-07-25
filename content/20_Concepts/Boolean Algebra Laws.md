@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT1047]
+domain: [D, F]
 week: [1, 2, 4]
 parent: "[[Logical Connectives]]"
 tags: [Math/Logic, Math/Discrete, CS/Systems]

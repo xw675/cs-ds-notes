@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 parent: "[[FIT2099_MOC]]"
 tags: [SWE/Design, SWE/OOP]
 type: cheatsheet

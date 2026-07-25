@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 3
 parent: "[[Transistors and Logic Gates]]"
 tags: [CS/Systems, CS/Hardware]

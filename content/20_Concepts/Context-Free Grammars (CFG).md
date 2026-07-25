@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+domain: D
 week: 5
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
 tags: [Math/Theory, CS/Computation, CS/Languages]

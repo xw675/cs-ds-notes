@@ -1,5 +1,6 @@
 ---
 unit: [FIT1058, FIT2014]
+domain: D
 week: [1, 4]
 parent: "[[Boolean Algebra Laws]]"
 tags: [Math/Logic, Math/Discrete, Math/Theory]

@@ -1,5 +1,6 @@
 ---
 unit: FIT2014
+domain: D
 week: [4, 5]
 parent: "[[Pumping Lemma for Regular Languages]]"
 tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages]

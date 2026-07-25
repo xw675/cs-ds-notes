@@ -1,5 +1,6 @@
 ---
 unit: FIT1008
+domain: A
 week: 8
 parent: "[[Tree]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Algorithms, CS/Complexity]

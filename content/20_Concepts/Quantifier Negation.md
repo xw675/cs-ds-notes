@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 5
 parent: "[[Quantifiers (Existential and Universal)]]"
 tags: [Math/Logic, Math/Discrete]

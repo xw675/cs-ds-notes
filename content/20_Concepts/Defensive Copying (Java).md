@@ -1,5 +1,6 @@
 ---
 unit: FIT2099
+domain: B
 week: 6
 parent: "[[Encapsulation and Access Modifiers (Java)]]"
 tags: [SWE/Java, SWE/Design, SWE/OOP]

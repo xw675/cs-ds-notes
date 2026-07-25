@@ -1,5 +1,6 @@
 ---
 unit: FIT2094
+domain: C
 week: 5
 parent: "[[Logical Modelling (ER Mapping)]]"
 tags: [CS/Databases, SWE/Design]

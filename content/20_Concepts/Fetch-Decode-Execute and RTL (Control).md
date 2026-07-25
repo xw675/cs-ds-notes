@@ -1,5 +1,6 @@
 ---
 unit: FIT1047
+domain: F
 week: 3
 parent: "[[Von Neumann Architecture and Programs]]"
 tags: [CS/Systems, CS/Architecture]

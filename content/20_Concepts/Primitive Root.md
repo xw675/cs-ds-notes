@@ -1,5 +1,6 @@
 ---
 unit: FIT1058
+domain: D
 week: 7
 parent: "[[Euler's Theorem and Fermat's Little Theorem]]"
 tags: [Math/NumberTheory, Math/Discrete]
