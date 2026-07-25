@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 7
 parent: "[[Machine Learning Styles (Supervised vs Unsupervised)]]"
-tags: [DataScience/Modelling, ML/Clustering, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Clustering, k-means, Centroid, Cluster Assignment]
 ---
 # [[k-means Clustering]]

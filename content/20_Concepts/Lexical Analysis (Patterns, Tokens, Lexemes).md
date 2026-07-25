@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 4
 parent: "[[Finite Automata (DFA and NFA)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [lexical analysis, lexer, tokeniser, token, lexeme, pattern, maximal munch, longest match, scanner]
 ---
 # [[Lexical Analysis (Patterns, Tokens, Lexemes)]]

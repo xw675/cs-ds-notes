@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 1
 parent: "[[Data Science]]"
-tags: [DataScience/Foundations, DataScience/Roles, Monash/CS_DS]
+tags: [DataScience/Foundations, DataScience/Roles]
 aliases: [Data Engineering, Data Analyst, Data Management, Chief Data Scientist]
 ---
 # [[Data Science vs Related Disciplines]]

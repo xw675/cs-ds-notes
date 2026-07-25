@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 6
 parent: "[[Summation Notation]]"
-tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
+tags: [Math/Discrete, Math/Sequences]
 ---
 # [[Geometric Series]]
 

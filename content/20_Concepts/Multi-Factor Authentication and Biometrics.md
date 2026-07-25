@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 11
 parent: "[[User Authentication and Passwords]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [MFA, multi-factor authentication, 2FA, biometrics, hardware token, authenticator app, TAN, SIM swap, transaction authentication]
 ---
 # [[Multi-Factor Authentication and Biometrics]]

@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 6
 parent: "[[Algorithm]]"
-tags: [CS/Algorithms, OOP/Python, CS/Complexity, CS/DataStructures]
+tags: [CS/Algorithms, SWE/OOP, CS/Complexity, CS/DataStructures]
 ---
 # [[Recursion]]
 

@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 6
 parent: "[[Linear and Polynomial Regression]]"
-tags: [DataScience/Modelling, ML/Theory, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Underfitting, Overfitting, Bias, Variance, Bias-Variance Tradeoff, Train Test Split]
 ---
 # [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]]

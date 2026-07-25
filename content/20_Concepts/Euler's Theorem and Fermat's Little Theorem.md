@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Euler Totient Function]]"
-tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/NumberTheory, Math/Discrete]
 ---
 # [[Euler's Theorem and Fermat's Little Theorem]]
 

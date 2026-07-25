@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 9
 parent: "[[Big Data and the Vs]]"
-tags: [DataScience/BigData, Monash/CS_DS]
+tags: [DataScience/BigData]
 aliases: [Growth Laws, Moore's Law, Koomey's Law, Bell's Law, Zimmerman's Law]
 ---
 # [[Growth Laws (Moore, Koomey, Bell, Zimmerman)]]

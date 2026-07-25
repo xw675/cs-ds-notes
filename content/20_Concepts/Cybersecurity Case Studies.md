@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 12
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [case studies, Stuxnet, F5 BIG-IP, CVE-2022-1388, Bangladesh Bank, SWIFT, Turkey pipeline, air gap, RCE, management plane]
 ---
 # [[Cybersecurity Case Studies]]

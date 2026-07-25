@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 2
 parent: "[[Data Science]]"
-tags: [DataScience/Foundations, DataScience/Ethics, Monash/CS_DS]
+tags: [DataScience/Foundations, Ethics/Data]
 aliases: [Impact of Data Science, Datafication, Data Ethics]
 ---
 # [[Impact of Data Science]]

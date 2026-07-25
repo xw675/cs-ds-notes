@@ -2,7 +2,7 @@
 unit: FIT2014
 week: [3, 4]
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [Kleene, Kleene's theorem, regular language equivalence, GNFA, equivalence of regex and automata]
 ---
 # [[Kleene's Theorem]]

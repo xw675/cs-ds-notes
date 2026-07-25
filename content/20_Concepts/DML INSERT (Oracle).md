@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 7
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [INSERT, TO_DATE, SEQUENCE, NEXTVAL, CURRVAL]
 ---

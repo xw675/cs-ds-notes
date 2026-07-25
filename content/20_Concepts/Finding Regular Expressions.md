@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 2
 parent: "[[Regular Expressions]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 type: pattern
 aliases: [writing regular expressions, description to regex, regex recipes, contains substring, starts with, ends with]
 ---

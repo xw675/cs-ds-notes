@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 11
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [access control, access rights, ACL, access control list, Kerberos, Active Directory, single sign-on, SSO, privilege escalation, ticket-based]
 ---
 # [[Access Control]]

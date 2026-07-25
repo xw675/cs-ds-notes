@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 3
 parent: "[[Relational Algebra]]"
-tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
+tags: [CS/Databases, Math/SetTheory]
 ---
 # [[Set Operations in Relational Algebra]]
 

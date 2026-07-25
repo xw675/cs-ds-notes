@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 4
 parent: "[[Python for Data Science]]"
-tags: [DataScience/Wrangling, Python/Pandas, Monash/CS_DS]
+tags: [DataScience/Wrangling, Tool/Pandas]
 type: pattern
 aliases: [groupby, agg, Split-Apply-Combine]
 ---

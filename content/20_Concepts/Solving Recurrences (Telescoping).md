@@ -6,7 +6,6 @@ tags:
   - CS/Algorithms
   - CS/Complexity
   - Math/Analysis
-  - Monash/CS_DS
 aliases:
   - solving recurrences
   - telescoping

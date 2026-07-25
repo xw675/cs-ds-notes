@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 6
 parent: "[[Sequence (Mathematics)]]"
-tags: [Math/Analysis, Math/Sequences, Monash/CS_DS]
+tags: [Math/Analysis, Math/Sequences]
 ---
 # [[Limit of a Sequence]]
 

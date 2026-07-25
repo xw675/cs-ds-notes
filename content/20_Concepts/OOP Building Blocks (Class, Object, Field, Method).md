@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 1
 parent: "[[Java Program Structure]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 aliases: [Class, Object, Field, Attribute, Method, Instance]
 ---
 # [[OOP Building Blocks (Class, Object, Field, Method)]]

@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 4
 parent: "[[Types of Data (Numeric and Categorical)]]"
-tags: [DataScience/Visualisation, Monash/CS_DS]
+tags: [DataScience/Visualisation]
 aliases: [Data Visualisation, Histogram, Bar Chart, Pie Chart, Motion Chart]
 ---
 # [[Data Visualisation (Chart Types)]]

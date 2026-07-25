@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 2
 parent: "[[Java Program Structure]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 aliases: [package, import, wildcard import, Java modules, project organization]
 ---
 # [[Java Packages and Imports]]

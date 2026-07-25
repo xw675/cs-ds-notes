@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 2
 parent: "[[Data Science vs Related Disciplines]]"
-tags: [DataScience/Foundations, DataScience/Roles, Monash/CS_DS]
+tags: [DataScience/Foundations, DataScience/Roles]
 aliases: [Data Analyst vs Data Scientist vs Data Engineer, Data Scientist Skills, Analyzing the Analyzers]
 ---
 # [[Data Scientist Roles and Skills]]

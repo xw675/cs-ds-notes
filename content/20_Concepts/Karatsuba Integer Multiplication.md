@@ -2,7 +2,7 @@
 unit: FIT2004
 week: 1
 parent: "[[Divide and Conquer]]"
-tags: [CS/Algorithms, CS/Complexity, CS/DivideConquer, Monash/CS_DS]
+tags: [CS/Algorithms, CS/Complexity, CS/DivideConquer]
 aliases: [Karatsuba, fast multiplication, integer multiplication, Gauss trick, big-integer multiply]
 ---
 # [[Karatsuba Integer Multiplication]]

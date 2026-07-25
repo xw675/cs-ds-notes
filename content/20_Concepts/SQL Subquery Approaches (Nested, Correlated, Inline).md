@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 10
 parent: "[[SQL Subquery (Nested SELECT)]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [Nested Subquery, Correlated Subquery, Inline View, Scalar Subquery]
 ---

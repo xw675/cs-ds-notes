@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 8
 parent: "[[Design by Contract (Java)]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 type: pattern
 aliases: [exception, custom exception, try catch, throw, IllegalArgumentException, assertion, assert, input validation, Scanner]
 ---

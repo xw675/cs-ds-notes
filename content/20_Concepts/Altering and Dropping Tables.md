@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 6
 parent: "[[DDL Table Creation]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [ALTER TABLE, DROP TABLE]
 ---

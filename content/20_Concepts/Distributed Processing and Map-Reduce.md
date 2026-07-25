@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 10
 parent: "[[Big Data and the Vs]]"
-tags: [DataScience/BigData, DataScience/DistributedProcessing, Monash/CS_DS]
+tags: [DataScience/BigData, DataScience/DistributedProcessing]
 aliases: [Distributed Processing, Map-Reduce, MapReduce, Batch, Streaming]
 ---
 # [[Distributed Processing and Map-Reduce]]

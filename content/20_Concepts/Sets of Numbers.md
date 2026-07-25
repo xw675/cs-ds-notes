@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 1
 parent: "[[Set (Mathematics)]]"
-tags: [Math/SetTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/SetTheory, Math/Discrete]
 ---
 # [[Sets of Numbers]]
 

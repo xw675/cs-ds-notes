@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: 8
 parent: "[[R for Data Science]]"
-tags: [DataScience/Tools, DataScience/Visualisation, R/Plotting, Monash/CS_DS]
+tags: [DataScience/Tools, DataScience/Visualisation, Tool/R]
 type: pattern
 aliases: [R plotting, barplot, hist, boxplot, R scatter plot]
 ---

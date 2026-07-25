@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Modular Exponentiation]]"
-tags: [Math/NumberTheory, CS/Cryptography, Monash/CS_DS]
+tags: [Math/NumberTheory, CS/Cryptography]
 ---
 # [[One-Way Function]]
 

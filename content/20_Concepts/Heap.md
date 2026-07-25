@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 9
 parent: "[[Priority Queue (ADT)]]"
-tags: [CS/DataStructures, OOP/Python, CS/Complexity, Math/Discrete]
+tags: [CS/DataStructures, SWE/OOP, CS/Complexity, Math/Discrete]
 ---
 # [[Heap]]
 

@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 1
 parent: "[[Computational Problem]]"
-tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
+tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 ---
 # [[Sorting Problem]]
 

@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 6
 parent: "[[Dependency Inversion Principle (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [dependency injection, DI, constructor injection, setter injection, interface injection, injector, mock, Spring, Guice]
 ---

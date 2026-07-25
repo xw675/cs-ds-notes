@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 2
 parent: "[[Database Design Life Cycle]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Conceptual Model]]
 

@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: 8
 parent: "[[Data Science]]"
-tags: [DataScience/Tools, R/Basics, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/R]
 aliases: [R, R vs Python, RStudio]
 ---
 # [[R for Data Science]]

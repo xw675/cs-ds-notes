@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 3
 parent: "[[Data Wrangling]]"
-tags: [DataScience/Wrangling, DataScience/DataQuality, Monash/CS_DS]
+tags: [DataScience/Wrangling, DataScience/DataQuality]
 aliases: [Data Quality, Missing Values, Outliers, Duplicates, IQR]
 ---
 # [[Data Quality Problems]]

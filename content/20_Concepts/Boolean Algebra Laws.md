@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT1047]
 week: [1, 2, 4]
 parent: "[[Logical Connectives]]"
-tags: [Math/Logic, Math/Discrete, CS/Systems, Monash/CS_DS]
+tags: [Math/Logic, Math/Discrete, CS/Systems]
 aliases: [Boolean Laws, De Morgan's Laws (Logic)]
 ---
 # [[Boolean Algebra Laws]]

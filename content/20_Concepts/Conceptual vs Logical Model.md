@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 2
 parent: "[[Conceptual Model]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Conceptual vs Logical Model]]
 

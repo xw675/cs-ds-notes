@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 5
 parent: "[[Iterator]]"
-tags: [CS/DataStructures, OOP/Python]
+tags: [CS/DataStructures, SWE/OOP]
 ---
 # [[Generator Expression]]
 

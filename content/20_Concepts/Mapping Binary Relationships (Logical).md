@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 5
 parent: "[[Logical Modelling (ER Mapping)]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Mapping Binary Relationships (Logical)]]
 

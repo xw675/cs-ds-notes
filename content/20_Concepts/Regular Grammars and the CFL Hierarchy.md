@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [regular grammar, semiword, NFA to CFG, Chomsky hierarchy, regular subset of CFL, right-linear grammar]
 ---
 # [[Regular Grammars and the CFL Hierarchy]]

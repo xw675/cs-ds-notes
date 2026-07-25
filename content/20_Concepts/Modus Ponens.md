@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: 3
 parent: "[[Logical Implication]]"
-tags: [Math/Logic, Math/Proof, Monash/CS_DS]
+tags: [Math/Logic, Math/Proof]
 ---
 # [[Modus Ponens]]
 

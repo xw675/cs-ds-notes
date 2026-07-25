@@ -2,7 +2,7 @@
 unit: FIT1043
 week: [5, 6]
 parent: "[[Machine Learning Styles (Supervised vs Unsupervised)]]"
-tags: [DataScience/Modelling, ML/Regression, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Linear Regression, Polynomial Regression, Least Squares, Learning Curve, MSE, Regression]
 ---
 # [[Linear and Polynomial Regression]]

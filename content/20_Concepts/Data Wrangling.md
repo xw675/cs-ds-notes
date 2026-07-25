@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 3
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/Wrangling, Monash/CS_DS]
+tags: [DataScience/Wrangling]
 aliases: [Data Wrangling, Data Munging, Tidy Data]
 ---
 # [[Data Wrangling]]

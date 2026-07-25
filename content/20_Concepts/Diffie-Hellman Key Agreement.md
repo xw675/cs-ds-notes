@@ -2,7 +2,7 @@
 unit: FIT1058
 week: [7, 10]
 parent: "[[One-Way Function]]"
-tags: [Math/NumberTheory, CS/Cryptography, Monash/CS_DS]
+tags: [Math/NumberTheory, CS/Cryptography]
 ---
 # [[Diffie-Hellman Key Agreement]]
 

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 1
 parent: "[[Power Set]]"
-tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
+tags: [Math/Combinatorics, Math/Discrete]
 ---
 # [[Binomial Coefficient]]
 

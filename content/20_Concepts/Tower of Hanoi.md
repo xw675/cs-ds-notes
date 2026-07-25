@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 6
 parent: "[[Recursion]]"
-tags: [CS/Algorithms, OOP/Python, CS/Complexity]
+tags: [CS/Algorithms, SWE/OOP, CS/Complexity]
 ---
 # [[Tower of Hanoi]]
 

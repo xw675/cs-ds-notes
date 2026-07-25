@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2004]
 week: [1, 6]
 parent: "[[Sequence (Mathematics)]]"
-tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
+tags: [Math/Discrete, Math/Sequences]
 ---
 # [[Recurrence Relation]]
 

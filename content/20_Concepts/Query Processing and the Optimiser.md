@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 10
 parent: "[[SQL SELECT and WHERE]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 aliases: [Query Processing, Cost-Based Optimiser, CBO, Explain Plan, Access Plan]
 ---
 # [[Query Processing and the Optimiser]]

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 4
 parent: "[[Normalisation]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Synthesis (Normalisation)]]
 

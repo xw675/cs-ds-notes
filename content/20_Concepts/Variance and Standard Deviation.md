@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 10
 parent: "[[Expectation]]"
-tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
+tags: [Math/Probability, Math/Discrete]
 ---
 # [[Variance and Standard Deviation]]
 

@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 2
 parent: "[[Data Structure]]"
-tags: [CS/DataStructures, OOP/Python]
+tags: [CS/DataStructures, SWE/OOP]
 ---
 # [[Array (Data Structure)]]
 

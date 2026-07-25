@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 9
 parent: "[[Data Sources and Open Data]]"
-tags: [DataScience/DataManagement, Monash/CS_DS]
+tags: [DataScience/DataManagement]
 aliases: [Metadata, Data about Data, EXIF]
 ---
 # [[Metadata]]

@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 3
 parent: "[[Data Wrangling]]"
-tags: [DataScience/Wrangling, Python/Pandas, Monash/CS_DS]
+tags: [DataScience/Wrangling, Tool/Pandas]
 type: pattern
 aliases: [Data Auditing, df.describe, df.info, df.corr]
 ---

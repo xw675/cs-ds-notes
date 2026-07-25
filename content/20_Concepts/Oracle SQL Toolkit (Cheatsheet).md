@@ -1,7 +1,7 @@
 ---
 unit: FIT2094
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
-tags: [CS/Databases, SQL/Oracle]
+tags: [CS/Databases, Tool/SQL]
 type: cheatsheet
 aliases: [SQL Cheatsheet, SELECT Anatomy]
 ---

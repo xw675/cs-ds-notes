@@ -1,7 +1,7 @@
 ---
 unit: FIT1008
 type: MOC
-tags: [Monash/CS_DS, 2026/S1]
+tags: [2026/S1]
 ---
 # 📘 FIT1008: Introduction to Computer Science
 

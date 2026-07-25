@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 4
 parent: "[[Finite Automata (DFA and NFA)]]"
-tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages]
 aliases: [pumping lemma, pumping, circuit in FA, non-regular, xyz decomposition, pumping length]
 ---
 # [[Pumping Lemma for Regular Languages]]

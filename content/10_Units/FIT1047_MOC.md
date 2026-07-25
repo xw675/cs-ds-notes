@@ -1,7 +1,7 @@
 ---
 unit: FIT1047
 type: MOC
-tags: [Monash/CS_DS, CS/Systems]
+tags: [CS/Systems]
 ---
 # 📘 FIT1047: Introduction to Computer Systems, Networks and Security
 

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 11
 parent: "[[NoSQL Data Models]]"
-tags: [CS/Databases, BigData/NoSQL, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, DataScience/BigData, Tool/SQL]
 aliases: [MongoDB, BSON, ObjectId, Embedded Document]
 ---
 # [[MongoDB Document Model]]

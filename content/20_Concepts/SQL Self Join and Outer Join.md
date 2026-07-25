@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 10
 parent: "[[SQL Joins (ANSI)]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [Self Join, Outer Join, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN]
 ---

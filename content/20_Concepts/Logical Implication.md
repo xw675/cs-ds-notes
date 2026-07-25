@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 3
 parent: "[[Theorem and Proof]]"
-tags: [Math/Logic, Math/Proof, Monash/CS_DS]
+tags: [Math/Logic, Math/Proof]
 ---
 # [[Logical Implication]]
 

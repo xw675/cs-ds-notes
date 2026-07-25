@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 3
 parent: "[[Kleene's Theorem]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 type: pattern
 aliases: [subset construction, powerset construction, determinisation, NFA to FA, epsilon closure, endStates]
 ---

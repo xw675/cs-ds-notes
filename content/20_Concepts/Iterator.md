@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 5
 parent: "[[Iterable]]"
-tags: [CS/DataStructures, OOP/Python]
+tags: [CS/DataStructures, SWE/OOP]
 ---
 # [[Iterator]]
 

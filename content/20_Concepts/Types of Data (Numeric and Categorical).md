@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: 4
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/Statistics, DataScience/Visualisation, Monash/CS_DS]
+tags: [DataScience/Statistics, DataScience/Visualisation]
 aliases: [Data Types, Nominal, Ordinal, Discrete, Continuous]
 ---
 # [[Types of Data (Numeric and Categorical)]]

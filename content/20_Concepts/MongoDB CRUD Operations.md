@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 11
 parent: "[[MongoDB Document Model]]"
-tags: [CS/Databases, BigData/NoSQL, Monash/CS_DS]
+tags: [CS/Databases, DataScience/BigData]
 type: pattern
 aliases: [CRUD, insertOne, find, updateOne, deleteMany, $set, $elemMatch]
 ---

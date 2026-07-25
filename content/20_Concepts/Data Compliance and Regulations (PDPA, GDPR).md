@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 11
 parent: "[[Data Management and Data Governance]]"
-tags: [DataScience/Governance, DataScience/Ethics, Monash/CS_DS]
+tags: [DataScience/Governance, Ethics/Data]
 aliases: [Compliance, PDPA, GDPR, PCI, Data Regulations]
 ---
 # [[Data Compliance and Regulations (PDPA, GDPR)]]

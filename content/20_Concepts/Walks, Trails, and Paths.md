@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 11
 parent: "[[Graph]]"
-tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/GraphTheory, Math/Discrete]
 ---
 # [[Walks, Trails, and Paths]]
 

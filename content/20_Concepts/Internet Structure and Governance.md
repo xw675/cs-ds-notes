@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 9
 parent: "[[Computer Networks (Components and Types)]]"
-tags: [CS/Networks, CS/Internet, Monash/CS_DS]
+tags: [CS/Networks, CS/Internet]
 aliases: [network of networks, ISP, Autonomous System, AS, BGP, border router, IXP, Internet Exchange Point, peering, transit, Tier 1 ISP, RIR, APNIC, ICANN, IETF, ISOC, Internet governance]
 ---
 # [[Internet Structure and Governance]]

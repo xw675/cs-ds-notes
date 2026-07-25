@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 6
 parent: "[[Encapsulation and Access Modifiers (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [defensive copying, privacy leak, aliasing, mutable, immutable, escaping reference]
 ---

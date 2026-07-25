@@ -2,7 +2,7 @@
 unit: FIT2086
 week: 1
 parent: "[[FIT2086_MOC]]"
-tags: [Stats/Modelling, DataScience/Theory, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/Theory]
 aliases: [modelling, statistical inference, population, sample, sampling, descriptive vs inferential, parameter, estimator]
 ---
 # [[Statistical Modelling and Inference]]

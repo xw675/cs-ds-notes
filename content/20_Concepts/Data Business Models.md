@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 2
 parent: "[[Data Science]]"
-tags: [DataScience/Foundations, DataScience/Business, Monash/CS_DS]
+tags: [DataScience/Foundations, DataScience/Business]
 aliases: [Data Business Models, Information Broker, Information Provider]
 ---
 # [[Data Business Models]]

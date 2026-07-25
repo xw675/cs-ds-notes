@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 3
 parent: "[[Data Sources and Open Data]]"
-tags: [DataScience/DataSources, Web/API, Monash/CS_DS]
+tags: [DataScience/DataSources, WebDev/API]
 aliases: [API, REST API, RESTful API]
 ---
 # [[APIs for Data Collection]]

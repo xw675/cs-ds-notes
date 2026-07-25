@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: 8
 parent: "[[R Basics (Syntax, Types, Control Flow)]]"
-tags: [DataScience/Tools, R/Basics, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/R]
 type: pattern
 aliases: [R Vector, c(), Vectorised, anyNA, is.na]
 ---

@@ -1,7 +1,7 @@
 ---
 unit: [FIT2014, FIT1043]
 parent: "[[Unix Shell (Bash)]]"
-tags: [DS/Shell, CS/Languages, Monash/CS_DS]
+tags: [Tool/Shell, CS/Languages]
 type: pattern
 aliases: [sed, tr, stream editor, character translator, sed substitution, backreference, POSIX regex, grep regex, BRE]
 ---

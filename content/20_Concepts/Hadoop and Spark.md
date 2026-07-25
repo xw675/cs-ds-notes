@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 10
 parent: "[[Distributed Processing and Map-Reduce]]"
-tags: [DataScience/BigData, DataScience/DistributedProcessing, Monash/CS_DS]
+tags: [DataScience/BigData, DataScience/DistributedProcessing]
 aliases: [Hadoop, Spark, Apache Spark]
 ---
 # [[Hadoop and Spark]]

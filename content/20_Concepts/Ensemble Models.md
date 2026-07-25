@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 6
 parent: "[[Machine Learning]]"
-tags: [DataScience/Modelling, ML/Concepts, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Ensemble, Ensemble Models, Model Averaging]
 ---
 # [[Ensemble Models]]

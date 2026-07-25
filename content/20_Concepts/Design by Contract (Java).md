@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 8
 parent: "[[Client-Supplier Relationship (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [design by contract, DbC, precondition, postcondition, invariant, subcontracting, fail fast, Bertrand Meyer]
 ---
 # [[Design by Contract (Java)]]

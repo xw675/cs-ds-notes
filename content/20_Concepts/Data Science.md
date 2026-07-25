@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 1
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/Foundations, Monash/CS_DS]
+tags: [DataScience/Foundations]
 aliases: [Data Science, Drew Conway Venn Diagram]
 ---
 # [[Data Science]]

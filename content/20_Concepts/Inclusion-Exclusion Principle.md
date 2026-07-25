@@ -2,7 +2,7 @@
 unit: FIT1058
 week: [8, 9]
 parent: "[[Set Operations (Mathematics)]]"
-tags: [Math/Combinatorics, Math/Probability, Math/Discrete, Monash/CS_DS]
+tags: [Math/Combinatorics, Math/Probability, Math/Discrete]
 ---
 # [[Inclusion-Exclusion Principle]]
 

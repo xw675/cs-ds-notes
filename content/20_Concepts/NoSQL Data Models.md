@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 11
 parent: "[[NoSQL Databases]]"
-tags: [CS/Databases, BigData/NoSQL, Monash/CS_DS]
+tags: [CS/Databases, DataScience/BigData]
 aliases: [Key-Value Store, Document Store, Column Family, Graph Database]
 ---
 # [[NoSQL Data Models]]

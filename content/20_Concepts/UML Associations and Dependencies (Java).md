@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 2
 parent: "[[Client-Supplier Relationship (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [association, dependency, multiplicity, aggregation, composition, has-a, uses-a, UML relationships]
 ---
 # [[UML Associations and Dependencies (Java)]]

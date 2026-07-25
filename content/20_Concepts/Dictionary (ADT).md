@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 10
 parent: "[[Abstract Data Type (ADT)]]"
-tags: [CS/DataStructures, OOP/Python, CS/Abstraction]
+tags: [CS/DataStructures, SWE/OOP, CS/Abstraction]
 ---
 # [[Dictionary (ADT)]]
 

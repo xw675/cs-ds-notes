@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 type: pattern
 aliases: [writing a grammar, CFG construction, Dyck language, PARENTHESES grammar, palindrome grammar, balanced brackets, a^n b^n grammar]
 ---

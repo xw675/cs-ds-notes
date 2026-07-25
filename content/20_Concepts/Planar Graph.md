@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 12
 parent: "[[Graph]]"
-tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/GraphTheory, Math/Discrete]
 ---
 # [[Planar Graph]]
 

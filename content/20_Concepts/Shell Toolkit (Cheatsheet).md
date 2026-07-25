@@ -1,7 +1,7 @@
 ---
 unit: [FIT1043, FIT2014]
 parent: "[[Data Wrangling]]"
-tags: [DS/Shell, DS/Wrangling, CS/Languages]
+tags: [Tool/Shell, DataScience/Wrangling, CS/Languages]
 type: cheatsheet
 aliases: [Shell Cheatsheet, Bash Cheatsheet, Unix Cheatsheet, grep awk sort cut cheatsheet, sed tr cheatsheet]
 ---

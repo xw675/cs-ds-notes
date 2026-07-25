@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Function (Mathematics)]]"
-tags: [Math/Functions, Math/Discrete, Monash/CS_DS]
+tags: [Math/Functions, Math/Discrete]
 ---
 # [[Function Composition]]
 

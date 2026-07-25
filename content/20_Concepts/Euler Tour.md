@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 11
 parent: "[[Walks, Trails, and Paths]]"
-tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/GraphTheory, Math/Discrete]
 ---
 # [[Euler Tour]]
 

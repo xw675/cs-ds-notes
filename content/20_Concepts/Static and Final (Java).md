@@ -2,7 +2,7 @@
 unit: FIT2099
 week: [2, 3]
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 aliases: [static, final, constant, blank final, non-access modifiers, static final]
 ---
 # [[Static and Final (Java)]]

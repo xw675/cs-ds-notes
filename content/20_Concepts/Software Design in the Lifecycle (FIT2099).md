@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 11
 parent: "[[FIT2099_MOC]]"
-tags: [SWE/Design, SWE/Process, Monash/CS_DS]
+tags: [SWE/Design, SWE/Process]
 aliases: [SDLC, software development lifecycle, waterfall, analysis vs design, just enough design, just in time design, lean, decide as late as possible, conscious design, when to design]
 ---
 # [[Software Design in the Lifecycle (FIT2099)]]

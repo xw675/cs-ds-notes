@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 12
 parent: "[[Spanning Tree]]"
-tags: [Math/GraphTheory, CS/Algorithms, Monash/CS_DS]
+tags: [Math/GraphTheory, CS/Algorithms]
 ---
 # [[Kruskal's Greedy Algorithm]]
 

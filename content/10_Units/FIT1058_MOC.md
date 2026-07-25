@@ -1,7 +1,7 @@
 ---
 unit: FIT1058
 type: MOC
-tags: [Monash/CS_DS, 2025/S2]
+tags: [2025/S2]
 ---
 # 📘 FIT1058: Foundations of Computing
 

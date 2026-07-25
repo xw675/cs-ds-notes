@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 4
 parent: "[[Boolean Algebra Laws]]"
-tags: [Math/Logic, CS/DigitalLogic, Monash/CS_DS]
+tags: [Math/Logic, CS/DigitalLogic]
 ---
 # [[Universal Sets of Operations]]
 

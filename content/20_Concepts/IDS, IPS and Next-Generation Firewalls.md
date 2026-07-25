@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 11
 parent: "[[Firewalls and Packet Filtering]]"
-tags: [CS/Security, CS/Networks, Monash/CS_DS]
+tags: [CS/Security, CS/Networks]
 aliases: [IDS, IPS, intrusion detection system, intrusion prevention system, next-generation firewall, NGF, signature-based detection, anomaly-based detection, HTTPS interception]
 ---
 # [[IDS, IPS and Next-Generation Firewalls]]

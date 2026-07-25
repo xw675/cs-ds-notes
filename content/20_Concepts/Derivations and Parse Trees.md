@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [derivation, parse tree, leftmost derivation, rightmost derivation, derivation step, prefix property, syntax tree]
 ---
 # [[Derivations and Parse Trees]]

@@ -1,7 +1,7 @@
 ---
 unit: FIT2099
 type: MOC
-tags: [Monash/CS_DS, 2026/S1]
+tags: [2026/S1]
 ---
 # 📘 FIT2099: Object-Oriented Design and Implementation
 

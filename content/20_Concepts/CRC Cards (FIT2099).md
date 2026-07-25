@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 11
 parent: "[[Design Process and Techniques (FIT2099)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [CRC, CRC cards, Class Responsibility Collaboration, Ward Cunningham, role play design]
 ---

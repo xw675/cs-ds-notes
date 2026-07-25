@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 9
 parent: "[[Internet Structure and Governance]]"
-tags: [CS/Networks, CS/Internet, Monash/CS_DS]
+tags: [CS/Networks, CS/Internet]
 aliases: [Internet access, dial-up modem, ADSL, DSLAM, VDSL, FTTN, NBN, GPON, fibre to the premises, 4G, 5G, mobile data, last mile]
 ---
 # [[Internet Access Technologies]]

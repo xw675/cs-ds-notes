@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 1
 parent: "[[Conjunctive Normal Form]]"
-tags: [Math/Logic, Math/Theory, CS/Computation, Monash/CS_DS]
+tags: [Math/Logic, Math/Theory, CS/Computation]
 type: pattern
 aliases: [encoding, propositional encoding, modelling in logic, seating problem, truth assignment, SAT encoding]
 ---

@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 3
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [FA, DFA, NFA, finite automaton, deterministic finite automaton, nondeterministic finite automaton, transition table, sink state, epsilon transition, complement automaton]
 ---
 # [[Finite Automata (DFA and NFA)]]

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Greatest Common Divisor]]"
-tags: [Math/NumberTheory, CS/Algorithms, Monash/CS_DS]
+tags: [Math/NumberTheory, CS/Algorithms]
 ---
 # [[Euclidean Algorithm]]
 

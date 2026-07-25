@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 3
 parent: "[[List (ADT)]]"
-tags: [CS/DataStructures, CS/Complexity, OOP/Python]
+tags: [CS/DataStructures, CS/Complexity, SWE/OOP]
 ---
 # [[Dynamic Array Resizing]]
 

@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 11
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Networks, Monash/CS_DS]
+tags: [CS/Security, CS/Networks]
 aliases: [firewall, packet filtering, stateful firewall, stateless firewall, network security, packet filter, security rules]
 ---
 # [[Firewalls and Packet Filtering]]

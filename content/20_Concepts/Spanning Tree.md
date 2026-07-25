@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 12
 parent: "[[Tree]]"
-tags: [Math/GraphTheory, CS/Algorithms, Monash/CS_DS]
+tags: [Math/GraphTheory, CS/Algorithms]
 ---
 # [[Spanning Tree]]
 

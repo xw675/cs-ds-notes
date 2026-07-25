@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 5
 parent: "[[Predicate]]"
-tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
+tags: [Math/Logic, Math/Discrete]
 ---
 # [[Term, Variable, and Constant]]
 

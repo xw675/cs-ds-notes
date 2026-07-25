@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Linear and Polynomial Regression]]"
-tags: [DataScience/Tools, ML/Regression, Python/Pandas, Monash/CS_DS]
+tags: [DataScience/Tools, DataScience/ML, Tool/Pandas]
 type: pattern
 aliases: [linregress, scipy linregress, Linear Regression Python]
 ---

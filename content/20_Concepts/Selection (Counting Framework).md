@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 8
 parent: "[[Counting Principles]]"
-tags: [Math/Combinatorics, Math/Discrete, Monash/CS_DS]
+tags: [Math/Combinatorics, Math/Discrete]
 ---
 # [[Selection (Counting Framework)]]
 

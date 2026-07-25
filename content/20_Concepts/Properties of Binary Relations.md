@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Binary Relation]]"
-tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
+tags: [Math/Relations, Math/Discrete]
 ---
 # [[Properties of Binary Relations]]
 

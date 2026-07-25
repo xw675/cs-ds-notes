@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 type: MOC
-tags: [Monash/CS_DS, CS/Algorithms, CS/Complexity]
+tags: [CS/Algorithms, CS/Complexity]
 ---
 # 📘 FIT2004: Algorithms and Data Structures
 

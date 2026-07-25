@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 3
 parent: "[[Relation (Database)]]"
-tags: [CS/Databases, Math/Discrete, Monash/CS_DS]
+tags: [CS/Databases, Math/Discrete]
 ---
 # [[Super Key and Candidate Key]]
 

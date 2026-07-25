@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 12
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Ethics, Monash/CS_DS]
+tags: [CS/Security, Ethics/Professional]
 aliases: [privacy, PETs, privacy enhancing technologies, you are the product, cookie pop-ups, ring signatures, data profiling, tracking]
 ---
 # [[Privacy and Data Protection (FIT1047)]]

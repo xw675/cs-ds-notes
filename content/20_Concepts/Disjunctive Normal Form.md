@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: [1, 4]
 parent: "[[Boolean Algebra Laws]]"
-tags: [Math/Logic, Math/Discrete, Math/Theory, Monash/CS_DS]
+tags: [Math/Logic, Math/Discrete, Math/Theory]
 aliases: [DNF, disjunctive normal form, literal]
 ---
 # [[Disjunctive Normal Form]]

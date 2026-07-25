@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Python for Data Science]]"
-tags: [DataScience/Tools, Python/Pandas, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/Pandas]
 type: pattern
 aliases: [Pandas DataFrame, Boolean Filtering, read_fwf, loc]
 ---

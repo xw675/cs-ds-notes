@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 9
 parent: "[[Conditional Probability]]"
-tags: [Math/Probability, DS/MachineLearning, Monash/CS_DS]
+tags: [Math/Probability, DataScience/ML]
 ---
 # [[Bayes' Theorem]]
 

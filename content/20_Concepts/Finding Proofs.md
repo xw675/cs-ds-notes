@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: 3
 parent: "[[Theorem and Proof]]"
-tags: [Math/Proof, Math/Logic, Monash/CS_DS]
+tags: [Math/Proof, Math/Logic]
 ---
 # [[Finding Proofs]]
 

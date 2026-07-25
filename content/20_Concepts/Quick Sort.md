@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 7
 parent: "[[Divide and Conquer]]"
-tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
+tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 ---
 # [[Quick Sort]]
 

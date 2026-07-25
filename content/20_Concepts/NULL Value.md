@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 3
 parent: "[[Relational Model]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[NULL Value]]
 

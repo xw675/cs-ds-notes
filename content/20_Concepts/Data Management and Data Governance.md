@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 11
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/DataManagement, DataScience/Governance, Monash/CS_DS]
+tags: [DataScience/DataManagement, DataScience/Governance]
 aliases: [Data Management, Data Governance, DAMA]
 ---
 # [[Data Management and Data Governance]]

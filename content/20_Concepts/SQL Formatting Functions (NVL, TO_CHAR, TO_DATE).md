@@ -2,7 +2,7 @@
 unit: FIT2094
 week: [8, 10]
 parent: "[[SQL SELECT and WHERE]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [NVL, TO_CHAR, TO_DATE, sysdate, dual, EXTRACT, LPAD, RPAD, LTRIM, TRIM]
 ---

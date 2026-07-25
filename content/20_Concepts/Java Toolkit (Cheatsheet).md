@@ -1,7 +1,7 @@
 ---
 unit: FIT2099
 parent: "[[FIT2099_MOC]]"
-tags: [SWE/Java, SWE/OOP, SWE/Design, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP, SWE/Design]
 type: cheatsheet
 aliases: [Java Toolkit, Java Cheatsheet, Java syntax reference, OO Java cheatsheet]
 ---

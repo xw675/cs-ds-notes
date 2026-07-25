@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 9
 parent: "[[Internet Structure and Governance]]"
-tags: [CS/Internet, CS/Ethics, Monash/CS_DS]
+tags: [CS/Internet, Ethics/Professional]
 aliases: [net neutrality, network neutrality, apps vs open standards, platform vs public utility, natural monopoly, law enforcement internet, internet ethics]
 ---
 # [[Net Neutrality and Internet Policy]]

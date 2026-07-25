@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 5
 parent: "[[Three Core Design Principles (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [SOLID, SRP, OCP, LSP, ISP, DIP, design principles, ReD, downcasting, instanceof, LCOM]
 ---
 # [[SOLID Principles (Java)]]

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 5
 parent: "[[Primary Key]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Surrogate Key]]
 

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Euler's Theorem and Fermat's Little Theorem]]"
-tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/NumberTheory, Math/Discrete]
 ---
 # [[Primitive Root]]
 

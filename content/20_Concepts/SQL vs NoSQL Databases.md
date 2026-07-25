@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 10
 parent: "[[Big Data and the Vs]]"
-tags: [DataScience/BigData, CS/Databases, Monash/CS_DS]
+tags: [DataScience/BigData, CS/Databases]
 aliases: [SQL vs NoSQL, Database Types, Polyglot Persistence]
 ---
 # [[SQL vs NoSQL Databases]]

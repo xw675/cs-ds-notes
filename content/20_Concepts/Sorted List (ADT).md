@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 4
 parent: "[[List (ADT)]]"
-tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
+tags: [CS/DataStructures, SWE/OOP, CS/Abstraction, CS/Complexity]
 ---
 # [[Sorted List (ADT)]]
 

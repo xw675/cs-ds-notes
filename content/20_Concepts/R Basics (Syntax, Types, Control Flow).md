@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: [0, 8]
 parent: "[[R for Data Science]]"
-tags: [DataScience/Tools, R/Basics, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/R]
 type: pattern
 aliases: [R Syntax, R Data Types, R Control Flow, R for loop]
 ---

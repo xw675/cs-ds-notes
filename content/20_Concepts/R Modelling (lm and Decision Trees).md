@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 8
 parent: "[[R for Data Science]]"
-tags: [DataScience/Tools, ML/Regression, R/Modelling, Monash/CS_DS]
+tags: [DataScience/Tools, DataScience/ML, Tool/R]
 type: pattern
 aliases: [lm, R linear regression, ctree, R decision tree]
 ---

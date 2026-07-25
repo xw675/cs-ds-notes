@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Binary Relation]]"
-tags: [Math/Relations, CS/Databases, Monash/CS_DS]
+tags: [Math/Relations, CS/Databases]
 ---
 # [[n-ary Relation]]
 

@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 11
 parent: "[[Refactoring (Java)]]"
-tags: [SWE/Design, SWE/Process, Monash/CS_DS]
+tags: [SWE/Design, SWE/Process]
 aliases: [technical debt, tech debt, debt quadrant, reckless, prudent, deliberate, inadvertent, refactoring debt]
 ---
 # [[Technical Debt (FIT2099)]]

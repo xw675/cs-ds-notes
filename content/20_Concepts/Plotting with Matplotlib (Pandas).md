@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 4
 parent: "[[Data Visualisation (Chart Types)]]"
-tags: [DataScience/Visualisation, Python/Matplotlib, Monash/CS_DS]
+tags: [DataScience/Visualisation, Tool/Matplotlib]
 type: pattern
 aliases: [Matplotlib, plt, df.plot, hist, boxplot]
 ---

@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [authentication, certificate, PKI, certification authority, CA, X509, certificate revocation, CRL, OCSP, OCSP stapling]
 ---
 # [[Authentication, Certificates and PKI]]

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Modular Arithmetic]]"
-tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/NumberTheory, Math/Discrete]
 ---
 # [[Modular Inverse]]
 

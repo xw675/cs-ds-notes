@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 2
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
-tags: [Math/Theory, Math/Proof, CS/Computation, Monash/CS_DS]
+tags: [Math/Theory, Math/Proof, CS/Computation]
 aliases: [countable, uncountable, countably infinite, bijection, Cantor, diagonalisation, diagonal argument, uncountability of languages]
 ---
 # [[Countability and Cantor Diagonalisation]]

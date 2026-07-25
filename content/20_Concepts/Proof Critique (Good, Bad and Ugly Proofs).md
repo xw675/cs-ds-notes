@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 2
 parent: "[[Proof Techniques]]"
-tags: [Math/Proof, Math/Theory, Monash/CS_DS]
+tags: [Math/Proof, Math/Theory]
 aliases: [bad proofs, faulty induction, spot the error, ex falso quodlibet, proof style, ugly proofs, four colour theorem]
 ---
 # [[Proof Critique (Good, Bad and Ugly Proofs)]]

@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 5
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/Modelling, ML/Concepts, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Model, Predictive Model, Classifier, Feature Space]
 ---
 # [[Predictive Models]]

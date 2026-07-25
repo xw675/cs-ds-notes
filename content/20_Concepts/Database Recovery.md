@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 7
 parent: "[[Database Transaction]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 aliases: [Recovery, Transaction Log, Checkpoint, REDO, UNDO, Forward Recovery]
 ---
 # [[Database Recovery]]

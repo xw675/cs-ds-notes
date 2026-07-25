@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 3
 parent: "[[Java Arrays]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 type: pattern
 aliases: [ArrayList, List, HashSet, Set, HashMap, Map, TreeMap, collections, generics]
 ---

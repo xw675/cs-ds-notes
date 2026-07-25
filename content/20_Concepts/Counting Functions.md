@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Function (Mathematics)]]"
-tags: [Math/Combinatorics, Math/Functions, Monash/CS_DS]
+tags: [Math/Combinatorics, Math/Functions]
 ---
 # [[Counting Functions]]
 

@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 12
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [vulnerability, buffer overflow, command injection, SQL injection, XSS, cross-site scripting, input sanitisation, CWE, Bobby Tables]
 ---
 # [[Software Vulnerabilities (Injection, XSS, Buffer Overflow)]]

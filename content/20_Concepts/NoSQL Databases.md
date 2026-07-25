@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 11
 parent: "[[Big Data and the Vs]]"
-tags: [CS/Databases, BigData/NoSQL, Monash/CS_DS]
+tags: [CS/Databases, DataScience/BigData]
 aliases: [NoSQL, Sharding, Replication]
 ---
 # [[NoSQL Databases]]

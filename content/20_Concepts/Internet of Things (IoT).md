@@ -2,7 +2,7 @@
 unit: FIT1047
 week: [9, 12]
 parent: "[[Internet Structure and Governance]]"
-tags: [CS/Networks, CS/Internet, CS/Security, Monash/CS_DS]
+tags: [CS/Networks, CS/Internet, CS/Security]
 aliases: [IoT, Internet of Things, ZigBee, LoRaWAN, Mirai, Dyn DDoS, smart devices, device-to-device]
 ---
 # [[Internet of Things (IoT)]]

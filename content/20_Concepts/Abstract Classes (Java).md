@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 3
 parent: "[[Inheritance (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [abstract class, abstract method, concrete class, abstraction]
 ---

@@ -1,7 +1,7 @@
 ---
 unit: FIT2086
 type: MOC
-tags: [Monash/CS_DS, Stats/Modelling, DS/R]
+tags: [DataScience/Modelling, Tool/R]
 ---
 # 📘 FIT2086: Modelling for Data Analysis
 

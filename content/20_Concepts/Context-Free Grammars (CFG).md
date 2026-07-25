@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 5
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [CFG, context-free grammar, context-free language, CFL, terminal, nonterminal, production rule, BNF, Backus-Naur Form, start symbol]
 ---
 # [[Context-Free Grammars (CFG)]]

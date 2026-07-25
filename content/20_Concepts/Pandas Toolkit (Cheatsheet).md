@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Data Wrangling]]"
-tags: [DS/Pandas, DS/Wrangling]
+tags: [Tool/Pandas, DataScience/Wrangling]
 type: cheatsheet
 aliases: [Pandas Cheatsheet, Python Aggregation]
 ---

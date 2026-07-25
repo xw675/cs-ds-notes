@@ -2,7 +2,7 @@
 unit: [FIT2094, FIT1043]
 week: [9, 11]
 parent: "[[Relational Model]]"
-tags: [CS/Databases, BigData/NoSQL, DataScience/BigData, Monash/CS_DS]
+tags: [CS/Databases, DataScience/BigData]
 aliases: [Big Data, 3Vs, Four Vs, Volume, Velocity, Variety]
 ---
 # [[Big Data and the Vs]]

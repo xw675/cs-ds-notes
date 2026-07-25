@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 10
 parent: "[[Geometric Distribution]]"
-tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
+tags: [Math/Probability, Math/Discrete]
 ---
 # [[Coupon Collector's Problem]]
 

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 3
 parent: "[[Relation (Database)]]"
-tags: [CS/Databases, Math/SetTheory, Monash/CS_DS]
+tags: [CS/Databases, Math/SetTheory]
 ---
 # [[Relation Properties]]
 

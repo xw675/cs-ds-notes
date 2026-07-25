@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 12
 parent: "[[Planar Graph]]"
-tags: [Math/GraphTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/GraphTheory, Math/Discrete]
 ---
 # [[Euler's Formula (Planar Graphs)]]
 

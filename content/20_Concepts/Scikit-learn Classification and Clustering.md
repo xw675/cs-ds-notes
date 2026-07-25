@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Predictive Models]]"
-tags: [DataScience/Tools, ML/Classification, Python/Sklearn, Monash/CS_DS]
+tags: [DataScience/Tools, DataScience/ML, Tool/Sklearn]
 type: pattern
 aliases: [sklearn, scikit-learn, DecisionTreeClassifier, RandomForestClassifier, KMeans, train_test_split]
 ---

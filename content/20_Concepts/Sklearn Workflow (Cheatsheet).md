@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Machine Learning]]"
-tags: [DS/MachineLearning, DS/Sklearn]
+tags: [DataScience/ML, Tool/Sklearn]
 type: cheatsheet
 aliases: [Sklearn Cheatsheet, ML Workflow]
 ---

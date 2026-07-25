@@ -2,7 +2,7 @@
 unit: FIT1008
 week: [3, 5]
 parent: "[[Abstract Data Type (ADT)]]"
-tags: [CS/DataStructures, OOP/Python, CS/Abstraction, CS/Complexity]
+tags: [CS/DataStructures, SWE/OOP, CS/Abstraction, CS/Complexity]
 ---
 # [[Queue (ADT)]]
 

@@ -1,7 +1,7 @@
 ---
 unit: FIT2099
 parent: "[[FIT2099_MOC]]"
-tags: [CS/SoftwareEngineering, CS/OOP]
+tags: [SWE/Design, SWE/OOP]
 type: cheatsheet
 aliases: [FIT2099 Exam Crib, OO Design Cheatsheet]
 ---

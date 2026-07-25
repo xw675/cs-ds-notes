@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 7
 parent: "[[UML Associations and Dependencies (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [sequence diagram, interaction diagram, communication diagram, dynamic model, lifeline, activation bar, fragment, loop, alt, opt]
 ---

@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 6
 parent: "[[SOLID Principles (Java)]]"
-tags: [SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Design, SWE/OOP]
 aliases: [design rationale, design goals, assignment rationale, YAGNI]
 ---
 # [[Design Rationale (FIT2099)]]

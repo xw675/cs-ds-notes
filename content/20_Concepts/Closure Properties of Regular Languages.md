@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 4
 parent: "[[Kleene's Theorem]]"
-tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages]
 aliases: [closure, closed under, union closure, intersection closure, complement closure, concatenation closure, symmetric difference]
 ---
 # [[Closure Properties of Regular Languages]]

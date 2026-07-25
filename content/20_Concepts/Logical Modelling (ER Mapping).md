@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 5
 parent: "[[Conceptual vs Logical Model]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Logical Modelling (ER Mapping)]]
 

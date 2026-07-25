@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 1
 parent: "[[FIT2014_MOC]]"
-tags: [Math/Theory, CS/Computation, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation]
 aliases: [alphabet, word, string, formal language, Sigma star, empty word, epsilon, EVEN-EVEN, DOUBLEWORD, PALINDROMES, universal language]
 ---
 # [[Formal Languages (Alphabets, Words, Languages)]]

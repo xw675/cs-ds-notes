@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 5
 parent: "[[Context-Free Grammars (CFG)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [PDA, pushdown automaton, stack automaton, CFG to PDA, PDA to CFG, stack, push, pop, dollar marker]
 ---
 # [[Pushdown Automata (PDA)]]

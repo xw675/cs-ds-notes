@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 2
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [inheritance, extends, super, generalisation, method overriding, Override, subclass, superclass, protected, constructor chaining]
 ---

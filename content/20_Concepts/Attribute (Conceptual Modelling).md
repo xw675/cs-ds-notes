@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 2
 parent: "[[Entity (Conceptual Modelling)]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Attribute (Conceptual Modelling)]]
 

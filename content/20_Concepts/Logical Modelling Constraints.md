@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 5
 parent: "[[Logical Modelling (ER Mapping)]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Logical Modelling Constraints]]
 

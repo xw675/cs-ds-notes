@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2014]
 week: 9
 parent: "[[Data Wrangling]]"
-tags: [DataScience/Tools, Unix/Shell, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/Shell]
 type: pattern
 aliases: [Unix Shell, Unix Shell for Data Science, Bash, Shell Commands, grep, awk, pipes]
 ---

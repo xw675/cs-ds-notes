@@ -1,7 +1,7 @@
 ---
 unit: FIT2014
 type: MOC
-tags: [Monash/CS_DS, Math/Theory, CS/Computation]
+tags: [Math/Theory, CS/Computation]
 ---
 # 📘 FIT2014: Theory of Computation
 

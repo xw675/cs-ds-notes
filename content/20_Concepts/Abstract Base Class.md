@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 2
 parent: "[[Abstract Data Type (ADT)]]"
-tags: [OOP/Python, CS/Abstraction]
+tags: [SWE/OOP, CS/Abstraction]
 ---
 # [[Abstract Base Class]]
 

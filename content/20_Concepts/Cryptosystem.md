@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Function Composition]]"
-tags: [Math/Functions, CS/Cryptography, Monash/CS_DS]
+tags: [Math/Functions, CS/Cryptography]
 ---
 # [[Cryptosystem]]
 

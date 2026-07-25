@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 2
 parent: "[[Data Science]]"
-tags: [DataScience/Tools, Python/Basics, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/Python]
 aliases: [Python for Data Science, Anaconda]
 ---
 # [[Python for Data Science]]

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 6
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [CREATE TABLE, ALTER ADD CONSTRAINT]
 ---

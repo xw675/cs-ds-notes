@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [key establishment, key agreement, Diffie-Hellman, DH key exchange, shared secret, discrete logarithm, key exchange]
 ---
 # [[Key Establishment and Diffie-Hellman]]

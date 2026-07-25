@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 7
 parent: "[[Predictive Models]]"
-tags: [DataScience/Modelling, ML/Classification, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Decision Tree, Regression Tree, Recursive Partitioning, Information Gain]
 ---
 # [[Decision Trees and Regression Trees]]

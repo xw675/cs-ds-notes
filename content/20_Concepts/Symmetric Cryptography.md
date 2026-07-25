@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [symmetric encryption, shared key, AES, Rijndael, S-box, substitution box, block chaining, CBC-MAC, Caesar cipher, Vigenere, secret key]
 ---
 # [[Symmetric Cryptography]]

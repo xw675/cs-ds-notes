@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 1
 parent: "[[Conjunctive Normal Form]]"
-tags: [Math/Logic, Math/Theory, CS/Computation, Monash/CS_DS]
+tags: [Math/Logic, Math/Theory, CS/Computation]
 type: pattern
 aliases: [at least k, at most k, exactly k, cardinality constraints, CNF recipe, pick at least, pick at most, pick exactly]
 ---

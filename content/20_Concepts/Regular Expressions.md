@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 2
 parent: "[[Formal Languages (Alphabets, Words, Languages)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 aliases: [regular expression, regex, regular language, Kleene star, concatenation, alternation, matched]
 ---
 # [[Regular Expressions]]

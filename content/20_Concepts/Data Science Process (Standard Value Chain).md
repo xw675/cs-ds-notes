@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 1
 parent: "[[Data Science]]"
-tags: [DataScience/Foundations, DataScience/Lifecycle, Monash/CS_DS]
+tags: [DataScience/Foundations, DataScience/Lifecycle]
 aliases: [Data Science Process, Standard Value Chain, Data Science Lifecycle]
 ---
 # [[Data Science Process (Standard Value Chain)]]

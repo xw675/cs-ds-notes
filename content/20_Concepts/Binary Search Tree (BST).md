@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 8
 parent: "[[Binary Tree]]"
-tags: [CS/DataStructures, OOP/Python, CS/Complexity]
+tags: [CS/DataStructures, SWE/OOP, CS/Complexity]
 aliases: [BST]
 ---
 # [[Binary Search Tree (BST)]]

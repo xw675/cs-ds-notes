@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 9
 parent: "[[Internet Structure and Governance]]"
-tags: [CS/Networks, CS/Internet, Monash/CS_DS]
+tags: [CS/Networks, CS/Internet]
 aliases: [CDN, Content Delivery Network, load balancing, DNS load balancing, content caching, cache engine, point of presence, why the internet still works]
 ---
 # [[CDNs, Load Balancing and Caching]]

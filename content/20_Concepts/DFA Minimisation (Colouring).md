@@ -2,7 +2,7 @@
 unit: FIT2014
 week: 4
 parent: "[[Finite Automata (DFA and NFA)]]"
-tags: [Math/Theory, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, CS/Computation, CS/Languages]
 type: pattern
 aliases: [DFA minimisation, minimum DFA, state minimisation, colouring algorithm, partition refinement, simplifying finite automata]
 ---

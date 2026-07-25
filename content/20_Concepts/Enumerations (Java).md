@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 4
 parent: "[[Three Core Design Principles (Java)]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 type: pattern
 aliases: [enum, enumeration, named constants, magic number, magic string]
 ---

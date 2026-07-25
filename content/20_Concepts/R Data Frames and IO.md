@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: 8
 parent: "[[R Vectors]]"
-tags: [DataScience/Tools, R/Wrangling, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/R]
 type: pattern
 aliases: [R Data Frame, data.frame, read.csv, aggregate, R wrangling, R Data Frames and I/O]
 ---

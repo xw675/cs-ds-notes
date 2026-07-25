@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 12
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [risk management, security controls, NIST RMF, risk management framework, NICE framework, cybersecurity roles, residual risk]
 ---
 # [[Cybersecurity Risk Management]]

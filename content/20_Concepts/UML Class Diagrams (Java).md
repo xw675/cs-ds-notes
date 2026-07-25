@@ -1,7 +1,7 @@
 ---
 unit: FIT2099
 parent: "[[UML Associations and Dependencies (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [class diagram, UML class diagram, generalisation, realization, visibility notation, multiplicity, UML stereotype, static structure]
 ---

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 9
 parent: "[[Probability]]"
-tags: [Math/Probability, Math/Discrete, Monash/CS_DS]
+tags: [Math/Probability, Math/Discrete]
 ---
 # [[Sample Space and Events]]
 

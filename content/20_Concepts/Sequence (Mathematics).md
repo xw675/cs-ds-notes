@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 6
 parent: "[[Function (Mathematics)]]"
-tags: [Math/Discrete, Math/Sequences, Monash/CS_DS]
+tags: [Math/Discrete, Math/Sequences]
 ---
 # [[Sequence (Mathematics)]]
 

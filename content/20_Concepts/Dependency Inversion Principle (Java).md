@@ -2,7 +2,7 @@
 unit: FIT2099
 week: [5, 6]
 parent: "[[SOLID Principles (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [DIP, dependency inversion, depend on abstractions]
 ---

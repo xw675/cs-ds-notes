@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 6
 parent: "[[Relational Model]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 aliases: [DDL, DML, DCL]
 ---
 # [[SQL Sublanguages (DDL, DML, DCL)]]

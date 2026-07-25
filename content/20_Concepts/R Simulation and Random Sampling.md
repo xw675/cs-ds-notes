@@ -2,7 +2,7 @@
 unit: FIT2086
 week: 1
 parent: "[[R for Data Science]]"
-tags: [DS/R, Stats/Probability, Monash/CS_DS]
+tags: [Tool/R, Math/Probability]
 type: pattern
 aliases: [R simulation, set.seed, sample, rnorm, dnorm, pnorm, qnorm, d p q r functions, random sampling in R, Monte Carlo R]
 ---

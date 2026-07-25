@@ -2,7 +2,7 @@
 unit: FIT2086
 week: 0
 parent: "[[Statistical Modelling and Inference]]"
-tags: [Math/Calculus, Stats/Modelling, Monash/CS_DS]
+tags: [Math/Calculus, DataScience/Modelling]
 aliases: [log identities, exp identities, derivative rules, product rule, chain rule, partial derivative, log-likelihood algebra, MLE toolkit]
 ---
 # [[Mathematics for Modelling (Log, Exp, Calculus)]]

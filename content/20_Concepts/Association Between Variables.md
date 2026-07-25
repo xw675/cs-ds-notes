@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: [0, 4]
 parent: "[[Measures of Centrality]]"
-tags: [DataScience/Statistics, DataScience/Visualisation, Monash/CS_DS]
+tags: [DataScience/Statistics, DataScience/Visualisation]
 aliases: [Correlation, Pearson Correlation, Association, Scatter Plot]
 ---
 # [[Association Between Variables]]

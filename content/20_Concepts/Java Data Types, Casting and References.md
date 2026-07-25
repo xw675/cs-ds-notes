@@ -2,7 +2,7 @@
 unit: FIT2099
 week: [1, 4]
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
-tags: [SWE/Java, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/OOP]
 aliases: [Primitive Types, Reference Types, Type Casting, Value vs Reference, Java Scope]
 ---
 # [[Java Data Types, Casting and References]]

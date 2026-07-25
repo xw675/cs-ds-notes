@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: [2, 3]
 parent: "[[Proof Techniques]]"
-tags: [Math/Proof, Math/Induction, Monash/CS_DS]
+tags: [Math/Proof, Math/Induction]
 ---
 # [[Mathematical Induction]]
 

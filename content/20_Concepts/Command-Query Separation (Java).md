@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 8
 parent: "[[Design by Contract (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [command-query separation, CQS, command, query, mutator, accessor, side effect]
 ---
 # [[Command-Query Separation (Java)]]

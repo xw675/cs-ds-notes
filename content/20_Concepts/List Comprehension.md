@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 3
 parent: "[[Higher-Order Function]]"
-tags: [OOP/Python, CS/DataStructures]
+tags: [SWE/OOP, CS/DataStructures]
 ---
 # [[List Comprehension]]
 

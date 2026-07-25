@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: [1, 3, 5]
 parent: "[[Theorem and Proof]]"
-tags: [Math/Logic, Math/Proof, Math/Theory, Monash/CS_DS]
+tags: [Math/Logic, Math/Proof, Math/Theory]
 aliases: [quantifier, forall, exists, universal quantifier, existential quantifier, bound variable, quantifier order]
 ---
 # [[Quantifiers (Existential and Universal)]]

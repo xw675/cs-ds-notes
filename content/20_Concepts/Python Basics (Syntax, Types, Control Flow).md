@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[Python for Data Science]]"
-tags: [DataScience/Tools, Python/Basics, Monash/CS_DS]
+tags: [DataScience/Tools, Tool/Python]
 type: pattern
 aliases: [Python Syntax, Python Data Types, Python List, Python Control Flow]
 ---

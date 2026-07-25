@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 7
 parent: "[[Concurrency Control and Locking]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 aliases: [Deadlock, Deadly Embrace, Wait-For Graph]
 ---
 # [[Deadlock]]

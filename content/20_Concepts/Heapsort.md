@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 9
 parent: "[[Heap]]"
-tags: [CS/Algorithms, CS/Sorting, CS/Complexity, OOP/Python]
+tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 ---
 # [[Heapsort]]
 

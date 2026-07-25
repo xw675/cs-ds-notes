@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Sets of Numbers]]"
-tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/NumberTheory, Math/Discrete]
 ---
 # [[Divisibility]]
 

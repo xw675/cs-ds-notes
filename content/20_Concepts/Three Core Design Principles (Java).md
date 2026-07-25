@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 2
 parent: "[[Client-Supplier Relationship (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [DRY, SRP, single responsibility, feature envy, avoid literals, magic numbers, design principles, design smell]
 ---
 # [[Three Core Design Principles (Java)]]

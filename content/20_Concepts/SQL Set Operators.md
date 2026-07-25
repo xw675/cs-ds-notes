@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 10
 parent: "[[SQL SELECT and WHERE]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [UNION, UNION ALL, INTERSECT, MINUS, Set Operators]
 ---

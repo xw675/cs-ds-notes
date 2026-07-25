@@ -2,7 +2,7 @@
 unit: FIT1043
 week: [1, 5]
 parent: "[[Data Science]]"
-tags: [DataScience/Foundations, ML/Concepts, Monash/CS_DS]
+tags: [DataScience/Foundations, DataScience/ML]
 aliases: [Machine Learning, ML]
 ---
 # [[Machine Learning]]

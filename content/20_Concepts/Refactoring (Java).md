@@ -2,7 +2,7 @@
 unit: FIT2099
 week: [9, 10]
 parent: "[[Design Smells (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [refactoring, two hats, refactor first, when to refactor, meta-technique, Fowler]
 ---
 # [[Refactoring (Java)]]

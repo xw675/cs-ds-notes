@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 6
 parent: "[[Data Integrity]]"
-tags: [CS/Databases, SQL/Oracle, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL, SWE/Design]
 aliases: [Check Constraint, Lookup Table]
 ---
 # [[Column Value Constraints (Check vs Lookup)]]

@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 10
 parent: "[[DDL Table Creation]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [INSERT SELECT, CREATE TABLE AS, CTAS]
 ---

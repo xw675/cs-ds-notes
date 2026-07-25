@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 6
 parent: "[[Database Design Life Cycle]]"
-tags: [CS/Databases, SWE/Design, Ethics/Privacy, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design, Ethics/Privacy]
 aliases: [Data Minimisation, Privacy by Design]
 ---
 # [[Personal Data and Privacy in Database Design]]

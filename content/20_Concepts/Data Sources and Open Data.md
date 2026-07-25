@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 3
 parent: "[[Data Science Process (Standard Value Chain)]]"
-tags: [DataScience/DataSources, Monash/CS_DS]
+tags: [DataScience/DataSources]
 aliases: [Open Data, Linked Open Data, LOD, Data Sources]
 ---
 # [[Data Sources and Open Data]]

@@ -2,7 +2,6 @@
 unit: FIT1043
 type: MOC
 tags:
-  - Monash/CS_DS
   - 2025/S2
 ---
 # 📘 FIT1043: Introduction to Data Science

@@ -2,7 +2,7 @@
 unit: [FIT1058, FIT2014]
 week: [2, 3]
 parent: "[[Theorem and Proof]]"
-tags: [Math/Proof, Math/Logic, Math/Theory, Monash/CS_DS]
+tags: [Math/Proof, Math/Logic, Math/Theory]
 aliases: [proof by construction, proof by cases, proof by contradiction, exhaustion, reductio ad absurdum, subset proof, set equality]
 ---
 # [[Proof Techniques]]

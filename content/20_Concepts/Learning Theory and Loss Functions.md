@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 5
 parent: "[[Machine Learning]]"
-tags: [DataScience/Modelling, ML/Theory, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Learning Theory, Loss Function, Error, Loss, Gain]
 ---
 # [[Learning Theory and Loss Functions]]

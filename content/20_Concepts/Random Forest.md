@@ -2,7 +2,7 @@
 unit: FIT1043
 week: 7
 parent: "[[Ensemble Models]]"
-tags: [DataScience/Modelling, ML/Classification, Monash/CS_DS]
+tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Random Forest, RF]
 ---
 # [[Random Forest]]

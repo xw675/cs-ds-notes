@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 11
 parent: "[[Software Design in the Lifecycle (FIT2099)]]"
-tags: [SWE/Design, SWE/Process, Monash/CS_DS]
+tags: [SWE/Design, SWE/Process]
 aliases: [design process, brainstorming, model storming, top-down, bottom-up, scenario-based design, use cases, design approaches, creative design]
 ---
 # [[Design Process and Techniques (FIT2099)]]

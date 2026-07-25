@@ -2,7 +2,7 @@
 unit: FIT2014
 week: [4, 5]
 parent: "[[Pumping Lemma for Regular Languages]]"
-tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages, Monash/CS_DS]
+tags: [Math/Theory, Math/Proof, CS/Computation, CS/Languages]
 type: pattern
 aliases: [non-regular, HALF-AND-HALF, EQUAL, PALINDROME, a^n b^n, pumping lemma proof, closure argument]
 ---

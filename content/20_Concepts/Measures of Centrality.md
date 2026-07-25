@@ -2,7 +2,7 @@
 unit: [FIT1043, FIT2086]
 week: [0, 4]
 parent: "[[Types of Data (Numeric and Categorical)]]"
-tags: [DataScience/Statistics, Monash/CS_DS]
+tags: [DataScience/Statistics]
 aliases: [Descriptive Statistics, Mean, Median, Mode, Skewness]
 ---
 # [[Measures of Centrality]]

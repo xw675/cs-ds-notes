@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 7
 parent: "[[Database Transaction]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 aliases: [Concurrency, Locking, Shared Lock, Exclusive Lock, Two-Phase Locking, 2PL]
 ---
 # [[Concurrency Control and Locking]]

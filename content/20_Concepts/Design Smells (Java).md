@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 9
 parent: "[[SOLID Principles (Java)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 type: pattern
 aliases: [code smell, design smell, bloaters, change preventers, couplers, dispensables, feature envy, data clumps, divergent change, shotgun surgery, primitive obsession, type checking, God class, message chains, middle man, refactoring.guru catalogue]
 ---

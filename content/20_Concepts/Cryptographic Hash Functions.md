@@ -2,7 +2,7 @@
 unit: FIT1047
 week: [10, 11]
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [hash function, cryptographic hash, MD5, SHA-1, SHA-256, MAC, message authentication code, collision resistance, digest]
 ---
 # [[Cryptographic Hash Functions]]

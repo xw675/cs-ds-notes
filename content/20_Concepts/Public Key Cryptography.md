@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [public key cryptography, asymmetric cryptography, RSA, key pair, digital signature, non-secret encryption, public private key]
 ---
 # [[Public Key Cryptography]]

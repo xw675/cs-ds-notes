@@ -2,7 +2,7 @@
 unit: FIT1058
 week: [1, 4]
 parent: "[[Proposition and Truth Value]]"
-tags: [Math/Logic, Math/Discrete, Monash/CS_DS]
+tags: [Math/Logic, Math/Discrete]
 ---
 # [[Logical Connectives]]
 

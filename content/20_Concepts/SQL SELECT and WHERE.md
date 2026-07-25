@@ -2,7 +2,7 @@
 unit: FIT2094
 week: 8
 parent: "[[SQL Sublanguages (DDL, DML, DCL)]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [SELECT, WHERE, BETWEEN, IN, LIKE, IS NULL]
 ---

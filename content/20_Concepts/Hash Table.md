@@ -2,7 +2,7 @@
 unit: FIT1008
 week: [10, 11]
 parent: "[[Dictionary (ADT)]]"
-tags: [CS/DataStructures, OOP/Python, CS/Algorithms, CS/Complexity]
+tags: [CS/DataStructures, SWE/OOP, CS/Algorithms, CS/Complexity]
 ---
 # [[Hash Table]]
 

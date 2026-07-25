@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 2
 parent: "[[Cartesian Product]]"
-tags: [Math/Relations, Math/Discrete, Monash/CS_DS]
+tags: [Math/Relations, Math/Discrete]
 ---
 # [[Binary Relation]]
 

@@ -2,7 +2,7 @@
 unit: FIT2086
 week: 1
 parent: "[[Statistical Modelling and Inference]]"
-tags: [Stats/Probability, Math/Probability, DataScience/Theory, Monash/CS_DS]
+tags: [Math/Probability, DataScience/Theory]
 aliases: [random variable FIT2086, joint distribution, marginal distribution, sum rule, conditional distribution, independence, iid, pdf, CDF, quantile function, event space]
 ---
 # [[Random Variables and Probability Distributions (FIT2086)]]

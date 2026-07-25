@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, CS/Networks, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Networks, CS/Cryptography]
 aliases: [TLS, SSL, HTTPS, Transport Layer Security, TLS handshake, TLS record, VPN, virtual private network, tunnel, IPSec, OpenVPN, WireGuard]
 ---
 # [[Secure Channels - TLS and VPNs]]

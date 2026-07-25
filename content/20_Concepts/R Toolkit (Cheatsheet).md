@@ -1,7 +1,7 @@
 ---
 unit: [FIT1043, FIT2086]
 parent: "[[Data Science]]"
-tags: [DS/R, DS/Wrangling, Stats/Modelling]
+tags: [Tool/R, DataScience/Wrangling, DataScience/Modelling]
 type: cheatsheet
 aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 ---

@@ -2,7 +2,7 @@
 unit: FIT1058
 week: 7
 parent: "[[Coprimality]]"
-tags: [Math/NumberTheory, Math/Discrete, Monash/CS_DS]
+tags: [Math/NumberTheory, Math/Discrete]
 ---
 # [[Euler Totient Function]]
 

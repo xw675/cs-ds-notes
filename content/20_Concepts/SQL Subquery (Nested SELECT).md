@@ -2,7 +2,7 @@
 unit: FIT2094
 week: [8, 9]
 parent: "[[SQL SELECT and WHERE]]"
-tags: [CS/Databases, SQL/Oracle, Monash/CS_DS]
+tags: [CS/Databases, Tool/SQL]
 type: pattern
 aliases: [Subquery, Nested SELECT, IN Subquery]
 ---

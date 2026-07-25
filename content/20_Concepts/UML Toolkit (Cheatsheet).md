@@ -1,7 +1,7 @@
 ---
 unit: FIT2099
 parent: "[[FIT2099_MOC]]"
-tags: [SWE/Design, SWE/UML, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Design, SWE/UML, SWE/OOP]
 type: cheatsheet
 aliases: [UML Toolkit, UML Cheatsheet, UML reference, class diagram cheatsheet, sequence diagram cheatsheet, Mermaid UML]
 ---

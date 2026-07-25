@@ -2,7 +2,7 @@
 unit: FIT2099
 week: 2
 parent: "[[OOP Building Blocks (Class, Object, Field, Method)]]"
-tags: [SWE/Java, SWE/Design, SWE/OOP, Monash/CS_DS]
+tags: [SWE/Java, SWE/Design, SWE/OOP]
 aliases: [encapsulation, information hiding, access modifiers, public, private, protected, package-private, getter, setter]
 ---
 # [[Encapsulation and Access Modifiers (Java)]]

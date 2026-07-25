@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 10
 parent: "[[FIT1047_MOC]]"
-tags: [CS/Security, CS/Cryptography, Monash/CS_DS]
+tags: [CS/Security, CS/Cryptography]
 aliases: [information security, CIA, confidentiality integrity availability, security goals, cryptography overview, security mechanisms, non-repudiation]
 ---
 # [[Information Security and Cryptography]]

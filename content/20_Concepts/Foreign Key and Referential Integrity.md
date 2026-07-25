@@ -2,7 +2,7 @@
 unit: FIT2094
 week: [3, 6]
 parent: "[[Primary Key]]"
-tags: [CS/Databases, SWE/Design, Monash/CS_DS]
+tags: [CS/Databases, SWE/Design]
 ---
 # [[Foreign Key and Referential Integrity]]
 

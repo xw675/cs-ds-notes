@@ -2,7 +2,7 @@
 unit: FIT1047
 week: 11
 parent: "[[Information Security and Cryptography]]"
-tags: [CS/Security, Monash/CS_DS]
+tags: [CS/Security]
 aliases: [authentication, user authentication, passwords, authentication factors, something you know, salted hash, rainbow table, password storage]
 ---
 # [[User Authentication and Passwords]]

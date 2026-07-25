@@ -1,7 +1,7 @@
 ---
 unit: FIT1043
 parent: "[[FIT1043_MOC]]"
-tags: [DS/Foundations, DS/MachineLearning]
+tags: [DataScience/Foundations, DataScience/ML]
 type: cheatsheet
 aliases: [FIT1043 Exam Crib, Data Science Cheatsheet]
 ---

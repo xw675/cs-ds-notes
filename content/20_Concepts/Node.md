@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 4
 parent: "[[Linked Node Data Structure]]"
-tags: [CS/DataStructures, OOP/Python]
+tags: [CS/DataStructures, SWE/OOP]
 ---
 # [[Node]]
 

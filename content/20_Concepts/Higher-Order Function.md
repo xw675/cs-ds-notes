@@ -2,7 +2,7 @@
 unit: FIT1008
 week: 5
 parent: "[[Iterator]]"
-tags: [CS/Programming, OOP/Python]
+tags: [CS/Programming, SWE/OOP]
 ---
 # [[Higher-Order Function]]
 
