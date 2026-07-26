@@ -40,7 +40,7 @@ public class Hercules implements SuperStrengthCapable {
 - **Each interface = one quality** ➔ e.g. standard `Comparable<T>` means "can be compared to a T" — nothing more.
 - **Implement many** ➔ a class combines the exact capabilities it has.
 
-## ⚙️ classDiagram (fat interface ➔ segregate)
+## 🏛️ Structure (fat interface ➔ segregate)
 ```mermaid
 classDiagram
     class SuperStrengthCapable { <<interface>> +superStrength() void }

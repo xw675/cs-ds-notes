@@ -15,7 +15,7 @@ aliases: [SQL Cheatsheet, SELECT Anatomy]
 > - **🎯 Objective:** assemble any query from the fixed skeleton ➔ SELECT → FROM(+JOIN) → WHERE → GROUP BY → HAVING → ORDER BY.
 > - **⚡ Key Constraint:** *logical execution order* ≠ writing order: **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY** — explains why aliases work in ORDER BY but not GROUP BY/WHERE.
 
-## 🧩 Statement Anatomy
+## 🧩 Statement Anatomy (execution order)
 ```sql
 SELECT   dt_code, AVG(drone_flight_time) AS avg_flight     -- 5. project + alias
 FROM     drone.drone                                        -- 1. source (+ JOINs)

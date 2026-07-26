@@ -35,7 +35,7 @@ class Seagull extends SeaBird implements SwimCapable, FlightCapable {    // many
 - **Multiple interfaces** ➔ list them comma-separated after `implements`; combine with a single `extends`.
 - **Pure abstraction** ➔ interface methods are `public` + `abstract` by default (no body); a class that skips one won't compile.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
   class SwimCapable {

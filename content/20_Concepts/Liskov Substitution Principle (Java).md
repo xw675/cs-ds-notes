@@ -42,7 +42,7 @@ class MechanicalDuck implements Speaker {
 - **Violation indicators** ➔ `instanceof`/`getClass()` inside an override; **empty do-nothing** overrides; an override that **throws** an unexpected exception.
 - **Fix** ➔ don't force a false is-a; introduce an interface so the odd class is a **sibling**, or share a common supertype.
 
-## ⚙️ classDiagram (false is-a ➔ siblings)
+## 🏛️ Structure (false is-a ➔ siblings)
 ```mermaid
 classDiagram
     class Speaker { <<interface>> +speak() String }

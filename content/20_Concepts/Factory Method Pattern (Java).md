@@ -39,7 +39,7 @@ Card card = CardManager.createCard(age);       // gets the right Card, doesn't k
 - **Centralised decision** ➔ the subclass choice sits inside the factory, not duplicated across clients (**DRY**).
 - **Static or instance** ➔ often a `static` method on a manager/factory class.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
     class Card { <<abstract>> }

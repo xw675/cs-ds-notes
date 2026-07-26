@@ -15,7 +15,7 @@ aliases: [Sklearn Cheatsheet, ML Workflow]
 > - **🎯 Objective:** every sklearn model, same four verbs ➔ Estimator() → fit(X_train, y_train) → predict(X_test) → evaluate.
 > - **⚡ Key Constraint:** shapes — $X\in\mathbb{R}^{N\times D}$ (2-D, even for one feature via `df.loc[:, ['weight']]`), $y\in\mathbb{R}^{N}$ (1-D); most beginner errors are a 1-D $X$.
 
-## 🧩 The Universal Skeleton
+## 🧩 Workflow Anatomy (execution order)
 ```python
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler

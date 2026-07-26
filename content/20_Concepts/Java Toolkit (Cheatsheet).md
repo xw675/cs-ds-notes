@@ -14,7 +14,7 @@ aliases: [Java Toolkit, Java Cheatsheet, Java syntax reference, OO Java cheatshe
 > - **🎯 Objective:** write correct, well-encapsulated OO Java ➔ class anatomy + modifiers + collections + inheritance/interfaces + contracts, with the exam gotchas inline.
 > - **⚡ Key Constraint:** Java is **statically typed** (types fixed at declaration, checked at **compile time**) and objects are **reference types** — most FIT2099 bugs come from **reference aliasing**, **`==` vs `.equals()`**, and **access-widening** on override.
 
-## 🧬 Class anatomy (execution order)
+## 🧩 Class Anatomy (execution order)
 ```java
 package game.actors;                    // 1. package — namespace, MUST be first line
 import java.util.ArrayList;             // 2. imports — bring in other packages

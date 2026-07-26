@@ -41,7 +41,7 @@ public class Book extends Document { // subclass: is-a Document
 - **`super(author)`** ➔ calls the parent constructor; must be the **first statement** in the child constructor.
 - **`super.getAuthor()`** ➔ reaches an inherited member; needed because `author` is `private` in Document.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
     class Document {

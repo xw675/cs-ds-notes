@@ -36,7 +36,7 @@ class Tutor { private String givenName, familyName, staffId, email; }
 - **Split trigger** ➔ two+ distinct behaviours, or changing one field cascades to unrelated features.
 - **Scope** ➔ SRP applies to classes **and** methods **and** fields (name things precisely).
 
-## ⚙️ classDiagram (God class ➔ split)
+## 🏛️ Structure (God class ➔ split)
 ```mermaid
 classDiagram
     class Lab {

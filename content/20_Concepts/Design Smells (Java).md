@@ -91,7 +91,7 @@ private boolean isAccountUnderMinimum() { return this.balance < MINIMUM_BALANCE;
 ```
 **Expected output:** the threshold rule now changes in **one** place, not three — one reason, one edit.
 
-## ⚙️ classDiagram (Divergent Change / Primitive Obsession ➔ composition)
+## 🏛️ Structure (Divergent Change / Primitive Obsession ➔ composition)
 ```mermaid
 classDiagram
     class Hero {

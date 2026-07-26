@@ -43,7 +43,7 @@ public void consumeAllItems() {
 - **New type = new class** ➔ implement the method; no edit to the consuming loop.
 - **Kills the `instanceof` ladder** ➔ dispatch replaces conditional type checks.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
   class ConsumableItem {

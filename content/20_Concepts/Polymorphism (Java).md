@@ -40,7 +40,7 @@ System.out.println(b.print());          // Soldier (100 HP)  <- overridden getHe
 - **Dynamic dispatch** ➔ `b.print()` calls `getHealth()`, and the **actual** object's override wins at runtime.
 - **Needs inheritance** ➔ polymorphism only exists where a subclass overrides a supertype method.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
     class Soldier {

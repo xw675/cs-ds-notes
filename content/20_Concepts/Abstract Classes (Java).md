@@ -45,7 +45,7 @@ Assessment a = new Test();         // OK — polymorphism through the abstract b
 - **UML** ➔ show an abstract class/method in *italics*, or tag the class `«abstract»`; generalisation arrow (hollow triangle) from subclass to it.
 - **Rule** ➔ abstract methods can't be `private` (nothing could implement them); `static` methods and constructors can't be abstract.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
   class Animal {

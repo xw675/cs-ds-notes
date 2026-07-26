@@ -53,7 +53,7 @@ class MyApp {                                     // the INJECTOR
 
 - **Connascence of execution** ➔ with setter/interface injection the object **isn't usable until** `setX()` is called — an ordering dependency to watch.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
   class Engine { <<interface>> +start() void }

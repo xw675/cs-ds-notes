@@ -46,7 +46,7 @@ public class Dungeon {
 
 > [!NOTE] **DIP vs DI:** DIP makes the client depend on the interface, but the client (or DIP alone) often still **creates** the concrete implementation. [[Dependency Injection (Java)|Dependency injection]] removes that last coupling by having an external *injector* supply the concrete service.
 
-## ⚙️ classDiagram
+## 🏛️ Structure
 ```mermaid
 classDiagram
   class DungeonResident { <<interface>> }
