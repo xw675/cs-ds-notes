@@ -10,9 +10,9 @@ tags: [2026/S1]
 
 ## 📊 Assessment Map
 
-- **Assessment:** pracs + mid-semester test + final exam *(⚠ splits unverified — fill from unit outline)*.
-- **Exam skills:** raw-code data structures (no magic methods), Best/Average/Worst complexity tables, hand-traces of sorts/hashing/trees.
-- **Mid-semester test** ➔ Weeks 1–5 (complexity → ADTs → linked structures + iterators); **exam** ➔ whole unit, weighted to Weeks 6–11 structures.
+- **Weekly Quizzes (30%):** 
+- **Assignment 1 (30%):**
+- **Assignment 2 (40%):**
 
 ## 🧰 Unit Cheatsheet
 

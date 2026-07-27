@@ -8,10 +8,11 @@ tags: [CS/Systems]
 > [!INFO] Map of Content
 > Index for **FIT1047 (Malaysia campus)**. Hand-execution unit: number conversions, logic circuits, MARIE assembly traces are the assessed skills — every applied note carries a write-from-blank element.
 
-## 📊 Assessment Map (from Week 1 workshop — verify remainder against unit guide)
+## 📊 Assessment Map
 - **Assignment 1 (15%)** ➔ Foundations: Binary Number System (W1) + Boolean Logic Circuit (W2).
-- **Assignment 2 (25%)** ➔ Programming Interview: Assembly Programming (W3–4), Computer Architecture (W3–4), Motherboard & Boot (W5), OS (W5).
-- **Remaining weight** ➔ networks + security half (LO5–7) and final assessment *(⚠ split not stated in W1 deck)*.
+- **Assignment 2 (30%)** ➔ Programming Interview: Assembly Programming (W3–4), Computer Architecture (W3–4), Motherboard & Boot (W5), OS (W5).
+- **Assignment 3 (30%)** ➔ Networks
+- **Assignment 4 (25%)** ➔ Security
 - **LO1 (W1–2):** number representations + Boolean algebra → logic circuits · **LO2:** hardware/software architectures · **LO3:** MARIE assembly · **LO4:** OS functions.
 
 ## 🧰 Unit Cheatsheet
