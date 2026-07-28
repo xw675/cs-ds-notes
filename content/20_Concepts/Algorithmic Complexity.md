@@ -41,6 +41,14 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 - **Best ≠ worst only on short-circuit** ➔ requires an `if`/`break`/early return, else best=worst (selection sort).
 - **Average ≠ amortised** ➔ average needs a **distribution**; amortised is a worst-case-sequence guarantee with **no probability**.
 
+### 6. Space: Total vs Auxiliary *(FIT2004 quoting standard)*
+- **Total space** ➔ input **plus** everything allocated ⟹ always $\Omega(n)$ for an $n$-element input, so it never discriminates between algorithms.
+- **Auxiliary space** ➔ **extra beyond the input** — the number quoted in a complexity table; **in-place** $\equiv$ $O(1)$ auxiliary.
+- **Recursion stack counts** ➔ auxiliary space $\ge$ **max live frame chain**, i.e. $\Theta(\text{depth})\times$ frame size — sibling calls run sequentially, so only ONE root-to-leaf path is live at a time (never $\Theta(\text{total calls})$).
+- **Depth is the discriminator** ➔ balanced recursion $\Theta(\log n)$ frames ([[Quick Sort]] with the smaller side recursed first) vs peeling one element $\Theta(n)$ frames — the same split that decides *time* in [[Divide and Conquer]].
+- **Shrinking frames sum, not multiply** ➔ frames of size $n,n/2,n/4,\dots$ total $<2n=\Theta(n)$, not $\Theta(n\log n)$ (see [[Karatsuba Integer Multiplication]]).
+- **Tightest bound** ➔ quote $\Theta$ when best $=$ worst; reserve $O$ for a genuine upper-bound-only claim.
+
 ## ⚙️ Core Implementation
 ### 🔹 Step-counting & the input-size gotcha
 > [!code]- counting rules + bit-length trap
@@ -133,6 +141,12 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Selection sort never early-terminates ⟹ cost depends only on $n$ ⟹ best=worst=$\Theta(n^2)$.
 > > - **Why:** **Pivot quality** ➔ quicksort's cost depends on the input (median $\Theta(n\log n)$, min/max $\Theta(n^2)$), so its cases separate.
+
+> [!FAQ]- [[Merge Sort]] is called an $O(n)$-space sort and [[Quick Sort]] an in-place one, yet both allocate. Justify both labels precisely.
+> - **Hint:** Auxiliary, and count the live stack chain.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** **Auxiliary** space is what is quoted. Merge sort needs a $\Theta(n)$ scratch array ⟹ $\Theta(n)$; quicksort partitions inside the array, leaving only the recursion stack, $O(\log n)$ when the smaller side recurses first.
+> > - **Why:** **Live chain, not total calls** ➔ sibling calls execute sequentially, so only one root-to-leaf path of frames exists at once; "in-place" means $O(1)$ auxiliary *excluding* that stack, which is why quicksort's label survives its $O(\log n)$ frames — but degrades to $\Theta(n)$ frames on a worst-case pivot.
 
 > [!FAQ]- If each comparison costs $O(m)$ but each swap is $O(1)$, does merge sort or selection sort scale better?
 > - **Hint:** Weight ops by their true cost.

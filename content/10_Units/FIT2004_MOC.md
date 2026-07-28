@@ -8,11 +8,25 @@ tags: [CS/Algorithms, CS/Complexity]
 > [!INFO] Map of Content
 > Index for **FIT2004 Algorithms and Data Structures** (Y2S1) — rigorous algorithmics building on [[FIT1008_MOC]]. Much of the foundational material (Big-O, recursion, divide-and-conquer, merge sort) is **shared dual-unit** with FIT1008/FIT1058 and deepened here with **correctness proofs** and **recurrence analysis** rather than duplicated.
 
-## 📊 Assessment Map
-- **Learning Project Portfolio (100%)** ➔ continuous production — the assignments *are* the unit.
-- **In-class tests (0%) — competency hurdle** ➔ must meet the standard to pass; **one supplementary attempt**. These are the **hand-execution checkpoints** (trace tables, complexity derivations).
-- **No exam** ➔ portfolio-driven; drill the in-class competency tests as the hand-skill gate.
+## 📊 Assessment Map (2026 S2)
+- Tiered grading framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
+- **Pass Tier (Base 50 Marks) — Pass Tests (PT1, PT2, PT3)**
+    - **Format:** 75-minute on-campus, closed-book Moodle exams using Safe Exam Browser (SEB).
+    - **Section 1 (Pass):** Binary grade (Competent / Not Competent). Requires ≥80% (4/5) with up to 3 check-attempts per question.
+    - **Section 2 (Bonus):** Optional written questions (+3 bonus marks each).
+    - **Safety Net:** Reattempts (PTR1/PTR2) allowed for missed competencies, but bonus marks are forfeited.
+- **Credit Tier (+10 Marks) — Credit Discussions (CD1, CD2)**
+    - **Format:** 15-minute 1-on-1 Zoom oral interviews (closed-book, screen sharing). No reattempts.
+    - **Structure:** Section 1 (+3 marks, guided prompts) and Section 2 (+2 marks, advanced unguided follow-up).
+    - **Prerequisites:** Competent in all PTs, completion of ≥50% weekly quizzes, and timely EOI form submission.
+- **Distinction / High Distinction Tier (+31 Marks) — D/HD Exam**
+    - **Format:** 3-hour written paper exam on-campus in Week 15 (closed-book, high failure/zero-mark rate, covers unit content and beyond).    
+    - **Prerequisites to Sit:** Competent in all PTs by PTR1, ≥9/12 weekly quizzes completed (100%), and a pre-exam score of ≥60 marks.
 - **LO thread so far** ➔ analyse running time via recurrences; design divide-and-conquer algorithms; quote tight Big-O with mandatory complexity tables.
+
+## 🧰 Unit Cheatsheet
+
+- 📌 [[FIT2004 Unit Cheatsheet]] — analysis discipline, recurrence regimes, D&C shapes, per-algorithm bounds
 
 ## 📅 Knowledge Index
 
