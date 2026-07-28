@@ -32,7 +32,7 @@ aliases:
 4. **Fix $k$** from the base case (choose $k$ so the argument reaches the base, e.g. $N-k=1$).
 5. **Back-substitute** $k$ to get the closed form, then read off the Big-O.
 
-## 🧭 Shape recognition — read the answer off the recurrence
+## 🧭 Shape recognition
 *(Diagnose before expanding: how the argument shrinks fixes the DEPTH, the per-step work fixes what accumulates.)*
 
 | Recurrence shape | Argument shrinks | Depth $k$ | What accumulates | Closed form |
