@@ -12,7 +12,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** every analysis question reduces to ➔ **write the recurrence** → **telescope to a level-sum** → **read the regime off the ratio** → quote the **tightest** $\Theta$ with its case and its space.
-> - **⚡ Critical Bottleneck:** naming a growth class without the derivation line earns nothing — the marks are in the general form in $k$ and the base case that fixes it.
+> - **⚡ Key Constraint:** naming a growth class without the derivation line earns nothing — the marks are in the general form in $k$ and the base case that fixes it.
 
 ## 1️⃣ Analysis Discipline (W1)
 - **Input size $n$** ➔ elements for a collection, but **bit-length** for a *number* ($n=\lceil\log_2(k+1)\rceil$) **· precondition:** state which you are counting — a loop running $k$ times on numeric input $k$ is $O(2^{n})$, not $O(n)$.

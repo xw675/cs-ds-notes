@@ -13,7 +13,7 @@ aliases: [DWH, DW, Data Warehousing]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** the need for an effective **decision support system** motivated a new storage facility ➔ subject-oriented, pre-designed, precomputed, queried as a *cube* rather than as normalised transactions.
-> - **⚡ Critical Bottleneck:** stating *why* [[Normalisation|ER + normalisation]] is the wrong tool — normalised operational design does not serve advanced analysis, so a new modelling technique was required.
+> - **⚡ Key Constraint:** stating *why* [[Normalisation|ER + normalisation]] is the wrong tool — normalised operational design does not serve advanced analysis, so a new modelling technique was required.
 
 ## 📝 Core
 - **Operational database** ➔ runs the business transaction-by-transaction: current, detailed, normalised, optimised for many small reads/writes ➔ [[Relational Model]].
@@ -50,10 +50,10 @@ $$\text{Operational DBs} \xrightarrow{\ \text{ETL}\ } \text{Data Warehouse (cube
 ## 🧠 Active Recall
 > [!FAQ]- ER modelling and normalisation are the standard database design tools. Why did data warehousing need a new modelling technique at all?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** existing relational techniques **did not yield a structure that served advanced data analysis requirements**.
-> > - **Technical Justification:** **Purpose mismatch** ➔ [[Normalisation|normalisation]] removes redundancy to protect transactional updates ([[Database Anomalies|anomaly]] avoidance), scattering one business event across many relations; analysis instead wants a *multidimensional* view of one measured event, so a query must re-join those relations every time. **Dimensional answer** ➔ the [[Star Schema]] deliberately denormalises into one fact + qualifying dimensions so the summarisation is cheap and the cube's axes are explicit.
+> > - **Short answer:** existing relational techniques **did not yield a structure that served advanced data analysis requirements**.
+> > - **Why:** **Purpose mismatch** ➔ [[Normalisation|normalisation]] removes redundancy to protect transactional updates ([[Database Anomalies|anomaly]] avoidance), scattering one business event across many relations; analysis instead wants a *multidimensional* view of one measured event, so a query must re-join those relations every time. **Dimensional answer** ➔ the [[Star Schema]] deliberately denormalises into one fact + qualifying dimensions so the summarisation is cheap and the cube's axes are explicit.
 
 > [!FAQ]- Where do ETL, OLAP and BI sit relative to each other?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** ETL **fills** the warehouse, OLAP **queries** it, BI **presents** the result.
-> > - **Technical Justification:** **Sequential layering** ➔ ETL is the write path from operational sources; OLAP is the read path that summarises large record sets on the fly; BI consumes OLAP output as reports, charts, dashboards and interactive navigation, feeding data analytics.
+> > - **Short answer:** ETL **fills** the warehouse, OLAP **queries** it, BI **presents** the result.
+> > - **Why:** **Sequential layering** ➔ ETL is the write path from operational sources; OLAP is the read path that summarises large record sets on the fly; BI consumes OLAP output as reports, charts, dashboards and interactive navigation, feeding data analytics.

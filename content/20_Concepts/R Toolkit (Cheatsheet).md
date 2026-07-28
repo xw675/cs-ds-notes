@@ -25,6 +25,20 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | if | `if (x > 0) { … }` | braces, C-style |
 | for / while | `for (i in 1:3) { … }` · `while (i <= 6) { … }` | `1:n` is an inclusive sequence |
 | break / next | `break` exits loop · `next` skips iteration | `next` ≈ Python's `continue` |
+| stepped sequence | `seq(1, 15, 2)` · `1:15` | `seq(from,to,by)` avoids a modulo test |
+| modulo / int div | `i %% 2` remainder · `i %/% 2` quotient | `%% 2 == 1` tests odd |
+| print in a loop/fn | `cat("i is:", i, "\n")` | loops/functions **don't** auto-print; `\n` = newline |
+| define a function | `f <- function(a, b) { return(a/b) }` | not usable until the definition is **executed** |
+| multi-value return | `r = list(); r$min = 1; return(r)` | `list()` is R's struct; nests and mixes types |
+| argument guard | `if (!is.numeric(x)) { stop("msg") }` | `stop()` aborts with a message |
+| scalar vs vector OR | `\|\|` and `&&` in `if` · `\|` and `&` element-wise | `!` negates a logical |
+
+## 🖥 Workspace & Scripts
+| Task | Micro-syntax | Gotcha |
+| :-- | :-- | :-- |
+| list / remove objects | `ls()` · `rm(x, y)` · `rm(list=ls())` | `rm` removes **objects**; a data-frame column needs `df$col <- NULL` |
+| help | `help("ls")` / `?ls` · `apropos("med")` | examples sit at the **bottom** of the help page |
+| run a script | `source("studio1.R")` | the script — not console history — is the reproducible record |
 
 ## 🧮 Vectors (the atom of R)
 | Task | Micro-syntax | Result |
@@ -49,11 +63,25 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | merge (join) | `merge(df1, df2, by="Names")` | SQL-join analogue |
 | stack rows | `rbind(df1, df2)` | same columns required |
 | aggregate | `aggregate(mtcars, by=list(cyl,vs), FUN=mean)` | R's groupby ➔ mean per group combo |
-| peek | `head(df, 6)` · `tail(df)` | never print a big df |
+| peek | `head(df, 6)` · `tail(df)` · `View(df)` | never print a big df; `View` opens the RStudio grid |
+| logical referencing | `df[df$SEX == 0, "AGE"]` · `df[df$A == 0 & df$B < 150, ]` | condition goes in the **row** slot; `==` not `=` |
+| add / drop column | `df$AC <- df$AGE / df$CHOL` · `df$AC <- NULL` | assignment is vectorised; `NULL` deletes |
+
+## 📐 Descriptive Statistics (details ➔ [[Measures of Centrality]], [[Measures of Spread and Boxplots]])
+| Task | Micro-syntax | Gotcha |
+| :-- | :-- | :-- |
+| centre | `mean(x)` · `median(x)` | median for skewed data |
+| spread | `var(x)` · `sd(x)` · `range(x)` · `IQR(x)` | `range` returns `c(min, max)`, not the difference |
+| quantiles | `quantile(x)` · `quantile(x, probs=c(.05,.25,.5,.75,.95))` | default is the five-number summary |
+| everything at once | `summary(x)` · `summary(df)` | per-column when given a data frame |
+| frequency table | `table(x)` · `prop.table(table(x))` | counts vs proportions |
+| cross-tabulate | `table(a, b)` · `prop.table(table(a,b), margin=1)` | `margin=1` rows sum to 1 — the fix for unequal group sizes |
+| label a coded column | `factor(x, labels=c("MALE","FEMALE"), levels=c(0,1))` | `labels[i]` names `levels[i]` — a mapping you **assert** |
+| correlation | `cor(x, y)` · `which.max(abs(r))` | linear only; rank by **absolute** value |
 
 ## 📂 Files, Libraries, Environment
 - **Working dir** ➔ `getwd()` / `setwd("D:/Folder")` — set BEFORE read/write.
-- **CSV / tables** ➔ `read.csv("file.csv")` · `write.csv(df, "file.csv")` · `read.table("out.txt", header=TRUE)` (the shell→R handoff after `awk … > out.txt`, see [[Unix Shell (Bash)]]).
+- **CSV / tables** ➔ `read.csv("file.csv", header=TRUE, stringsAsFactors=TRUE)` — **always pass `stringsAsFactors`** so text columns become categorical · `write.csv(df, "file.csv")` · `read.table("out.txt", header=TRUE)` (the shell→R handoff after `awk … > out.txt`, see [[Unix Shell (Bash)]]).
 - **Packages** ➔ once: `install.packages("moments")`; per session: `library(moments)`; built-ins: `data()` then `data(mtcars)`.
 
 ## 📊 Plots (details ➔ [[R Visualisation (base graphics)]])
@@ -81,8 +109,18 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | quantile $F^{-1}(p)$ | `qnorm(p, mean, sd)` | inverse of `pnorm` |
 | random draws | `rnorm(n, mean, sd)` · `runif(n)` · `rbinom(n,size,prob)` | `r` = simulate `n` values |
 | Monte Carlo prob | `mean(rnorm(1e6) > 1.5)` | proportion of draws = estimated probability |
+| Bernoulli draws | `rbinom(n, size=1, prob=theta)` | **no `*bern` family** — a binomial with `size = 1` |
+| "$k$ or more" | `pbinom(k-1, n, p, lower.tail=FALSE)` | `pbinom(k)` is $P(X\le k)$ **inclusive** ➔ pass `k-1` |
 
-*(the four prefixes `d`/`p`/`q`/`r` attach to every distribution suffix: `norm`, `binom`, `pois`, `unif`, `exp`, …)*
+*(the four prefixes `d`/`p`/`q`/`r` attach to every distribution suffix; the per-distribution argument names are the trap)*
+
+| Suffix | Args | Distribution |
+| :-- | :-- | :-- |
+| `norm` | `mean`, `sd` | $N(\mu,\sigma^2)$ — pass the **sd**, not $\sigma^2$ |
+| `binom` | `size`, `prob` | $Bin(\theta,n)$ — `size` $=n$ |
+| `pois` | `lambda` | $Pois(\lambda)$ — rescale $\lambda$ to the question's interval first |
+| `unif` | `min`, `max` | $U(a,b)$ |
+| `exp` | `rate` | exponential |
 
 ## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.

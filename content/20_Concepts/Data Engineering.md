@@ -13,7 +13,7 @@ aliases: [DE, Data Engineering Framework]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** treat data itself as the engineered product ➔ a repeatable pipeline replaces one-off ad-hoc cleaning.
-> - **⚡ Critical Bottleneck:** justifying the framework — marks come from arguing *repeatability, specialisation, quality assurance*, not from listing tools.
+> - **⚡ Key Constraint:** justifying the framework — marks come from arguing *repeatability, specialisation, quality assurance*, not from listing tools.
 
 ## 📝 Core
 - **Product = data** ➔ DE designs and builds **data**; raw data already exists but **is not ready** — DE turns raw data into analysis-ready data.
@@ -78,10 +78,10 @@ flowchart LR
 ## 🧠 Active Recall
 > [!FAQ]- The dashboard was built successfully once from the csv extracts. Why does the lecture still call the approach wrong?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** it optimised a **one-off**, but the scenario is inherently **recurring**.
-> > - **Technical Justification:** **Repeatability failure** ➔ new extracts arrive periodically, carry *different* defects, and reflect changed metrics/requirements; each cycle re-runs explore → clean → build, often by different people, so **quality assurance is unenforceable** and no work is reusable. **Modularisation fix** ➔ split the flow into separately owned, specialised, abstracted processes — which is exactly what a [[Data Warehouse]] framework imposes.
+> > - **Short answer:** it optimised a **one-off**, but the scenario is inherently **recurring**.
+> > - **Why:** **Repeatability failure** ➔ new extracts arrive periodically, carry *different* defects, and reflect changed metrics/requirements; each cycle re-runs explore → clean → build, often by different people, so **quality assurance is unenforceable** and no work is reusable. **Modularisation fix** ➔ split the flow into separately owned, specialised, abstracted processes — which is exactly what a [[Data Warehouse]] framework imposes.
 
 > [!FAQ]- The project is small. Is data warehousing then pointless?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** no — you *can* do everything yourself, but you lose the framework.
-> > - **Technical Justification:** **Framework value survives scale** ➔ the lecture concedes a small project needs no warehouse, yet keeps warehousing "very important" because it supplies the structure (separation of cleaning, storage, serving) that makes the result auditable and extensible.
+> > - **Short answer:** no — you *can* do everything yourself, but you lose the framework.
+> > - **Why:** **Framework value survives scale** ➔ the lecture concedes a small project needs no warehouse, yet keeps warehousing "very important" because it supplies the structure (separation of cleaning, storage, serving) that makes the result auditable and extensible.

@@ -53,7 +53,7 @@ ON     manufacturer.manuf_id = drone_type.manuf_id;
 > ```
 > - **Table alias, no `AS`** ➔ `customer ct`; prefixing every attribute is *recommended* whenever more than one table is involved, to avoid ambiguity.
 > - **Condition count** ➔ joining $n$ tables needs $n-1$ join conditions in the WHERE, ANDed with any search conditions.
-> 💡 **Exam Pitfall:** **Missing join condition = PRODUCT, not a join** ➔ FIT3003 warns this exhausts your Oracle quota and **locks your account**; count your ANDs before you run.
+> 💡 **Common Mistake:** **Missing join condition = PRODUCT, not a join** ➔ FIT3003 warns this exhausts your Oracle quota and **locks your account**; count your ANDs before you run.
 
 ## ✍️ Practice 
 > [!QUESTION]- Practice 1: Join `MANUFACTURER` and `DRONE_TYPE` on `manuf_id` with a **single** `manuf_id` column in the output, assuming the column name matches in both.

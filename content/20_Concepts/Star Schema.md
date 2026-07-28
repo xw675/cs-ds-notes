@@ -15,9 +15,9 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a data modelling technique that maps **multidimensional decision-support data into a relational database** ➔ one central fact surrounded by qualifying dimensions.
 > - **📦 Core Components:** **Facts** ➔ numeric measurements | **Dimensions** ➔ qualifying perspectives | **Attributes** ➔ properties within a dimension.
-> - **⚡ Critical Bottleneck:** picking the fact and its grain. The required *analysis questions* dictate the dimensions — derive them from the questions, never guess.
+> - **⚡ Key Constraint:** picking the fact and its grain. The required *analysis questions* dictate the dimensions — derive them from the questions, never guess.
 
-## 📝 Dashboard Blueprint
+## 📝 How It Works
 ### 1. Why it exists
 - **Core Mechanism:** **Analysis-driven design** ➔ ER modelling and [[Normalisation|normalisation]] did **not** yield a database structure serving advanced data-analysis requirements, so dimensional modelling was developed to sit on the same relational technology.
 - **Structural Invariant:** **Relational underneath** ➔ the star is ordinary tables; the "cube" of the [[Data Warehouse]] is the logical view those tables present.
@@ -66,7 +66,7 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 >   }
 > ```
 > *(the three FKs in `FACT_SALES` jointly form its composite primary key)*
-> 💡 **Exam Pitfall:** **Measures must be numeric and additive over the grain** ➔ a descriptive text column placed in the fact table is a dimension attribute in the wrong place.
+> 💡 **Common Mistake:** **Measures must be numeric and additive over the grain** ➔ a descriptive text column placed in the fact table is a dimension attribute in the wrong place.
 
 $$\text{FACT\_SALES}(\underline{\text{time\_id}^{*}, \text{location\_id}^{*}, \text{product\_id}^{*}}, \text{sales\_amount}, \text{quantity\_sold})$$
 
@@ -140,10 +140,10 @@ $$\text{FACT\_SALES}(\underline{\text{time\_id}^{*}, \text{location\_id}^{*}, \t
 ## 🧠 Active Recall
 > [!FAQ]- Given a case study, in what order do you decide the pieces, and why that order?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** fact → grain → dimensions → attributes, all driven by the **required analysis questions**.
-> > - **Technical Justification:** **Measure first** ➔ the fact is whatever the questions total or count, since $\text{FACT}$'s non-key columns must be numeric measurements. **Grain next** ➔ it fixes what one row means and is unrecoverable later. **Dimensions from grouping terms** ➔ every "by X" / "for each X" in a question forces a dimension keyed into the fact's composite PK. **Attributes last** ➔ each remaining qualifier in a question ("postgraduate", "country") must exist as a column inside its dimension or the query is unanswerable.
+> > - **Short answer:** fact → grain → dimensions → attributes, all driven by the **required analysis questions**.
+> > - **Why:** **Measure first** ➔ the fact is whatever the questions total or count, since $\text{FACT}$'s non-key columns must be numeric measurements. **Grain next** ➔ it fixes what one row means and is unrecoverable later. **Dimensions from grouping terms** ➔ every "by X" / "for each X" in a question forces a dimension keyed into the fact's composite PK. **Attributes last** ➔ each remaining qualifier in a question ("postgraduate", "country") must exist as a column inside its dimension or the query is unanswerable.
 
 > [!FAQ]- Why is the star schema deliberately *not* normalised, given [[Third Normal Form (3NF)|3NF]] is the operational default?
 > > [!SUCCESS]- Answer
-> > - **Direct Criterion:** normalisation optimises safe updating; the warehouse is loaded by [[Data Engineering|ETL]] and read, not updated in place.
-> > - **Technical Justification:** **Anomaly risk is priced differently** ➔ [[Database Anomalies|update anomalies]] are the cost normalisation buys off, but a warehouse's writes are controlled bulk loads, so the redundancy in a flat dimension is harmless. **Join cost dominates** ➔ keeping every dimension one hop from the fact bounds an OLAP query to $n$ single joins regardless of hierarchy depth, which is what lets summaries be computed "on the fly".
+> > - **Short answer:** normalisation optimises safe updating; the warehouse is loaded by [[Data Engineering|ETL]] and read, not updated in place.
+> > - **Why:** **Anomaly risk is priced differently** ➔ [[Database Anomalies|update anomalies]] are the cost normalisation buys off, but a warehouse's writes are controlled bulk loads, so the redundancy in a flat dimension is harmless. **Join cost dominates** ➔ keeping every dimension one hop from the fact bounds an OLAP query to $n$ single joins regardless of hierarchy depth, which is what lets summaries be computed "on the fly".
