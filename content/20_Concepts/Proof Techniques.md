@@ -67,7 +67,7 @@ Matching claims to techniques:
 - 💡 **Construction ≠ universal proof** ➔ exhibiting one witness settles $\exists$ only; a $\forall$ claim needs cases/arbitrary-element, and contradiction relies on a *true* framework so the lone false assumption is convicted.
 
 ## 🧠 Active Recall
-> [!FAQ]- Match each proof method to the claim it suits, and give construction's pitfall.
+> [!FAQ]- Match each proof method to the claim it suits, and give construction's common mistake.
 > - **Hint:** Quantifier ↔ method.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Symbolic → identities; construction → $\exists$; cases → finite $\forall$; contradiction → hard-direct.
