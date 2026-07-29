@@ -36,4 +36,10 @@ tags: [2026/S2]
 
 ## 🎯 Learning Outcomes
 
-- **W1** ➔ argue why ad-hoc cleaning fails and modularisation wins · contrast software vs data engineering · place ETL, OLAP and BI on the delivery chain · separate operational DB from warehouse (precomputed, granularity, pre-designed) · derive fact, grain, dimensions and attributes from analysis questions · write FIT3003 old-style joins without producing a Cartesian product
+- **W1** ➔ 
+	- argue why ad-hoc cleaning fails and modularisation wins 
+	- contrast software vs data engineering 
+	- place ETL, OLAP and BI on the delivery chain 
+	- separate operational DB from warehouse (precomputed, granularity, pre-designed) 
+	- derive fact, grain, dimensions and attributes from analysis questions 
+	- write FIT3003 old-style joins without producing a Cartesian product
