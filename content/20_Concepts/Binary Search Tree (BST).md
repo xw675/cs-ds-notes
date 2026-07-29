@@ -1,7 +1,8 @@
 ---
-unit: FIT1008
+unit: [FIT1008, FIT2004]
 domain: A
-week: 8
+week: [1, 8]
+source: [applied]
 parent: "[[Binary Tree]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Complexity]
 aliases: [BST]
@@ -83,6 +84,11 @@ aliases: [BST]
 
 > [!NOTE] **When It Flips:** a BST is good at **both** search and insert/delete (binary search + constant re-link), unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).
 
+### 🔹 Building the tree: $n$ insertions into an empty BST *(FIT2004)*
+- **Worst case $\Theta(n^2)$** ➔ feed keys **already sorted** ➔ every key goes to the end of a growing chain ➔ the $i$-th insertion walks $i-1$ nodes ⟹ $\sum_{i=1}^{n}\Theta(i)=\Theta(n^2)$ ([[Arithmetic Series]]).
+- **Best case $\Theta(n\log n)$** ➔ keys arriving in an order that keeps the tree balanced ⟹ each insertion $\Theta(\log n)$.
+- **Per-op worst × $n$ is only an UPPER bound** ➔ "each insertion is $O(n)$, so $n$ of them are $O(n^2)$" is valid but does **not** establish $\Theta(n^2)$ — tightness needs a **witness input** on which the worst cases genuinely co-occur, which sorted input supplies.
+
 ## 📊 Exam Execution Trace
 
 ### Manual Execution Trace
@@ -109,6 +115,15 @@ $$
 \end{aligned}
 $$
 **Final Extracted Output:** substituting the next-largest key preserves left<root<right; the successor has no left child, so its removal is the easy case.
+
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Insert $n$ items into an initially empty BST. Give the worst-case $\Theta$ time complexity, reasoning precisely.
+> - **Hint:** An upper bound from per-op worst cases is not enough — you must exhibit an input that attains it.
+> > [!SUCCESS]- Answer
+> > - **Upper bound** ➔ when the tree holds $i-1$ keys its height is at most $i-1$, so insertion $i$ costs $O(i)$ ⟹ total $O\!\big(\sum_{i=1}^{n} i\big)=O(n^2)$.
+> > - **Matching lower bound (the witness)** ➔ feed the keys in **strictly ascending order**: every key exceeds all present, so it descends the entire right spine, and insertion $i$ costs exactly $\Theta(i)$ ⟹ total $\sum_{i=1}^{n}\Theta(i)=\Theta\!\big(\tfrac{n(n+1)}{2}\big)=\Omega(n^2)$.
+> > - **Short answer:** upper meets lower ⟹ **worst case $\Theta(n^2)$**.
+> > - **Why:** **Worst cases must be simultaneously achievable** ➔ multiplying "$n$ insertions" by "each is $O(n)$" is a legitimate $O(n^2)$ ceiling, but a $\Theta$ claim asserts the ceiling is *reached*; sorted input is the construction that proves it, and it is the same degenerate-chain failure that motivates AVL/red-black balancing.
 
 ## 🧠 Active Recall
 > [!FAQ]- A recursive `insert_aux` that does `current = Node(key, item)` "finishes without modifying the tree" — why, and how is it fixed?

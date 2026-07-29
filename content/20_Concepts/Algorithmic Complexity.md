@@ -2,6 +2,7 @@
 unit: [FIT1008, FIT2004]
 domain: A
 week: 1
+source: [applied]
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 ---
@@ -23,13 +24,16 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 
 ### 2. Input Size $n$ ("Big" Defined)
 - **Type-dependent** ➔ collection's element count | string's chars | graph's $|V|$ **and** $|E|$.
-- **Bit-length trap** ➔ a **number** $k$ has size $\lceil\log_2(k+1)\rceil\approx\log_2 k$, **not** $k$.
+- **Bit-length trap** ➔ a **number** $k$ has size $\lceil\log_2(k+1)\rceil\approx\log_2 k$, **not** $k$; halving $k$ to $1$ therefore takes $\Theta(\log k)$ steps, i.e. $\Theta(\text{bits})$.
 - **Pseudo-polynomial** ➔ a loop running $k$ times is $O(2^n)$ in true size (Knapsack $O(nW)$, still NP-hard).
+- **A BOUNDED parameter is a constant** ➔ if the spec caps a parameter ($n\le10^6$, $\text{arr}[i]<2^{32}$), that parameter contributes $\Theta(1)$ and **vanishes from the bound** — the cap makes it independent of input size, not merely small.
+- **Which symbols are free** ➔ before quoting a bound, list which parameters can grow without limit; a bound may only be expressed in **those**.
 
 ### 3. Running Time & RAM Model
 - **Abstraction** ➔ **Random-Access Machine** — each elementary op = 1 unit, $O(1)$ random access (ignores compiler/machine).
 - **Portability** ➔ step count $T(n)$ is machine-independent ⟹ "$\Theta(n^2)$" portable, "3 ms" not.
 - **Boundary** ➔ breaks for arbitrary-precision arithmetic / external-memory effects.
+- **Declare the unit-cost assumption** ➔ "$+$ is $O(1)$" holds only for machine-word operands; on values whose **bit-length grows with $n$** an addition costs $\Theta(\text{bits})$ ➔ iterative Fibonacci is $\Theta(n)$ *word* operations but $\Theta(n^2)$ *bit* operations, since $F(n)=\Theta(\varphi^{n})$ occupies $\Theta(n)$ bits (see [[Fibonacci Sequence]], [[Recursion]]).
 
 ### 4. Time Complexity $T(n)$ & Step Cost
 - **Counting rules** ➔ statement $=1$ | sequence sums | if = test + branch | loop = body × iters | recursion = **recurrence**.
@@ -116,6 +120,16 @@ O(nW) &= O\!\big(n\,2^{\log_2 W}\big) = \textbf{exponential in the encoding leng
 \end{aligned}
 $$
 **Final Extracted Output:** polynomial in the *value* $W$ but exponential in its *bit-length* ⟹ pseudo-polynomial (why Knapsack stays NP-hard).
+
+## ✍️ Practice
+> [!QUESTION]- Practice 1: `CountBits(x)` sets `bits=1` then halves `x` while `x>1`; `CountTotalBits(arr[1..n])` sums `CountBits` over the array. Give the $\Theta$ complexity when (a) $|arr|=n$, $0\le arr[i]\le2^{m}-1$ · (b) same but $1\le n\le10^{6}$ · (c) $|arr|=n$, $0\le arr[i]\le2^{32}-1$.
+> - **Hint:** First cost one `CountBits`, then ask which of $n$ and $m$ is actually allowed to grow.
+> > [!SUCCESS]- Answer
+> > - **Inner cost** ➔ halving $x$ until $x\le1$ runs $\lfloor\log_2 x\rfloor$ times ⟹ $\Theta(\log x)$, i.e. $\Theta(\text{bit-length})$; capped by $arr[i]\le2^{m}-1$ this is $\Theta(m)$ worst case.
+> > - **(a) $\Theta(nm)$** ➔ $n$ calls × $\Theta(m)$ each; both parameters are unbounded, so both appear.
+> > - **(b) $\Theta(m)$** ➔ $n\le10^{6}$ is a **constant cap** ⟹ $n=\Theta(1)$ ⟹ it drops out. The loop still runs, but it runs a bounded number of times.
+> > - **(c) $\Theta(n)$** ➔ $arr[i]<2^{32}$ caps the bit-length at $32=\Theta(1)$ ⟹ each `CountBits` is $\Theta(1)$ ⟹ $n$ calls of constant cost.
+> > - **Why:** **A cap kills a parameter** ➔ asymptotics describe growth, and a quantity that cannot grow contributes a constant factor — which is exactly what $\Theta$ discards. This is why real 32/64-bit integer arithmetic is quoted as $O(1)$ while big-integer arithmetic is not.
 
 ## 🧠 Active Recall
 > [!FAQ]- Distinguish worst-case, average-case, and amortised complexity, stressing each assumption.

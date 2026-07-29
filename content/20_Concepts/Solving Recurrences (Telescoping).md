@@ -2,6 +2,7 @@
 unit: FIT2004
 domain: [A, D]
 week: 1
+source: [applied]
 parent: "[[Big-O Notation]]"
 tags:
   - CS/Algorithms
@@ -113,6 +114,13 @@ $$T(n)=\sum_{i=0}^{\log_b n} c\,n\left(\frac{a}{b}\right)^{i} \qquad\text{— a 
 
 The identity that collapses the leaf case — worth memorising, it is the whole of [[Karatsuba Integer Multiplication]]'s exponent:
 $$n\left(\frac{a}{b}\right)^{\log_b n} = n\cdot\frac{a^{\log_b n}}{b^{\log_b n}} = n\cdot\frac{n^{\log_b a}}{n} = n^{\log_b a}$$
+
+### 🔹 The two log identities it rests on
+> [!NOTE] **Exponent swap** ➔ $a^{\log_b n} = n^{\log_b a}$ for any base $b>1$ — the step that turns a *count of leaves* into a *power of $n$*.
+> $$a^{\log_b n} = \big(b^{\log_b a}\big)^{\log_b n} = b^{\,\log_b a\,\cdot\,\log_b n} = \big(b^{\log_b n}\big)^{\log_b a} = n^{\log_b a}$$
+> The product in the exponent is **symmetric**, so $a$ and $n$ may trade places — that symmetry *is* the identity.
+
+- **Halving-with-ceiling** ➔ $\log_2\!\left(\frac{k+1}{2}\right)+1=\log_2(k+1)$, since $\log_2\frac{k+1}{2}=\log_2(k+1)-\log_2 2=\log_2(k+1)-1$ ➔ justifies "one more level of halving costs $+1$ to the depth", the step that makes depth $=\log_2 n$ rather than an unevaluated recursion.
 
 - **Instantiations** ➔ naive D&C multiply $a{=}4,b{=}2\Rightarrow\Theta(n^{\log_2 4})=\Theta(n^2)$ · Karatsuba $a{=}3,b{=}2\Rightarrow\Theta(n^{1.585})$ · merge sort $a{=}b{=}2\Rightarrow\Theta(n\log n)$ · a single half with $\Theta(n)$ work $a{=}1,b{=}2\Rightarrow\Theta(n)$.
 

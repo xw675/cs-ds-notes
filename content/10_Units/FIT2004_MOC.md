@@ -39,13 +39,18 @@ tags: [CS/Algorithms, CS/Complexity]
 - [[Recurrence Relation]] -> Parent Framework: [[Sequence (Mathematics)]] *(dual-unit — the maths behind the running-time recurrences)*
 - [[Merge Sort]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — the canonical $2T(n/2)+\Theta(n)=\Theta(n\log n)$ example)*
 
+**Applied sheet 1 — assumed background, drilled with the new $\Omega/\Theta$ apparatus:**
+- [[Arithmetic Series]] -> Parent Framework: [[Algorithmic Complexity]] *(dual-unit — $\sum i=\Theta(n^2)$ by induction; shrink-by-one costs)*
+- [[Geometric Series]] -> Parent Framework: [[Summation Notation]] *(dual-unit — $\sum r^i$ closed form; the $r{=}2$ and $r{=}\tfrac12$ corollaries that bound every D&C tree)*
+- [[Binary Search Tree (BST)]] -> Parent Framework: [[Binary Tree]] *(dual-unit — the vehicle for bound-vs-case drills; $n$ sorted inserts $=\Theta(n^2)$)*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
 - Correctness proofs via **loop invariants** · amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · $O(n)$ sorting (counting/radix) · order statistics · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
 
-- **W1 — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → [[Big-O Notation]] *($O/\Omega/\Theta$)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → **[[Karatsuba Integer Multiplication]]** *(apply it end-to-end)* · compare with [[Merge Sort]]
+- **W1 — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → **[[Karatsuba Integer Multiplication]]** *(apply it end-to-end)* · compare with [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -55,3 +60,7 @@ tags: [CS/Algorithms, CS/Complexity]
 	- derive schoolbook multiplication as $\Theta(n^2)$ and the naive D&C split as $4T(n/2)+\Theta(n)=\Theta(n^2)$
 	- apply the **Karatsuba (Gauss) trick** to cut 4 sub-multiplications to 3 via $(x_L{+}x_R)(y_L{+}y_R)-A-C$, giving $3T(n/2)+\Theta(n)=\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$
 	- know that shifts/additions are the $\Theta(n)$ combine term (not counted as multiplications), and that Karatsuba wins only **asymptotically**
+	- state $O/\Omega/\Theta$ **formally with witnesses**; judge a bound **valid** separately from **tight** ($3n^2{+}100n=O(n^3)$ is TRUE, $\Theta(n^3)$ FALSE)
+	- pair every bound with a **case** — "any operation" bounds cheapest/dearest, so an unqualified $\Theta$ needs them to agree
+	- prove $\sum i=\tfrac{n(n+1)}{2}$ and $\sum r^{i}=\tfrac{r^{n+1}-1}{r-1}$ by induction, then **substitute** for $r{=}2$ and $r{=}\tfrac12$
+	- drop **capped** parameters from a bound ($n\le10^6$, $arr[i]<2^{32}$ ⟹ $\Theta(1)$) and declare the **unit-cost** assumption

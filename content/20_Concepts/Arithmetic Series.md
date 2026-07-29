@@ -1,13 +1,15 @@
 ---
-unit: [FIT1008, FIT1058]
+unit: [FIT1008, FIT1058, FIT2004]
 domain: [A, D]
 week: [1, 6]
+source: [applied]
 parent: "[[Algorithmic Complexity]]"
 tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 ---
 # [[Arithmetic Series]]
 
-**Context:** [[FIT1008_MOC]], [[FIT1058_MOC]] · the sum of an [[Arithmetic, Geometric, and Harmonic Sequences|arithmetic sequence]] · the counting tool behind nested-loop [[Algorithmic Complexity|Time Complexity]]
+**Context:** [[FIT1008_MOC]], [[FIT1058_MOC]], [[FIT2004_MOC]] · the sum of an [[Arithmetic, Geometric, and Harmonic Sequences|arithmetic sequence]] · the counting tool behind nested-loop [[Algorithmic Complexity|Time Complexity]]
+**FIT2004 use:** the $\Theta(n^2)$ behind shrink-by-one recurrences ($T(n)=T(n-1)+cn$) and behind $n$ sorted insertions into a [[Binary Search Tree (BST)|BST]].
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** sum a constant-difference sequence ➔ $S_n = n\times$ (average of first and last term).
@@ -54,6 +56,16 @@ Counting a shrinking nested loop, $n=5$:
 
 ## ⚠️ Common Mistakes
 - 💡 **Shrinking inner count is still $\Theta(n^2)$** ➔ not $\Theta(n)$; a sum of $\Theta(n)$ terms each averaging $\Theta(n)$ is quadratic.
+
+## ✍️ Practice
+> [!QUESTION]- Practice 1: Prove $\sum_{i=1}^{n}i=\frac{n(n+1)}{2}$ for $n\ge1$ by induction.
+> - **Hint:** In the step, add $k+1$ and factor it out.
+> > [!SUCCESS]- Answer
+> > - **Basis ($n=1$):** LHS $=1$; RHS $=\frac{1\cdot2}{2}=1$. ✓
+> > - **Hypothesis:** assume $\sum_{i=1}^{k}i=\frac{k(k+1)}{2}$ for some $k\ge1$.
+> > - **Step:** $$\sum_{i=1}^{k+1}i=\frac{k(k+1)}{2}+(k+1)=\frac{k(k+1)+2(k+1)}{2}=\frac{(k+1)(k+2)}{2}$$ which is the claim at $n=k+1$.
+> > - **Short answer:** basis and step hold ⟹ true for all $n\ge1$. **Q.E.D.**
+> > - **Why:** **Factor, don't expand** ➔ pulling out $(k+1)$ lands the target form directly; multiplying out to $\frac{k^2+3k+2}{2}$ then re-factoring is the same work done twice.
 
 ## 🧠 Active Recall
 > [!FAQ]- A nested loop's inner count shrinks by one each pass — why is it $\Theta(n^2)$, not $\Theta(n)$, and what is the exact count?
