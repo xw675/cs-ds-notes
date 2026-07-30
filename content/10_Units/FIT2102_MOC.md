@@ -12,8 +12,6 @@ tags: [2026/S2, CS/Languages]
 - **Tutorials + Quizzes (40%)** ➔ completed **individually**, assessed via **in-class interviews**. Marked on *correct and timely completion* (submitted via Moodle) **and demonstrated understanding in the interview**.
 - **Assignment 1 (30%)** ➔ set W4, **due W7**. Individual; interviews check understanding; standard plagiarism checks.
 - **Assignment 2 (30%)** ➔ set W8, **due W12**. Same conditions.
-- **To pass** ➔ total ≥ **50%** AND two hurdles: **45% of tutorial+quiz** AND **45% of assignment** marks.
-- **Rules that bite** ➔ no code from other people or generative AI **without attribution**; **never submit code you cannot explain** (the interview will find it). Late penalty **10% per day**.
 - **Workload calibration** ➔ most tutorial tasks are a few lines; **no single problem should exceed ~30 minutes**. Stuck? Write the question as a code comment, split it into sub-questions, bring it to the lab. This is deliberate — the pedagogy is **productive failure + active learning**.
 - **Deck provenance** ➔ the W1 slides carry 2019-era markers (`Not Examinable in 2019`, an old tutor list). **Verify weights and the schedule against the current unit guide** before planning revision.
 - **Out of scope** ➔ not a full "Programming Languages" course: you will **not** build a compiler or design a language, though both are discussed.
@@ -33,4 +31,11 @@ tags: [2026/S2, CS/Languages]
 - **W1 — from the machine to functions-as-values:** [[Levels of Abstraction (Machine to High-Level)]] → **[[Syntax versus Semantics]]** → **[[Programming Paradigms]]** *(the spine)* → [[JavaScript Basics (Syntax, Types, Control Flow)]] → **[[JavaScript Functions as Values]]** *(W1 hand skill)*
 
 ## 🎯 Learning Outcomes
-- **W1** ➔ justify the need for abstraction from machine instructions to high-level languages · distinguish **syntax** from **semantics** · write JS with immutable bindings, functions, loops and conditionals · contrast composition via **higher-order functions** vs **objects** · desugar arrow functions to `function` form · define a **closure** as an anonymous function capturing its enclosing scope · use the built-in Array HOFs instead of hand-coded loops
+- **W1** ➔ 
+	- justify the need for abstraction from machine instructions to high-level languages 
+	- distinguish **syntax** from **semantics** 
+	- write JS with immutable bindings, functions, loops and conditionals 
+	- contrast composition via **higher-order functions** vs **objects** 
+	- desugar arrow functions to `function` form 
+	- define a **closure** as an anonymous function capturing its enclosing scope 
+	- use the built-in Array HOFs instead of hand-coded loops

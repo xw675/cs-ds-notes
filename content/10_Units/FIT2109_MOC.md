@@ -24,4 +24,10 @@ tags: [2026/S2, CS/Systems, Tool/Shell]
 - [[Shell Execution Model (Permissions, Processes, Streams)]] -> Parent Framework: [[Unix Shell (Bash)]] *(the "why did it fail?" note — 5-stage lookup → permission → process → streams → exit status)*
 
 ## 🎯 Learning Outcomes
-- **W1** ➔ decode shell context (user · host · cwd · shell) · read command anatomy `name -option argument` · predict a `cd` destination from `.` `..` `~` and relative vs absolute paths · interpret a permission string and diagnose a non-running script · distinguish a stored program from a running process with a PID · explain `$PATH` lookup, the three standard streams, pipes, and exit status
+- **W1** ➔ 
+	- decode shell context (user · host · cwd · shell)
+	- read command anatomy `name -option argument`
+	- predict a `cd` destination from `.` `..` `~`, relative vs absolute
+	- interpret a permission string and diagnose a non-running script
+	- distinguish a stored program from a running process with a PID
+	- explain `$PATH` lookup, the three streams, pipes, and exit status
