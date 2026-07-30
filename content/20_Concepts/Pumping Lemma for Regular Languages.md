@@ -8,7 +8,7 @@ aliases: [pumping lemma, pumping, circuit in FA, non-regular, xyz decomposition,
 ---
 # [[Pumping Lemma for Regular Languages]]
 
-**Context:** [[FIT2014_MOC]] · the property **every** infinite regular language must have ➔ the tool that finally proves some languages are **not** regular · applied in [[Proving a Language Non-Regular]]
+**Context:** [[FIT2014_MOC]] · the property **every** infinite regular language must have ➔ the tool that finally proves some languages are **not** regular · applied in [[Proving a Language Non-Regular]] · the outer-ring twin is [[Pumping Lemma for Context-Free Languages]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** in an FA with $N$ states, any accepted word of length $\ge N$ must **repeat a state**, so its path contains a **circuit** ➔ the looping segment can be repeated ("**pumped**") any number of times and the word stays in the language.

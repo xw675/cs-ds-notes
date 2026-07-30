@@ -1,14 +1,16 @@
 ---
-unit: FIT1047
+unit: [FIT1047, FIT2102]
 domain: F
-week: 3
+week: [1, 3]
+source: [lecture]
 parent: "[[Computer Fundamentals (Bits, Bytes, Words)]]"
 tags: [CS/Systems, CS/Architecture]
 aliases: [Von Neumann, Machine Code, ISA, Assembly Language]
 ---
 # [[Von Neumann Architecture and Programs]]
 
-**Context:** [[FIT1047_MOC]] · the blueprint of every modern computer + what a program actually is · concretised by MARIE ([[MARIE Assembly (Instruction Set and Patterns)]]) · executed by [[Fetch-Decode-Execute and RTL (Control)]]
+**Context:** [[FIT1047_MOC]], [[FIT2102_MOC]] · the blueprint of every modern computer + what a program actually is · concretised by MARIE ([[MARIE Assembly (Instruction Set and Patterns)]]) · executed by [[Fetch-Decode-Execute and RTL (Control)]]
+**FIT2102 (W1):** treated as a **model of computation**, not just hardware — it shares with the **Turing Machine** an imperative, *instruction-following* paradigm, and the **lambda calculus** is the alternative the unit builds toward. Language-design consequences in [[Levels of Abstraction (Machine to High-Level)]]; paradigm contrast in [[Programming Paradigms]].
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** Von Neumann = **CPU (ALU + registers + control) + memory + I/O**, with memory holding **both data AND program code**.

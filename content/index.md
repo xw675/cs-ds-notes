@@ -25,6 +25,11 @@ Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit
 - [[FIT2086_MOC|📘 FIT2086 — Modelling for Data Analysis]] · probability, distributions, statistical inference, hypothesis testing, regression
 - [[FIT3003_MOC|📘 FIT3003 — Business Intelligence and Data Warehousing]] · data warehousing, dimensional modelling, star schemas, ETL, OLAP
 
+## Others
+
+- [[FIT2102_MOC |📘 FIT2102 - Programming Paradigms]]
+- [[FIT2109_MOC |📘 FIT2109 - Computer Science Workshop]]
+
 ## 🧰 Toolkit Cheatsheets
 
 - [[Pandas Toolkit (Cheatsheet)]] · [[Sklearn Workflow (Cheatsheet)]] · [[R Toolkit (Cheatsheet)]] · [[Shell Toolkit (Cheatsheet)]] · [[Oracle SQL Toolkit (Cheatsheet)]] · [[Java Toolkit (Cheatsheet)]] · [[UML Toolkit (Cheatsheet)]] · [[HTML CSS Toolkit (Cheatsheet)]]

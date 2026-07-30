@@ -19,7 +19,7 @@ tags:
 - [[Pandas Toolkit (Cheatsheet)]] -> integrates Weeks 3–4: audit → clean → groupby/agg → plot
 - [[Sklearn Workflow (Cheatsheet)]] -> integrates Weeks 6–7: one estimator skeleton + metrics
 - [[R Toolkit (Cheatsheet)]] -> integrates Week 8: syntax → data frames → plots → lm
-- [[Shell Toolkit (Cheatsheet)]] -> integrates Weeks 9–10: navigate → inspect → grep/sort/cut/awk → pipes → shell→R handoff
+- [[Shell Toolkit (Cheatsheet)]] -> integrates Weeks 9–10: navigate → inspect → grep/sort/cut/awk → pipes → shell→R handoff *(tri-unit — FIT2014 adds `sed`/`tr`/regex, FIT2109 adds permissions/streams/exit status)*
 
 ## 📅 Knowledge Index
 

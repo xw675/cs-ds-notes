@@ -6,7 +6,7 @@ tags: [Math/Theory, CS/Computation]
 # 📘 FIT2014: Theory of Computation
 
 > [!INFO] Map of Content
-> Index for **FIT2014 (Malaysia campus)**. Arc: languages → logic/CNF → automata → grammars → Turing machines → NP-completeness. Conventions: $\Sigma$ alphabets, $\varepsilon$ empty word, **CNF is the working form**; W1–2 logic notes are shared dual-unit with [[FIT1058_MOC]].
+> Index for **FIT2014 (Malaysia campus)**. Arc: languages → logic/CNF → automata → grammars → parsing → Turing machines → NP-completeness. Conventions: $\Sigma$ alphabets, $\varepsilon$ empty word, **CNF is the working form** — but **[[Conjunctive Normal Form]] (logic) ≠ [[Chomsky Normal Form]] (grammars)**; W1–2 logic notes are shared dual-unit with [[FIT1058_MOC]].
 
 ## 📊 Assessment Map
 - **Practical Preparation (5%)** ➔ ongoing weekly prac work — part of the in-semester threshold hurdle.
@@ -20,10 +20,10 @@ tags: [Math/Theory, CS/Computation]
 ## 📅 Knowledge Index
 
 ### 🧰 Toolkit Cheatsheets
-- [[Shell Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2014); FIT2014 adds the `sed`/`tr`/grep-regex block (Lab 0)
+- [[Shell Toolkit (Cheatsheet)]] -> tri-unit (FIT1043 + FIT2014 + FIT2109); FIT2014 adds the `sed`/`tr`/grep-regex block (Lab 0)
 
 ### Lab 0 — Linux Tooling *(all assignment work runs in Linux)*
-- [[Unix Shell (Bash)]] -> Parent Framework: [[FIT2014_MOC]] *(dual-unit — navigate/inspect/pipe/grep; grep patterns are regexes)*
+- [[Unix Shell (Bash)]] -> Parent Framework: [[FIT2014_MOC]] *(tri-unit — navigate/inspect/pipe/grep; grep patterns are regexes)*
 - [[Text Processing with sed and tr]] -> Parent Framework: [[Unix Shell (Bash)]] *(applied bridge to [[Regular Expressions]] — POSIX BRE)*
 
 ### Week 1 — Languages, Propositional & Predicate Logic *(Lectures 1–3)*
@@ -70,8 +70,17 @@ tags: [Math/Theory, CS/Computation]
 - [[Pushdown Automata (PDA)]] -> Parent Framework: [[Context-Free Grammars (CFG)]] *(NFA + stack; CFG ⟺ PDA)*
 - *(Picks up the pumping-lemma escapees: EQUAL, HALF-AND-HALF, PALINDROME are all **context-free** — see [[Proving a Language Non-Regular]].)*
 
+### Week 6 — Parsing, Chomsky Normal Form & the CFL Frontier *(Lectures 15–17)*
+- [[Parsing and Shift-Reduce Parsers]] -> Parent Framework: [[Derivations and Parse Trees]] *(**A2 material** — stack/buffer trace + shift-reduce & reduce-reduce conflicts)*
+- [[Lex and Yacc (Parser Generators)]] -> Parent Framework: [[Parsing and Shift-Reduce Parsers]] *(**A2 toolchain** — `lex.yy.c`/`yylex()`, `y.tab.c`/`yyparse()`)*
+- [[Chomsky Normal Form]] -> Parent Framework: [[Context-Free Grammars (CFG)]] *(the 5-step conversion + nullability; ⚠ not [[Conjunctive Normal Form]])*
+- [[CYK Algorithm]] -> Parent Framework: [[Chomsky Normal Form]] *(**hand skill** — the length-ordered table, $O(n^3)$)*
+- [[Pumping Lemma for Context-Free Languages]] -> Parent Framework: [[Context-Free Grammars (CFG)]] *($uvxyz$, $|w|>2^{k-1}$; the two-lemma contrast table)*
+- [[Proving a Language Non-Context-Free]] -> Parent Framework: [[Pumping Lemma for Context-Free Languages]] *(**the exam hand skill** — $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$, $\mathtt{a}^n\mathtt{b}^n\mathtt{c}^n$)*
+- *(Closes the hierarchy picture: regular ⊊ context-free ⊊ all languages — $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ escapes even the CFLs.)*
+
 ### 🔭 Coming later in the unit *(from the Lecture 1 roadmap — no notes yet)*
-- Parsing · Turing machines · computability & decidability · computational complexity · classes **P** and **NP** · **NP-completeness**.
+- Turing machines · computability & decidability · computational complexity · classes **P** and **NP** · **NP-completeness**.
 
 ## 🧭 Suggested Reading Order
 *(read left→right within each week · **bold** = assessment-critical hand skill)*
@@ -82,6 +91,7 @@ tags: [Math/Theory, CS/Computation]
 - **W3 — automata & equivalence:** **[[Finite Automata (DFA and NFA)]]** *(trace + complement)* → [[Kleene's Theorem]] *(the cycle)* → **[[Converting Regular Expressions to NFA]]** → **[[NFA to DFA (Subset Construction)]]** → **[[FA to Regular Expression (GNFA State Elimination)]]** *(all three are A1 hand skills)*
 - **W4 — minimisation → limits:** **[[DFA Minimisation (Colouring)]]** *(finishes the pipeline)* → [[Lexical Analysis (Patterns, Tokens, Lexemes)]] *(A2)* → [[Closure Properties of Regular Languages]] → **[[Pumping Lemma for Regular Languages]]** → **[[Proving a Language Non-Regular]]** *(the exam kill-shot)*
 - **W5 — context-free tier:** [[Context-Free Grammars (CFG)]] → [[Derivations and Parse Trees]] *(leftmost = prefix property)* → **[[Writing a CFG]]** *(hand skill)* → [[Regular Grammars and the CFL Hierarchy]] *(regular ⊊ CFL)* → [[Pushdown Automata (PDA)]] *(NFA + stack; CFG ⟺ PDA)*
+- **W6 — parsing → the CFL frontier:** **[[Parsing and Shift-Reduce Parsers]]** *(A2 trace)* → [[Lex and Yacc (Parser Generators)]] *(A2 toolchain)* → **[[Chomsky Normal Form]]** *(enables both below)* → **[[CYK Algorithm]]** *(hand skill)* → **[[Pumping Lemma for Context-Free Languages]]** → **[[Proving a Language Non-Context-Free]]** *(the exam kill-shot)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 
@@ -129,3 +139,11 @@ tags: [Math/Theory, CS/Computation]
 	- **write a grammar** from an inductive definition (Dyck $S\to\varepsilon\mid(S)\mid SS$; PALINDROME; $\mathtt{a}^n\mathtt{b}^n$ via $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$) 
 	- recognise a **regular grammar** (semiword rules) and build one from an NFA ($X\xrightarrow{z}Y \Rightarrow X\to zY$); know **{regular} ⊊ {CFL}** 
 	- define a **PDA** (NFA + stack; transition $x,y\to z$ = read/pop/push; $\$$ bottom-marker; accept iff some path reaches Final) and know **CFG ⟺ PDA** (both construction directions), that NFA = stackless PDA, and that **deterministic PDAs are weaker**
+- **W6** ➔ 
+	- run a **shift-reduce** trace (stack + buffer; reduce = rule in reverse; accept iff stack $=S$, buffer empty) 
+	- diagnose **shift-reduce** vs **reduce-reduce** conflicts and read them as grammar **ambiguity**; know $\text{DCFL}\subsetneq\text{CFL}$ 
+	- set up **Lex** (`lex.yy.c`, `yylex()`) + **Yacc** (`y.tab.c`, `yyparse()`) and their conflict defaults (shift; first-listed rule) 
+	- convert a grammar to **[[Chomsky Normal Form]]** by the 5 steps and decide $\varepsilon$ by **nullability** 
+	- fill a **[[CYK Algorithm|CYK]]** table by increasing substring length; state $O(n^3)$ 
+	- state the **CFL pumping lemma** ($w=uvxyz$, $|w|>2^{k-1}$, $vy\neq\varepsilon$, $|vxy|\le 2^k$) and where CNF enters its proof 
+	- **prove non-context-freeness**: pick $w=\mathtt{a}^N\mathtt{b}^N\mathtt{a}^N$, split on where $v,y$ sit, kill straddling cases by repeated boundary patterns
