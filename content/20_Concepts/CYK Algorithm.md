@@ -71,7 +71,8 @@ $$
 \text{rule lookups per split} &= O(|G|) \\
 \Rightarrow \text{total} &= O(n^{3}\,|G|)
 \end{aligned}
-$$**Final Extracted Output:** $O(n^{3})$ in the string length for a fixed grammar — **polynomial**, which is the whole point of the algorithm. *(Correctness is by induction on substring length: the base row is exact by the dead productions, and the inductive step is exact because CNF forces a **binary** root split, so every derivation of a length-$\ell$ substring is caught by one of the $\ell-1$ splits.)*
+$$
+**Final Extracted Output:** $O(n^{3})$ in the string length for a fixed grammar — **polynomial**, which is the whole point of the algorithm. *(Correctness is by induction on substring length: the base row is exact by the dead productions, and the inductive step is exact because CNF forces a **binary** root split, so every derivation of a length-$\ell$ substring is caught by one of the $\ell-1$ splits.)*
 
 ---
 ## ⚠️ Common Mistakes

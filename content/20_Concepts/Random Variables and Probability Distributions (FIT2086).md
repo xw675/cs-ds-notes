@@ -112,7 +112,8 @@ $$
 \text{(ii)}\quad P(1\le X\le 2)&=\int_1^2 f_X(x)\,dx=\Big[x^{-3}\Big]^{1}_{2}=1-\tfrac{1}{2^3}=\tfrac{7}{8}\\
 \text{(iii)}\quad F_X(t)&=\int_1^t f_X(x)\,dx=1-t^{-3}\;(t\ge1), &F_X(t)&=0\;(t<1)
 \end{aligned}
-$$**Final Extracted Output:** $F_X(t)=1-t^{-3}$ on $t\ge1$, $0$ otherwise; check $F_X(2)-F_X(1)=\tfrac78-0=\tfrac78$ agrees with (ii).
+$$
+**Final Extracted Output:** $F_X(t)=1-t^{-3}$ on $t\ge1$, $0$ otherwise; check $F_X(2)-F_X(1)=\tfrac78-0=\tfrac78$ agrees with (ii).
 
 ### Applied Exercise 3 — piecewise pdf (wood strength, N/mm²)
 **Problem:** $f_X(x)=\frac{x}{1400}$ on $[0,40)$, $\frac{70-x}{1050}$ on $[40,70]$, $0$ elsewhere. Find $P(20<X<50)$.
@@ -128,7 +129,8 @@ Q(0.25)&=-5\ln(0.75)=1.44, &Q(0.5)&=-5\ln(0.5)=3.47, &Q(0.75)&=-5\ln(0.25)=6.93\
 \text{(ii)}\quad P(X>s+t\mid X>t)&=\frac{P(\{X>s+t\}\cap\{X>t\})}{P(X>t)}=\frac{P(X>s+t)}{P(X>t)}\\
 &=\frac{1-F_X(s+t)}{1-F_X(t)}=\frac{e^{-0.2(s+t)}}{e^{-0.2t}}=e^{-0.2s}=P(X>s)
 \end{aligned}
-$$**Final Extracted Output:** the tail is **memoryless** — surviving to $t$ gives no information about surviving a further $s$. **Key move:** $\{X>s+t\}\subset\{X>t\}$, so the intersection collapses to the smaller event before any algebra.
+$$
+**Final Extracted Output:** the tail is **memoryless** — surviving to $t$ gives no information about surviving a further $s$. **Key move:** $\{X>s+t\}\subset\{X>t\}$, so the intersection collapses to the smaller event before any algebra.
 
 ## 🖼️ Modelling application — generative AI
 - **Joint over images + tags** ➔ image $I$ with tag vector $\mathbf{t}$; the system models $p(I,\mathbf{t})$, then generates by **conditioning** on target tags $\mathbf{t}^{*}$ and sampling

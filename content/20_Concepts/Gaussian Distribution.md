@@ -86,7 +86,8 @@ X_1+X_2 &\sim N(3+5,\;4+9)=N(8,13)\\
 z &= \frac{12-8}{\sqrt{13}}=\frac{4}{3.606}=1.109\\
 P(X_1+X_2>12) &= 1-P(Z\le1.109)\approx 1-0.866=0.134
 \end{aligned}
-$$**Final Extracted Output:** $N(8,13)$, upper-tail probability $\approx0.13$. **Key move:** add the **variances** ($4+9=13$), then take $\sqrt{13}$ only when standardising.
+$$
+**Final Extracted Output:** $N(8,13)$, upper-tail probability $\approx0.13$. **Key move:** add the **variances** ($4+9=13$), then take $\sqrt{13}$ only when standardising.
 
 ## ⚙️ In R
 > [!code]- The `norm` suffix (details ➔ [[R Simulation and Random Sampling]])

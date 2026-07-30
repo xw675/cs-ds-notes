@@ -34,7 +34,8 @@ $$
 V[\bar Y]&=\frac{1}{n^2}V\!\left[\sum_i Y_i\right]=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n}\\
 \Rightarrow\;\bar Y &\xrightarrow{d} N\!\left(\mu,\frac{\sigma^2}{n}\right)
 \end{aligned}
-$$**Q.E.D.** ➔ the same $(\mu,\sigma^2/n)$ that [[Estimator Quality (Bias, Variance, MSE)|bias/variance]] gives under iid-only assumptions, now carrying a **distributional shape** — which is exactly what a probability statement or interval needs.
+$$
+**Q.E.D.** ➔ the same $(\mu,\sigma^2/n)$ that [[Estimator Quality (Bias, Variance, MSE)|bias/variance]] gives under iid-only assumptions, now carrying a **distributional shape** — which is exactly what a probability statement or interval needs.
 
 ## 📊 Normal Approximations to Named Families
 | Family | Written as a sum | Summand moments | Normal limit | Limit taken in |

@@ -92,7 +92,8 @@ $$
 \text{Steps 3--4:}\quad & S\to A S A,\; S\to \mathtt{b},\; A\to \mathtt{a} \\
 \text{Step 5 (split } ASA)\!:\quad & S\to TA,\; T\to AS
 \end{aligned}
-$$**Final Extracted Output:** $\;S\to TA \mid \mathtt{b}$, $\;T\to AS$, $\;A\to \mathtt{a}$. *(This grammar is the input to the [[CYK Algorithm]] trace.)*
+$$
+**Final Extracted Output:** $\;S\to TA \mid \mathtt{b}$, $\;T\to AS$, $\;A\to \mathtt{a}$. *(This grammar is the input to the [[CYK Algorithm]] trace.)*
 
 ---
 ## 🕳️ Nullability — the case CNF cannot cover

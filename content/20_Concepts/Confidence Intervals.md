@@ -37,7 +37,8 @@ P\!\left(-1.96<\frac{\hat\mu_{ML}-\mu}{\sigma/\sqrt n}<1.96\right)&=0.95 && \tex
 P\!\left(-1.96\frac{\sigma}{\sqrt n}<\mu-\hat\mu_{ML}<1.96\frac{\sigma}{\sqrt n}\right)&=0.95 && \text{(multiply by } -\sigma/\sqrt n\text{; symmetry absorbs the flip)}\\
 P\!\left(\hat\mu_{ML}-1.96\frac{\sigma}{\sqrt n}<\mu<\hat\mu_{ML}+1.96\frac{\sigma}{\sqrt n}\right)&=0.95 && \text{(add }\hat\mu_{ML})
 \end{aligned}
-$$**Q.E.D.** ➔ for $95\%$ of possible samples the population mean lies within $1.96\,\sigma/\sqrt n$ of the sample mean; replacing $1.96$ by $z_{\alpha/2}$ generalises to any $\alpha$.
+$$
+**Q.E.D.** ➔ for $95\%$ of possible samples the population mean lies within $1.96\,\sigma/\sqrt n$ of the sample mean; replacing $1.96$ by $z_{\alpha/2}$ generalises to any $\alpha$.
 
 ## ⚖️ Which Interval Fires
 | Case | Population assumptions | Interval | Critical value | Coverage |

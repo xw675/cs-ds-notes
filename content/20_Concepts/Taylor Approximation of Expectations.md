@@ -49,7 +49,8 @@ E[f(X)] &\approx E\!\left[f(\mu)+f'(\mu)(X-\mu)+\tfrac{f''(\mu)}{2}(X-\mu)^2\rig
 &= f(\mu)+\frac{f''(\mu)}{2}V[X] &&\text{(} E[X-\mu]=0 \text{ by definition of } \mu\text{)}\\
 &= f(\mu)+\frac{f''(\mu)}{2}\sigma^2 &&\blacksquare
 \end{aligned}
-$$**Sealing move:** the **first-derivative contribution vanishes** because $E[X-\mu]=0$, and $E[(X-\mu)^2]$ is precisely $V[X]=\sigma^2$.
+$$
+**Sealing move:** the **first-derivative contribution vanishes** because $E[X-\mu]=0$, and $E[(X-\mu)^2]$ is precisely $V[X]=\sigma^2$.
 
 ### 4. Formal Proof Blueprint — $V[f(X)]$
 **Theorem.** $V[f(X)]\approx\sigma^2\left(f'(\mu)\right)^2$.
@@ -62,7 +63,8 @@ V[f(X)] &\approx V\!\left[f(\mu)+f'(\mu)(X-\mu)\right]\\
 &= \left(f'(\mu)\right)^2 V[X-\mu] &&\text{(} V[cX]=c^2V[X]\text{)}\\
 &= \left(f'(\mu)\right)^2\sigma^2 &&\blacksquare
 \end{aligned}
-$$**Why only first order here** ➔ a second-order expansion would introduce $V[X^2]$, a quantity the assumptions ($\mu$ and $\sigma^2$ only) do not supply.
+$$
+**Why only first order here** ➔ a second-order expansion would introduce $V[X^2]$, a quantity the assumptions ($\mu$ and $\sigma^2$ only) do not supply.
 
 ## ⚖️ Core Decision Matrix
 | Target | Expansion order used | Terms that survive | Why the other order fails |
@@ -82,7 +84,8 @@ $$
 E[f(X)] &\approx f(\mu_X)+\frac{\sigma_X^2}{2}(2a) &=\;& a\mu_X^2+c+a\sigma_X^2\\
 V[f(X)] &\approx \sigma_X^2\left(2a\mu_X\right)^2 &=\;& 4(a\mu_X)^2\sigma_X^2
 \end{aligned}
-$$**Final Extracted Output:** the mean picks up an extra $a\sigma_X^2$ over the naive $a\mu_X^2+c$, and the **variance of a squared RV grows with the square of the mean** of that RV.
+$$
+**Final Extracted Output:** the mean picks up an extra $a\sigma_X^2$ over the naive $a\mu_X^2+c$, and the **variance of a squared RV grows with the square of the mean** of that RV.
 
 ## ⚠️ Common Mistakes
 - 💡 **Evaluating derivatives at $x$, not $\mu$** ➔ the formulas need *numbers* $f'(\mu),f''(\mu)$; leaving $x$ in the answer means the expectation was never taken.

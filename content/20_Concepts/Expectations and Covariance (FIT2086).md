@@ -88,7 +88,8 @@ $$
 E[F] &= E[1.8C+32] = 1.8\,E[C]+32 = 1.8(31)+32 = 87.8\ \text{°F}\\
 V[F] &= V[1.8C+32] = 1.8^2\,V[C] = 3.24(5) = 16.2
 \end{aligned}
-$$**Final Extracted Output:** $E[F]=87.8$, $V[F]=16.2$ — the $+32$ shifts the mean and is **invisible** to the variance.
+$$
+**Final Extracted Output:** $E[F]=87.8$, $V[F]=16.2$ — the $+32$ shifts the mean and is **invisible** to the variance.
 
 ## ⚠️ Common Mistakes
 - 💡 **$E[f(X)]\ne f(E[X])$ unless $f$ is linear** ➔ $E[\log X]=0.3871$ above while $\log E[X]=\log 1.6=0.470$. Non-linear $f$ needs the [[Taylor Approximation of Expectations|Taylor approximation]].

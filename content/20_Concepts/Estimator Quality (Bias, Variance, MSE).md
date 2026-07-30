@@ -57,7 +57,8 @@ E\!\left[\hat\sigma^2_{ML}\right]&=\frac1n E\!\left[\sum_{i=1}^n\big((y_i-\mu)-(
 b_{\sigma^2}\!\left(\hat\sigma^2_{ML}\right)&=\left(\frac{n-1}{n}\right)\sigma^2-\sigma^2=-\frac{\sigma^2}{n}\;<0\\
 E\!\left[\hat\sigma^2_u\right]&=\frac{n}{n-1}E\!\left[\hat\sigma^2_{ML}\right]=\frac{n}{n-1}\cdot\frac{n-1}{n}\sigma^2=\sigma^2\;\Rightarrow\;b_{\sigma^2}\!\left(\hat\sigma^2_u\right)=0
 \end{aligned}
-$$**Q.E.D.** ➔ $\hat\sigma^2_{ML}$ systematically **underestimates** the variance (it measures spread about $\bar y$, which sits closer to the data than $\mu$ does), and the bias vanishes as $n\to\infty$ ⟹ consistent.
+$$
+**Q.E.D.** ➔ $\hat\sigma^2_{ML}$ systematically **underestimates** the variance (it measures spread about $\bar y$, which sits closer to the data than $\mu$ does), and the bias vanishes as $n\to\infty$ ⟹ consistent.
 
 ## ⚖️ Core Decision Matrix
 Comparing the two variance estimators for $Y_1,\dots,Y_n\sim N(\mu,\sigma^2)$:
@@ -72,22 +73,26 @@ Comparing the two variance estimators for $Y_1,\dots,Y_n\sim N(\mu,\sigma^2)$:
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: $\mathbf{X}=(X_1,\dots,X_{12})$ is a random sample from $X\sim Poi(\theta)$. Determine the bias of $\hat\theta_1=\bar X$, $\hat\theta_2=X_1$, $\hat\theta_3=\frac{1}{12}\sum_{i=1}^{12}X_i^2$.
 > > [!SUCCESS]- Reference solution
-> > $$\begin{aligned}
+> > $$
+> > \begin{aligned}
 > > E[\hat\theta_1]&=E[\bar X]=\frac{1}{12}\sum_{i=1}^{12}E[X_i]=\frac{1}{12}\sum_{i=1}^{12}\theta=\theta&&\Rightarrow b_\theta=0\;\text{(unbiased)}\\
 > > E[\hat\theta_2]&=E[X_1]=\theta&&\Rightarrow b_\theta=0\;\text{(unbiased)}\\
 > > E[X_i^2]&=V[X_i]+E[X_i]^2=\theta+\theta^2\;\Rightarrow\;E[\hat\theta_3]=\theta+\theta^2&&\Rightarrow b_\theta=\theta^2>0\;\text{(overestimates)}
 > > \end{aligned}
-$$> > - **Key move:** rearrange $V[X]=E[X^2]-E[X]^2$ into $E[X^2]=V[X]+E[X]^2$, then use $Poi$'s $E=V=\theta$. A single observation $X_1$ is a perfectly **unbiased** estimator — unbiasedness alone says nothing about quality.
+> > $$
+> > - **Key move:** rearrange $V[X]=E[X^2]-E[X]^2$ into $E[X^2]=V[X]+E[X]^2$, then use $Poi$'s $E=V=\theta$. A single observation $X_1$ is a perfectly **unbiased** estimator — unbiasedness alone says nothing about quality.
 
 > [!QUESTION]- Practice 2: same setup. Compare $\mathrm{MSE}(\hat\theta_1)$ and $\mathrm{MSE}(\hat\theta_2)$ and state which is more efficient.
 > > [!SUCCESS]- Reference solution
 > > Both are unbiased, so $\mathrm{MSE}=\mathrm{Var}$:
-> > $$\begin{aligned}
+> > $$
+> > \begin{aligned}
 > > \mathrm{MSE}(\hat\theta_1)&=V[\bar X]=\frac{V[X]}{12}=\frac{\theta}{12},\qquad
 > > \mathrm{MSE}(\hat\theta_2)=V[X_1]=\theta\\
 > > \mathrm{MSE}(\hat\theta_1)&<\mathrm{MSE}(\hat\theta_2)\;\Rightarrow\;\hat\theta_1=\bar X\text{ is }\textbf{more efficient}
 > > \end{aligned}
-$$> > - **Key move:** $b=0$ collapses MSE to variance ➔ averaging 12 observations divides the variance by 12, which is the entire benefit of using the whole sample.
+> > $$
+> > - **Key move:** $b=0$ collapses MSE to variance ➔ averaging 12 observations divides the variance by 12, which is the entire benefit of using the whole sample.
 
 > [!QUESTION]- Practice 3: is $\hat\theta_3=\frac{1}{12}\sum X_i^2$ consistent for $\theta$? Justify with the two-condition test.
 > > [!SUCCESS]- Reference solution

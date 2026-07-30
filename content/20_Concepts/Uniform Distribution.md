@@ -77,7 +77,8 @@ $$
 P(X\text{ odd}) &= P(X{=}1)+P(X{=}3)+P(X{=}5)=\tfrac16+\tfrac16+\tfrac16=\tfrac36=\tfrac12\\
 P(X<5) &= 4\times\tfrac16=\tfrac46=\tfrac23
 \end{aligned}
-$$**Key move:** under a uniform pmf every event probability collapses to **favourable count** $\div\ |\mathcal{X}|$.
+$$
+**Key move:** under a uniform pmf every event probability collapses to **favourable count** $\div\ |\mathcal{X}|$.
 
 ### Applied Exercise 2 — car weight *(continuous)*
 **Problem:** weight of a randomly selected car $\sim U(800,1500)$ kg. Find (i) $E[X]$, (ii) $V[X]$, (iii) $P(X<1000)$.
@@ -87,7 +88,8 @@ E[X] &= \frac{a+b}{2}=\frac{800+1500}{2}=1150\\
 V[X] &= \frac{(b-a)^2}{12}=\frac{700^2}{12}=\frac{490000}{12}=40833.33\\
 P(X<1000) &= \int_{800}^{1000}\frac{dx}{700}=\left[\frac{x}{700}\right]_{800}^{1000}=\frac{1000-800}{700}=\frac{200}{700}=0.29
 \end{aligned}
-$$**Final Extracted Output:** $1150$ kg, $40833.33$, $P\approx0.29$. **Key move:** the integral of a constant density is a **length ratio** — no antiderivative work needed.
+$$
+**Final Extracted Output:** $1150$ kg, $40833.33$, $P\approx0.29$. **Key move:** the integral of a constant density is a **length ratio** — no antiderivative work needed.
 
 ### Applied Exercise 3 — deriving $E[X]$ from the definition *(Studio 2)*
 **Problem:** $X\sim U(0,b)$. Derive $E[X]$ by integration rather than quoting $\tfrac{a+b}{2}$.
@@ -96,7 +98,8 @@ $$
 E[X]&=\int_0^b x\,p(x\mid0,b)\,dx=\int_0^b\frac{x}{b}\,dx=\frac1b\int_0^b x\,dx\\
 &=\frac1b\left[\frac{x^2}{2}\right]_0^b=\frac{b^2}{2b}=\frac{b}{2}
 \end{aligned}
-$$**Final Extracted Output:** $E[X]=\tfrac b2$, consistent with $\tfrac{a+b}{2}$ at $a=0$. **Key move:** the constant $\tfrac1b$ pulls **outside** the integral, leaving the elementary $\int x\,dx$ — the same trick works for $E[X^2]$ if the question wants $V[X]$ from scratch.
+$$
+**Final Extracted Output:** $E[X]=\tfrac b2$, consistent with $\tfrac{a+b}{2}$ at $a=0$. **Key move:** the constant $\tfrac1b$ pulls **outside** the integral, leaving the elementary $\int x\,dx$ — the same trick works for $E[X^2]$ if the question wants $V[X]$ from scratch.
 
 ### Applied Exercise 4 — two dice by linearity *(Studio 2)*
 **Problem:** $X$ = one roll of a fair six-sided die, $Y$ = an independent second roll. Give $E[X]$ and $E[X+Y]$.
@@ -105,7 +108,8 @@ $$
 E[X]&=\sum_x x\,P(X=x)=\tfrac16(1)+\tfrac16(2)+\tfrac16(3)+\tfrac16(4)+\tfrac16(5)+\tfrac16(6)=3.5\\
 E[X+Y]&=E[X]+E[Y]=3.5+3.5=7
 \end{aligned}
-$$**Final Extracted Output:** $3.5$ and $7$. **Key move:** $E[X+Y]=E[X]+E[Y]$ is **linearity — it needs no independence at all**; independence would only be required for $V[X+Y]=V[X]+V[Y]$ (see [[Expectations and Covariance (FIT2086)]]).
+$$
+**Final Extracted Output:** $3.5$ and $7$. **Key move:** $E[X+Y]=E[X]+E[Y]$ is **linearity — it needs no independence at all**; independence would only be required for $V[X+Y]=V[X]+V[Y]$ (see [[Expectations and Covariance (FIT2086)]]).
 
 ## ⚠️ Common Mistakes
 - 💡 **Count is $b-a+1$, not $b-a$** ➔ inclusive endpoints; the uniform is the maximally non-committal choice given only the range.

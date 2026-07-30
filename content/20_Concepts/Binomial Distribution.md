@@ -68,7 +68,8 @@ $$
 &= \underbrace{(0.92)^{12}}_{0.3677}+\underbrace{12(0.08)(0.92)^{11}}_{0.3837}+\underbrace{66(0.08)^2(0.92)^{10}}_{0.1835}\;=\;0.9348\\
 \text{(iii)}\quad P(M\ge2) &= 1-P(M\le1) = 1-(0.3677+0.3837) = 0.2487
 \end{aligned}
-$$**Final Extracted Output:** $0.96$ expected sales; $P(M\le2)\approx0.935$; $P(M\ge2)\approx0.249$. **Key move:** "**2 or more**" is the complement of $M\le1$, **not** of $M\le2$ — the boundary value $m=2$ sits inside *both* one-sided events, so $P(M\le2)+P(M\ge2)>1$.
+$$
+**Final Extracted Output:** $0.96$ expected sales; $P(M\le2)\approx0.935$; $P(M\ge2)\approx0.249$. **Key move:** "**2 or more**" is the complement of $M\le1$, **not** of $M\le2$ — the boundary value $m=2$ sits inside *both* one-sided events, so $P(M\le2)+P(M\ge2)>1$.
 
 ### 3. Applied Exercise — fair-coin tails by hand *(Studio 2)*
 **Problem:** (i) $P(m\ge2)$ heads in $n=4$ tosses of a fair coin; (ii) $P(m\ge5)$ ones in $n=10$ Bernoulli$(\tfrac12)$ draws.
@@ -78,7 +79,8 @@ $$
 &=\left(\tfrac12\right)^{4}\!\left(6+4+1\right)=\frac{11}{16}\\
 \text{(ii)}\quad P(m\ge5)&=1-P(m\le4)=1-0.377=0.623\qquad\texttt{1 - pbinom(4, 10, 1/2)}
 \end{aligned}
-$$**Final Extracted Output:** $11/16=0.6875$; $\approx0.623$. **Key move:** with $\theta=\tfrac12$ every term shares the factor $(\tfrac12)^n$, so the sum collapses to $\tfrac{1}{2^n}\sum\binom{n}{k}$ — pure counting. For (ii), "$5$ or more" complements $m\le\mathbf{4}$, so `pbinom` takes $k-1$.
+$$
+**Final Extracted Output:** $11/16=0.6875$; $\approx0.623$. **Key move:** with $\theta=\tfrac12$ every term shares the factor $(\tfrac12)^n$, so the sum collapses to $\tfrac{1}{2^n}\sum\binom{n}{k}$ — pure counting. For (ii), "$5$ or more" complements $m\le\mathbf{4}$, so `pbinom` takes $k-1$.
 
 > [!NOTE] **When It Flips:** the indicator sum is the showcase of linearity — instant $E=np$. Binomial fixes $n$ and counts successes; the [[Geometric Distribution|geometric]] fixes the first success and varies the trial count.
 

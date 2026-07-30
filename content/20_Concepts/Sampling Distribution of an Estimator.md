@@ -34,7 +34,8 @@ $$
 E[\bar Y]&=\frac1n\big(E[Y_1]+\cdots+E[Y_n]\big)=\frac{n\mu}{n}=\mu\\
 V[\bar Y]&=\frac{1}{n^2}\big(V[Y_1]+\cdots+V[Y_n]\big)=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n}
 \end{aligned}
-$$**Q.E.D.** ➔ the sample mean is centred on the **unknown population mean** with variance the **population variance divided by $n$**: it **decreases with $n$** and **increases with $\sigma^2$**.
+$$
+**Q.E.D.** ➔ the sample mean is centred on the **unknown population mean** with variance the **population variance divided by $n$**: it **decreases with $n$** and **increases with $\sigma^2$**.
 
 ## ⚖️ Strength of Assumptions
 | Assumption on $Y_1,\dots,Y_n$ | What you get about $\bar Y$ | What you cannot do |

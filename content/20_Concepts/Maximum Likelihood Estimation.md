@@ -57,7 +57,8 @@ L(\mathbf{y}\mid\mu,\sigma)&=\frac{n}{2}\log(2\pi\sigma^2)+\frac{1}{2\sigma^2}\s
 \frac{\partial L}{\partial\mu}&=-\frac{1}{\sigma^2}\sum_i(y_i-\mu)=-\frac{1}{\sigma^2}\sum_i y_i+\frac{n\mu}{\sigma^2}=0\;\Rightarrow\;\hat\mu=\frac1n\sum_{i=1}^n y_i\\
 \frac{\partial L}{\partial\sigma}\bigg|_{\mu=\hat\mu}&=\frac{n}{\sigma}-\frac{1}{\sigma^3}\sum_i(y_i-\hat\mu)^2=0\;\Rightarrow\;n\sigma^2=\sum_i(y_i-\hat\mu)^2\;\Rightarrow\;\hat\sigma=\sqrt{\frac1n\sum_{i=1}^n(y_i-\hat\mu)^2}
 \end{aligned}
-$$**Q.E.D.** ➔ for the Gaussian the ML estimators are the **sample mean** and the **sample standard deviation** (with divisor $n$). Multiply through by $\sigma^3$ to clear denominators; $\hat\mu$ is substituted **before** differentiating in $\sigma$, which removes $\mu$ from the equation.
+$$
+**Q.E.D.** ➔ for the Gaussian the ML estimators are the **sample mean** and the **sample standard deviation** (with divisor $n$). Multiply through by $\sigma^3$ to clear denominators; $\hat\mu$ is substituted **before** differentiating in $\sigma$, which removes $\mu$ from the equation.
 
 **Derivation — Poisson $Poi(\lambda)$, $p(y\mid\lambda)=\lambda^y e^{-\lambda}/y!$:**
 $$
@@ -66,7 +67,8 @@ p(\mathbf{y}\mid\lambda)&=\frac{\lambda^{\sum_i y_i}e^{-n\lambda}}{\prod_i y_i!}
 L(\mathbf{y}\mid\lambda)=-\sum_i y_i\log\lambda+n\lambda+\sum_i\log y_i!\\
 \frac{dL}{d\lambda}&=-\frac1\lambda\sum_i y_i+n=0\;\Rightarrow\;\hat\lambda=\frac1n\sum_{i=1}^n y_i
 \end{aligned}
-$$**Q.E.D.** ➔ the Poisson rate's MLE is again the sample mean — **but this coincidence is not a rule**, as the practice derivations below show.
+$$
+**Q.E.D.** ➔ the Poisson rate's MLE is again the sample mean — **but this coincidence is not a rule**, as the practice derivations below show.
 
 ## 📊 Worked Numbers
 | Data | Family | ML estimates | Read-off |
@@ -78,30 +80,36 @@ $$**Q.E.D.** ➔ the Poisson rate's MLE is again the sample mean — **but this 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: $Y_1,\dots,Y_n\sim\mathrm{Exp}(\beta)$ with $p(y\mid\beta)=\beta e^{-\beta y}$. Derive $\hat\beta_{\text{MLE}}$.
 > > [!SUCCESS]- Reference solution
-> > $$\begin{aligned}
+> > $$
+> > \begin{aligned}
 > > p(\mathbf{y}\mid\beta)&=\prod_{i=1}^n\beta e^{-\beta y_i}=\beta^n e^{-\beta\sum_i y_i}\\
 > > L(\mathbf{y}\mid\beta)&=-n\log\beta+\beta\sum_i y_i\\
 > > \frac{dL}{d\beta}&=-\frac{n}{\beta}+\sum_i y_i=0\;\Rightarrow\;\hat\beta=\frac{n}{\sum_i y_i}=\frac{1}{\bar y}
 > > \end{aligned}
-$$> > - **Key move:** $\prod e^{-\beta y_i}=e^{-\beta\sum y_i}$ ➔ the estimator is the **reciprocal** of the sample mean, not the sample mean.
+> > $$
+> > - **Key move:** $\prod e^{-\beta y_i}=e^{-\beta\sum y_i}$ ➔ the estimator is the **reciprocal** of the sample mean, not the sample mean.
 
 > [!QUESTION]- Practice 2: pollination rates $X_1,\dots,X_n$ have $f(x\mid\theta)=\frac1\theta x^{(1-\theta)/\theta}$ on $0<x<1$, $\theta>0$. Derive $\hat\theta_{\text{MLE}}$.
 > > [!SUCCESS]- Reference solution
-> > $$\begin{aligned}
+> > $$
+> > \begin{aligned}
 > > P(\mathbf{x}\mid\theta)&=\prod_{i=1}^n\frac1\theta x_i^{(1-\theta)/\theta}=\frac{1}{\theta^n}\prod_{i=1}^n x_i^{(1-\theta)/\theta}\\
 > > L(\mathbf{x}\mid\theta)&=n\log\theta-\frac{1-\theta}{\theta}\sum_{i=1}^n\log x_i=n\log\theta-\frac{1}{\theta}\sum_i\log x_i+\sum_i\log x_i\\
 > > \frac{dL}{d\theta}&=\frac{n}{\theta}+\frac{1}{\theta^2}\sum_i\log x_i=0\;\Rightarrow\;n\theta+\sum_i\log x_i=0\;\Rightarrow\;\hat\theta=-\frac{\sum_{i=1}^n\log x_i}{n}
 > > \end{aligned}
-$$> > - **Key move:** $\log\left(\prod x_i^{c}\right)=c\sum\log x_i$, then multiply by $\theta^2$ to clear denominators; $\hat\theta>0$ because $\log x_i<0$ on $0<x<1$.
+> > $$
+> > - **Key move:** $\log\left(\prod x_i^{c}\right)=c\sum\log x_i$, then multiply by $\theta^2$ to clear denominators; $\hat\theta>0$ because $\log x_i<0$ on $0<x<1$.
 
 > [!QUESTION]- Practice 3: seed germination with $f_X(x)=\lambda x^{\lambda-1}$ on $0<x<1$ (else $0$), $\lambda>0$. Derive $\hat\lambda_{\text{MLE}}$ and contrast with Practice 2.
 > > [!SUCCESS]- Reference solution
-> > $$\begin{aligned}
+> > $$
+> > \begin{aligned}
 > > P(\mathbf{x}\mid\lambda)&=\prod_{i=1}^n\lambda x_i^{\lambda-1}=\lambda^n\left(\prod_{i=1}^n x_i\right)^{\lambda-1}\\
 > > L(\mathbf{x}\mid\lambda)&=-n\log\lambda-(\lambda-1)\sum_{i=1}^n\log x_i\\
 > > \frac{dL}{d\lambda}&=-\frac{n}{\lambda}-\sum_i\log x_i=0\;\Rightarrow\;\frac{n}{\lambda}=-\sum_i\log x_i\;\Rightarrow\;\hat\lambda=-\frac{n}{\sum_{i=1}^n\log x_i}
 > > \end{aligned}
-$$> > - **Key move:** the exponent here is $\lambda-1$ (linear in the parameter) versus $(1-\theta)/\theta$ (a **reciprocal** in the parameter) ➔ same data, **reciprocal** estimators: $\hat\lambda=n/(-\sum\log x_i)$ against $\hat\theta=(-\sum\log x_i)/n$.
+> > $$
+> > - **Key move:** the exponent here is $\lambda-1$ (linear in the parameter) versus $(1-\theta)/\theta$ (a **reciprocal** in the parameter) ➔ same data, **reciprocal** estimators: $\hat\lambda=n/(-\sum\log x_i)$ against $\hat\theta=(-\sum\log x_i)/n$.
 
 ## ⚠️ Common Mistakes
 - 💡 **Maximising the NLL** ➔ $L$ carries the minus sign already; maximise $p(\mathbf{y}\mid\theta)$ **or** minimise $L(\mathbf{y}\mid\theta)$, never maximise $L$.
