@@ -71,12 +71,12 @@ sumTo(10, x => x * x);             // 385  -- behaviour is now an argument
 - **What changed between 2 and 3** ➔ `let` disappears. No binding is ever reassigned, so no expression's value depends on *when* it is evaluated.
 
 ## ⚖️ Core Decision Matrix
-| Paradigm | You write | Model of computation | Buys you | Costs you |
-| :--- | :--- | :--- | :--- | :--- |
-| **Imperative** | statements mutating state | von Neumann / Turing | direct match to hardware; bounded memory | four loop failure surfaces; no referential transparency |
-| **Declarative** | expressions describing the result | reduction of expressions | states the invariant; safe to reason about equationally | indirection from the machine |
-| **Functional** | pure functions + [[Higher-Order Function|HOFs]] | lambda calculus | composability; behaviour as a parameter | **stack overflow** on deep recursion |
-| **Object oriented** | objects bundling state + behaviour | message passing over encapsulated state | composition via interfaces; locality of state | state is mutable *by design* ➔ harder to reason about |
+| Paradigm            | You write                                        | Model of computation                    | Buys you                                                | Costs you                                               |
+| :------------------ | :----------------------------------------------- | :-------------------------------------- | :------------------------------------------------------ | :------------------------------------------------------ |
+| **Imperative**      | statements mutating state                        | von Neumann / Turing                    | direct match to hardware; bounded memory                | four loop failure surfaces; no referential transparency |
+| **Declarative**     | expressions describing the result                | reduction of expressions                | states the invariant; safe to reason about equationally | indirection from the machine                            |
+| **Functional**      | pure functions + [[Higher-Order Function\|HOFs]] | lambda calculus                         | composability; behaviour as a parameter                 | **stack overflow** on deep recursion                    |
+| **Object oriented** | objects bundling state + behaviour               | message passing over encapsulated state | composition via interfaces; locality of state           | state is mutable *by design* ➔ harder to reason about   |
 
 > [!NOTE] **When It Flips:** prefer the imperative loop only when recursion depth is unbounded or the mutation *is* the point (in-place algorithms). Otherwise the built-in Array HOFs win: they remove all four hand-coded-loop failure surfaces at once, and they compose (`map(…).reduce(…)`) where loops do not.
 
