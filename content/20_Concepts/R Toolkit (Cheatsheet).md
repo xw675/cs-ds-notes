@@ -107,20 +107,33 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | density (pmf/pdf) | `dnorm(x, mean, sd)` · `dpois(x, lambda)` | a density, **not** a probability |
 | CDF $P(X\le q)$ | `pnorm(q, mean, sd)` · `lower.tail=FALSE` for $>$ | `p` = probability |
 | quantile $F^{-1}(p)$ | `qnorm(p, mean, sd)` | inverse of `pnorm` |
+| CI critical value $z_{\alpha/2}$ | `qnorm(1 - 0.05/2)` $\to1.96$ | pass the **percentile** $1-\alpha/2$, never $\alpha$ or $\alpha/2$ |
+| CI critical value $t_{\alpha/2,n-1}$ | `qt(1 - 0.05/2, df = n - 1)` | `df` $=n-1$; at $n=8$ gives $2.36$ ➔ [[Confidence Intervals]] |
+| unbiased variance $\hat\sigma^2_u$ | `var(y)` · `sd(y)` | divisor is $n-1$ ➔ this is $\hat\sigma^2_u$, **not** $\hat\sigma^2_{ML}$ |
 | random draws | `rnorm(n, mean, sd)` · `runif(n)` · `rbinom(n,size,prob)` | `r` = simulate `n` values |
 | Monte Carlo prob | `mean(rnorm(1e6) > 1.5)` | proportion of draws = estimated probability |
 | Bernoulli draws | `rbinom(n, size=1, prob=theta)` | **no `*bern` family** — a binomial with `size = 1` |
 | "$k$ or more" | `pbinom(k-1, n, p, lower.tail=FALSE)` | `pbinom(k)` is $P(X\le k)$ **inclusive** ➔ pass `k-1` |
+| "**strictly** less than $k$" (discrete) | `ppois(k-1, lambda)` | $P(X<k)=P(X\le k-1)$ ➔ the boundary carries mass, unlike the continuous case |
+| pmf by hand | `4^1 * exp(-4) / factorial(1)` | `exp()` and `factorial()` reproduce `dpois(1,4)` — use to check a translation |
+| standardise then look up | `1 - pnorm((2-0)/4, 0, 1)` | identical to `1 - pnorm(2, 0, 4)` — self-similarity of the normal |
+| help for a whole family | `?dbinom` | one help page documents `d`/`p`/`q`/`r` together |
+| preallocate a vector | `mu <- vector(mode="numeric", length=n)` | `c(mu, val)` in a loop is $O(n^2)$ — preallocate for $O(n)$ |
+| constant reference line | `rep(0, 1000)` / `rep(1/2, 1000)` | how you draw a horizontal line via `plot(..., type="l")` |
+| overlay extra curves | `lines(x, y, col="red")` | `plot()` first, then `lines()`; set `ylim=c(0,1)` on the **`plot`** call — `lines` ignores it |
+| running mean (WLLN demo) | accumulator loop ➔ [[R Simulation and Random Sampling]] | one running sum `S`, then `mu[i] <- S/i` |
 
 *(the four prefixes `d`/`p`/`q`/`r` attach to every distribution suffix; the per-distribution argument names are the trap)*
 
-| Suffix | Args | Distribution |
-| :-- | :-- | :-- |
-| `norm` | `mean`, `sd` | $N(\mu,\sigma^2)$ — pass the **sd**, not $\sigma^2$ |
-| `binom` | `size`, `prob` | $Bin(\theta,n)$ — `size` $=n$ |
-| `pois` | `lambda` | $Pois(\lambda)$ — rescale $\lambda$ to the question's interval first |
-| `unif` | `min`, `max` | $U(a,b)$ |
-| `exp` | `rate` | exponential |
+| Suffix  | Args           | Distribution                                                              |
+| :------ | :------------- | :------------------------------------------------------------------------ |
+| `norm`  | `mean`, `sd`   | $N(\mu,\sigma^2)$ — pass the **sd**, not $\sigma^2$                       |
+| `binom` | `size`, `prob` | $Bin(\theta,n)$ — `size` $=n$                                             |
+| `pois`  | `lambda`       | $Pois(\lambda)$ — rescale $\lambda$ to the question's interval first      |
+| `unif`  | `min`, `max`   | $U(a,b)$                                                                  |
+| `exp`   | `rate`         | exponential                                                               |
+| `t`     | `df`           | [[Student-t Distribution\|Student-t]] with $\nu=$ `df` degrees of freedom |
+
 
 ## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.
@@ -140,3 +153,5 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 - 💡 **1-based indexing** ➔ `x[1]` is the first element; muscle-memory from Python costs marks.
 - 💡 **Negative index drops** ➔ `x[-1]` = everything EXCEPT first (Python: last element).
 - 💡 **`order` returns indices** ➔ sorting is `df[order(df$col), ]` — forgetting the outer `df[ , ]` returns numbers, not rows.
+- 💡 **`rbinom(n, size, prob)`: `n` ≠ the binomial's $n$** ➔ `n` is **how many variates to generate**, `size` is the number of trials ➔ `rbinom(10, 5, 0.25)` gives 10 draws from $Bin(5,0.25)$.
+- 💡 **`*norm` takes `sd`, `*pois` takes an interval-matched `lambda`** ➔ pass $\sigma$ not $\sigma^2$; rescale $\lambda$ to the question's interval **before** the call.

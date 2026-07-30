@@ -35,8 +35,8 @@ tags: [CS/Databases, Math/Discrete]
 | Dependency | Determinant | Removed at |
 | :--- | :--- | :--- |
 | full | whole composite key | (2NF requires) |
-| partial | part of key | [[Second Normal Form (2NF)|2NF]] |
-| transitive | non-key | [[Third Normal Form (3NF)|3NF]] |
+| partial | part of key | [[Second Normal Form (2NF)\|2NF]] |
+| transitive | non-key | [[Third Normal Form (3NF)\|3NF]] |
 | total (mutual) | both candidate keys | — |
 
 > [!NOTE] **When It Flips:** keys are special FDs — a [[Super Key and Candidate Key|super key]] determines the whole tuple. "Bad" FDs (non-key determined by part of a key, or by another non-key) signal the redundancy [[Normalisation]] removes.

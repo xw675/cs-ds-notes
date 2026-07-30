@@ -90,8 +90,8 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 | Algorithm | Best | Average | Worst | Trigger of worst |
 | :--- | :--- | :--- | :--- | :--- |
 | Bubble Sort II | $O(n)$ | $O(n^2)$ | $O(n^2)$ | reverse-sorted |
-| [[Sorting Problem|Selection Sort]] | $O(n^2)$ | $O(n^2)$ | $O(n^2)$ | **always** (no short-circuit) |
-| [[Sorting Problem|Insertion Sort]] | $O(n)$ | $O(n^2)$ | $O(n^2)$ | reverse-sorted |
+| [[Sorting Problem\|Selection Sort]] | $O(n^2)$ | $O(n^2)$ | $O(n^2)$ | **always** (no short-circuit) |
+| [[Sorting Problem\|Insertion Sort]] | $O(n)$ | $O(n^2)$ | $O(n^2)$ | reverse-sorted |
 | [[Quick Sort]] | $O(n\log n)$ | $O(n\log n)$ | $O(n^2)$ | min/max pivot |
 | [[Hash Table]] | $O(1)$ | $O(1)$ | $O(n)$ | all keys collide |
 

@@ -29,12 +29,12 @@ tags: [CS/Algorithms, CS/Foundations]
 ## ⚖️ Core Decision Matrix
 | Algorithm | Key loop invariant | What it enables |
 | :--- | :--- | :--- |
-| [[Sorting Problem|Bubble Sort]] | after pass $i$, the $i$ largest are final at the tail | early-exit ($O(n)$ best) |
-| [[Sorting Problem|Selection Sort]] | prefix is sorted **and final** | correctness; blocks adaptivity |
-| [[Sorting Problem|Insertion Sort]] | prefix sorted, **not necessarily final** | incremental inserts |
+| [[Sorting Problem\|Bubble Sort]] | after pass $i$, the $i$ largest are final at the tail | early-exit ($O(n)$ best) |
+| [[Sorting Problem\|Selection Sort]] | prefix is sorted **and final** | correctness; blocks adaptivity |
+| [[Sorting Problem\|Insertion Sort]] | prefix sorted, **not necessarily final** | incremental inserts |
 | [[Binary Search]] | target, if present, lies in `[lo, hi]` | shrink-by-half correctness |
 | [[Heap]] | every node $\ge$ its children | $O(\log n)$ `get_max` |
-| [[Hash Table|Linear Probing]] | key with hash $N$ sits between $N$ and first empty slot | search/delete correctness |
+| [[Hash Table\|Linear Probing]] | key with hash $N$ sits between $N$ and first empty slot | search/delete correctness |
 
 > [!NOTE] **When It Flips:** class invariants generalise to objects — a property every public method preserves (a [[Queue (ADT)|CircularQueue]]'s `front`/`rear`/`count` consistency). Invariants prove *correctness*; [[Big-O Notation|asymptotic analysis]] proves *cost* — the two halves of analysis.
 

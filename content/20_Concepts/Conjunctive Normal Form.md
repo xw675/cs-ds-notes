@@ -41,7 +41,7 @@ aliases: [CNF, clause, conjunctive normal form]
 $$\text{only False row TF} \to (\neg X\vee Y) \;\Rightarrow\; P=(\neg X\vee Y)\ (\equiv X\Rightarrow Y)$$
 
 ## ⚖️ Core Decision Matrix
-| | CNF | [[Disjunctive Normal Form|DNF]] |
+| | CNF | [[Disjunctive Normal Form\|DNF]] |
 | :--- | :--- | :--- |
 | shape | AND-of-ORs | OR-of-ANDs |
 | built from | False rows | True rows |

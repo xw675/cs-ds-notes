@@ -25,7 +25,7 @@ aliases: [code smell, design smell, bloaters, change preventers, couplers, dispe
 | Family | Smell | Symptom | Refactoring step |
 | :--- | :--- | :--- | :--- |
 | **Bloaters** | Long Method | method too long to grasp | **Extract Method**; Decompose Conditional; Replace Method with Method Object |
-| **Bloaters** | Large / God Class | "catch-all" class, likely breaks [[Single Responsibility Principle (Java)|SRP]] | **Extract Class** / Extract Subclass / Extract Interface |
+| **Bloaters** | Large / God Class | "catch-all" class, likely breaks [[Single Responsibility Principle (Java)\|SRP]] | **Extract Class** / Extract Subclass / Extract Interface |
 | **Bloaters** | Long Parameter List | $>3$ args to a method | pass the **object itself**; **Introduce Parameter Object** |
 | **Bloaters** | Data Clumps | same group of fields recurs everywhere | **Extract Class** / Introduce Parameter Object |
 | **Change Preventers** | Divergent Change | *one* class changed for **many** unrelated reasons | **Extract Class** to split it |

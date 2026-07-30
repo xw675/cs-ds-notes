@@ -77,9 +77,9 @@ aliases: [BST]
 | Variant / Strategy | search | insert / delete | Ordered? | Cache / Note |
 | :--- | :--- | :--- | :--- | :--- |
 | **BST (balanced)** | $O(\log N)$ | $O(\log N)$ | **yes** | good at both; range/successor |
-| **BST (degenerate)** | $O(N)$ | $O(N)$ | yes | sorted input → [[List (ADT)|LinkList]] stick |
-| [[Sorted List (ADT)|sorted array]] | $O(\log N)$ | $O(N)$ shift | yes | fast search, slow insert |
-| sorted [[List (ADT)|linked list]] | $O(N)$ | $O(1)$ positioned | yes | fast insert, slow search |
+| **BST (degenerate)** | $O(N)$ | $O(N)$ | yes | sorted input → [[List (ADT)\|LinkList]] stick |
+| [[Sorted List (ADT)\|sorted array]] | $O(\log N)$ | $O(N)$ shift | yes | fast search, slow insert |
+| sorted [[List (ADT)\|linked list]] | $O(N)$ | $O(1)$ positioned | yes | fast insert, slow search |
 | [[Hash Table]] | $O(1)$ expected | $O(1)$ expected | **no** | fastest, no order/range |
 
 > [!NOTE] **When It Flips:** a BST is good at **both** search and insert/delete (binary search + constant re-link), unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).

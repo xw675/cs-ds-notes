@@ -1,8 +1,8 @@
 ---
 unit: FIT2086
 domain: D
-week: 2
-source: [lecture]
+week: [2, 3]
+source: [lecture, applied]
 parent: "[[Statistical Modelling and Inference]]"
 tags: [Math/Probability, DataScience/Theory]
 aliases: [parametric model, p(x|theta), parameter space, distribution zoo, distribution summary table]
@@ -35,6 +35,26 @@ aliases: [parametric model, p(x|theta), parameter space, distribution zoo, distr
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [[Uniform Distribution\|Uniform]] | $X\sim U(a,b)$ | $\dfrac{1}{b-a}$ | $a\le x\le b$ | $\dfrac{a+b}{2}$ | $\dfrac{(b-a)^2}{12}$ |
 | [[Gaussian Distribution\|Normal / Gaussian]] | $X\sim N(\mu,\sigma^2)$ | $\dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right)$ | $-\infty<x<\infty$ | $\mu$ | $\sigma^2$ |
+
+## ⚖️ Family Selection Drill *(Studio 2 — "which of these could be X-distributed?")*
+The exam asks this as a one-line judgement plus a **reason**; the reason is always about **support or the number of outcomes**, never about "it looks bell-shaped".
+
+| Described variable | Verdict | Reason ➔ better family |
+| :--- | :--- | :--- |
+| US presidential election outcome | **not** binomial | more than two candidates ➔ binomial only with exactly **two** outcomes |
+| Shuttle launch | **binomial** ✓ | success/failure per launch, independent trials |
+| Football match result | **not** binomial | win/draw/loss = **three** outcomes ➔ redefine to "won?" or "lost?" to recover a binary trial |
+| Depth of the Yarra at a random point | **not** binomial | **continuous** measurement ➔ a continuous family |
+| Roll of a six-sided die | **not** binomial / **not** normal | six discrete outcomes ➔ **discrete uniform** |
+| Coin toss | **not** normal | discrete binary ➔ **Bernoulli/binomial**; uniform if fair |
+| Height of adults | **normal** ✓ | continuous, symmetric, unbounded support adequate |
+| Measurement error on a car's velocity | **normal** ✓ | continuous, centred on zero |
+| Calls received by a call centre in an hour | **not** normal | **discrete count** ➔ **Poisson** (near-normal only if the count is very large) |
+| Meteorites striking land vs water | **not** Poisson | **binary** event ➔ binomial |
+| Heart attacks per month · shoppers per day · workplace accidents per week | **Poisson** ✓ | counts of independent events at a constant rate in a fixed interval |
+| Populations of cities | **maybe** Poisson | discrete, but so large that a **normal** approximation is usually better |
+| Average weights of women | **not** Poisson | continuous ➔ **normal** |
+| Daily temperature in Belgrade | **not** uniform | seasonal and centre-heavy ➔ **normal** |
 
 > [!NOTE] **When It Flips:** the **variance–mean relationship** is the family fingerprint — Poisson has $V=E=\lambda$ (variance **grows** with the mean), binomial has $V=n\theta(1-\theta)<E=n\theta$ (variance **capped** and maximal at $\theta=\tfrac12$), Gaussian decouples them entirely ($\mu$ and $\sigma^2$ free) ➔ comparing a sample's mean against its variance is the fastest check that a count model is the wrong family.
 

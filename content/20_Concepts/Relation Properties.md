@@ -32,7 +32,7 @@ tags: [CS/Databases, Math/SetTheory]
 ## ⚖️ Core Decision Matrix
 | Property | From | Consequence |
 | :--- | :--- | :--- |
-| no duplicates | set | a [[Super Key and Candidate Key|super key]] always exists |
+| no duplicates | set | a [[Super Key and Candidate Key\|super key]] always exists |
 | tuples unordered | set | access by content |
 | attributes unordered | set | access by name |
 | atomic values | 1NF rule | dependencies/joins well-defined |

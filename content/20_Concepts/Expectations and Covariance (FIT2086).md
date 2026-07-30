@@ -58,6 +58,7 @@ $$V[X+Y]=V[X]+V[Y] \qquad (X\perp Y)$$
 - **Statement** ➔ for $X_1,\dots,X_n$ with $E[X_i]=\mu$ and any $\varepsilon>0$:
 $$P\!\left(\left|\frac{X_1+\cdots+X_n}{n}-\mu\right|>\varepsilon\right)\to 0 \quad\text{as } n\to\infty$$
 - **Reading** ➔ the **sample mean** $\bar x=\frac1n\sum x_i$ (a statistic — see [[Measures of Centrality]]) converges to the **theoretical mean** $E[X]$ as the sample grows ➔ this is the licence to estimate $\mu$ by $\bar x$ at all, and the engine behind every Monte Carlo estimate in [[R Simulation and Random Sampling]].
+- **Convergence RATE is set by the variance** *(Studio 2 simulation)* ➔ $V[\bar X_n]=\sigma^2/n$, so **less variable data converges sooner**: Bernoulli running means for $\theta=0.9$ ($\sigma^2=0.09$) settle onto their line visibly faster and tighter than $\theta=0.5$ ($\sigma^2=0.25$, the **maximum-variance** Bernoulli). The WLLN promises *that* it converges; $\sigma^2/n$ says *how fast* — and is exactly the estimator variance of [[Estimator Quality (Bias, Variance, MSE)]].
 
 ### 6. Existence of expected values
 - **Finite $\mathcal{X}$** ➔ $E[X]$ always exists.

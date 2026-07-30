@@ -43,13 +43,13 @@ tags: [CS/Algorithms, SWE/OOP, CS/Complexity]
 > 💡 **Common Mistake:** **Exponential time/output ≠ exponential space** ➔ the call tree has $2^n-1$ nodes but only one path is live, so stack is $\Theta(n)$; an iterative version emits the identical sequence with $\Theta(1)$ control state.
 
 ## ⚖️ Core Decision Matrix
-| Aspect | Tower of Hanoi | naive [[Recursion|Fibonacci]] |
-| :--- | :--- | :--- |
-| Recursion shape | binary, direct | binary, direct |
-| Subproblems | **distinct** (different pegs) | **overlapping** (recomputed) |
-| Time | $\Theta(2^n)$ (= output size) | $\Theta(\varphi^n)$ |
-| Memoisation helps? | **No** — output is exponential | **Yes** → $\Theta(n)$ |
-| Space (stack) | $\Theta(n)$ | $\Theta(n)$ |
+| Aspect             | Tower of Hanoi                 | naive [[Recursion\|Fibonacci]] |
+| :----------------- | :----------------------------- | :----------------------------- |
+| Recursion shape    | binary, direct                 | binary, direct                 |
+| Subproblems        | **distinct** (different pegs)  | **overlapping** (recomputed)   |
+| Time               | $\Theta(2^n)$ (= output size)  | $\Theta(\varphi^n)$            |
+| Memoisation helps? | **No** — output is exponential | **Yes** → $\Theta(n)$          |
+| Space (stack)      | $\Theta(n)$                    | $\Theta(n)$                    |
 
 > [!NOTE] **When It Flips:** vs [[Divide and Conquer]] — Hanoi divides into two subproblems + a $\Theta(1)$ combine, but the subproblems are size $n-1$ (not $n/2$), hence exponential not log-linear.
 

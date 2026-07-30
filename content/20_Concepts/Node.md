@@ -46,7 +46,7 @@ tags: [CS/DataStructures, SWE/OOP]
 | **Singly** | `next` | minimal memory | no backward walk, $O(n)$ predecessor |
 | **Doubly** | `prev`+`next` | $O(1)$ delete-given-node, bidirectional | extra pointer, double updates |
 | **Circular** | last→head | round-robin iteration | termination care |
-| node vs [[Array (Data Structure)|array slot]] | pointer | flexible growth, $O(1)$ splice | $O(i)$ access, poor cache |
+| node vs [[Array (Data Structure)\|array slot]] | pointer | flexible growth, $O(1)$ splice | $O(i)$ access, poor cache |
 
 > [!NOTE] **When It Flips:** $O(1)$ splice/relink at a held node vs $O(i)$ to reach an arbitrary position, plus per-node pointer overhead and poor locality — arrays win on access + cache, nodes win on growth + splicing.
 

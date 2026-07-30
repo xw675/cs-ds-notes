@@ -50,7 +50,7 @@ tags: [CS/Algorithms, CS/Complexity]
 | Even halves | $\log_2 n$ × $\Theta(n)$ | $\Theta(n\log n)$ | [[Merge Sort]] |
 | One side ≈ all | $n$ × $\Theta(n)$ | $\Theta(n^2)$ | [[Quick Sort]] worst |
 | Single half, $\Theta(1)$ work | $\log_2 n$ × $\Theta(1)$ | $\Theta(\log n)$ | [[Binary Search]] |
-| Overlapping subproblems | recompute | exponential → DP | naive [[Recursion|Fibonacci]] |
+| Overlapping subproblems | recompute | exponential → DP | naive [[Recursion\|Fibonacci]] |
 
 > [!NOTE] **When It Flips:** balanced splits give depth $\log_b n$; lopsided ones push depth toward $n$, collapsing $\Theta(n\log n)$ to $\Theta(n^2)$. Space: recursion stack $\Theta(\text{depth})$; merge-style combine adds $\Theta(n)$ scratch, partition-style is in-place.
 

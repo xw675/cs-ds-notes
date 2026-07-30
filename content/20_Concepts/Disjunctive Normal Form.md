@@ -44,7 +44,7 @@ $$P=(\neg X\wedge\neg Y)\vee(\neg X\wedge Y)\vee(X\wedge Y)$$
 | built from | True rows | one implicant each |
 | satisfiability | **easy** | any internally-consistent part is a witness |
 | size | up to $2^k$ parts | exponential blow-up |
-| natural for | listing solutions | not for stating rules ([[Conjunctive Normal Form|CNF]] better) |
+| natural for | listing solutions | not for stating rules ([[Conjunctive Normal Form\|CNF]] better) |
 
 > [!NOTE] **When It Flips:** DNF makes satisfiability trivial (inspect the parts — a part with no $X\wedge\neg X$ names a satisfying assignment), but real specifications list conditions that hold *together* (a conjunction), which suits CNF.
 

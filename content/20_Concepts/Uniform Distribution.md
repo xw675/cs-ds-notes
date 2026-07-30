@@ -1,11 +1,11 @@
 ---
 unit: [FIT1058, FIT2086]
 domain: D
-week: [2, 10]
-source: [lecture]
+week: [2, 3, 10]
+source: [lecture, applied]
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete]
-aliases: [discrete uniform, continuous uniform, U(a,b), U(k)]
+aliases: [discrete uniform, continuous uniform, U(a,b), U(k), runif, uniform cdf]
 ---
 # [[Uniform Distribution]]
 
@@ -39,6 +39,9 @@ $$p(x\mid a,b)=\begin{cases}0 & x<a\\[3pt] \dfrac{1}{b-a} & a\le x\le b\\[5pt] 0
 - **Mean** ➔ $E[X]=\dfrac{a+b}{2}=a+\dfrac{w}{2}$ — the midpoint, as in the discrete case.
 - **Variance** ➔ $V[X]=\dfrac{(b-a)^2}{12}=\dfrac{w^2}{12}$ ➔ **no $+1$**, unlike the discrete formula.
 - **Probabilities are length ratios** ➔ $P(X<c)=\dfrac{c-a}{b-a}$ for $a\le c\le b$: integrating a constant density just measures a sub-interval.
+- **cdf derivation** ➔ $\displaystyle P(X<x)=\int_a^x\frac{1}{b-a}\,dx'=\frac{1}{b-a}\left[x'\right]_a^x=\frac{x-a}{b-a}$ ➔ **linear** in $x$, from $0$ at $a$ to $1$ at $b$.
+- **"Fraction of the way along" shortcut** ➔ any bound expressed as a weighted midpoint reads off instantly: $\frac{a+b}{2}$ is halfway ⟹ $P=\tfrac12$; $\frac{a+3b}{4}$ is three-quarters along ⟹ $P(X\in[\tfrac{a+3b}{4},b])=\tfrac14$. No integration required.
+- **Outside the support the probability is exactly $0$** ➔ for $X\sim U(a,b)$ with $a,b>0$: $P(X>2b)=0$ (since $2b>b$) and $P(X\in[0,a])=0$ (the interval ends where the support starts) ➔ **check the support before computing anything**.
 
 **Key identities:**
 
@@ -86,10 +89,30 @@ P(X<1000) &= \int_{800}^{1000}\frac{dx}{700}=\left[\frac{x}{700}\right]_{800}^{1
 \end{aligned}
 $$**Final Extracted Output:** $1150$ kg, $40833.33$, $P\approx0.29$. **Key move:** the integral of a constant density is a **length ratio** — no antiderivative work needed.
 
+### Applied Exercise 3 — deriving $E[X]$ from the definition *(Studio 2)*
+**Problem:** $X\sim U(0,b)$. Derive $E[X]$ by integration rather than quoting $\tfrac{a+b}{2}$.
+$$
+\begin{aligned}
+E[X]&=\int_0^b x\,p(x\mid0,b)\,dx=\int_0^b\frac{x}{b}\,dx=\frac1b\int_0^b x\,dx\\
+&=\frac1b\left[\frac{x^2}{2}\right]_0^b=\frac{b^2}{2b}=\frac{b}{2}
+\end{aligned}
+$$**Final Extracted Output:** $E[X]=\tfrac b2$, consistent with $\tfrac{a+b}{2}$ at $a=0$. **Key move:** the constant $\tfrac1b$ pulls **outside** the integral, leaving the elementary $\int x\,dx$ — the same trick works for $E[X^2]$ if the question wants $V[X]$ from scratch.
+
+### Applied Exercise 4 — two dice by linearity *(Studio 2)*
+**Problem:** $X$ = one roll of a fair six-sided die, $Y$ = an independent second roll. Give $E[X]$ and $E[X+Y]$.
+$$
+\begin{aligned}
+E[X]&=\sum_x x\,P(X=x)=\tfrac16(1)+\tfrac16(2)+\tfrac16(3)+\tfrac16(4)+\tfrac16(5)+\tfrac16(6)=3.5\\
+E[X+Y]&=E[X]+E[Y]=3.5+3.5=7
+\end{aligned}
+$$**Final Extracted Output:** $3.5$ and $7$. **Key move:** $E[X+Y]=E[X]+E[Y]$ is **linearity — it needs no independence at all**; independence would only be required for $V[X+Y]=V[X]+V[Y]$ (see [[Expectations and Covariance (FIT2086)]]).
+
 ## ⚠️ Common Mistakes
 - 💡 **Count is $b-a+1$, not $b-a$** ➔ inclusive endpoints; the uniform is the maximally non-committal choice given only the range.
 - 💡 **Discrete variance formula on a continuous uniform** ➔ $\frac{(b-a+1)^2-1}{12}$ counts *lattice points* and is meaningless on an interval, where $\frac{(b-a)^2}{12}$ applies.
 - 💡 **Continuous density can exceed 1** ➔ $U(3,3.5)$ has $p(x)=2$; only the area under it is a probability.
+- 💡 **Computing a probability for a region outside $[a,b]$** ➔ $P(X>2b)$ and $P(X\in[0,a])$ are **zero**, not small; students reflexively apply the length ratio and produce a negative or $>1$ answer. Sketch the support first.
+- 💡 **Assuming any bounded variable is uniform** ➔ daily temperature and adult heights are bounded but centre-heavy ➔ **normal**. Uniform requires genuine symmetry (fair die/coin) or deliberate ignorance. Selection drill ➔ [[Parametric Probability Distributions]].
 
 ## 🧠 Active Recall
 > [!FAQ]- Give the pmf, mean, and variance of $\mathrm{Unif}(a,b)$ and verify on a fair die.

@@ -34,7 +34,7 @@ tags: [Math/Combinatorics, Math/Probability, Math/Discrete]
 | 1 | $+$ | single-set sizes |
 | 2 | $-$ | pairwise intersections |
 | 3 | $+$ | triple intersections |
-| all disjoint | — | collapses to $\sum|A_i|$ ([[Counting Principles|Addition Principle]]) |
+| all disjoint | — | collapses to $\sum\lvert A_i\rvert$ ([[Counting Principles\|Addition Principle]]) |
 
 > [!NOTE] **When It Flips:** the disjoint case (all intersections empty) is the [[Counting Principles|Addition Principle]]. A dual form expresses $\lvert\bigcap A_i\rvert$ via union sizes (De Morgan). $\binom{n}{k}$ counts the $k$-fold terms at each level.
 

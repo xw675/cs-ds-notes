@@ -1,11 +1,11 @@
 ---
 unit: [FIT1058, FIT2086]
 domain: D
-week: [2, 10]
-source: [lecture]
+week: [2, 3, 10]
+source: [lecture, applied]
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete]
-aliases: [Pois(lambda), rate parameter, Poisson thinning, dpois]
+aliases: [Pois(lambda), rate parameter, Poisson thinning, dpois, ppois, Poisson process]
 ---
 # [[Poisson Distribution]]
 
@@ -75,6 +75,17 @@ P(X_{T/4}=0) &= \frac{3^{0}e^{-3}}{0!} = e^{-3} \approx 0.0498
 \end{aligned}
 $$**Final Extracted Output:** $\approx0.05$. **Key move:** rescale $\lambda$ to the requested interval **first**; using $\lambda=12$ would answer a different question entirely.
 
+### Applied Exercise 3 — hospital heart attacks, week ➔ day *(Studio 2)*
+**Problem:** a hospital sees on average $6$ heart-attack patients **per week**, rate independent of the day. Find (i) $P(\le2$ in a week$)$; (ii) $P(\text{exactly }1$ on a given day$)$; (iii) $P(\ge1$ on a given day$)$.
+$$
+\begin{aligned}
+\text{(i)}\quad &P(X\le2\mid\lambda=6)=\texttt{ppois(2, 6)}\approx0.0620\\
+\text{(ii)}\quad &X=\textstyle\sum_{i=1}^{7}X_i\sim Poi\!\left(\sum_{i=1}^{7}\lambda_i\right)\text{ with all }\lambda_i\text{ equal}\;\Rightarrow\;\lambda_i=\tfrac67\\
+&P(X_i=1\mid\lambda=\tfrac67)=\frac{(6/7)^{1}e^{-6/7}}{1!}\approx0.3637\qquad\texttt{dpois(1, 6/7)}\\
+\text{(iii)}\quad &P(X_i\ge1)=1-P(X_i=0)=1-\frac{(6/7)^{0}e^{-6/7}}{0!}=1-e^{-6/7}\approx0.5756
+\end{aligned}
+$$**Final Extracted Output:** $0.0620$; $0.3637$; $0.5756$. **Key move:** the identical-days assumption is what forces $\lambda_1=\cdots=\lambda_7$, so additivity **run backwards** gives $\lambda_i=\lambda/7$. And "**at least one**" always collapses to $1-e^{-\lambda}$ because $P(X=0)=e^{-\lambda}$ — no summation needed.
+
 ## ⚙️ In R
 > [!code]- The `pois` suffix (details ➔ [[R Simulation and Random Sampling]])
 > ```r
@@ -83,13 +94,21 @@ $$**Final Extracted Output:** $\approx0.05$. **Key move:** rescale $\lambda$ to 
 > ppois(2, lambda = 3, lower.tail = FALSE)  # P(X >= 3)
 > qpois(0.95, lambda = 3)               # quantile
 > rpois(10, lambda = 3)                 # 10 random counts
+>
+> # Studio 2 — the pmf by hand vs the built-in (identical results)
+> 4^1 * exp(-4) / factorial(1)          # 0.07326  =  dpois(1, 4)
+> 4^0*exp(-4)/factorial(0) + 4^1*exp(-4)/factorial(1)   # P(X < 2) = 0.09158
+> dpois(0, 4) + dpois(1, 4)             # same, and equals ppois(1, 4)
+> 1 - ppois(5, 4)                       # P(X > 5) = 0.2149
 > ```
-> 💡 **Common Mistake:** `lambda` must already match the interval in the question ➔ do the $\lambda/k$ thinning by hand before the call.
+> 💡 **Common Mistake:** `lambda` must already match the interval in the question ➔ do the $\lambda/k$ thinning by hand before the call. Also `exp()` and `factorial()` reproduce the pmf exactly — useful for checking that you translated $P(X<2)$ into $P(X\le1)$ and not $P(X\le2)$.
 
 ## ⚠️ Common Mistakes
 - 💡 **$\mu$ is mean AND variance** ➔ the single parameter does double duty; the binomial→Poisson swap needs large $n$ with small $np$.
 - 💡 **Forgetting to rescale the rate** ➔ $\lambda$ is defined *per interval*; a question about a half/quarter period needs $Poi(\lambda/k)$.
 - 💡 **Applying Poisson to clustered events** ➔ if one event makes another more likely (contagion, queues, bursts) the independence and constant-rate conditions fail, and the $V=\lambda$ prediction breaks.
+- 💡 **Strict vs weak inequality on a discrete support** ➔ $P(X<2)=P(X\le1)=$ `ppois(1, λ)`, **not** `ppois(2, λ)`; unlike the continuous case the boundary value carries real mass.
+- 💡 **Poisson for a binary or continuous variable** ➔ "land vs water" is binary (binomial) and "average weight" is continuous (normal); Poisson needs an unbounded **count**. Selection drill ➔ [[Parametric Probability Distributions]].
 
 ## 🧠 Active Recall
 > [!FAQ]- State the Poisson pmf, show it sums to 1, and give mean and variance.

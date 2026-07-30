@@ -1,11 +1,12 @@
 ---
 unit: FIT2086
 domain: [D, E]
-week: 1
+week: [1, 3]
+source: [lecture, applied]
 parent: "[[R for Data Science]]"
 tags: [Tool/R, Math/Probability]
 type: pattern
-aliases: [R simulation, set.seed, sample, rnorm, dnorm, pnorm, qnorm, d p q r functions, random sampling in R, Monte Carlo R]
+aliases: [R simulation, set.seed, sample, rnorm, dnorm, pnorm, qnorm, d p q r functions, random sampling in R, Monte Carlo R, running mean, runningmean, WLLN simulation, convergence plot]
 ---
 # [[R Simulation and Random Sampling]]
 
@@ -59,6 +60,38 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 ```
 **Expected output:** a bell-shaped histogram with the red theoretical density tracking it; sample mean/sd close to 5/2. *(plotting: see [[R Visualisation (base graphics)]].)*
 
+## 📈 Simulating the WLLN — the running-mean convergence plot *(Studio 2)*
+The **running mean** $\bar x_j=\frac1j\sum_{i=1}^{j}x_i$ for $j=1,\dots,n$ makes the [[Expectations and Covariance (FIT2086)|WLLN]] visible: plot it against $j$ and watch it settle onto the population mean.
+```r
+runningmean <- function(x) {
+  mu <- vector(mode = "numeric", length = length(x))  # preallocate — avoids O(n^2) regrowth
+  S  <- 0
+  for (i in 1:length(x)) {
+    S     <- S + x[i]          # ONE running accumulator ...
+    mu[i] <- S / i             # ... so the whole vector costs O(n), not O(n^2)
+  }
+  return(mu)
+}
+
+# reference line = the population mean, then overlay three independent runs
+plot(1:1000, rep(0, 1000), col = "black", type = "l",
+     xlab = "Samples", ylab = "Sample mean")
+lines(1:1000, runningmean(rnorm(1000, 0, 1)), col = "red")
+lines(1:1000, runningmean(rnorm(1000, 0, 1)), col = "green")
+lines(1:1000, runningmean(rnorm(1000, 0, 1)), col = "blue")
+
+# Bernoulli version: ylim pins the axis to the parameter space [0, 1]
+plot(1:1000, rep(1/2, 1000), col = "black", type = "l", ylim = c(0, 1),
+     xlab = "Samples", ylab = "Sample mean")
+lines(1:1000, rep(0.9, 1000), col = "black")
+lines(1:1000, runningmean(rbinom(1000, 1, 0.5)), col = "red")
+lines(1:1000, runningmean(rbinom(1000, 1, 0.9)), col = "blue")
+```
+**Expected output:** every curve is wild for small $j$ and tightens onto its flat reference line as $j$ grows. The $\theta=0.9$ curve hugs its line **visibly sooner and tighter** than the $\theta=0.5$ curve.
+- **Why the two Bernoulli curves differ** ➔ $V[\bar X_j]=\frac{\theta(1-\theta)}{j}$, and $0.9(0.1)=0.09$ against $0.5(0.5)=0.25$ ➔ **less variable data converges faster**; $\theta=\tfrac12$ is the maximum-variance Bernoulli.
+- **`rep(c, n)` builds the reference line** ➔ a constant vector of length $n$ is how you draw a horizontal line with `plot`/`lines`.
+- **`ylim = c(0,1)`** ➔ set on the **first** `plot()` call; passing it to `lines()` is silently ignored.
+
 ## ✍️ Practice 
 > [!QUESTION]- Practice 1: Estimate $P(X>1.5)$ for $X\sim N(0,1)$ two ways — exactly, and by simulation — reproducibly.
 > > [!SUCCESS]- Reference solution
@@ -83,6 +116,8 @@ curve(dnorm(x, 5, 2), add = TRUE, col = "red")  # true density overlaid
 - 💡 **`d`/`p`/`q`/`r` mix-up** ➔ `rnorm` draws samples; `dnorm` gives density heights (not probabilities); `pnorm` gives $P(X\le q)$; `qnorm` inverts it. Reaching for the wrong prefix is the top mistake.
 - 💡 **`sample` without `replace` caps at set size** ➔ `sample(1:6, 10)` errors; you need `replace = TRUE` whenever `size` exceeds the population.
 - 💡 **Seed placement matters** ➔ `set.seed()` must precede **each** block you want reproducible; the generator advances with every draw.
+- 💡 **`rbinom`'s `n` is not the binomial's $n$** ➔ in `rbinom(n, size, prob)` the first argument is **how many variates to generate** and `size` is the binomial's number of trials ➔ `rbinom(10, 5, 0.25)` returns **10 draws** from $Bin(5,0.25)$, not one draw from $Bin(10,\cdot)$.
+- 💡 **Growing a vector inside a loop** ➔ `mu <- c(mu, val)` reallocates every iteration ($O(n^2)$); `vector(mode="numeric", length=n)` preallocates and keeps the running mean $O(n)$.
 - 💡 **A density is not a probability** ➔ `dnorm(0)` ≈ 0.399, not a probability — consistent with [[Random Variables and Probability Distributions (FIT2086)|continuous densities]] where only integrals (via `pnorm`) are probabilities.
 
 ## 🧠 Active Recall

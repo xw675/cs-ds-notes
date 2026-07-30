@@ -37,7 +37,7 @@ tags: [CS/DataStructures, SWE/OOP, CS/Complexity, CS/Abstraction]
 ## ⚖️ Core Decision Matrix
 | Implementation | `get_max()` | `add` | `decrease_key` |
 | :--- | :--- | :--- | :--- |
-| Unsorted array / [[List (ADT)|LinkList]] | $O(n)$ | $O(1)$ | $O(1)$ |
+| Unsorted array / [[List (ADT)\|LinkList]] | $O(n)$ | $O(1)$ | $O(1)$ |
 | Sorted array / list | $O(1)$ | $O(n)$ | $O(n)$ |
 | Balanced BST ([[Binary Tree]]) | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ |
 | **Binary [[Heap]]** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ |

@@ -37,7 +37,7 @@ tags: [CS/DataStructures, CS/Abstraction]
 | Variant / Strategy | Access | Insert/delete at position | Growth | Cache / Memory Impact |
 | :--- | :--- | :--- | :--- | :--- |
 | **Contiguous** ([[Array (Data Structure)]]) | $O(1)$ | $O(n)$ (shift) | fixed (realloc) | **friendly** (spatial locality) |
-| **Linked** ([[Node]]/[[List (ADT)|LinkList]]) | $O(n)$ (traverse) | $O(1)$ (relink) | free | **hostile** (pointer chasing) |
+| **Linked** ([[Node]]/[[List (ADT)\|LinkList]]) | $O(n)$ (traverse) | $O(1)$ (relink) | free | **hostile** (pointer chasing) |
 
 > [!NOTE] **When It Flips:** layout ≠ ADT — the same ADT on different structures differs in real-world performance even at identical Big-O (cache + constants). [[Tree]]s/graphs extend the linked layout to multi-child pointer nodes.
 

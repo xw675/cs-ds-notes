@@ -49,7 +49,7 @@ Proved in **two containments**, both constructive:
 
 | Direction | Construction idea |
 | :--- | :--- |
-| **CFG → PDA** (⊆) | Simulate a **leftmost** derivation: push $S$; repeatedly **expand** the top nonterminal by a production ($\varepsilon,X\to$ its right side) and **match** surfacing terminals against the input ($a,a\to\varepsilon$). Uses the [[Derivations and Parse Trees|prefix property]]. |
+| **CFG → PDA** (⊆) | Simulate a **leftmost** derivation: push $S$; repeatedly **expand** the top nonterminal by a production ($\varepsilon,X\to$ its right side) and **match** surfacing terminals against the input ($a,a\to\varepsilon$). Uses the [[Derivations and Parse Trees\|prefix property]]. |
 | **PDA → CFG** (⊇) | Normalise the PDA (one Final state, empty stack at accept, each move **either** pushes **or** pops). Introduce a nonterminal $A_{pq}$ = "strings that take the PDA from state $p$ to $q$, empty stack to empty stack"; the productions $A_{pq}\to A_{pr}A_{rq}$ and $A_{pq}\to xA_{p'q'}y$ mirror the two ways a computation returns to an empty stack. |
 
 - **Consequence** ➔ the PDA is to CFLs what the FA is to regular languages — a machine characterisation of the grammar class.

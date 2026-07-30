@@ -60,7 +60,7 @@ $$
 
 ---
 ## ⚖️ A Tale of Two Pumping Lemmas
-| | [[Pumping Lemma for Regular Languages|Regular]] | **Context-free** |
+| | [[Pumping Lemma for Regular Languages\|Regular]] | **Context-free** |
 | :--- | :--- | :--- |
 | Object with the bound | **FA** with $N$ states | **CNF grammar** with $k$ nonterminals |
 | "Sufficiently long" | $\vert w\vert\ge N$ | $\vert w\vert>2^{k-1}$ |

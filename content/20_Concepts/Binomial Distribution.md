@@ -1,11 +1,11 @@
 ---
 unit: [FIT1058, FIT2086]
 domain: D
-week: [2, 10]
-source: [lecture]
+week: [2, 3, 10]
+source: [lecture, applied]
 parent: "[[Random Variable]]"
 tags: [Math/Probability, Math/Discrete]
-aliases: [Bernoulli Trial, Bernoulli Distribution, Bin(theta n), Be(theta), dbinom]
+aliases: [Bernoulli Trial, Bernoulli Distribution, Bin(theta n), Be(theta), dbinom, pbinom, binomial experiment]
 ---
 # [[Binomial Distribution]]
 
@@ -29,6 +29,17 @@ aliases: [Bernoulli Trial, Bernoulli Distribution, Bin(theta n), Be(theta), dbin
 - **pmf derivation** ➔ one specific $k$-success sequence has probability $\prod_{i=1}^{n}p(x_i\mid\theta)=p^k(1-p)^{n-k}$; $\binom{n}{k}$ placements ([[Binomial Coefficient]]) ⟹ $\mathrm{Pr}(Z=k)=\binom{n}{k}p^k(1-p)^{n-k}$.
 - **Why the coefficient is needed** ➔ for $1\le k\le n-1$ **several** sequences carry $k$ successes; $k=2,n=4$ admits the six orderings $1100,1010,1001,0110,0101,0011$ ⟹ $p(m{=}2\mid\theta)=\binom42\theta^2(1-\theta)^2$.
 - **Additivity in $n$** *(FIT2086)* ➔ $M_1\sim Bin(\theta,n_1)$ and $M_2\sim Bin(\theta,n_2)$ with the **same** $\theta$ ⟹ $M_1+M_2\sim Bin(\theta,n_1+n_2)$ — immediate from the definition as a sum of Bernoulli variates, so pooling batches simply adds trial counts.
+- **Reading the pmf term by term** *(the standard "interpret this factor" exam question)*:
+
+| Factor in $\binom{n}{m}\theta^{m}(1-\theta)^{n-m}$ | Interpretation |
+| :--- | :--- |
+| $\theta^{m}$ | probability of seeing $m$ **successes** |
+| $(1-\theta)^{n-m}$ | probability of the event **not** occurring $n-m$ times, i.e. $n-m$ **failures** |
+| $\theta^{m}(1-\theta)^{n-m}$ | probability of $m$ successes and $n-m$ failures **in one particular ordering** |
+| $\binom{n}{m}$ | the **number of orderings** of $m$ successes among $n$ trials |
+| $\sum_{k=i}^{n}\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$ | probability of **$i$ or more** successes, irrespective of ordering |
+
+- **Every specific sequence is equally likely when $\theta=\tfrac12$** ➔ $P(\text{a named sequence})=\theta^{n}$ regardless of how many $1$s it contains, so $(0,0,1,0,1,1,0,0,1,1)$ and $(0,0,\dots,0)$ both have $(\tfrac12)^{10}=1/1024$ ➔ the $\binom{n}{m}$ factor is what makes *counts* unequal while *sequences* stay equal.
 
 ### 3. Moments via Indicator Sums
 - **Decompose** ➔ $Z=\sum_{i=1}^n X_i$ with Bernoulli $X_i$.
@@ -59,6 +70,16 @@ $$
 \end{aligned}
 $$**Final Extracted Output:** $0.96$ expected sales; $P(M\le2)\approx0.935$; $P(M\ge2)\approx0.249$. **Key move:** "**2 or more**" is the complement of $M\le1$, **not** of $M\le2$ — the boundary value $m=2$ sits inside *both* one-sided events, so $P(M\le2)+P(M\ge2)>1$.
 
+### 3. Applied Exercise — fair-coin tails by hand *(Studio 2)*
+**Problem:** (i) $P(m\ge2)$ heads in $n=4$ tosses of a fair coin; (ii) $P(m\ge5)$ ones in $n=10$ Bernoulli$(\tfrac12)$ draws.
+$$
+\begin{aligned}
+\text{(i)}\quad P(m\ge2\mid\theta=\tfrac12,n=4)&=\binom42\left(\tfrac12\right)^{2}\!\left(\tfrac12\right)^{2}+\binom43\left(\tfrac12\right)^{3}\!\left(\tfrac12\right)^{1}+\binom44\left(\tfrac12\right)^{4}\!\left(\tfrac12\right)^{0}\\
+&=\left(\tfrac12\right)^{4}\!\left(6+4+1\right)=\frac{11}{16}\\
+\text{(ii)}\quad P(m\ge5)&=1-P(m\le4)=1-0.377=0.623\qquad\texttt{1 - pbinom(4, 10, 1/2)}
+\end{aligned}
+$$**Final Extracted Output:** $11/16=0.6875$; $\approx0.623$. **Key move:** with $\theta=\tfrac12$ every term shares the factor $(\tfrac12)^n$, so the sum collapses to $\tfrac{1}{2^n}\sum\binom{n}{k}$ — pure counting. For (ii), "$5$ or more" complements $m\le\mathbf{4}$, so `pbinom` takes $k-1$.
+
 > [!NOTE] **When It Flips:** the indicator sum is the showcase of linearity — instant $E=np$. Binomial fixes $n$ and counts successes; the [[Geometric Distribution|geometric]] fixes the first success and varies the trial count.
 
 ## ⚙️ In R
@@ -77,6 +98,8 @@ $$**Final Extracted Output:** $0.96$ expected sales; $P(M\le2)\approx0.935$; $P(
 - 💡 **Linearity needs no independence, variance does** ➔ $E=np$ always holds; $\mathrm{Var}=np(1-p)$ requires independent trials.
 - 💡 **Renaming success swaps $p\leftrightarrow1-p$** ➔ which outcome is "success" is a modelling choice; keep it fixed through the calculation.
 - 💡 **Additivity requires a shared $\theta$** ➔ $M_1+M_2\sim Bin(\theta,n_1+n_2)$ holds only when both batches share the success probability; differing $\theta$ leaves no binomial at all.
+- 💡 **Calling a ≥3-outcome experiment binomial** ➔ a football match (win/draw/loss) or a die roll is **not** a binomial experiment; it becomes one only if you **redefine** the outcome as a single yes/no ("did they win?"). Continuous measurements never qualify. Selection drill ➔ [[Parametric Probability Distributions]].
+- 💡 **Confusing "this sequence" with "this many successes"** ➔ a named sequence has probability $\theta^{m}(1-\theta)^{n-m}$ with **no** $\binom{n}{m}$; the coefficient appears only when the event is a **count**.
 
 ## 🧠 Active Recall
 > [!FAQ]- Derive the binomial pmf $\binom{n}{k}p^k(1-p)^{n-k}$.
