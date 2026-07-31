@@ -1,7 +1,7 @@
 ---
 unit: FIT2086
-week: 4
-source: [lecture]
+week: [4, 5]
+source: [lecture, applied]
 domain: D
 parent: "[[Parametric Probability Distributions]]"
 tags: [Math/Probability, DataScience/Modelling]
@@ -9,7 +9,7 @@ aliases: [Student t, t-distribution, t distribution, degrees of freedom, DOF, t 
 ---
 # [[Student-t Distribution]]
 
-**Context:** [[FIT2086_MOC]] · the distribution the standardised sample mean follows once $\sigma^2$ is **estimated rather than known** · replaces $z$ with $t$ in the unknown-variance case of [[Confidence Intervals]] · a wider-tailed sibling of the [[Gaussian Distribution]]
+**Context:** [[FIT2086_MOC]] · the distribution the standardised sample mean follows once $\sigma^2$ is **estimated rather than known** · replaces $z$ with $t$ in the unknown-variance case of [[Confidence Intervals]] and of [[Tests for Normal Means (z-test and t-test)|the $t$-test]] · a wider-tailed sibling of the [[Gaussian Distribution]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $\dfrac{\hat\mu_{ML}-\mu}{\hat\sigma_u/\sqrt{n}}\sim t(n-1)$ ➔ one parameter, the **degrees of freedom** $\nu=n-1$; symmetric and self-similar like the normal, but with **heavier tails**.
@@ -26,12 +26,18 @@ aliases: [Student t, t-distribution, t distribution, degrees of freedom, DOF, t 
 | $n$ | $\nu=n-1$ | $t_{0.025,\nu}$ | Excess over $z_{0.025}=1.96$ |
 | :--- | :--- | :--- | :--- |
 | $3$ | $2$ | $\approx 4.30$ | $+119\%$ |
+| $5$ | $4$ | $\approx 2.776$ | $+42\%$ |
 | $6$ | $5$ | $\approx 2.57$ | $+31\%$ |
 | $8$ | $7$ | $\approx 2.36$ | $+20\%$ |
+| $10$ | $9$ | $\approx 2.262$ | $+15\%$ |
 | $11$ | $10$ | $\approx 2.22$ | $+13\%$ |
+| $15$ | $14$ | $\approx 2.145$ | $+9\%$ |
+| $50$ | $49$ | $\approx 2.009$ | $+2.5\%$ |
+| $100$ | $99$ | $\approx 1.984$ | $+1.2\%$ |
+| $1000$ | $999$ | $\approx 1.962$ | $+0.1\%$ |
 | $\infty$ | $\infty$ | $1.96$ | $0\%$ |
 
-**Final extracted output:** the penalty is severe only for tiny samples — by $n\approx 30$ the $t$ and $z$ intervals differ by a few percent, which is why large-$n$ work quotes $1.96$ without apology. Look-up syntax lives in [[R Toolkit (Cheatsheet)]].
+**Final extracted output:** the penalty is severe only for tiny samples — by $n\approx 30$ the $t$ and $z$ intervals differ by a few percent, which is why large-$n$ work quotes $1.96$ without apology. Look-up syntax lives in [[R Toolkit (Cheatsheet)]]; the coverage cost of ignoring the correction is measured empirically in [[Confidence Interval Coverage Simulation]].
 
 ## ⚠️ Common Mistakes
 - 💡 **Using $\nu=n$** ➔ the degrees of freedom are $n-1$; at $n=8$ that is $t_{0.025,7}=2.36$, not $t_{0.025,8}=2.31$ — small, but it is a free mark.

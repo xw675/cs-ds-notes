@@ -1,6 +1,6 @@
 ---
 unit: FIT2086
-week: 4
+week: [4, 5]
 source: [lecture]
 domain: D
 parent: "[[Statistical Modelling and Inference]]"
@@ -9,7 +9,7 @@ aliases: [confidence interval, CI, interval estimation, interval estimator, cove
 ---
 # [[Confidence Intervals]]
 
-**Context:** [[FIT2086_MOC]] · **interval** estimation — the second of the three inference tasks, after the point estimation of [[Maximum Likelihood Estimation]] · built entirely on the sampling distribution of $\hat\theta$ ([[Sampling Distribution of an Estimator]]), exactly where the population is normal and via [[Central Limit Theorem|the CLT]] everywhere else · the machinery reused next week for hypothesis testing
+**Context:** [[FIT2086_MOC]] · **interval** estimation — the second of the three inference tasks, after the point estimation of [[Maximum Likelihood Estimation]] · built entirely on the sampling distribution of $\hat\theta$ ([[Sampling Distribution of an Estimator]]), exactly where the population is normal and via [[Central Limit Theorem|the CLT]] everywhere else · the machinery reused in W5 by [[Hypothesis Testing]], where the same pivot is re-centred on a fixed null value
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a **procedure** $T_\alpha(\mathbf{y})=(\hat\theta^-,\hat\theta^+)$ with $P\big(\theta\in T_\alpha(\mathbf{y})\big)=1-\alpha$ ➔ estimate $\pm$ (critical value) $\times$ (standard error).
@@ -22,7 +22,8 @@ aliases: [confidence interval, CI, interval estimation, interval estimator, cove
 - **Coverage definition** ➔ $T_\alpha$ is a $100(1-\alpha)\%$ confidence interval if $P\big(\theta\in T_\alpha(\mathbf{y})\big)=1-\alpha$, the probability taken **over samples from the population**: for $100(1-\alpha)\%$ of the samples you *could* have drawn, the generated interval covers the true $\theta$.
 - **Frequentist reading, stated precisely** ➔ *before* sampling there is a $95\%$ chance of drawing a $\mathbf{y}$ whose interval covers $\theta$; *after* sampling the interval is fixed and either covers or does not — no probability remains to be assigned.
 - **Standard error is the scale unit** ➔ $\mathrm{se}=\sqrt{V[\hat\theta]}$, i.e. $\sigma/\sqrt{n}$ for a sample mean with known variance and $\sqrt{v(\hat\theta)/n}$ in the approximate case; every interval below is $\hat\theta\pm(\text{critical value})\times\mathrm{se}$.
-- **Critical values from the unit normal** ➔ $z_{\alpha/2}=Q(1-\alpha/2)$ with $Q$ the quantile function: $z_{0.025}\approx1.96$ ($\alpha=0.05$), $z_{0.005}\approx2.576$ ($\alpha=0.01$).
+- **Critical values from the unit normal** ➔ $z_{\alpha/2}=Q(1-\alpha/2)$ with $Q$ the quantile function: $z_{0.1}\approx1.281$ ($\alpha=0.2$), $z_{0.025}\approx1.96$ ($\alpha=0.05$), $z_{0.005}\approx2.576$ ($\alpha=0.01$) — lower confidence ⟹ smaller multiplier ⟹ **narrower** interval.
+- **The $100\%$ interval is degenerate** ➔ covering the parameter for *every* possible sample forces $(-\infty,\infty)$; it is useless precisely because it excludes nothing. Confidence is bought with width.
 - **Three width drivers** ➔ width is **proportional to $\sigma$**, **inversely proportional to $\sqrt{n}$** (quartering the width costs $16\times$ the data), and **increases with the confidence level $1-\alpha$**.
 - **Reporting template** ➔ *"The estimated mean BMI of diabetic Pima people ($n=8$) is $38.88\ \mathrm{kg/m^2}$. We are $95\%$ confident the population mean lies between $34.3$ and $43.47\ \mathrm{kg/m^2}$."* — estimate, then $n$, then the interval, then the population-level claim.
 
@@ -67,6 +68,22 @@ Non-diabetic sample $\mathbf{y}_N=(34.0,28.9,29.0,45.4,53.2,29.0,36.5,32.9)$, $n
 - **Entirely positive** ➔ suggestive of a genuine **positive** difference ($\mu_A>\mu_B$).
 - **Contains zero** ➔ $\mu_A=\mu_B$ is **compatible with the data** — report "cannot rule out no difference", which is *not* evidence that the difference is zero.
 - **Why variances add, not subtract** ➔ independence of the two samples gives $V[\hat\mu_A-\hat\mu_B]=V[\hat\mu_A]+V[\hat\mu_B]=\frac{\sigma_A^2}{n_A}+\frac{\sigma_B^2}{n_B}$; the minus sign in the estimate never reaches the variance.
+
+## ➕ Further Intervals
+- **Proportion (Case 4 instantiated)** ➔ $\hat\theta_{ML}=m/n$ is a sample mean with $v(\theta)=\theta(1-\theta)$, so the CLT gives $\hat\theta_{ML}\pm z_{\alpha/2}\sqrt{\dfrac{\hat\theta_{ML}(1-\hat\theta_{ML})}{n}}$ — the **plug-in** form used in Studio 4. *(The W5 test-summary table writes the same interval with $\theta_0$ in the radicand, matching the null-based standard error of the test itself ➔ [[Tests for Bernoulli Populations]].)*
+- **Worked — the coin toss** ➔ $n=12$, $m=4$ heads ➔ $\hat\theta=1/3$; $1/3\pm1.96\sqrt{\tfrac{(1/3)(2/3)}{12}}=(0.066,\,0.600)$. The interval **contains $0.5$**, so a fair coin is not ruled out — but it also spans "heavily tail-biased" to "slightly head-biased", i.e. $n=12$ buys almost no information.
+- **Two proportions** ➔ $(\hat\theta_x-\hat\theta_y)\pm z_{\alpha/2}\sqrt{\hat\theta_p(1-\hat\theta_p)\left(\tfrac{1}{n_x}+\tfrac{1}{n_y}\right)}$ with the pooled $\hat\theta_p=\tfrac{m_x+m_y}{n_x+n_y}$.
+- **Small-$n$ difference of means, equal variances** *(slides flag this as optional extra)* ➔ $(\hat\mu_x-\hat\mu_y)\pm t_{\alpha/2,\,n_x+n_y-2}\,\hat\sigma_p\sqrt{\tfrac{1}{n_x}+\tfrac{1}{n_y}}$ with the pooled $\hat\sigma_p$.
+- **Small-$n$ difference of means, unequal variances** ➔ same estimate, but $t_{\alpha/2,\mathrm{df}}$ on the Welch–Satterthwaite $\mathrm{df}$ ➔ both forms in [[Tests for Normal Means (z-test and t-test)]].
+- **Every interval pairs with a test** ➔ the W5 summary tables list each test statistic beside the interval built on the *same* standard error; learn them as one object, not two.
+- **A one-sided alternative yields a BOUND, not a range** ➔ against $H_A:\mu<\mu_0$ the companion interval is $\left(-\infty,\ \hat\mu+t_{\alpha,n-1}\tfrac{\hat\sigma_u}{\sqrt n}\right)$: a plausible **upper bound** on $\mu$, using $t_\alpha$ rather than $t_{\alpha/2}$ because the whole $\alpha$ sits in one tail. On the Studio 5 blood-pressure data this is $(-\infty,\,116.10)$ against the two-sided $(111.46,\,116.54)$ ➔ report the **two-sided** interval whenever a range of plausible values is wanted, and the one-sided one only alongside the directional test it answers.
+- **Same difference, three widths** ➔ approximate $z$ vs Welch $t$ vs pooled $t$ on one two-sample difference give three intervals; the approximate one is narrowest and therefore slightly **overconfident** ➔ the S&P comparison in [[Tests for Normal Means (z-test and t-test)]].
+
+## 🖥 Applied Layer *(Studios 4–5)*
+- **Compute and report** ➔ `calcCI(y, alpha)` returns $\hat\mu$, $\hat\sigma^2_u$ and the $t$ interval; the two-group SP500 comparison and the reporting templates live in [[Confidence Intervals in R (calcCI)]].
+- **Or let R do it** ➔ `t.test()` returns the same interval, with `conf.level` setting $1-\alpha$ and `alternative` switching a range for a bound ➔ [[Hypothesis Testing in R (t.test, binom.test, prop.test)]].
+- **Confidence is bought with width** ➔ on the $n=20$ blood-pressure data the two-sided interval runs $(111.90,\,116.10)$ at $90\%$, $(111.46,\,116.54)$ at $95\%$ and $(110.53,\,117.47)$ at $99\%$ — covering more of the parameter space is the *only* way to raise the guarantee on fixed data.
+- **Audit the guarantee** ➔ Cases 1–2 are **exact** at every $n$; every plug-in variance (Cases 3–4, the proportion form) **undercovers** at small $n$ — measured empirically in [[Confidence Interval Coverage Simulation]].
 
 ## ⚠️ Common Mistakes
 - 💡 **"There is a $95\%$ probability that $\mu$ lies in $(34.3,43.47)$"** ➔ the classic mark-loser: $\mu$ is a **fixed constant**, not an RV, so this interval has no probability attached. Say "we are $95\%$ confident", meaning $95\%$ of samples produce covering intervals.

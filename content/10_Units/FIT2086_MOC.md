@@ -12,7 +12,7 @@ tags: [DataScience/Modelling, Tool/R]
 - **Assignment 1 (10%, due W5)** · **Assignment 2 (20%, due W8)** · **Assignment 3 (20%, due W11)** ➔ carry the whole in-semester half; **all involve implementing models in R (LO5)**.
 - **Final exam (50%)**
 - **LO map** ➔ LO1 EDA/descriptive (W1–2) · LO2 inferential models (W3–5) · LO3 predictive models (W6–9, W11) · LO4 sampling/simulation/testing (W3, W5, W10) · LO5 implement in R (W6–11) · LO6 interpret results (W4–11).
-- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.**
+- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.**
 
 ## 🧰 Toolkit Cheatsheets
 - [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block plus the `qnorm`/`qt` critical-value rows
@@ -63,9 +63,45 @@ tags: [DataScience/Modelling, Tool/R]
 - [[Student-t Distribution]] -> Parent Framework: [[Parametric Probability Distributions]] *($\nu=n-1$, heavier tails, $t_{\alpha/2,\nu}>z_{\alpha/2}$ always)*
 - *(Reading: Ross Ch. 6 §6.3 and Ch. 7 §7.3, 7.4, 7.5)*
 
+#### Studio 3 *(run in W4 — drills the W3 estimation material; `train.csv` / `test.csv`)*
+- [[Plug-in Prediction and Held-Out Evaluation]] -> Parent Framework: [[Maximum Likelihood Estimation]] *(fit on train ➔ `pnorm` predictions ➔ empirical proportions ➔ **out-of-sample NLL**; $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u$ head-to-head)*
+- [[Monte Carlo Estimator Comparison]] -> Parent Framework: [[Estimator Quality (Bias, Variance, MSE)]] *(simulation loop for $b_\theta$/$\mathrm{Var}_\theta$/MSE; **RelMSE**; mean vs median under contamination)*
+- [[Maximum Likelihood Estimation]] — the **Bernoulli** derivation $\hat\theta=m/n$; ML's **boundary overconfidence** at $m\in\{0,n\}$
+- [[Estimator Quality (Bias, Variance, MSE)]] — **efficiency vs robustness**: RelMSE is scale-free, moves with $n$ and the contamination fraction
+
+### Week 5 — Hypothesis Testing
+- [[Hypothesis Testing]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy** hub: Neyman–Pearson, $p$-value semantics + evidence grading, one vs two sided, $\alpha$, why the null can never be proved)*
+- [[Tests for Normal Means (z-test and t-test)]] -> Parent Framework: [[Hypothesis Testing]] *(**exam-heavy hand skill**: the 5-case selection matrix + 8 worked examples; pooled/Welch $t$ flagged optional)*
+- [[Tests for Bernoulli Populations]] -> Parent Framework: [[Hypothesis Testing]] *(CLT-based proportion $z$-test; null-supplied $\mathrm{se}$, pooled $\hat\theta_p$, exact `binom.test`/`prop.test`)*
+- [[Confidence Intervals]] — **merged**: proportion intervals, small-$n$ pooled/Welch difference intervals, and the interval–test pairing from the W5 summary tables
+- *(Reading: Lecture 5 Notes)*
+
+#### Studio 4 *(run in W5 — drills the W4 CLT/CI material; `train.csv` / `test.csv` / `SP500.csv`)*
+- [[Confidence Intervals in R (calcCI)]] -> Parent Framework: [[Confidence Intervals]] *(**A1 hand-and-R skill**: `calcCI` anatomy ➔ heights train/test check ➔ SP500 pre/post-Lehman difference ➔ the reporting statement)*
+- [[Confidence Interval Coverage Simulation]] -> Parent Framework: [[Confidence Intervals]] *(generate ➔ build interval ➔ tally containment; exact $z$/$t$ vs the undercovering plug-in; Poisson $(\lambda,n)$ coverage grid)*
+- [[Confidence Intervals]] — $z_{0.1}=1.281$ at $80\%$, the degenerate $100\%$ interval $(-\infty,\infty)$, the **plug-in proportion** interval + the $n=12$ coin toss $(0.066,0.600)$
+- [[Student-t Distribution]] — critical-value table extended to $n=5,10,50,100,1000$ ➔ $t\to z$ visibly by $n\approx50$
+- [[Estimator Quality (Bias, Variance, MSE)]] — the **Bernoulli** $\hat\theta_{ML}$ drill: $b=0$, $\mathrm{Var}=\mathrm{MSE}=\theta(1-\theta)/n$, consistency, and the CLT limit
+
+### Week 6 — Linear Regression & Model Selection
+- [[Linear Regression (FIT2086)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy** hub: supervised setup, simple→multiple, least squares, $\text{RSS}$/$\text{TSS}$/$R^2$, prediction)*
+- [[Least Squares as Maximum Likelihood]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**derivation drill**: $\varepsilon_i\sim N(0,\sigma^2)$ ➔ $L=\tfrac n2\log(2\pi\sigma^2)+\tfrac{\text{RSS}}{2\sigma^2}$; $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u=\text{RSS}/(n-p-1)$)*
+- [[Predictor Transformations (Indicators, Polynomials, Interactions)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *($K-1$ indicators, $\log$/polynomial, $x_jx_k$ — linear in $\boldsymbol\beta$, not in $x$)*
+- [[Model Selection and Information Criteria (AIC, BIC)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: $t_j$ + $H_0:\beta_j=0$; $L+\alpha(n,k_M)$; AIC $k_M$ vs BIC $\tfrac{k_M}2\log n$; all-subsets $2^p$ vs stepwise)*
+- [[Multiple Regression and Stepwise Selection in R]] -> Parent Framework: [[R for Data Science]] *(**LO5 hand skill**: `lm` ➔ `summary` ➔ `step(…, k = log(n))`)*
+- [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] — **merged**: under/overfitting restated as *omitting important* vs *including spurious* predictors; generalisation; polynomial degree $=$ predictor-set choice
+- *(Reading: Ross Ch. 9)*
+
+#### Studio 5 *(run in W6 — drills the W5 hypothesis-testing material; `bpdata.csv` / `SP500.csv`)*
+- [[Hypothesis Testing in R (t.test, binom.test, prop.test)]] -> Parent Framework: [[Hypothesis Testing]] *(**exam + A2 hand skill**: `mu` / `alternative` / `conf.level` / `var.equal`; `rv$p.value`; `binom.test` vs `prop.test`)*
+- [[Tests for Normal Means (z-test and t-test)]] — **merged**: the `bpdata` two-sided ($9.0\times10^{-5}$) vs one-sided ($4.5\times10^{-5}$) pair, and the **three routes to one difference** on S&P (approximate $z$ / Welch $t$ / pooled $t$)
+- [[Tests for Bernoulli Populations]] — **merged**: the "guess the coin" drill ($z=-1.155$, $p=0.248$ vs exact $0.3877$), the two-sample pooled $\hat\theta_p=14/24$ ($p=0.0130$ vs exact $0.0384$), and the `binom.test` **sensitivity sweep**
+- [[Hypothesis Testing]] — **merged**: $\sigma^2\uparrow\Rightarrow\lvert z\rvert\downarrow\Rightarrow p\uparrow$; the leukemia-trial true/false drill at $p=0.17$; the rejection threshold **scales with the consequences** of a wrong call
+- [[Confidence Intervals]] — **merged**: a one-sided alternative returns a **bound** $(-\infty,u)$, not a range; the $90/95/99\%$ width sweep on `bpdata`
+
 ### 🔭 Coming later in the unit *(from the unit outline — no notes yet)*
-- **W5 next:** hypothesis testing ($p$-values, type I/II errors) *(the direct sequel — same sampling-distribution machinery, inverted)*.
-- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · hypothesis testing (p-values, type I/II errors) · exploratory vs confirmatory analysis · linear & logistic regression · Bayesian classification & inverse probability · cross-validation & model-performance estimation.
+- **W7 next:** supervised learning for **categorical** targets (classification).
+- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · logistic regression · Bayesian classification & inverse probability · cross-validation & model-performance estimation.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = assessment-critical)*
@@ -74,7 +110,9 @@ tags: [DataScience/Modelling, Tool/R]
 - **W1 — modelling & probability:** **[[Statistical Modelling and Inference]]** *(the hub)* → **[[Random Variables and Probability Distributions (FIT2086)]]** *(sum/product rules, iid, pdf/CDF/quantile)* → [[R Simulation and Random Sampling]] *(simulate it in R)*
 - **W2 — expectations & distributions:** **[[Expectations and Covariance (FIT2086)]]** *(every summary is an $E$)* → [[Taylor Approximation of Expectations]] *(derivation drill)* → **[[Parametric Probability Distributions]]** *(the zoo tables)* → **[[Gaussian Distribution]]** → [[Binomial Distribution]] → [[Poisson Distribution]] → [[Uniform Distribution]]
 - **W3 — estimation:** **[[Maximum Likelihood Estimation]]** *(the derivation drill)* → [[Sampling Distribution of an Estimator]] *($\hat\theta$ as an RV)* → **[[Estimator Quality (Bias, Variance, MSE)]]** *(compare estimators)*
-- **W4 — CLT & intervals:** **[[Central Limit Theorem]]** *(shape for free)* → [[Student-t Distribution]] *(unknown $\sigma^2$)* → **[[Confidence Intervals]]** *(A1 hand skill)*
+- **W4 — CLT & intervals:** **[[Central Limit Theorem]]** *(shape for free)* → [[Student-t Distribution]] *(unknown $\sigma^2$)* → **[[Confidence Intervals]]** *(A1 hand skill)* → [[Plug-in Prediction and Held-Out Evaluation]] *(Studio 3, in R)* → [[Monte Carlo Estimator Comparison]] *(Studio 3, in R)*
+- **W5 — testing:** **[[Hypothesis Testing]]** *(the logic + $p$-value)* → **[[Tests for Normal Means (z-test and t-test)]]** *(exam hand skill)* → [[Tests for Bernoulli Populations]] *(proportions)* → **[[Confidence Intervals in R (calcCI)]]** *(Studio 4, A1 skill)* → [[Confidence Interval Coverage Simulation]] *(Studio 4, in R)*
+- **W6 — regression & selection:** **[[Linear Regression (FIT2086)]]** *(the hub)* → [[Least Squares as Maximum Likelihood]] *(derivation drill)* → [[Predictor Transformations (Indicators, Polynomials, Interactions)]] *(build the columns)* → [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] *(why prune)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(exam hand skill)* → **[[Multiple Regression and Stepwise Selection in R]]** *(LO5, in R)* → **[[Hypothesis Testing in R (t.test, binom.test, prop.test)]]** *(Studio 5, in R)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W0** ➔ 
@@ -112,3 +150,33 @@ tags: [DataScience/Modelling, Tool/R]
 	- derive the $z$ interval by inverting $\frac{\hat\mu-\mu}{\sigma/\sqrt n}\sim N(0,1)$
 	- select among the four CI cases: $z$ known $\sigma^2$ · $t_{\alpha/2,n-1}$ unknown · difference of means · CLT-approximate $\hat\theta\pm z_{\alpha/2}\sqrt{v(\hat\theta)/n}$
 	- state coverage correctly (**procedure**, not the one interval) and read a difference CI containing zero
+	- *(Studio 3)* derive the **Bernoulli** MLE $\hat\theta=m/n$ and explain ML's boundary overconfidence
+	- *(Studio 3)* fit on train, predict with `pnorm`, check against empirical proportions, rank models by held-out NLL
+	- *(Studio 3)* code a simulation study returning bias/variance/MSE, and read **RelMSE** for efficiency vs robustness
+- **W5** ➔ 
+	- set up $H_0$ vs $H_A$ and identify one-sided vs two-sided from the wording
+	- define a $p$-value as $P(\text{data this extreme}\mid H_0)$ and grade it ($0.01$ / $0.05$)
+	- select the test: $\sigma$ known $z$ · $\sigma$ unknown small-$n$ $t_{n-1}$ · large-$n$ approximate $z$ · two-sample difference
+	- compute $z$/$t$ by hand and bracket $p$ with tabulated criticals
+	- test a proportion via the CLT, pooling $\hat\theta_p$ for two Bernoulli samples
+	- explain why a large $p$ **never** proves $H_0$, and why $\alpha$-thresholding is deprecated
+	- *(Studio 4)* state how CI width scales with $\sigma$ and $n$ ($\times4$ data to halve the width); read $z$ at any $\alpha$
+	- *(Studio 4)* write `calcCI` cold and report an interval as a sentence about the **population**
+	- *(Studio 4)* build a difference-of-means CI for two groups and read it against zero
+	- *(Studio 4)* derive $b$, $\mathrm{Var}$, MSE, consistency and the CLT limit for the Bernoulli $\hat\theta_{ML}$
+	- *(Studio 4)* simulate **coverage** and explain why plug-in intervals undercover at small $n$
+- **W6** ➔ 
+	- separate **classification** (categorical target) from **regression** (numerical target)
+	- write $\mathbb{E}[Y_i\mid\mathbf{x}_i]=\beta_0+\sum_j\beta_jx_{i,j}$; read each $\beta_j$ as a per-unit change
+	- fit by least squares; state $\sum e_i=0$, $\operatorname{corr}(\mathbf{x},\mathbf{e})=0$, and the $p<n$ requirement
+	- compute $R^2=1-\text{RSS}/\text{TSS}$ and say why it can never select a model
+	- derive $L=\tfrac{n}{2}\log(2\pi\sigma^2)+\tfrac{\text{RSS}}{2\sigma^2}$ ⟹ LS $=$ ML; quote $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u$
+	- build $K-1$ **indicators**, polynomial terms, and interaction columns
+	- rank predictors by $t_j$, test $H_0:\beta_j=0$, score models by $L+\alpha(n,k_M)$
+	- contrast AIC ($k_M$, overfits) with BIC ($\tfrac{k_M}{2}\log n$, underfits); $\ge3$ is significant
+	- search all-subsets $2^p$ vs forward/backward **stepwise**; run `step(…, k = log(n))` in R
+	- *(Studio 5)* run `t.test` with the right `mu`, `alternative`, `conf.level` and `var.equal`
+	- *(Studio 5)* explain why $\sigma^2\uparrow$ weakens the evidence, and read a $p$ of $0.9$ correctly
+	- *(Studio 5)* judge a large effect with a borderline $p$ — demand a larger trial, not a verdict
+	- *(Studio 5)* compare approximate $z$, Welch $t$ and pooled $t$ on one difference, and say which interval is overconfident
+	- *(Studio 5)* test one and two proportions by hand, then check against `binom.test` / `prop.test`

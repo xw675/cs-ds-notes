@@ -1,11 +1,11 @@
 ---
 unit: FIT2086
-week: 3
-source: [lecture]
+week: [3, 4, 5]
+source: [lecture, applied]
 domain: D
 parent: "[[Sampling Distribution of an Estimator]]"
 tags: [Math/Probability, DataScience/Modelling]
-aliases: [estimator bias, unbiased estimator, estimator variance, mean squared error, MSE, bias-variance decomposition, efficiency, consistency, unbiased variance estimator]
+aliases: [estimator bias, unbiased estimator, estimator variance, mean squared error, MSE, bias-variance decomposition, efficiency, consistency, unbiased variance estimator, robustness, relative MSE, mean vs median]
 ---
 # [[Estimator Quality (Bias, Variance, MSE)]]
 
@@ -44,6 +44,13 @@ aliases: [estimator bias, unbiased estimator, estimator variance, mean squared e
 - **Sufficient test** ➔ $b_\theta(\hat\theta)\to0$ **and** $\mathrm{Var}_\theta(\hat\theta)\to0$ as $n\to\infty$, for all $\theta$.
 - **Sample mean qualifies** ➔ $b_\mu(\bar Y)=0$ and $\mathrm{Var}_{\sigma^2}(\bar Y)=\sigma^2/n\to0$; also derivable from the **WLLN** ([[Expectations and Covariance (FIT2086)]]).
 - **Why it matters** ➔ unlike bias/variance/MSE, consistency **does not depend on the parameterisation** — and ML is consistent for many (not all) models.
+
+### 6. Efficiency vs robustness *(Studio 3)*
+- **Both metrics need a rival** ➔ compare two estimators of the same $\theta$ by $\mathrm{RelMSE}=\dfrac{\mathrm{MSE}(\hat\theta_A)}{\mathrm{MSE}(\hat\theta_B)}$ ➔ $<1$ means $A$ wins; the ratio is **scale-free**, so changing $\sigma$ leaves it unmoved.
+- **Sample mean vs sample median** ➔ for a normal population **both are unbiased**, so the verdict is pure variance: the mean uses every value, the median uses only the central one or two ➔ the **mean is more efficient**, and its lead *grows* with $n$ because $\mathrm{Var}(\bar Y)=\sigma^2/n$ falls faster than the median's.
+- **Robustness is the counterweight** ➔ replace a fraction $n_c/n$ of the sample with draws of $4\times$ the spread and the mean's variance inflates while the median's barely moves ➔ **the verdict flips to the median**; enough clean data dilutes the contamination and flips it back.
+- **The general lesson** ➔ "better estimator" is a claim **conditional on the population you assume**; an estimator optimal under exact normality can be the wrong choice under outliers ([[Measures of Centrality]] makes the same point descriptively).
+- **When the algebra runs out** ➔ estimate $b_\theta$, $\mathrm{Var}_\theta$ and $\mathrm{MSE}_\theta$ by **simulation** — generate many datasets from a known $\theta$, recompute $\hat\theta$ on each, and summarise ➔ [[Monte Carlo Estimator Comparison]].
 
 ## 🧮 Proof Blueprint
 **Theorem.** For iid $Y_i$ with variance $\sigma^2$, the ML variance estimator $\hat\sigma^2_{ML}=\frac1n\sum_i(y_i-\bar y)^2$ is **biased**, with $b_{\sigma^2}(\hat\sigma^2_{ML})=-\sigma^2/n$; the rescaled $\hat\sigma^2_u=\frac{1}{n-1}\sum_i(y_i-\bar y)^2=\frac{n}{n-1}\hat\sigma^2_{ML}$ is **unbiased**.
@@ -99,6 +106,20 @@ Comparing the two variance estimators for $Y_1,\dots,Y_n\sim N(\mu,\sigma^2)$:
 > > - **No.** $b_\theta(\hat\theta_3)=\theta^2$, which is **free of $n$** ➔ $b_\theta\not\to0$ as $n\to\infty$, so the bias condition fails regardless of what the variance does.
 > > - **Key move:** the consistency test needs $b_\theta\to0$ **and** $\mathrm{Var}_\theta\to0$; a bias that does not shrink with sample size is fatal — more data buys precision around the **wrong** target ($\theta+\theta^2$).
 
+> [!QUESTION]- Practice 4 *(Studio 4)*: for $Y_1,\dots,Y_n\sim Be(\theta)$ and $\hat\theta_{ML}=\frac1n\sum_i y_i$, derive the bias, variance and MSE, decide consistency, and state the large-$n$ distribution.
+> > [!SUCCESS]- Reference solution
+> > $$
+> > \begin{aligned}
+> > E[Y_i]=\theta,\quad V[Y_i]&=\theta(1-\theta) &&\text{(Bernoulli moments)}\\
+> > E\!\left[\hat\theta_{ML}\right]=E[\bar Y]&=\theta &&\Rightarrow b_\theta\!\left(\hat\theta_{ML}\right)=0\ \textbf{(unbiased)}\\
+> > \mathrm{Var}_\theta\!\left(\hat\theta_{ML}\right)&=\frac{V[Y_i]}{n}=\frac{\theta(1-\theta)}{n}\\
+> > \mathrm{MSE}_\theta\!\left(\hat\theta_{ML}\right)&=0^2+\frac{\theta(1-\theta)}{n}=\frac{\theta(1-\theta)}{n}\\
+> > \hat\theta_{ML}&\xrightarrow{d} N\!\left(\theta,\frac{\theta(1-\theta)}{n}\right) &&\text{(CLT, since } \hat\theta_{ML}\text{ is an average)}
+> > \end{aligned}
+> > $$
+> > - **Key move:** recognise $\hat\theta_{ML}$ as a **sample mean**, which lets the generic $E[\bar Y]=\mu$, $V[\bar Y]=\sigma^2/n$ results fire with $\mu=\theta$ and $\sigma^2=\theta(1-\theta)$ — no Bernoulli-specific algebra is needed. **Consistent**: $b_\theta=0$ already and $\theta(1-\theta)/n\to0$.
+> > - **Hint:** the variance is largest at $\theta=1/2$ and vanishes at $\theta\in\{0,1\}$ — precision depends on **where** in the parameter space you are, which is the same effect behind ML's boundary overconfidence. The interval built on this appears in [[Confidence Intervals]]; the *test* built on it swaps $\hat\theta$ for $\theta_0$ ➔ [[Tests for Bernoulli Populations]].
+
 ## ⚠️ Common Mistakes
 - 💡 **"Unbiased ⟹ better"** ➔ $\hat\sigma^2_u$ is unbiased yet always has larger variance than $\hat\sigma^2_{ML}$; the comparison must go through MSE, and even then $\mathrm{MSE}=b^2+\mathrm{Var}$ can favour the biased estimator.
 - 💡 **Claiming unbiasedness from one $\theta$** ➔ unbiased means $b_\theta(\hat\theta)=0$ for **all** $\theta$; bias is a *function* of the population parameter.
@@ -112,6 +133,12 @@ Comparing the two variance estimators for $Y_1,\dots,Y_n\sim N(\mu,\sigma^2)$:
 > > - **Short answer:** it measures spread about $\bar y$, and $\bar y$ is itself fitted to the data so it sits **closer to the sample than the true $\mu$ does** ➔ $E[\hat\sigma^2_{ML}]=\frac{n-1}{n}\sigma^2$, a deficit of exactly $\sigma^2/n$. Rescaling by $\frac{n}{n-1}$ cancels the factor.
 > > - **Why:** **One degree of freedom is consumed by $\hat\mu$** ➔ in the derivation the cross term contributes $-n\,E[(\bar y-\mu)^2]=-n\cdot\frac{\sigma^2}{n}=-\sigma^2$, i.e. the sampling variance of the plugged-in mean is subtracted from the total.
 > > - **Hint:** the bias is $O(1/n)$ ➔ irrelevant at $n=10^4$, material at $n=5$.
+
+> [!FAQ]- Sample mean or sample median for the centre of a population? Both are unbiased under normality, so on what does the answer turn?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** on **variance, and on whether the normal assumption actually holds**. With clean normal data the mean's MSE is about $27\%$ lower ($\mathrm{RelMSE}\approx0.73$ at $n=10$) because it uses every observation; contaminate even one point in ten with a $4\sigma$-wide draw and the ratio exceeds $1$ — the median wins.
+> > - **Why:** **Efficiency and robustness are different questions** ➔ the median discards magnitude information (its value depends only on the central one or two order statistics), which costs precision on well-behaved data and buys immunity to outliers on badly-behaved data. Verified by simulation in [[Monte Carlo Estimator Comparison]].
+> > - **Hint:** $\sigma$ cancels from $\mathrm{RelMSE}$; $n$ and the **contamination fraction** $n_c/n$ do not.
 
 > [!FAQ]- Two estimators of $\theta$: one unbiased with variance $4\sigma^2$, one with bias $\sigma$ and variance $\sigma^2$. Which do you prefer, and what caveat must you state?
 > > [!SUCCESS]- Answer

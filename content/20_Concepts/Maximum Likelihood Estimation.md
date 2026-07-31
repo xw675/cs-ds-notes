@@ -1,11 +1,11 @@
 ---
 unit: FIT2086
-week: 3
-source: [lecture]
+week: [3, 4]
+source: [lecture, applied]
 domain: D
 parent: "[[Statistical Modelling and Inference]]"
 tags: [Math/Probability, DataScience/Modelling]
-aliases: [MLE, ML estimator, likelihood, negative log-likelihood, point estimation, plug-in distribution, minimum sum of squared errors, SSE]
+aliases: [MLE, ML estimator, likelihood, negative log-likelihood, point estimation, plug-in distribution, minimum sum of squared errors, SSE, Bernoulli MLE, zero-count problem, ML overconfidence]
 ---
 # [[Maximum Likelihood Estimation]]
 
@@ -44,6 +44,7 @@ aliases: [MLE, ML estimator, likelihood, negative log-likelihood, point estimati
 - **Plug-in** ➔ substitute the estimates back into the family, $p(y\mid\hat\mu,\hat\sigma^2)$, and treat it as the population.
 - **What it buys** ➔ probability statements about the population: for the height data, $P(1.6<X<1.8\mid\hat\mu=1.6789,\hat\sigma^2=0.1032^2)\approx0.664$.
 - **Accuracy inherits** ➔ the better $\hat\theta$, the more trustworthy every downstream probability — which is why estimator quality gets its own note.
+- **Checking the fit** ➔ score the plug-in model on **held-out data**, comparing predicted probabilities against empirical proportions and ranking models by out-of-sample NLL ➔ [[Plug-in Prediction and Held-Out Evaluation]].
 
 ## 🧮 Proof Blueprint
 **Theorem (ML recipe).** For iid $y_1,\dots,y_n\sim p(y\mid\theta)$, $\hat\theta$ solves $\frac{\partial}{\partial\theta}L(\mathbf{y}\mid\theta)=0$.
@@ -69,6 +70,15 @@ L(\mathbf{y}\mid\lambda)=-\sum_i y_i\log\lambda+n\lambda+\sum_i\log y_i!\\
 \end{aligned}
 $$
 **Q.E.D.** ➔ the Poisson rate's MLE is again the sample mean — **but this coincidence is not a rule**, as the practice derivations below show.
+
+**Derivation — Bernoulli $Be(\theta)$, $p(y\mid\theta)=\theta^y(1-\theta)^{1-y}$, $y\in\{0,1\}$ *(Studio 3)*:**
+$$
+\begin{aligned}
+p(\mathbf{y}\mid\theta)&=\prod_{i=1}^n\theta^{y_i}(1-\theta)^{1-y_i}=\theta^{m}(1-\theta)^{n-m},\qquad m=\sum_{i=1}^n y_i\\
+L(\mathbf{y}\mid\theta)&=-m\log\theta-(n-m)\log(1-\theta)\\
+\frac{dL}{d\theta}&=-\frac{m}{\theta}+\frac{n-m}{1-\theta}=-\frac{n\theta-m}{(\theta-1)\theta}=0\;\Rightarrow\;m-n\theta=0\;\Rightarrow\;\hat\theta=\frac{m}{n}=\frac1n\sum_{i=1}^n y_i
+\end{aligned}
+$$**Q.E.D.** ➔ the ML success probability is the **fraction of successes**, i.e. the sample mean of the $0/1$ trials. The exponents collapse because $\sum_i y_i=m$ counts the successes and $\sum_i(1-y_i)=n-m$ the failures; the derivative's $\frac{d}{d\theta}\log(1-\theta)=-\frac{1}{1-\theta}$ supplies the sign flip.
 
 ## 📊 Worked Numbers
 | Data | Family | ML estimates | Read-off |
@@ -117,12 +127,19 @@ $$
 - 💡 **Differentiating in $\sigma$ before plugging in $\hat\mu$** ➔ leaves two unknowns coupled; substitute $\hat\mu$ first, then the $\sigma$ equation solves in one line.
 - 💡 **Assuming the MLE is always the sample mean** ➔ true for Gaussian $\mu$ and Poisson $\lambda$, false for $\mathrm{Exp}(\beta)$ ($1/\bar y$) and for the power families above.
 - 💡 **Forgetting the ML variance divides by $n$** ➔ $\hat\sigma^2_{ML}=\frac1n\sum(y_i-\bar y)^2$; the $n-1$ version is a *different*, unbiased estimator — see [[Estimator Quality (Bias, Variance, MSE)]].
+- 💡 **Taking a boundary estimate at face value** ➔ $m=n$ gives $\hat\theta=1$ and $m=0$ gives $\hat\theta=0$, **ruling out** the unseen outcome entirely in every future prediction; ML is **overconfident on small samples** and at $n=1$ this happens always.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is minimum squared error abandoned in favour of maximum likelihood, given both return $\bar y$ for the Gaussian mean?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** SSE only scores **closeness of a centre** — it offers no goodness-of-fit measure for a spread parameter like $\sigma$, whereas ML scores the **whole model** and so estimates every parameter of any family.
 > > - **Why:** **Generality** ➔ ML's criterion $p(\mathbf{y}\mid\theta)$ is defined for any $\theta\in\Theta$ of any distribution, giving simultaneous equations $\partial L/\partial\mu=0,\ \partial L/\partial\sigma=0$; the agreement on $\hat\mu=\bar y$ is a **coincidence of the Gaussian's quadratic exponent**, not equivalence of methods.
+
+> [!FAQ]- You toss a coin twice and see two heads. What does ML report for $\theta$, why is that a problem, and what does it say about ML generally?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** $\hat\theta_{ML}=m/n=2/2=1$ ➔ the plug-in model assigns $P(\text{tail})=0$, declaring a tail **impossible** on all future tosses. No one would accept that conclusion from two tosses.
+> > - **Why:** **ML optimises fit to the observed sample, with no allowance for what was not observed** ➔ the boundary estimates $\hat\theta\in\{0,1\}$ are attained whenever $m\in\{0,n\}$, which is likely for small $n$ and certain at $n=1$; the estimator is therefore **overconfident**, and the fix is either more data or a prior that keeps $\hat\theta$ off the boundary.
+> > - **Hint:** the same over-confidence appears continuously as $\hat\sigma^2_{ML}$ **understating spread** — see [[Plug-in Prediction and Held-Out Evaluation]], where the too-narrow density mispredicts held-out tail probabilities.
 
 > [!FAQ]- Why take logs at all, and why does it not change the answer?
 > > [!SUCCESS]- Answer
