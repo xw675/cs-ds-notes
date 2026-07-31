@@ -17,10 +17,11 @@ tags: [Math/Theory, CS/Computation]
 - **Reference text** ➔ Sipser (pp. 13–14 strings/languages; §0.3 pp. 17–20 definitions/theorems/proofs; pp. 14–15 and p. 302 for normal forms).
 - **LO thread so far** ➔ define and manipulate formal languages; read/write propositional and predicate logic; **encode real problems in CNF** (the recurring assessable skill).
 
-## 📅 Knowledge Index
-
-### 🧰 Toolkit Cheatsheets
+## 🧰 Toolkit Cheatsheets
+- [[FIT2014 Unit Cheatsheet]] -> **the whole-unit exam crib** — W1→W11 as formulas/rules with firing preconditions, in syllabus order; the single re-read before the 3h10 exam
 - [[Shell Toolkit (Cheatsheet)]] -> tri-unit (FIT1043 + FIT2014 + FIT2109); FIT2014 adds the `sed`/`tr`/grep-regex block (Lab 0)
+
+## 📅 Knowledge Index
 
 ### Lab 0 — Linux Tooling *(all assignment work runs in Linux)*
 - [[Unix Shell (Bash)]] -> Parent Framework: [[FIT2014_MOC]] *(tri-unit — navigate/inspect/pipe/grep; grep patterns are regexes)*
@@ -79,8 +80,40 @@ tags: [Math/Theory, CS/Computation]
 - [[Proving a Language Non-Context-Free]] -> Parent Framework: [[Pumping Lemma for Context-Free Languages]] *(**the exam hand skill** — $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$, $\mathtt{a}^n\mathtt{b}^n\mathtt{c}^n$)*
 - *(Closes the hierarchy picture: regular ⊊ context-free ⊊ all languages — $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ escapes even the CFLs.)*
 
-### 🔭 Coming later in the unit *(from the Lecture 1 roadmap — no notes yet)*
-- Turing machines · computability & decidability · computational complexity · classes **P** and **NP** · **NP-completeness**.
+### Week 7 — Turing Machines & Universality *(Lectures 18–19)*
+- [[Turing Machines]] -> Parent Framework: [[Formal Languages (Alphabets, Words, Languages)]] *(**A2 material** — the model, $\text{Accept}/\text{Reject}/\text{Loop}$, deciders, FA→TM)*
+- [[Building Turing Machines]] -> Parent Framework: [[Turing Machines]] *(**the exam hand skill** — the marking recipe, $\mathtt{a}^n\mathtt{b}^n$ and $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$)*
+- [[Computable Functions and the Church-Turing Thesis]] -> Parent Framework: [[Turing Machines]] *(unary codes, successor/double/addition, the thesis is **not** a theorem)*
+- [[Encoding Turing Machines (Code Words)]] -> Parent Framework: [[Turing Machines]] *(**hand skill** — encode/decode a table; CWL is regular but ⊋ {TM codes})*
+- [[Universal Turing Machine]] -> Parent Framework: [[Turing Machines]] *(programs as data — the stored-program idea)*
+- *(Breaks the hierarchy's ceiling: $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ defeated the [[Pumping Lemma for Context-Free Languages|CFL pumping lemma]] yet a TM decides it — see [[Proving a Language Non-Context-Free]].)*
+
+### Week 8 — Decidability & Mapping Reductions *(Lectures 20–21)*
+- [[Decidability and Decision Problems]] -> Parent Framework: [[Turing Machines]] *(deciders, decidable = recursive = solvable, problem ⟷ language, $\langle O\rangle$ encoding, closure)*
+- [[Deciding Properties of FAs and CFGs]] -> Parent Framework: [[Decidability and Decision Problems]] *(**hand skill** — FA-Empty & CFG-Empty marking, RegExpEquiv via symmetric difference)*
+- [[Mapping Reductions]] -> Parent Framework: [[Decidability and Decision Problems]] *(**the exam hand skill** — $\le_m$, the transfer theorem, direction discipline)*
+- *(Adds the tier above the hierarchy: regular ⊊ context-free ⊊ **decidable** ⊊ ? — the outer ring stays unnamed until undecidability.)*
+
+### Week 9 — Undecidability & Recursive Enumerability *(Lectures 22–23)*
+- [[Undecidability and the Halting Problem]] -> Parent Framework: [[Decidability and Decision Problems]] *(names the $\boxed{?}$ ring — counting + the diagonalisation/Liar proof)*
+- [[Proving Undecidability by Reduction]] -> Parent Framework: [[Mapping Reductions]] *(**the exam hand skill** — the input-blind gadget $M\mapsto M'$)*
+- [[Recursively Enumerable Languages]] -> Parent Framework: [[Decidability and Decision Problems]] *(decidable $=$ r.e. $\cap$ co-r.e.; $\text{HALT}$ vs $\overline{\text{HALT}}$)*
+- [[Enumerators and Dovetailing]] -> Parent Framework: [[Recursively Enumerable Languages]] *(the generative characterisation + the $k$-then-$i$ schedule)*
+- *(Fills in the outer ring at last: regular ⊊ context-free ⊊ decidable ⊊ **r.e.** ⊊ all languages — $\text{HALT}$ and $\overline{\text{HALT}}$ are the two named separating inhabitants.)*
+
+### Week 10 — Complexity: P, NP & Polynomial-Time Reductions *(Lectures 24–26)*
+- [[Polynomial Time and the Class P]] -> Parent Framework: [[Decidability and Decision Problems]] *(decidability is not enough — $t_M(n)$, fixed $k$, the polynomial-slowdown model-independence proof)*
+- [[Verifiers, Certificates and the Class NP]] -> Parent Framework: [[Polynomial Time and the Class P]] *(**the exam hand skill** — the 4-part membership proof; $\mathrm{P}\subseteq\mathrm{NP}\subseteq\mathrm{EXP}$; NDTMs)*
+- [[Standard NP Problems and Certificates]] -> Parent Framework: [[Verifiers, Certificates and the Class NP]] *(the named instance stock — VC/IS/CLIQUE, SAT family, Euler vs Hamilton, PARTITION/SUBSET SUM)*
+- [[Polynomial-Time Reductions]] -> Parent Framework: [[Mapping Reductions]] *(**the exam hand skill** — $\le_P$, the output-length lemma, the transfer theorem)*
+- *(Splits the decidable tier by cost: regular ⊊ context-free ⊊ **P** ⊊ decidable, with $\mathrm{NP}$ straddling the frontier — and re-times [[Mapping Reductions]], which transferred decidability but **not** tractability.)*
+
+### Week 11 — NP-Completeness *(Lectures 27–30)*
+- [[NP-Completeness]] -> Parent Framework: [[Verifiers, Certificates and the Class NP]] *(conditions (a)+(b), the master theorem poly-decider $\iff\mathrm{P}=\mathrm{NP}$, co-NP, the four engineering options)*
+- [[Reducing to SATISFIABILITY]] -> Parent Framework: [[NP-Completeness]] *(**the W11 hand skill** — the 4-step recipe + PARTITION INTO TRIANGLES worked end-to-end; the W1 CNF templates re-timed)*
+- [[Cook-Levin Theorem]] -> Parent Framework: [[NP-Completeness]] *(SAT is NP-complete; **proof explicitly non-examinable** — statement, part (a), and architecture only)*
+- [[Proving NP-Completeness by Reduction]] -> Parent Framework: [[NP-Completeness]] *(**the exam hand skill** — inheritance theorem, SAT $\le_P$ 3-SAT, 3-SAT $\le_P$ VERTEX COVER with $k_\phi=2m+n$)*
+- *(Closes the unit's arc: the [[Polynomial-Time Reductions|$\le_P$]] relation acquires a **summit** — one efficient algorithm for any NP-complete language would settle $\mathrm{P}$ vs $\mathrm{NP}$ outright.)*
 
 ## 🧭 Suggested Reading Order
 *(read left→right within each week · **bold** = assessment-critical hand skill)*
@@ -92,6 +125,12 @@ tags: [Math/Theory, CS/Computation]
 - **W4 — minimisation → limits:** **[[DFA Minimisation (Colouring)]]** *(finishes the pipeline)* → [[Lexical Analysis (Patterns, Tokens, Lexemes)]] *(A2)* → [[Closure Properties of Regular Languages]] → **[[Pumping Lemma for Regular Languages]]** → **[[Proving a Language Non-Regular]]** *(the exam kill-shot)*
 - **W5 — context-free tier:** [[Context-Free Grammars (CFG)]] → [[Derivations and Parse Trees]] *(leftmost = prefix property)* → **[[Writing a CFG]]** *(hand skill)* → [[Regular Grammars and the CFL Hierarchy]] *(regular ⊊ CFL)* → [[Pushdown Automata (PDA)]] *(NFA + stack; CFG ⟺ PDA)*
 - **W6 — parsing → the CFL frontier:** **[[Parsing and Shift-Reduce Parsers]]** *(A2 trace)* → [[Lex and Yacc (Parser Generators)]] *(A2 toolchain)* → **[[Chomsky Normal Form]]** *(enables both below)* → **[[CYK Algorithm]]** *(hand skill)* → **[[Pumping Lemma for Context-Free Languages]]** → **[[Proving a Language Non-Context-Free]]** *(the exam kill-shot)*
+- **W7 — Turing machines → universality:** [[Turing Machines]] *(three outcomes, deciders)* → **[[Building Turing Machines]]** *(the marking recipe)* → [[Computable Functions and the Church-Turing Thesis]] *(unary codes)* → **[[Encoding Turing Machines (Code Words)]]** *(encode/decode)* → [[Universal Turing Machine]] *(programs as data)*
+- **W8 — decidability → reductions:** [[Decidability and Decision Problems]] *(halting is the point)* → **[[Deciding Properties of FAs and CFGs]]** *(marking to fixpoint)* → **[[Mapping Reductions]]** *(direction discipline)*
+- **W9 — undecidability → r.e.:** **[[Undecidability and the Halting Problem]]** *(the diagonalisation proof)* → **[[Proving Undecidability by Reduction]]** *(the exam hand skill)* → [[Recursively Enumerable Languages]] *(the bridge theorem)* → [[Enumerators and Dovetailing]] *(the schedule)*
+- **W10 — complexity:** [[Polynomial Time and the Class P]] *(fixed $k$, slowdown)* → **[[Verifiers, Certificates and the Class NP]]** *(4-part membership proof)* → [[Standard NP Problems and Certificates]] *(instance stock)* → **[[Polynomial-Time Reductions]]** *(the exam hand skill)*
+- **W11 — NP-completeness:** [[NP-Completeness]] *(both conditions)* → **[[Reducing to SATISFIABILITY]]** *(the CNF hand skill)* → [[Cook-Levin Theorem]] *(non-examinable proof)* → **[[Proving NP-Completeness by Reduction]]** *(the exam kill-shot)*
+- **SWOTVAC — whole unit:** **[[FIT2014 Unit Cheatsheet]]** *(one re-read, all 11 weeks)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 
@@ -147,3 +186,53 @@ tags: [Math/Theory, CS/Computation]
 	- fill a **[[CYK Algorithm|CYK]]** table by increasing substring length; state $O(n^3)$ 
 	- state the **CFL pumping lemma** ($w=uvxyz$, $|w|>2^{k-1}$, $vy\neq\varepsilon$, $|vxy|\le 2^k$) and where CNF enters its proof 
 	- **prove non-context-freeness**: pick $w=\mathtt{a}^N\mathtt{b}^N\mathtt{a}^N$, split on where $v,y$ sit, kill straddling cases by repeated boundary patterns
+- **W7** ➔ 
+	- define a **TM** (tape, head, program; Start $=1$, Accept $=2$; crash $=$ reject) and trace one
+	- partition $\Sigma^*$ into $\text{Accept}(T)$, $\text{Reject}(T)$, $\text{Loop}(T)$; a **decider** has $\text{Loop}(T)=\emptyset$
+	- convert an **FA → TM** by the 5 steps ⟹ every regular language is **decidable**
+	- **build a TM** for $\mathtt{a}^n\mathtt{b}^n$ and $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ by the mark-and-sweep recipe
+	- read the **unary code** ($n\mapsto\mathtt{a}^n$, tuples $\mathtt{b}$-separated) and define $f$ by a TM; state the **Church–Turing thesis** and why it is not a theorem
+	- **encode and decode** a TM table ($\mathtt{a}^n\mathtt{b}$ states, 2-letter symbols, 1-letter direction); know $\text{CWL}=(\mathtt{aa}^*\mathtt{b}\mathtt{aa}^*\mathtt{b}(\mathtt{a}\cup\mathtt{b})^5)^*$ is regular but $\supsetneq$ {TM codes}
+	- say what a **UTM** does, lay out $\langle M\rangle\,\$\,x$, and justify why UTMs exist
+- **W8** ➔ 
+	- define a **decider** ($\text{Loop}(M)=\emptyset$) and **decidable** ($L=\text{Accept}(M)$, so $\overline{L}=\text{Reject}(M)$ free); decidable $=$ recursive $=$ solvable
+	- convert a **decision problem** to its YES-input language and back; encode objects as $\langle O\rangle$, tuples as $\langle O_1,\dots,O_n\rangle$
+	- place the tier: regular ⊊ context-free ⊊ **decidable**; prove closure under $\overline{\ \cdot\ }$, $\cup$, $\cap$, concatenation by running deciders as subroutines
+	- run the **FA-Empty** marking algorithm (seed Start, propagate forward, Accept iff **no** Final State marked)
+	- run the **CFG-Empty** marking algorithm (seed terminals, propagate upward, Accept iff $S$ **un**marked)
+	- decide **RegExpEquiv** by emptiness of $\big(L(A)\cap\overline{L(B)}\big)\cup\big(\overline{L(A)}\cap L(B)\big)$
+	- define a **mapping reduction** ($f$ computable, $x\in K \iff f(x)\in L$) and write the certifying **iff chain**
+	- apply the transfer theorem: $L$ decidable $\Rightarrow K$ decidable; $K$ undecidable $\Rightarrow L$ undecidable; $\le_m$ is transitive, **not** symmetric
+	- build the standard reductions (EQUAL → HALF-AND-HALF by sorting, FA-Empty → No-Digraph-Path by the sink vertex $t$)
+	- know why reducing **from** a decidable $L_1$ to any $L_2\neq\emptyset,\Sigma^*$ proves nothing
+- **W9** ➔ 
+	- argue from countability that **undecidable languages exist** (existence only — names nobody)
+	- state the **Halting Problem** $\{\langle P,x\rangle : P \text{ halts on } x\}$ and its diagonal one-argument form
+	- **prove undecidability**: build $E$ flipping the diagonal, say which assumption dies
+	- run the **input-blind gadget** $M'$ = "ignore $x$, run $M$ on $M$" ⟹ HALT-FOR-ZERO / ALWAYS HALTS / SOMETIMES HALTS
+	- get **NEVER HALTS** by the Accept/Reject swap; say why that is illegal on recognisers
+	- classify: bounded-step halting and state-counting **decidable**; acceptance and $\exists$-input halting **not**
+	- define **r.e.** ($\text{Accept}(T)=L$, $\text{Loop}(T)$ unrestricted) + synonyms (Turing recognisable, type 0)
+	- prove **$L$ decidable $\iff$ $L$ and $\overline{L}$ both r.e.** via the one-step interleaved decider
+	- prove $\text{HALT}$ is **r.e. but undecidable**, $\overline{\text{HALT}}$ is **not r.e.**; decidable $=$ r.e. $\cap$ co-r.e.
+	- prove **r.e. $\iff$ enumerated**, with the $k$-then-$i$ **dovetailing** schedule
+- **W10** ➔ 
+	- compute $t_M(n)=\max\{t_M(x):\lvert x\rvert=n\}$ and say why it needs a **decider**
+	- define **polynomial time** ($O(n^k)$, $k$ **fixed**) and $\mathrm{P}$; place regular ⊊ CFL ⊊ $\mathrm{P}$ ⊊ decidable
+	- run the **polynomial-slowdown** argument for model-independence of $\mathrm{P}$
+	- define **verifier** and **certificate**; bound time in $\lvert x\rvert$, never $\lvert y\rvert$
+	- **prove membership of $\mathrm{NP}$** in 4 parts: certificate · verifier · iff claim · time claim (3-colourability, $O(mn)$)
+	- prove $\mathrm{P}\subseteq\mathrm{NP}$ (ignore the certificate) and $\mathrm{NP}\subseteq\mathrm{EXP}$ (search $\le 2^{cn^k}$ certificates)
+	- state the **NDTM** characterisation of $\mathrm{NP}$ and why DFA $=$ NFA does not transfer
+	- recall instance $+$ certificate for VERTEX COVER, INDEPENDENT SET, CLIQUE, SAT/2-SAT/3-SAT, colouring, PARTITION, SUBSET SUM
+	- **build a $\le_P$ reduction**: function $+$ **iff chain** $+$ **time bound**, via the one-symbol-per-step output-length lemma
+	- apply the transfer theorem ($L\in\mathrm{P}\Rightarrow K\in\mathrm{P}$; $K\notin\mathrm{P}\Rightarrow L\notin\mathrm{P}$) and re-time old $\le_m$ reductions
+- **W11** ➔ 
+	- define **NP-complete** by both conditions and name the failure mode of each (**NP-hard** when (a) fails)
+	- prove the master theorem: an NP-complete $L$ has a poly decider $\iff\mathrm{P}=\mathrm{NP}$
+	- place SAT/3-SAT/VC/IS/CLIQUE, GRAPH ISOMORPHISM, and the $\mathrm{P}$ problems on the two-lobe diagram
+	- **reduce a language to SAT**: certificate variables $+$ rule clauses $+$ clause count
+	- state the **[[Cook-Levin Theorem]]** and prove part (a) only *(the rest is non-examinable)*
+	- apply the **inheritance theorem** ($K$ NP-complete, $L\in\mathrm{NP}$, $K\le_P L$) — just one reduction
+	- run $\text{SAT}\le_P3\text{-SAT}$ (fresh-variable padding and chaining) and $3\text{-SAT}\le_P\text{VERTEX COVER}$ ($k_\phi=2m+n$)
+	- choose the response to NP-completeness: exponential · randomised · special-case · approximation

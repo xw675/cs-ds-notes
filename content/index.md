@@ -20,8 +20,8 @@ Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit
 
 ## 📅 Year 2 — Semester 1
 
-- [[FIT2004_MOC|📘 FIT2004 — Algorithms and Data Structures]] · dynamic programming, greedy algorithms, graph algorithms, network flows, string matching
-- [[FIT2014_MOC|📘 FIT2014 — Theory of Computation]] · automata theory, regular expressions, grammars, Turing machines, decidability
+- [[FIT2004_MOC|📘 FIT2004 — Algorithms and Data Structures]] · dynamic programming, greedy algorithms, graph algorithms, network flows, string matching → [[FIT2004 Unit Cheatsheet|📄 Cheatsheet]]
+- [[FIT2014_MOC|📘 FIT2014 — Theory of Computation]] · automata theory, regular expressions, grammars, Turing machines, decidability → [[FIT2014 Unit Cheatsheet|📄 Cheatsheet]]
 - [[FIT2086_MOC|📘 FIT2086 — Modelling for Data Analysis]] · probability, distributions, statistical inference, hypothesis testing, regression
 - [[FIT3003_MOC|📘 FIT3003 — Business Intelligence and Data Warehousing]] · data warehousing, dimensional modelling, star schemas, ETL, OLAP
 
