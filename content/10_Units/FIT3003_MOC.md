@@ -34,6 +34,16 @@ tags: [2026/S2]
 - [[Populating Tables from Queries (INSERT-SELECT, CTAS)]] *(W1: cross-account `CREATE TABLE … AS SELECT * FROM dtaniar.x`)*
 - [[DDL Table Creation]] · [[Oracle Data Types]] · [[SQL SELECT and WHERE]] · [[SQL Sorting, Distinct & Alias]] · [[SQL Aggregate Functions and GROUP BY]] · [[SQL Subquery (Nested SELECT)]] · [[DML UPDATE and DELETE (Oracle)]] · [[Database Transaction]] *(unchanged — revision only)*
 
+### Week 2 — Simple Star Schemas (Ch2) & More Complex Facts and Dimensions (Ch3)
+- [[Star Schema]] -> Parent Framework: [[Data Warehouse]] *(W2 merge: notation, transformation process, the Chapter 2 College answer)*
+- [[Two-Column Table Methodology]] -> Parent Framework: [[Star Schema]]
+- [[Building Dimension Tables]] -> Parent Framework: [[Star Schema]]
+- [[Building Fact Tables]] -> Parent Framework: [[Star Schema]]
+- [[Fact Measure Aggregation Rules]] -> Parent Framework: [[Star Schema]]
+
+## 🧭 Suggested Reading Order
+- **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
+
 ## 🎯 Learning Outcomes
 
 - **W1** ➔ 
@@ -43,3 +53,10 @@ tags: [2026/S2]
 	- separate operational DB from warehouse (precomputed, granularity, pre-designed) 
 	- derive fact, grain, dimensions and attributes from analysis questions 
 	- write FIT3003 old-style joins without producing a Cartesian product
+- **W2** ➔ 
+	- draw a star in unit notation — `XxxDIM`/`XxxFACT`, dimension ID as FK+PK in the fact
+	- validate a drafted star with the two-column table method
+	- create dimensions directly, or stage a derived attribute in a temp dimension
+	- aggregate a fact from operational tables, a `TempFact`, or a pre-processed source
+	- use `left outer join` + `count(attribute)` for two unequal populations
+	- reject `avg` as a stored measure; store total $+$ count instead

@@ -118,6 +118,25 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | date part / format | `EXTRACT(YEAR FROM d)` (number) · `TO_CHAR(d,'yyyy')` (string) | filter/group by a date part |
 | text align | `LPAD/RPAD(s,n,'*')` · `LTRIM/TRIM(s)` | monospace-only bar charts |
 
+## 🏭 Warehouse ETL Clauses (FIT3003 W2)
+*(➔ [[Building Dimension Tables]] · [[Building Fact Tables]] · [[Fact Measure Aggregation Rules]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :-- | :-- | :-- |
+| dimension by copy | `create table AgentDim as select * from Agent;` | route 1 of 3; rows only, **no PK/FK** |
+| dimension by projection | `create table CourseDim as select CourseCode, CourseName from Course;` | route 2 — drop columns no analysis question needs |
+| dimension by de-dup | `create table CountryDim as select distinct Country from Student;` | mandatory `distinct` when the source is a **transaction** table |
+| dimension by hand | `create table TimeDim (Quarter number(1), Description varchar2(20));` + `insert into … values (1,'Jan-Mar');` | route 3 — members are business knowledge, membership is fixed and known |
+| manufactured key | `Country \|\| City as LocationID` · `set QuarterID = Year \|\| Quarter` | builds an ID the operational DB never stored |
+| time key | `to_char(DownloadDate,'YYYYMM') as TimeID` · `'MM'` · `'YYYY'` · `'Month'` | `'Month'` yields the *name*; masks are the dimension's attributes |
+| staging table | `create table TempFact as select … from a, b where …;` | the **joined, unaggregated** row set; grain preserved for one later `group by` |
+| add derived column | `alter table TempFact add (Quarter number(1));` then `update … set Quarter = 1 where …` | the chapter's banding idiom — one `update` per band, not `CASE` |
+| null-band catch-all | `update TempFact set Quarter = '4' where Quarter is null;` | last band by exclusion instead of a range test |
+| fact by aggregation | `create table SalesFact as select Quarter, BranchID, sum(TotalPrice) as Total_Sales from TempFact group by Quarter, BranchID;` | `group by` list $=$ the fact's composite PK; build **from operational/temp tables, never from the dimensions** |
+| two populations | `from Opening O left outer join Placement P on O.OpenNo = P.OpenNo` + `count(OpenNo)` / `count(CandNo)` | outer join keeps unmatched rows; `count(col)` skips the NULLs — `count(*)` would equalise both measures |
+| latest-per-entity | `rank() over (partition by E.EmpNo order by D.GraduationDate desc) as Rank` in an inline view, then `where T.Rank = 1` | pre-processes the **operational** side; without it the join multiplies rows per entity |
+| ⛔ never store | `avg(x)` as a fact measure | average of averages ≠ average — store `Total_x` **and** `Number_of_y`, recover with `sum(Total_x)/sum(Number_of_y)` |
+
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
 > > [!SUCCESS]- Reference solution
@@ -164,3 +183,4 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Alias in GROUP BY** ➔ illegal (GROUP BY runs before SELECT); repeat the full expression.
 - 💡 **Forgetting `COMMIT`** ➔ your inserts exist only in the session buffer; close the client badly and the work is gone.
 - 💡 **Word's curly quotes** ➔ SQL pasted from a `.docx` lab sheet carries `'` instead of `'`; Oracle rejects it — retype the quote.
+- 💡 **Building a FIT3003 fact from the dimension tables** ➔ dimensions were created with `select distinct` and hold no measures; aggregate from the operational (or Temp) tables.

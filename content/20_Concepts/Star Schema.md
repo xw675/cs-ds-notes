@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: 1
+week: [1, 2]
 source: [lecture, slides]
 domain: C
 parent: "[[Data Warehouse]]"
@@ -33,6 +33,17 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 ### 4. Attributes
 - **Core Mechanism:** **Properties in a dimension** ➔ the descriptive columns a dimension carries (a country attribute inside a student dimension; a level attribute inside a course dimension).
 - **Structural Invariant:** **Attributes are what you group by** ➔ an analysis question can only slice on an attribute that some dimension actually stores.
+
+### 5. Notation conventions *(W2 — must be reproduced exactly in the assignment)*
+- **Naming:** **`XxxDIM` / `XxxFACT`** ➔ dimensions and the fact are named by suffix; connecting lines may be straight or bent, and the dimension under discussion is **highlighted** in the diagram.
+- **Keys:** **Dimension ID is the dimension's PK** ➔ the same column appears inside the fact as **FK *and* part of the composite PK**, drawn in *bold italic* above the separator line; measures sit below it.
+- **Fact content:** **Numerical only** ➔ a fact may hold only numerical values; anything descriptive belongs in a dimension ➔ [[Fact Measure Aggregation Rules]].
+- **Source-side E/R notation:** **`ENTITY` capitalised**, keys marked `PK` / `FK`, Crow's-foot relationships **with participation**, associative relationship $=$ m–m, non-associative $=$ 1–m ➔ [[Entity Relationship Diagram (ERD)]], [[Cardinality (Crow's Foot Notation)]].
+
+### 6. Transformation process
+$$\text{Operational DB (E/R diagram)} \xrightarrow{\ \text{Transformation (ETL)}\ } \text{Data Warehouse (star schema)}$$
+- **Direction is one-way** ➔ the star is *derived from* the operational schema; the operational database keeps running unchanged.
+- **Build order** ➔ validate with [[Two-Column Table Methodology]] ➔ [[Building Dimension Tables]] ➔ [[Building Fact Tables]].
 
 ## ⚙️ Schema Layout
 ### 🔹 Generic star
@@ -77,71 +88,64 @@ $$\text{FACT\_SALES}(\underline{\text{time\_id}^{*}, \text{location\_id}^{*}, \t
 
 | # | Analysis question | Grouping term ➔ dimension | Measure ➔ fact column |
 | :--- | :--- | :--- | :--- |
-| 1 | Total income from certain **countries** | country ➔ **Student** (attribute `country`) | income |
-| 2 | Total income for **postgraduate courses** in a **year** | course level ➔ **Course** · year ➔ **Time** | income |
-| 3 | Total income as a result of each **agent** | agent ➔ **Agent** | income |
-| 4 | How many **payments** generated each **year** | year ➔ **Time** | payment count |
+| 1 | Total income from certain **countries** | country ➔ **Country** | Total_Income |
+| 2 | Total income for **postgraduate courses** in a **year** | course level ➔ **Course** · year ➔ **Enrolment Year** | Total_Income |
+| 3 | Total income as a result of each **agent** | agent ➔ **Agent** | Total_Income |
+| 4 | How many **payments** generated each **year** | year ➔ **Enrolment Year** | Number_of_Payments |
 
 - **Grain falls out of the source** ➔ students pay "several times, normally once every semester, for each course" ⟹ one fact row per payment.
-- **Campus is a dimension too** ➔ the College is multi-campus and courses are offered at different campuses, so campus is a legitimate perspective even though no listed question demands it yet.
+- **Dimensions come only from the questions** ➔ the lecture's answer set is exactly **Country, Course, Agent, Enrolment Year**; campus is *not* a dimension here because no analysis question asks for it.
 
 ### Applied Exercise — International College enrolment star
-**Problem:** the admission office handles enrolment, payment and marketing for international students, some recruited through overseas educational agents (typically only for a student's *first* course). Design the star schema answering the four questions above.
+**Problem:** the admission office handles enrolment, payment and marketing for international students of a multi-campus college, some recruited through overseas educational agents. Design the star schema answering the four questions above.
 
 > [!QUESTION]- Attempt the fact + dimensions + attributes cold, then expand.
-> > [!SUCCESS]- Model answer *(derived from the four analysis questions — check against the lab solution)*
+> > [!SUCCESS]- Model answer *(as given in Chapter 2)*
 > > ```mermaid
 > > erDiagram
-> >   DIM_STUDENT ||--o{ FACT_PAYMENT : qualifies
-> >   DIM_COURSE  ||--o{ FACT_PAYMENT : qualifies
-> >   DIM_CAMPUS  ||--o{ FACT_PAYMENT : qualifies
-> >   DIM_AGENT   ||--o{ FACT_PAYMENT : qualifies
-> >   DIM_TIME    ||--o{ FACT_PAYMENT : qualifies
-> >   FACT_PAYMENT {
-> >     NUMBER student_id FK
-> >     NUMBER course_id FK
-> >     NUMBER campus_id FK
-> >     NUMBER agent_id FK
-> >     NUMBER time_id FK
-> >     NUMBER fee_amount
-> >     NUMBER num_payments
+> >   COUNTRY_DIM ||--o{ COLLEGE_FACT : qualifies
+> >   COURSE_DIM  ||--o{ COLLEGE_FACT : qualifies
+> >   AGENT_DIM   ||--o{ COLLEGE_FACT : qualifies
+> >   YEAR_DIM    ||--o{ COLLEGE_FACT : qualifies
+> >   COLLEGE_FACT {
+> >     VARCHAR2 Country FK
+> >     NUMBER AgentNo FK
+> >     VARCHAR2 CourseCode FK
+> >     NUMBER EnrolmentYear FK
+> >     NUMBER Number_of_Payments
+> >     NUMBER Total_Income
 > >   }
-> >   DIM_STUDENT {
-> >     NUMBER student_id PK
-> >     VARCHAR2 student_name
-> >     VARCHAR2 country
+> >   COUNTRY_DIM {
+> >     VARCHAR2 Country PK
 > >   }
-> >   DIM_COURSE {
-> >     NUMBER course_id PK
-> >     VARCHAR2 course_name
-> >     VARCHAR2 course_level
+> >   COURSE_DIM {
+> >     VARCHAR2 CourseCode PK
+> >     VARCHAR2 CourseName
+> >     NUMBER Duration
+> >     VARCHAR2 CourseLevel
 > >   }
-> >   DIM_CAMPUS {
-> >     NUMBER campus_id PK
-> >     VARCHAR2 campus_name
+> >   AGENT_DIM {
+> >     NUMBER AgentNo PK
+> >     VARCHAR2 AgentName
+> >     VARCHAR2 AgentAddress
+> >     VARCHAR2 AgentPhone
+> >     VARCHAR2 ContactPerson
 > >   }
-> >   DIM_AGENT {
-> >     NUMBER agent_id PK
-> >     VARCHAR2 agent_name
-> >     VARCHAR2 agent_country
-> >   }
-> >   DIM_TIME {
-> >     NUMBER time_id PK
-> >     NUMBER year
-> >     NUMBER semester
+> >   YEAR_DIM {
+> >     NUMBER EnrolmentYear PK
 > >   }
 > > ```
-> > $$\text{FACT\_PAYMENT}(\underline{\text{student\_id}^{*}, \text{course\_id}^{*}, \text{campus\_id}^{*}, \text{agent\_id}^{*}, \text{time\_id}^{*}}, \text{fee\_amount}, \text{num\_payments})$$
-> > - **Fact:** payment/income — the only numeric measurement the four questions ask to total or count.
-> > - **Grain:** one row per student payment per course per semester (given directly by the case text).
-> > - **Key move:** `course_level` must be a stored *attribute*, or question 2 ("postgraduate courses") cannot be answered at all.
-> > - **Agent nuance:** subsequent courses are usually *not* agent-handled, so `agent_id` needs a "no agent" member rather than a NULL FK.
+> > $$\text{COLLEGEFACT}(\underline{\text{Country}^{*}, \text{AgentNo}^{*}, \text{CourseCode}^{*}, \text{EnrolmentYear}^{*}}, \text{Number\_of\_Payments}, \text{Total\_Income})$$
+> > - **Fact:** two measures — `Number_of_Payments` (Q4) and `Total_Income` (Q1–3).
+> > - **Key move:** `CourseLevel` must be a stored *attribute*, or question 2 ("postgraduate courses") cannot be answered at all.
+> > - **Degenerate dimensions are fine** ➔ `CountryDIM` and `YearDIM` hold a single column each; they still exist so the star's axes are explicit.
+> > - **Implementation** ➔ [[Building Dimension Tables]] then [[Building Fact Tables]] (Route A, direct aggregation).
 
 ## 🧠 Active Recall
 > [!FAQ]- Given a case study, in what order do you decide the pieces, and why that order?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** fact → grain → dimensions → attributes, all driven by the **required analysis questions**.
-> > - **Why:** **Measure first** ➔ the fact is whatever the questions total or count, since $\text{FACT}$'s non-key columns must be numeric measurements. **Grain next** ➔ it fixes what one row means and is unrecoverable later. **Dimensions from grouping terms** ➔ every "by X" / "for each X" in a question forces a dimension keyed into the fact's composite PK. **Attributes last** ➔ each remaining qualifier in a question ("postgraduate", "country") must exist as a column inside its dimension or the query is unanswerable.
+> > - **Why:** **Measure first** ➔ the fact is whatever the questions total or count, since $\text{FACT}$'s non-key columns must be numerical measurements. **Grain next** ➔ it fixes what one row means and is unrecoverable later. **Dimensions from grouping terms** ➔ every "by X" / "for each X" in a question forces a dimension keyed into the fact's composite PK. **Attributes last** ➔ each remaining qualifier in a question ("postgraduate", "country") must exist as a column inside its dimension or the query is unanswerable.
 
 > [!FAQ]- Why is the star schema deliberately *not* normalised, given [[Third Normal Form (3NF)|3NF]] is the operational default?
 > > [!SUCCESS]- Answer
