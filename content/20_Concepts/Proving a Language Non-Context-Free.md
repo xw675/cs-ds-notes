@@ -29,7 +29,7 @@ aliases: [non-context-free, not context-free, a^n b^n a^n, a^n b^n c^n, CFL pump
 
 ## 🥇 Worked example — $L=\{\mathtt{a}^{n}\mathtt{b}^{n}\mathtt{a}^{n}: n\ge 0\}=\{\varepsilon,\mathtt{aba},\mathtt{aabbaa},\dots\}$
 **Theorem.** $L$ is not context-free.
-**Proof (by contradiction).** Assume it is. Take its CNF grammar, let $k$ = #nonterminals, take $N>2^{k-1}/3$ so that $|w|=3N>2^{k-1}$, and choose $w=\mathtt{a}^{N}\mathtt{b}^{N}\mathtt{a}^{N}$. Consider any $u,v,x,y,z$ with $w=uvxyz$, $vy\neq\varepsilon$, $|vxy|\le 2^{k}$.
+**Proof (by contradiction).** Assume it is. Take its CNF grammar, let $k = \#\text{nonterminals}$, take $N>2^{k-1}/3$ so that $|w|=3N>2^{k-1}$, and choose $w=\mathtt{a}^{N}\mathtt{b}^{N}\mathtt{a}^{N}$. Consider any $u,v,x,y,z$ with $w=uvxyz$, $vy\neq\varepsilon$, $|vxy|\le 2^{k}$.
 
 | Case | Where $v,y$ sit | Pumped word | Why it leaves $L$ |
 | :--- | :--- | :--- | :--- |

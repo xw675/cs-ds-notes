@@ -49,7 +49,7 @@ $$P_1\oplus\cdots\oplus P_n=\text{True} \iff \#\{i: P_i=\text{True}\}\text{ is o
 ### Manual Execution Trace
 Accumulate $1\oplus 0\oplus 1\oplus 1$ left to right:
 
-| Step / State | Bit $P_i$ | Running $\oplus$ | #True odd? |
+| Step / State | Bit $P_i$ | Running $\oplus$ | $\#\texttt{True}$ odd? |
 | :--- | :--- | :--- | :--- |
 | **0 (Init)** | — | 0 | no |
 | 1 | 1 | 1 | yes |

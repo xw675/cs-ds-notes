@@ -111,7 +111,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | :-- | :-- | :-- |
 | `CASE` | `CASE WHEN cond THEN 'r' ELSE 'd' END` / `CASE col WHEN v THEN …` | if/else in SELECT; searched form allows ranges |
 | `DECODE` | `DECODE(emp_type,'F','Full','C','Casual')` | equality-only legacy of CASE — ➔ [[SQL Conditional Expressions (CASE, DECODE)]] |
-| set ops | `q1 UNION / UNION ALL / INTERSECT / MINUS q2` | **union-compatible** (same #cols + types); one final `ORDER BY`; names from q1 — ➔ [[SQL Set Operators]] |
+| set ops | `q1 UNION / UNION ALL / INTERSECT / MINUS q2` | **union-compatible** (same $\#$cols + types); one final `ORDER BY`; names from q1 — ➔ [[SQL Set Operators]] |
 | subquery placement | nested (once) · **correlated** (per-row) · **inline view** (`FROM (SELECT …) alias`) · scalar-in-SELECT | ➔ [[SQL Subquery Approaches (Nested, Correlated, Inline)]] |
 | populate table | `INSERT INTO t (SELECT …)` · `CREATE TABLE t AS (SELECT …)` | **CTAS copies data, NOT constraints** — re-add PK/FK after |
 | view | `CREATE OR REPLACE VIEW v AS SELECT …` · `DROP VIEW v` | virtual table (stored query); **banned in FIT2094 Assignment 2** — use a subquery |

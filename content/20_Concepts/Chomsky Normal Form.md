@@ -116,7 +116,7 @@ CNF covers $L\setminus\{\varepsilon\}$, so decide $\varepsilon\in L$ by a **sepa
 ## 🧠 Active Recall
 > [!FAQ]- What does the binary shape of CNF actually buy, and where is it used?
 > > [!SUCCESS]- Answer
-> > - **Short answer:** every parse tree becomes a **binary tree**, so **#leaves $\le 2^{\text{max path length}-1}$** — a bound linking **word length** to **tree height**, and hence to the number of nonterminals on a root-to-leaf path.
+> > - **Short answer:** every parse tree becomes a **binary tree**, so **$\#\text{leaves}\le 2^{\text{max path length}-1}$** — a bound linking **word length** to **tree height**, and hence to the number of nonterminals on a root-to-leaf path.
 > > - **Why:** **Two consumers** ➔ the [[Pumping Lemma for Context-Free Languages|CFL pumping lemma]] uses that bound to force a **repeated nonterminal** on a path once $|w|>2^{k-1}$; the [[CYK Algorithm]] uses binary rules so each substring need only be split into **two** parts, giving a polynomial-time table fill.
 > > - **Bonus:** the same shape kills $\varepsilon$ and unit rules, so no derivation step can ever *shrink* or merely rename — which is what makes those bounds tight.
 
