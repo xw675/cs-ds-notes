@@ -1,7 +1,8 @@
 ---
 unit: FIT2014
 type: MOC
-tags: [Math/Theory, CS/Computation]
+tags:
+  - 2026/S2
 ---
 # 📘 FIT2014: Theory of Computation
 

@@ -1,7 +1,8 @@
 ---
 unit: FIT1047
 type: MOC
-tags: [CS/Systems]
+tags:
+  - 2025/S2
 ---
 # 📘 FIT1047: Introduction to Computer Systems, Networks and Security
 

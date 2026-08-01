@@ -23,8 +23,8 @@ Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit
 - [[FIT2004_MOC|📘 FIT2004 — Algorithms and Data Structures]] · dynamic programming, greedy algorithms, graph algorithms, network flows, string matching → [[FIT2004 Unit Cheatsheet|📄 Cheatsheet]]
 - [[FIT2014_MOC|📘 FIT2014 — Theory of Computation]] · automata theory, regular expressions, grammars, Turing machines, decidability → [[FIT2014 Unit Cheatsheet|📄 Cheatsheet]]
 - [[FIT2086_MOC|📘 FIT2086 — Modelling for Data Analysis]] · probability, distributions, statistical inference, hypothesis testing, regression
-- [[FIT2102_MOC|📘 FIT2102 — Programming Paradigms]] · functional & declarative paradigms, Haskell, type systems (JS/TS/Haskell), lazy vs strict evaluation, functional reactive programming
-- [[FIT2109_MOC|📘 FIT2109 — Computer Science Workshop]] · command-line, version control, debugging/profiling, remote & virtual machines, metaprogramming, data wrangling
+- [[FIT2102_MOC|📘 FIT2102 — Programming Paradigms]] · declarative & functional paradigms, Haskell, type systems, lambda calculus, FRP
+- [[FIT2109_MOC|📘 FIT2109 — Computer Science Workshop]] · command-line, version control, debugging/profiling, remote & virtual machines, agentic coding
 - [[FIT3003_MOC|📘 FIT3003 — Business Intelligence and Data Warehousing]] · data warehousing, dimensional modelling, star schemas, ETL, OLAP
 
 ## 🧰 Toolkit Cheatsheets

@@ -1,7 +1,8 @@
 ---
 unit: FIT2004
 type: MOC
-tags: [CS/Algorithms, CS/Complexity]
+tags:
+  - 2026/S2
 ---
 # 📘 FIT2004: Algorithms and Data Structures
 

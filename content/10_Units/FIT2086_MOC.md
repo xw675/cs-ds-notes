@@ -1,7 +1,8 @@
 ---
 unit: FIT2086
 type: MOC
-tags: [DataScience/Modelling, Tool/R]
+tags:
+  - 2026/S2
 ---
 # 📘 FIT2086: Modelling for Data Analysis
 

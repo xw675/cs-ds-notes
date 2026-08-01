@@ -1,7 +1,8 @@
 ---
 unit: FIT2102
 type: MOC
-tags: [2026/S2, CS/Languages]
+tags:
+  - 2026/S2
 ---
 # 📘 FIT2102: Programming Paradigms
 
@@ -13,7 +14,6 @@ tags: [2026/S2, CS/Languages]
 - **Assignment 1 (30%)** ➔ set W4, **due W7**. Individual; interviews check understanding; standard plagiarism checks.
 - **Assignment 2 (30%)** ➔ set W8, **due W12**. Same conditions.
 - **Workload calibration** ➔ most tutorial tasks are a few lines; **no single problem should exceed ~30 minutes**. Stuck? Write the question as a code comment, split it into sub-questions, bring it to the lab. This is deliberate — the pedagogy is **productive failure + active learning**.
-- **Deck provenance** ➔ the W1 slides carry 2019-era markers (`Not Examinable in 2019`, an old tutor list). **Verify weights and the schedule against the current unit guide** before planning revision.
 - **Out of scope** ➔ not a full "Programming Languages" course: you will **not** build a compiler or design a language, though both are discussed.
 
 ## 📅 Knowledge Index

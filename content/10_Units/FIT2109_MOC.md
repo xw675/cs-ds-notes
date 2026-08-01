@@ -1,7 +1,8 @@
 ---
 unit: FIT2109
 type: MOC
-tags: [2026/S2, CS/Systems, Tool/Shell]
+tags:
+  - 2026/S2
 ---
 # 📘 FIT2109: Computer Science Workshop
 
