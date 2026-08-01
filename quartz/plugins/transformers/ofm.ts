@@ -129,7 +129,15 @@ export const tableRegex = new RegExp(/^\|([^\n])+\|\n(\|)( ?:?-{3,}:? ?\|)+\n(\|
 export const tableWikilinkRegex = new RegExp(/(!?\[\[[^\]]*?\]\]|\[\^[^\]]*?\])/g)
 
 const highlightRegex = new RegExp(/==([^=]+)==/g)
-const commentRegex = new RegExp(/%%[\s\S]*?%%/g)
+// %%...%% comments, but NOT inside fenced or inline code -- matching Obsidian,
+// which does not treat %% as a comment delimiter there. Without the code
+// alternatives a literal `%%` (e.g. the Lex/Yacc section separator) pairs with
+// an unrelated %% elsewhere in the file and silently deletes everything between.
+// Group 1 captures a code region and is re-emitted verbatim; a bare %%...%% match
+// leaves group 1 undefined and is stripped.
+const commentRegex = new RegExp(
+  /((?:^[ \t>]*(?:```|~~~)[\s\S]*?^[ \t>]*(?:```|~~~).*$)|(?:`+[^`\n]*`+))|%%[\s\S]*?%%/gm,
+)
 // from https://github.com/escwxyz/remark-obsidian-callout/blob/main/src/index.ts
 const calloutRegex = new RegExp(/^\[\!([\w-]+)\|?(.+?)?\]([+-]?)/)
 const calloutLineRegex = new RegExp(/^> *\[\!\w+\|?.*?\][+-]?.*$/gm)
@@ -161,7 +169,7 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
     textTransform(_ctx, src) {
       // do comments at text level
       if (opts.comments) {
-        src = src.replace(commentRegex, "")
+        src = src.replace(commentRegex, (_m, code) => code ?? "")
       }
 
       // pre-transform blockquotes

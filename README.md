@@ -33,6 +33,14 @@ Notes are written and maintained in Obsidian. This repo holds a synced copy of t
 | `sync-content.sh` | Copies vault folders in + normalizes math fences |
 | `.github/workflows/deploy.yml` | Build + deploy on every push to `main` |
 
+## Local patches to Quartz
+
+`quartz/` is upstream Quartz with one deliberate change — **re-apply it after any upstream merge**:
+
+| File | Change | Why |
+| --- | --- | --- |
+| `quartz/plugins/transformers/ofm.ts` | `commentRegex` skips fenced and inline code | Upstream strips `%%…%%` with a raw-text regex that ignores code blocks, so a literal `%%` (R's modulo, the Lex/Yacc section separator) pairs with an unrelated `%%` elsewhere in the file and silently deletes everything between. Obsidian itself does not treat `%%` in code as a comment. |
+
 ## Publishing an update
 
 ```bash
