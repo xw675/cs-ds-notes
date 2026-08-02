@@ -88,7 +88,7 @@ aliases: [FIT2014 Exam Crib, Theory of Computation Cheatsheet]
 - **[[Building Turing Machines|Building recipe]]** ➔ mark-and-sweep: mark leftmost unmarked $\mathtt{a}$, run right to the matching $\mathtt{b}$, mark, return, repeat; accept when a full sweep finds nothing left to match.
 - **[[Computable Functions and the Church-Turing Thesis|Unary code]]** ➔ $n\mapsto\mathtt{a}^{n}$, tuples separated by $\mathtt{b}$; $f$ is computable iff some TM leaves $f(x)$ on the tape **· precondition** the **Church–Turing thesis is a thesis, not a theorem** — it cannot be cited as a proof step.
 - **[[Encoding Turing Machines (Code Words)|Code words]]** ➔ one row per transition, 5 fields: state $\mathtt{a}^{n}\mathtt{b}$, 2-letter symbols, 1-letter direction; $\text{CWL}=(\mathtt{aa}^{*}\mathtt{b}\mathtt{a}\mathtt{a}^{*}\mathtt{b}(\mathtt{a}\cup\mathtt{b})^{5})^{*}$ is **regular** but strictly **larger** than the set of genuine TM codes.
-- **[[Universal Turing Machine|UTM]]** ➔ takes $\langle M\rangle\,\$\,x$ and simulates $M$ on $x$ — programs as data, the stored-program idea.
+- **[[Universal Turing Machine|UTM]]** ➔ takes $\langle M\rangle\,\texttt{\$}\,x$ and simulates $M$ on $x$ — programs as data, the stored-program idea.
 
 ## 🔟 Decidability and Mapping Reductions
 - **[[Decidability and Decision Problems|Decidable]]** ➔ $L=\text{Accept}(M)$ for some **decider** $M$; then $\overline{L}=\text{Reject}(M)$ comes free. Synonyms: recursive, solvable.

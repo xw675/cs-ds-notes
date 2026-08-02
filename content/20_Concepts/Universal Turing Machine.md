@@ -12,7 +12,7 @@ aliases: [UTM, universal Turing machine, stored program, interpreter]
 **Context:** [[FIT2014_MOC]] · one [[Turing Machines|Turing machine]] that runs **all** the others, by reading them as data via [[Encoding Turing Machines (Code Words)]] · the theoretical ancestor of the stored-program computer
 
 > [!abstract] Quick Revision
-> - **🎯 Objective:** a **single fixed** TM $U$ taking $\langle M\rangle\,\$\,x$ ➔ simulates $M$ on $x$ step for step, accepting iff $M$ accepts $x$.
+> - **🎯 Objective:** a **single fixed** TM $U$ taking $\langle M\rangle\,\texttt{\$}\,x$ ➔ simulates $M$ on $x$ step for step, accepting iff $M$ accepts $x$.
 > - **⚠️ Key Constraint:** $U$ has a **finite** state set but must simulate machines with arbitrarily many states — so the simulated state is held **on the tape**, and only the *current letter* is carried in $U$'s own states.
 
 ## 📝 Definition and input format
