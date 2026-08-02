@@ -1,8 +1,8 @@
 # 🎓 CS × DS Knowledge Vault
 
-**Live site:** https://xw675.github.io/monash-cs-notes/
+**Live site:** https://xw675.github.io/cs-ds-notes/
 
-Exam-ready study notes for a Monash University CS + Data Science, published from my Obsidian vault with [Quartz 4](https://quartz.jzhao.xyz).
+Exam-ready study notes for a CS + Data Science degree, published from my Obsidian vault with [Quartz 4](https://quartz.jzhao.xyz).
 
 Covers six first-year units — **FIT1058** (Foundations of Computing), **FIT1043** (Intro to Data Science), **FIT1047** (Computer Systems, Networks & Security), **FIT1008** (Fundamentals of Algorithms), **FIT2094** (Databases), **FIT2099** (Object Oriented Design) — as ~370 interlinked atomic notes with unit cheatsheets, toolkit cheatsheets, LaTeX math, Mermaid UML diagrams, full-text search, backlinks, and a graph view.
 

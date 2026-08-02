@@ -4,7 +4,7 @@ title: "🎓 CS × DS Knowledge Vault"
 
 # 🎓 CS × DS Knowledge Vault
 
-Exam-ready notes for a Monash CS + Data Science double degree. Start from a unit's Map of Content, or use search (`Ctrl+K` / `Cmd+K`).
+Exam-ready notes for a CS + DS double degree. Start from a unit's Map of Content, or use search (`Ctrl+K` / `Cmd+K`).
 
 ## 📅 Year 1 — Semester 1
 

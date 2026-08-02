@@ -15,8 +15,8 @@ aliases: [package, import, wildcard import, Java modules, project organization]
 > - **⚡ Key Constraint:** the `package` declaration must be the **very first statement** in the file (before any `import`); the folder path on disk must **match** the dotted package name.
 
 ## 📝 Core
-- **Package** ➔ a namespace grouping related classes; declared `package com.monash.smarthome;` as the **first line**.
-- **Folder = package** ➔ `com.monash.smarthome` ➔ the file lives in `com/monash/smarthome/`; mismatch = won't compile.
+- **Package** ➔ a namespace grouping related classes; declared `package com.smarthome;` as the **first line**.
+- **Folder = package** ➔ `com.smarthome` ➔ the file lives in `com/smarthome/`; mismatch = won't compile.
 - **Import** ➔ pull a class from another package into scope: `import java.util.ArrayList;` — then use `ArrayList` unqualified.
 - **Order** ➔ `package` line → `import` lines → class declaration; imports sit **between** the two.
 - **Fully-qualified name** ➔ without an import, refer to a class by its full path: `java.util.ArrayList list = ...`.

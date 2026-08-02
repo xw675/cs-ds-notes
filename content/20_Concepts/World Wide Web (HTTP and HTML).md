@@ -21,18 +21,18 @@ aliases: [HTTP, WWW, Request-Response, GET, POST]
 
 ## 📊 Exam Execution Trace — lecture session, verbatim
 ```text
-client:  GET /~guidot/test.html HTTP/1.1        ← request line (method, path, version)
-         Host: www.csse.monash.edu              ← request header
+client:  GET /~john/test.html HTTP/1.1        ← request line (method, path, version)
+         Host: www.stanford.edu              ← request header
 
 server:  HTTP/1.1 200 OK                        ← response status
          Date: Thu, 05 Mar 2015 08:30:48 GMT    ← response headers
          Server: Apache/1.3.26 (Unix)
          Content-Type: text/html
                                                  ← blank line separates
-         <html><body><h1>Guido Tack</h1>        ← response body (HTML)
-         <img src="images/guido3.jpg">…
+         <html><body><h1>John</h1>        ← response body (HTML)
+         <img src="images/john.jpg">…
 ```
-Then the `<img>` tag causes a **second** cycle: `GET /~guidot/images/guido3.jpg` → `200 OK`, `Content-Type: image/jpeg`, binary body.
+Then the `<img>` tag causes a **second** cycle: `GET /~john/images/john.jpg` → `200 OK`, `Content-Type: image/jpeg`, binary body.
 
 ## 🎛 HTTP Methods
 | Method | Does |

@@ -16,7 +16,7 @@ aliases: [DNS, ARP, Iterative Lookup, Recursive Lookup]
 
 ## 📝 Core
 ### DNS (Domain Name System) — name → IP
-- **What** ➔ application-layer protocol over a **distributed database** of names; servers arranged in a hierarchy mirroring domain structure: root zone → TLD (`.au`, `.com`, `.edu`) → organisation (`monash`, `unimelb`) → host.
+- **What** ➔ application-layer protocol over a **distributed database** of names; servers arranged in a hierarchy mirroring domain structure: root zone → TLD (`.au`, `.com`, `.edu`) → organisation (`unsw`, `unimelb`) → host.
 - **Iterative lookup** ➔ client asks root → "ask `.au`" → client asks TLD → "ask `edns-396.unimelb.edu.au`" → client asks that server → gets $124.47.170.46$ — the CLIENT follows each referral.
 - **Recursive lookup** ➔ client asks one server (typically the ISP's) which does the whole walk itself and returns the final answer — enabling the **ISP cache** that answers repeat queries instantly.
 

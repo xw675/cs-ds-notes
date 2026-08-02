@@ -28,7 +28,7 @@ C: HELO my.laptop
 S: 250 MyMailServer Hello laptop …
 C: MAIL FROM:<alice@mymail.com>
 S: 250 OK
-C: RCPT TO:<guido.tack@monash.edu>
+C: RCPT TO:<john@mymail.edu>
 S: 250 Accepted
 C: DATA
 S: 354 Enter message, ending with "." on a line by itself

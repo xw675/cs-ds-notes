@@ -15,12 +15,12 @@ aliases: [IP Address, MAC Address, Port Numbers, IPv6, Subnet Mask]
 > - **⚡ Key Constraint:** IPv4 structure — $130.194.66.43/26$ means first 26 bits = network+subnet, last 6 = host ⟹ same-subnet test by prefix comparison.
 
 ## ⚖️ Core Decision Matrix — one address per layer
-| Layer | Address | Example | Identifies |
-| :-- | :-- | :-- | :-- |
-| Application | URL | `http://www.monash.edu` | a resource |
-| Transport | port | $80$ (HTTP), $25$ (SMTP) | the application on a host |
-| Network | IP | $130.194.66.43$ | a device across networks |
-| Data Link | MAC | `00:23:ae:e7:52:85` | an interface within a LAN |
+| Layer | Address | Example                   | Identifies |
+| :---------- | :------ | :------------------------ | :------------------------ |
+| Application | URL | `http://www.stanford.edu` | a resource |
+| Transport | port | $80$ (HTTP), $25$ (SMTP)  | the application on a host |
+| Network | IP | $130.194.66.43$           | a device across networks |
+| Data Link | MAC | `00:23:ae:e7:52:85`       | an interface within a LAN |
 
 ## 📝 Core
 ### IPv4
