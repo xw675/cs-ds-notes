@@ -10,7 +10,6 @@ tags:
 > Index for **FIT2109 Computer Science Workshop** — the professional-tooling spine: shell → scripting → Git → remote machines → containers → debugging → profiling → automation → agentic coding. Taught by **productive failure**: the assessable skill is explaining *both the command and its output*, so every note pairs a correct invocation with its failure mode and the error text that identifies it. Shell notes are shared with [[FIT1043_MOC]] and [[FIT2014_MOC]] — FIT2109 contributes the **systems** angle (paths, permissions, processes, streams, exit status) to the same notes rather than forking a parallel tree.
 
 ## 📊 Assessment Map
-- **Splits unrecorded** ➔ not stated in the Week 1 material; update this block from the unit guide before planning revision.
 - **Format** ➔ weekly workshop with demos + group **handout activities** (Parts A–D/E) + a Poll Everywhere checkpoint at `pollev.com/fit2109`; weekly applied tasks between sessions.
 - **What is actually assessed** ➔ fluency, not memorisation — you must be able to explain *why* a command ran or failed, and read an error message as a clue rather than noise.
 - **Standard environment** ➔ **Bash** (`#!/usr/bin/env bash`); macOS defaults to **Zsh** since Catalina (`%` prompt) — identical for all W1 commands, diverging only in scripting syntax and expansions from W2.
