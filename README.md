@@ -4,7 +4,20 @@
 
 Exam-ready study notes for a CS + Data Science degree, published from my Obsidian vault with [Quartz 4](https://quartz.jzhao.xyz).
 
-Covers six first-year units — **FIT1058** (Foundations of Computing), **FIT1043** (Intro to Data Science), **FIT1047** (Computer Systems, Networks & Security), **FIT1008** (Fundamentals of Algorithms), **FIT2094** (Databases), **FIT2099** (Object Oriented Design) — as ~370 interlinked atomic notes with unit cheatsheets, toolkit cheatsheets, LaTeX math, Mermaid UML diagrams, full-text search, backlinks, and a graph view.
+Covers units: 
+**FIT1047** (Computer Systems, Networks & Security)
+**FIT1058** (Foundations of Computing)
+**FIT1043** (Introduction to Data Science)
+**FIT1008** (Fundamentals of Algorithms)
+**FIT2094** (Databases)
+**FIT2099** (Object Oriented Design)
+**FIT2004** (Algorithms and Data Structures)
+**FIT2014** (Theory of Computation)
+**FIT2086** (Modelling for Data Analysis)
+**FIT2102** (Programming Paradigms)
+**FIT2109** (Computer Science Workshop)
+**FIT3003** (Business Intelligence and Data Warehousing)
+as interlinked atomic notes with unit cheatsheets, toolkit cheatsheets, LaTeX math, Mermaid UML diagrams, full-text search, backlinks, and a graph view.
 
 ## How it works
 
