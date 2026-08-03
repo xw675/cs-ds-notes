@@ -8,7 +8,7 @@ tags: [CS/Algorithms, CS/Complexity]
 # [[Divide and Conquer]]
 
 **Context:** [[FIT1008_MOC]], [[FIT2004_MOC]] · a [[Recursion|recursive]] strategy · powers [[Binary Search]], [[Merge Sort]], [[Quick Sort]] · solves the [[Sorting Problem]]
-**FIT2004 use:** the flagship example is [[Karatsuba Integer Multiplication]] (4→3 sub-multiplications); its running time — and every D&C algorithm's — is found by [[Solving Recurrences (Telescoping)|solving the cost recurrence]] $T(n)=a\,T(n/b)+f(n)$.
+**FIT2004 use:** the examinable examples are [[Merge Sort]] and [[Quick Sort]]; every D&C algorithm's running time is found by [[Solving Recurrences (Telescoping)|solving the cost recurrence]] $T(n)=a\,T(n/b)+f(n)$, where $a$ counts **recursive calls** and $f(n)$ the combine.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** divide into subproblems, conquer recursively, combine ➔ most efficient when splits are roughly equal.

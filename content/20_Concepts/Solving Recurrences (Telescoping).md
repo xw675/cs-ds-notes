@@ -110,9 +110,9 @@ $$T(n)=\sum_{i=0}^{\log_b n} c\,n\left(\frac{a}{b}\right)^{i} \qquad\text{— a 
 
 - **$r<1$ (i.e. $a<b$)** ➔ series **converges** to a constant multiple of its first term ⟹ $\Theta(n)$, **root-dominated** (the top-level combine is the whole cost).
 - **$r=1$ (i.e. $a=b$)** ➔ **every level costs the same** $cn$, and there are $\log_b n{+}1$ of them ⟹ $\Theta(n\log n)$. *(Merge sort: $a{=}b{=}2$.)*
-- **$r>1$ (i.e. $a>b$)** ➔ the **last term dominates** ⟹ $\Theta\!\big(n(a/b)^{\log_b n}\big)=\Theta\!\big(n^{\log_b a}\big)$, **leaf-dominated**. *(Karatsuba: $a{=}3,b{=}2$, $r=\tfrac32>1$ ⟹ $\Theta(n^{\log_2 3})$.)*
+- **$r>1$ (i.e. $a>b$)** ➔ the **last term dominates** ⟹ $\Theta\!\big(n(a/b)^{\log_b n}\big)=\Theta\!\big(n^{\log_b a}\big)$, **leaf-dominated**. *($a{=}3,b{=}2$, $r=\tfrac32>1$ ⟹ $\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$.)*
 
-The identity that collapses the leaf case — worth memorising, it is the whole of [[Karatsuba Integer Multiplication]]'s exponent:
+The identity that collapses the leaf case — worth memorising, it produces every leaf-dominated exponent:
 $$n\left(\frac{a}{b}\right)^{\log_b n} = n\cdot\frac{a^{\log_b n}}{b^{\log_b n}} = n\cdot\frac{n^{\log_b a}}{n} = n^{\log_b a}$$
 
 ### 🔹 The two log identities it rests on
@@ -122,7 +122,7 @@ $$n\left(\frac{a}{b}\right)^{\log_b n} = n\cdot\frac{a^{\log_b n}}{b^{\log_b n}}
 
 - **Halving-with-ceiling** ➔ $\log_2\!\left(\frac{k+1}{2}\right)+1=\log_2(k+1)$, since $\log_2\frac{k+1}{2}=\log_2(k+1)-\log_2 2=\log_2(k+1)-1$ ➔ justifies "one more level of halving costs $+1$ to the depth", the step that makes depth $=\log_2 n$ rather than an unevaluated recursion.
 
-- **Instantiations** ➔ naive D&C multiply $a{=}4,b{=}2\Rightarrow\Theta(n^{\log_2 4})=\Theta(n^2)$ · Karatsuba $a{=}3,b{=}2\Rightarrow\Theta(n^{1.585})$ · merge sort $a{=}b{=}2\Rightarrow\Theta(n\log n)$ · a single half with $\Theta(n)$ work $a{=}1,b{=}2\Rightarrow\Theta(n)$.
+- **Instantiations** ➔ $a{=}4,b{=}2\Rightarrow\Theta(n^{\log_2 4})=\Theta(n^2)$ · $a{=}3,b{=}2\Rightarrow\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$ · merge sort $a{=}b{=}2\Rightarrow\Theta(n\log n)$ · a single half with $\Theta(n)$ work $a{=}1,b{=}2\Rightarrow\Theta(n)$.
 
 ## 🔭 Beyond Week 1 — the Master Theorem *(shortcut, not in the lecture slides)*
 > [!NOTE] The Week 1 deck solves everything by **telescoping**; the Master Theorem is a standard lookup that gives the same answers for the divide-and-conquer family without the algebra. Included here as a revision aid — **cite telescoping in assessments unless the Master Theorem has been formally introduced.**
@@ -135,7 +135,7 @@ For $T(n)=a\,T(n/b)+\Theta(n^{d})$ compare $d$ with the critical exponent $\log_
 | 2 | $d=\log_b a$ | $\Theta\!\big(n^{d}\log n\big)$ | every level equally |
 | 3 | $d>\log_b a$ | $\Theta\!\big(n^{d}\big)$ | the root (combine) |
 
-Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹ $\Theta(n\log n)$; Karatsuba $a{=}3,b{=}2,d{=}1$, $\log_2 3\approx1.585{>}1$ = Case 1 ⟹ $\Theta(n^{1.585})$ — matching the telescoping results above. The three cases are the same **root / equal / leaves** split as the ratio $r=a/b$ above, restated for $d=1$.
+Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹ $\Theta(n\log n)$; $a{=}3,b{=}2,d{=}1$ with $\log_2 3\approx1.585{>}1$ = Case 1 ⟹ $\Theta(n^{1.585})$ — matching the telescoping results above. The three cases are the same **root / equal / leaves** split as the ratio $r=a/b$ above, restated for $d=1$.
 
 ## ⚠️ Common Mistakes
 - 💡 **Fix $k$ from the base case** ➔ the general form has an unknown depth $k$; you must set it so the recursion reaches the base (e.g. $N-k=1$ or $n/2^{k}=1$) before reading off the complexity.
@@ -156,7 +156,7 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 > [!QUESTION]- D2: $T(n)=4T(n/2)+cn$ — the naive D&C multiplication recurrence.
 > > [!SUCCESS]- Solution
 > > $$\begin{aligned} \text{level } i:\;& 4^{i}\text{ subproblems}\times c\,n/2^{i} = cn\,2^{i} && (r=a/b=2>1) \\ T(n)&=cn\sum_{i=0}^{\log_2 n}2^{i}=cn\big(2^{\log_2 n+1}-1\big)=\Theta(n\cdot n)=\Theta(n^{2})\end{aligned}$$
-> > - **Key move:** $r>1$ ⟹ leaf-dominated ⟹ $\Theta(n^{\log_2 4})=\Theta(n^2)$ — identical to schoolbook, which is exactly why [[Karatsuba Integer Multiplication]] must cut $a$ to $3$.
+> > - **Key move:** $r>1$ ⟹ leaf-dominated ⟹ $\Theta(n^{\log_2 4})=\Theta(n^2)$ — the branching factor $a$, not the combine, sets the exponent; cutting $a$ to $3$ would drop it to $\Theta(n^{\log_2 3})$.
 
 > [!QUESTION]- D3: $T(n)=T(n/2)+cn$ with $T(1)=c$ — one recursive call, linear work.
 > > [!SUCCESS]- Solution

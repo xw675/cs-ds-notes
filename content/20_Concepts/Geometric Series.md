@@ -38,7 +38,7 @@ Both drop out of $\sum_{i=0}^{n}r^{i}=\frac{r^{n+1}-1}{r-1}$ by substituting $r$
 
 - **$r=2$ — doubling/branching** ➔ $\displaystyle\sum_{i=0}^{n}2^{i}=\frac{2^{n+1}-1}{2-1}=2^{n+1}-1$ ➔ nodes of a complete [[Binary Tree]] of height $n$; also **the leaf level alone exceeds all levels above it combined** ($2^n > 2^n-1$) — why leaf-dominated recursions are $\Theta(\text{leaves})$.
 - **$r=\tfrac12$ — halving/shrinking** ➔ $\displaystyle\sum_{i=0}^{n}\frac{1}{2^{i}}=\frac{(\tfrac12)^{n+1}-1}{\tfrac12-1}=2-\frac{1}{2^{n}}<2$ ➔ a **strict, $n$-independent** bound: work that halves each level totals **less than twice the first level**.
-- **Why the strict finite bound matters** ➔ it converts "$\log n$ levels of shrinking work" into $\Theta(\text{top level})$ *without* an infinite-series limit argument — the move behind $\Theta(n)$ auxiliary space in [[Karatsuba Integer Multiplication]] and $T(n)=T(n/2)+cn=\Theta(n)$.
+- **Why the strict finite bound matters** ➔ it converts "$\log n$ levels of shrinking work" into $\Theta(\text{top level})$ *without* an infinite-series limit argument — the move behind $\Theta(n)$ auxiliary space for shrinking recursive frames and $T(n)=T(n/2)+cn=\Theta(n)$.
 
 > [!NOTE] **When It Flips:** vs [[Arithmetic Series]] — arithmetic always diverges in size (terms don't shrink); geometric converges exactly when terms decay ($|r|<1$). For $r>1$, $S_n=\Theta(r^n)$ — the node count $\sum 2^i=2^{k+1}-1$ of a perfect [[Binary Tree]].
 

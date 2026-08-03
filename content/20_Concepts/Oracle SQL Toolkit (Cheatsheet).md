@@ -88,14 +88,14 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - **Aggregate over a join** ➔ join condition goes in WHERE/ON and runs first; group on the surviving columns.
 
 ## 🔗 Joins — [[SQL Joins (ANSI)]] · [[SQL Self Join and Outer Join]]
-| Form | Syntax | When |
-| :-- | :-- | :-- |
-| `JOIN … ON` | `FROM a JOIN b ON a.id = b.id` | **the general form — default choice**, always works |
-| `JOIN … USING` | `JOIN b USING (manuf_id)` | identical column names both sides |
-| `NATURAL JOIN` | `a NATURAL JOIN b` | all common columns match — ⚠ no common column ⇒ **Cartesian product** |
-| self join | `FROM emp e1 JOIN emp e2 ON e1.mgrno = e2.empno` | recursive FK (employee→manager); **distinct aliases required** |
-| outer join | `LEFT / RIGHT / FULL OUTER JOIN … ON …` | keep unmatched rows (INNER drops them) |
-| implicit / old-style | `FROM customer ct, carsales cs, car c WHERE ct.customerID = cs.customerID AND c.carID = cs.carID` | ⛔ **banned in FIT2094** (marked wrong) · ✅ **standard in FIT3003** — $n$ tables need $n-1$ conditions |
+| Form | Syntax | When                                                                                                |
+| :------------------- | :------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------- |
+| `JOIN … ON` | `FROM a JOIN b ON a.id = b.id` | **the general form — default choice**, always works                                                 |
+| `JOIN … USING` | `JOIN b USING (manuf_id)` | identical column names both sides                                                                   |
+| `NATURAL JOIN` | `a NATURAL JOIN b` | all common columns match — ⚠ no common column ⇒ **Cartesian product**                               |
+| self join | `FROM emp e1 JOIN emp e2 ON e1.mgrno = e2.empno` | recursive FK (employee→manager); **distinct aliases required**                                      |
+| outer join | `LEFT / RIGHT / FULL OUTER JOIN … ON …` | keep unmatched rows (INNER drops them)                                                              |
+| implicit / old-style | `FROM customer ct, carsales cs, car c WHERE ct.customerID = cs.customerID AND c.carID = cs.carID` | **banned in FIT2094** (marked wrong) · ✅ **standard in FIT3003** — $n$ tables need $n-1$ conditions |
 
 > [!WARNING] **Missing join condition = PRODUCT.** FIT3003 warns that a comma-list `FROM` with no matching WHERE condition returns the Cartesian product, exhausts your Oracle quota, and **locks your account**. Count your ANDs before running.
 
@@ -121,21 +121,21 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 ## 🏭 Warehouse ETL Clauses (FIT3003 W2)
 *(➔ [[Building Dimension Tables]] · [[Building Fact Tables]] · [[Fact Measure Aggregation Rules]])*
 
-| Tool | Micro-syntax | Job / gotcha |
-| :-- | :-- | :-- |
-| dimension by copy | `create table AgentDim as select * from Agent;` | route 1 of 3; rows only, **no PK/FK** |
-| dimension by projection | `create table CourseDim as select CourseCode, CourseName from Course;` | route 2 — drop columns no analysis question needs |
-| dimension by de-dup | `create table CountryDim as select distinct Country from Student;` | mandatory `distinct` when the source is a **transaction** table |
-| dimension by hand | `create table TimeDim (Quarter number(1), Description varchar2(20));` + `insert into … values (1,'Jan-Mar');` | route 3 — members are business knowledge, membership is fixed and known |
-| manufactured key | `Country \|\| City as LocationID` · `set QuarterID = Year \|\| Quarter` | builds an ID the operational DB never stored |
-| time key | `to_char(DownloadDate,'YYYYMM') as TimeID` · `'MM'` · `'YYYY'` · `'Month'` | `'Month'` yields the *name*; masks are the dimension's attributes |
-| staging table | `create table TempFact as select … from a, b where …;` | the **joined, unaggregated** row set; grain preserved for one later `group by` |
-| add derived column | `alter table TempFact add (Quarter number(1));` then `update … set Quarter = 1 where …` | the chapter's banding idiom — one `update` per band, not `CASE` |
-| null-band catch-all | `update TempFact set Quarter = '4' where Quarter is null;` | last band by exclusion instead of a range test |
-| fact by aggregation | `create table SalesFact as select Quarter, BranchID, sum(TotalPrice) as Total_Sales from TempFact group by Quarter, BranchID;` | `group by` list $=$ the fact's composite PK; build **from operational/temp tables, never from the dimensions** |
-| two populations | `from Opening O left outer join Placement P on O.OpenNo = P.OpenNo` + `count(OpenNo)` / `count(CandNo)` | outer join keeps unmatched rows; `count(col)` skips the NULLs — `count(*)` would equalise both measures |
-| latest-per-entity | `rank() over (partition by E.EmpNo order by D.GraduationDate desc) as Rank` in an inline view, then `where T.Rank = 1` | pre-processes the **operational** side; without it the join multiplies rows per entity |
-| ⛔ never store | `avg(x)` as a fact measure | average of averages ≠ average — store `Total_x` **and** `Number_of_y`, recover with `sum(Total_x)/sum(Number_of_y)` |
+| Tool                    | Micro-syntax                                                                                                                   | Job / gotcha                                                                                                        |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| dimension by copy       | `create table AgentDim as select * from Agent;`                                                                                | route 1 of 3; rows only, **no PK/FK**                                                                               |
+| dimension by projection | `create table CourseDim as select CourseCode, CourseName from Course;`                                                         | route 2 — drop columns no analysis question needs                                                                   |
+| dimension by de-dup     | `create table CountryDim as select distinct Country from Student;`                                                             | mandatory `distinct` when the source is a **transaction** table                                                     |
+| dimension by hand       | `create table TimeDim (Quarter number(1), Description varchar2(20));` + `insert into … values (1,'Jan-Mar');`                  | route 3 — members are business knowledge, membership is fixed and known                                             |
+| manufactured key        | `Country \|\| City as LocationID` · `set QuarterID = Year \|\| Quarter`                                                        | builds an ID the operational DB never stored                                                                        |
+| time key                | `to_char(DownloadDate,'YYYYMM') as TimeID` · `'MM'` · `'YYYY'` · `'Month'`                                                     | `'Month'` yields the *name*; masks are the dimension's attributes                                                   |
+| staging table           | `create table TempFact as select … from a, b where …;`                                                                         | the **joined, unaggregated** row set; grain preserved for one later `group by`                                      |
+| add derived column      | `alter table TempFact add (Quarter number(1));` then `update … set Quarter = 1 where …`                                        | the chapter's banding idiom — one `update` per band, not `CASE`                                                     |
+| null-band catch-all     | `update TempFact set Quarter = '4' where Quarter is null;`                                                                     | last band by exclusion instead of a range test                                                                      |
+| fact by aggregation     | `create table SalesFact as select Quarter, BranchID, sum(TotalPrice) as Total_Sales from TempFact group by Quarter, BranchID;` | `group by` list $=$ the fact's composite PK; build **from operational/temp tables, never from the dimensions**      |
+| two populations         | `from Opening O left outer join Placement P on O.OpenNo = P.OpenNo` + `count(OpenNo)` / `count(CandNo)`                        | outer join keeps unmatched rows; `count(col)` skips the NULLs — `count(*)` would equalise both measures             |
+| latest-per-entity       | `rank() over (partition by E.EmpNo order by D.GraduationDate desc) as Rank` in an inline view, then `where T.Rank = 1`         | pre-processes the **operational** side; without it the join multiplies rows per entity                              |
+| never store             | `avg(x)` as a fact measure                                                                                                     | average of averages ≠ average — store `Total_x` **and** `Number_of_y`, recover with `sum(Total_x)/sum(Number_of_y)` |
 
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.

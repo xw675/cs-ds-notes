@@ -9,7 +9,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 # [[Algorithmic Complexity]]
 
 **Context:** [[FIT1008_MOC]], [[FIT2004_MOC]] · backbone clustering the **measurement foundation** — input size, the RAM cost model, time complexity, per-operation cost, and best/worst/average cases
-**FIT2004 emphasis:** distinguish **total** space from **auxiliary** space (extra beyond the input — an in-place algorithm uses $O(1)$ auxiliary); and always quote the **tightest** ($\Theta$) bound available, not just an $O$ upper bound. Input size is often **bit-length** (e.g. $n$ digits in [[Karatsuba Integer Multiplication]]).
+**FIT2004 emphasis:** distinguish **total** space from **auxiliary** space (extra beyond the input — an in-place algorithm uses $O(1)$ auxiliary); and always quote the **tightest** ($\Theta$) bound available, not just an $O$ upper bound. Input size is often **bit-length** — for a *number* $k$, $n=\lceil\log_2(k+1)\rceil$, not $k$ itself.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** measure the resource (time/space) as a function of input size $n$ ➔ the question is scalability as $n\to\infty$.
@@ -50,7 +50,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 - **Auxiliary space** ➔ **extra beyond the input** — the number quoted in a complexity table; **in-place** $\equiv$ $O(1)$ auxiliary.
 - **Recursion stack counts** ➔ auxiliary space $\ge$ **max live frame chain**, i.e. $\Theta(\text{depth})\times$ frame size — sibling calls run sequentially, so only ONE root-to-leaf path is live at a time (never $\Theta(\text{total calls})$).
 - **Depth is the discriminator** ➔ balanced recursion $\Theta(\log n)$ frames ([[Quick Sort]] with the smaller side recursed first) vs peeling one element $\Theta(n)$ frames — the same split that decides *time* in [[Divide and Conquer]].
-- **Shrinking frames sum, not multiply** ➔ frames of size $n,n/2,n/4,\dots$ total $<2n=\Theta(n)$, not $\Theta(n\log n)$ (see [[Karatsuba Integer Multiplication]]).
+- **Shrinking frames sum, not multiply** ➔ frames of size $n,n/2,n/4,\dots$ total $<2n=\Theta(n)$, not $\Theta(n\log n)$ — by the $r=\tfrac12$ bound in [[Geometric Series]].
 - **Tightest bound** ➔ quote $\Theta$ when best $=$ worst; reserve $O$ for a genuine upper-bound-only claim.
 
 ## ⚙️ Core Implementation

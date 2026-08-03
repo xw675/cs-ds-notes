@@ -8,7 +8,10 @@ aliases: [Karatsuba, fast multiplication, integer multiplication, Gauss trick, b
 ---
 # [[Karatsuba Integer Multiplication]]
 
-**Context:** [[FIT2004_MOC]] · the flagship Week 1 [[Divide and Conquer]] algorithm · beats schoolbook $O(n^2)$ by trading one multiplication for cheap additions · analysed by [[Solving Recurrences (Telescoping)|solving its recurrence]]
+**Context:** [[FIT2004_MOC]] · a Week 1 [[Divide and Conquer]] algorithm · beats schoolbook $O(n^2)$ by trading one multiplication for cheap additions · analysed by [[Solving Recurrences (Telescoping)|solving its recurrence]]
+
+> [!warning] **NOT EXAMINABLE**
+> Karatsuba is a **motivating hook** for Divide & Conquer, not assessed content. It has been stripped from [[FIT2004 Unit Cheatsheet]] and the exam-oriented notes; the transferable skill that *is* examinable is reading $a$ and $b$ off a recurrence and classifying by $r=a/b$ — see [[Solving Recurrences (Telescoping)]]. Read this note for intuition only; do not spend SWOTVAC time drilling it.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** multiply two $n$-digit integers in **sub-quadratic** time by splitting each in half and doing only **3** (not 4) half-size multiplications ➔ $\Theta\!\big(n^{\log_2 3}\big)\approx\Theta(n^{1.585})$.

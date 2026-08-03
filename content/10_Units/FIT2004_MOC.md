@@ -32,7 +32,7 @@ tags:
 ## 📅 Knowledge Index
 
 ### Week 1 — Divide & Conquer and Recurrence Analysis *(Lecture 1, parts 1–2)*
-- [[Karatsuba Integer Multiplication]] -> Parent Framework: [[Divide and Conquer]] *(the flagship D&C algorithm; 4→3 sub-multiplications)*
+- [[Karatsuba Integer Multiplication]] -> Parent Framework: [[Divide and Conquer]] *(**NOT EXAMINABLE** — lecturer-confirmed motivating hook only; read for D&C intuition, never drill it)*
 - [[Solving Recurrences (Telescoping)]] -> Parent Framework: [[Big-O Notation]] *(the analysis hand skill — repeated substitution; Master Theorem flagged as supplementary)*
 - [[Divide and Conquer]] -> Parent Framework: [[Recursion]] *(dual-unit — split/recurse/combine; analysed via recurrences)*
 - [[Algorithmic Complexity]] -> Parent Framework: [[Algorithm]] *(dual-unit — input size, RAM model, best/avg/worst; + auxiliary space, tightest bound)*
@@ -51,7 +51,7 @@ tags:
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
 
-- **W1 — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → **[[Karatsuba Integer Multiplication]]** *(apply it end-to-end)* · compare with [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
+- **W1 — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → apply it end-to-end on [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -59,8 +59,7 @@ tags:
 	- set up a running-time **recurrence** $T(n)=a\,T(n/b)+f(n)$ for a recursive algorithm
 	- solve it by **telescoping** (repeated substitution → general form → fix $k$ from the base case → back-substitute) *(the Master Theorem is a supplementary shortcut, not taught in Week 1)*
 	- derive schoolbook multiplication as $\Theta(n^2)$ and the naive D&C split as $4T(n/2)+\Theta(n)=\Theta(n^2)$
-	- apply the **Karatsuba (Gauss) trick** to cut 4 sub-multiplications to 3 via $(x_L{+}x_R)(y_L{+}y_R)-A-C$, giving $3T(n/2)+\Theta(n)=\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$
-	- know that shifts/additions are the $\Theta(n)$ combine term (not counted as multiplications), and that Karatsuba wins only **asymptotically**
+	- read $a$ (recursive calls) and $b$ (shrink factor) off code and classify by $r=a/b$ — root-dominated $\Theta(n)$ · all-levels-equal $\Theta(n\log n)$ · leaf-dominated $\Theta(n^{\log_b a})$
 	- state $O/\Omega/\Theta$ **formally with witnesses**; judge a bound **valid** separately from **tight** ($3n^2{+}100n=O(n^3)$ is TRUE, $\Theta(n^3)$ FALSE)
 	- pair every bound with a **case** — "any operation" bounds cheapest/dearest, so an unqualified $\Theta$ needs them to agree
 	- prove $\sum i=\tfrac{n(n+1)}{2}$ and $\sum r^{i}=\tfrac{r^{n+1}-1}{r-1}$ by induction, then **substitute** for $r{=}2$ and $r{=}\tfrac12$

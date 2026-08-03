@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. Every claim is hand-derivable; wikilinks for depth only. FIT1008 foundations live in [[FIT1008 Unit Cheatsheet]] — this sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently seeded to W1; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently seeded to W1; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -30,7 +30,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 
 - **Formal definitions — state the witnesses** `[C]` ➔ $O$: $\exists c,n_0>0$ with $f\le cg$ $\forall n\ge n_0$ · $\Omega$: $\exists c,n_0$ with $f\ge cg$ · $\Theta$: $\exists c_1,c_2,n_0$ with $c_1g\le f\le c_2g$ **· precondition:** every claim needs the constants **and** the range of $n$; a proof without witnesses scores nothing.
 - **Valid ≠ tight** `[P]` ➔ $3n^{2}+15\log n+100n$ **is** $O(n^{3})$ (TRUE, $c{=}118,n_0{=}1$) and **is** $\Omega(n)$, but **not** $\Theta(n^{3})$ — killed because $T(n)/n^{3}\to0$ leaves no $c_1$ **· precondition:** on true/false questions answer from the definition; "not the tightest" never makes an $O$ claim false.
-- **Unqualified "complexity" = worst case** `[P]` ➔ best/worst diverge **· precondition:** the code has a short-circuit (`break`/early return) or input-dependent branching; otherwise best $=$ worst (selection sort, Karatsuba) and you may state one $\Theta$ for all cases.
+- **Unqualified "complexity" = worst case** `[P]` ➔ best/worst diverge **· precondition:** the code has a short-circuit (`break`/early return) or input-dependent branching; otherwise best $=$ worst (selection sort, [[Merge Sort]]) and you may state one $\Theta$ for all cases.
 - **Input size $n$** `[C]` ➔ elements for a collection, but **bit-length** for a *number* ($n=\lceil\log_2(k+1)\rceil$) **· precondition:** state which you are counting — a loop running $k$ times on numeric input $k$ is $O(2^{n})$, not $O(n)$.
 - **A CAPPED parameter is $\Theta(1)$ and vanishes** `[C]` ➔ $n\le10^{6}\Rightarrow\Theta(nm)$ becomes $\Theta(m)$; $arr[i]<2^{32}\Rightarrow$ bit-count constant $\Rightarrow\Theta(n)$ **· precondition:** list which parameters may grow before quoting any bound.
 - **Space = AUXILIARY** `[P]` ➔ extra beyond the input; in-place $\equiv O(1)$ auxiliary **· precondition:** include the recursion stack — $\Theta(\text{depth})$ frames, only ONE root-to-leaf chain live at a time.
@@ -64,6 +64,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 
 - **Level-sum** `[C]` ➔ $T(n)=\sum_{i=0}^{\log_b n} c\,n\,(a/b)^{i}$ — level $i$ holds $a^{i}$ subproblems of size $n/b^{i}$ **· precondition:** subproblems are equal-sized and the combine is $\Theta(n)$.
 - **Regime from the ratio $r=a/b$** `[C]` ➔ $r<1$ **root-dominated** $\Theta(n)$ · $r=1$ **all levels equal** $\Theta(n\log n)$ · $r>1$ **leaf-dominated** $\Theta(n^{\log_b a})$.
+- **Worked instances** `[P]` ➔ $a{=}1,b{=}2$: $r{=}\tfrac12<1\Rightarrow\Theta(n)$ · $a{=}b{=}2$: $r{=}1\Rightarrow\Theta(n\log n)$ · $a{=}3,b{=}2$: $r{=}\tfrac32>1\Rightarrow\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$ · $a{=}4,b{=}2$: $r{=}2>1\Rightarrow\Theta(n^{2})$ **· precondition:** read $a$ off the number of **recursive calls**, never off the shifts/additions in the combine.
 - **Leaf identity** `[D]` ➔ $n(a/b)^{\log_b n}=n^{\log_b a}$ — the collapse that produces every D&C exponent.
 - **Diagnostic** `[P]` ➔ *subtract* from the argument ⟹ depth $\Theta(N)$; *divide* ⟹ depth $\Theta(\log N)$. Depth and per-level work are independent choices.
 - 🔭 **Master Theorem** *(shortcut, not lectured in W1)* ➔ for $T(n)=aT(n/b)+\Theta(n^{d})$: $d<\log_b a\Rightarrow\Theta(n^{\log_b a})$ · $d=\log_b a\Rightarrow\Theta(n^{d}\log n)$ · $d>\log_b a\Rightarrow\Theta(n^{d})$ **· precondition:** cite telescoping in assessment unless formally introduced.
@@ -79,10 +80,8 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | :--- | :--- | :--- | :--- | :--- |
 | Schoolbook multiply | — | $\Theta(n^{2})$ all | $\Theta(n)$ | every digit pair |
 | Naive D&C multiply | $4T(n/2)+\Theta(n)$ | $\Theta(n^{2})$ all | $\Theta(n)$ | $a{=}4$ ⟹ no gain |
-| [[Karatsuba Integer Multiplication]] | $3T(n/2)+\Theta(n)$ | $\Theta(n^{\log_2 3})$ all | $\Theta(n)$ | $a{=}3$ via Gauss trick |
 | [[Merge Sort]] | $2T(n/2)+\Theta(n)$ | $\Theta(n\log n)$ all | $\Theta(n)$ scratch | order-independent, **stable** |
 | [[Quick Sort]] | avg $2T(n/2)+\Theta(n)$ | $\Theta(n\log n)$ / $\Theta(n^{2})$ W | $O(\log n)$ stack | pivot quality |
 
-- **Karatsuba identity** `[P]` ➔ $x_Ly_R+x_Ry_L=(x_L{+}x_R)(y_L{+}y_R)-x_Ly_L-x_Ry_R$ **· precondition:** $A=x_Ly_L$ and $C=x_Ry_R$ computed first and **reused**; shifts by $B^{m}$/$B^{2m}$ are $\Theta(n)$ combine work, never counted in $a$.
-- **Karatsuba wins only ASYMPTOTICALLY** `[C]` ➔ the extra additions and shifts carry a large constant, so schoolbook is faster on small $n$ **· consequence:** an asymptotic win is never a claim about a particular input size.
+- **Asymptotic win ≠ faster in practice** `[C]` ➔ a lower exponent bought with extra additions/shifts carries a large constant, so the "worse" algorithm wins on small $n$ **· consequence:** an asymptotic claim is never a claim about a particular input size.
 - **Merge stability** `[C]` ➔ the tie-break `a[ia] <= a[ib]` emits from the **left** half **· precondition:** strict `<` breaks stability.
