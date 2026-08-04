@@ -33,7 +33,7 @@ aliases:
 - **Scope: the argument must SHRINK** ➔ assessed recurrences decrease the search space each call (`n-1`, `n//2`, `n//3`); recursions whose argument *grows in value* are out of assessment scope.
 
 ### 2. Stage 2 — recurrence ➔ time
-- **Owned elsewhere** ➔ expand, spot the general form in $k$, fix $k$ from the base, back-substitute ➔ [[Solving Recurrences (Telescoping)]].
+- **Owned elsewhere** ➔ the solving itself, in the mandated **Steps 0→6b** exam format (levels ➔ substitute ➔ general form ➔ base ➔ closed form ➔ complexity ➔ verify) ➔ [[Solving Recurrences (Telescoping)]].
 - **The one diagnostic** ➔ *subtracting* from the argument gives depth $\Theta(N)$; *dividing* gives depth $\Theta(\log N)$.
 
 ### 3. Stage 3 — recursion ➔ auxiliary space

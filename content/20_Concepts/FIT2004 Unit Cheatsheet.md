@@ -54,7 +54,10 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Induction blueprint** `[C]` ➔ base $n=1$ → assume $P(k)$ → prove $P(k{+}1)$ by adding the $(k{+}1)$-th term to the **assumed closed form** and re-factoring **· precondition:** the inductive step must *cite* the hypothesis explicitly; algebra alone is not a proof.
 
 ## 3️⃣ Recurrence Solving — Telescoping (W1)
-**Pipeline** `[P]`**:** pseudocode → **recurrence relation** → complexity. **Protocol for the middle arrow:** write recurrence + base → expand 2–3 steps → general form in $k$ → fix $k$ from the base → back-substitute.
+**Pipeline** `[P]`**:** pseudocode → **recurrence relation** → complexity.
+
+**MANDATED EXAM FORMAT — Steps 0→6b, write all of them** `[P]` *(marks are for the steps, not the answer — full worked exemplar in [[Solving Recurrences (Telescoping)]])*
+> **0** levels at $n,\;n/2,\;n/4,\;n/8$ · **1** substitute in, simplify *a little* (keep $4cn/4$ visible) · **2** pattern ➔ general $T(n)=2^{k}T(n/2^{k})+kcn$ · **3** base ➔ $n/2^{k}=1\Rightarrow k=\log_2 n$ · **4** back-substitute ➔ closed form $nb+cn\log_2 n$ · **5** complexity $O(n\log n)$ · **6a** verify at $n=1\Rightarrow b$ · **6b** verify by substituting the closed form into the original RHS *(needs $\log_2(n/2)=\log_2 n-1$)*.
 
 **Stage 0 — writing the recurrence off the code** *(where the marks are actually lost)*
 - **Piecewise, with symbolic constants** `[P]` ➔ base $T(n)=a$ for $n<k$ · general $T(n)=\langle\#\text{calls}\rangle\,T(\text{shrunk }n)+\langle\text{per-call work}\rangle$ for $n\ge k$ **· precondition:** $k$ is the **guard threshold in the source** (`if n < 3` ⟹ $k=3$), not a reflexive $T(1)$.

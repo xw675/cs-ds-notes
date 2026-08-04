@@ -71,7 +71,7 @@ tags:
 - **W1** ➔
 	- measure cost as a function of **input size** (often **bit-length**) on the RAM model; distinguish **total** vs **auxiliary** space; quote the **tightest** ($\Theta$) bound
 	- set up a running-time **recurrence** $T(n)=a\,T(n/b)+f(n)$ for a recursive algorithm
-	- solve it by **telescoping** (repeated substitution → general form → fix $k$ from the base case → back-substitute) — the **required** method: it covers $T(n-1)$ *and* $T(n/b)$ and yields $\Theta$, where the Master Theorem covers only $T(n/b)$ and yields $O$
+	- solve it by **telescoping** written in the mandated **Steps 0→6b** exam format (levels → substitute → general form in $k$ → fix $k$ from the base → closed form → complexity → **verify base + general**) — the **required** method: it covers $T(n-1)$ *and* $T(n/b)$ and yields $\Theta$, where the Master Theorem covers only $T(n/b)$ and yields $O$
 	- derive schoolbook multiplication as $\Theta(n^2)$ and the naive D&C split as $4T(n/2)+\Theta(n)=\Theta(n^2)$
 	- read $a$ (recursive calls) and $b$ (shrink factor) off code and classify by $r=a/b$ — root-dominated $\Theta(n)$ · all-levels-equal $\Theta(n\log n)$ · leaf-dominated $\Theta(n^{\log_b a})$
 	- state $O/\Omega/\Theta$ **formally with witnesses**; judge a bound **valid** separately from **tight** ($3n^2{+}100n=O(n^3)$ is TRUE, $\Theta(n^3)$ FALSE)

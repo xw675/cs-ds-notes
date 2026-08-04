@@ -24,16 +24,26 @@ aliases:
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a recursive algorithm's running time obeys a **recurrence** ($T(N)=T(N-1)+c$, $T(N)=T(N/2)+c$, $T(n)=aT(n/b)+f(n)$, …) ➔ solve it for a closed-form growth class by **telescoping**.
-> - **📦 Core Components:** **expand** ➔ **general form in $k$** ➔ **fix $k$ from the base** ➔ **back-substitute** | with $\ge2$ calls the general form is a **level-sum**, and its **ratio $a/b$** decides the answer.
-> - **⚡ Key Constraint:** the **assessed** method is **repeated substitution (telescoping)** — expand a few steps, spot the **general form** in $k$, fix $k$ from the **base case**, back-substitute. It is the only one of the two that covers *both* $T(n/b)$ and $T(n-1)$; the Master Theorem below is a lecturer-flagged shortcut with strictly narrower reach.
+> - **📦 Core Components:** **levels** ➔ **substitute** ➔ **general form in $k$** ➔ **fix $k$ from the base** ➔ **closed form** ➔ **complexity** ➔ **verify (base + general)** | with $\ge2$ calls the general form is a **level-sum**, and its **ratio $a/b$** decides the answer.
+> - **⚡ Key Constraint:** the **assessed** method is **repeated substitution (telescoping)**, written in the lecturer's **Steps 0–6b** below — marks are for the steps, not the answer. It is the only one of the two methods that covers *both* $T(n/b)$ and $T(n-1)$; the Master Theorem below is a lecturer-flagged shortcut with strictly narrower reach.
 
-## 📝 Telescoping — the lecture method (5 steps)
-1. **Write** the recurrence and its base case (e.g. $T(N)=T(N-1)+c$, $T(1)=b$).
-2. **Expand** two or three steps by substituting the recurrence into itself.
-3. **Spot the general form** after $k$ steps (a formula in $N$ and $k$).
-4. **Fix $k$** from the base case (choose $k$ so the argument reaches the base, e.g. $N-k=1$).
-	- **A threshold base shifts $k$ by a constant, not by an order** ➔ if the guard is `if n < 3` then $n/3^{k}<3 \Rightarrow k=\log_3 n - 1$, and the $-1$ is absorbed: still $\Theta(\log_3 n)=\Theta(\log n)$. Solve with the threshold the code actually uses, then discard the constant.
-5. **Back-substitute** $k$ to get the closed form, then read off the Big-O.
+## 📝 How It Works — the mandated exam format (Steps 0 → 6b)
+> [!IMPORTANT] **Write every step, in this order, every time.** A correct $\Theta$ with no general form and no verification earns nothing; Steps 6a+6b are *not* optional garnish — together they are the induction that proves the closed form.
+
+| Step | Name | What must appear on the page |
+| :--- | :--- | :--- |
+| **0** | Write the levels | the recurrence instantiated at $n$, $n/2$, $n/4$, $n/8$ (or $n{-}1$, $n{-}2$, …) — one line each, **before** any substitution |
+| **1** | Substitute and simplify *(a little)* | fold each level into the one above, **one substitution per line**; simplify only enough to keep $2cn/2$, $4cn/4$ visible so the series is readable |
+| **2** | Find the pattern to the general | collapse the visible series into the general form in $k$ — $T(n)=2^{k}T(n/2^{k})+kcn$ |
+| **3** | Resolve base case | set the argument to the base ($n/2^{k}=1$) and solve for the depth ($k=\log_2 n$) |
+| **4** | General ➔ closed form | substitute $k$ back into the Step 2 form and simplify to a **$T$-free** expression, using $T(1)=b$ |
+| **5** | Time complexity | read the dominant term off the closed form ($O(n+n\log_2 n)=O(n\log n)$) |
+| **6a** | Verify — base case | evaluate the closed form at $n=1$; it must return $T(1)=b$ |
+| **6b** | Verify — general case | substitute the closed form for $T(n/2)$ into the **original** recurrence's RHS; it must reproduce the closed form exactly |
+
+- **Step 0 is where the answer is decided** ➔ instantiating four levels *before* substituting is what makes the series visible at Step 1; jumping straight to "$=2^kT(n/2^k)+kcn$" is the step that loses marks even when the bound is right.
+- **A threshold base shifts $k$ by a constant, not by an order** ➔ if the guard is `if n < 3` then $n/3^{k}<3 \Rightarrow k=\log_3 n - 1$, and the $-1$ is absorbed: still $\Theta(\log_3 n)=\Theta(\log n)$. Solve Step 3 with the threshold the code actually uses, then discard the constant.
+- **Step 6b runs on log identities** ➔ $\log_2(n/2)=\log_2 n-\log_2 2=\log_2 n-1$ is what makes the verification close; keep the $\log$ rules at hand or 6b stalls.
 
 ## 🧭 Shape recognition
 *(Diagnose before expanding: how the argument shrinks fixes the DEPTH, the per-step work fixes what accumulates.)*
@@ -77,14 +87,63 @@ T(N) &= T(1)+c\log_2 N = O(\log N)
 $$
 - **The lesson** ➔ *subtracting* from $N$ each step (Example 1) gives $O(N)$; *dividing* $N$ each step (Example 2) gives $O(\log N)$ — the halving is exactly why `power_better` beats `power`.
 
-## 📊 Worked example 3 — divide-and-conquer ($T(n)=2T(n/2)+\Theta(n)$, [[Merge Sort]])
-Telescoping still works when there is more than one recursive call — expand and sum the per-level work:
+## ⭐ Worked example 3 — the exam exemplar, all 7 steps ($T(n)=2T(n/2)+cn$, $T(1)=b$, [[Merge Sort]])
+*(This is the format every recurrence answer must copy. Examples 1, 2 and 4 are compressed to show **shape** only — never compress in the exam.)*
+
+**Step 0 — write the levels**
 $$
 \begin{aligned}
-T(n) &= 2T(n/2)+cn = 2\big(2T(n/4)+c\tfrac{n}{2}\big)+cn = 4T(n/4)+2cn \\
-&= 2^{k}T(n/2^{k}) + k\,cn && \text{(general form: } cn \text{ per level} \times k \text{ levels)} \\
-\text{base: } n/2^{k}=1 &\Rightarrow k=\log_2 n \\
-T(n) &= n\,T(1) + cn\log_2 n = \Theta(n\log n)
+T(n) &= 2T(n/2)+cn \\
+T(n/2) &= 2T(n/4)+cn/2 \\
+T(n/4) &= 2T(n/8)+cn/4 \\
+T(n/8) &= 2T(n/16)+cn/8
+\end{aligned}
+$$
+
+**Step 1 — substitute it in and simplify (a little)**
+$$
+\begin{aligned}
+T(n) &= 2T(n/2)+cn \\
+&= 2\big[2T(n/4)+cn/2\big]+cn = 4T(n/4)+2cn/2+cn \\
+&= 4\big[2T(n/8)+cn/4\big]+2cn/2+cn = 8T(n/8)+4cn/4+2cn/2+cn \\
+&= 16T(n/16)+8cn/8+4cn/4+2cn/2+cn \\
+&= 32T(n/32)+16cn/16+8cn/8+4cn/4+2cn/2+cn
+\end{aligned}
+$$
+
+**Step 2 — find the pattern to the general** *(every term collapses to $cn$)*
+$$
+\begin{aligned}
+T(n) &= 32\,T(n/32)+cn+cn+cn+cn+cn \\
+&= 2^{5}\,T(n/2^{5})+5cn \\
+&= 2^{k}\,T(n/2^{k})+kcn
+\end{aligned}
+$$
+
+**Step 3 — resolve base case** ➔ $n/2^{k}=1 \Rightarrow n=2^{k} \Rightarrow k=\log_2 n$
+
+**Step 4 — general ➔ closed form**
+$$
+\begin{aligned}
+T(n) &= 2^{\log_2 n}\,T\!\big(n/2^{\log_2 n}\big)+(\log_2 n)cn \\
+&= 2^{\log_2 n}\,T(1)+(\log_2 n)cn \\
+&= nb + cn\log_2 n
+\end{aligned}
+$$
+
+**Step 5 — time complexity from the closed form** ➔ $O(n+n\log_2 n)=O(n\log n)$
+
+**Step 6a — verify, base case** ➔ $T(1)=1\cdot b + c\cdot1\cdot\log_2 1 = b + 0 = b$ ✅
+
+**Step 6b — verify, general case** *(substitute the closed form back into the original recurrence)*
+$$
+\begin{aligned}
+T(n) &= 2T(n/2)+cn \\
+&= 2\big[\tfrac{n}{2}b + c\tfrac{n}{2}\log_2(n/2)\big]+cn \\
+&= nb + cn\log_2(n/2)+cn \\
+&= nb + cn\big[\log_2(n/2)+1\big] \\
+&= nb + cn\big[\log_2 n-\log_2 2+1\big] \\
+&= nb + cn\log_2 n \quad\text{✅ verified}
 \end{aligned}
 $$
 
@@ -150,6 +209,9 @@ For $T(n)=a\,T(n/b)+\Theta(n^{d})$ compare $d$ with the critical exponent $\log_
 Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹ $\Theta(n\log n)$; $a{=}3,b{=}2,d{=}1$ with $\log_2 3\approx1.585{>}1$ = Case 1 ⟹ $\Theta(n^{1.585})$ — matching the telescoping results above. The three cases are the same **root / equal / leaves** split as the ratio $r=a/b$ above, restated for $d=1$.
 
 ## ⚠️ Common Mistakes
+- 💡 **Skipping Steps 0 and 6** ➔ the marks live in the *derivation*: no instantiated levels (Step 0) and no verification (6a+6b) is an unproven assertion, however right the $\Theta$. Budget exam time for all seven.
+- 💡 **Over-simplifying at Step 1** ➔ collapsing $4cn/4$ to $cn$ too early hides the series that Step 2 has to generalise; keep the coefficients and denominators visible until the pattern is stated.
+- 💡 **Stopping at the general form** ➔ Step 2 still contains $T(\cdot)$ and an unknown $k$; it is not a closed form and carries no complexity until Steps 3–4 remove both.
 - 💡 **Fix $k$ from the base case** ➔ the general form has an unknown depth $k$; you must set it so the recursion reaches the base (e.g. $N-k=1$ or $n/2^{k}=1$) before reading off the complexity.
 - 💡 **Subtract vs divide changes the class** ➔ $T(N)=T(N-1)+c\Rightarrow O(N)$ but $T(N)=T(N/2)+c\Rightarrow O(\log N)$; check whether the argument shrinks additively or multiplicatively.
 - 💡 **With ≥2 calls, sum the level totals** ➔ don't forget the $a^{i}$ multiplier on each level's work; the per-level totals are $cn(a/b)^i$, **not** $cn$, unless $a=b$.
@@ -157,8 +219,23 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 - 💡 **Compare $a$ against $b$, not against $2$** ➔ the regime is set by the ratio $a/b$; $4T(n/2)$ is leaf-dominated but $2T(n/4)$ ($r=\tfrac12$) is root-dominated $\Theta(n)$.
 - 💡 **Reaching for the Master Theorem on a $T(n-1)$ recurrence** ➔ no case of it applies to an additively-shrinking argument; the answer will be wrong, not merely unjustified. Telescope instead.
 
+## ✍️ Practice — the lecturer's drill set
+*(Blank page, all seven steps each, then diff against the closed form. Naming the growth class without Steps 0–6b earns nothing.)*
+
+| # | Recurrence | Base | Closed form | Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | $T(n)=T(n-1)+n+c$ | $T(0)=b$ | $b+\tfrac{n(n+1)}{2}+nc$ | $\Theta(n^2)$ |
+| 2 | $T(n)=T(n-1)+2n+c$ | $T(0)=b$ | $b+n(n+1)+nc$ | $\Theta(n^2)$ |
+| 3 | $T(n)=T(n-1)+n+2c$ | $T(0)=b$ | $b+\tfrac{n(n+1)}{2}+2nc$ | $\Theta(n^2)$ |
+| 4 | $T(n)=T(n/2)+4c$ | $T(1)=b$ | $b+4c\log_2 n$ | $\Theta(\log n)$ |
+| 5 | $T(n)=2T(n/2)+cn$ | $T(1)=b$ | $nb+cn\log_2 n$ | $\Theta(n\log n)$ |
+| 6 | $T(n)=2T(n/2)+2cn$ | $T(1)=b$ | $nb+2cn\log_2 n$ | $\Theta(n\log n)$ |
+| 7 | $T(n)=4T(n/2)+cn$ | $T(1)=b$ | $n^2b+cn(n-1)$ | $\Theta(n^2)$ |
+
+- **1 vs 2 vs 3 is a constants drill** ➔ doubling the per-level work or the constant changes the *coefficient*, never the class — all three are $\Theta(n^2)$ via the [[Arithmetic Series]].
+- **5 vs 6 vs 7 is the ratio drill** ➔ 5 and 6 have $r=a/b=1$ (all levels equal), 7 has $r=2>1$ (leaf-dominated) — only changing $a$ moves the class.
+
 ## 🥋 Drill — solve cold, then expand
-*(Revision protocol: blank page → telescope to a closed form → expand and diff. Naming the growth class without the general-form line earns nothing.)*
 
 > [!QUESTION]- D1: $T(n)=2T(n/2)+c$ (constant combine, **not** linear) with $T(1)=c$.
 > > [!SUCCESS]- Solution
