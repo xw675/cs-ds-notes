@@ -2,7 +2,7 @@
 unit: [FIT1008, FIT2004]
 domain: A
 week: 1
-source: [applied]
+source: [lecture, applied]
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 ---
@@ -27,7 +27,7 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 - **Bit-length trap** ➔ a **number** $k$ has size $\lceil\log_2(k+1)\rceil\approx\log_2 k$, **not** $k$; halving $k$ to $1$ therefore takes $\Theta(\log k)$ steps, i.e. $\Theta(\text{bits})$.
 - **Pseudo-polynomial** ➔ a loop running $k$ times is $O(2^n)$ in true size (Knapsack $O(nW)$, still NP-hard).
 - **A BOUNDED parameter is a constant** ➔ if the spec caps a parameter ($n\le10^6$, $\text{arr}[i]<2^{32}$), that parameter contributes $\Theta(1)$ and **vanishes from the bound** — the cap makes it independent of input size, not merely small.
-- **Which symbols are free** ➔ before quoting a bound, list which parameters can grow without limit; a bound may only be expressed in **those**.
+- **Which symbols are free** ➔ before quoting a bound, list which parameters can grow without limit; a bound may only be expressed in **those**. The **output size** can be one of them ➔ [[Output-Sensitive Complexity]].
 
 ### 3. Running Time & RAM Model
 - **Abstraction** ➔ **Random-Access Machine** — each elementary op = 1 unit, $O(1)$ random access (ignores compiler/machine).
@@ -46,11 +46,15 @@ tags: [CS/Algorithms, CS/Complexity, CS/Foundations]
 - **Average ≠ amortised** ➔ average needs a **distribution**; amortised is a worst-case-sequence guarantee with **no probability**.
 
 ### 6. Space: Total vs Auxiliary *(FIT2004 quoting standard)*
+- **The lecture's split** ➔ **space complexity $=$ input space $+$ auxiliary space**; the two are reported separately because only the second is the algorithm's *choice*.
 - **Total space** ➔ input **plus** everything allocated ⟹ always $\Omega(n)$ for an $n$-element input, so it never discriminates between algorithms.
 - **Auxiliary space** ➔ **extra beyond the input** — the number quoted in a complexity table; **in-place** $\equiv$ $O(1)$ auxiliary.
-- **Recursion stack counts** ➔ auxiliary space $\ge$ **max live frame chain**, i.e. $\Theta(\text{depth})\times$ frame size — sibling calls run sequentially, so only ONE root-to-leaf path is live at a time (never $\Theta(\text{total calls})$).
+- **The three iterative reference cases** ➔ `find_min(arr)` scans and keeps one variable ⟹ input $\Theta(n)$, auxiliary $O(1)$, **in-place** · `build_list(n)` takes a *number* and allocates an $n$-slot array ⟹ input $O(1)$, auxiliary $\Theta(n)$ · iterative `binary_search(arr, target)` ⟹ input $\Theta(n)$, auxiliary $O(1)$.
+- **Allocating output is auxiliary too** ➔ `build_list` does no recursion and still costs $\Theta(n)$ — auxiliary space is *any* memory beyond the input, not just the call stack.
+- **Recursion stack counts** ➔ auxiliary space $\ge$ **max live frame chain**, i.e. $\Theta(\text{depth})\times$ frame size — sibling calls run sequentially, so only ONE root-to-leaf path is live at a time (never $\Theta(\text{total calls})$); worked per algorithm in [[Analysing Recursive Algorithms (Time and Auxiliary Space)]].
 - **Depth is the discriminator** ➔ balanced recursion $\Theta(\log n)$ frames ([[Quick Sort]] with the smaller side recursed first) vs peeling one element $\Theta(n)$ frames — the same split that decides *time* in [[Divide and Conquer]].
 - **Shrinking frames sum, not multiply** ➔ frames of size $n,n/2,n/4,\dots$ total $<2n=\Theta(n)$, not $\Theta(n\log n)$ — by the $r=\tfrac12$ bound in [[Geometric Series]].
+- **Time $\ge$ auxiliary space — always** ➔ memory must be *allocated and written* before it counts as used, and each cell costs at least one step ⟹ an algorithm quoting $\Theta(n)$ auxiliary cannot be $o(n)$ in time. A $\Theta(\log n)$-time algorithm claiming $\Theta(n)$ auxiliary is a marking error somewhere.
 - **Tightest bound** ➔ quote $\Theta$ when best $=$ worst; reserve $O$ for a genuine upper-bound-only claim.
 
 ## ⚙️ Core Implementation

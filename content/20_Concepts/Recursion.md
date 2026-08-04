@@ -1,18 +1,19 @@
 ---
-unit: FIT1008
-domain: A
-week: 6
+unit: [FIT1008, FIT2102]
+domain: [A, H]
+week: [1, 6]
+source: [lecture, applied]
 parent: "[[Algorithm]]"
-tags: [CS/Algorithms, SWE/OOP, CS/Complexity, CS/DataStructures]
+tags: [CS/Algorithms, SWE/OOP, CS/Complexity, CS/DataStructures, Tool/JavaScript]
 ---
 # [[Recursion]]
 
-**Context:** [[FIT1008_MOC]] · defining an [[Algorithm]] in terms of itself · backbone clustering **Notation**, **Accumulator**, **Auxiliary Function**, **vs-Iteration**, and **→Iteration-via-Stack**
+**Context:** [[FIT1008_MOC]], [[FIT2102_MOC]] · defining an [[Algorithm]] in terms of itself · backbone clustering **Notation**, **Accumulator**, **Auxiliary Function**, **vs-Iteration**, **→Iteration-via-Stack**, and — from FIT2102 — **recursion as the declarative replacement for the loop**
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** reduce to smaller subproblems of the same kind until a base case ➔ cost via recurrence, correctness via induction.
 > - **📦 Core Components:** base + call + **convergence** + combine | **classified** by count/route/tail | reshaped by **accumulator**/**auxiliary function**.
-> - **⚡ Key Constraint:** $\Theta(\text{depth})$ **stack frames** (no Python TCO) ➔ overflow; removed by an **accumulator** (forward) or explicit **[[Stack (ADT)]]** (backward).
+> - **⚡ Key Constraint:** $\Theta(\text{depth})$ **stack frames** (no TCO in Python, none in Chrome's V8) ➔ overflow; removed by an **accumulator** (forward) or explicit **[[Stack (ADT)]]** (backward).
 
 ## 📝 Core
 ### 1. Recursion (Four Components)
@@ -45,6 +46,13 @@ tags: [CS/Algorithms, SWE/OOP, CS/Complexity, CS/DataStructures]
 - **When** ➔ general conversion when an accumulator can't (work builds on the way *back*).
 - **Payoff** ➔ same $\Theta(\text{depth})$ space but on the **heap** ➔ no fixed call-stack limit.
 
+### 7. Recursion as the Loop Replacement (FIT2102)
+- **Direction of use is reversed** ➔ FIT1008 converts recursion *to* iteration for safety; FIT2102 converts iteration *to* recursion because a loop needs a **mutable index and a mutable accumulator**, and mutation is what the [[Programming Paradigms|declarative]] style removes.
+- **What the accumulator replaces** ➔ the `let` that the loop body updated. Carrying it as a parameter means every binding in sight can be `const`, and the function becomes **pure** — same arguments, same result, no state outside its own frame.
+- **Prepend vs append is the whole trick** ➔ an accumulator built by *prepending* (`digit + acc`) emerges in the original left-to-right order even though the recursion peels the *last* piece first; appending silently reverses it. This is where the marks go on any digit/character-building recursion.
+- **Recursion vs the Array HOFs** ➔ `map`/`filter`/`reduce` cover the traversals that visit each element once ➔ [[JavaScript Functions as Values]]. Reach for explicit recursion when the shrinking argument is **not** a collection (a number, a string being consumed, a [[Cons List (Closures as Data)|cons list]]) or when you must stop early.
+- **Failure mode is unchanged** ➔ JavaScript specifies proper tail calls but **V8 does not implement them**, so the tail form is $\Theta(1)$ *conceptually* and $\Theta(n)$ frames *in Chrome*. The purity argument survives; the stack-safety argument does not.
+
 ## ⚙️ Core Implementation
 ### 🔹 Basic vs Accumulator (factorial / Fibonacci)
 > [!code]- non-tail vs tail-recursive forms
@@ -61,6 +69,24 @@ tags: [CS/Algorithms, SWE/OOP, CS/Complexity, CS/DataStructures]
 >     return fm2 if n == 0 else fib_aux(n - 1, fm1, fm2 + fm1)
 > ```
 > 💡 **Common Mistake:** **Accumulator kills recomputation regardless of TCO** ➔ the time win ($\Theta(\varphi^n)\to\Theta(n)$) is independent of the space win; the tail form maps mechanically onto a `while` loop.
+
+### 🔹 JavaScript: killing a loop with an accumulator (FIT2102)
+> [!code]- the same job, imperative then declarative — note where the mutation went
+> ```javascript
+> // IMPERATIVE: two mutable variables (i and out) and an index to get wrong
+> function reverseLoop(s) {
+>     let out = "";
+>     for (let i = 0; i < s.length; i++) { out = s[i] + out; }
+>     return out;
+> }
+>
+> // DECLARATIVE: driver + tail-recursive worker, every binding const, no index
+> const reverseAcc = (s, acc) => (s === "" ? acc : reverseAcc(s.slice(1), s[0] + acc));
+> const reverse    = s => reverseAcc(s, "");
+>
+> reverse("paradigm");   // "mgidarap"
+> ```
+> 💡 **Common Mistake:** **Prepend, don't append** ➔ `acc + s[0]` type-checks, runs, and returns the string *unreversed* — a same-shaped bug hits every accumulator that builds digits or characters. Decide the order by hand-tracing **two** elements before writing the line, and always seed the driver with the identity value (`""` for strings, `0` for sums) rather than the first element.
 
 ### 🔹 Auxiliary Function over a LinkList
 > [!code]- `len_aux` / `contains_aux` (driver + worker)
@@ -158,6 +184,12 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Tail factorial ➔ plain loop; `power` ➔ explicit stack of args; **[[Tower of Hanoi]]** ➔ explicit stack of *work items*.
 > > - **Why:** **Pending state** ➔ Hanoi's two recursive calls must remember which sub-move to resume, exactly like call frames.
+
+> [!FAQ]- FIT1008 converts recursion into loops; FIT2102 converts loops into recursion. Are the two units contradicting each other?
+> - **Hint:** Ask what each conversion is optimising for.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** No — different objectives. FIT1008 removes recursion to buy **stack safety** on large $n$; FIT2102 removes the loop to buy **purity and referential transparency**, because a loop cannot exist without a mutable index and accumulator.
+> > - **Why:** **Same equivalence, opposite direction** ➔ both rest on loops and self-calls being Turing-equivalent, differing only in *where state lives* — in a `let` you mutate, or in a parameter you rebind per frame. Neither cost disappears: the accumulator form is still $\Theta(n)$ frames in Chrome, since **V8 implements no tail-call optimisation** despite the specification requiring it.
 
 > [!FAQ]- Why does recursing over a `LinkList` need an auxiliary function, and what three jobs can its parameter do?
 > - **Hint:** The public type can't shrink itself.

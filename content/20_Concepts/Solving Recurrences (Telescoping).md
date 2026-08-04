@@ -2,7 +2,7 @@
 unit: FIT2004
 domain: [A, D]
 week: 1
-source: [applied]
+source: [lecture, applied]
 parent: "[[Big-O Notation]]"
 tags:
   - CS/Algorithms
@@ -20,17 +20,19 @@ aliases:
 # [[Solving Recurrences (Telescoping)]]
 
 **Context:** [[FIT2004_MOC]] · turning a recursive algorithm's cost recurrence $T(n)$ into a [[Big-O Notation|Big-O]] bound · the analysis half of [[Divide and Conquer]] (the maths of [[Recurrence Relation]] applied to running time)
+**Upstream and downstream:** getting the recurrence *out of the code*, and the **auxiliary space** the same recursion costs, live in [[Analysing Recursive Algorithms (Time and Auxiliary Space)]] — this note owns only the solving.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a recursive algorithm's running time obeys a **recurrence** ($T(N)=T(N-1)+c$, $T(N)=T(N/2)+c$, $T(n)=aT(n/b)+f(n)$, …) ➔ solve it for a closed-form growth class by **telescoping**.
 > - **📦 Core Components:** **expand** ➔ **general form in $k$** ➔ **fix $k$ from the base** ➔ **back-substitute** | with $\ge2$ calls the general form is a **level-sum**, and its **ratio $a/b$** decides the answer.
-> - **⚡ Key Constraint:** the method the unit uses is **repeated substitution (telescoping)**: expand a few steps, spot the **general form** in $k$, then fix $k$ from the **base case** and back-substitute. The Master Theorem below is a shortcut, **not** part of the Week 1 lecture.
+> - **⚡ Key Constraint:** the **assessed** method is **repeated substitution (telescoping)** — expand a few steps, spot the **general form** in $k$, fix $k$ from the **base case**, back-substitute. It is the only one of the two that covers *both* $T(n/b)$ and $T(n-1)$; the Master Theorem below is a lecturer-flagged shortcut with strictly narrower reach.
 
 ## 📝 Telescoping — the lecture method (5 steps)
 1. **Write** the recurrence and its base case (e.g. $T(N)=T(N-1)+c$, $T(1)=b$).
 2. **Expand** two or three steps by substituting the recurrence into itself.
 3. **Spot the general form** after $k$ steps (a formula in $N$ and $k$).
 4. **Fix $k$** from the base case (choose $k$ so the argument reaches the base, e.g. $N-k=1$).
+	- **A threshold base shifts $k$ by a constant, not by an order** ➔ if the guard is `if n < 3` then $n/3^{k}<3 \Rightarrow k=\log_3 n - 1$, and the $-1$ is absorbed: still $\Theta(\log_3 n)=\Theta(\log n)$. Solve with the threshold the code actually uses, then discard the constant.
 5. **Back-substitute** $k$ to get the closed form, then read off the Big-O.
 
 ## 🧭 Shape recognition
@@ -43,8 +45,11 @@ aliases:
 | $T(N)=T(N/2)+c$ | by factor $2$ | $\log_2 N$ | $k$ constants | $\Theta(\log N)$ |
 | $T(N)=T(N/2)+cN$ | by factor $2$ | $\log_2 N$ | **geometric, ratio $\tfrac12$** | $\Theta(N)$ |
 | $T(n)=a\,T(n/b)+cn$ | by factor $b$, $a$ ways | $\log_b n$ | **geometric, ratio $a/b$** | see the level-sum below |
+| $T(N)=T(N-1)+T(N-2)+c$ | by $1$, **$2$ ways** | $N$ | a **branching tree**, $\Theta(\varphi^{N})$ nodes | $O(2^{N})$ |
 
 - **The one diagnostic** ➔ *subtracting* from the argument gives depth $\Theta(N)$; *dividing* gives depth $\Theta(\log N)$ — everything else is what you sum over that depth.
+- **Branching by subtraction is the catastrophic case** ➔ $a\ge2$ calls that each shrink by a *constant* build a tree of depth $\Theta(N)$ with $\Theta(a^{N})$ nodes ⟹ **exponential**. Naive Fibonacci's $T(N)=T(N-1)+T(N-2)+c$ counts nodes, so it is bounded above by the full binary tree $2^{N}$ (exactly $\Theta(\varphi^{N})$, $\varphi=\tfrac{1+\sqrt5}{2}$ — see [[Fibonacci Sequence]]). This is the recurrence that motivates memoisation and dynamic programming.
+- **This shape does NOT telescope cleanly** ➔ with two *different* arguments there is no single general form in $k$; bound it instead by the tree ($T(N)\le 2T(N-1)+c\Rightarrow O(2^{N})$).
 
 ## 📊 Worked example 1 — linear `power` ($T(N)=T(N-1)+c$)
 Algorithm: `power(x, N)` returns `x * power(x, N-1)`, base `power(x,1)=x`.
@@ -125,7 +130,14 @@ $$n\left(\frac{a}{b}\right)^{\log_b n} = n\cdot\frac{a^{\log_b n}}{b^{\log_b n}}
 - **Instantiations** ➔ $a{=}4,b{=}2\Rightarrow\Theta(n^{\log_2 4})=\Theta(n^2)$ · $a{=}3,b{=}2\Rightarrow\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$ · merge sort $a{=}b{=}2\Rightarrow\Theta(n\log n)$ · a single half with $\Theta(n)$ work $a{=}1,b{=}2\Rightarrow\Theta(n)$.
 
 ## 🔭 Beyond Week 1 — the Master Theorem *(shortcut, not in the lecture slides)*
-> [!NOTE] The Week 1 deck solves everything by **telescoping**; the Master Theorem is a standard lookup that gives the same answers for the divide-and-conquer family without the algebra. Included here as a revision aid — **cite telescoping in assessments unless the Master Theorem has been formally introduced.**
+> [!NOTE] A lookup that skips the algebra for the divide-and-conquer family only. **Cite telescoping in assessment** — the lecturer scoped the two methods explicitly:
+>
+> | | Telescoping | Master Theorem |
+> | :--- | :--- | :--- |
+> | $T(n/b)$ — divide | ✅ | ✅ |
+> | $T(n-1)$ — shrink by one | ✅ | ❌ **no case fits** |
+> | Bound it yields | closed form ⟹ $\Theta$ | $O$ only |
+> | Assessment status | **required** | supplementary |
 
 For $T(n)=a\,T(n/b)+\Theta(n^{d})$ compare $d$ with the critical exponent $\log_b a$:
 
@@ -143,7 +155,7 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 - 💡 **With ≥2 calls, sum the level totals** ➔ don't forget the $a^{i}$ multiplier on each level's work; the per-level totals are $cn(a/b)^i$, **not** $cn$, unless $a=b$.
 - 💡 **Decreasing per-level work is not free** ➔ $T(n)=T(n-1)+cn$ is $\Theta(n^2)$, not $\Theta(n)$ — the arithmetic series still costs half the rectangle.
 - 💡 **Compare $a$ against $b$, not against $2$** ➔ the regime is set by the ratio $a/b$; $4T(n/2)$ is leaf-dominated but $2T(n/4)$ ($r=\tfrac12$) is root-dominated $\Theta(n)$.
-- 💡 **Master Theorem is supplementary here** ➔ it only fits the $a\,T(n/b)+f(n)$ shape and was **not** taught in Week 1 — use telescoping as the primary method.
+- 💡 **Reaching for the Master Theorem on a $T(n-1)$ recurrence** ➔ no case of it applies to an additively-shrinking argument; the answer will be wrong, not merely unjustified. Telescope instead.
 
 ## 🥋 Drill — solve cold, then expand
 *(Revision protocol: blank page → telescope to a closed form → expand and diff. Naming the growth class without the general-form line earns nothing.)*

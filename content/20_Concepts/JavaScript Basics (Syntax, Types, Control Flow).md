@@ -1,7 +1,7 @@
 ---
 unit: FIT2102
 week: 1
-source: [lecture]
+source: [lecture, applied]
 domain: H
 parent: "[[Programming Paradigms]]"
 tags: [CS/Languages, Tool/JavaScript]
@@ -36,7 +36,7 @@ myFunction(1, 2);                  // logs "hello world", returns 4
 ```
 **Expected output:** `hello world` on the console; return value `4` ($1+2+1$).
 
-- **Bindings** ➔ `const` immutable binding (default choice) · `let` mutable. Reassigning a `const` is an error.
+- **Bindings** ➔ `const` immutable binding (default choice) · `let` mutable. Reassigning a `const` throws a **`TypeError`** *at run time* (`Assignment to constant variable.`) — not a compile-time or lint-time error, so an untested branch can still ship it. `var` is the legacy third form: function-scoped, hoisted, silently redeclarable ➔ never use it.
 - **Branch, three surfaces** ➔ `if (c) { … } else { … }` · early return (`if (x >= y) return x; return y;`) · **conditional expression** `x >= y ? x : y`.
 - **Loops** ➔ `while (cond) { … }` · `for (let i = 1; i <= n; i++) { … }`. Both are on the unit's discouraged list ➔ [[Programming Paradigms]].
 - **Truthiness** ➔ `while (n)` terminates at zero because `Boolean(0) === false`. Concise, and a trap when `0` is a legitimate value.

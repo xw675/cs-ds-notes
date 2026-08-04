@@ -1,12 +1,12 @@
 ---
 unit: FIT2102
 week: 1
-source: [lecture]
+source: [lecture, applied]
 domain: H
 parent: "[[Higher-Order Function]]"
 tags: [CS/Languages, Tool/JavaScript]
 type: pattern
-aliases: [Arrow Function, Anonymous Function, JavaScript Closure, Array Methods, forEach, map filter reduce JavaScript, First-Class Functions]
+aliases: [Arrow Function, Anonymous Function, JavaScript Closure, Array Methods, forEach, map filter reduce JavaScript, First-Class Functions, range JavaScript]
 ---
 # [[JavaScript Functions as Values]]
 
@@ -65,6 +65,28 @@ addNine(1);   // 10   -- x is still 9; the capture outlived add()'s call
 - **Effect vs value** ➔ `forEach` for side effects (logging), `map` when you want the results. Using `map` purely for its side effect builds and discards an array.
 - **Chaining beats nesting** ➔ `tutors.map(p => p.length).reduce((t, s) => t + s, 0)` reads left-to-right as *transform then accumulate*; the equivalent loop needs an index and an accumulator you must initialise correctly.
 - **`reduce` subsumes the other two** ➔ `map` and `filter` are both expressible as a `reduce` that appends conditionally — useful to know, rarely worth writing.
+- **Generating the source array** ➔ the pipeline needs something to start from, and JS has no `range`. Two loop-free idioms, both producing $[0, n)$:
+```javascript
+const range = n => Array.from({ length: n }, (_, i) => i);   // preferred: builds AND fills
+const range2 = n => [...Array(n).keys()];                    // spread the index iterator
+range(5);    // [0, 1, 2, 3, 4]
+range(0);    // []          -- the empty case falls out for free
+```
+- **The `filter → reduce` aggregation shape** ➔ *generate a domain, keep what qualifies, collapse to one number* is the single most reusable pipeline in the unit: `range(n).filter(pred).reduce((t, x) => t + x, 0)`. Naming each stage in an interview ("domain, predicate, fold") is worth more than the answer.
+
+## ⚖️ Core Decision Matrix
+Read the loop body and ask what each line is *doing*; the answer names the method.
+
+| The loop body does… | ➔ becomes | Initial value |
+| :-- | :-- | :-- |
+| `out.push(f(a[i]))` | `.map(f)` | — |
+| `if (p(a[i])) out.push(a[i])` | `.filter(p)` | — |
+| `acc = g(acc, a[i])` | `.reduce(g, init)` | whatever `acc` was set to **before** the loop |
+| `count++` under a condition | `.filter(p).length` **or** `.reduce((c, x) => p(x) ? c + 1 : c, 0)` | `0` |
+| track a running best | `.reduce((best, x) => x > best ? x : best, a[0])` | the **first element**, never `0` |
+| transform **then** select | `.map(f).filter(p)` — order matters | — |
+
+> [!NOTE] **When It Flips:** a loop that both transforms and tests (`tripled = a[i] * 3; if (tripled % 2)`) tests the **transformed** value ➔ `.map(x => x * 3).filter(x => x % 2 !== 0)`, in that order. Filter-then-map is cheaper (fewer elements transformed) and is the default — but only when the predicate reads the *original* value. Reading the loop backwards is how you tell.
 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Given `const tutors = ['tim','michael','yan','Yang','arthur','kelvin']`, return the total number of characters across all names whose name starts with a lowercase `y`. Then explain why `'Yang'` is or is not included.
@@ -96,7 +118,19 @@ addNine(1);   // 10   -- x is still 9; the capture outlived add()'s call
 > > ```
 > > - **Key move:** the loop conflated three jobs — traverse, select, transform. Splitting them removes the index (and its off-by-one risk), removes `let`, and makes the intent readable in one line.
 
+> [!QUESTION]- Practice 4: With no loop and no `Math.max`, return the sum of every number below $100$ that is a multiple of $4$ or $7$. Then state the three pipeline stages by name.
+> > [!SUCCESS]- Reference solution
+> > ```javascript
+> > const range = n => Array.from({ length: n }, (_, i) => i);
+> > range(100)
+> >     .filter(x => x % 4 === 0 || x % 7 === 0)
+> >     .reduce((t, x) => t + x, 0);   // 1767
+> > ```
+> > - **Key move:** **domain → predicate → fold.** `range(100)` is $[0, 100)$, so "below 100" needs no adjustment — an inclusive bound would need `range(101)`. The `||` matters: `&&` counts only multiples of $28$, and chaining two `.filter` calls is that same mistake written differently. Multiples of both are visited **once**, so the single pass gives inclusion–exclusion for free: $1200 + 735 - 168 = 1767$.
+
 ## ⚠️ Common Mistakes
+- 💡 **`new Array(n).map(…)` silently does nothing** ➔ it creates a **sparse** array of $n$ holes, and `map`/`filter`/`forEach` skip holes, so you get `[empty × n]` back. Use `Array.from({length: n}, (_, i) => i)`, which fills as it builds, or spread `[...Array(n).keys()]`.
+- 💡 **Seeding a max-`reduce` with `0`** ➔ `reduce((m, x) => x > m ? x : m, 0)` returns `0` for an all-negative array. Seed with `array[0]` — and accept that the empty array then has no answer, which is the honest result.
 - 💡 **Arrow functions are only *almost* equivalent** ➔ the slides say "(almost)" and do not explain why in Week 1. Do not claim exact equivalence in an interview; say the arrow form differs in how it binds context and that the unit covers it later.
 - 💡 **A closure captures the variable, not a copy** ➔ if the enclosing variable is a mutable `let` that changes later, the closure sees the **new** value. Capturing a `const` avoids the whole class of bug.
 - 💡 **`forEach` returns `undefined`** ➔ chaining off it (`xs.forEach(…).map(…)`) throws. Use `map` when you need the results.

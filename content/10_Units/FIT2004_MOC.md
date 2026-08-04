@@ -31,7 +31,7 @@ tags:
 
 ## 📅 Knowledge Index
 
-### Week 1 — Divide & Conquer and Recurrence Analysis *(Lecture 1, parts 1–2)*
+### Week 1 — Complexity Analysis, Divide & Conquer, and Solving Recurrences *(Lectures 1–2)*
 - [[Karatsuba Integer Multiplication]] -> Parent Framework: [[Divide and Conquer]] *(**NOT EXAMINABLE** — lecturer-confirmed motivating hook only; read for D&C intuition, never drill it)*
 - [[Solving Recurrences (Telescoping)]] -> Parent Framework: [[Big-O Notation]] *(the analysis hand skill — repeated substitution; Master Theorem flagged as supplementary)*
 - [[Divide and Conquer]] -> Parent Framework: [[Recursion]] *(dual-unit — split/recurse/combine; analysed via recurrences)*
@@ -45,22 +45,57 @@ tags:
 - [[Geometric Series]] -> Parent Framework: [[Summation Notation]] *(dual-unit — $\sum r^i$ closed form; the $r{=}2$ and $r{=}\tfrac12$ corollaries that bound every D&C tree)*
 - [[Binary Search Tree (BST)]] -> Parent Framework: [[Binary Tree]] *(dual-unit — the vehicle for bound-vs-case drills; $n$ sorted inserts $=\Theta(n^2)$)*
 
+**Lecture 2 — the recursion analysis pipeline:**
+- [[Analysing Recursive Algorithms (Time and Auxiliary Space)]] -> Parent Framework: [[Recursion]] *(the pipeline spine — code ➔ recurrence ➔ time, **and** depth ➔ auxiliary space; owns the **call-site vs coefficient** trap)*
+- [[Binary Search]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — decrease-and-conquer; the canonical best $\ne$ worst case)*
+- [[Output-Sensitive Complexity]] -> Parent Framework: [[Algorithmic Complexity]] *(range reporting — $\Theta(N{+}W)$ vs $\Theta(\log N{+}W)$)*
+
+### Week 2 — Proof of Correctness and the Sorting Suite *(decks p1 Correctness · p2 Comparison-Based · p3p4 Counting & Radix)*
+- [[Invariant]] -> Parent Framework: [[Algorithm]] *(dual-unit — **the W2 spine**: correctness $=$ **termination** $+$ **loop invariant**; owns the exam protocol "explain why this algorithm is correct")*
+- [[Binary Search]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — deepened with the **non-termination bug**: `lo = mid` stalls at $hi{=}lo{+}1$)*
+- [[Sorting Problem]] -> Parent Framework: [[Computational Problem]] *(dual-unit — deepened with **comparison vs non-comparison**, the $\Omega(N\log N)$ floor, the $O(k)$ comparison-cost multiplier, and the recursion-stack/in-place rule)*
+- [[Counting Sort]] -> Parent Framework: [[Sorting Problem]] *(non-comparison — $\Theta(N{+}M)$; stability must be **engineered** via a prefix-sum position array)*
+- [[Radix Sort]] -> Parent Framework: [[Counting Sort]] *($K$ stable counting passes, LSD first — $\Theta(KN{+}KM)$; stability is load-bearing)*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Correctness proofs via **loop invariants** · amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · $O(n)$ sorting (counting/radix) · order statistics · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
+- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · order statistics · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
 
-- **W1 — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → apply it end-to-end on [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
+- **W1a — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → apply it end-to-end on [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
+- **W1b — the whole pipeline on one function:** [[Algorithmic Complexity]] *(§6 input vs auxiliary space)* → **[[Analysing Recursive Algorithms (Time and Auxiliary Space)]]** *(code ➔ recurrence ➔ time + space)* → [[Solving Recurrences (Telescoping)]] *(the branching row)* → [[Binary Search]] *(best $\ne$ worst)* → [[Output-Sensitive Complexity]] *(bounds carrying $W$)*
+- **W2 — prove it, then rank it:** **[[Invariant]]** *(termination + invariant)* → [[Binary Search]] *(§3 the non-termination bug)* → **[[Sorting Problem]]** *(the four-axis suite + $\Omega(N\log N)$ floor)* → **[[Counting Sort]]** *(escape the floor)* → **[[Radix Sort]]** *(escape the $M$ blow-up)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
 	- measure cost as a function of **input size** (often **bit-length**) on the RAM model; distinguish **total** vs **auxiliary** space; quote the **tightest** ($\Theta$) bound
 	- set up a running-time **recurrence** $T(n)=a\,T(n/b)+f(n)$ for a recursive algorithm
-	- solve it by **telescoping** (repeated substitution → general form → fix $k$ from the base case → back-substitute) *(the Master Theorem is a supplementary shortcut, not taught in Week 1)*
+	- solve it by **telescoping** (repeated substitution → general form → fix $k$ from the base case → back-substitute) — the **required** method: it covers $T(n-1)$ *and* $T(n/b)$ and yields $\Theta$, where the Master Theorem covers only $T(n/b)$ and yields $O$
 	- derive schoolbook multiplication as $\Theta(n^2)$ and the naive D&C split as $4T(n/2)+\Theta(n)=\Theta(n^2)$
 	- read $a$ (recursive calls) and $b$ (shrink factor) off code and classify by $r=a/b$ — root-dominated $\Theta(n)$ · all-levels-equal $\Theta(n\log n)$ · leaf-dominated $\Theta(n^{\log_b a})$
 	- state $O/\Omega/\Theta$ **formally with witnesses**; judge a bound **valid** separately from **tight** ($3n^2{+}100n=O(n^3)$ is TRUE, $\Theta(n^3)$ FALSE)
 	- pair every bound with a **case** — "any operation" bounds cheapest/dearest, so an unqualified $\Theta$ needs them to agree
 	- prove $\sum i=\tfrac{n(n+1)}{2}$ and $\sum r^{i}=\tfrac{r^{n+1}-1}{r-1}$ by induction, then **substitute** for $r{=}2$ and $r{=}\tfrac12$
 	- drop **capped** parameters from a bound ($n\le10^6$, $arr[i]<2^{32}$ ⟹ $\Theta(1)$) and declare the **unit-cost** assumption
+	- split space into **input** $+$ **auxiliary**, label $O(1)$ auxiliary **in-place**, and **time $\ge$ auxiliary space**
+	- extract a **piecewise** recurrence from code — base $T(n)=a$ at the guard threshold, general $T(n)=aT(\cdot)+c$
+	- count $a$ as **call sites**, not coefficients — `2*f(n//3)` is $T(n/3)+c$, `f(n//3)+f(n//3)` is $2T(n/3)+c$
+	- quote **auxiliary space** as $\Theta(\text{max stack depth})$, never $\Theta(\text{total calls})$ — hence [[Merge Sort]]'s $\Theta(N{+}\log N)=\Theta(N)$
+	- separate time from space on a **branching** recursion (Fibonacci $O(2^{N})$ time, $\Theta(N)$ space)
+	- state a reporting bound with its **output size** $W$ and prove $\Omega(\log N{+}W)$ optimality
+- **W2** ➔ 
+	- prove an algorithm correct by stating **both** obligations — loop invariant **and** termination
+	- write a termination argument as *finite domain · known start · monotone update* (`find_min`)
+	- name the **variant** that strictly decreases, and spot where it fails (`lo = mid` at $hi{=}lo{+}1$)
+	- write the invariant **first**, then code to it — minimal, data-mentioning, implies the postcondition
+	- state selection sort's two-clause invariant and insertion sort's sorted-prefix invariant
+	- rank the sorting suite on **four** axes: correctness, time (B/A/W), **auxiliary** space, stability
+	- multiply every comparison-based bound by the comparison cost $O(k)$ ⟹ $O(kN^{2})$, $O(kN\log N)$
+	- count the **recursion stack** as auxiliary ⟹ recursive sorts are **not in-place**, $\Theta(k\log N)$
+	- justify the $\Omega(N\log N)$ floor as a claim about **comparison-based** sorts only
+	- derive [[Counting Sort]]'s $\Theta(N{+}M)$ and engineer stability via the **prefix-sum position array**
+	- reject the $\Theta(N\cdot M)$ bucket-space misconception — buckets partition $N$ ⟹ $\Theta(M{+}N)$
+	- run [[Radix Sort]] LSD-first by hand and justify why the subsort **must** be stable
+	- derive $\Theta(KN{+}KM)$ time, $\Theta(KN{+}M{+}N)$ space, and $\Theta(M{+}N)$ auxiliary (**no $K$**)
+	- trade base $M$ against column count $K=\lceil\log_M(\text{max key})\rceil$, and pad ragged keys

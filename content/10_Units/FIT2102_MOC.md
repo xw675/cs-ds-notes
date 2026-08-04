@@ -23,19 +23,20 @@ tags:
 - [[Levels of Abstraction (Machine to High-Level)]] -> Parent Framework: [[Von Neumann Architecture and Programs]] *(shared with FIT1047 — the assembly/x86 tables are flagged **not examinable**)*
 - [[Programming Paradigms]] -> Parent Framework: [[FIT2102_MOC]] *(**the unit's spine** — imperative vs declarative, purity, referential transparency, the four-surface loop critique)*
 - [[JavaScript Basics (Syntax, Types, Control Flow)]] -> Parent Framework: [[Programming Paradigms]] *(`const`/`let`, `===`, truthiness, operators)*
-- [[JavaScript Functions as Values]] -> Parent Framework: [[Higher-Order Function]] *(arrow functions, closures, `forEach`/`map`/`filter`/`reduce` — **the W1 hand skill**)*
-- [[Higher-Order Function]] *(Smart Merged: dual-unit — FIT1008 Python forms + the FIT2102 JavaScript/arrow forms)*
+- [[JavaScript Functions as Values]] -> Parent Framework: [[Higher-Order Function]] *(arrow functions, closures, `forEach`/`map`/`filter`/`reduce`, `range`, loop→method refactor — **the W1 hand skill**)*
+- [[Cons List (Closures as Data)]] -> Parent Framework: [[JavaScript Functions as Values]] *(**W1 tutorial punchline** — selectors, closures as storage, HOFs re-derived for your own type)*
+- [[Higher-Order Function]] *(dual-unit — FIT1008 Python forms + the FIT2102 JavaScript/arrow forms)*
+- [[Recursion]] *(dual-unit — FIT1008 converts recursion to loops for stack safety, FIT2102 converts loops to recursion for purity)*
 - [[Von Neumann Architecture and Programs]] *(Smart Merged: FIT2102 adds the imperative-model framing that lambda calculus later replaces)*
 
 ## 🧭 Suggested Reading Order
-- **W1 — from the machine to functions-as-values:** [[Levels of Abstraction (Machine to High-Level)]] → **[[Syntax versus Semantics]]** → **[[Programming Paradigms]]** *(the spine)* → [[JavaScript Basics (Syntax, Types, Control Flow)]] → **[[JavaScript Functions as Values]]** *(W1 hand skill)*
+- **W1 — from the machine to functions-as-values:** [[Levels of Abstraction (Machine to High-Level)]] → **[[Syntax versus Semantics]]** → **[[Programming Paradigms]]** *(the spine)* → [[JavaScript Basics (Syntax, Types, Control Flow)]] → **[[JavaScript Functions as Values]]** *(W1 hand skill)* → [[Recursion]] *(loop replacement)* → **[[Cons List (Closures as Data)]]** *(tutorial punchline)*
 
 ## 🎯 Learning Outcomes
 - **W1** ➔ 
-	- justify the need for abstraction from machine instructions to high-level languages 
+	- justify abstraction from machine instructions to high-level languages 
 	- distinguish **syntax** from **semantics** 
-	- write JS with immutable bindings, functions, loops and conditionals 
-	- contrast composition via **higher-order functions** vs **objects** 
-	- desugar arrow functions to `function` form 
-	- define a **closure** as an anonymous function capturing its enclosing scope 
-	- use the built-in Array HOFs instead of hand-coded loops
+	- write JS with immutable bindings; desugar arrows to `function` form 
+	- define a **closure** as a function capturing its enclosing scope 
+	- contrast composition via **higher-order functions** vs **objects** (cons list) 
+	- replace hand-coded loops with Array HOFs or accumulator recursion
