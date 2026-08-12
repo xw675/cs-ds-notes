@@ -137,6 +137,25 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | latest-per-entity       | `rank() over (partition by E.EmpNo order by D.GraduationDate desc) as Rank` in an inline view, then `where T.Rank = 1`         | pre-processes the **operational** side; without it the join multiplies rows per entity                              |
 | never store             | `avg(x)` as a fact measure                                                                                                     | average of averages ≠ average — store `Total_x` **and** `Number_of_y`, recover with `sum(Total_x)/sum(Number_of_y)` |
 
+## 🧹 Data Exploration & Cleaning Clauses (FIT3003 W3)
+*(➔ [[Data Exploration (Warehouse Validation)]] · [[Data Cleaning (Dirty Data)]] · [[Multi-Role Facts]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| baseline count | `select count(*) from dw.uselog;` | run on **every** source table before building anything — the prediction all later numbers are judged against |
+| duplicate PK probe | `select PK, count(*) from t group by PK having count(*) > 1;` | the standard dirty-data detector; empty result $=$ that key is clean |
+| duplicate row probe | `group by log_time, log_date, student_id, act having count(*) > 1` | when there is **no single-column PK**, group on the full composite |
+| orphan FK probe | `select * from t1 where FK not in (select PK from t2);` | anti-join; a NULL inside the subquery makes `not in` return **nothing at all** |
+| formatted sample | `select log_date, to_char(log_time,'HH24:MI'), student_id from t order by …;` | `order by` puts duplicates adjacent so they are visible in a big table |
+| de-dup at the join | `create table tempfact2 as select distinct U.…, S.… from … where …;` | kills join fan-out **and** true source duplicates in one clause; only removes rows identical across the **projected** columns |
+| de-dup a copy | `create table student_clean as select distinct * from dw.student;` | when the defect survives projection; CTAS brings **no PK/FK** |
+| contradiction check | `select * from contract where starttime > endtime;` | inconsistent-value type — two attributes disagreeing |
+| domain check | `select * from charter where char_distance < 0;` | incorrect-value type — outside the legal range |
+| null check | `select * from major where major_name is null;` | `= NULL` never matches; only `IS NULL` |
+| simplest repair | `delete from t where <<the same predicate>>;` | always `select` first — the count is the evidence the repair worked |
+| merge two role facts | `select … sum(x) from ( select * from f1 union select * from f2 ) group by emp_num;` | `union` alone leaves two rows per member; the outer `group by` is what merges — legal only for **individually-owned** measures |
+| label vs key | `group by F.CourseCode, D1.CourseName` | keep the **key** in the grouping list; grouping on the description alone merges members that share it |
+
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
 > > [!SUCCESS]- Reference solution
@@ -177,6 +196,30 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > - **Key moves:** cross-account CTAS to seed the schema + exactly one join condition for two tables + `IN` for the set membership + `SUM` over a computed expression.
 > > - ⚠ **Column names unverified** ➔ only `SALARYPERHOUR` is named in the lab sheet; `duration`, `tutorno`, `subjectcode` are inferred — confirm against the lab E/R diagram with `DESC LAB;` before relying on them.
 
+> [!QUESTION]- Practice 4 (FIT3003 Lab 3-style): `dw.uselog` (108267 rows) joins 1–$m$ to `dw.student` (37951 rows), yet the staged TempFact holds 170610. Diagnose it, clean it, and rebuild the fact banded by lab-time period.
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > select student_id, count(*) from dw.student            -- 1. diagnose
+> > group by student_id having count(*) > 1;               --    14288 duplicated ids
+> >
+> > create table tempfact_uselog2 as                       -- 2. clean at the join
+> > select distinct U.log_date, U.log_time, U.student_ID, S.class_id, S.major_code
+> > from   dw.uselog U, dw.student S
+> > where  U.student_id = S.student_id;                    --    108261 rows
+> >
+> > alter table tempfact_uselog2 add (timeid number);      -- 3. band the derived key
+> > update tempfact_uselog2 set timeid = 1
+> > where  to_char(log_time,'HH24:MI') >= '06:01' and to_char(log_time,'HH24:MI') <= '12:00';
+> > update tempfact_uselog2 set timeid = 3
+> > where  to_char(log_time,'HH24:MI') >= '18:01' or  to_char(log_time,'HH24:MI') <= '06:00';
+> >
+> > create table fact_uselog2 as                           -- 4. aggregate
+> > select semid, timeid, class_id, major_code, count(student_id) as total_usage
+> > from   tempfact_uselog2
+> > group by semid, timeid, class_id, major_code;
+> > ```
+> > - **Key moves:** count-based diagnosis → `select distinct` CTAS → `alter add` + one `update` per band → single `group by`. The **night band needs `or`**, not `and`, because it wraps past midnight; and the fact's row count is unchanged by cleaning — only `total_usage` moves.
+
 ## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
 - 💡 **"not A or B" trap** ➔ `emp_no <> 3 OR emp_no <> 8` is TRUE for every row; exclusion needs `AND`.
@@ -184,3 +227,5 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Forgetting `COMMIT`** ➔ your inserts exist only in the session buffer; close the client badly and the work is gone.
 - 💡 **Word's curly quotes** ➔ SQL pasted from a `.docx` lab sheet carries `'` instead of `'`; Oracle rejects it — retype the quote.
 - 💡 **Building a FIT3003 fact from the dimension tables** ➔ dimensions were created with `select distinct` and hold no measures; aggregate from the operational (or Temp) tables.
+- 💡 **Staging a fact without counting first** ➔ correct SQL over dirty sources produces a correctly-shaped fact with inflated measures; predict the join cardinality before trusting anything ➔ [[Data Exploration (Warehouse Validation)]].
+- 💡 **`select … as X` while `group by` still names the old column** ➔ ORA-00979; change the projection and the grouping list together.

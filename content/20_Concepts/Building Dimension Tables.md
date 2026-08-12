@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
-week: 2
-source: [lecture, slides]
+week: [2, 3]
+source: [lecture, slides, lab]
 domain: C
 parent: "[[Star Schema]]"
 tags: [CS/Databases, Tool/SQL, DataScience/DataWarehousing]
@@ -51,6 +51,8 @@ insert into TimeDim values (4, 'Oct-Dec');
 - **Dimension ID is the PK** ➔ each dimension carries a Dimension ID; the same column sits in the fact as **FK and part of the composite PK**.
 - **Composite text keys are built with `||`** ➔ `Country || City as LocationID` and `Year || Quarter as QuarterID` manufacture an ID the operational database never stored.
 - **`to_char` is the time-dimension workhorse** ➔ `'YYYYMM'` builds a month key, `'YYYY'` / `'MM'` / `'Month'` extract the attributes to group by.
+- **The dimension's job is query time, not build time** ➔ [[Building Fact Tables]] never reads it; it exists so a query can ask for `CourseName = 'MIT'` instead of `CourseCode = '60001'`, and so the result set carries a readable label.
+- **Group on the code, join for the label** ➔ `select F.CourseCode, D1.CourseName, sum(…) … group by F.CourseCode, D1.CourseName` keeps the key in the grouping list, so a shared description cannot merge two members ➔ [[One-Attribute Dimensions]].
 
 ## 🔀 Variations
 ### Temporary dimension table (derived attribute the source cannot express)
@@ -106,3 +108,10 @@ select distinct QuarterID, Quarter, Year from TimeDimTemp;
 - 💡 **Omitting `distinct` on a transaction-sourced dimension** ➔ one dimension row per transaction instead of per member; the fact's FK then matches many rows and every aggregate is inflated.
 - 💡 **Trying to derive a banded attribute in one `select`** ➔ the chapter's route is stage ➔ `alter add` ➔ `update` per band ➔ `select distinct`; skipping the temp table forces manual `insert` of an unknown number of rows.
 - 💡 **`create table … as select` copies rows only** ➔ no PK/FK comes across ➔ [[Populating Tables from Queries (INSERT-SELECT, CTAS)]].
+- 💡 **Grouping a report on a dimension's *description* instead of its key** ➔ `majorDIM` holds several majors sharing one `Major_Name`, so the "more meaningful" USELOG query returned $722$ rows where the code-based query returned $773$ — the readable answer was the inaccurate one ➔ [[Data Exploration (Warehouse Validation)]].
+
+## 🧠 Active Recall
+> [!FAQ]- If the fact table is never built from the dimension tables, why create them at all?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** they supply the descriptive attributes a query needs to *ask* and to *label*, which the fact's bare keys cannot.
+> > - **Why:** **The fact stores codes** ➔ `CollegeFact` holds `CourseCode = '60001'`, so "total income from the MIT course" is unanswerable from the fact alone. **The dimension resolves the name** ➔ joining `CourseDim` lets the predicate be `CourseName = 'MIT'` and puts the name in the output. **Build order and query order are opposite** ➔ dimensions are built first but read last; the fact is built from the operational tables ➔ [[Building Fact Tables]].

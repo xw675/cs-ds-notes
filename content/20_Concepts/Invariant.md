@@ -22,7 +22,7 @@ aliases: [Loop Invariant, Proof of Correctness]
 - **Definition** ➔ a property that **remains true** at a program point or throughout an algorithm.
 - **Loop invariant** ➔ holds before the loop, preserved by every iteration ➔ still holds at exit.
 - **Payoff** ➔ anything provably always-true can be **exploited to skip work** ➔ the basis of every correctness proof.
-- **Why prove instead of test** ➔ development cost and compute are finite, testing cannot cover the input space, and field failures are unbounded — Ariane 5 ($\sim\$7$B, bad horizontal-velocity conversion), the Patriot battery that missed a Scud (accumulated time-since-boot error, 28 dead). Proof is applied at **design** time, where testing cannot reach.
+- **Why prove instead of test** ➔ development cost and compute are finite, testing cannot cover the input space, and field failures are unbounded — Ariane 5 ($\approx 7$ billion USD, bad horizontal-velocity conversion), the Patriot battery that missed a Scud (accumulated time-since-boot error, 28 dead). Proof is applied at **design** time, where testing cannot reach.
 
 ### 2. The Three-Part Proof
 - **Initialization** ➔ $P$ holds before the first iteration.
