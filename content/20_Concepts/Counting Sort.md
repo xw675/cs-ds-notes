@@ -1,8 +1,8 @@
 ---
 unit: FIT2004
 domain: A
-week: 2
-source: [lecture]
+week: [2, 3]
+source: [lecture, applied]
 parent: "[[Sorting Problem]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity]
 aliases: [Count Sort, Bucket Count Sort]
@@ -32,12 +32,20 @@ aliases: [Count Sort, Bucket Count Sort]
 - **Fix A — chained buckets** ➔ store the *items* in a list per slot (the [[Hash Table|separate-chaining]] shape) and append in input order ⟹ stable.
 - **Space of Fix A is $\Theta(M+N)$, NOT $\Theta(M\cdot N)$** ➔ the buckets partition the input, so **all buckets together hold exactly $N$ items** — the $M$ slots and the $N$ payloads add, never multiply.
 - **Fix B — position (prefix-sum) array** ➔ turn counts into starting offsets, then place items in a single input-order pass ⟹ stable with a flat $\Theta(M+N)$ array, no lists ➔ §4.
+- **Which variant does the question want?** ➔ **unstated ⟹ buckets** (simpler, and correct across the repeated passes of [[Radix Sort]]); a question naming a **count array *and* a position array** is asking for Fix B — that pairing is the non-bucket variant's signature.
+- **Bucket drain must be $O(1)$ per item** ➔ concatenate with `extend()` (amortised $O(1)$), never `pop(0)`, which shifts the whole list at $O(n)$ per item and silently turns the rebuild into $\Theta(N^{2})$; a circular queue / deque restores $O(1)$ front removal if FIFO order must be popped rather than copied.
 
 ### 4. Stable Counting Sort via a Position Array
 - **Build `count`** ➔ `count[key] += 1` over the input, as before.
 - **Build `position`** ➔ `position[first] = 1`, then $\text{position}[i]=\text{position}[i-1]+\text{count}[i-1]$ ➔ a **prefix sum**: each key learns where its block starts.
 - **Construct output** ➔ scan the input **in order**; for each $(key,val)$ write `output[position[key]] = (key,val)` then `position[key] += 1` ⟹ earlier-arriving equal keys land in earlier slots ⟹ **stable**.
 - **Cost unchanged** ➔ still $\Theta(N+M)$ time, $\Theta(N+M)$ space — stability costs an extra array, not an extra factor.
+
+### 5. Negative and Non-Zero-Based Keys
+- **The count array is indexed from $0$** ➔ a negative key has no slot, so a raw `count[key]` fails before it sorts.
+- **Offset mapping** ➔ scan for `min` as well as `max`, then store every key at index $\text{key}-\min$ ⟹ every index becomes valid ($-322\to0$, $420\to742$) and the range is $M=\max-\min+1$.
+- **Undo the shift on rebuild** ➔ emit $\text{index}+\min$, never the index itself — forgetting this returns a correctly *ordered* list of the *wrong values*.
+- **The bound is driven by the RANGE, not the maximum** ➔ $\Theta(N+M)$ with $M=\max-\min+1$; a tight cluster of huge values ($10^{6}\dots10^{6}{+}5$) is cheap, while $\{0,\,10^{6}\}$ is ruinous.
 
 ## ⚙️ Core Implementation
 ### 🔹 Basic counting sort (unstable, keys only)
@@ -134,6 +142,8 @@ $$
 - 💡 **Quoting $\Theta(N)$ unconditionally** ➔ the bound is $\Theta(N+M)$; $M$ may only be dropped after you **state** that the key range is capped (alphabet $M{=}26$, digits $M{=}10$).
 - 💡 **Claiming bucket space is $\Theta(N\cdot M)$** ➔ lecturer-flagged as the *very common misconception*: buckets partition the input, so the total payload is $N$ ⟹ $\Theta(M+N)$.
 - 💡 **Assuming counting sort is stable by default** ➔ it is not; stability must be engineered (buckets or prefix-sum positions), and [[Radix Sort]] silently breaks without it.
+- 💡 **Draining buckets with `pop(0)`** ➔ $O(n)$ per removal from shifting ⟹ the rebuild becomes $\Theta(N^{2})$ and the whole linear claim collapses; use `extend()` or a circular queue.
+- 💡 **Carrying the `max()` scan into [[Radix Sort]]** ➔ counting sort needs `max` to **size the count array**; radix sizes it from the **base** and needs `max` only to compute the **column count**. Lecturer-flagged as a recurring code-review error.
 
 ## 🧠 Active Recall
 > [!FAQ]- Counting sort runs in $\Theta(N+M)$ — does this contradict the $\Omega(N\log N)$ sorting lower bound?

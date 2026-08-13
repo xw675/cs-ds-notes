@@ -1,15 +1,15 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 2]
-source: [lecture]
+week: [1, 2, 3]
+source: [lecture, applied]
 parent: "[[Computational Problem]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 ---
 # [[Sorting Problem]]
 
 **Context:** [[FIT1008_MOC]], [[FIT2004_MOC]] · a [[Computational Problem]] · backbone clustering the three **elementary $O(n^2)$ sorts** (Bubble/Selection/Insertion) + sort properties **Stability** & **Incrementality** · recursive sorts ([[Merge Sort]], [[Quick Sort]], [[Heapsort]]) referenced
-**FIT2004 emphasis:** every sort is now graded on **four** axes — correctness ([[Invariant]]), time, **auxiliary** space, stability — and the suite splits into **comparison-based** (floored at $\Omega(N\log N)$) vs **non-comparison** ([[Counting Sort]], [[Radix Sort]], which break the floor).
+**FIT2004 emphasis:** every sort is now graded on **four** axes — correctness ([[Invariant]]), time, **auxiliary** space, stability — and the suite splits into **comparison-based** (floored at $\Omega(N\log N)$) vs **non-comparison** ([[Counting Sort]], [[Radix Sort]], which break the floor). W3 adds the **engineering** layer: how to *force* stability onto an unstable sort, and what sorting is actually **for** (§9).
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** rearrange $n$ orderable elements → non-decreasing ➔ correctness = permutation + ordering.
@@ -45,18 +45,38 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 
 ### 6. Stability (Property)
 - **Definition** ➔ equal keys keep input order; observable only sorting **by key**.
-- **Universal fix** ➔ index-tag $k_i\to(k_i,i)$ ($O(n)$ space) ➔ why [[Radix Sort]] needs a stable subsort.
+- **When it matters** ➔ multi-pass sorting on several keys (sort by name, then by department, and the names stay ordered within each department) and any [[Radix Sort]] subsort; with distinct keys it is unobservable and free.
+- **Mechanism heuristic** ➔ **shifting is stable, long-distance swapping is not**. Bubble/insertion/merge move items past **adjacent** or ordered positions and preserve ties; selection/heap/quicksort throw an item across the array and can hurdle an equal key.
 - **Bug vector** ➔ `>` vs `>=` is a one-character stability break.
+- **Engineering fix A — tuple the index in** ➔ compare on $(k_i, i)$ so ties break by original position; blocked when the container cannot hold tuples.
+- **Engineering fix B — a parallel index list** ➔ keep `index_list` alongside the data, consult it **only when `list[a] == list[b]`**, and apply every swap to both lists.
+- **Time is UNCHANGED by either fix** ➔ when $\text{list}[a]\ne\text{list}[b]$ the index list is never read; when they are equal the tie-break compares two **integers** in $O(1)$ ⟹ no factor is added to any bound.
+- **Space grows by one class at most** ➔ selection sort goes from $O(1)$ auxiliary to $\Theta(N)$; but total space was already $\Theta(N)$ for the input, and $\Theta(N)+\Theta(N)=\Theta(N)$ ⟹ the **total** bound does not move, only the in-place claim is lost.
 
 ### 7. Incrementality (Property)
-- **Definition** ➔ small input change ➔ $O(1)$ rework (sorting's **online** analogue).
+- **Definition** ➔ small input change ➔ $O(1)$ rework (sorting's **online** analogue) ➔ [[Online Algorithm]].
 - **Insertion yes / Selection no** ➔ append-to-back ➔ one pass; "final" prefix blocks latecomers.
 - **Graduate** ➔ frequent updates ➔ balanced [[Binary Tree]]/[[Heap]] ($O(\log n)$/update).
 
-### 8. The Two Cost Multipliers Everyone Drops
+### 8. The Cost Terms Everyone Drops
 - **Comparisons are not $O(1)$** ➔ if comparing two items costs $O(k)$ (words compared letter-by-letter, tuples field-by-field), every bound gains a factor: elementary sorts become $O(kN^2)$, [[Merge Sort]] becomes $O(kN\log N)$ **· state $k$ or declare it constant**.
+- **Why an integer comparison IS $O(1)$** ➔ a fixed-width machine word is compared by **one hardware instruction** regardless of its value; a $k$-character string has no such instruction and must be walked symbol by symbol. The asymmetry is architectural, not algorithmic — which is why the item type, not the algorithm, decides whether $k$ can be dropped.
+- **Input space follows the same rule** ➔ $N$ integers occupy $\Theta(N)$; $N$ strings of length up to $k$ occupy $\Theta(Nk)$.
+- **Comparisons $\ge$ swaps, always** ➔ no algorithm swaps a pair it never compared ⟹ a swap-count bound can never exceed the comparison-count bound; use it as a self-check on a derived answer.
 - **The recursion stack is auxiliary space** ➔ $\log N$ levels of frames cost $\Theta(\log N)$, and $\Theta(k\log N)$ if each frame stores $k$ words ⟹ recursive sorts are **not in-place** even when they never allocate a scratch array.
+- **Three auxiliary-space classes, three causes** ➔ $O(1)$ ⟸ iterative, swaps only (the three elementary sorts, [[Heapsort]]) · $O(\log N)$ ⟸ a **balanced** recursion's frame chain ([[Merge Sort]]'s stack, [[Quick Sort]] recursing smaller-first) · $O(N)$ ⟸ a scratch array ([[Merge Sort]]'s merge buffer) **or** a degenerate recursion ([[Quick Sort]]'s worst-case stack). Naming the *cause* is what earns the mark.
 - **Consequence** ➔ an iterative rewrite is the standard route to $O(1)$ auxiliary; this is why "in-place?" and "recursive?" are almost the same question in the summary table.
+- **Best $=$ worst is a diagnostic, not a coincidence** ➔ the cases collapse exactly when *(1)* the algorithm has **no early termination** path and *(2)* the **item values cannot change the control flow**. Selection sort and [[Merge Sort]] satisfy both ⟹ one $\Theta$ covers every case; bubble (the `swapped` flag) and insertion (the inner `while`) violate *(1)*, and [[Quick Sort]] violates *(2)* ➔ [[Big-O Notation]].
+
+### 9. What Sorting Is FOR
+- **Sorting is rarely the goal** ➔ it is the $\Theta(N\log N)$ preprocessing step that makes a later pass **linear**; if the follow-up pass is not cheaper, the sort was not worth it.
+- **Grouping** ➔ equal keys become **contiguous**, so counting occurrences, finding the mode, or aggregating by key collapses to one sequential scan instead of a nested search.
+- **Deduplication** ➔ duplicates are adjacent after sorting, so a **two-pointer compaction** removes them in $\Theta(N)$; the naive alternative — deleting in place by shifting the tail left — costs $\Theta(N)$ per removal and $\Theta(N^{2})$ overall.
+- **An "in-place" requirement PICKS THE SORT** ➔ the compaction is already $O(1)$ auxiliary, so the sort is the only term that can break the budget: [[Merge Sort]] spends $\Theta(N)$ on scratch and [[Quick Sort]] $\Theta(\log N)$ on stack ⟹ **[[Heapsort]] is the only valid choice**, being the sole $\Theta(N\log N)$ sort with $O(1)$ auxiliary. Naming the sort is the marked step, not the two-pointer loop.
+- **Why not a hash set or BST** ➔ both dedup in $\Theta(N)$ expected / $\Theta(N\log N)$ and **preserve input order**, but cost $\Theta(N)$ auxiliary ⟹ disqualified the moment "in-place" appears in the spec. Reach for them when order preservation matters more than space.
+- **Enabling $O(\log N)$ access** ➔ sortedness is the precondition of [[Binary Search]] and of range reporting in $\Theta(\log N+W)$ ➔ [[Output-Sensitive Complexity]].
+- **Order statistics** ➔ sorting answers **every** rank at once; when only one rank is wanted, [[Quickselect]] does it in $\Theta(N)$ and sorting is over-solving.
+- **The amortisation rule** ➔ sort once at $\Theta(N\log N)$ and every subsequent query is cheap; sort per query and the preprocessing cost is paid again each time — the standard "is preprocessing worth it?" exam judgement.
 
 ## ⚙️ Core Implementation
 ### 🔹 Bubble Sort (II, adaptive)
@@ -101,6 +121,24 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 >         my_list[j + 1] = key                   # 3. drop key into the gap
 > ```
 > 💡 **Common Mistake:** **Flat "$O(n^2)$" hides the best case** ➔ on sorted input the `while` never fires ⟹ $O(n)$; the weak "sorted-not-final" invariant is what makes it **online**.
+
+### 🔹 Two-pointer deduplication (the payoff of sorting)
+> [!code]- `dedup_sorted` — read/write pointers, in-place, $\Theta(N)$
+> ```python
+> def dedup_sorted(my_list):
+>     # PRECONDITION: my_list is sorted, so duplicates are ADJACENT.
+>     # For an IN-PLACE guarantee the caller must sort with HEAPSORT --
+>     # merge sort's scratch and quicksort's stack both break O(1) auxiliary.
+>     if len(my_list) == 0:
+>         return 0
+>     write = 0                                  # last kept unique item
+>     for read in range(1, len(my_list)):        # ONE forward scan
+>         if my_list[read] != my_list[write]:
+>             write = write + 1
+>             my_list[write] = my_list[read]     # overwrite, never shift
+>     return write + 1                           # new logical length
+> ```
+> 💡 **Common Mistake:** **Two pointers, not one** ➔ `read` advances every iteration, `write` only on a new value; collapsing them into one index either skips elements or overwrites unread ones.
 
 ## ⚖️ Core Decision Matrix
 *(Best / Average / Worst time, auxiliary space, stability, in-place. $\times\,O(k)$ comparison cost applies to every comparison-based row.)*
@@ -165,7 +203,7 @@ $$
 > - **Hint:** Match the stability requirement to the algorithm and know the index-tag trick.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Use **merge sort** (or Timsort) — guaranteed $\Theta(n\log n)$, naturally stable.
-> > - **Why:** **Index tagging** ➔ sort on $(\text{key}, \text{original index})$ so ties break by input order ($O(n)$ space) — converts unstable quicksort to stable.
+> > - **Why:** **Forced stability is the fallback, not the plan** ➔ if quicksort is mandated, index-tagging converts it at $\Theta(n)$ space and no time penalty ➔ §6 — at which point merge sort's scratch array costs nothing extra, so the tagging only pays when the sort itself is fixed.
 
 > [!FAQ]- Every sort we have met is $\Omega(N\log N)$ — so how can [[Radix Sort]] claim $\Theta(KN)$?
 > - **Hint:** The floor is a statement about a *class* of algorithms, not about the problem.

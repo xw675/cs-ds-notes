@@ -57,8 +57,21 @@ tags:
 - [[Counting Sort]] -> Parent Framework: [[Sorting Problem]] *(non-comparison — $\Theta(N{+}M)$; stability must be **engineered** via a prefix-sum position array)*
 - [[Radix Sort]] -> Parent Framework: [[Counting Sort]] *($K$ stable counting passes, LSD first — $\Theta(KN{+}KM)$; stability is load-bearing)*
 
+### Week 3 — QuickSort Deep Dive, Selection, and the Applied Sorting Suite *(lecture W3 · applied W3 · PT-01)*
+- [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — **deepened**: Lomuto vs Hoare vs 3-way partition, the pivot-policy ladder, and how to make the worst case impossible)*
+- [[Quickselect]] -> Parent Framework: [[Divide and Conquer]] *(the $k$-th smallest — **one-sided** recursion turns $\Theta(N\log N)$ into $\Theta(N)$ expected)*
+- [[Median of Medians]] -> Parent Framework: [[Quickselect]] *(**quiz-only** — lecturer-stated as historically **not examinable in the final exam**; own the $30/70$ guarantee and the $\tfrac15+\tfrac{7}{10}<1$ recurrence, do not drill it as a hand skill)*
+- [[Counting Sort]] -> Parent Framework: [[Sorting Problem]] *(**deepened**: negative-key offset mapping, and the PT-01 rule for bucket vs count+position variant)*
+- [[Radix Sort]] -> Parent Framework: [[Counting Sort]] *(**deepened**: base $b\le N$ is what buys linearity; string optimisation by length and alignment)*
+
+**Applied sheet 3 — the CD1 problem set, tier tags as issued:**
+- [[Sorting Problem]] -> Parent Framework: [[Computational Problem]] *(**deepened**: §6 forcing stability `[P,C,D]` · §8 the dropped cost terms · §9 what sorting is FOR, incl. two-pointer dedup `[C,D,HD]`)*
+- [[K-way Merge]] -> Parent Framework: [[Merge Sort]] *(Problem 3 `[P,C]` — $\Theta(Nk)$ ➔ $\Theta(N\log k)$ by swapping the linear scan for a min-[[Heap]])*
+- [[Online Algorithm]] -> Parent Framework: [[Algorithm]] *(Problem 6 `[P,C,D]` — online vs offline, and the size-$k$ **max**-heap for the $k$ smallest)*
+- *The supplementary problems 7–13 are **deliberately not noted** — one-off puzzles with no transferable pattern; solve them from the PDF if they come up. The only two ideas worth keeping (the comparison model bounds only from below; "in-place" depends on the cost model) live as `[D]` lines in [[FIT2004 Unit Cheatsheet]] §9️⃣.*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · order statistics · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
+- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -66,6 +79,8 @@ tags:
 - **W1a — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → apply it end-to-end on [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
 - **W1b — the whole pipeline on one function:** [[Algorithmic Complexity]] *(§6 input vs auxiliary space)* → **[[Analysing Recursive Algorithms (Time and Auxiliary Space)]]** *(code ➔ recurrence ➔ time + space)* → [[Solving Recurrences (Telescoping)]] *(the branching row)* → [[Binary Search]] *(best $\ne$ worst)* → [[Output-Sensitive Complexity]] *(bounds carrying $W$)*
 - **W2 — prove it, then rank it:** **[[Invariant]]** *(termination + invariant)* → [[Binary Search]] *(§3 the non-termination bug)* → **[[Sorting Problem]]** *(the four-axis suite + $\Omega(N\log N)$ floor)* → **[[Counting Sort]]** *(escape the floor)* → **[[Radix Sort]]** *(escape the $M$ blow-up)*
+- **W3a — partition, then stop sorting:** **[[Quick Sort]]** *(partition, pivot, worst case)* → **[[Quickselect]]** *(recurse one side)* → [[Median of Medians]] *(the guarantee, quiz-only)*
+- **W3b — the applied suite, in CD1 order:** **[[Sorting Problem]]** *(§6 stability, §8 cost terms, §9 uses)* → **[[K-way Merge]]** *(ADT swap ⟹ $\Theta(N\log k)$)* → **[[Radix Sort]]** *(§3 base choice, §5 strings)* → **[[Online Algorithm]]** *(size-$k$ heap)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -99,3 +114,18 @@ tags:
 	- run [[Radix Sort]] LSD-first by hand and justify why the subsort **must** be stable
 	- derive $\Theta(KN{+}KM)$ time, $\Theta(KN{+}M{+}N)$ space, and $\Theta(M{+}N)$ auxiliary (**no $K$**)
 	- trade base $M$ against column count $K=\lceil\log_M(\text{max key})\rceil$, and pad ragged keys
+- **W3** ➔ 
+	- distinguish Lomuto's **final pivot index** from Hoare's **split point** — and the recursive call each demands
+	- pick a partition scheme by **swap count**, and reach for 3-way once duplicates are common
+	- rank pivot policies by what each removes — randomisation kills the *adversary*, [[Median of Medians]] kills the *case*
+	- show a constant-**fraction** split ($1:9$) is still $\Theta(N\log N)$; only constant-**size** splits are $\Theta(N^{2})$
+	- derive [[Quickselect]]'s $T(N)=T(N/2)+\Theta(N)=\Theta(N)$ and say where quicksort's $\log N$ went
+	- state the $\tfrac15+\tfrac7{10}<1$ [[Median of Medians]] recurrence, and why groups of $5$ not $3$
+	- force stability on an unstable sort via a parallel index list, proving **time is unchanged**
+	- swap [[K-way Merge]]'s $\Theta(k)$ minimum scan for a min-[[Heap]] ⟹ $\Theta(N\log k)$, and state the root invariant
+	- classify a problem **online vs offline** before quoting any bound, and pick the size-$k$ heap on the **opposite** extreme
+	- choose radix base $b\le N$ and prove $M=O(N^{d})\Rightarrow\Theta(N)$; map negative keys by offset in [[Counting Sort]]
+	- prove a bound **optimal by reduction** — singleton lists turn [[K-way Merge]] into a sort, inheriting $\Omega(N\log N)$
+	- let an **in-place** requirement pick the sort — dedup needs [[Heapsort]], the only $O(1)$-auxiliary $\Theta(N\log N)$ option
+	- radix-sort ragged strings in $\Theta(n)$ *(total characters)* — length-sort ascending, then sweep with a live-window pointer
+	- `[D]` the comparison model proves $\Omega$, never $O$ — optimal comparisons $\ne$ optimal running time

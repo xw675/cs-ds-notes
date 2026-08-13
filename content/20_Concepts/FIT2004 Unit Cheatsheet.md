@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W2; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W3; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -175,3 +175,51 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **$K$ vs base trade** `[C]` ➔ $K=\lceil\log_M(\text{max key})\rceil$ — raising $M$ shrinks $K$ but grows the $\Theta(KM)$ term and $\Theta(M)$ auxiliary **· precondition:** worth it while $M\ll N$.
 - **"Radix is $\Theta(N)$" needs a hypothesis** `[D]` ➔ true only for **capped** key width; $N$ distinct base-$M$ keys force $K\ge\log_M N$, recovering $\Theta(N\log N)$.
 - **Ragged keys** `[C]` ➔ pad to a common width with a filler that sorts below every real symbol **· precondition:** right-aligned padding gives numeric order, left-aligned gives lexicographic — they differ.
+- **Base choice is what buys linearity** `[P]` ➔ pick $b\le N$ so the per-pass $\Theta(N+b)$ stays $\Theta(N)$; then $M=O(N^{d})$ with $d$ constant $\Rightarrow c=\log_N M=\Theta(1)\Rightarrow\Theta(N)$ **· precondition:** $b>N$ makes the count array dominate and the sort is linear in $b$, not $N$.
+- **Digit extraction** `[P]` ➔ column $j$ of key $x$ in base $b$ is $\lfloor x/b^{j}\rfloor\bmod b$ **· consequence:** $O(1)$ per digit, no string conversion.
+- **`max()` serves different masters** `[P]` ➔ [[Counting Sort]] needs it to **size the count array**; [[Radix Sort]] sizes that from the **base** and needs `max` only for the **column count** $c=\lfloor\log_b M\rfloor+1$ **· lecturer-flagged** as the recurring code-review error.
+- **Negative keys ⟹ offset map** `[C]` ➔ store at $\text{key}-\min$, range $M=\max-\min+1$, and add $\min$ back on rebuild **· consequence:** the bound is driven by the **range**, not the maximum.
+- **Bucket drain must be $O(1)$** `[C]` ➔ `extend()`, never `pop(0)` (shifts, $O(n)$ each ⟹ $\Theta(N^{2})$ rebuild) **· alternative:** circular queue / deque if FIFO removal is genuinely required.
+- **Which counting-sort variant?** `[P]` ➔ unstated ⟹ **bucket** variant; a question naming a **count array *and* a position array** wants the prefix-sum variant — that pairing is its signature (PT-01).
+
+## 9️⃣ Quicksort, Selection and the Applied Suite (W3)
+> [!warning] Every W3 bound is a pair: an **expected** value and a **worst case** that differ. An answer that quotes one without naming which is unmarkable ➔ §1️⃣ *bound ≠ case*.
+
+- **Partition contracts differ — and so do the calls** `[P]` ➔ **Lomuto** returns the pivot's **final index** $j$ ⟹ recurse `(start, j-1)` and `(j+1, end)` · **Hoare** returns a **split point** ⟹ recurse `(start, j)` and `(j+1, end)` **· precondition:** copying Lomuto's `j-1` onto Hoare drops an element and the sort silently loses data.
+- **Schemes differ in WRITES, not comparisons** `[C]` ➔ all make $\Theta(N)$ comparisons per level; Hoare makes $\approx3\times$ fewer swaps **· consequence:** the choice matters when records are large, not when keys are integers.
+- **3-way (Dutch flag) for duplicates** `[C]` ➔ split into $<,=,>$ and recurse on the outer two ⟹ depth $O(\log d)$ for $d$ distinct keys, $\Theta(N)$ on all-equal input **· precondition:** a 2-way split can never retire equal keys, so they recur forever.
+- **Constant-FRACTION splits are still $\Theta(N\log N)$** `[P]` ➔ a fixed $1:9$ split gives depth $\log_{10/9}N=\Theta(\log N)$ **· consequence:** $\Theta(N^{2})$ needs a constant-**size** split at *every* level, not merely an unbalanced one.
+- **Randomisation vs guarantee** `[P]` ➔ a random pivot makes the bad input **unconstructible** (expected $\Theta(N\log N)$, worst case still $\Theta(N^{2})$); [[Median of Medians]] makes it **impossible** (worst case $\Theta(N\log N)$) **· precondition:** name which claim you are making — this is the W3 exam hinge.
+- **Quicksort auxiliary space is $O(N)$ worst, $O(\log N)$ if engineered** `[P]` ➔ recurse the **smaller** partition first and loop on the larger ⟹ depth $\le\log_2 N$ regardless of pivot quality.
+- **Quicksort stability "depends on the partition"** `[C]` ➔ in-place swapping is unstable; an **out-of-place** partition preserving input order is stable at $\Theta(N)$ per level.
+- **[[Quickselect]] $=$ quicksort minus one call** `[P]` ➔ after partition at $j$: $j=k$ return · $k<j$ recurse left · $k>j$ recurse right, $k$ **unchanged** under absolute indices **· consequence:** level costs become $N,\tfrac N2,\tfrac N4,\dots$ ⟹ [[Geometric Series]] $r=\tfrac12$ ⟹ $\Theta(N)$ expected.
+- **Quickselect is $O(1)$ auxiliary, quicksort is not** `[C]` ➔ the single call is a **tail** call ⟹ rewritable as a `while` over `lo`/`hi` **· precondition:** quicksort's first call has work pending after it, so its frames stay live.
+- **[[Median of Medians]] recurrence** `[D]` ➔ $T(N)=T(N/5)+T(7N/10)+cN$ with $\tfrac15+\tfrac7{10}=\tfrac9{10}<1\Rightarrow\Theta(N)$ **· precondition:** the fractions must sum to **strictly** less than $1$ — groups of $3$ give $\tfrac13+\tfrac23=1\Rightarrow\Theta(N\log N)$. *Lecturer-stated as historically **not examinable in the exam**; quiz-live.*
+- **Forcing stability costs space, never time** `[P]` ➔ parallel index list consulted **only** when $\text{list}[a]=\text{list}[b]$, compared as integers in $O(1)$ ⟹ every time bound unchanged; auxiliary $O(1)\to\Theta(N)$, **total** still $\Theta(N)$.
+- **Shifting is stable, long-distance swapping is not** `[C]` ➔ bubble/insertion/merge shift ⟹ stable; selection/heap/quicksort hurdle equal keys ⟹ unstable.
+- **Comparisons $\ge$ swaps** `[C]` ➔ nothing is swapped that was not first compared **· use:** a self-check on a derived count.
+- **An integer comparison is $O(1)$ by HARDWARE** `[C]` ➔ one machine instruction on a fixed-width word; a $k$-character string has no such instruction ⟹ $O(k)$ **· consequence:** the **item type**, not the algorithm, decides whether $k$ may be dropped.
+- **Best $=$ worst is a diagnostic** `[P]` ➔ it holds exactly when there is **no early termination** *and* **item values cannot steer control flow** (selection, [[Merge Sort]]) **· consequence:** bubble/insertion fail the first, [[Quick Sort]] the second.
+- **[[K-way Merge]]** `[P]` ➔ naive "minimum of $k$ heads" scan $\Theta(Nk)$ ⟹ min-[[Heap]] of the $k$ heads $\Theta(N\log k)$, auxiliary $\Theta(k)$ **· invariant:** at iteration $i$ the root is $\le$ every unconsumed item, because each list is sorted so its head is its own minimum.
+- **Heap entries carry $(\text{value},\ \text{list id},\ \text{index})$** `[C]` ➔ the id is what makes the refill $O(1)$ **· precondition:** the heap never exceeds size $k$; seeding all $N$ items is heapsort, not a merge.
+- **Online vs offline decides admissibility BEFORE complexity** `[P]` ➔ online $=$ act on each arrival with no view of the future, answer valid at every instant **· consequence:** [[Quickselect]] is $\Theta(N)$ and still unusable on a stream; insertion sort and [[Heap|`add`/rise]] are online, [[Merge Sort]] and bottom-up `build_heap` are not.
+- **$k$ smallest ⟹ size-$k$ MAX-heap** `[P]` ➔ root $=$ largest admitted $=$ the eviction threshold; arrival $\ge$ root ⟹ reject in $O(1)$, else evict root and insert ⟹ $\Theta(N\log k)$ time, $\Theta(k)$ space **· mirror:** $k$ largest ⟹ **min**-heap. Always heap the **opposite** extreme to the one collected.
+- **Sorting is preprocessing, not a goal** `[C]` ➔ it buys **adjacency** (grouping, dedup) and $O(\log N)$ access ([[Binary Search]]) **· precondition:** it is only worth $\Theta(N\log N)$ if the follow-up pass gets cheaper.
+- **Dedup after sorting is two pointers** `[P]` ➔ `read`/`write`, overwrite never shift ⟹ $\Theta(N)$ **· consequence:** shift-on-delete is $O(N)$ per removal ⟹ $\Theta(N^{2})$.
+- **An "in-place" spec PICKS THE SORT** `[P]` ➔ the compaction is already $O(1)$ auxiliary, so [[Heapsort]] is the **only** valid $\Theta(N\log N)$ sort ([[Merge Sort]] $\Theta(N)$ scratch, [[Quick Sort]] $\Theta(\log N)$ stack) **· consequence:** naming the sort is the marked step, not the loop.
+- **Optimality by REDUCTION** `[C]` ➔ split a length-$N$ sequence into $N$ singleton lists and $k$-way merge them ⟹ it *is* a comparison sort ⟹ inherits $\Omega(N\log N)$ ⟹ no comparison-based merge beats $O(N\log k)$ **· use:** the general move — simulate a problem whose bound you already know.
+- **Ragged-string radix in $\Theta(n)$** `[D]` ➔ ($k$ strings, $\ell$ longest, $n=\sum$ lengths) counting-sort by length **ascending** $\Theta(\ell+k)$, then sweep $i=\ell\to1$ moving a pointer $j$ so $S[j\dots k]$ have length $\ge i$, subsorting only that window **· precondition:** ascending, so a prefix sorts before its extension (`cat` before `cats`); naive padding is $\Theta(\ell k)$.
+- **The constant-factor radix base** `[D]` ➔ minimise $f(b)=\tfrac{W}{\log_2 b}(N+b)$; for $W=64,N=10^{6}$ the optimum is $b=2^{16}$ ($c=4$ passes) **· precondition:** pick $b=2^{t}$ with $t\mid W$ — digit extraction becomes shift-and-mask and no column is ragged.
+
+- **The comparison model proves $\Omega$, NEVER $O$** `[D]` ➔ insertion sort with a [[Binary Search]] insertion point makes $\Theta(N\log N)$ comparisons — optimal — yet runs in $\Theta(N^{2})$ because it still **shifts** **· consequence:** an optimal comparison count is not an optimal running time; use the model for lower bounds only.
+- **"In-place" is a claim about the COST MODEL** `[D]` ➔ the unit's $O(1)$ auxiliary means $O(1)$ **machine words**; under strict RAM accounting, indexing $n$ elements needs $\Theta(\log n)$-bit pointers, so the definition is relaxed to $O(\log n)$, or $O(1)$ excluding pointers, or $o(n)$ **· precondition:** say which you mean before claiming in-place.
+
+| W3 algorithm | Time (B/A/W) | Auxiliary space | Online? | Discriminator |
+| :--- | :--- | :--- | :--- | :--- |
+| [[Quick Sort]] (random pivot) | $\Theta(N\log N)$ / $\Theta(N\log N)$ / $\Theta(N^{2})$ | $O(\log N)$ smaller-first · $O(N)$ naive | No | smallest constant of the $\Theta(N\log N)$ sorts |
+| [[Quick Sort]] $+$ [[Median of Medians]] | $\Theta(N\log N)$ all | $O(\log N)$ | No | worst case **eliminated**, large constant |
+| [[Quickselect]] (random pivot) | $\Theta(N)$ / $\Theta(N)$ / $\Theta(N^{2})$ | $O(1)$ iterative | No | **one rank**; destroys input order |
+| [[Quickselect]] $+$ [[Median of Medians]] | $\Theta(N)$ all | $O(\log N)$ | No | linear **worst case** selection |
+| [[K-way Merge]] (min-heap) | $\Theta(N\log k)$ all | $\Theta(k)$ | Yes | $\Theta(k)$ space ⟹ external sorting |
+| [[K-way Merge]] (scan heads) | $\Theta(Nk)$ all | $\Theta(k)$ | Yes | only for $k\lesssim4$ |
+| Size-$k$ heap ➔ [[Online Algorithm]] | $\Theta(N\log k)$ all | $\Theta(k)$ | **Yes** | $N$ unknown/unbounded, or a memory cap |
