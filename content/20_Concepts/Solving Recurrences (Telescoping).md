@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 domain: [A, D]
-week: 1
+week: [1, 2]
 source: [lecture, applied]
 parent: "[[Big-O Notation]]"
 tags:
@@ -16,6 +16,7 @@ aliases:
   - T(n) recurrence
   - recursion tree
   - master theorem
+  - verifying a recurrence by induction
 ---
 # [[Solving Recurrences (Telescoping)]]
 
@@ -55,8 +56,10 @@ aliases:
 | $T(N)=T(N/2)+c$ | by factor $2$ | $\log_2 N$ | $k$ constants | $\Theta(\log N)$ |
 | $T(N)=T(N/2)+cN$ | by factor $2$ | $\log_2 N$ | **geometric, ratio $\tfrac12$** | $\Theta(N)$ |
 | $T(n)=a\,T(n/b)+cn$ | by factor $b$, $a$ ways | $\log_b n$ | **geometric, ratio $a/b$** | see the level-sum below |
+| $T(n)=2T(n-1)+a$ | by $1$, **$2$ ways** | $n$ | **geometric, ratio $2$** | $\Theta(2^{n})$ |
 | $T(N)=T(N-1)+T(N-2)+c$ | by $1$, **$2$ ways** | $N$ | a **branching tree**, $\Theta(\varphi^{N})$ nodes | $O(2^{N})$ |
 
+- **Branching on the SAME argument still telescopes** ➔ $T(n)=aT(n-1)+c$ has one argument per level, so the general form is clean: $T(n)=a^{k}T(n-k)+c\sum_{i=0}^{k-1}a^{i}$, and $k=n$ collapses it via the [[Geometric Series]] to $a^{n}b+\tfrac{a^{n}-1}{a-1}c$. Only *different* arguments ($T(n-1)+T(n-2)$) break the method.
 - **The one diagnostic** ➔ *subtracting* from the argument gives depth $\Theta(N)$; *dividing* gives depth $\Theta(\log N)$ — everything else is what you sum over that depth.
 - **Branching by subtraction is the catastrophic case** ➔ $a\ge2$ calls that each shrink by a *constant* build a tree of depth $\Theta(N)$ with $\Theta(a^{N})$ nodes ⟹ **exponential**. Naive Fibonacci's $T(N)=T(N-1)+T(N-2)+c$ counts nodes, so it is bounded above by the full binary tree $2^{N}$ (exactly $\Theta(\varphi^{N})$, $\varphi=\tfrac{1+\sqrt5}{2}$ — see [[Fibonacci Sequence]]). This is the recurrence that motivates memoisation and dynamic programming.
 - **This shape does NOT telescope cleanly** ➔ with two *different* arguments there is no single general form in $k$; bound it instead by the tree ($T(N)\le 2T(N-1)+c\Rightarrow O(2^{N})$).
@@ -147,6 +150,34 @@ T(n) &= 2T(n/2)+cn \\
 \end{aligned}
 $$
 
+## 🧮 Proof Blueprint — verifying a GIVEN closed form by induction
+*(Applied 2 P3. A different question type: the closed form is handed to you, so there is nothing to telescope — the marks are entirely in the induction's form.)*
+
+- **Recognise the ask** ➔ *"use mathematical induction to prove that $T(n)=\dots$ is a solution"* ⟹ produce base case, an explicitly **cited** hypothesis, and an inductive step. Step 6b is a one-line algebraic check; this is the full [[Mathematical Induction]] apparatus.
+- **⚡ Induct over the DOMAIN, not over $\mathbb{N}$** ➔ a recurrence in $T(n/2)$ is only defined at $n=2^{k}$. So the successor of $m$ in the domain is $2m$, **not** $m+1$ — attempting $P(m)\Rightarrow P(m+1)$ is unprovable because $T(m+1)$ has no defining equation. State this restriction explicitly; it is a marked step, not a technicality.
+- **The step is always: unfold once, invoke the hypothesis, re-fold with log laws** ➔ the constant is absorbed by writing $c=c\log_2 2$.
+
+> **Theorem.** For $T(n)=T(n/2)+c$ ($n>1$), $T(1)=b$, the function $T'(n)=b+c\log_2 n$ satisfies $T(n)=T'(n)$ for all $n=2^{k}$, $k\ge0$.
+> **Strategy.** Induction on $k$, with the domain restricted to exact powers of two.
+
+**Base case** ($n=1$, i.e. $k=0$):
+$$T(1)=b=b+c\times0=b+c\log_2 1=T'(1)\ \checkmark$$
+
+**Inductive step** — assume $T(m)=T'(m)$ for $m=2^{k}$; show $T(2m)=T'(2m)$:
+$$
+\begin{aligned}
+T(2m) &= T\!\left(\tfrac{2m}{2}\right)+c && \text{(unfold the recurrence once)} \\
+&= T(m)+c && \\
+&= T'(m)+c && \text{(inductive hypothesis — cite it)} \\
+&= b+c\log_2 m+c && \\
+&= b+c\log_2 m+c\log_2 2 && \text{(}c=c\log_2 2\text{ — the folding move)} \\
+&= b+c\log_2(2m) = T'(2m) && \blacksquare
+\end{aligned}
+$$
+
+- **Where the marks go** ➔ naming the domain restriction · citing the hypothesis by name at the line that uses it · the $c=c\log_2 2$ rewrite · closing with $T'(2m)$ rather than stopping at "which is the answer".
+- **Reuse** ➔ this is the recurrence behind [[Binary Search]] and the *improved* fast power, so the same three lines discharge several questions ➔ [[Analysing Recursive Algorithms (Time and Auxiliary Space)]].
+
 ## 📊 Worked example 4 — shrink-by-one with linear work ($T(n)=T(n-1)+cn$)
 The **lopsided** D&C recurrence — one subproblem of size $n-1$, $\Theta(n)$ work to produce it (quicksort's bad pivot, selection-sort-shaped recursion):
 $$
@@ -231,9 +262,11 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 | 5 | $T(n)=2T(n/2)+cn$ | $T(1)=b$ | $nb+cn\log_2 n$ | $\Theta(n\log n)$ |
 | 6 | $T(n)=2T(n/2)+2cn$ | $T(1)=b$ | $nb+2cn\log_2 n$ | $\Theta(n\log n)$ |
 | 7 | $T(n)=4T(n/2)+cn$ | $T(1)=b$ | $n^2b+cn(n-1)$ | $\Theta(n^2)$ |
+| 8 | $T(n)=2T(n-1)+a$ | $T(0)=b$ | $2^{n}b+(2^{n}-1)a$ | $\Theta(2^{n})$ |
 
 - **1 vs 2 vs 3 is a constants drill** ➔ doubling the per-level work or the constant changes the *coefficient*, never the class — all three are $\Theta(n^2)$ via the [[Arithmetic Series]].
 - **5 vs 6 vs 7 is the ratio drill** ➔ 5 and 6 have $r=a/b=1$ (all levels equal), 7 has $r=2>1$ (leaf-dominated) — only changing $a$ moves the class.
+- **1 vs 8 is the catastrophe drill** ➔ identical shrink ($n-1$) and identical constant work, but the coefficient $2$ on the *recursive call* replaces the arithmetic series with a **geometric** one of ratio $2$ ⟹ $\Theta(n^{2})$ becomes $\Theta(2^{n})$. Branching, not per-level work, is what makes a recurrence exponential.
 
 ## 🥋 Drill — solve cold, then expand
 
@@ -252,7 +285,19 @@ Quick checks: merge sort $a{=}2,b{=}2,d{=}1\Rightarrow\log_2 2{=}1$ = Case 2 ⟹
 > > $$\begin{aligned} T(n)&=cn+c\tfrac{n}{2}+c\tfrac{n}{4}+\dots = cn\sum_{i=0}^{\log_2 n}\left(\tfrac12\right)^{i} < 2cn = \Theta(n)\end{aligned}$$
 > > - **Key move:** $r=\tfrac12<1$ ⟹ the series **converges** ⟹ **root-dominated** $\Theta(n)$; the top-level scan alone accounts for the whole cost, and the $\log_2 n$ levels contribute only a constant factor $<2$.
 
+> [!QUESTION]- D4: $T(n)=2T(n-1)+a$ with $T(0)=b$ — **all seven steps plus both verifications** (Applied 2 P1).
+> > [!SUCCESS]- Solution
+> > $$\begin{aligned} T(n)&=2T(n-1)+a \\ &=2\big[2T(n-2)+a\big]+a=2^{2}T(n-2)+(1+2)a \\ &=2^{2}\big[2T(n-3)+a\big]+(1+2)a=2^{3}T(n-3)+(1+2+4)a \\ &=2^{k}T(n-k)+\big(2^{k}-1\big)a && \text{(general form; } \textstyle\sum_{i=0}^{k-1}2^{i}=2^{k}-1) \\ \text{base: } n-k=0 &\Rightarrow k=n \\ T(n)&=2^{n}T(0)+(2^{n}-1)a=2^{n}b+(2^{n}-1)a=\Theta(2^{n})\end{aligned}$$
+> > **Verify 6b** ➔ $2T(n-1)+a=2\big[2^{n-1}b+(2^{n-1}-1)a\big]+a=2^{n}b+(2^{n}-2)a+a=2^{n}b+(2^{n}-1)a$ ✅ · **Verify 6a** ➔ $T(0)=2^{0}b+(2^{0}-1)a=b$ ✅
+> > - **Key move:** the accumulating series is $1+2+4+\dots+2^{k-1}$ — the $r=2$ [[Geometric Series]] corollary, **not** the arithmetic one. Recognising which series the coefficients form is the whole step; writing $ka$ instead of $(2^{k}-1)a$ gives $\Theta(n2^{n-1})$-flavoured nonsense.
+
 ## 🧠 Active Recall
+> [!FAQ]- A question hands you a closed form and says "prove by induction". Why is proving $P(m)\Rightarrow P(m+1)$ the wrong step?
+> - **Hint:** Ask where the recurrence is even defined.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** a recurrence in $T(n/2)$ is only defined at $n=2^{k}$, so $T(m+1)$ has no defining equation; the successor inside that domain is $2m$, and the step to prove is $T(2m)=T'(2m)$.
+> > - **Why:** **Induct over the index of the domain** ➔ the induction really runs on $k$ in $n=2^{k}$, and $k\to k+1$ *is* $m\to 2m$. Stating that restriction explicitly is a marked step; skipping it leaves an inductive step that cannot be closed.
+
 > [!FAQ]- Solve $T(N)=T(N/2)+c$ by telescoping and give the complexity.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** expanding gives $T(N)=T(N/2^{k})+kc$; the base case $N/2^{k}=1$ fixes $k=\log_2 N$, so $T(N)=T(1)+c\log_2 N=O(\log N)$.

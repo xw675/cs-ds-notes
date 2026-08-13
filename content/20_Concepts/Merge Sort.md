@@ -8,6 +8,7 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 # [[Merge Sort]]
 
 **Context:** [[FIT1008_MOC]] · a [[Divide and Conquer]] sort · solves the [[Sorting Problem]] · uses an [[Recursion|Auxiliary Function (Recursion)]] · contrast with [[Quick Sort]] · the merge step generalises from $2$ to $k$ lists in [[K-way Merge]]
+**FIT2004 use:** the merge is also an **instrumentation point** — threading a counter through it solves an apparently unrelated problem in $\Theta(N\log N)$ ➔ [[Counting Inversions]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** cut in half, sort each, merge two sorted halves ➔ trivial-split / heavy-combine D&C sort.

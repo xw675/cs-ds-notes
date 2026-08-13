@@ -52,6 +52,8 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **$r=2$ corollary** `[P]` ➔ $\sum_{i=0}^{n}2^{i}=2^{n+1}-1$ ➔ complete-binary-tree node count; the leaf level alone outweighs everything above it.
 - **$r=\tfrac12$ corollary** `[P]` ➔ $\sum_{i=0}^{n}2^{-i}=2-2^{-n}<2$ ➔ **strict, $n$-independent**: halving work totals $<2\times$ the top level. Both corollaries are **substitutions**, not new inductions.
 - **Induction blueprint** `[C]` ➔ base $n=1$ → assume $P(k)$ → prove $P(k{+}1)$ by adding the $(k{+}1)$-th term to the **assumed closed form** and re-factoring **· precondition:** the inductive step must *cite* the hypothesis explicitly; algebra alone is not a proof.
+- **Induct over the DOMAIN, not $\mathbb{N}$** `[C]` ➔ a recurrence in $T(n/2)$ exists only at $n=2^{k}$, so the successor of $m$ is $2m$: prove $T(2m)=T'(2m)$, **never** $T(m{+}1)$ **· precondition:** state the restriction explicitly — it is a marked step, and the closing move is always $c=c\log_2 2 \Rightarrow b+c\log_2 m+c=b+c\log_2(2m)$.
+- **Fibonacci doubling identities** `[D]` ➔ $F(2k)=F(k)\big[2F(k{+}1)-F(k)\big]$ · $F(2k{+}1)=F(k{+}1)^{2}+F(k)^{2}$, both read off $\big[\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\big]^{n}=\big[\begin{smallmatrix}F(n+1)&F(n)\\F(n)&F(n-1)\end{smallmatrix}\big]$ via $M^{2k}=(M^{k})^{2}$ **· precondition:** $F(0)=0,F(1)=1$ indexing, and eliminate $F(k{-}1)$ with $F(k{-}1)=F(k{+}1)-F(k)$ **· consequence:** the index **halves** ⟹ $\Theta(\log n)$ depth ➔ [[Fibonacci Sequence]].
 
 ## 3️⃣ Recurrence Solving — Telescoping (W1)
 **Pipeline** `[P]`**:** pseudocode → **recurrence relation** → complexity.
@@ -78,6 +80,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | :--- | :--- | :--- | :--- |
 | $T(N)=T(N-1)+c$ | $N-1$ | $k$ constants | $\Theta(N)$ |
 | $T(N)=T(N-1)+cN$ | $N-1$ | arithmetic series $\tfrac{N(N+1)}{2}$ | $\Theta(N^{2})$ |
+| $T(n)=a\,T(n-1)+c$ | $n$ | geometric ratio $a$, $\sum_{i<k}a^{i}=\tfrac{a^{k}-1}{a-1}$ | $\Theta(a^{n})$ |
 | $T(N)=T(N/2)+c$ | $\log_2 N$ | $k$ constants | $\Theta(\log N)$ |
 | $T(N)=T(N/2)+cN$ | $\log_2 N$ | geometric $r=\tfrac12$ | $\Theta(N)$ |
 | $T(n)=a\,T(n/b)+cn$ | $\log_b n$ | geometric $r=a/b$ | regime below |
@@ -88,6 +91,8 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Worked instances** `[P]` ➔ $a{=}1,b{=}2$: $r{=}\tfrac12<1\Rightarrow\Theta(n)$ · $a{=}b{=}2$: $r{=}1\Rightarrow\Theta(n\log n)$ · $a{=}3,b{=}2$: $r{=}\tfrac32>1\Rightarrow\Theta(n^{\log_2 3})\approx\Theta(n^{1.585})$ · $a{=}4,b{=}2$: $r{=}2>1\Rightarrow\Theta(n^{2})$ **· precondition:** read $a$ off the number of **recursive calls**, never off the shifts/additions in the combine.
 - **Leaf identity** `[D]` ➔ $n(a/b)^{\log_b n}=n^{\log_b a}$ — the collapse that produces every D&C exponent.
 - **Diagnostic** `[P]` ➔ *subtract* from the argument ⟹ depth $\Theta(N)$; *divide* ⟹ depth $\Theta(\log N)$. Depth and per-level work are independent choices.
+- **Branching by SUBTRACTION is the exponential case** `[P]` ➔ $T(n)=2T(n-1)+a$ telescopes cleanly to $2^{n}b+(2^{n}-1)a=\Theta(2^{n})$ **· precondition:** all calls share **one** argument; $T(n{-}1)+T(n{-}2)$ has two and must be bounded by the tree instead **· contrast:** $T(n)=T(n-1)+a$ is only $\Theta(n)$ — the coefficient on the *call* is what flips the class.
+- **"Prove by induction" is a DIFFERENT question from Step 6b** `[C]` ➔ the closed form is given, so nothing is telescoped; produce base $+$ cited hypothesis $+$ step, inducting over the domain ($T(2m)$, not $T(m{+}1)$) ➔ §2️⃣.
 - 🔭 **Master Theorem** *(supplementary — see the scope table above)* ➔ for $T(n)=aT(n/b)+\Theta(n^{d})$: $d<\log_b a\Rightarrow\Theta(n^{\log_b a})$ · $d=\log_b a\Rightarrow\Theta(n^{d}\log n)$ · $d>\log_b a\Rightarrow\Theta(n^{d})$ **· precondition:** the argument must shrink **multiplicatively**; applying it to $T(n-1)$ yields a wrong answer, not just an unjustified one.
 
 ## 4️⃣ Recursive Time **and** Space in One Pass (W1)
@@ -105,6 +110,12 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Balance sets depth** `[C]` ➔ even halves $\log_2 n$ levels ⟹ $\Theta(n\log n)$ · maximally lopsided $n$ levels ⟹ $\Theta(n^{2})$ · single half with $\Theta(1)$ work ⟹ $\Theta(\log n)$.
 - **Split/combine trade** `[C]` ➔ [[Merge Sort]] trivial split / heavy combine · [[Quick Sort]] heavy split / trivial combine · [[Binary Search]] one subproblem ("decrease and conquer").
 - **The $\log$ factor is bought by the combine, not the branching** `[D]` ➔ $2T(n/2)+\Theta(1)=\Theta(n)$ but $2T(n/2)+\Theta(n)=\Theta(n\log n)$.
+- **Adapting D&C to an UNSEEN problem — three questions in order** `[P]` ➔ (1) does the answer decompose **additively** into within-left $+$ within-right $+$ **cross**? (2) is the cross term computable in $\Theta(n)$? (3) does the **per-call work shrink** with the subproblem? **· consequence:** failing (3) is the silent one — see the peak-finding entry below.
+- **Strengthen the recursive contract** `[C]` ➔ make the recursion return more than the answer; [[Counting Inversions]] is linear-per-level only because each call also returns its subarray **sorted** **· precondition:** the extra guarantee must itself be maintainable in the combine.
+- **Cross-term counting: block, never pairwise** `[P]` ➔ emitting $B[j]$ during a merge while $A[i..mid]$ is unconsumed retires $mid-i+1$ inversions in **one** addition **· precondition:** both runs sorted; a $+1$ instead counts merge steps, not inversions.
+- **Per-call work must shrink or the level sum won't decay** `[P]` ➔ [[2D Local Maximum (Peak Finding)]]: a middle-**column** split leaves an $n\times\tfrac n2$ block whose deciding scan is still $\Theta(n)$ ⟹ $\Theta(n\log n)$; cutting **both** axes (cross / window frame) gives $T(n)=T(n/2)+\Theta(n)$, $r=\tfrac12$ ⟹ $\Theta(n)$.
+- **Discarding subproblems needs an EXISTENCE claim** `[C]` ➔ "a peak of $M$ lies inside the kept quadrant, because a strictly-increasing walk from $y$ can never re-cross the cross" **· precondition:** the claim is about the *kept* region containing an answer, not about the discarded ones being empty — that is the marked sentence.
+- **Two identical recursive calls are a common subexpression** `[P]` ➔ `POW(x,p/2)*POW(x,p/2)` is $2T(p/2)+c=\Theta(p)$; `y = POW(x,p/2); return y*y` is $T(p/2)+c=\Theta(\log p)$ **· consequence:** halving bounds the tree's **height**, branching fills it — $\Theta(2^{\log_2 p})=\Theta(p)$ nodes. Same trap in Fibonacci fast doubling.
 
 ## 6️⃣ W1 Algorithm Bounds
 | Algorithm | Recurrence | Time (B/A/W) | Auxiliary space | Discriminator |
@@ -121,7 +132,13 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | `f(n) = f(n//3)+f(n//3)+4` | $T(n)=2T(n/3)+c$ | $\Theta(n^{\log_3 2})\approx\Theta(n^{0.63})$ | $\Theta(\log n)$ frames | **two** call sites — leaf-dominated |
 | `power` | $T(N)=T(N-1)+c$ | $\Theta(N)$ all | $\Theta(N)$ frames | decrement |
 | `power_better` | $T(N)=T(N/2)+c$ | $\Theta(\log N)$ all | $\Theta(\log N)$ frames | squares the base |
+| `power_naive` (call written twice) | $T(p)=2T(p/2)+c$ | $\Theta(p)$ all | $\Theta(\log p)$ frames | halving buys **nothing** — binary tree |
+| `power_fast` (`y` bound once) | $T(p)=T(p/2)+c$ | $\Theta(\log p)$ all | $\Theta(\log p)$ frames | $a$ cut from $2$ to $1$ |
 | naive `fibonacci` | $T(N)=T(N{-}1)+T(N{-}2)+c$ | $O(2^{N})$ all | $\Theta(N)$ frames | **nodes vs height** |
+| [[Counting Inversions]] | $2T(N/2)+\Theta(N)$ | $\Theta(N\log N)$ all | $\Theta(N)$ scratch | recursion also returns **sorted**; output may be $\Theta(N^{2})$ |
+| [[2D Local Maximum (Peak Finding)]], gradient walk | — | $\Theta(1)$ / — / $\Theta(n^{2})$ | $O(1)$ | ridge adversary |
+| [[2D Local Maximum (Peak Finding)]], column split | $T(n)=T(n/2)+\Theta(n)$, $n$ **fixed** | $\Theta(n\log n)$ all | $\Theta(\log n)$ frames | scan length never shrinks |
+| [[2D Local Maximum (Peak Finding)]], window frame | $T(n)=T(n/2)+\Theta(n)$ | $\Theta(n)$ all | $\Theta(\log n)$ frames | $r=\tfrac12$ root-dominated; reads $\ll n^{2}$ cells |
 | Range report, scan | — | $\Theta(N+W)=\Theta(N)$ | $O(1)$ | touches all $N$ |
 | Range report, [[Binary Search]] $+$ scan | — | $\Theta(\log N+W)$ | $O(1)$ | **optimal** — meets $\Omega(\log N+W)$ |
 

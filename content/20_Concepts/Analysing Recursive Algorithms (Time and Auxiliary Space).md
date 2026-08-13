@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 domain: A
-week: 1
+week: [1, 2]
 source: [lecture, applied]
 parent: "[[Recursion]]"
 tags:
@@ -83,6 +83,32 @@ aliases:
 > ```
 > 💡 **Common Mistake:** **Squaring the base is what buys the halving** ➔ `power_better(x, n//2)` (base left alone) computes $x^{n/2}$, not $x^{n}$; the recursion must pass `x*x` because $x^{n}=(x^{2})^{n/2}$.
 
+### 🔹 Duplicate calls — the halving that buys nothing *(Applied 2 P4)*
+> [!code]- `power_naive` ($2T(p/2)+c=\Theta(p)$) vs the one-line repair ($\Theta(\log p)$)
+> ```python
+> def power_naive(x, p):               # T(p) = 2 T(p/2) + c
+>     if p == 0: return 1
+>     if p == 1: return x
+>     if p % 2 == 0:
+>         return power_naive(x, p // 2) * power_naive(x, p // 2)      # SAME argument, twice
+>     return power_naive(x, p // 2) * power_naive(x, p // 2) * x
+> # halving depth log2(p), but a BINARY call tree -> Theta(p) calls -> Theta(p) time
+>
+> def power_fast(x, p):                # T(p) = T(p/2) + c
+>     if p == 0: return 1
+>     y = power_fast(x, p // 2)        # compute ONCE, bind it
+>     if p % 2 == 0:
+>         return y * y
+>     return y * y * x
+> # one call per level -> Theta(log p) time, Theta(log p) frames
+> ```
+> 💡 **Common Mistake:** **Assuming "it halves, so it's $\Theta(\log p)$"** ➔ halving fixes only the tree's **height**; two calls per node fill that height with $\Theta(2^{\log_2 p})=\Theta(p)$ nodes, so `power_naive` is no faster than the $\Theta(p)$ decrement version. Depth and node count are separate questions.
+
+- **The leaf-count argument, stated as the sheet does** ➔ the call tree is binary of height $\log_2 p$; a binary tree of height $h$ (root at level $0$) holds at most $2^{h+1}-1$ nodes ⟹ $\Theta(2^{\log_2 p})=\Theta(p)$ calls of $O(1)$ work each. The collapse uses the **exponent swap** $a^{\log_b n}=n^{\log_b a}$ ➔ [[Solving Recurrences (Telescoping)]].
+- **The transferable repair** ➔ *two recursive calls with **identical arguments** are a common subexpression* — bind the result to a variable and reuse it. One `y =` deletes an entire branch of the tree, taking $a$ from $2$ to $1$ and $\Theta(p)$ to $\Theta(\log p)$.
+- **It is the seed of memoisation** ➔ eliminating duplicate calls *within one frame* is the trivial case; eliminating them *across the whole tree* is what [[Divide and Conquer|dynamic programming]] does when the subproblems overlap.
+- **Two independent routes to $\Theta(\log p)$** ➔ `power_fast` keeps the base and squares the *result*; `power_better` above squares the *base* and passes `x*x`. Both make $a=1$; neither is better, and mixing them (squaring both) computes $x^{2p}$.
+
 ### 🔹 Branching recursion — exponential time, linear space
 > [!code]- naive `fibonacci` — the space trap
 > ```python
@@ -104,6 +130,8 @@ aliases:
 | :--- | :--- | :--- | :--- | :--- |
 | `power` | $T(N)=T(N-1)+c$ | $\Theta(N)$ | $\Theta(N)$ | one frame per decrement |
 | `power_better` | $T(N)=T(N/2)+c$ | $\Theta(\log N)$ | $\Theta(\log N)$ | halving depth |
+| `power_naive` (duplicate call) | $T(p)=2T(p/2)+c$ | $\Theta(p)$ | $\Theta(\log p)$ | binary tree of height $\log_2 p$ ⟹ $\Theta(p)$ **nodes** |
+| `power_fast` (`y =` bound once) | $T(p)=T(p/2)+c$ | $\Theta(\log p)$ | $\Theta(\log p)$ | $a$ cut from $2$ to $1$ |
 | recursive [[Linear Search]] | $T(N)=T(N-1)+c$ | $\Theta(N)$ | $\Theta(N)$ | one frame per element |
 | [[Merge Sort]] | $2T(N/2)+\Theta(N)$ | $\Theta(N\log N)$ | $\Theta(N+\log N)=\Theta(N)$ | scratch array dominates the stack |
 | naive `fibonacci` | $T(N)=T(N-1)+T(N-2)+c$ | $O(2^{N})$ | $\Theta(N)$ | **height**, not node count |
@@ -151,6 +179,12 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Both share the base $T(n)=a$ for $n<3$. The first is $T(n)=T(n/3)+c \Rightarrow \Theta(\log n)$; the second is $T(n)=2T(n/3)+c \Rightarrow \Theta(n^{\log_3 2})\approx\Theta(n^{0.63})$.
 > > - **Why:** **Coefficients don't branch** ➔ multiplying one returned value by $2$ is a single $\Theta(1)$ op inside one frame, so the call tree stays a **chain** of depth $\log_3 n$. Writing the call twice makes level $i$ hold $2^{i}$ frames, and with a $\Theta(1)$ combine the level totals sum geometrically to $\Theta(2^{\log_3 n})=\Theta(n^{\log_3 2})$ — leaf-dominated, polynomial instead of logarithmic.
+
+> [!FAQ]- A power function halves its exponent every call yet runs in $\Theta(p)$, not $\Theta(\log p)$. Diagnose it, and repair it in one line.
+> - **Hint:** Height and node count are different measurements of the same tree.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** it calls `power(x, p/2)` **twice with the same argument**, so $T(p)=2T(p/2)+c$; the tree is binary of height $\log_2 p$ and therefore holds $\Theta(2^{\log_2 p})=\Theta(p)$ nodes. Bind `y = power(x, p//2)` once and return `y*y`, giving $T(p)=T(p/2)+c=\Theta(\log p)$.
+> > - **Why:** **Halving bounds the depth, branching fills it** ➔ $a$ is what multiplies the work per level, and with $a=2,b=2$ against a $\Theta(1)$ combine the level totals are leaf-dominated ⟹ $\Theta(p^{\log_2 2})=\Theta(p)$. Two recursive calls on **identical arguments** are a common subexpression, and deleting one is a $\Theta(p)\to\Theta(\log p)$ change in the growth class, not a micro-optimisation.
 
 > [!FAQ]- Naive `fibonacci(n)` makes exponentially many calls yet uses only $\Theta(n)$ auxiliary space. Reconcile the two.
 > - **Hint:** Ask what is *live at one instant*, not what happens over the whole run.

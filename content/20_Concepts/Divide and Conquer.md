@@ -1,7 +1,7 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 7]
+week: [1, 2, 7]
 parent: "[[Recursion]]"
 tags: [CS/Algorithms, CS/Complexity]
 ---
@@ -29,6 +29,12 @@ tags: [CS/Algorithms, CS/Complexity]
 - **Assumption** ➔ subproblems are **independent** (non-overlapping), solved once.
 - **Overlap break** ➔ $\text{fib}(n)$ recomputing $\text{fib}(n-2)$ ⟹ exponential ➔ use **memoisation / dynamic programming**.
 
+### 4. Adapting D&C to a NEW problem *(the LO1 drill — Applied 2)*
+- **Three questions, in order** ➔ (1) does the answer **decompose additively** across the split — within-left $+$ within-right $+$ **cross**? (2) can the cross term be computed in $\Theta(n)$? (3) does the **per-call work shrink** with the subproblem, or does the level sum refuse to decay?
+- **Strengthen the recursive contract** ➔ ask the recursion to return *more* than the answer. [[Counting Inversions]] is only $\Theta(n\log n)$ because each call returns a **sorted** subarray as well as a count; that extra guarantee is what makes the cross term linear.
+- **Question (3) is the one that gets skipped** ➔ [[2D Local Maximum (Peak Finding)]] halves the matrix on the middle column and still costs $\Theta(n\log n)$, because the deciding scan stays full-length. Cutting **both** axes makes level $i$ cost $cn/2^{i}$ ⟹ $\Theta(n)$.
+- **On a new problem, the correctness argument is the deliverable** ➔ "why is it safe to discard the other subproblems?" carries more marks than the pseudocode; state it as an explicit claim about what the kept subproblem is guaranteed to contain.
+
 ## ⚙️ Core Implementation
 *Split/combine trade-off:* [[Merge Sort]] = trivial split, heavy combine; [[Quick Sort]] = heavy split, trivial combine; [[Binary Search]] = single-subproblem "decrease and conquer".
 
@@ -50,6 +56,8 @@ tags: [CS/Algorithms, CS/Complexity]
 | Even halves | $\log_2 n$ × $\Theta(n)$ | $\Theta(n\log n)$ | [[Merge Sort]] |
 | One side ≈ all | $n$ × $\Theta(n)$ | $\Theta(n^2)$ | [[Quick Sort]] worst |
 | Single half, $\Theta(1)$ work | $\log_2 n$ × $\Theta(1)$ | $\Theta(\log n)$ | [[Binary Search]] |
+| Single half, **shrinking** $\Theta(n)$ work | $cn+\tfrac{cn}2+\tfrac{cn}4+\dots<2cn$ | $\Theta(n)$ — root-dominated | [[2D Local Maximum (Peak Finding)]] |
+| Both halves, $\Theta(n)$ combine | $\log_2 n$ × $\Theta(n)$ | $\Theta(n\log n)$ | [[Counting Inversions]] |
 | Overlapping subproblems | recompute | exponential → DP | naive [[Recursion\|Fibonacci]] |
 
 > [!NOTE] **When It Flips:** balanced splits give depth $\log_b n$; lopsided ones push depth toward $n$, collapsing $\Theta(n\log n)$ to $\Theta(n^2)$. Space: recursion stack $\Theta(\text{depth})$; merge-style combine adds $\Theta(n)$ scratch, partition-style is in-place.

@@ -57,6 +57,15 @@ tags:
 - [[Counting Sort]] -> Parent Framework: [[Sorting Problem]] *(non-comparison — $\Theta(N{+}M)$; stability must be **engineered** via a prefix-sum position array)*
 - [[Radix Sort]] -> Parent Framework: [[Counting Sort]] *($K$ stable counting passes, LSD first — $\Theta(KN{+}KM)$; stability is load-bearing)*
 
+**Applied sheet 2 — recurrences drilled, then D&C applied to two UNSEEN problems:**
+- [[Solving Recurrences (Telescoping)]] -> Parent Framework: [[Big-O Notation]] *(**deepened**: P1 branching-by-subtraction $2T(n{-}1){+}a=\Theta(2^{n})$ · P3 the **Proof Blueprint** — proving a GIVEN closed form by induction over $n{=}2^{k}$, i.e. $T(2m)$ not $T(m{+}1)$)*
+- [[Analysing Recursive Algorithms (Time and Auxiliary Space)]] -> Parent Framework: [[Recursion]] *(**deepened**: P4 the **duplicate-call trap** — `POW(x,p/2)*POW(x,p/2)` is $\Theta(p)$, binding it once is $\Theta(\log p)$)*
+- [[Counting Inversions]] -> Parent Framework: [[Merge Sort]] *(P5 — the flagship LO1 note: instrument the merge, count split inversions in blocks, $\Theta(N^{2})\to\Theta(N\log N)$)*
+- [[2D Local Maximum (Peak Finding)]] -> Parent Framework: [[Divide and Conquer]] *(P6 — $\Theta(n)$ on an $n^{2}$ input; the **correctness argument** is the deliverable, and halving ONE axis silently costs $\Theta(n\log n)$)*
+- [[Fibonacci Sequence]] -> Parent Framework: [[Recurrence Relation]] *(dual-unit — P7 deepens it with the matrix identity by induction and the $F(2k)$ / $F(2k{+}1)$ **doubling identities** that halve the index)*
+- [[Divide and Conquer]] -> Parent Framework: [[Recursion]] *(**deepened**: §4 the three-question checklist for adapting D&C to a new problem, and "strengthen the recursive contract")*
+- *Supplementary problems 8–17 **deliberately not noted** — P8–P14 are telescoping repetitions of P1–P3, and P15 (Master Theorem proof), P16 (Strassen) and P17 (the $T(\sqrt n)$ substitution) are lecturer-flagged supplementary. The Master Theorem already sits as a 🔭 block in [[Solving Recurrences (Telescoping)]].*
+
 ### Week 3 — QuickSort Deep Dive, Selection, and the Applied Sorting Suite *(lecture W3 · applied W3 · PT-01)*
 - [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — **deepened**: Lomuto vs Hoare vs 3-way partition, the pivot-policy ladder, and how to make the worst case impossible)*
 - [[Quickselect]] -> Parent Framework: [[Divide and Conquer]] *(the $k$-th smallest — **one-sided** recursion turns $\Theta(N\log N)$ into $\Theta(N)$ expected)*
@@ -79,6 +88,7 @@ tags:
 - **W1a — analysis first, then the algorithm:** [[Algorithmic Complexity]] *(what we measure)* → **[[Big-O Notation]]** *(formal $O/\Omega/\Theta$, bound vs case)* → [[Arithmetic Series]] · [[Geometric Series]] *(the summation tools)* → **[[Solving Recurrences (Telescoping)]]** *(how to solve $T(n)$)* → [[Divide and Conquer]] → apply it end-to-end on [[Merge Sort]] · drill bounds on [[Binary Search Tree (BST)]]
 - **W1b — the whole pipeline on one function:** [[Algorithmic Complexity]] *(§6 input vs auxiliary space)* → **[[Analysing Recursive Algorithms (Time and Auxiliary Space)]]** *(code ➔ recurrence ➔ time + space)* → [[Solving Recurrences (Telescoping)]] *(the branching row)* → [[Binary Search]] *(best $\ne$ worst)* → [[Output-Sensitive Complexity]] *(bounds carrying $W$)*
 - **W2 — prove it, then rank it:** **[[Invariant]]** *(termination + invariant)* → [[Binary Search]] *(§3 the non-termination bug)* → **[[Sorting Problem]]** *(the four-axis suite + $\Omega(N\log N)$ floor)* → **[[Counting Sort]]** *(escape the floor)* → **[[Radix Sort]]** *(escape the $M$ blow-up)*
+- **W2b — the applied sheet, recurrences then new problems:** **[[Solving Recurrences (Telescoping)]]** *(D4 $\Theta(2^{n})$ · the induction blueprint)* → [[Analysing Recursive Algorithms (Time and Auxiliary Space)]] *(the duplicate-call trap)* → [[Divide and Conquer]] *(§4 the adaptation checklist)* → **[[Counting Inversions]]** *(instrument the combine)* → **[[2D Local Maximum (Peak Finding)]]** *(shrink both axes)* → [[Fibonacci Sequence]] *(§4 doubling)*
 - **W3a — partition, then stop sorting:** **[[Quick Sort]]** *(partition, pivot, worst case)* → **[[Quickselect]]** *(recurse one side)* → [[Median of Medians]] *(the guarantee, quiz-only)*
 - **W3b — the applied suite, in CD1 order:** **[[Sorting Problem]]** *(§6 stability, §8 cost terms, §9 uses)* → **[[K-way Merge]]** *(ADT swap ⟹ $\Theta(N\log k)$)* → **[[Radix Sort]]** *(§3 base choice, §5 strings)* → **[[Online Algorithm]]** *(size-$k$ heap)*
 
@@ -114,6 +124,12 @@ tags:
 	- run [[Radix Sort]] LSD-first by hand and justify why the subsort **must** be stable
 	- derive $\Theta(KN{+}KM)$ time, $\Theta(KN{+}M{+}N)$ space, and $\Theta(M{+}N)$ auxiliary (**no $K$**)
 	- trade base $M$ against column count $K=\lceil\log_M(\text{max key})\rceil$, and pad ragged keys
+	- telescope $T(n)=2T(n-1)+a$ to $2^{n}b+(2^{n}-1)a=\Theta(2^{n})$ via the $r{=}2$ series
+	- prove a **given** closed form by induction over $n{=}2^{k}$ — the step is $T(2m)$, never $T(m{+}1)$
+	- collapse two identical recursive calls into one binding ⟹ $\Theta(p)\to\Theta(\log p)$
+	- count split inversions in **blocks** during a merge ⟹ $\Theta(N^{2})\to\Theta(N\log N)$
+	- shrink **both** matrix axes for $\Theta(n)$ peak finding, and justify discarding three quadrants
+	- read $F(2k)$ and $F(2k{+}1)$ off the Fibonacci matrix power, eliminating $F(k{-}1)$
 - **W3** ➔ 
 	- distinguish Lomuto's **final pivot index** from Hoare's **split point** — and the recursive call each demands
 	- pick a partition scheme by **swap count**, and reach for 3-way once duplicates are common
