@@ -1,7 +1,7 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 7]
+week: [1, 4, 7]
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 ---
@@ -30,6 +30,13 @@ tags: [CS/Algorithms, CS/Sorting, CS/Complexity, SWE/OOP]
 - **Stable tie-break** ➔ take from **left** half (`<=`) ➔ earlier-input keys emitted first.
 - **Linked variant** ➔ [[List (ADT)|LinkList]] merges by **relinking** ➔ $\Theta(\log n)$ stack, no scratch.
 - **External sort** ➔ sequential access pattern ➔ basis of multiway sorts for data $>$ RAM.
+
+### 4. The Hybrid Cut-off *(applied W4)*
+- **The engineering trick** ➔ stop recursing once a subproblem reaches size $k$ and finish it with **insertion sort**, which is fast on small, nearly-sorted ranges and has tiny constants ([[Sorting Problem]]).
+- **Depth** ➔ recursion stops when $n\left(\tfrac12\right)^{d}=k$ ⟹ $d=\log_{2}\dfrac{n}{k}$ levels of merging, each costing $\Theta(n)$ ⟹ $\Theta\!\left(n\log\dfrac{n}{k}\right)$.
+- **The tail** ➔ $\Theta(n/k)$ independent subproblems of size $k$, each $\Theta(k^{2})$ worst case ⟹ $\Theta\!\left(\tfrac{n}{k}\cdot k^{2}\right)=\Theta(nk)$.
+- **Total** ➔ $\Theta\!\left(nk+n\log\dfrac{n}{k}\right)$ — asymptotically **worse** than $\Theta(n\log n)$ for growing $k$, which is why $k$ is held at a small **constant** (libraries use $\approx10$–$32$); at constant $k$ the bound collapses back to $\Theta(n\log n)$ with a smaller constant factor.
+- **Read the trade** ➔ raising $k$ buys fewer merge levels ($\log\frac{n}{k}$ shrinks) and pays for it quadratically in the tail ($nk$ grows); the optimum is where the two derivative terms meet, and it is a **constant-factor** optimisation, never a complexity-class one.
 
 ## ⚙️ Core Implementation
 ### 🔹 `merge_sort` + auxiliary recursion + the $O(n)$ merge

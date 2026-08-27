@@ -10,7 +10,7 @@ tags: [2026/S2]
 
 ## 📊 Assessment Map
 
-- **Assessment 1 — Online Quiz (10%)**
+- **Assessment 1 — Online Quiz (10%)** ➔ Introduction to Data Warehousing and Star Schemas; **due Monday of Week 6** (the W4 slide dates this 1 September 2026)
 - **Assessment 2 — Individual Assignment (40%)** ➔ THE unit: design a warehouse and implement it in Oracle; fed by [[Star Schema]] and [[Oracle SQL Toolkit (Cheatsheet)]]. Four tasks, stated in Lab 3: **1** clean the input data (an ERD is *not* supplied — draw one) · **2–3** draw the star and create it in SQL · **4** answer the given queries **plus one of your own**, each touching the fact and $\geq 1$ dimension, with a justification of why management would want it.
 - **Assessment 3 — Online Quiz (10%)**
 - **Exam (40%)**
@@ -18,7 +18,7 @@ tags: [2026/S2]
 **Topics covered:** data warehousing (ETL, multidimensional schemas, star/snowflake) · OLAP · data analytics.
 
 ## 🧰 Toolkit Cheatsheets
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, and the W3 exploration/cleaning probes
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses
 
 ## 📅 Knowledge Index
 
@@ -49,9 +49,18 @@ tags: [2026/S2]
 - [[Two-Column Table Methodology]] *(W3 merge: the `Number_of_Reviews` failure case, the grounding check)*
 - [[Building Dimension Tables]] *(W3 merge: why dimensions exist at query time; the shared-description trap)*
 
+### Week 4 — Hierarchies (Ch4), Bridge Tables (Ch5) & Snowflake Schemas
+- [[Snowflake Schema]] -> Parent Framework: [[Star Schema]]
+- [[Dimension Hierarchies]] -> Parent Framework: [[Snowflake Schema]]
+- [[Bridge Tables]] -> Parent Framework: [[Snowflake Schema]]
+- [[Building Bridge Table Schemas]] -> Parent Framework: [[Bridge Tables]]
+- [[Star Schema]] *(W4 merge: the one-hop rule and its snowflake exception)*
+- [[Data Warehouse]] *(W4 merge: the five reasons warehousing is needed — Feedback Session 3)*
+
 ## 🧭 Suggested Reading Order
 - **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
 - **W3 — never trust the source:** **[[Data Exploration (Warehouse Validation)]]** *(A2 task 1)* → **[[Data Cleaning (Dirty Data)]]** *(A2 task 1)* → [[Multi-Role Facts]] *(two-role transactions)* → [[One-Attribute Dimensions]] *(refinement)*
+- **W4 — when the star must bend:** [[Snowflake Schema]] *(the two families)* → [[Dimension Hierarchies]] *(optional, usually reject)* → **[[Bridge Tables]]** *(A2 hand skill)* → **[[Building Bridge Table Schemas]]** *(lab SQL)*
 
 ## 🎯 Learning Outcomes
 
@@ -76,3 +85,10 @@ tags: [2026/S2]
 	- clean with `select distinct` at the join, or a cleaned source copy
 	- split a two-role transaction into one star schema per role
 	- rule out `union`-merging a fact whose measures belong to the trip, not the person
+- **W4** ➔ 
+	- split a dimension into a many-1 hierarchy chain
+	- choose among separate, combined, hierarchy and linked dimensions
+	- reject a hierarchy that keys the fact at the coarse level
+	- detect the source m–m that forces a bridge table
+	- build a bridge by copying the operational associative table
+	- compute $\text{WeightFactor}$ and `LISTAGG` in the parent dimension

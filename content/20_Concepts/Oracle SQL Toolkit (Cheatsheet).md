@@ -156,6 +156,20 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | merge two role facts | `select … sum(x) from ( select * from f1 union select * from f2 ) group by emp_num;` | `union` alone leaves two rows per member; the outer `group by` is what merges — legal only for **individually-owned** measures |
 | label vs key | `group by F.CourseCode, D1.CourseName` | keep the **key** in the grouping list; grouping on the description alone merges members that share it |
 
+## ❄️ Snowflake & Bridge Clauses (FIT3003 W4)
+*(➔ [[Bridge Tables]] · [[Building Bridge Table Schemas]] · [[Dimension Hierarchies]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| bridge from associative table | `create table ProductSupplierBridge as select * from StockSupplier;` | the source's m–m table already **is** the bridge; its composite key is the PK, so no `distinct` |
+| bridge, history dropped | `select distinct SS.ProductNo, S.Name as SupplierName from …` | collapsing the temporal columns re-introduces duplicates — `distinct` becomes mandatory |
+| weight factor | `1.0/count(*) as WeightFactor` grouped on the parent's own columns | `1/count(*)` is **integer division** → every weight floors to $0$; store it in the parent dimension, never the bridge |
+| list aggregate | `LISTAGG(D.StoreID, '_') Within Group (Order By D.StoreID) As StoreGroupList` | ordered-set aggregate; `Within Group` is mandatory, add `Desc` inside it to reverse |
+| join through a bridge | `where F.TripId = T.TripId and T.TripId = B.TripId and B.StoreId = S.StoreId` | fact → parent dim → bridge → child dim: 4 tables, **3** conditions |
+| join via a list aggregate | `where T.StoreGroupList like '%'\|\|S.StoreID\|\|'%'` | one join fewer than the bridge path; redundant and cannot use an index |
+| weighted measure | `sum(Total_delivery_Cost * Weight_Factor)` grouped by the bridged dimension | apportions a parent-owned measure to its members — an **estimate**, not a stored fact |
+| never do | putting the far dimension's key in the fact when the source is m–m | the measure is undividable, so the fact row multiplies once per partner |
+
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
 > > [!SUCCESS]- Reference solution

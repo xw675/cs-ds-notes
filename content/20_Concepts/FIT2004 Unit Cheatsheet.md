@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W3; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W4; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -202,16 +202,30 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ## 9️⃣ Quicksort, Selection and the Applied Suite (W3)
 > [!warning] Every W3 bound is a pair: an **expected** value and a **worst case** that differ. An answer that quotes one without naming which is unmarkable ➔ §1️⃣ *bound ≠ case*.
 
-- **Partition contracts differ — and so do the calls** `[P]` ➔ **Lomuto** returns the pivot's **final index** $j$ ⟹ recurse `(start, j-1)` and `(j+1, end)` · **Hoare** returns a **split point** ⟹ recurse `(start, j)` and `(j+1, end)` **· precondition:** copying Lomuto's `j-1` onto Hoare drops an element and the sort silently loses data.
-- **Schemes differ in WRITES, not comparisons** `[C]` ➔ all make $\Theta(N)$ comparisons per level; Hoare makes $\approx3\times$ fewer swaps **· consequence:** the choice matters when records are large, not when keys are integers.
+- **Partition contracts differ — and so do the calls** `[P]` ➔ **Lomuto** returns the pivot's **final index** $j$ ⟹ recurse `(start, j-1)` and `(j+1, end)` · **this unit's Hoare** parks the pivot at the front and swaps it to `R_bad`, so it *also* returns the pivot's **final index** ⟹ same calls · the **textbook** Hoare never parks the pivot and returns a **split point** that must be **included** on the left ⟹ `(start, j)` and `(j+1, end)` **· precondition:** say which contract you are using before you recurse — mixing them silently drops or duplicates an element ➔ [[Partitioning (Quicksort)]].
+- **Schemes differ in WRITES, not comparisons** `[C]` ➔ all make $\Theta(N)$ comparisons per level; Hoare swaps **each item at most once** (one swap repairs two), $\approx3\times$ fewer than Lomuto **· consequence:** the choice matters when records are large, not when keys are integers.
+- **Out-of-place partition: $\Theta(N)$ extra and STILL unstable** `[C]` ➔ `≤ pivot` sends every duplicate of the pivot **in front of** it **· repair:** a **third** buffer for `== pivot`, concatenated $<p$ + $=p$ + $>p$ — the lecturer's *anything is stable with more memory*.
+- **Hoare invariants** `[P]` ➔ left of `L_bad` is $\le p$ · right of `R_bad` is $>p$ · `[L_bad … R_bad]` **unprocessed**, empty when the pointers cross **· gotcha:** the final pivot swap must be **guarded** — lecturer-flagged as a live bug.
+- **Hoare cannot be made stable** `[C]` ➔ the pointer rules *can* be stabilised with the pivot's original index, but the **final swap** of the pivot from the front to `R_bad` jumps it over everything between ⟹ unstable regardless.
 - **3-way (Dutch flag) for duplicates** `[C]` ➔ split into $<,=,>$ and recurse on the outer two ⟹ depth $O(\log d)$ for $d$ distinct keys, $\Theta(N)$ on all-equal input **· precondition:** a 2-way split can never retire equal keys, so they recur forever.
+- **Dutch flag invariants** `[P]` ➔ `[1 … boundary1-1]` $<p$ · `[boundary1 … j-1]` $=p$ · `[boundary2+1 … N]` $>p$ · `[j … boundary2]` unprocessed, empty at exit `j > boundary2` **· gotcha:** the $>p$ branch must **not** advance `j` — the item swapped in is unexamined.
+- **Average-case height by the green-area argument** `[P]` ➔ a pivot lands in the middle half with probability $\tfrac12$; the worst such split leaves $\tfrac{3N}{4}$ ⟹ $N(\tfrac34)^{h}=1\Rightarrow h=\log_{4/3}N$, average depth $\approx2h$ **· closer:** change of base $\log_a N=\log_b N/\log_b a$ ⟹ $2\log_{4/3}N=\Theta(\log N)$, $\times\,\Theta(N)$ per level $=\Theta(N\log N)$.
+- **Quicksort is NEVER in-place** `[P]` ➔ lecturer-flagged: even with an in-place partition the recursion depth is $\ge\Theta(\log N)$ and live frames are auxiliary space **· consequence:** "in-place partition" and "in-place sort" are different claims; only [[Heapsort]] is the latter.
+- **Average case from the recurrence** `[D]` ➔ *(lecturer-flagged **NOT EXAMINABLE**)* $T_k(N)=(N{+}1)+T(N{-}k)+T(k{-}1)$, average over $k$ ⟹ $N T(N)=2N+(N{+}1)T(N{-}1)$ ⟹ $T(N)=2+\tfrac{N+1}{N}T(N{-}1)$ ⟹ $2+b(N{+}1)+2(N{+}1)\ln N=O(N\log N)$ **· the two moves:** subtract the $(N{-}1)$ instance to kill the sum, bound the harmonic tail by $\int_1^N\!\tfrac{dx}{x}$.
 - **Constant-FRACTION splits are still $\Theta(N\log N)$** `[P]` ➔ a fixed $1:9$ split gives depth $\log_{10/9}N=\Theta(\log N)$ **· consequence:** $\Theta(N^{2})$ needs a constant-**size** split at *every* level, not merely an unbalanced one.
 - **Randomisation vs guarantee** `[P]` ➔ a random pivot makes the bad input **unconstructible** (expected $\Theta(N\log N)$, worst case still $\Theta(N^{2})$); [[Median of Medians]] makes it **impossible** (worst case $\Theta(N\log N)$) **· precondition:** name which claim you are making — this is the W3 exam hinge.
 - **Quicksort auxiliary space is $O(N)$ worst, $O(\log N)$ if engineered** `[P]` ➔ recurse the **smaller** partition first and loop on the larger ⟹ depth $\le\log_2 N$ regardless of pivot quality.
 - **Quicksort stability "depends on the partition"** `[C]` ➔ in-place swapping is unstable; an **out-of-place** partition preserving input order is stable at $\Theta(N)$ per level.
+- **Sort-then-slice is the baseline to beat** `[P]` ➔ $O(NM\log N)+O(k)$ with $M$ the **comparison cost** **· precondition:** [[Counting Sort]] needs a capped key range and [[Radix Sort]] a capped key width — neither may be **assumed**, so the $\log N$ stands.
+- **$k$-th order statistics $=$ the quartile family** `[C]` ➔ $Q_1$ at $k=N/4$ · median at $k=N/2$ · $Q_3$ at $k=3N/4$ **· consequence:** one algorithm answers all of them.
+- **Quickselect's BEST case is $\Theta(N)$, not $\Theta(1)$** `[P]` ➔ even an immediate $j=k$ hit has paid for one full partition **· consequence:** B $=$ A $=\Theta(N)$, W $=\Theta(N^{2})$.
+- **An exact-median pivot does NOT fix quicksort** `[D]` ➔ finding it with [[Quickselect]] costs $\Theta(N^{2})$ worst case, so the level sum is $N^{2}+\tfrac{N^{2}}{2}+\tfrac{N^{2}}{4}+\dots=2N^{2}=\Theta(N^{2})$ **· consequence:** a *perfect* split is worthless if the pivot search is quadratic; a merely $30/70$ pivot found in linear **worst-case** time is what closes it.
 - **[[Quickselect]] $=$ quicksort minus one call** `[P]` ➔ after partition at $j$: $j=k$ return · $k<j$ recurse left · $k>j$ recurse right, $k$ **unchanged** under absolute indices **· consequence:** level costs become $N,\tfrac N2,\tfrac N4,\dots$ ⟹ [[Geometric Series]] $r=\tfrac12$ ⟹ $\Theta(N)$ expected.
 - **Quickselect is $O(1)$ auxiliary, quicksort is not** `[C]` ➔ the single call is a **tail** call ⟹ rewritable as a `while` over `lo`/`hi` **· precondition:** quicksort's first call has work pending after it, so its frames stay live.
-- **[[Median of Medians]] recurrence** `[D]` ➔ $T(N)=T(N/5)+T(7N/10)+cN$ with $\tfrac15+\tfrac7{10}=\tfrac9{10}<1\Rightarrow\Theta(N)$ **· precondition:** the fractions must sum to **strictly** less than $1$ — groups of $3$ give $\tfrac13+\tfrac23=1\Rightarrow\Theta(N\log N)$. *Lecturer-stated as historically **not examinable in the exam**; quiz-live.*
+- **[[Median of Medians]] recurrence** `[P]` ➔ $T(N)=T(N/5)+T(7N/10)+cN$ with $\tfrac15+\tfrac7{10}=\tfrac9{10}<1\Rightarrow\Theta(N)$ **· precondition:** the fractions must sum to **strictly** less than $1$ — groups of $3$ give $\tfrac13+\tfrac23=1\Rightarrow\Theta(N\log N)$. *Scope: the W3 deck **strikes** the old "not examinable" and writes **examinable from 2023 onwards** — treat it as a hand skill.*
+- **MoM by hand** `[P]` ➔ groups of $5$ → insertion-sort each ($O(1)$) → read its median → **quickselect** the median of those medians → partition on it **· base case:** $N\le5$ ⟹ insertion-sort and return the median directly.
+- **The $30\%$ derivation** `[P]` ➔ half the $\tfrac N5$ group medians are $\le M$, each contributing $3$ of its $5$ ⟹ $\tfrac12\cdot\tfrac N5\cdot3=\tfrac{3N}{10}$ on each side ⟹ $M$ lies in the **middle $40\%$**, worst split $70{:}30$.
+- **Co-recursion** `[C]` ➔ `median_of_medians` calls `quickselect`, which calls `median_of_medians` for its pivot **· termination:** both arguments strictly shrink ($\tfrac N5$ and $\tfrac{7N}{10}$) and the $N\le5$ guard is the shared base case.
 - **Forcing stability costs space, never time** `[P]` ➔ parallel index list consulted **only** when $\text{list}[a]=\text{list}[b]$, compared as integers in $O(1)$ ⟹ every time bound unchanged; auxiliary $O(1)\to\Theta(N)$, **total** still $\Theta(N)$.
 - **Shifting is stable, long-distance swapping is not** `[C]` ➔ bubble/insertion/merge shift ⟹ stable; selection/heap/quicksort hurdle equal keys ⟹ unstable.
 - **Comparisons $\ge$ swaps** `[C]` ➔ nothing is swapped that was not first compared **· use:** a self-check on a derived count.
@@ -231,12 +245,65 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **The comparison model proves $\Omega$, NEVER $O$** `[D]` ➔ insertion sort with a [[Binary Search]] insertion point makes $\Theta(N\log N)$ comparisons — optimal — yet runs in $\Theta(N^{2})$ because it still **shifts** **· consequence:** an optimal comparison count is not an optimal running time; use the model for lower bounds only.
 - **"In-place" is a claim about the COST MODEL** `[D]` ➔ the unit's $O(1)$ auxiliary means $O(1)$ **machine words**; under strict RAM accounting, indexing $n$ elements needs $\Theta(\log n)$-bit pointers, so the definition is relaxed to $O(\log n)$, or $O(1)$ excluding pointers, or $o(n)$ **· precondition:** say which you mean before claiming in-place.
 
+- **A pivot rule is judged on FRACTION, not balance** `[P]` ➔ minimum-element pivot ⟹ $T(N)=T(N-1)+\Theta(N)=\Theta(N^{2})$ for **every** input (best $=$ worst) · $10$th-percentile pivot ⟹ $0.9^{k}n=1\Rightarrow k=\log_{10/9}n=\Theta(\log n)$ ⟹ still $\Theta(n\log n)$ **· consequence:** even a $1\%$ split is $\Theta(n\log n)$; only a constant-**size** split is quadratic.
+- **The MEAN is not the median** `[D]` ➔ pivoting on the element closest to the average is $\Theta(n^{2})$ on $a_{i}=i!$, where $\frac1n\sum i!\ge\frac{n!}{n}=(n-1)!$ picks the **second-largest** element ⟹ $T(n)=T(n-2)+\Theta(n)$ **· general lesson:** any [[Divide and Conquer]] rule without a **guaranteed proportional** reduction has no logarithmic depth.
+- **Naive 3-way (out-of-place) partition groups duplicates; Hoare's scatters them** `[C]` ➔ on `[7,1,12,9,3,3,10,6,7,14,4]` with pivot $7$: naive gives `[1,3,3,6,4,7,7,12,9,10,14]`, Hoare's gives `[6,1,4,7,3,3,7,10,9,14,12]` **· consequence:** this is the exact gap the Dutch national flag scheme was designed to close.
+- **$k$-partitioning** `[C]` ➔ sequential 2-way partitions on $p_1,\dots,p_k$ ⟹ $\Theta(nk)$; pivot on the **middle** pivot and recurse on both halves ⟹ $\Theta(n\log k)$ **· optimality by reduction:** $k=n$ turns it into sorting ⟹ $\Omega(n\log k)$ ➔ [[Partitioning (Quicksort)]] §6.
+- **Quickselect expected $O(n)$ by the coin argument** `[C]` ➔ a **good** pivot (middle $50\%$) leaves $\le0.75n$ ⟹ $cn\sum 0.75^{i}\le 4cn$; $\Pr[\text{good}]=\tfrac12$ ⟹ $2$ tries expected ⟹ $\mathbb{E}[T]\le8cn=O(n)$ **· precondition:** the expected-flips-to-first-head fact $1/p$; the same argument with both halves kept gives quicksort's $O(n\log n)$.
+- **Weighted median via quickselect** `[C]` ➔ compare **weight sums** instead of ranks: neither side $>w$ ⟹ the pivot is the answer, else recurse into the heavier side with $w$ reduced by the discarded weight **· precondition:** permute the weight array in unison with the values during partitioning.
+- **$k$ closest to the median in $\Theta(n)$** `[C]` ➔ quickselect the median $m$, quickselect the $k$-th smallest $\lvert a_i-m\rvert$, take everything strictly smaller and **top up** from the ties **· precondition:** distances tie even when values are unique ($m\pm d$) **· space:** interpret `a[i]` as $\lvert a_i-m\rvert$ in place rather than copying ⟹ $O(1)$ extra.
+- **Hybrid: mergesort down to size $k$, then insertion sort** `[C]` ➔ $\Theta\!\left(nk+n\log\tfrac{n}{k}\right)$ — $d=\log_2\tfrac nk$ merge levels plus $\tfrac nk$ subproblems at $\Theta(k^{2})$ **· precondition:** $k$ must be a **constant** or the $nk$ term dominates; this is a constant-factor optimisation only.
+- **Cross-pivoting when the model forbids intra-set comparison** `[D]` ➔ $n$ locks and $n$ keys, comparable only across sets: pivot the keys on a **lock**, then pivot the locks on the **matching key** ⟹ $\Theta(n)$ per partition, $\Theta(n\log n)$ average.
+- **Order statistic of the union of two sorted arrays** `[D]` ➔ $\text{order}(a[i])=i+\lvert\{j:b[j]<a[i]\}\rvert$ is monotone in $i$ ⟹ nested [[Binary Search]] $\Theta(\log n\log m)$; **simultaneous** binary searches on both, comparing $a[i]$ with $b[j]$ and moving one bound per step, remove the nesting ⟹ $\Theta(\log n+\log m)$.
+
+| Partition scheme | Writes | Extra space | Returns | Stable | Pick it when |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Out-of-place | $\Theta(N)$ copies | $\Theta(N)$ $+$ stack | pivot's final index | No · **Yes** with a 3rd buffer | stability is contractual, memory free |
+| **Hoare's** | $\le1$ swap per item | $O(1)$ | pivot's final index *(this unit)* | No | large records ⟹ writes dominate |
+| Lomuto's | 1 swap per item $<p$, many redundant | $O(1)$ | pivot's final index | No | writing it correctly under exam time |
+| Dutch flag (3-way) | 1 swap per misplaced item | $O(1)$ | **two** boundaries | No | duplicates common ⟹ $d\ll N$ |
+
 | W3 algorithm | Time (B/A/W) | Auxiliary space | Online? | Discriminator |
 | :--- | :--- | :--- | :--- | :--- |
 | [[Quick Sort]] (random pivot) | $\Theta(N\log N)$ / $\Theta(N\log N)$ / $\Theta(N^{2})$ | $O(\log N)$ smaller-first · $O(N)$ naive | No | smallest constant of the $\Theta(N\log N)$ sorts |
 | [[Quick Sort]] $+$ [[Median of Medians]] | $\Theta(N\log N)$ all | $O(\log N)$ | No | worst case **eliminated**, large constant |
-| [[Quickselect]] (random pivot) | $\Theta(N)$ / $\Theta(N)$ / $\Theta(N^{2})$ | $O(1)$ iterative | No | **one rank**; destroys input order |
+| [[Quickselect]] (random pivot) | $\Theta(N)$ / $\Theta(N)$ / $\Theta(N^{2})$ | $O(1)$ iterative | No | **one rank**; best is $\Theta(N)$ — one partition is unavoidable |
+| [[Quick Sort]] $+$ exact-median [[Quickselect]] | $\Theta(N\log N)$ / $\Theta(N\log N)$ / $\Theta(N^{2})$ | $O(\log N)$ | No | **no gain** — inherits quickselect's worst case |
 | [[Quickselect]] $+$ [[Median of Medians]] | $\Theta(N)$ all | $O(\log N)$ | No | linear **worst case** selection |
 | [[K-way Merge]] (min-heap) | $\Theta(N\log k)$ all | $\Theta(k)$ | Yes | $\Theta(k)$ space ⟹ external sorting |
 | [[K-way Merge]] (scan heads) | $\Theta(Nk)$ all | $\Theta(k)$ | Yes | only for $k\lesssim4$ |
 | Size-$k$ heap ➔ [[Online Algorithm]] | $\Theta(N\log k)$ all | $\Theta(k)$ | **Yes** | $N$ unknown/unbounded, or a memory cap |
+
+
+## 🔟 Graphs, Traversal and Shortest Paths (W4)
+> [!warning] Every graph bound carries **two** parameters. $\Theta(V+E)$ means $\Theta(V)$ on a sparse graph and $\Theta(V^{2})$ on a dense one, and it is an **adjacency-list** bound — the same code on a matrix is $\Theta(V^{2})$. Name the density and the representation, or the bound is unmarkable ➔ §1️⃣ *bound ≠ case*.
+
+- **Definitions** `[P]` ➔ $G=(V,E)$ · edge $e=(u,v)$, **directed** ⟹ from $u$ to $v$ · **weighted** ⟹ $e=(u,v,w)$ and $G=(V,E,W)$ · **simple** ⟹ no self-edges (loops) and no multi-edges **· precondition:** every FIT2004 algorithm assumes simple unless told otherwise.
+- **Maximum edges** `[P]` ➔ directed $V(V-1)=O(V^{2})$ · undirected $\tfrac{V(V-1)}{2}=O(V^{2})$ **· consequence:** the halving is a constant factor; **density** is what fraction of these actually exist.
+- **Sparse vs dense** `[P]` ➔ sparse $E\lll V^{2}$ (usually $E=O(V)$) · dense $E\approx V^{2}$ **· use:** it selects the representation, collapses $O(E\log V)$ to $O(V^{2}\log V)$, and decides whether a Fibonacci heap pays.
+- **Representation costs** `[P]`:
+
+| | Space | Edge-exists | All neighbours of $u$ | Traversal becomes |
+| :--- | :--- | :--- | :--- | :--- |
+| Adjacency **matrix** | $\Theta(V^{2})$ **unconditionally** | $O(1)$ | $O(V)$ (scan the row) | $\Theta(V^{2})$ |
+| Adjacency **list** | $\Theta(V+E)$ | $O(X)$, early exit if sorted | $O(X)$ — output-sensitive | $\Theta(V+E)$ |
+
+- **No $O(\log V)$ lookup on a linked adjacency list** `[C]` ➔ sorting the neighbours only buys **early termination**; binary search needs random access **· precondition:** a sorted **array** of neighbours does give $O(\log X)$.
+- **Traversal $\Theta(V+E)$ derivation** `[P]` ➔ each vertex served **once** ($V$) $+$ each undirected edge inspected **twice**, once from each endpoint ($2E$) **· precondition:** the "already discovered?" test must be an $O(1)$ **flag on the vertex object** — searching the queue makes it $\Theta(VE)$.
+- **Three vertex states** `[P]` ➔ undiscovered ➔ **discovered** (in the collection) ➔ **visited/finalised** (served, edges scanned) **· exam form:** write a `Discovered` row and a `Visited` row at every step.
+- **The frontier ADT *is* the algorithm** `[P]` ➔ [[Queue (ADT)|queue]] ⟹ BFS · [[Stack (ADT)|stack]] ⟹ DFS · min-[[Heap]] ⟹ [[Dijkstra's Algorithm|Dijkstra]] **· consequence:** every other line is identical; a "compare BFS and DFS" answer that changes anything else is not a controlled comparison.
+- **Traversal order is NOT unique** `[C]` ➔ it depends on the adjacency-list order **· precondition:** state your edge order before the first step of any hand trace.
+- **BFS gives unweighted shortest distance** `[P]` ➔ `v.distance = u.distance + 1` at **discovery**, `v.previous = u` for the path **· precondition:** FIFO order **and** uniform edge cost; lose either and the first arrival is no longer shortest.
+- **DFS distances are meaningless** `[C]` ➔ LIFO destroys the layer ordering, so a DFS depth records the branch taken, not a distance.
+- **Traversal applications** `[C]` ➔ reachability · connected components · cycle detection · shortest path on unweighted graphs (and brute force on weighted) · [[Topological Sort]].
+- **[[Dijkstra's Algorithm|Dijkstra]] $=$ DP $+$ greedy** `[P]` ➔ DP: $\min(A\rightsquigarrow C)$ built from known sub-minima · greedy: the closest non-finalised vertex is **finalised on serve** **· precondition:** **non-negative** weights — a negative edge makes a detour cheaper *after* finalisation and breaks the greedy step. *(May still be right if the negative edge is in no cycle — never rely on it.)*
+- **Relaxation** `[P]` ➔ on edge $\langle u,v,w\rangle$ with $v$ **not** finalised: if undiscovered set $v.\text{distance}=u.\text{distance}+w$, else update **only if** $v.\text{distance}>u.\text{distance}+w$; rewrite `v.previous` on every successful relaxation.
+- **Dijkstra bounds** `[P]` ➔ binary heap $O((V+E)\log V)=O(E\log V)$; the slide's $O(V^{2}\log V)$ is the **dense** instantiation of the same bound · Fibonacci heap $O(E+V\log V)=O(V^{2})$ dense **· precondition:** `update` needs an **index map** vertex ➔ heap slot for $O(1)$ location, else each update is $O(V)$.
+- **Single target ⟹ early exit** `[C]` ➔ stop the moment the target is moved to `visited`; its distance is already final **· path:** backtrack `v.previous` and reverse.
+- **Dijkstra correctness (proof by contradiction)** `[D]` ➔ claim: every vertex removed from $Q$ has a correct $\text{dist}$. Base $\text{dist}[s]=0$. Step: assume a shorter $P:s\rightsquigarrow u$; let $x$ be the last vertex of $P$ in $S$ and $y$ its successor; $\text{len}(s\rightsquigarrow y)\le\text{len}(P)<\text{dist}[u]$ ⟹ $\text{dist}[y]<\text{dist}[u]$, so $y$ would have been served first ($y\ne u$) or $\text{dist}[u]<\text{dist}[u]$ ($y=u$) **· precondition:** the inequality $\text{len}(s\rightsquigarrow y)\le\text{len}(P)$ is **exactly** where non-negativity is spent.
+- **Later shortest-path algorithms** `[C]` ➔ **Bellman-Ford**: single source, tolerates negative edges · **Floyd-Warshall**: all pairs with transitive closure, tolerates negative edges.
+- **[[Directed Acyclic Graph (DAG)|DAG]]** `[P]` ➔ directed, **no directed cycle**; edge $\langle A,B\rangle$ reads as *$A$ is a prerequisite of / ancestor of / a subset of / ordered before $B$* **· precondition:** only **directed** cycles are forbidden — an undirected cycle is fine.
+- **[[Topological Sort]]** `[P]` ➔ a permutation with $u$ before $v$ for every edge $\langle u,v\rangle$; **not unique** — incomparable vertices are free **· existence:** a valid order exists **iff** the graph is a DAG.
+- **Kahn's** `[P]` ➔ count incoming edges $\Theta(V+E)$ → seed with the in-degree-$0$ vertices → pop, emit, decrement each out-neighbour, push new zeros ⟹ $\Theta(V+E)$ time and space **· cycle check:** $\lvert\text{sorted}\rvert<V$ ⟹ a cycle exists **· note:** `process` may be a queue or a stack; the choice changes *which* valid order you get.
+- **Modified DFS** `[P]` ➔ push each vertex on **finish** (after all out-neighbours), then **pop**/reverse ⟹ $\Theta(V+E)$ **· precondition:** DFS **pre-order is not a topological order** — the single highest-frequency error — and the outer loop must seed every vertex, since a DAG can have many sources.
+- **Choosing between them** `[C]` ➔ Kahn's for free cycle diagnosis, parallel layering (each zero-in-degree round is a batch) and no recursion depth; modified DFS when a recursive traversal already exists.

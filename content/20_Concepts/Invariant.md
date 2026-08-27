@@ -1,8 +1,8 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 2]
-source: [lecture]
+week: [1, 2, 3]
+source: [lecture, applied]
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Foundations]
 aliases: [Loop Invariant, Proof of Correctness]
@@ -34,6 +34,7 @@ aliases: [Loop Invariant, Proof of Correctness]
 - **What to state** ➔ which **update** guarantees the guard is eventually falsified, or which **base case** the recursion is guaranteed to reach.
 - **The three-line template** ➔ *(i)* the domain is **finite** · *(ii)* the counter **starts** at a known point · *(iii)* every iteration moves it **monotonically** toward the bound ⟹ the guard fails after finitely many steps.
 - **`find_min` worked** ➔ array is finite · `index` starts at $1$ · each iteration does `index += 1` ⟹ `index` reaches `len(array)` and the `while` exits.
+- **Say WHERE you are quoting it** ➔ an invariant may be stated at the **start** or the **end** of an iteration and the two differ by one index — `find_min` reads naturally at the start (`min` $=\min($`A[1…i-1]`$)$), [[Linear Search]] at the end (`index` $=$ the last match in `A[1…i]`). Unstated, the maintenance step cannot be checked.
 - **Failure is not exotic** ➔ [[Binary Search]] written with `lo = mid` and `while lo < hi` **does not terminate** at $lo{=}5,hi{=}6$: $mid=\lfloor 11/2\rfloor=5$, so `lo = mid` is a no-op and no measure decreases ➔ see that note for the fix.
 
 ### 4. Design Order — Invariant First, Then Code
@@ -49,6 +50,7 @@ aliases: [Loop Invariant, Proof of Correctness]
 | [[Sorting Problem\|Selection Sort]] | `my_list[0…i-1]` is sorted **AND** $\le$ every element of `my_list[i…N]` | both $i$ and $j$ only increment and reach the end | prefix is **final** ⟹ correctness; blocks adaptivity |
 | [[Sorting Problem\|Insertion Sort]] | `my_list[0…i-1]` sorted, **not necessarily final** | `i` increments; inner `j` strictly decreases and is bounded below by $0$ | incremental inserts |
 | [[Binary Search]] | if the key exists in `array[0…N]` it exists in `array[lo…hi]` | `hi - lo` must **strictly** shrink — the bug vector | shrink-by-half correctness |
+| [[Linear Search]] *(no early exit)* | **at the end of iteration $i$:** `index` $=$ the largest $j\le i$ with `A[j] = target`, else `null` | `i` runs $1\to n$ over a finite array | at $i=n$ the invariant **is** the postcondition ⟹ returns the **last** occurrence |
 | [[Heap]] | every node $\ge$ its children | sift index halves / doubles toward a bound | $O(\log n)$ `get_max` |
 | [[Hash Table\|Linear Probing]] | key with hash $N$ sits between $N$ and first empty slot | probe count bounded by table size | search/delete correctness |
 
@@ -72,6 +74,7 @@ $$
 ## ⚠️ Common Mistakes
 - 💡 **Invariant ≠ termination** ➔ it proves correctness *if* the loop halts; you still need a separate **variant** (a strictly-decreasing non-negative measure) for total correctness.
 - 💡 **"Eventually they meet" is not a termination proof** ➔ name the measure and show it **strictly** decreases; a move that can leave the measure unchanged (`lo = mid`) is exactly where infinite loops live.
+- 💡 **Choosing an invariant that does not match the code's behaviour** ➔ [[Linear Search]] without an early `return` keeps overwriting `index`, so "`index` is the **first** match" is false; the true invariant names the **largest** $j\le i$. Write the invariant the code actually maintains, not the one you wish it did.
 - 💡 **Restating the code as the invariant** ➔ *"`i` increases each iteration"* is a fact about the loop, not a property that implies the postcondition; the invariant must mention the **data**, not just the counter.
 
 ## 🧠 Active Recall

@@ -66,12 +66,17 @@ tags:
 - [[Divide and Conquer]] -> Parent Framework: [[Recursion]] *(**deepened**: §4 the three-question checklist for adapting D&C to a new problem, and "strengthen the recursive contract")*
 - *Supplementary problems 8–17 **deliberately not noted** — P8–P14 are telescoping repetitions of P1–P3, and P15 (Master Theorem proof), P16 (Strassen) and P17 (the $T(\sqrt n)$ substitution) are lecturer-flagged supplementary. The Master Theorem already sits as a 🔭 block in [[Solving Recurrences (Telescoping)]].*
 
-### Week 3 — QuickSort Deep Dive, Selection, and the Applied Sorting Suite *(lecture W3 · applied W3 · PT-01)*
-- [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — **deepened**: Lomuto vs Hoare vs 3-way partition, the pivot-policy ladder, and how to make the worst case impossible)*
-- [[Quickselect]] -> Parent Framework: [[Divide and Conquer]] *(the $k$-th smallest — **one-sided** recursion turns $\Theta(N\log N)$ into $\Theta(N)$ expected)*
-- [[Median of Medians]] -> Parent Framework: [[Quickselect]] *(**quiz-only** — lecturer-stated as historically **not examinable in the final exam**; own the $30/70$ guarantee and the $\tfrac15+\tfrac{7}{10}<1$ recurrence, do not drill it as a hand skill)*
+### Week 3 — QuickSort Deep Dive, Selection, and the Applied Sorting Suite *(lecture W3 p1/p2 · prep W3 · applied W3 · PT-01)*
+- [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(dual-unit — **deepened**: the pivot-policy ladder, the **average-case height** argument $h=\log_{4/3}N$, and why the sort is **never** in-place)*
+- [[Partitioning (Quicksort)]] -> Parent Framework: [[Quick Sort]] *(**new** — out-of-place vs Hoare's vs Lomuto's vs Dutch national flag; invariants, swap counts, and why each is unstable for a **different** reason)*
+- [[Quickselect]] -> Parent Framework: [[Divide and Conquer]] *(the $k$-th smallest — **one-sided** recursion turns $\Theta(N\log N)$ into $\Theta(N)$ expected; **deepened**: an **exact-median** pivot still leaves quicksort $\Theta(N^{2})$)*
+- [[Median of Medians]] -> Parent Framework: [[Quickselect]] *(**scope changed** — the W3 deck strikes "not examinable" and writes **examinable from 2023 onwards**; own the **hand execution**, the $30/70$ guarantee, the co-recursion, and $\tfrac15+\tfrac{7}{10}<1$)*
 - [[Counting Sort]] -> Parent Framework: [[Sorting Problem]] *(**deepened**: negative-key offset mapping, and the PT-01 rule for bucket vs count+position variant)*
 - [[Radix Sort]] -> Parent Framework: [[Counting Sort]] *(**deepened**: base $b\le N$ is what buys linearity; string optimisation by length and alignment)*
+
+**Prep sheet 3 — last week's obligations, re-drilled before the applied class:**
+- [[Invariant]] -> Parent Framework: [[Algorithm]] *(**deepened**: P1 `find_min` quotes its invariant at the **start** of an iteration, P2 [[Linear Search]] at the **end** — no early exit ⟹ it returns the **last** match, so the invariant names the largest $j\le i$)*
+- *P3 (radix-sort `4329, 5169, 4321, 3369, 2121, 2099`) duplicates the LSD hand-trace already in [[Radix Sort]] — **no new content**, run it from the PDF as a timed drill.*
 
 **Applied sheet 3 — the CD1 problem set, tier tags as issued:**
 - [[Sorting Problem]] -> Parent Framework: [[Computational Problem]] *(**deepened**: §6 forcing stability `[P,C,D]` · §8 the dropped cost terms · §9 what sorting is FOR, incl. two-pointer dedup `[C,D,HD]`)*
@@ -79,8 +84,27 @@ tags:
 - [[Online Algorithm]] -> Parent Framework: [[Algorithm]] *(Problem 6 `[P,C,D]` — online vs offline, and the size-$k$ **max**-heap for the $k$ smallest)*
 - *The supplementary problems 7–13 are **deliberately not noted** — one-off puzzles with no transferable pattern; solve them from the PDF if they come up. The only two ideas worth keeping (the comparison model bounds only from below; "in-place" depends on the cost model) live as `[D]` lines in [[FIT2004 Unit Cheatsheet]] §9️⃣.*
 
+### Week 4 — Graphs, Traversal, and Shortest Paths *(lecture W4 p1 Graph Traversal $+$ Dijkstra · p2 Directed Acyclic Graph · prep W4 · applied W4)*
+- [[Graph]] -> Parent Framework: [[Binary Relation]] *(dual-unit — **deepened**: directed/weighted $G=(V,E,W)$, **simple** graphs, max edges $V(V-1)$ vs $\tfrac{V(V-1)}{2}$, and the **sparse/dense** split every later bound depends on)*
+- [[Graph Representations]] -> Parent Framework: [[Graph]] *(dual-unit — **deepened**: matrix $\Theta(V^{2})$ / $O(1)$ lookup / $O(V)$ neighbours vs list $\Theta(V+E)$ / $O(X)$ output-sensitive; **the representation, not the algorithm, sets the bound** — LO3)*
+- [[Uninformed Search (BFS and DFS)]] -> Parent Framework: [[Search Problem Formulation]] *(dual-unit — **deepened**: discovered/visited states, the $\Theta(V+E)$ derivation, the $O(1)$ **flag** that makes it hold, and unweighted shortest **distance $+$ path**)*
+- [[Dijkstra's Algorithm]] -> Parent Framework: [[Graph]] *(**new** — DP $+$ greedy, relaxation, min-[[Heap]] with an index map, $O(E\log V)$, the **proof by contradiction**, and exactly why a negative edge breaks it)*
+- [[Directed Acyclic Graph (DAG)]] -> Parent Framework: [[Types of Graphs]] *(**new** — the dependency model; acyclicity is what makes an order exist)*
+- [[Topological Sort]] -> Parent Framework: [[Directed Acyclic Graph (DAG)]] *(**new** — Kahn's peel-the-sources vs DFS **push-on-finish**, both $\Theta(V+E)$; the answer is never unique)*
+
+**Prep sheet 4 — last week's quicksort obligations, re-drilled:**
+- [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(**deepened**: §3b reading a pivot rule — a **minimum** pivot is $\Theta(n^{2})$ in the *best* case too, while a $10$th-percentile pivot is still $\Theta(n\log n)$)*
+- [[Partitioning (Quicksort)]] -> Parent Framework: [[Quick Sort]] *(**deepened**: the unit notes' **naive 3-way** partition named and traced, beside Hoare's on the same array — duplicates grouped vs scattered)*
+
+**Applied sheet 4 — the W3 problem set, adapting the partition to NEW problems:**
+- [[Quickselect]] -> Parent Framework: [[Divide and Conquer]] *(**deepened**: §6 the **coin-flip** expected-$O(n)$ argument · the **weighted median** · the $k$ **closest to the median** in $\Theta(n)$ · `[D]` order statistic across two sorted arrays)*
+- [[Partitioning (Quicksort)]] -> Parent Framework: [[Quick Sort]] *(**deepened**: §6 **$k$-partitioning** — $\Theta(nk)$ sequential ➔ $\Theta(n\log k)$ by D&C, proved optimal by **reduction to sorting**)*
+- [[Quick Sort]] -> Parent Framework: [[Divide and Conquer]] *(**deepened**: the **mean-pivot** trap on $a_i=i!$ ⟹ $T(n)=T(n-2)+\Theta(n)=\Theta(n^{2})$ · **cross-pivoting** to match $n$ locks to $n$ keys)*
+- [[Merge Sort]] -> Parent Framework: [[Divide and Conquer]] *(**deepened**: §4 the **hybrid cut-off** — mergesort to size $k$ then insertion sort $=\Theta(nk+n\log\tfrac{n}{k})$)*
+- *Supplementary P8 (iterative quickselect) is already the note's implementation, and P9 (order statistic of two sorted arrays) is carried as a single `[D]` bullet in [[Quickselect]] §6 — do not spend `[P]` time on it.*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries, union-find · graph algorithms (BFS/DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, topological sort, network flow) · hashing.
+- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries, union-find · the remaining graph algorithms (**Bellman-Ford**, **Floyd-Warshall**, MST, network flow) · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -89,7 +113,10 @@ tags:
 - **W1b — the whole pipeline on one function:** [[Algorithmic Complexity]] *(§6 input vs auxiliary space)* → **[[Analysing Recursive Algorithms (Time and Auxiliary Space)]]** *(code ➔ recurrence ➔ time + space)* → [[Solving Recurrences (Telescoping)]] *(the branching row)* → [[Binary Search]] *(best $\ne$ worst)* → [[Output-Sensitive Complexity]] *(bounds carrying $W$)*
 - **W2 — prove it, then rank it:** **[[Invariant]]** *(termination + invariant)* → [[Binary Search]] *(§3 the non-termination bug)* → **[[Sorting Problem]]** *(the four-axis suite + $\Omega(N\log N)$ floor)* → **[[Counting Sort]]** *(escape the floor)* → **[[Radix Sort]]** *(escape the $M$ blow-up)*
 - **W2b — the applied sheet, recurrences then new problems:** **[[Solving Recurrences (Telescoping)]]** *(D4 $\Theta(2^{n})$ · the induction blueprint)* → [[Analysing Recursive Algorithms (Time and Auxiliary Space)]] *(the duplicate-call trap)* → [[Divide and Conquer]] *(§4 the adaptation checklist)* → **[[Counting Inversions]]** *(instrument the combine)* → **[[2D Local Maximum (Peak Finding)]]** *(shrink both axes)* → [[Fibonacci Sequence]] *(§4 doubling)*
-- **W3a — partition, then stop sorting:** **[[Quick Sort]]** *(partition, pivot, worst case)* → **[[Quickselect]]** *(recurse one side)* → [[Median of Medians]] *(the guarantee, quiz-only)*
+- **W3a — partition, then stop sorting:** **[[Quick Sort]]** *(driver, pivot policy, average case)* → **[[Partitioning (Quicksort)]]** *(three schemes $+$ Dutch flag)* → **[[Quickselect]]** *(recurse one side)* → **[[Median of Medians]]** *(the guarantee — now examinable)*
+- **W4a — the structure, then the traversal:** [[Graph]] *(directed, weighted, sparse vs dense)* → **[[Graph Representations]]** *(the bound lives here)* → **[[Uninformed Search (BFS and DFS)]]** *($\Theta(V+E)$, unweighted distance)* → **[[Dijkstra's Algorithm]]** *(queue ➔ min-heap)*
+- **W4b — order instead of distance:** [[Directed Acyclic Graph (DAG)]] *(acyclicity is the precondition)* → **[[Topological Sort]]** *(Kahn's · push-on-finish)*
+- **W4c — the W3 re-drill, applied:** **[[Quick Sort]]** *(§3b pivot rules)* → **[[Partitioning (Quicksort)]]** *(naive 3-way · $k$-partitioning)* → **[[Quickselect]]** *(§6 adaptations)* → [[Merge Sort]] *(hybrid cut-off)*
 - **W3b — the applied suite, in CD1 order:** **[[Sorting Problem]]** *(§6 stability, §8 cost terms, §9 uses)* → **[[K-way Merge]]** *(ADT swap ⟹ $\Theta(N\log k)$)* → **[[Radix Sort]]** *(§3 base choice, §5 strings)* → **[[Online Algorithm]]** *(size-$k$ heap)*
 
 ## 🎯 Learning Outcomes (key skills per week)
@@ -114,6 +141,7 @@ tags:
 	- write a termination argument as *finite domain · known start · monotone update* (`find_min`)
 	- name the **variant** that strictly decreases, and spot where it fails (`lo = mid` at $hi{=}lo{+}1$)
 	- write the invariant **first**, then code to it — minimal, data-mentioning, implies the postcondition
+	- quote it at the **end** of an iteration when the loop has no early exit — `linear_search` returns the **last** match
 	- state selection sort's two-clause invariant and insertion sort's sorted-prefix invariant
 	- rank the sorting suite on **four** axes: correctness, time (B/A/W), **auxiliary** space, stability
 	- multiply every comparison-based bound by the comparison cost $O(k)$ ⟹ $O(kN^{2})$, $O(kN\log N)$
@@ -131,8 +159,15 @@ tags:
 	- shrink **both** matrix axes for $\Theta(n)$ peak finding, and justify discarding three quadrants
 	- read $F(2k)$ and $F(2k{+}1)$ off the Fibonacci matrix power, eliminating $F(k{-}1)$
 - **W3** ➔ 
-	- distinguish Lomuto's **final pivot index** from Hoare's **split point** — and the recursive call each demands
-	- pick a partition scheme by **swap count**, and reach for 3-way once duplicates are common
+	- **state which partition contract you are using** — this unit's Hoare parks the pivot and returns its **final index** (recurse `j-1` / `j+1`); the textbook Hoare returns a **split point** that stays on the left (recurse `j` / `j+1`)
+	- rank the three schemes by **writes**, not comparisons, and reach for the 3-way Dutch flag once duplicates are common
+	- state Hoare's `L_bad`/`R_bad` invariants and the Dutch flag's **four** regions, one of which is empty at exit
+	- explain why out-of-place partitioning is **still** unstable, and give the third-buffer repair
+	- derive the average-case height from $N(\tfrac34)^{h}=1\Rightarrow h=\log_{4/3}N$, then $2h=\Theta(\log N)$ by **change of base**
+	- say why quicksort is **never** in-place even with an in-place partition — the $\Theta(\log N)$ stack is auxiliary
+	- price sort-then-slice at $O(NM\log N)+O(k)$ and say why [[Counting Sort]]/[[Radix Sort]] cannot be **assumed**
+	- show an **exact-median** pivot leaves quicksort $\Theta(N^{2})$ via $N^{2}+\tfrac{N^{2}}{2}+\tfrac{N^{2}}{4}+\dots$
+	- run [[Median of Medians]] **by hand** on groups of five and check the $30/70$ band
 	- rank pivot policies by what each removes — randomisation kills the *adversary*, [[Median of Medians]] kills the *case*
 	- show a constant-**fraction** split ($1:9$) is still $\Theta(N\log N)$; only constant-**size** splits are $\Theta(N^{2})$
 	- derive [[Quickselect]]'s $T(N)=T(N/2)+\Theta(N)=\Theta(N)$ and say where quicksort's $\log N$ went
@@ -145,3 +180,22 @@ tags:
 	- let an **in-place** requirement pick the sort — dedup needs [[Heapsort]], the only $O(1)$-auxiliary $\Theta(N\log N)$ option
 	- radix-sort ragged strings in $\Theta(n)$ *(total characters)* — length-sort ascending, then sweep with a live-window pointer
 	- `[D]` the comparison model proves $\Omega$, never $O$ — optimal comparisons $\ne$ optimal running time
+- **W4** ➔ 
+	- state $G=(V,E)$ or $G=(V,E,W)$ and declare **directed** / **weighted** / **simple**
+	- quote max edges — directed $V(V-1)$, undirected $\tfrac{V(V-1)}{2}$, both $O(V^{2})$
+	- classify a graph **sparse** or **dense** *before* quoting any bound
+	- pick matrix vs list from the operation mix, and state the resulting traversal bound
+	- derive $\Theta(V+E)$ — each vertex served once, each edge inspected twice
+	- name the $O(1)$ `discovered` flag as the reason no queue scan happens
+	- trace BFS and DFS writing **both** the `Discovered` and `Visited` rows
+	- get unweighted distance from `u.distance + 1` and the path from `v.previous`
+	- explain [[Dijkstra's Algorithm|Dijkstra]] as **dynamic programming $+$ greedy**, and where the greed dies
+	- hand-trace Dijkstra, writing every vertex's distance **estimate** at every serve
+	- derive $O((V+E)\log V)=O(E\log V)$, and place the slide's $O(V^{2}\log V)$ as the dense case
+	- prove Dijkstra correct by contradiction, pointing at the step that spends non-negativity
+	- define a **DAG** and say why acyclicity is the existence condition for an order
+	- run **Kahn's** and the **push-on-finish DFS**, detecting a cycle from a short output
+	- reject a DFS **pre-order** as a topological order, with the counterexample
+	- read a pivot rule for **proportional** reduction — minimum, $10$th percentile, mean
+	- generalise partitioning to $k$ pivots, $\Theta(n\log k)$, optimal by **reduction**
+	- adapt [[Quickselect]] to the **weighted median** and the $k$ **closest to the median**

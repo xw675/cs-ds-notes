@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: 1
+week: [1, 4]
 source: [lecture, slides]
 domain: C
 parent: "[[Data Engineering]]"
@@ -57,3 +57,8 @@ $$\text{Operational DBs} \xrightarrow{\ \text{ETL}\ } \text{Data Warehouse (cube
 > > [!SUCCESS]- Answer
 > > - **Short answer:** ETL **fills** the warehouse, OLAP **queries** it, BI **presents** the result.
 > > - **Why:** **Sequential layering** ➔ ETL is the write path from operational sources; OLAP is the read path that summarises large record sets on the fly; BI consumes OLAP output as reports, charts, dashboards and interactive navigation, feeding data analytics.
+
+> [!FAQ]- The operational database already holds every transaction. State the five reasons a warehouse is still needed.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** access, quality, precomputation, granularity, project scope.
+> > - **Why:** **1 — no direct access** ➔ operational databases normally sit behind a security wall; you send data requirements to their owner and receive **data extracts**, so the lab's local copies are a convenience, not the real topology. **2 — data and process quality** ➔ each stage of the pipeline is modularised so the output can be guaranteed ➔ [[Data Engineering]]. **3 — precomputed measures** ➔ dashboards read fact measures directly instead of re-assembling them from the operational sources. **4 — chosen granularity** ➔ star schemas at several levels of detail let a dashboard take the level it needs already computed. **5 — project-based and historical** ➔ warehousing is normally built for a project over historical data, real-time (active) warehousing being the exception.

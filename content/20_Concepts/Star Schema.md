@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: [1, 2]
+week: [1, 2, 4]
 source: [lecture, slides]
 domain: C
 parent: "[[Data Warehouse]]"
@@ -28,7 +28,7 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 
 ### 3. Dimensions
 - **Core Mechanism:** **Qualifying characteristics** ➔ perspectives added to a fact; sales viewed by sales location, sales period, sales product.
-- **Structural Invariant:** **One hop only** ➔ each dimension joins directly to the fact (that is what makes the picture a star); a dimension is not further normalised into sub-tables.
+- **Structural Invariant:** **One hop only** ➔ each dimension joins directly to the fact (that is what makes the picture a star); a dimension is not further normalised into sub-tables. **W4 exception** ➔ decomposing one dimension turns the star into a [[Snowflake Schema]] — forced when the source relationship is m–m ([[Bridge Tables]]), merely optional when it is many-1 ([[Dimension Hierarchies]]).
 
 ### 4. Attributes
 - **Core Mechanism:** **Properties in a dimension** ➔ the descriptive columns a dimension carries (a country attribute inside a student dimension; a level attribute inside a course dimension).
