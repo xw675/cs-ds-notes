@@ -28,9 +28,12 @@ aliases: [BST]
 - **Duplicate** ➔ raise, or `current.item = item` for insert-or-update (`__setitem__`).
 
 ### 3. Delete (Three Cases via Successor)
-- **Leaf** ➔ null the parent link.
-- **One child** ➔ bypass (parent points to the child).
-- **Two children** ➔ replace key/item with the **in-order successor** (one step right, then all the way left), then delete it (successor has no left child ➔ easy case).
+- **Leaf** ➔ null the parent link · **one child** ➔ bypass · **two children** ➔ replace key/item with the **in-order successor** (one step right, then all the way left), then delete it — the successor has no left child, so its removal is the easy case, and the next-largest key preserves left<root<right.
+
+### 4. Building the tree: $n$ insertions into an empty BST *(FIT2004)*
+- **Worst case $\Theta(n^2)$** ➔ feed keys **already sorted** ➔ every key descends the growing right spine, the $i$-th insertion walking $i-1$ nodes ⟹ $\sum_{i=1}^{n}\Theta(i)=\Theta(n^2)$ ([[Arithmetic Series]]).
+- **Best case $\Theta(n\log n)$** ➔ an arrival order that keeps the tree balanced ⟹ each insertion $\Theta(\log n)$.
+- **Per-op worst × $n$ is only an UPPER bound** ➔ "each insertion is $O(n)$, so $n$ of them are $O(n^2)$" is valid but does **not** establish $\Theta(n^2)$; tightness needs a **witness input** on which the worst cases genuinely co-occur, which sorted input supplies. This is the degenerate-chain failure that motivates AVL/red-black balancing.
 
 ## ⚙️ Core Implementation
 ### 🔹 Search + Insert
@@ -74,7 +77,7 @@ aliases: [BST]
 > 💡 **Common Mistake:** **A tree has no single "next" link** ➔ an external [[Iterator]] keeps its own [[Stack (ADT)]]; push right then left to emit **preorder** (the [[Recursion|recursion→explicit-stack]] conversion).
 
 ## ⚖️ Core Decision Matrix
-| Variant / Strategy | search | insert / delete | Ordered? | Cache / Note |
+| Variant / Strategy | search | insert / delete | Ordered? | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | **BST (balanced)** | $O(\log N)$ | $O(\log N)$ | **yes** | good at both; range/successor |
 | **BST (degenerate)** | $O(N)$ | $O(N)$ | yes | sorted input → [[List (ADT)\|LinkList]] stick |
@@ -82,12 +85,7 @@ aliases: [BST]
 | sorted [[List (ADT)\|linked list]] | $O(N)$ | $O(1)$ positioned | yes | fast insert, slow search |
 | [[Hash Table]] | $O(1)$ expected | $O(1)$ expected | **no** | fastest, no order/range |
 
-> [!NOTE] **When It Flips:** a BST is good at **both** search and insert/delete (binary search + constant re-link), unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).
-
-### 🔹 Building the tree: $n$ insertions into an empty BST *(FIT2004)*
-- **Worst case $\Theta(n^2)$** ➔ feed keys **already sorted** ➔ every key goes to the end of a growing chain ➔ the $i$-th insertion walks $i-1$ nodes ⟹ $\sum_{i=1}^{n}\Theta(i)=\Theta(n^2)$ ([[Arithmetic Series]]).
-- **Best case $\Theta(n\log n)$** ➔ keys arriving in an order that keeps the tree balanced ⟹ each insertion $\Theta(\log n)$.
-- **Per-op worst × $n$ is only an UPPER bound** ➔ "each insertion is $O(n)$, so $n$ of them are $O(n^2)$" is valid but does **not** establish $\Theta(n^2)$ — tightness needs a **witness input** on which the worst cases genuinely co-occur, which sorted input supplies.
+> [!NOTE] **When It Flips:** a BST is good at **both** search and insert/delete, unlike a sorted array/linked list (each wins one); vs a hash table it is slower per op but **traversable in key order** with range/predecessor/successor queries. Correctness = ops **maintain the BST invariant** (BST in ⟹ BST out).
 
 ## 📊 Exam Execution Trace
 
@@ -104,42 +102,30 @@ Insert `5, 3, 8, 4, 7`, then delete `8` (one child `7`):
 | 5 | insert 7 | `5(3(_,4), 8(7,_))` |
 | 6 | delete 8 | one child → bypass: `5(3(_,4), 7)` |
 
-### Applied Exercise
-**Problem:** Delete a node with two children while preserving the BST invariant.
-**Derivation Proof / Hand-Calculation Walkthrough:**
-$$
-\begin{aligned}
-\text{delete } x \text{ (2 children)}:\;& s = \text{in-order successor} = \min(\text{right subtree of } x) \\
-& (\text{one step right, then all the way left}) \\
-& x.\text{key} \leftarrow s.\text{key};\quad \text{delete } s \;(\text{leaf / single-right-child case})
-\end{aligned}
-$$
-**Final Extracted Output:** substituting the next-largest key preserves left<root<right; the successor has no left child, so its removal is the easy case.
-
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Insert $n$ items into an initially empty BST. Give the worst-case $\Theta$ time complexity, reasoning precisely.
 > - **Hint:** An upper bound from per-op worst cases is not enough — you must exhibit an input that attains it.
 > > [!SUCCESS]- Answer
-> > - **Upper bound** ➔ when the tree holds $i-1$ keys its height is at most $i-1$, so insertion $i$ costs $O(i)$ ⟹ total $O\!\big(\sum_{i=1}^{n} i\big)=O(n^2)$.
-> > - **Matching lower bound (the witness)** ➔ feed the keys in **strictly ascending order**: every key exceeds all present, so it descends the entire right spine, and insertion $i$ costs exactly $\Theta(i)$ ⟹ total $\sum_{i=1}^{n}\Theta(i)=\Theta\!\big(\tfrac{n(n+1)}{2}\big)=\Omega(n^2)$.
+> > - **Upper bound** ➔ with $i-1$ keys present the height is at most $i-1$, so insertion $i$ costs $O(i)$ ⟹ total $O\!\big(\sum_{i=1}^{n} i\big)=O(n^2)$.
+> > - **Matching lower bound (the witness)** ➔ feed the keys in **strictly ascending order**: every key exceeds all present, descends the entire right spine, and costs exactly $\Theta(i)$ ⟹ $\sum_{i=1}^{n}\Theta(i)=\Omega(n^2)$.
 > > - **Short answer:** upper meets lower ⟹ **worst case $\Theta(n^2)$**.
-> > - **Why:** **Worst cases must be simultaneously achievable** ➔ multiplying "$n$ insertions" by "each is $O(n)$" is a legitimate $O(n^2)$ ceiling, but a $\Theta$ claim asserts the ceiling is *reached*; sorted input is the construction that proves it, and it is the same degenerate-chain failure that motivates AVL/red-black balancing.
+> > - **Why:** **Worst cases must be simultaneously achievable** ➔ multiplying "$n$ insertions" by "each is $O(n)$" is a legitimate ceiling, but a $\Theta$ claim asserts the ceiling is *reached*; sorted input is the construction that proves it.
 
 ## 🧠 Active Recall
 > [!FAQ]- A recursive `insert_aux` that does `current = Node(key, item)` "finishes without modifying the tree" — why, and how is it fixed?
 > - **Hint:** Local rebinding vs parent-link update.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Assigning `current` only rebinds the local parameter ➔ the new node is never attached.
+> > - **Short answer:** assigning `current` only rebinds the local parameter ➔ the new node is never attached.
 > > - **Why:** **Return-and-relink** ➔ return `current` from every branch and re-assign `current.left`/`self.root` on the way back up.
 
 > [!FAQ]- How do you delete a two-child node while keeping the BST invariant, and why is the successor convenient?
 > - **Hint:** The in-order successor's structure.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Replace key/item with the **in-order successor** (min of the right subtree), then delete it.
-> > - **Why:** **No left child** ➔ the successor (next-largest key) preserves ordering and can't have a left child, so its removal is the easy leaf/single-child case.
+> > - **Short answer:** replace key/item with the **in-order successor** (min of the right subtree), then delete it.
+> > - **Why:** **No left child** ➔ the next-largest key preserves ordering and the successor cannot have a left child, so its removal is the easy leaf/single-child case.
 
-> [!FAQ]- BST ops are $O(\log N)$ best but $O(N)$ worst — what decides which, and how does a BST compare to a sorted array, sorted linked list, and hash table?
-> - **Hint:** Cost = depth; compare structural strengths.
+> [!FAQ]- BST ops are $O(\log N)$ best but $O(N)$ worst — what decides which?
+> - **Hint:** Cost = depth.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Cost $= O(\text{depth})$ — balanced $\log N$, sorted-insert stick $O(N)$; a BST is good at **both** search and insert/delete.
-> > - **Why:** **Ordered vs hash** ➔ sorted array (fast search/slow insert) and linked list (fast insert/slow search) each win one; a hash table is $O(1)$ but unordered, while a BST is traversable in sorted order with range queries.
+> > - **Short answer:** cost $= O(\text{depth})$ — balanced gives $\log N$, a sorted-insert stick gives $O(N)$.
+> > - **Why:** **Balance is the only variable** ➔ nothing about the search rule changes; only the shape the insertions produced, which is why self-balancing trees exist and why "any BST insertion" admits no single $\Theta$ ➔ [[Big-O Notation]].

@@ -1,7 +1,7 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 2, 4]
+week: [2, 3, 4]
 source: [lecture]
 parent: "[[Divide and Conquer]]"
 tags: [CS/Algorithms, CS/Search, CS/Complexity]
@@ -9,7 +9,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 # [[Binary Search]]
 
 **Context:** [[FIT1008_MOC]], [[FIT2004_MOC]] · the **decrease-and-conquer** search · contrast with [[Linear Search]] · powers `index` in [[Sorted List (ADT)|SortedArrayList]]
-**FIT2004 emphasis:** the canonical **best $\ne$ worst** example — an early return exists, so $\Omega(1)$ / $O(\log N)$ cannot be collapsed into one $\Theta$; it is the *locate* half of [[Output-Sensitive Complexity]]; and W2 makes it the unit's **termination counter-example** ➔ [[Invariant]].
+**FIT2004 emphasis:** the canonical **best $\ne$ worst** example — an early return exists, so $\Omega(1)$ / $O(\log N)$ cannot collapse into one $\Theta$; it is the *locate* half of [[Output-Sensitive Complexity]]; and W3 makes it the unit's **termination counter-example** ➔ [[Invariant]].
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** find a target in a sorted array by halving the window ➔ $\Theta(\log n)$, exponentially faster than linear search.
@@ -23,17 +23,17 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 
 ### 2. Why $\Theta(\log n)$ (the Invariant)
 - **Halving** ➔ each pass is $O(1)$ and halves the window ⟹ $n/2^b=1 \Rightarrow b=\log_2 n$ passes.
-- **Loop invariant** ➔ *if the key exists in `array[0…N]`, it exists in `array[lo…hi]`* — the `if/else` is exactly what preserves it, and it is deliberately the **weakest** statement that implies the postcondition.
-- **Best $\ne$ worst, and why** ➔ the `return mid` short-circuits ⟹ best $\Theta(1)$ (target *is* the first midpoint), worst $\Theta(\log n)$ (target absent, window shrinks to empty). Contrast [[Linear Search]]'s recursive form, which has no early exit on a miss.
+- **Loop invariant** ➔ *if the key exists in `array[0…N]`, it exists in `array[lo…hi]`* — the `if/else` is exactly what preserves it, and it is deliberately the **weakest** statement implying the postcondition.
+- **Best $\ne$ worst, and why** ➔ the `return mid` short-circuits ⟹ best $\Theta(1)$ (target *is* the first midpoint), worst $\Theta(\log n)$ (target absent). Contrast [[Linear Search]]'s recursive form, which has no early exit on a miss.
 
 ### 3. The Termination Bug (why `lo = mid` hangs)
 - **The naive form** ➔ `while lo < hi: mid = (lo+hi)//2; if key >= array[mid]: lo = mid else: hi = mid` — no early return, because `lo` is reused as the answer index.
-- **The stall** ➔ at $lo{=}5,\;hi{=}6$: $mid=\lfloor 11/2\rfloor=5$, so `lo = mid` sets $lo=5$ ⟹ **no measure decreases**, the guard stays true, the loop spins forever.
-- **The fix** ➔ `while lo < hi - 1`: since `hi` is **exclusive** (initialised to `len(array)`), the search space is allowed to shrink to size $1$ and then exit, with `lo` holding the answer index.
-- **Why it matters beyond the exam** ➔ a non-terminating branch is input-dependent, so it survives testing; in FIT2004 assignments the marking harness kills the thread on timeout and the mark is lost.
+- **The stall** ➔ at $lo{=}5,\;hi{=}6$: $mid=\lfloor 11/2\rfloor=5$, so `lo = mid` is a no-op ⟹ **no measure decreases**, the guard stays true, the loop spins forever.
+- **The fix** ➔ `while lo < hi - 1`: with `hi` **exclusive**, the space may shrink to size $1$ and exit, `lo` holding the answer index.
+- **Why it matters beyond the exam** ➔ a non-terminating branch is input-dependent, so it survives testing; the assignment harness kills the thread on timeout and the mark is lost.
 
 ### 4. Boundary Search (the range-reporting entry point)
-- **Search for the boundary, not the value** ➔ to report everything in $(X,Y)$, binary-search the **smallest element $>X$** — $X$ itself need not be in the array.
+- **Search for the boundary, not the value** ➔ to report everything in $(X,Y)$, binary-search the **smallest element $>X$** — $X$ itself need not be present.
 - **Then scan** ➔ walk forward printing until an element $\ge Y$ ⟹ $\Theta(\log n + W)$ for $W$ reported items ➔ [[Output-Sensitive Complexity]].
 
 ## ⚙️ Core Implementation
@@ -68,7 +68,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 >             hi = mid                    # keep [lo, mid)
 >     return lo if len(array) > 0 and array[lo] == key else -1
 > ```
-> 💡 **Common Mistake:** **`lo = mid` with guard `lo < hi`** ➔ at $hi = lo+1$ the midpoint *is* `lo`, so the assignment is a no-op ⟹ infinite loop. `mid + 1` or the `hi - 1` guard is what restores the strictly-decreasing variant.
+> 💡 **Common Mistake:** **`lo = mid` with guard `lo < hi`** ➔ at $hi = lo+1$ the midpoint *is* `lo`, so the assignment is a no-op ⟹ infinite loop. `mid + 1` or the `hi - 1` guard restores the strictly-decreasing variant.
 
 ## ⚖️ Core Decision Matrix
 | Aspect | Complexity | Why |
@@ -78,7 +78,7 @@ tags: [CS/Algorithms, CS/Search, CS/Complexity]
 | Space (iterative) | $O(1)$ | three indices |
 | Space (recursive) | $O(\log n)$ | call stack |
 
-> [!NOTE] **When It Flips:** vs [[Linear Search]] ($O(n)$) always better; vs [[Hash Table]] ($O(1)$ expected but unordered) binary search keeps order for predecessor/successor/range. A balanced [[Binary Tree]] is "binary search made dynamic" — $O(\log n)$ search **and** insert/delete, which a sorted array can't.
+> [!NOTE] **When It Flips:** vs [[Linear Search]] ($O(n)$) always better; vs [[Hash Table]] ($O(1)$ expected but unordered) binary search keeps order for predecessor/successor/range queries and in-order iteration. A balanced [[Binary Tree]] is "binary search made dynamic" — $O(\log n)$ search **and** insert/delete, which a sorted array ($O(n)$ inserts) cannot.
 
 ## 📊 Exam Execution Trace
 
@@ -94,35 +94,26 @@ Search `15` in `[2,5,8,12,15,23,42,50]`:
 
 ### Applied Exercise
 **Problem:** Derive the $\Theta(\log n)$ bound.
-**Derivation Proof / Hand-Calculation Walkthrough:**
 $$
-\begin{aligned}
 \text{after } b \text{ passes: } \frac{n}{2^b} \text{ candidates} \;\Rightarrow\; \frac{n}{2^b}=1 \;\Rightarrow\; b = \log_2 n \;\Rightarrow\; \Theta(\log n)
-\end{aligned}
 $$
-**Final Extracted Output:** halving ⟹ $\log_2 n$ passes of $O(1)$ ⟹ $\Theta(\log n)$ — vs linear search's $O(n)$.
+**Final Extracted Output:** halving ⟹ $\log_2 n$ passes of $O(1)$ ⟹ $\Theta(\log n)$ — vs [[Linear Search]]'s $O(n)$, i.e. ~20 vs 1,000,000 passes on a million elements.
 
 ## 🧠 Active Recall
-> [!FAQ]- Why is binary search $\Theta(\log n)$, and why is that exponentially better than linear search?
-> - **Hint:** Halving vs decrementing the candidate set.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** Each pass discards half ⟹ $n/2^b=1$ gives $b=\log_2 n$ passes of $O(1)$.
-> > - **Why:** **Halve vs decrement** ➔ [[Linear Search]] eliminates one element per step ($O(n)$) — ~20 vs 1,000,000 passes for a million elements.
-
 > [!FAQ]- Binary search needs sorted data in an array — why each requirement, and what structure relaxes them while keeping $O(\log n)$?
 > - **Hint:** Order justifies discarding; array gives the midpoint.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** **Sorted** lets you discard a half; **array** gives $O(1)$ midpoint access.
-> > - **Why:** **Dynamic version** ➔ a balanced [[Binary Tree]] keeps $O(\log n)$ search *and* $O(\log n)$ insert/delete, which a sorted array ($O(n)$ inserts) cannot.
+> > - **Short answer:** **sorted** lets you discard a half; **array** gives $O(1)$ midpoint access.
+> > - **Why:** **Dynamic version** ➔ a balanced [[Binary Tree]] keeps $O(\log n)$ search *and* $O(\log n)$ insert/delete, which a sorted array cannot.
 
 > [!FAQ]- Binary search is $\Theta(\log n)$; a hash table is $O(1)$ expected — when would you still choose binary search?
 > - **Hint:** Ordered operations.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** When you need predecessor/successor, range queries, or in-order iteration.
+> > - **Short answer:** when you need predecessor/successor, range queries, or in-order iteration.
 > > - **Why:** **Order preservation** ➔ binary search/BSTs keep key order; hashing scatters keys ($O(n\log n)$ to recover sorted order).
 
 > [!FAQ]- "The window shrinks every iteration, so it terminates." Where does that argument fail?
 > - **Hint:** Shrinks, or *strictly* shrinks?
 > > [!SUCCESS]- Answer
-> > - **Short answer:** With `lo = mid` and $hi = lo+1$, the midpoint equals `lo`, so the window does **not** shrink and the loop never exits.
+> > - **Short answer:** with `lo = mid` and $hi = lo+1$, the midpoint equals `lo`, so the window does **not** shrink and the loop never exits.
 > > - **Why:** **A variant must strictly decrease** ➔ termination needs $hi-lo$ to drop by at least $1$ every iteration; use `lo = mid + 1`, or guard with `while lo < hi - 1` given an **exclusive** `hi` ➔ [[Invariant]].

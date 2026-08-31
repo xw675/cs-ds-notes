@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 domain: A
-week: 3
+week: 4
 source: [lecture]
 parent: "[[Quickselect]]"
 tags: [CS/Algorithms, CS/Complexity]
@@ -77,7 +77,7 @@ Find the MoM pivot of `12, 3, 45, 7, 19, 22, 8, 31, 1, 27, 14, 40, 5, 25, 33` ($
 
 ## ⚠️ Common Mistakes
 - 💡 **Forgetting the recursive call** ➔ finding the median of the $\lceil N/5\rceil$ medians is itself a selection problem; scanning or sorting them instead costs $\Theta(N\log N)$ and destroys the linear bound.
-- 💡 **Selling it as "faster quickselect"** ➔ it is strictly **slower** on typical input; the deliverable is the removal of the $\Theta(N^{2})$ tail, nothing else.
+- 💡 **Selling it as "faster quickselect"** ➔ it is strictly **slower** on typical input; the deliverable is converting an **expected** bound into a **worst-case** one ([[Algorithmic Complexity]]) by removing the $\Theta(N^{2})$ tail, nothing else.
 - 💡 **Claiming the pivot is the true median** ➔ it is only guaranteed to lie in the middle $40\%$ — a **constant-fraction** split, which is all the recurrence needs.
 
 ## 🧠 Active Recall
@@ -98,9 +98,3 @@ Find the MoM pivot of `12, 3, 45, 7, 19, 22, 8, 31, 1, 27, 14, 40, 5, 25, 33` ($
 > > [!SUCCESS]- Answer
 > > - **Short answer:** **Co-recursion** with a shared base case: at $N\le5$ the median is read off an insertion sort with no further calls.
 > > - **Why:** **Both arguments strictly shrink** ➔ `median_of_medians` hands `quickselect` a list of $\lceil N/5\rceil$ medians, and `quickselect` hands back a range of at most $\tfrac{7N}{10}$; every round is smaller, so the $N\le5$ guard is reached ➔ [[Invariant]] (termination is the co-equal obligation).
-
-> [!FAQ]- A random pivot already gives $\Theta(N)$ expected time. What does [[Median of Medians]] actually buy?
-> - **Hint:** Name what an expectation does not rule out.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** It converts a claim about the **average over pivot choices** into a claim about **every** run on **every** input.
-> > - **Why:** **Expected $\ne$ bounded** ➔ randomisation stops an adversary from *constructing* a bad input, but an unlucky sequence of pivots is still possible; a deterministic $30/70$ guarantee removes the bad case from the algorithm rather than from the input distribution ➔ [[Algorithmic Complexity]].

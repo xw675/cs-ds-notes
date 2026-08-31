@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W4; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W5; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -75,7 +75,6 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Bound yielded | closed form ⟹ $\Theta$ | $O$ only |
 | Assessment | **required** | supplementary |
 
-
 | Recurrence | Depth $k$ | Accumulates | Closed form |
 | :--- | :--- | :--- | :--- |
 | $T(N)=T(N-1)+c$ | $N-1$ | $k$ constants | $\Theta(N)$ |
@@ -95,7 +94,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **"Prove by induction" is a DIFFERENT question from Step 6b** `[C]` ➔ the closed form is given, so nothing is telescoped; produce base $+$ cited hypothesis $+$ step, inducting over the domain ($T(2m)$, not $T(m{+}1)$) ➔ §2️⃣.
 - 🔭 **Master Theorem** *(supplementary — see the scope table above)* ➔ for $T(n)=aT(n/b)+\Theta(n^{d})$: $d<\log_b a\Rightarrow\Theta(n^{\log_b a})$ · $d=\log_b a\Rightarrow\Theta(n^{d}\log n)$ · $d>\log_b a\Rightarrow\Theta(n^{d})$ **· precondition:** the argument must shrink **multiplicatively**; applying it to $T(n-1)$ yields a wrong answer, not just an unjustified one.
 
-## 4️⃣ Recursive Time **and** Space in One Pass (W1)
+## 4️⃣ Recursive Time **and** Space in One Pass (W2)
 **Protocol** `[P]`**:** read $a$ (recursive calls) + argument shrink + per-call work → recurrence → telescope for **time**; take the same depth $k$ → **auxiliary space** ➔ [[Analysing Recursive Algorithms (Time and Auxiliary Space)]].
 
 - **Auxiliary space $=\Theta(\text{max stack depth})$** `[P]` ➔ **never** $\Theta(\text{total calls})$ **· precondition:** siblings run sequentially — one root-to-leaf frame chain is live at a time.
@@ -117,7 +116,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Discarding subproblems needs an EXISTENCE claim** `[C]` ➔ "a peak of $M$ lies inside the kept quadrant, because a strictly-increasing walk from $y$ can never re-cross the cross" **· precondition:** the claim is about the *kept* region containing an answer, not about the discarded ones being empty — that is the marked sentence.
 - **Two identical recursive calls are a common subexpression** `[P]` ➔ `POW(x,p/2)*POW(x,p/2)` is $2T(p/2)+c=\Theta(p)$; `y = POW(x,p/2); return y*y` is $T(p/2)+c=\Theta(\log p)$ **· consequence:** halving bounds the tree's **height**, branching fills it — $\Theta(2^{\log_2 p})=\Theta(p)$ nodes. Same trap in Fibonacci fast doubling.
 
-## 6️⃣ W1 Algorithm Bounds
+## 6️⃣ W1–W2 Algorithm Bounds
 | Algorithm | Recurrence | Time (B/A/W) | Auxiliary space | Discriminator |
 | :--- | :--- | :--- | :--- | :--- |
 | Schoolbook multiply | — | $\Theta(n^{2})$ all | $\Theta(n)$ | every digit pair |
@@ -145,7 +144,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Asymptotic win ≠ faster in practice** `[C]` ➔ a lower exponent bought with extra additions/shifts carries a large constant, so the "worse" algorithm wins on small $n$ **· consequence:** an asymptotic claim is never a claim about a particular input size.
 - **Merge stability** `[C]` ➔ the tie-break `a[ia] <= a[ib]` emits from the **left** half **· precondition:** strict `<` breaks stability.
 
-## 7️⃣ Proof of Correctness (W2)
+## 7️⃣ Proof of Correctness (W3)
 > [!warning] Correctness is **two** obligations. An invariant with no termination argument proves only *partial* correctness; a termination argument with no invariant proves only that it stops — possibly with the wrong answer.
 
 - **The answer template** `[P]` ➔ *(1)* loop invariant, quantified over the counter · *(2)* termination: the measure that **strictly** decreases · *(3)* one line: invariant $\wedge\ \neg\text{guard}\Rightarrow$ postcondition **· precondition:** the invariant must mention the **data**, not just the counter — "`i` increases" is not an invariant.
@@ -164,7 +163,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 
 - **The `lo = mid` hang** `[P]` ➔ at $lo{=}5,hi{=}6$: $mid=5$, so `lo = mid` is a **no-op** ⟹ never terminates **· fix:** `mid + 1`, or guard `while lo < hi - 1` with an **exclusive** `hi = len(array)` so the space shrinks to size $1$.
 
-## 8️⃣ Sorting — the Four-Axis Suite (W2)
+## 8️⃣ Sorting — the Four-Axis Suite (W3)
 > [!warning] Rank every sort on **correctness · time (B/A/W) · auxiliary space · stability**. Two multipliers are dropped constantly: the $O(k)$ comparison cost and the recursion stack.
 
 - **$\Omega(N\log N)$ is a claim about a CLASS** `[P]` ➔ it binds **comparison-based** sorts only **· consequence:** [[Merge Sort]]/[[Heapsort]] are *provably optimal* there; [[Counting Sort]]/[[Radix Sort]] escape it by assuming **bounded integer keys**, not by beating it.
@@ -199,8 +198,8 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Bucket drain must be $O(1)$** `[C]` ➔ `extend()`, never `pop(0)` (shifts, $O(n)$ each ⟹ $\Theta(N^{2})$ rebuild) **· alternative:** circular queue / deque if FIFO removal is genuinely required.
 - **Which counting-sort variant?** `[P]` ➔ unstated ⟹ **bucket** variant; a question naming a **count array *and* a position array** wants the prefix-sum variant — that pairing is its signature (PT-01).
 
-## 9️⃣ Quicksort, Selection and the Applied Suite (W3)
-> [!warning] Every W3 bound is a pair: an **expected** value and a **worst case** that differ. An answer that quotes one without naming which is unmarkable ➔ §1️⃣ *bound ≠ case*.
+## 9️⃣ Quicksort, Selection and the Applied Suite (W3 applied · W4 lecture)
+> [!warning] Every W4 bound is a pair: an **expected** value and a **worst case** that differ. An answer that quotes one without naming which is unmarkable ➔ §1️⃣ *bound ≠ case*.
 
 - **Partition contracts differ — and so do the calls** `[P]` ➔ **Lomuto** returns the pivot's **final index** $j$ ⟹ recurse `(start, j-1)` and `(j+1, end)` · **this unit's Hoare** parks the pivot at the front and swaps it to `R_bad`, so it *also* returns the pivot's **final index** ⟹ same calls · the **textbook** Hoare never parks the pivot and returns a **split point** that must be **included** on the left ⟹ `(start, j)` and `(j+1, end)` **· precondition:** say which contract you are using before you recurse — mixing them silently drops or duplicates an element ➔ [[Partitioning (Quicksort)]].
 - **Schemes differ in WRITES, not comparisons** `[C]` ➔ all make $\Theta(N)$ comparisons per level; Hoare swaps **each item at most once** (one swap repairs two), $\approx3\times$ fewer than Lomuto **· consequence:** the choice matters when records are large, not when keys are integers.
@@ -210,11 +209,10 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **3-way (Dutch flag) for duplicates** `[C]` ➔ split into $<,=,>$ and recurse on the outer two ⟹ depth $O(\log d)$ for $d$ distinct keys, $\Theta(N)$ on all-equal input **· precondition:** a 2-way split can never retire equal keys, so they recur forever.
 - **Dutch flag invariants** `[P]` ➔ `[1 … boundary1-1]` $<p$ · `[boundary1 … j-1]` $=p$ · `[boundary2+1 … N]` $>p$ · `[j … boundary2]` unprocessed, empty at exit `j > boundary2` **· gotcha:** the $>p$ branch must **not** advance `j` — the item swapped in is unexamined.
 - **Average-case height by the green-area argument** `[P]` ➔ a pivot lands in the middle half with probability $\tfrac12$; the worst such split leaves $\tfrac{3N}{4}$ ⟹ $N(\tfrac34)^{h}=1\Rightarrow h=\log_{4/3}N$, average depth $\approx2h$ **· closer:** change of base $\log_a N=\log_b N/\log_b a$ ⟹ $2\log_{4/3}N=\Theta(\log N)$, $\times\,\Theta(N)$ per level $=\Theta(N\log N)$.
-- **Quicksort is NEVER in-place** `[P]` ➔ lecturer-flagged: even with an in-place partition the recursion depth is $\ge\Theta(\log N)$ and live frames are auxiliary space **· consequence:** "in-place partition" and "in-place sort" are different claims; only [[Heapsort]] is the latter.
 - **Average case from the recurrence** `[D]` ➔ *(lecturer-flagged **NOT EXAMINABLE**)* $T_k(N)=(N{+}1)+T(N{-}k)+T(k{-}1)$, average over $k$ ⟹ $N T(N)=2N+(N{+}1)T(N{-}1)$ ⟹ $T(N)=2+\tfrac{N+1}{N}T(N{-}1)$ ⟹ $2+b(N{+}1)+2(N{+}1)\ln N=O(N\log N)$ **· the two moves:** subtract the $(N{-}1)$ instance to kill the sum, bound the harmonic tail by $\int_1^N\!\tfrac{dx}{x}$.
-- **Constant-FRACTION splits are still $\Theta(N\log N)$** `[P]` ➔ a fixed $1:9$ split gives depth $\log_{10/9}N=\Theta(\log N)$ **· consequence:** $\Theta(N^{2})$ needs a constant-**size** split at *every* level, not merely an unbalanced one.
-- **Randomisation vs guarantee** `[P]` ➔ a random pivot makes the bad input **unconstructible** (expected $\Theta(N\log N)$, worst case still $\Theta(N^{2})$); [[Median of Medians]] makes it **impossible** (worst case $\Theta(N\log N)$) **· precondition:** name which claim you are making — this is the W3 exam hinge.
-- **Quicksort auxiliary space is $O(N)$ worst, $O(\log N)$ if engineered** `[P]` ➔ recurse the **smaller** partition first and loop on the larger ⟹ depth $\le\log_2 N$ regardless of pivot quality.
+- **A pivot rule is judged on FRACTION, not balance** `[P]` ➔ a fixed $1{:}9$ split gives depth $\log_{10/9}N=\Theta(\log N)$, and even a $10$th-percentile pivot ($0.9^{k}n=1$) is $\Theta(n\log n)$ **· consequence:** $\Theta(N^{2})$ needs a constant-**size** split at *every* level — a minimum-element pivot gives $T(N)=T(N-1)+\Theta(N)=\Theta(N^{2})$ for **every** input (best $=$ worst).
+- **Randomisation vs guarantee** `[P]` ➔ a random pivot makes the bad input **unconstructible** (expected $\Theta(N\log N)$, worst case still $\Theta(N^{2})$); [[Median of Medians]] makes it **impossible** (worst case $\Theta(N\log N)$) **· precondition:** name which claim you are making — this is the W4 exam hinge.
+- **Quicksort is NEVER in-place; auxiliary is $O(N)$ worst, $O(\log N)$ if engineered** `[P]` ➔ lecturer-flagged: even with an in-place partition the live frames are auxiliary space, so "in-place partition" and "in-place sort" are different claims (only [[Heapsort]] is the latter) **· fix:** recurse the **smaller** partition first and loop on the larger, giving depth $\le\log_2 N$ regardless of pivot quality.
 - **Quicksort stability "depends on the partition"** `[C]` ➔ in-place swapping is unstable; an **out-of-place** partition preserving input order is stable at $\Theta(N)$ per level.
 - **Sort-then-slice is the baseline to beat** `[P]` ➔ $O(NM\log N)+O(k)$ with $M$ the **comparison cost** **· precondition:** [[Counting Sort]] needs a capped key range and [[Radix Sort]] a capped key width — neither may be **assumed**, so the $\log N$ stands.
 - **$k$-th order statistics $=$ the quartile family** `[C]` ➔ $Q_1$ at $k=N/4$ · median at $k=N/2$ · $Q_3$ at $k=3N/4$ **· consequence:** one algorithm answers all of them.
@@ -222,7 +220,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **An exact-median pivot does NOT fix quicksort** `[D]` ➔ finding it with [[Quickselect]] costs $\Theta(N^{2})$ worst case, so the level sum is $N^{2}+\tfrac{N^{2}}{2}+\tfrac{N^{2}}{4}+\dots=2N^{2}=\Theta(N^{2})$ **· consequence:** a *perfect* split is worthless if the pivot search is quadratic; a merely $30/70$ pivot found in linear **worst-case** time is what closes it.
 - **[[Quickselect]] $=$ quicksort minus one call** `[P]` ➔ after partition at $j$: $j=k$ return · $k<j$ recurse left · $k>j$ recurse right, $k$ **unchanged** under absolute indices **· consequence:** level costs become $N,\tfrac N2,\tfrac N4,\dots$ ⟹ [[Geometric Series]] $r=\tfrac12$ ⟹ $\Theta(N)$ expected.
 - **Quickselect is $O(1)$ auxiliary, quicksort is not** `[C]` ➔ the single call is a **tail** call ⟹ rewritable as a `while` over `lo`/`hi` **· precondition:** quicksort's first call has work pending after it, so its frames stay live.
-- **[[Median of Medians]] recurrence** `[P]` ➔ $T(N)=T(N/5)+T(7N/10)+cN$ with $\tfrac15+\tfrac7{10}=\tfrac9{10}<1\Rightarrow\Theta(N)$ **· precondition:** the fractions must sum to **strictly** less than $1$ — groups of $3$ give $\tfrac13+\tfrac23=1\Rightarrow\Theta(N\log N)$. *Scope: the W3 deck **strikes** the old "not examinable" and writes **examinable from 2023 onwards** — treat it as a hand skill.*
+- **[[Median of Medians]] recurrence** `[P]` ➔ $T(N)=T(N/5)+T(7N/10)+cN$ with $\tfrac15+\tfrac7{10}=\tfrac9{10}<1\Rightarrow\Theta(N)$ **· precondition:** the fractions must sum to **strictly** less than $1$ — groups of $3$ give $\tfrac13+\tfrac23=1\Rightarrow\Theta(N\log N)$. *Scope: the W4 deck **strikes** the old "not examinable" and writes **examinable from 2023 onwards** — treat it as a hand skill.*
 - **MoM by hand** `[P]` ➔ groups of $5$ → insertion-sort each ($O(1)$) → read its median → **quickselect** the median of those medians → partition on it **· base case:** $N\le5$ ⟹ insertion-sort and return the median directly.
 - **The $30\%$ derivation** `[P]` ➔ half the $\tfrac N5$ group medians are $\le M$, each contributing $3$ of its $5$ ⟹ $\tfrac12\cdot\tfrac N5\cdot3=\tfrac{3N}{10}$ on each side ⟹ $M$ lies in the **middle $40\%$**, worst split $70{:}30$.
 - **Co-recursion** `[C]` ➔ `median_of_medians` calls `quickselect`, which calls `median_of_medians` for its pivot **· termination:** both arguments strictly shrink ($\tfrac N5$ and $\tfrac{7N}{10}$) and the $N\le5$ guard is the shared base case.
@@ -245,7 +243,6 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **The comparison model proves $\Omega$, NEVER $O$** `[D]` ➔ insertion sort with a [[Binary Search]] insertion point makes $\Theta(N\log N)$ comparisons — optimal — yet runs in $\Theta(N^{2})$ because it still **shifts** **· consequence:** an optimal comparison count is not an optimal running time; use the model for lower bounds only.
 - **"In-place" is a claim about the COST MODEL** `[D]` ➔ the unit's $O(1)$ auxiliary means $O(1)$ **machine words**; under strict RAM accounting, indexing $n$ elements needs $\Theta(\log n)$-bit pointers, so the definition is relaxed to $O(\log n)$, or $O(1)$ excluding pointers, or $o(n)$ **· precondition:** say which you mean before claiming in-place.
 
-- **A pivot rule is judged on FRACTION, not balance** `[P]` ➔ minimum-element pivot ⟹ $T(N)=T(N-1)+\Theta(N)=\Theta(N^{2})$ for **every** input (best $=$ worst) · $10$th-percentile pivot ⟹ $0.9^{k}n=1\Rightarrow k=\log_{10/9}n=\Theta(\log n)$ ⟹ still $\Theta(n\log n)$ **· consequence:** even a $1\%$ split is $\Theta(n\log n)$; only a constant-**size** split is quadratic.
 - **The MEAN is not the median** `[D]` ➔ pivoting on the element closest to the average is $\Theta(n^{2})$ on $a_{i}=i!$, where $\frac1n\sum i!\ge\frac{n!}{n}=(n-1)!$ picks the **second-largest** element ⟹ $T(n)=T(n-2)+\Theta(n)$ **· general lesson:** any [[Divide and Conquer]] rule without a **guaranteed proportional** reduction has no logarithmic depth.
 - **Naive 3-way (out-of-place) partition groups duplicates; Hoare's scatters them** `[C]` ➔ on `[7,1,12,9,3,3,10,6,7,14,4]` with pivot $7$: naive gives `[1,3,3,6,4,7,7,12,9,10,14]`, Hoare's gives `[6,1,4,7,3,3,7,10,9,14,12]` **· consequence:** this is the exact gap the Dutch national flag scheme was designed to close.
 - **$k$-partitioning** `[C]` ➔ sequential 2-way partitions on $p_1,\dots,p_k$ ⟹ $\Theta(nk)$; pivot on the **middle** pivot and recurse on both halves ⟹ $\Theta(n\log k)$ **· optimality by reduction:** $k=n$ turns it into sorting ⟹ $\Omega(n\log k)$ ➔ [[Partitioning (Quicksort)]] §6.
@@ -263,7 +260,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Lomuto's | 1 swap per item $<p$, many redundant | $O(1)$ | pivot's final index | No | writing it correctly under exam time |
 | Dutch flag (3-way) | 1 swap per misplaced item | $O(1)$ | **two** boundaries | No | duplicates common ⟹ $d\ll N$ |
 
-| W3 algorithm | Time (B/A/W) | Auxiliary space | Online? | Discriminator |
+| W4 algorithm | Time (B/A/W) | Auxiliary space | Online? | Discriminator |
 | :--- | :--- | :--- | :--- | :--- |
 | [[Quick Sort]] (random pivot) | $\Theta(N\log N)$ / $\Theta(N\log N)$ / $\Theta(N^{2})$ | $O(\log N)$ smaller-first · $O(N)$ naive | No | smallest constant of the $\Theta(N\log N)$ sorts |
 | [[Quick Sort]] $+$ [[Median of Medians]] | $\Theta(N\log N)$ all | $O(\log N)$ | No | worst case **eliminated**, large constant |
@@ -274,8 +271,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | [[K-way Merge]] (scan heads) | $\Theta(Nk)$ all | $\Theta(k)$ | Yes | only for $k\lesssim4$ |
 | Size-$k$ heap ➔ [[Online Algorithm]] | $\Theta(N\log k)$ all | $\Theta(k)$ | **Yes** | $N$ unknown/unbounded, or a memory cap |
 
-
-## 🔟 Graphs, Traversal and Shortest Paths (W4)
+## 🔟 Graphs, Traversal and Shortest Paths (W5)
 > [!warning] Every graph bound carries **two** parameters. $\Theta(V+E)$ means $\Theta(V)$ on a sparse graph and $\Theta(V^{2})$ on a dense one, and it is an **adjacency-list** bound — the same code on a matrix is $\Theta(V^{2})$. Name the density and the representation, or the bound is unmarkable ➔ §1️⃣ *bound ≠ case*.
 
 - **Definitions** `[P]` ➔ $G=(V,E)$ · edge $e=(u,v)$, **directed** ⟹ from $u$ to $v$ · **weighted** ⟹ $e=(u,v,w)$ and $G=(V,E,W)$ · **simple** ⟹ no self-edges (loops) and no multi-edges **· precondition:** every FIT2004 algorithm assumes simple unless told otherwise.

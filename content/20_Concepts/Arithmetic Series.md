@@ -18,18 +18,16 @@ tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 
 ## 📝 Core
 ### 1. The Series (Constant Difference)
-- **General sum** ➔ from first term $a$, $n$ terms: $S_n=na+\frac{n(n-1)}{2}d$.
-- **Algorithm-analysis case** ➔ $1+2+\dots+(n-1)=\frac{n(n-1)}{2}=\frac{n^2-n}{2}=\Theta(n^2)$.
+- **General sum** ➔ from first term $a$, $n$ terms: $S_n=na+\frac{n(n-1)}{2}d$; the $na$ term is linear, $\frac{n(n-1)}{2}d$ **quadratic**, and the sign of $d$ decides $S_n\to\pm\infty$.
+- **Algorithm-analysis case** ➔ $1+2+\dots+(n-1)=\frac{n(n-1)}{2}=\Theta(n^2)$.
 - **Gauss pairing** ➔ $1+(n-1)=2+(n-2)=\dots=n$, over $\tfrac{n-1}{2}$ pairs.
 
 ### 2. Reverse-and-Add (FIT1058)
-- **Method** ➔ write $S_n$ forwards and backwards, aligned ➔ every column sums to $2a+(n-1)d$.
-- **Result** ➔ $2S_n=n(2a+(n-1)d) \Rightarrow S_n=n\cdot\frac{a+(a+(n-1)d)}{2}$.
-- **Dominant term** ➔ $na$ linear, $\frac{n(n-1)}{2}d$ **quadratic** ➔ sign of $d$ decides $S_n\to\pm\infty$.
+- **Method** ➔ write $S_n$ forwards and backwards, aligned ➔ every column sums to $2a+(n-1)d$ ⟹ $2S_n=n(2a+(n-1)d)$.
 
 ### 3. Which Series a Loop Generates
-- **Arithmetic** $\sum k=\Theta(n^2)$ ➔ nested loops whose inner count shrinks by one.
-- **Geometric** $\sum 2^i=2^{k+1}-1$ ➔ [[Binary Tree]] node counts, $\log n$ height.
+- **Arithmetic** $\sum k=\Theta(n^2)$ ➔ nested loops whose inner count shrinks by one (quadratic sorts).
+- **Geometric** $\sum 2^i=2^{k+1}-1$ ➔ [[Binary Tree]] node counts, branching structures ➔ [[Geometric Series]].
 
 ## ⚖️ Core Decision Matrix
 | Sum | Closed form | Order |
@@ -39,7 +37,7 @@ tags: [Math/Discrete, CS/Complexity, Math/Sequences]
 | $\sum_{i=0}^{k} 2^i$ ([[Geometric Series]]) | $2^{k+1}-1$ | $\Theta(2^k)$ |
 | $\sum_{k=1}^{n} k^2$ | $\dfrac{n(n+1)(2n+1)}{6}$ | $\Theta(n^3)$ |
 
-> [!NOTE] **When It Flips:** the constant $\tfrac12$ and lower-order $-\tfrac n2$ drop under [[Big-O Notation]], leaving $\Theta(n^2)$ — but the **exact** closed form is needed for tight constants or off-by-one correctness.
+> [!NOTE] **When It Flips:** the constant $\tfrac12$ and lower-order $-\tfrac n2$ drop under [[Big-O Notation]], leaving $\Theta(n^2)$ — but the **exact** closed form is needed for tight constants or off-by-one correctness (whether a sum runs to $n$ or $n-1$ changes the count).
 
 ## 📊 Exam Execution Trace
 
@@ -55,7 +53,7 @@ Counting a shrinking nested loop, $n=5$:
 | 4 | 4 | 1 | $10=\frac{5\cdot4}{2}$ |
 
 ## ⚠️ Common Mistakes
-- 💡 **Shrinking inner count is still $\Theta(n^2)$** ➔ not $\Theta(n)$; a sum of $\Theta(n)$ terms each averaging $\Theta(n)$ is quadratic.
+- 💡 **Shrinking inner count is still $\Theta(n^2)$** ➔ not $\Theta(n)$; $\Theta(n)$ terms each averaging $\Theta(n)$ is quadratic, even though no single pass does $n$ work.
 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Prove $\sum_{i=1}^{n}i=\frac{n(n+1)}{2}$ for $n\ge1$ by induction.
@@ -65,23 +63,11 @@ Counting a shrinking nested loop, $n=5$:
 > > - **Hypothesis:** assume $\sum_{i=1}^{k}i=\frac{k(k+1)}{2}$ for some $k\ge1$.
 > > - **Step:** $$\sum_{i=1}^{k+1}i=\frac{k(k+1)}{2}+(k+1)=\frac{k(k+1)+2(k+1)}{2}=\frac{(k+1)(k+2)}{2}$$ which is the claim at $n=k+1$.
 > > - **Short answer:** basis and step hold ⟹ true for all $n\ge1$. **Q.E.D.**
-> > - **Why:** **Factor, don't expand** ➔ pulling out $(k+1)$ lands the target form directly; multiplying out to $\frac{k^2+3k+2}{2}$ then re-factoring is the same work done twice.
+> > - **Why:** **Factor, don't expand** ➔ pulling out $(k+1)$ lands the target form directly; expanding to $\frac{k^2+3k+2}{2}$ then re-factoring is the same work twice.
 
 ## 🧠 Active Recall
-> [!FAQ]- A nested loop's inner count shrinks by one each pass — why is it $\Theta(n^2)$, not $\Theta(n)$, and what is the exact count?
-> - **Hint:** A shrinking sum is still quadratic.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** Total iterations $=(n-1)+\dots+1=\frac{n(n-1)}{2}=\Theta(n^2)$.
-> > - **Why:** **Averaging** ➔ $\Theta(n)$ terms each averaging $\Theta(n)$ ⟹ quadratic, even though no single pass does $n$ work.
-
 > [!FAQ]- Match each series to the algorithm class it powers: arithmetic vs geometric.
 > - **Hint:** Series shape ↔ cost shape.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Arithmetic $\sum k=\Theta(n^2)$ → quadratic sorts; geometric $\sum 2^i=2^{k+1}-1$ → tree node counts / $\log n$ height.
+> > - **Short answer:** arithmetic $\sum k=\Theta(n^2)$ → quadratic sorts and shrink-by-one recurrences; geometric $\sum 2^i=2^{k+1}-1$ → tree node counts / $\log n$ height.
 > > - **Why:** **Loop geometry** ➔ linear-shrink inner loops sum arithmetically; branching structures sum geometrically.
-
-> [!FAQ]- When is the *closed form* needed rather than just the $\Theta$ order?
-> - **Hint:** Constants and off-by-one.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** For exact constants, tight proof bounds, or off-by-one loop reasoning.
-> > - **Why:** **Order hides constants** ➔ two $\Theta(n^2)$ algorithms differ by leading coefficient; whether a sum runs to $n$ or $n-1$ changes the exact count.

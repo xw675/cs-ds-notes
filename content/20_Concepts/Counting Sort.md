@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 domain: A
-week: [2, 3]
+week: 3
 source: [lecture, applied]
 parent: "[[Sorting Problem]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity]
@@ -14,38 +14,37 @@ aliases: [Count Sort, Bucket Count Sort]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** use each key as an **array index** into a frequency table ➔ sort in $\Theta(N+M)$ with **zero comparisons**, beating the comparison lower bound.
 > - **📦 Core Components:** **max scan** $\Theta(N)$ | **count array** size $M{+}1$ | **tally** $\Theta(N)$ via $O(1)$ indexing | **rebuild** $\Theta(N+M)$.
-> - **⚡ Key Constraint:** $M$ is the **key range**, not the item count ➔ one huge value inflates $M$ and both time and space; the sort is only a win when $M \ll N$.
+> - **⚡ Key Constraint:** $M$ is the **key range**, not the item count ➔ one huge value inflates $M$ and both time and space; only a win when $M \ll N$.
 
 ## 📝 How It Works
 ### 1. Why It Escapes the Comparison Bound
-- **No comparisons** ➔ the key *is* the address — `count[key] += 1` never asks "$a<b$?" ⟹ the $\Omega(N\log N)$ floor for [[Sorting Problem|comparison sorts]] simply does not apply.
+- **No comparisons** ➔ the key *is* the address — `count[key] += 1` never asks "$a<b$?" ⟹ the $\Omega(N\log N)$ floor for [[Sorting Problem|comparison sorts]] does not apply; the decision-tree argument behind it never gets started.
 - **Precondition** ➔ keys must be **non-negative integers in a bounded range** $[0, M]$ that index an array in $O(1)$; arbitrary orderable objects do not qualify.
 
 ### 2. The Four Phases
 - **Phase 1 — find max** ➔ one linear scan gives $M=\max(\text{input})$ ⟹ $\Theta(N)$; you cannot allocate before you know the range.
 - **Phase 2 — allocate count** ➔ zero-filled array of length $M{+}1$, position $v$ holds $\text{freq}(v)$ ⟹ $\Theta(M)$.
-- **Phase 3 — tally** ➔ for each item, `count[item] += 1` ⟹ $\Theta(N)$, **because** array access is $O(1)$; that $O(1)$ is the whole trick.
+- **Phase 3 — tally** ➔ `count[item] += 1` ⟹ $\Theta(N)$, **because** array access is $O(1)$; that $O(1)$ is the whole trick.
 - **Phase 4 — rebuild** ➔ walk `count` left→right emitting value $v$ exactly $\text{count}[v]$ times ⟹ $\Theta(N+M)$ — $M$ cells visited, $N$ items written.
 
 ### 3. Stability Is Not Free
-- **Naive version is UNSTABLE** ➔ storing only a frequency **discards item identity**; the emitted items are freshly manufactured copies of the key, so the payload attached to equal keys is lost/reordered.
-- **Fix A — chained buckets** ➔ store the *items* in a list per slot (the [[Hash Table|separate-chaining]] shape) and append in input order ⟹ stable.
-- **Space of Fix A is $\Theta(M+N)$, NOT $\Theta(M\cdot N)$** ➔ the buckets partition the input, so **all buckets together hold exactly $N$ items** — the $M$ slots and the $N$ payloads add, never multiply.
-- **Fix B — position (prefix-sum) array** ➔ turn counts into starting offsets, then place items in a single input-order pass ⟹ stable with a flat $\Theta(M+N)$ array, no lists ➔ §4.
-- **Which variant does the question want?** ➔ **unstated ⟹ buckets** (simpler, and correct across the repeated passes of [[Radix Sort]]); a question naming a **count array *and* a position array** is asking for Fix B — that pairing is the non-bucket variant's signature.
-- **Bucket drain must be $O(1)$ per item** ➔ concatenate with `extend()` (amortised $O(1)$), never `pop(0)`, which shifts the whole list at $O(n)$ per item and silently turns the rebuild into $\Theta(N^{2})$; a circular queue / deque restores $O(1)$ front removal if FIFO order must be popped rather than copied.
+- **Naive version is UNSTABLE** ➔ storing only a frequency **discards item identity**; emitted items are freshly manufactured copies of the key, so payloads attached to equal keys are lost/reordered.
+- **Fix A — chained buckets** ➔ store the *items* in a list per slot ([[Hash Table|separate-chaining]] shape), appending in input order ⟹ stable.
+- **Space of Fix A is $\Theta(M+N)$, NOT $\Theta(M\cdot N)$** ➔ the buckets **partition** the input, so all buckets together hold exactly $N$ items — slots and payloads add, never multiply.
+- **Fix B — position (prefix-sum) array** ➔ turn counts into starting offsets, then place items in a single input-order pass ⟹ stable with flat $\Theta(M+N)$ arrays ➔ §4.
+- **Which variant does the question want?** ➔ **unstated ⟹ buckets** (simpler, and correct across [[Radix Sort]]'s repeated passes); a question naming a **count array *and* a position array** is asking for Fix B.
+- **Bucket drain must be $O(1)$ per item** ➔ concatenate with `extend()` (amortised $O(1)$), never `pop(0)`, which shifts the whole list and turns the rebuild into $\Theta(N^{2})$; a circular queue/deque restores $O(1)$ front removal.
 
 ### 4. Stable Counting Sort via a Position Array
-- **Build `count`** ➔ `count[key] += 1` over the input, as before.
+- **Build `count`** ➔ `count[key] += 1` over the input.
 - **Build `position`** ➔ `position[first] = 1`, then $\text{position}[i]=\text{position}[i-1]+\text{count}[i-1]$ ➔ a **prefix sum**: each key learns where its block starts.
-- **Construct output** ➔ scan the input **in order**; for each $(key,val)$ write `output[position[key]] = (key,val)` then `position[key] += 1` ⟹ earlier-arriving equal keys land in earlier slots ⟹ **stable**.
-- **Cost unchanged** ➔ still $\Theta(N+M)$ time, $\Theta(N+M)$ space — stability costs an extra array, not an extra factor.
+- **Construct output** ➔ scan the input **in order**; write `output[position[key]] = (key,val)` then `position[key] += 1` ⟹ earlier-arriving equal keys land in earlier slots ⟹ **stable**.
+- **Cost unchanged** ➔ still $\Theta(N+M)$ time and space — stability costs an extra array, not an extra factor.
 
 ### 5. Negative and Non-Zero-Based Keys
-- **The count array is indexed from $0$** ➔ a negative key has no slot, so a raw `count[key]` fails before it sorts.
-- **Offset mapping** ➔ scan for `min` as well as `max`, then store every key at index $\text{key}-\min$ ⟹ every index becomes valid ($-322\to0$, $420\to742$) and the range is $M=\max-\min+1$.
-- **Undo the shift on rebuild** ➔ emit $\text{index}+\min$, never the index itself — forgetting this returns a correctly *ordered* list of the *wrong values*.
-- **The bound is driven by the RANGE, not the maximum** ➔ $\Theta(N+M)$ with $M=\max-\min+1$; a tight cluster of huge values ($10^{6}\dots10^{6}{+}5$) is cheap, while $\{0,\,10^{6}\}$ is ruinous.
+- **The count array is indexed from $0$** ➔ a negative key has no slot, so raw `count[key]` fails before it sorts.
+- **Offset mapping** ➔ scan for `min` as well as `max`, store every key at index $\text{key}-\min$ ⟹ every index valid ($-322\to0$, $420\to742$), range $M=\max-\min+1$. **Undo the shift on rebuild** — emit $\text{index}+\min$, or you return a correctly *ordered* list of the *wrong values*.
+- **The bound is driven by the RANGE, not the maximum** ➔ a tight cluster of huge values ($10^{6}\dots10^{6}{+}5$) is cheap; $\{0,\,10^{6}\}$ is ruinous.
 
 ## ⚙️ Core Implementation
 ### 🔹 Basic counting sort (unstable, keys only)
@@ -98,14 +97,14 @@ aliases: [Count Sort, Bucket Count Sort]
 > 💡 **Common Mistake:** **Scanning the input backwards, or forgetting `position[key] += 1`** ➔ either overwrites the block's first slot repeatedly or reverses equal keys — and an unstable subsort silently destroys [[Radix Sort]].
 
 ## ⚖️ Core Decision Matrix
-| Variant | Trigger condition | Pro | Con / complexity bound | Memory impact |
+| Variant | Trigger condition | Pro | Con | Memory |
 | :--- | :--- | :--- | :--- | :--- |
 | **Frequency only** | keys carry no payload | simplest; rebuild is two loops | **unstable** — identity discarded | $\Theta(M)$ auxiliary |
 | **Chained buckets** | payloads present, lists acceptable | stable; conceptually easy | pointer chasing; per-node overhead | $\Theta(M+N)$ auxiliary |
 | **Position prefix-sum** | payloads present, [[Radix Sort]] subroutine | stable, flat arrays, cache-friendly | two extra passes, $1$-index bookkeeping | $\Theta(M+N)$ auxiliary |
 | [[Merge Sort]] (comparison) | $M$ unbounded or keys not integers | works on any orderable type | $\Theta(N\log N)\cdot O(k)$ | $\Theta(N)$ |
 
-> [!NOTE] **When It Flips:** counting sort wins while $M \ll N\log N$. Sorting $10^6$ lowercase letters ($M{=}26$) is $\Theta(N)$; sorting $7$ numbers where one is $981$ costs $\Theta(N{+}981)$ — worse than [[Merge Sort]]. Once $M$ dominates, either switch to a comparison sort or decompose the key into digits ➔ [[Radix Sort]].
+> [!NOTE] **When It Flips:** counting sort wins while $M \ll N\log N$. Sorting $10^6$ lowercase letters ($M{=}26$) is $\Theta(N)$; sorting $7$ numbers where one is $981$ costs $\Theta(N{+}981)$ — worse than [[Merge Sort]]. $32$-bit keys give $M=2^{32}$ — unusable for any realistic $N$. Once $M$ dominates, switch to a comparison sort or decompose the key into digits ➔ [[Radix Sort]].
 
 ## 📊 Exam Execution Trace & Applied Exercises
 
@@ -125,41 +124,35 @@ Counts: $c_1{=}1,\;c_3{=}3,\;c_5{=}1,\;c_7{=}2,\;c_8{=}1$ ⟹ prefix positions $
 | 7 | $(7,d)$ | 7 | $7\to8$ | `[p a c b g f d _]` |
 | 8 | $(8,w)$ | 8 | $8\to9$ | `[p a c b g f d w]` |
 
-**Final:** $(1,p)(3,a)(3,c)(3,b)(5,g)(7,f)(7,d)(8,w)$ — the key-$3$ payloads keep their input order $a,c,b$ ⟹ **stable**.
+**Final:** $(1,p)(3,a)(3,c)(3,b)(5,g)(7,f)(7,d)(8,w)$ — the key-$3$ payloads keep input order $a,c,b$ ⟹ **stable**.
 
 ### Applied Exercise
 **Problem:** Derive total time and auxiliary space, then decide whether counting sort beats [[Merge Sort]] on $N=7$ with input $200,151,291,981,369,421,671$.
 $$
 \begin{aligned}
 T(N,M) &= \underbrace{\Theta(N)}_{\text{max}}+\underbrace{\Theta(M)}_{\text{alloc}}+\underbrace{\Theta(N)}_{\text{tally}}+\underbrace{\Theta(N+M)}_{\text{rebuild}} = \Theta(N+M) \\
-S_{\text{aux}} &= \Theta(M) \quad\text{(frequency only)}\qquad \Theta(M+N)\ \text{(stable)} \\
-M &= 981,\; N=7 \;\Rightarrow\; \Theta(N+M)=\Theta(988) \;\gg\; N\log_2 N \approx 20
+S_{\text{aux}} &= \Theta(M) \text{ (frequency only)},\quad \Theta(M+N) \text{ (stable)} \\
+M = 981,\; N=7 &\Rightarrow \Theta(988) \;\gg\; N\log_2 N \approx 20
 \end{aligned}
 $$
-**Final Extracted Output:** $\Theta(N{+}M)$ time, $\Theta(M)$ / $\Theta(M{+}N)$ auxiliary; here $M\gg N$ so counting sort **loses badly** — the fix is to sort digit-by-digit with $M=10$ ➔ [[Radix Sort]].
+**Final Extracted Output:** here $M\gg N$ so counting sort **loses badly** — the fix is to sort digit-by-digit with $M=10$ ➔ [[Radix Sort]].
 
 ## ⚠️ Common Mistakes
-- 💡 **Quoting $\Theta(N)$ unconditionally** ➔ the bound is $\Theta(N+M)$; $M$ may only be dropped after you **state** that the key range is capped (alphabet $M{=}26$, digits $M{=}10$).
-- 💡 **Claiming bucket space is $\Theta(N\cdot M)$** ➔ lecturer-flagged as the *very common misconception*: buckets partition the input, so the total payload is $N$ ⟹ $\Theta(M+N)$.
-- 💡 **Assuming counting sort is stable by default** ➔ it is not; stability must be engineered (buckets or prefix-sum positions), and [[Radix Sort]] silently breaks without it.
-- 💡 **Draining buckets with `pop(0)`** ➔ $O(n)$ per removal from shifting ⟹ the rebuild becomes $\Theta(N^{2})$ and the whole linear claim collapses; use `extend()` or a circular queue.
-- 💡 **Carrying the `max()` scan into [[Radix Sort]]** ➔ counting sort needs `max` to **size the count array**; radix sizes it from the **base** and needs `max` only to compute the **column count**. Lecturer-flagged as a recurring code-review error.
+- 💡 **Quoting $\Theta(N)$ unconditionally** ➔ the bound is $\Theta(N+M)$; $M$ may only be dropped after you **state** the key range is capped (alphabet $M{=}26$, digits $M{=}10$).
+- 💡 **Claiming bucket space is $\Theta(N\cdot M)$** ➔ lecturer-flagged as the *very common misconception*: buckets partition the input ⟹ $\Theta(M+N)$.
+- 💡 **Assuming counting sort is stable by default** ➔ it is not; stability must be engineered, and [[Radix Sort]] silently breaks without it.
+- 💡 **Draining buckets with `pop(0)`** ➔ $O(n)$ per removal ⟹ the rebuild becomes $\Theta(N^{2})$ and the linear claim collapses.
+- 💡 **Carrying the `max()` scan into [[Radix Sort]]** ➔ counting sort needs `max` to **size the count array**; radix sizes it from the **base** and needs `max` only for the **column count**. Lecturer-flagged as a recurring code-review error.
 
 ## 🧠 Active Recall
 > [!FAQ]- Counting sort runs in $\Theta(N+M)$ — does this contradict the $\Omega(N\log N)$ sorting lower bound?
 > - **Hint:** Check what the lower bound is a bound *on*.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** No — $\Omega(N\log N)$ bounds **comparison-based** sorts only, and counting sort performs no comparisons.
-> > - **Why:** **Key-as-address** ➔ `count[key] += 1` extracts order from the key's *value* via $O(1)$ indexing, so the decision-tree argument that produces $\Omega(N\log N)$ never applies.
+> > - **Short answer:** no — $\Omega(N\log N)$ bounds **comparison-based** sorts only, and counting sort performs no comparisons.
+> > - **Why:** **Key-as-address** ➔ `count[key] += 1` extracts order from the key's *value* via $O(1)$ indexing, so the decision-tree argument producing $\Omega(N\log N)$ never applies.
 
 > [!FAQ]- Why does making counting sort stable cost $\Theta(M+N)$ space rather than $\Theta(M\cdot N)$?
 > - **Hint:** Count the items across all buckets, not per bucket.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** The buckets **partition** the $N$ items — $\sum_v \text{count}[v]=N$ — so slots and payloads add.
+> > - **Short answer:** the buckets **partition** the $N$ items — $\sum_v \text{count}[v]=N$ — so slots and payloads add.
 > > - **Why:** **Additive, not multiplicative** ➔ $M$ empty slots plus $N$ stored items gives $\Theta(M+N)$; $\Theta(M\cdot N)$ would require every bucket to hold all $N$ items.
-
-> [!FAQ]- Your keys are $32$-bit integers. Justify, with the bound, why counting sort is the wrong choice and what replaces it.
-> - **Hint:** Put a number on $M$.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** $M=2^{32}$ ⟹ $\Theta(N+2^{32})$ time **and** space — unusable for any realistic $N$.
-> > - **Why:** **Decompose the key** ➔ [[Radix Sort]] treats the integer as $K$ digits in base $M'$, paying $\Theta(K(N+M'))$ with $M'$ small, which is $\Theta(N)$ for fixed-width keys.

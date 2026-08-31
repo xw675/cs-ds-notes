@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 domain: A
-week: [2, 3]
+week: 3
 source: [lecture, applied]
 parent: "[[Counting Sort]]"
 tags: [CS/Algorithms, CS/Sorting, CS/Complexity]
@@ -14,51 +14,47 @@ aliases: [LSD Radix Sort]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** run a **stable** [[Counting Sort]] once per digit column, **least-significant first** ➔ $\Theta(KN+KM)$, beating [[Merge Sort]]'s $\Theta(kN\log N)$ for fixed-width keys.
 > - **📦 Core Components:** $N$ items $\times$ $K$ columns | base $M$ (digits $10$ · bits $2$ · letters $26$) | stable subsort per column.
-> - **⚡ Key Constraint:** the subsort **must be stable** — an unstable column pass destroys all order won by the previous passes, and the output is wrong, not merely unsorted.
+> - **⚡ Key Constraint:** the subsort **must be stable** — an unstable column pass destroys all order won by previous passes, and the output is wrong, not merely unsorted.
 
 ## 📝 How It Works
 ### 1. The Reframing
-- **Key as a grid** ➔ lay the $N$ items as rows, their digits as $K$ columns; the rightmost column is **least significant**, the leftmost **most significant**.
+- **Key as a grid** ➔ items are rows, digits are $K$ columns; rightmost = **least significant**.
 - **Why $M$ collapses** ➔ each column holds only base-$M$ symbols, so every subsort sees $M=10$ (decimal), $2$ (binary), $26$ (alphabet) — never the $981$ or $2^{32}$ that ruined plain [[Counting Sort]].
-- **$K$ is a length, not a count** ➔ $K=\lceil\log_M(\text{largest key})\rceil$ ⟹ raising the base **shrinks** $K$ but grows $M$; the trade is the design decision the exam asks about.
+- **$K$ is a length, not a count** ➔ $K=\lceil\log_M(\text{largest key})\rceil$ ⟹ raising the base **shrinks** $K$ but grows $M$; that trade is the exam's design question.
 - **Lecture notation map — memorise both** ➔ this note's $K$ (columns) is the lecture's $c$; this note's $M$ (base) is the lecture's $b$; the lecture reserves $M$ for the **largest item**. In lecture symbols: $c=\lfloor\log_b M\rfloor+1$, time $O(cN+cb)$, auxiliary $O(N+b)$.
-- **Digit extraction is arithmetic, not string slicing** ➔ column $j$ (counting from $0$ at the least significant end) of key $x$ is $\lfloor x / b^{j}\rfloor \bmod b$ ⟹ $O(1)$ per digit, no conversion to text.
+- **Digit extraction is arithmetic, not string slicing** ➔ column $j$ (from $0$ at the least significant end) of key $x$ is $\lfloor x / b^{j}\rfloor \bmod b$ ⟹ $O(1)$ per digit.
 
 ### 2. Least-Significant-Digit Order + Stability
-- **Pass order** ➔ sort on column $K$ (rightmost), then $K{-}1$, … , then column $1$ ⟹ after pass $j$ the list is correctly sorted on the last $j$ digits.
-- **Stability carries the earlier work** ➔ when column $j$ ties, a stable subsort preserves the previous pass's order, which is exactly the ordering on the lower-significance digits ⟹ the invariant is maintained.
-- **Unstable ⟹ catastrophe** ➔ with $200$ before $291$ from pass 2, an unstable hundreds pass may emit $291$ before $200$; both have hundreds digit $2$, so nothing later repairs it.
+- **Pass order** ➔ sort on column $K$ (rightmost), then $K{-}1$, …, then column $1$ ⟹ after pass $j$ the list is correctly sorted on the last $j$ digits.
+- **Stability carries the earlier work** ➔ when column $j$ ties, a stable subsort preserves the previous pass's order, which *is* the ordering on the lower-significance digits ⟹ the invariant extends.
+- **Unstable ⟹ catastrophe** ➔ with $200$ before $291$ from pass 2, an unstable hundreds pass may emit $291$ first; both share hundreds digit $2$, so nothing later repairs it.
 
 ### 3. Choosing the Base — Where Linearity Comes From
-- **The base is a free design parameter** ➔ nothing forces $b=10$; you pick $b$, and that choice alone decides whether the sort is linear.
-- **Raise $b$ up to $N$** ➔ the per-pass cost is $\Theta(N+b)$, so any $b\le N$ leaves it at $\Theta(N)$ ⟹ total $\Theta(cN)$. Choosing $b=N$ is the standard move because it buys the **smallest** $c$ at no asymptotic cost.
-- **Never let $b>N$** ➔ the count array of size $b$ then **dominates** the $N$ items, the per-pass cost becomes $\Theta(b)$, and the sort is no longer linear in $N$ — it is linear in the *base* you chose.
-- **The linearity theorem** ➔ with $b=N$, $c=\lfloor\log_N M\rfloor+1$; so if the largest item satisfies $M=O(N^{d})$ for a **constant** $d$, then $c=O(d)=\Theta(1)$ and radix sort runs in $\Theta(N)$.
+- **The base is a free design parameter** ➔ nothing forces $b=10$; that choice alone decides whether the sort is linear.
+- **Raise $b$ up to $N$** ➔ per-pass cost is $\Theta(N+b)$, so any $b\le N$ leaves it at $\Theta(N)$ ⟹ total $\Theta(cN)$; $b=N$ buys the **smallest** $c$ at no asymptotic cost.
+- **Never let $b>N$** ➔ the size-$b$ count array then **dominates** the $N$ items and the sort is linear in the *base*, not in $N$.
+- **The linearity theorem** ➔ with $b=N$, $c=\lfloor\log_N M\rfloor+1$; so if the largest item satisfies $M=O(N^{d})$ for **constant** $d$, then $c=\Theta(1)$ and radix sort is $\Theta(N)$:
 $$
 b=N,\quad M=O(N^{d}) \;\Longrightarrow\; c=\log_N M = \Theta(d) \;\Longrightarrow\; T=\Theta(cN+cb)=\Theta(N)
 $$
-- **Where it stops being linear** ➔ $M$ super-polynomial in $N$ ($M=N^{N}$, $M=N!$) makes $c$ grow with $N$ — the distinct-keys argument of the "When It Flips" note, reached from the base side.
-- **$b=N$ is the asymptotic rule, NOT the constant-factor optimum** `[D]` ➔ for $N$ integers of $W$ bits, $c=W/\log_2 b$ and the operation count is
-$$
-f(b)=\frac{W}{\log_2 b}\,(N+b)
-$$
-which is minimised well below $N$: at $W=64,\ N=10^{6}$ the minimum sits near $b\approx95{,}536$, so the practical choice is $b=2^{16}=65536$ — the nearest power of two whose exponent **divides** the word width, giving exactly $c=4$ passes.
-- **Powers of two win twice** ➔ a base of $2^{t}$ makes digit extraction a **shift and mask** instead of a division, and choosing $t \mid W$ avoids a ragged final column; measured timings degrade sharply for $b=2^{20}$ and $2^{24}$ because $20$ and $24$ do not divide $64$.
+- **Where it stops being linear** ➔ $M$ super-polynomial in $N$ ($N^{N}$, $N!$) makes $c$ grow with $N$ — the distinct-keys argument reached from the base side.
+- **$b=N$ is the asymptotic rule, NOT the constant-factor optimum** `[D]` ➔ for $N$ integers of $W$ bits, $c=W/\log_2 b$ and the operation count $f(b)=\frac{W}{\log_2 b}(N+b)$ is minimised well below $N$: at $W=64,\ N=10^{6}$ the minimum sits near $b\approx95{,}536$, so the practical choice is $b=2^{16}$ — the nearest power of two whose exponent **divides** the word width, giving exactly $c=4$ passes.
+- **Powers of two win twice** ➔ base $2^{t}$ makes digit extraction a **shift and mask** instead of a division, and $t \mid W$ avoids a ragged final column; timings degrade sharply for $b=2^{20}$ and $2^{24}$ because $20$ and $24$ do not divide $64$.
 
 ### 4. Ragged Keys
 - **Unequal lengths break the column grid** ➔ `banhammer` and `kappa` have no common $K$.
-- **Pad to a common width** ➔ insert a filler symbol that sorts **below** every real symbol; numbers pad with leading zeros (right-aligned), strings pad with spaces.
-- **Alignment decides the order semantics** ➔ right-aligned padding gives numeric order; left-aligned padding gives lexicographic order — choose deliberately, they differ.
+- **Pad to a common width** ➔ insert a filler that sorts **below** every real symbol; numbers pad with leading zeros (right-aligned), strings with spaces.
+- **Alignment decides the order semantics** ➔ right-aligned padding gives **numeric** order, left-aligned gives **lexicographic** — choose deliberately, they differ.
 
 ### 5. Optimising for Strings — the $\Theta(n)$ Algorithm *(applied Problem 4 — `[D, HD]`)*
-- **Applied-sheet notation** ➔ $k$ $=$ number of strings · $\ell$ $=$ length of the **longest** string · $n=\sum_i \text{len}(S_i)$ $=$ **total characters**. The optimal bound is $\Theta(n)$ in *that* $n$ — do not read it as this note's item count.
-- **Naive padding is $\Theta(\ell k)$** ➔ every string is scanned $\ell$ times regardless of its own length ⟹ pathological when lengths are skewed: $10^{6}$ strings of length $10$ plus **one** string of length $10^{6}$ costs $10^{12}$ operations, against $n\approx2\times10^{7}$ actual characters.
-- **The fix — never look at a string before it has a character to contribute** ➔ a string of length $i$ only matters in the **final $i$ iterations** of an LSD sweep, so exclude it from every earlier pass.
-- **Step 1 — counting-sort by length, ASCENDING** ➔ key $=\text{len}(S)$, range $\ell$ ⟹ $\Theta(\ell+k)$. Ascending is load-bearing: shorter strings must precede longer ones that **share a prefix** (`cat` before `cats`), which is exactly alphabetical order.
-- **Step 2 — sweep columns $i=\ell$ down to $1$ with a live pointer** ➔ maintain $j$ such that $S[j\dots k]$ are the strings of length $\ge i$; on each decrement of $i$, decrement $j$ while $\text{len}(S[j-1])\ge i$ ⟹ strings enter the working window exactly when they acquire a character at position $i$, and never leave.
-- **Step 3 — run the stable counting subsort on $S[j\dots k]$ only** ➔ base $26$, so no pass ever touches a non-existent character.
-- **Why it totals $\Theta(n)$** ➔ string $S_i$ participates in exactly $\text{len}(S_i)$ passes ⟹ the work is $\sum_i \text{len}(S_i)=n$, plus the $\Theta(\ell+k)$ length sort ⟹ **optimal**, since every character must be read at least once.
-- **Alignment decides the semantics, not the speed** ➔ this scheme is **left-aligned/lexicographic** (position $1$ is the first character); right-aligned padding is the *numeric* reading and is the wrong model for words ➔ §4.
+- **Applied-sheet notation** ➔ $k$ = number of strings · $\ell$ = length of the **longest** · $n=\sum_i \text{len}(S_i)$ = **total characters**. The optimal bound is $\Theta(n)$ in *that* $n$.
+- **Naive padding is $\Theta(\ell k)$** ➔ every string is scanned $\ell$ times regardless of its own length ⟹ $10^{6}$ strings of length $10$ plus **one** of length $10^{6}$ costs $10^{12}$ operations against $n\approx2\times10^{7}$ actual characters.
+- **The fix — never look at a string before it has a character to contribute** ➔ a string of length $i$ only matters in the **final $i$ iterations** of an LSD sweep.
+- **Step 1 — counting-sort by length, ASCENDING** ➔ key $=\text{len}(S)$, range $\ell$ ⟹ $\Theta(\ell+k)$. Ascending is load-bearing: shorter strings must precede longer ones that **share a prefix** (`cat` before `cats`) — exactly alphabetical order.
+- **Step 2 — sweep columns $i=\ell$ down to $1$ with a live pointer** ➔ maintain $j$ so that $S[j\dots k]$ are the strings of length $\ge i$; on each decrement of $i$, decrement $j$ while $\text{len}(S[j-1])\ge i$ ⟹ strings enter the window exactly when they acquire a character at position $i$, and never leave.
+- **Step 3 — run the stable counting subsort on $S[j\dots k]$ only** ➔ base $26$, so no pass touches a non-existent character.
+- **Why it totals $\Theta(n)$** ➔ string $S_i$ participates in exactly $\text{len}(S_i)$ passes ⟹ work $=\sum_i \text{len}(S_i)=n$, plus $\Theta(\ell+k)$ ⟹ **optimal**, since every character must be read once.
+- **This scheme is left-aligned/lexicographic** ➔ position $1$ is the first character; right-aligned padding is the numeric reading and the wrong model for words ➔ §4.
 
 ## ⚙️ Core Implementation
 ### 🔹 LSD radix sort over base $M$
@@ -124,7 +120,7 @@ which is minimised well below $N$: at $W=64,\ N=10^{6}$ the minimum sits near $b
 >             S[p] = temp[p - j]
 >     return S
 > ```
-> 💡 **Common Mistake:** **Sorting the lengths descending** ➔ then `cats` precedes `cat`, which is not alphabetical order. Ascending is what makes a shorter string win when it is a **prefix** of a longer one — the same rule that makes the pad symbol sort below every real character ➔ §4.
+> 💡 **Common Mistake:** **Sorting the lengths descending** ➔ then `cats` precedes `cat`, which is not alphabetical. Ascending is what makes a shorter string win when it is a **prefix** of a longer one — the same rule that makes the pad symbol sort below every real character ➔ §4.
 
 ## ⚖️ Core Decision Matrix
 | Algorithm | Time | Auxiliary space | Stable | Selection rule |
@@ -134,12 +130,12 @@ which is minimised well below $N$: at $W=64,\ N=10^{6}$ the minimum sits near $b
 | [[Merge Sort]] | $\Theta(N\log N)\cdot O(k)$ | $\Theta(N)$ | yes | keys not integer-decomposable, or $K$ grows with $N$ |
 | [[Quick Sort]] | $\Theta(N\log N)$ avg, $\Theta(N^2)$ worst | $O(\log N)$ | no | in-place matters more than the guarantee |
 
-> [!NOTE] **When It Flips:** radix beats [[Merge Sort]] while $K < \log_2 N$. Fixed-width keys ($32$-bit ints, $K{=}10$ decimal digits) ⟹ $K$ is a **constant** ⟹ $\Theta(N)$. Distinct keys force $K\ge\log_M N$, so the advantage shrinks exactly when the keys become long — and raising base $M$ buys $K$ down at $\Theta(KM)$ time and $\Theta(M)$ space.
+> [!NOTE] **When It Flips:** radix beats [[Merge Sort]] while $K < \log_2 N$. Fixed-width keys ($32$-bit ints, $K{=}10$ decimal digits) ⟹ $K$ is a **constant** ⟹ $\Theta(N)$. Distinct keys force $K\ge\log_M N$, degenerating $\Theta(KN)$ back to $\Theta(N\log N)$ — so the advantage shrinks exactly when keys become long; raising base $M$ buys $K$ down at $\Theta(KM)$ time and $\Theta(M)$ space, and stops paying once $M$ approaches $N$.
 
 ## 📊 Exam Execution Trace & Applied Exercises
 
 ### Manual Execution Trace
-`[200, 151, 291, 981, 369, 421, 671]`, base $10$, $K=3$, LSD first. Digit sorted on is **bold**.
+`[200, 151, 291, 981, 369, 421, 671]`, base $10$, $K=3$, LSD first:
 
 | Pass | Column | Digits read | List after the pass |
 | :--- | :--- | :--- | :--- |
@@ -155,33 +151,32 @@ which is minimised well below $N$: at $W=64,\ N=10^{6}$ the minimum sits near $b
 $$
 \begin{aligned}
 T &= \underbrace{K}_{\text{columns}}\times\underbrace{\Theta(N+M)}_{\text{one stable counting sort}} = \Theta(KN+KM) \\
-S &= \underbrace{\Theta(KN)}_{\text{input, }K\text{ symbols per item}} + \underbrace{\Theta(M+N)}_{\text{one subsort, reused}} = \Theta(KN+M+N) \\
-M=10 \;&\Rightarrow\; T=\Theta(KN),\quad S=\Theta(KN),\quad S_{\text{aux}}=\Theta(M+N)=\Theta(N)
+S &= \underbrace{\Theta(KN)}_{\text{input, }K\text{ symbols per item}} + \underbrace{\Theta(M+N)}_{\text{one subsort, reused}} = \Theta(KN+M+N)
 \end{aligned}
 $$
-**Final Extracted Output:** $\Theta(KN+KM)$ time, $\Theta(KN+M+N)$ total space, $\Theta(M+N)$ **auxiliary** — auxiliary carries **no $K$**, because the same count/position/output arrays are reused every pass rather than allocated per column.
+**Final Extracted Output:** $\Theta(KN+KM)$ time, $\Theta(KN+M+N)$ total space, $\Theta(M+N)$ **auxiliary** — auxiliary carries **no $K$**, because the same count/position/output arrays are reused every pass rather than allocated per column. At $M=10$: $T=\Theta(KN)$, $S_{\text{aux}}=\Theta(N)$.
 
 ## ⚠️ Common Mistakes
 - 💡 **Multiplying $K$ into the auxiliary space** ➔ the subsort arrays are reused across passes ⟹ auxiliary is $\Theta(M+N)$; only the *input* carries the $K$ factor.
-- 💡 **Reusing the two meanings of $M$** ➔ in [[Counting Sort]] $M$ is the **maximum key**; in radix sort $M$ is the **base** (number of distinct symbols per column). Name which one you mean before quoting a bound.
-- 💡 **Calling radix sort $\Theta(N)$ with no conditions** ➔ true only once you state that $K$ and $M$ are **capped**; for distinct keys $K=\Omega(\log_M N)$, which recovers $\Theta(N\log N)$.
-- 💡 **Sizing the count array from `max()`** ➔ that is [[Counting Sort]]'s rule; radix sizes it from the **base**. You still scan for `max` — but only to compute the **number of columns** $c=\lfloor\log_b M\rfloor+1$. Lecturer-flagged as the recurring code-review error.
+- 💡 **Reusing the two meanings of $M$** ➔ in [[Counting Sort]] $M$ is the **maximum key**; here $M$ is the **base**. Name which one you mean before quoting a bound.
+- 💡 **Calling radix sort $\Theta(N)$ with no conditions** ➔ true only once you state that $K$ and $M$ are **capped**; distinct keys force $K=\Omega(\log_M N)$, recovering $\Theta(N\log N)$.
+- 💡 **Sizing the count array from `max()`** ➔ that is [[Counting Sort]]'s rule; radix sizes it from the **base** and uses `max` only for the **column count** $c=\lfloor\log_b M\rfloor+1$. Lecturer-flagged as the recurring code-review error.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why must radix sort's per-column subsort be stable, and why is LSD order the one that needs it?
 > - **Hint:** Ask what the previous passes have already established when a tie occurs.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Ties on the current digit must fall back on the order from the lower-significance passes — stability is precisely that fallback.
+> > - **Short answer:** ties on the current digit must fall back on the order from the lower-significance passes — stability is precisely that fallback.
 > > - **Why:** **Invariant** ➔ after pass $j$ the list is sorted on the last $j$ digits; a stable pass $j{+}1$ preserves that order within each new digit group, so the invariant extends. An unstable pass discards it and no later pass can recover it.
 
 > [!FAQ]- Radix sort is $\Theta(KN)$ and merge sort $\Theta(N\log N)$ — is radix sort therefore always better?
 > - **Hint:** Ask how small $K$ can be when all $N$ keys are distinct.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** No — $N$ distinct base-$M$ keys need $K\ge\log_M N$, so $\Theta(KN)$ degenerates to $\Theta(N\log N)$.
+> > - **Short answer:** no — $N$ distinct base-$M$ keys need $K\ge\log_M N$, so $\Theta(KN)$ degenerates to $\Theta(N\log N)$.
 > > - **Why:** **$K$ is only constant when the key width is capped** ➔ fixed-width $32$-bit integers give $K=\Theta(1)$ and a genuine $\Theta(N)$; unbounded keys do not, and radix additionally requires integer-decomposable keys where [[Merge Sort]] accepts any orderable type.
 
-> [!FAQ]- You may raise the base from $10$ to $100$. State the effect on every term of the complexity, and when it is worth it.
-> - **Hint:** $K$ and $M$ move in opposite directions.
+> [!FAQ]- You may choose the base freely. What choice makes radix sort provably $\Theta(N)$, and where does that stop working?
+> - **Hint:** $K$ and $M$ move in opposite directions; put a ceiling on the base.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** $K$ halves, $M$ goes $10\to100$ ⟹ time $\Theta(KN+KM)$ trades fewer passes for a bigger count array; worth it while $M\ll N$.
-> > - **Why:** **$K=\lceil\log_M(\text{max key})\rceil$** ➔ squaring the base halves the column count, but the $\Theta(KM)$ term and the $\Theta(M)$ auxiliary grow; once $M$ approaches $N$ the per-pass count array dominates and the saving vanishes.
+> > - **Short answer:** choose $b=N$ — per-pass cost stays $\Theta(N+b)=\Theta(N)$ and $c=\lfloor\log_N M\rfloor+1$, so if the largest key is $O(N^{d})$ for constant $d$ then $c=\Theta(1)$ and $T=\Theta(N)$.
+> > - **Why:** **Past $b=N$ the count array dominates** ➔ the sort becomes linear in the base rather than in $N$; and for $M$ super-polynomial in $N$, $c$ grows with $N$ and linearity is lost from the other side.

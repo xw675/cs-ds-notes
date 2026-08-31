@@ -1,6 +1,6 @@
 ---
 unit: FIT2004
-week: 4
+week: 5
 source: [lecture]
 domain: A
 parent: "[[Types of Graphs]]"

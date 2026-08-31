@@ -8,7 +8,7 @@ tags: [CS/Algorithms, CS/Complexity]
 # [[Divide and Conquer]]
 
 **Context:** [[FIT1008_MOC]], [[FIT2004_MOC]] · a [[Recursion|recursive]] strategy · powers [[Binary Search]], [[Merge Sort]], [[Quick Sort]] · solves the [[Sorting Problem]]
-**FIT2004 use:** the examinable examples are [[Merge Sort]] and [[Quick Sort]]; every D&C algorithm's running time is found by [[Solving Recurrences (Telescoping)|solving the cost recurrence]] $T(n)=a\,T(n/b)+f(n)$, where $a$ counts **recursive calls** and $f(n)$ the combine.
+**FIT2004 use:** the examinable examples are [[Merge Sort]] and [[Quick Sort]]; every D&C running time is found by [[Solving Recurrences (Telescoping)|solving the cost recurrence]] $T(n)=a\,T(n/b)+f(n)$, where $a$ counts **recursive calls** and $f(n)$ the combine.
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** divide into subproblems, conquer recursively, combine ➔ most efficient when splits are roughly equal.
@@ -17,22 +17,18 @@ tags: [CS/Algorithms, CS/Complexity]
 
 ## 📝 Core
 ### 1. The Strategy (Divide / Conquer / Combine)
-- **Divide** ➔ split into subproblems; **conquer** ➔ solve each recursively + *independently*; **combine** ➔ merge solutions.
-- **Base case** ➔ size $\le 1$.
+- **Divide** ➔ split into subproblems; **conquer** ➔ solve each recursively + *independently*; **combine** ➔ merge solutions. Base case = size $\le1$.
 - **Efficiency condition** ➔ best when subproblems are **roughly equal in size** ➔ depth $\Theta(\log n)$.
+- **Cost by levels** ➔ total = (levels) × (work per level): balanced $\log_2 n\times\Theta(n)=\Theta(n\log n)$ · lopsided $n\times\Theta(n)=\Theta(n^2)$ · single-half with $\Theta(1)$ work $=\Theta(\log n)$.
 
-### 2. Cost by Levels
-- **Recursion tree** ➔ total cost = (levels) × (work per level).
-- **Balanced** ➔ $\log_2 n$ × $\Theta(n)$ = $\Theta(n\log n)$; **lopsided** ➔ $n$ × $\Theta(n)$ = $\Theta(n^2)$; **single-half** + $\Theta(1)$ work ➔ $\Theta(\log n)$.
-
-### 3. Independence Assumption (vs DP)
+### 2. Independence Assumption (vs DP)
 - **Assumption** ➔ subproblems are **independent** (non-overlapping), solved once.
 - **Overlap break** ➔ $\text{fib}(n)$ recomputing $\text{fib}(n-2)$ ⟹ exponential ➔ use **memoisation / dynamic programming**.
 
-### 4. Adapting D&C to a NEW problem *(the LO1 drill — Applied 2)*
+### 3. Adapting D&C to a NEW problem *(the LO1 drill — Applied 2)*
 - **Three questions, in order** ➔ (1) does the answer **decompose additively** across the split — within-left $+$ within-right $+$ **cross**? (2) can the cross term be computed in $\Theta(n)$? (3) does the **per-call work shrink** with the subproblem, or does the level sum refuse to decay?
-- **Strengthen the recursive contract** ➔ ask the recursion to return *more* than the answer. [[Counting Inversions]] is only $\Theta(n\log n)$ because each call returns a **sorted** subarray as well as a count; that extra guarantee is what makes the cross term linear.
-- **Question (3) is the one that gets skipped** ➔ [[2D Local Maximum (Peak Finding)]] halves the matrix on the middle column and still costs $\Theta(n\log n)$, because the deciding scan stays full-length. Cutting **both** axes makes level $i$ cost $cn/2^{i}$ ⟹ $\Theta(n)$.
+- **Strengthen the recursive contract** ➔ ask the recursion to return *more* than the answer. [[Counting Inversions]] is only $\Theta(n\log n)$ because each call returns a **sorted** subarray as well as a count; that extra guarantee makes the cross term linear.
+- **Question (3) is the one that gets skipped** ➔ [[2D Local Maximum (Peak Finding)]] halving on the middle column still costs $\Theta(n\log n)$ because the deciding scan stays full-length. Cutting **both** axes makes level $i$ cost $cn/2^{i}$ ⟹ $\Theta(n)$.
 - **On a new problem, the correctness argument is the deliverable** ➔ "why is it safe to discard the other subproblems?" carries more marks than the pseudocode; state it as an explicit claim about what the kept subproblem is guaranteed to contain.
 
 ## ⚙️ Core Implementation
@@ -63,45 +59,23 @@ tags: [CS/Algorithms, CS/Complexity]
 > [!NOTE] **When It Flips:** balanced splits give depth $\log_b n$; lopsided ones push depth toward $n$, collapsing $\Theta(n\log n)$ to $\Theta(n^2)$. Space: recursion stack $\Theta(\text{depth})$; merge-style combine adds $\Theta(n)$ scratch, partition-style is in-place.
 
 ## 📊 Exam Execution Trace
-
-### Manual Execution Trace
-Recursion tree of a balanced D&C sort on $n=8$:
-
-| Step / State | Level | # subproblems | Size each | Work this level |
-| :--- | :--- | :--- | :--- | :--- |
-| **0 (Init)** | 0 | 1 | 8 | $\Theta(8)$ |
-| 1 | 1 | 2 | 4 | $\Theta(8)$ |
-| 2 | 2 | 4 | 2 | $\Theta(8)$ |
-| 3 | 3 | 8 | 1 | $\Theta(8)$ |
-
-$\log_2 8 + 1 = 4$ levels, each $\Theta(n)$ ⟹ $\Theta(n\log n)$.
-
 ### Applied Exercise
 **Problem:** Derive the balanced vs lopsided D&C recurrences.
-**Derivation Proof / Hand-Calculation Walkthrough:**
 $$
-\begin{aligned}
-\text{balanced: } T(n) &= 2T(n/2) + \Theta(n) = \Theta(n\log n) \\
-\text{lopsided: } T(n) &= T(n-1) + \Theta(n) = \Theta(n^2)
-\end{aligned}
+\text{balanced: } T(n) = 2T(n/2) + \Theta(n) = \Theta(n\log n) \qquad
+\text{lopsided: } T(n) = T(n-1) + \Theta(n) = \Theta(n^2)
 $$
-**Final Extracted Output:** split balance alone decides $\Theta(n\log n)$ vs $\Theta(n^2)$ — the depth term dominates.
+**Final Extracted Output:** split balance alone decides $\Theta(n\log n)$ vs $\Theta(n^2)$ — the depth term dominates. (Balanced tree on $n=8$: $\log_2 8+1=4$ levels, each $\Theta(8)$.)
 
 ## 🧠 Active Recall
 > [!FAQ]- Why is merge sort $\Theta(n\log n)$ but a naïve "process one element then recurse on the rest" is $\Theta(n^2)$?
 > - **Hint:** Factor-shrink vs one-element-shrink.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Halving ⟹ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$; peeling one ⟹ $n$ levels × $\Theta(n)$ = $\Theta(n^2)$.
-> > - **Why:** **Depth** ➔ shrinking by a constant *factor* vs by *one element* is the whole difference ($\sum_k k = \Theta(n^2)$).
+> > - **Short answer:** halving ⟹ $\log_2 n$ levels × $\Theta(n)$ = $\Theta(n\log n)$; peeling one ⟹ $n$ levels × $\Theta(n)$ = $\Theta(n^2)$.
+> > - **Why:** **Balance sets the depth** ➔ shrinking by a constant *factor* vs by *one element* is the whole difference ($\sum_k k = \Theta(n^2)$) — and quicksort's bad pivot realises the lopsided case on an otherwise balanced algorithm.
 
 > [!FAQ]- Divide and conquer assumes independent subproblems — what breaks when they overlap, and what replaces it?
 > - **Hint:** Redundant recomputation.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Overlapping subproblems ⟹ redundant work ⟹ exponential ($O(2^n)$).
+> > - **Short answer:** overlapping subproblems ⟹ redundant work ⟹ exponential ($O(2^n)$).
 > > - **Why:** **Caching** ➔ memoisation / dynamic programming stores each subresult once, restoring polynomial time.
-
-> [!FAQ]- Why does the *balance* of the split determine whether a D&C sort is $\Theta(n\log n)$ or $\Theta(n^2)$?
-> - **Hint:** Balance sets recursion depth.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** Even halving ⟹ depth $\log_2 n$; maximally lopsided ⟹ depth $n$.
-> > - **Why:** **Per-level $\Theta(n)$** ➔ $\log_2 n$ × $\Theta(n) = \Theta(n\log n)$ vs $n$ × $\Theta(n) = \Theta(n^2)$ — quicksort's bad pivot realises the latter.

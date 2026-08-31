@@ -1,6 +1,6 @@
 ---
 unit: FIT2004
-week: 4
+week: 5
 source: [lecture]
 domain: A
 parent: "[[Directed Acyclic Graph (DAG)]]"
@@ -15,25 +15,24 @@ aliases: [Topological Sorting, Topological Order, Kahn's Algorithm]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** output a permutation of $V$ in which $u$ precedes $v$ for **every** edge $\langle u,v\rangle$ ➔ a legal execution order for the dependencies.
 > - **📦 Core Components:** **Kahn's** ➔ repeatedly emit an in-degree-$0$ vertex | **modified DFS** ➔ push each vertex on **finish**, then read the stack top-down.
-> - **⚠️ Key Constraint:** the answer is **not unique** — incomparable vertices may come in either order, so an exam answer must be *a* valid order and a marker's answer that differs is not a contradiction.
+> - **⚠️ Key Constraint:** the answer is **not unique** — incomparable vertices may come in either order, so a marker's differing answer is not a contradiction.
 
 ## 📝 How It Works
 ### 1. What "Valid" Means
 - **The obligation** ➔ for every edge $\langle u,v\rangle$, position of $u$ $<$ position of $v$. Nothing else is constrained.
-- **Incomparable vertices are free** ➔ with no edge between $V$ and $W$, both $V,W$ and $W,V$ are legal ➔ many valid outputs per DAG.
-- **Checking an answer** ➔ scan the edge list once and test each edge against the emitted positions; $\Theta(E)$, and it is the fastest way to mark your own trace.
+- **Incomparable vertices are free** ➔ with no edge between $V$ and $W$, both orders are legal ➔ many valid outputs per DAG.
+- **Checking an answer** ➔ scan the edge list once and test each edge against the emitted positions; $\Theta(E)$, and the fastest way to mark your own trace.
 - **Cycle $\Rightarrow$ nothing** ➔ if fewer than $V$ vertices are emitted, the leftovers form a [[Cycle (Graph Theory)|cycle]] and **no** valid order exists.
 
 ### 2. Kahn's Algorithm — peel the sources
 - **Idea** ➔ a vertex with **no incoming edge** owes nothing, so it can go next; emit it, delete its out-edges, and whatever that frees becomes emittable.
 - **Bookkeeping** ➔ one `incoming_edges` count per vertex, built in $\Theta(V+E)$; a `process` collection holding every currently-zero vertex.
-- **Queue or stack** ➔ `process` may be either; the ordering rule fixes only *which* vertices are eligible, not which eligible one you pick ➔ different choices give different valid orders.
-- **Decrement, do not rescan** ➔ each edge is decremented **once**, which is what keeps the total at $\Theta(V+E)$ rather than $\Theta(VE)$.
+- **Queue or stack** ➔ `process` may be either; the rule fixes only *which* vertices are eligible, not which eligible one you pick ➔ different choices give different valid orders.
+- **Decrement, do not rescan** ➔ each edge is decremented **once**, which keeps the total at $\Theta(V+E)$ rather than $\Theta(VE)$.
 
 ### 3. Modified DFS — push on finish
-- **The observation** ➔ raw [[Uninformed Search (BFS and DFS)|DFS]] visit order is **not** a topological order: after hitting a dead end it returns to an earlier vertex that must appear *early*. On the lecture DAG, DFS visits $A,B,D,C,E$, which is invalid ($C$ must precede $E$... and $D$ must follow both).
-- **The repair** ➔ push $u$ onto a stack only **after** every out-neighbour has finished (post-order); a vertex is therefore stacked below everything it must precede.
-- **Reading it out** ➔ the topological order is the stack **popped**, i.e. the **reverse** of the push order.
+- **The observation** ➔ raw [[Uninformed Search (BFS and DFS)|DFS]] visit order is **not** a topological order: after hitting a dead end it returns to an earlier vertex that must appear *early*. On the lecture DAG, DFS visits $A,B,D,C,E$, which is invalid.
+- **The repair** ➔ push $u$ onto a stack only **after** every out-neighbour has finished (post-order); the topological order is the stack **popped**, i.e. the **reverse** of the push order.
 - **Why it works** ➔ $u$ finishes after all of its descendants, so its push is deeper in the stack than theirs ➔ on popping, $u$ emerges first.
 
 ## ⚙️ Core Implementation
@@ -87,8 +86,8 @@ aliases: [Topological Sorting, Topological Order, Kahn's Algorithm]
 >             dfs_aux(v, stack)
 >     stack.append(u)                               # push AFTER all descendants
 > ```
-> 💡 **Common Mistake:** **Printing the stack as built** ➔ the push order is the **reverse** of the answer. The slide's `print(stack)` is only correct read right-to-left; pop it, or reverse it, before submitting.
-> 💡 **Common Mistake:** **Starting from one vertex** ➔ a DAG can have several sources, so a single seeded DFS misses whole components; loop over all vertices, and push the seed itself (the slide's outer function forgets both).
+> 💡 **Common Mistake:** **Printing the stack as built** ➔ the push order is the **reverse** of the answer; pop it, or reverse it, before submitting.
+> 💡 **Common Mistake:** **Starting from one vertex** ➔ a DAG can have several sources, so a single seeded DFS misses whole components; loop over all vertices, and push the seed itself.
 
 ## ⚖️ Complexity
 | Variant | Time | Auxiliary space | Cycle detection | Order it tends to produce |
@@ -130,37 +129,29 @@ Kahn's, `process` used as a **stack** (`pop()` from the end).
 ### Applied Exercise
 **Problem:** which of $\;1.\ A,B,C,E,D\;$ $\;2.\ A,C,B,E,D\;$ $\;3.\ A,C,E,B,D\;$ $\;4.\ A,B,E,C,D\;$ is **not** a valid topological sort?
 $$
-\begin{aligned}
-\text{constraints} \;&:\; A<B,\; A<C,\; B<D,\; C<D,\; C<E,\; E<D \\
-\text{option }4 \;&:\; \text{pos}(E)=3,\ \text{pos}(C)=4 \;\Rightarrow\; E<C \\
-&\;\text{but the edge } \langle C,E\rangle \text{ demands } C<E.
-\end{aligned}
+\text{constraints}: A<B,\; A<C,\; B<D,\; C<D,\; C<E,\; E<D; \qquad \text{option }4:\ \text{pos}(E)=3<\text{pos}(C)=4 \text{ violates } \langle C,E\rangle
 $$
-**Final Extracted Output:** **option 4** is invalid; $1$, $2$ and $3$ each satisfy all six constraints. Options $1$–$3$ differ only in the order of the incomparable pairs, which is exactly the non-uniqueness the definition permits.
+**Final Extracted Output:** **option 4** is invalid; $1$–$3$ each satisfy all six constraints, differing only in the order of incomparable pairs — exactly the non-uniqueness the definition permits.
 
 ### Applied Exercise
 **Problem:** DFS from $A$ (neighbours in alphabetical order) — give the visit order and the topological order, and explain why they differ.
 $$
-\begin{aligned}
-\text{visit (pre-order)} \;&:\; A,\; B,\; D,\; C,\; E \\
-\text{finish (push)} \;&:\; D,\; B,\; E,\; C,\; A \\
-\text{pop (reverse)} \;&:\; A,\; C,\; E,\; B,\; D
-\end{aligned}
+\text{visit (pre-order)}: A, B, D, C, E \qquad \text{finish (push)}: D, B, E, C, A \qquad \text{pop (reverse)}: A, C, E, B, D
 $$
-**Final Extracted Output:** the visit order $A,B,D,C,E$ is **invalid** ($D$ precedes $C$, yet $\langle C,D\rangle$ exists); the pop order $A,C,E,B,D$ is valid. Pre-order records *when we arrived*, post-order records *when everything downstream was settled* — only the second respects the dependencies.
+**Final Extracted Output:** the visit order is **invalid** ($D$ precedes $C$, yet $\langle C,D\rangle$ exists); the pop order is valid. Pre-order records *when we arrived*, post-order *when everything downstream was settled* — only the second respects the dependencies.
 
 ## ⚠️ Common Mistakes
 - 💡 **Emitting the DFS visit order** ➔ the single highest-frequency error; DFS **pre**-order has no ordering guarantee, only the reversed **post**-order does.
-- 💡 **Claiming "the" topological sort** ➔ say *a* topological sort, and if the question demands determinism, state your tie-break rule (alphabetical, lowest index) before tracing.
-- 💡 **Reporting success on a cyclic graph** ➔ Kahn's terminates happily with a **short** `sorted_list`; the check is `len(sorted_list) == V`, and skipping it turns a cycle into a silently truncated answer.
+- 💡 **Claiming "the" topological sort** ➔ say *a* topological sort, and if the question demands determinism, state your tie-break rule before tracing.
+- 💡 **Reporting success on a cyclic graph** ➔ Kahn's terminates happily with a **short** `sorted_list`; the check is `len(sorted_list) == V`.
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does pushing on **finish** produce a valid order when pushing on **discovery** does not?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** a vertex finishes only after every vertex it points to has finished, so it is pushed **below** all of them and pops **before** all of them.
-> > - **Why:** **Discovery order carries no dependency information** ➔ DFS may reach a deep vertex $D$ long before it ever discovers $C$, even though $\langle C,D\rangle$ exists. **Finish order inverts the edges** ➔ for every edge $\langle u,v\rangle$ on a [[Directed Acyclic Graph (DAG)|DAG]], $v$ finishes strictly before $u$, so reversing finish order puts $u$ first. **Acyclicity is load-bearing** ➔ on a cyclic graph $v$ may still be in progress when $u$ finishes, and the argument collapses — that unfinished-but-visited vertex is precisely the back edge a cycle check looks for.
+> > - **Why:** **Discovery order carries no dependency information** ➔ DFS may reach a deep vertex $D$ long before it discovers $C$, even though $\langle C,D\rangle$ exists. **Finish order inverts the edges** ➔ for every edge $\langle u,v\rangle$ on a DAG, $v$ finishes strictly before $u$. **Acyclicity is load-bearing** ➔ on a cyclic graph $v$ may still be in progress when $u$ finishes — that unfinished-but-visited vertex is precisely the back edge a cycle check looks for.
 
 > [!FAQ]- Both algorithms are $\Theta(V+E)$. On what grounds would you still prefer Kahn's in a build system?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** it hands you cycle detection and parallel layering for free, and it needs no call stack.
-> > - **Why:** **A build system must *diagnose* circular dependencies, not just fail** ➔ Kahn's leftover set is the offending vertices, ready to print. **Each zero-in-degree round is a parallel batch** ➔ everything eligible in the same round has no dependency between its members, which is the schedule a build runner wants. **Deep dependency chains overflow recursion** ➔ the iterative form has no depth limit, whereas the DFS variant's stack is $\Theta(V)$.
+> > - **Why:** **A build system must *diagnose* circular dependencies, not just fail** ➔ Kahn's leftover set is the offending vertices, ready to print. **Each zero-in-degree round is a parallel batch** ➔ its members have no dependency between them, which is the schedule a build runner wants. **Deep dependency chains overflow recursion** ➔ the iterative form has no depth limit, whereas the DFS variant's stack is $\Theta(V)$.

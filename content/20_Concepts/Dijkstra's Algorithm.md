@@ -1,6 +1,6 @@
 ---
 unit: FIT2004
-week: 4
+week: 5
 source: [lecture]
 domain: A
 parent: "[[Graph]]"
@@ -19,20 +19,20 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 
 ## 📝 How It Works
 ### 1. The Two Paradigms It Fuses
-- **Dynamic programming** ➔ optimal substructure: $\min(A\rightsquigarrow C)$ is built from $\min(A\rightsquigarrow B)$ already known plus $B\rightarrow C$ — subproblem answers are reused, never recomputed.
-- **Greedy** ➔ the closest reachable vertex is **finalised immediately**: if $B$ is nearest to $A$, no detour $A\rightarrow C\rightarrow B$ can beat it, so we never re-check it.
+- **Dynamic programming** ➔ optimal substructure: $\min(A\rightsquigarrow C)$ is built from $\min(A\rightsquigarrow B)$ plus $B\rightarrow C$ — subproblem answers are reused, never recomputed.
+- **Greedy** ➔ the closest reachable vertex is **finalised immediately**: if $B$ is nearest to $A$, no detour $A\rightarrow C\rightarrow B$ can beat it.
 - **Where greed dies** ➔ a **negative** edge $C\rightarrow B$ makes the detour cheaper *after* $B$ was finalised ➔ Dijkstra is wrong on negative edges. *(It may still happen to be right when the negative edge sits outside any cycle — never rely on it.)*
-- **The escape hatches** ➔ [[Bellman-Ford]] (single source, tolerates negative edges) and [[Floyd-Warshall]] (all pairs, transitive closure) — later in the unit.
+- **The escape hatches** ➔ [[Bellman-Ford]] (single source, tolerates negative edges) and [[Floyd-Warshall]] (all pairs) — later in the unit.
 
 ### 2. The Diff From BFS
-- **Queue ➔ priority queue** ➔ [[Uninformed Search (BFS and DFS)|BFS]] serves by *arrival*, Dijkstra serves by **smallest `distance`**; that single ADT swap ([[Priority Queue (ADT)]]) is the whole algorithm.
+- **Queue ➔ priority queue** ➔ BFS serves by *arrival*, Dijkstra by **smallest `distance`**; that single ADT swap ([[Priority Queue (ADT)]]) is the whole algorithm.
 - **Increment ➔ relaxation** ➔ BFS sets `v.distance = u.distance + 1`; Dijkstra sets `v.distance = u.distance + w` and, on an **already discovered** vertex, **updates downward** if $v.\text{distance} > u.\text{distance} + w$.
 - **Two flags, not one** ➔ `discovered` (in the heap, estimate may still fall) vs `visited`/finalised (served, distance frozen). A finalised neighbour is **skipped**, never relaxed.
 - **Unweighted case** ➔ if all weights are equal, BFS already solves it in $\Theta(V+E)$ — do not pay for a heap you do not need.
 
 ### 3. Reading the Answer Out
 - **Distance** ➔ `v.distance` at the moment $v$ is served; it never changes again.
-- **Path** ➔ set `v.previous = u` on every successful relaxation, then **backtrack** from the target and reverse — the same trick BFS uses.
+- **Path** ➔ set `v.previous = u` on every successful relaxation, then **backtrack** from the target and reverse.
 - **Single target** ➔ terminate the moment the target is moved to `visited`; the remaining heap is irrelevant.
 - **Unreachable** ➔ a vertex never discovered keeps $\text{dist}=\infty$; the loop ends with an empty heap, not an error.
 
@@ -68,36 +68,20 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 >                 discovered.update(v, v.distance)    # O(log V)
 > ```
 > 💡 **Common Mistake:** **Searching the heap for $v$** ➔ `update` must reach $v$'s slot in $O(1)$, so the heap keeps an **index map** `vertex ➔ position` maintained by every rise/sink. Scanning for $v$ turns each update into $O(V)$ and the algorithm into $O(VE)$.
-
-### 🔹 Backtracking the path
-> [!code]- Code
-> ```python
-> def path_to(target):
->     path, current = [], target
->     while current is not None:               # source.previous is None
->         path.append(current)
->         current = current.previous
->     i, j = 0, len(path) - 1                  # reverse in place, no library call
->     while i < j:
->         path[i], path[j] = path[j], path[i]
->         i, j = i + 1, j - 1
->     return path
-> ```
-> 💡 **Common Mistake:** **Updating `distance` without `previous`** ➔ the distances come out right and the path comes out wrong; `previous` must be rewritten on **every** successful relaxation, not only on first discovery.
+> 💡 **Common Mistake:** **Updating `distance` without `previous`** ➔ the distances come out right and the path comes out wrong; `previous` must be rewritten on **every** successful relaxation, not only on first discovery. Backtrack it from the target and reverse in place, exactly as BFS does.
 
 ## ⚖️ Complexity
 Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 
 | Case | Time | Auxiliary space | Trigger |
 | :--- | :--- | :--- | :--- |
-| Best | $\Theta(V)$ | $\Theta(V)$ | single target, adjacent to the source, early exit — the $\Theta(V)$ init still runs |
-| Average | $\Theta(E\log V)$ | $\Theta(V)$ | every edge relaxed once, every vertex served once |
-| Worst | $\Theta(E\log V)$ | $\Theta(V)$ | same — Dijkstra has **no bad-input case**, only a bad-graph *size* |
+| Best | $\Theta(V)$ | $\Theta(V)$ | single target adjacent to the source, early exit — the $\Theta(V)$ init still runs |
+| Average / Worst | $\Theta(E\log V)$ | $\Theta(V)$ | every edge relaxed once, every vertex served once — Dijkstra has **no bad-input case**, only a bad-graph *size* |
 
-- **Slide derivation** ➔ outer loop $O(V)$ $\times$ [ serve $O(\log V)$ $+$ inner edge scan $O(V)$ $\times$ update $O(\log V)$ ] $=O(V^{2}\log V)=O(E\log V)$, using $E\approx V^{2}$ for a **dense** graph.
-- **Aggregate derivation (tighter, prefer it)** ➔ $V$ serves at $O(\log V)$ **plus** $E$ relaxations at $O(\log V)$ ➔ $O((V+E)\log V)=O(E\log V)$ once $E\ge V-1$. The two agree; the slide's $V^{2}$ is the dense instantiation, not a separate bound.
-- **Fibonacci heap** ➔ $O(1)$ amortised `update` ➔ $O(E+V\log V)$, which on a dense graph collapses to $O(V^{2}+V\log V)=O(V^{2})$.
-- **Space** ➔ $\Theta(V)$ auxiliary (heap $+$ `distance`/`previous`/flags) on top of the $\Theta(V+E)$ adjacency list that is **input**, not auxiliary ([[Algorithmic Complexity]] §6).
+- **Slide derivation** ➔ outer loop $O(V)$ $\times$ [ serve $O(\log V)$ $+$ edge scan $O(V)$ $\times$ update $O(\log V)$ ] $=O(V^{2}\log V)=O(E\log V)$, using $E\approx V^{2}$ for a **dense** graph.
+- **Aggregate derivation (tighter, prefer it)** ➔ $V$ serves at $O(\log V)$ **plus** $E$ relaxations at $O(\log V)$ ➔ $O((V+E)\log V)=O(E\log V)$ once $E\ge V-1$. The slide's $V^{2}$ is the dense instantiation, not a separate bound.
+- **Fibonacci heap** ➔ $O(1)$ amortised `update` ➔ $O(E+V\log V)$, collapsing on a dense graph to $O(V^{2})$.
+- **Space** ➔ $\Theta(V)$ auxiliary (heap $+$ `distance`/`previous`/flags) on top of the $\Theta(V+E)$ adjacency list, which is **input**, not auxiliary ([[Algorithmic Complexity]] §6).
 
 ## ⚖️ Core Decision Matrix
 | Situation | Reach for | Why | Cost |
@@ -129,36 +113,35 @@ Lecture's directed weighted graph — $A\!\to\!B(10)$, $A\!\to\!C(5)$, $B\!\to\!
 
 ### Applied Exercise
 **Problem:** state and discharge the correctness claim.
-**Claim:** for every vertex $v$ removed from the queue, $\text{dist}[v]$ is correct. Let $S=V\setminus Q$ be the removed (finalised) set.
+**Claim:** for every vertex $v$ removed from the queue, $\text{dist}[v]$ is correct. Let $S=V\setminus Q$ be the finalised set.
 $$
 \begin{aligned}
 \textbf{Base: } & \text{dist}[s]=0 \text{ is optimal, since no edge weight is negative.} \\
 \textbf{IH: } & \text{dist}[x] \text{ correct for every } x\in S. \\
 \textbf{Step: } & \text{let } u \text{ be served next; suppose a shorter path } P:s\rightsquigarrow u,\ \text{len}(P)<\text{dist}[u]. \\
-& \text{let } x \text{ be the furthest vertex of } P \text{ inside } S,\ y \text{ the next vertex on } P \text{ after } x. \\
-& \text{len}(s\rightsquigarrow y)\le\text{len}(P)<\text{dist}[u] \quad (\text{non-negative weights}) \\
-& \Rightarrow \text{dist}[y]<\text{dist}[u].
+& \text{let } x \text{ be the furthest vertex of } P \text{ inside } S,\ y \text{ the next vertex on } P. \\
+& \text{len}(s\rightsquigarrow y)\le\text{len}(P)<\text{dist}[u] \quad (\text{non-negative weights}) \;\Rightarrow\; \text{dist}[y]<\text{dist}[u].
 \end{aligned}
 $$
-**Final Extracted Output:** contradiction either way — if $y\ne u$ then $y$ had the smaller key and would have been served **before** $u$; if $y=u$ then $\text{dist}[u]<\text{dist}[u]$. Hence no such $P$ exists. The inequality $\text{len}(s\rightsquigarrow y)\le\text{len}(P)$ is **exactly** where non-negativity is spent.
+**Final Extracted Output:** contradiction either way — if $y\ne u$ then $y$ had the smaller key and would have been served **before** $u$; if $y=u$ then $\text{dist}[u]<\text{dist}[u]$. The inequality $\text{len}(s\rightsquigarrow y)\le\text{len}(P)$ is **exactly** where non-negativity is spent.
 
 ## ⚠️ Common Mistakes
-- 💡 **Relaxing a finalised vertex** ➔ writing to `v.distance` after $v$ was served silently corrupts an already-correct answer and hides the negative-weight failure instead of exposing it. Test `v.visited` **first**.
-- 💡 **Quoting $O(V^{2}\log V)$ as the bound** ➔ that is the **dense** case. The bound that survives marking is $O(E\log V)$ with $E$ named and the sparse/dense distinction stated ([[Graph]] §properties).
-- 💡 **"Dijkstra fails on negative edges because distances go negative"** ➔ no — it fails because a vertex is **finalised too early**; state the failure as a broken greedy choice, with the $A\rightarrow B$ vs $A\rightarrow C\rightarrow B$ counterexample.
+- 💡 **Relaxing a finalised vertex** ➔ writing to `v.distance` after $v$ was served silently corrupts an already-correct answer and hides the negative-weight failure. Test `v.visited` **first**.
+- 💡 **Quoting $O(V^{2}\log V)$ as the bound** ➔ that is the **dense** case. The bound that survives marking is $O(E\log V)$ with $E$ named and the sparse/dense distinction stated ([[Graph]] §3).
+- 💡 **"Dijkstra fails on negative edges because distances go negative"** ➔ no — it fails because a vertex is **finalised too early**; state it as a broken greedy choice, with the $A\rightarrow B$ vs $A\rightarrow C\rightarrow B$ counterexample.
 
 ## 🧠 Active Recall
 > [!FAQ]- BFS and Dijkstra are the same loop. Name every line that differs, and say why each difference is forced.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** the ADT ([[Queue (ADT)|queue]] ➔ min-[[Heap]]), the increment ($+1$ ➔ $+w$), and the added downward **update** branch.
-> > - **Why:** **FIFO orders by hop count** ➔ correct only when every edge costs the same; with weights, "discovered earliest" no longer means "closest". **Serving the minimum key restores the ordering** ➔ vertices leave in nondecreasing distance, which is the property the correctness proof consumes. **The update branch is needed because an estimate can fall** ➔ in BFS the first arrival is final, in Dijkstra a cheaper route can be found while $v$ still sits in the heap.
+> > - **Why:** **FIFO orders by hop count** ➔ correct only when every edge costs the same. **Serving the minimum key restores the ordering** ➔ vertices leave in nondecreasing distance, the property the correctness proof consumes. **The update branch is needed because an estimate can fall** ➔ in BFS the first arrival is final; in Dijkstra a cheaper route can appear while $v$ still sits in the heap.
 
 > [!FAQ]- Exactly where does the correctness proof use non-negativity, and what does a single negative edge break?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** at $\text{len}(s\rightsquigarrow y)\le\text{len}(P)$ — a prefix is never longer than the whole path only when no edge is negative.
-> > - **Why:** **A negative suffix makes a prefix cost more than the full path** ➔ the inequality reverses and the contradiction evaporates. **Operationally the greedy step is what dies** ➔ $u$ is finalised at $\text{dist}[u]$ while a route through a later negative edge is cheaper, and Dijkstra never revisits a finalised vertex. **The repair is a different algorithm** ➔ [[Bellman-Ford]] relaxes every edge $V-1$ times instead of finalising once.
+> > - **Why:** **A negative suffix makes a prefix cost more than the full path** ➔ the inequality reverses and the contradiction evaporates. **Operationally the greedy step dies** ➔ $u$ is finalised while a route through a later negative edge is cheaper, and Dijkstra never revisits a finalised vertex. **The repair is a different algorithm** ➔ [[Bellman-Ford]] relaxes every edge $V-1$ times instead of finalising once.
 
 > [!FAQ]- You need the shortest path from one source to one target on a graph with $V=10^{5}$, $E=10^{5}$. Justify your ADT and bound choices.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** binary heap, $O(E\log V)$, terminate on serving the target.
-> > - **Why:** **The graph is sparse** ($E\approx V$, not $V^{2}$) ➔ the adjacency list is $\Theta(V+E)$ against the matrix's $\Theta(V^{2})=10^{10}$, and the Fibonacci heap's $O(E+V\log V)$ advantage only shows when $E\gg V$. **Early exit is free correctness** ➔ the target's distance is final the instant it is served, so the rest of the heap cannot improve it. **The path needs `previous`** ➔ distances alone are not the deliverable when the question says "path".
+> > - **Why:** **The graph is sparse** ($E\approx V$) ➔ the adjacency list is $\Theta(V+E)$ against the matrix's $10^{10}$, and the Fibonacci heap's advantage only shows when $E\gg V$. **Early exit is free correctness** ➔ the target's distance is final the instant it is served. **The path needs `previous`** ➔ distances alone are not the deliverable when the question says "path".

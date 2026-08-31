@@ -1,7 +1,7 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 2, 3]
+week: [1, 3]
 source: [lecture, applied]
 parent: "[[Algorithm]]"
 tags: [CS/Algorithms, CS/Foundations]
@@ -19,26 +19,22 @@ aliases: [Loop Invariant, Proof of Correctness]
 
 ## 📝 Core
 ### 1. The Invariant (A Property Preserved)
-- **Definition** ➔ a property that **remains true** at a program point or throughout an algorithm.
-- **Loop invariant** ➔ holds before the loop, preserved by every iteration ➔ still holds at exit.
+- **Definition** ➔ a property that **remains true** at a program point or throughout an algorithm; a **loop invariant** holds before the loop, is preserved by every iteration, and therefore still holds at exit.
 - **Payoff** ➔ anything provably always-true can be **exploited to skip work** ➔ the basis of every correctness proof.
-- **Why prove instead of test** ➔ development cost and compute are finite, testing cannot cover the input space, and field failures are unbounded — Ariane 5 ($\approx 7$ billion USD, bad horizontal-velocity conversion), the Patriot battery that missed a Scud (accumulated time-since-boot error, 28 dead). Proof is applied at **design** time, where testing cannot reach.
+- **Why prove instead of test** ➔ testing cannot cover the input space and field failures are unbounded — Ariane 5 ($\approx 7$ billion USD, bad velocity conversion), the Patriot battery that missed a Scud (accumulated time-since-boot error, 28 dead). Proof applies at **design** time, where testing cannot reach.
 
 ### 2. The Three-Part Proof
-- **Initialization** ➔ $P$ holds before the first iteration.
-- **Maintenance** ➔ $P$ before ⟹ $P$ after each iteration.
-- **Termination** ➔ loop ends + negated guard ⟹ postcondition.
+- **Initialization** ➔ $P$ holds before the first iteration · **Maintenance** ➔ $P$ before ⟹ $P$ after each iteration · **Termination** ➔ loop ends + negated guard ⟹ postcondition.
 - **Total correctness** ➔ maintenance + termination give **partial**; a **variant** (non-negative integer measure strictly decreasing, e.g. `end - start`) proves halting ⟹ **total**.
 
 ### 3. Termination — the Co-Equal Obligation
-- **What to state** ➔ which **update** guarantees the guard is eventually falsified, or which **base case** the recursion is guaranteed to reach.
 - **The three-line template** ➔ *(i)* the domain is **finite** · *(ii)* the counter **starts** at a known point · *(iii)* every iteration moves it **monotonically** toward the bound ⟹ the guard fails after finitely many steps.
 - **`find_min` worked** ➔ array is finite · `index` starts at $1$ · each iteration does `index += 1` ⟹ `index` reaches `len(array)` and the `while` exits.
 - **Say WHERE you are quoting it** ➔ an invariant may be stated at the **start** or the **end** of an iteration and the two differ by one index — `find_min` reads naturally at the start (`min` $=\min($`A[1…i-1]`$)$), [[Linear Search]] at the end (`index` $=$ the last match in `A[1…i]`). Unstated, the maintenance step cannot be checked.
-- **Failure is not exotic** ➔ [[Binary Search]] written with `lo = mid` and `while lo < hi` **does not terminate** at $lo{=}5,hi{=}6$: $mid=\lfloor 11/2\rfloor=5$, so `lo = mid` is a no-op and no measure decreases ➔ see that note for the fix.
+- **Failure is not exotic** ➔ [[Binary Search]] written with `lo = mid` and `while lo < hi` **does not terminate** at $lo{=}5,hi{=}6$: $mid=5$, so the assignment is a no-op and no measure decreases.
 
 ### 4. Design Order — Invariant First, Then Code
-- **Reverse the usual order** ➔ *(1)* define the invariant you need at exit, *(2)* write the loop that maintains it. Code written to a stated invariant is correct by construction; an invariant reverse-engineered from finished code usually just paraphrases the code.
+- **Reverse the usual order** ➔ *(1)* define the invariant needed at exit, *(2)* write the loop that maintains it. Code written to a stated invariant is correct by construction; one reverse-engineered from finished code usually just paraphrases the code.
 - **Keep it minimal** ➔ the invariant only has to be **strong enough to imply the postcondition** at exit; extra clauses are extra proof burden with no marks attached.
 - **Exam shape** ➔ *"(1 mark) Write a loop invariant for the Floyd–Warshall algorithm that can be used to show it correctly computes all-pairs shortest distances."* — one sentence, quantified over the loop counter, that becomes the postcondition when the counter hits its bound.
 
@@ -48,7 +44,7 @@ aliases: [Loop Invariant, Proof of Correctness]
 | `find_min` | `my_min` holds the minimum of `array[0…index]` | finite array; `index` starts at $1$ and increments | at exit `index` $=N$ ⟹ global minimum |
 | [[Sorting Problem\|Bubble Sort]] | after pass $i$, the $i$ largest are final at the tail | outer counter shrinks by $1$ per pass | early-exit ($O(n)$ best) |
 | [[Sorting Problem\|Selection Sort]] | `my_list[0…i-1]` is sorted **AND** $\le$ every element of `my_list[i…N]` | both $i$ and $j$ only increment and reach the end | prefix is **final** ⟹ correctness; blocks adaptivity |
-| [[Sorting Problem\|Insertion Sort]] | `my_list[0…i-1]` sorted, **not necessarily final** | `i` increments; inner `j` strictly decreases and is bounded below by $0$ | incremental inserts |
+| [[Sorting Problem\|Insertion Sort]] | `my_list[0…i-1]` sorted, **not necessarily final** | `i` increments; inner `j` strictly decreases, bounded below by $0$ | incremental inserts |
 | [[Binary Search]] | if the key exists in `array[0…N]` it exists in `array[lo…hi]` | `hi - lo` must **strictly** shrink — the bug vector | shrink-by-half correctness |
 | [[Linear Search]] *(no early exit)* | **at the end of iteration $i$:** `index` $=$ the largest $j\le i$ with `A[j] = target`, else `null` | `i` runs $1\to n$ over a finite array | at $i=n$ the invariant **is** the postcondition ⟹ returns the **last** occurrence |
 | [[Heap]] | every node $\ge$ its children | sift index halves / doubles toward a bound | $O(\log n)$ `get_max` |
@@ -57,14 +53,12 @@ aliases: [Loop Invariant, Proof of Correctness]
 > [!NOTE] **When It Flips:** the **strength** of the invariant, not the code, decides what optimisations are legal — selection sort's *final* prefix forbids the incremental insert that insertion sort's *sorted-not-final* prefix permits. Class invariants generalise the idea to objects (a [[Queue (ADT)|CircularQueue]]'s `front`/`rear`/`count` consistency). Invariants prove *correctness*; [[Big-O Notation|asymptotic analysis]] proves *cost*.
 
 ## 📊 Exam Execution Trace
-
 ### Applied Exercise
 **Problem:** Show the invariant method is induction over iterations, and that termination is a separate obligation.
 $$
 \begin{aligned}
 \textbf{base}\;(\text{initialization}) &: P \text{ holds before iteration } 1 \\
 \textbf{step}\;(\text{maintenance}) &: P \text{ before iter } k \Rightarrow P \text{ before iter } k{+}1 \\
-\therefore\; & P \text{ holds at every iteration reached} \\
 \textbf{variant}\;(\text{termination}) &: V_k \in \mathbb{N},\; V_{k+1} < V_k \Rightarrow \text{finitely many iterations} \\
 P \wedge \neg\text{guard} &\Rightarrow \text{postcondition} \quad \text{(total correctness)}
 \end{aligned}
@@ -72,28 +66,22 @@ $$
 **Final Extracted Output:** initialization = base case, maintenance = inductive step, variant = the well-ordering argument that the induction actually reaches its last step.
 
 ## ⚠️ Common Mistakes
-- 💡 **Invariant ≠ termination** ➔ it proves correctness *if* the loop halts; you still need a separate **variant** (a strictly-decreasing non-negative measure) for total correctness.
+- 💡 **Invariant ≠ termination** ➔ it proves correctness *if* the loop halts; you still need a separate **variant** for total correctness.
 - 💡 **"Eventually they meet" is not a termination proof** ➔ name the measure and show it **strictly** decreases; a move that can leave the measure unchanged (`lo = mid`) is exactly where infinite loops live.
-- 💡 **Choosing an invariant that does not match the code's behaviour** ➔ [[Linear Search]] without an early `return` keeps overwriting `index`, so "`index` is the **first** match" is false; the true invariant names the **largest** $j\le i$. Write the invariant the code actually maintains, not the one you wish it did.
-- 💡 **Restating the code as the invariant** ➔ *"`i` increases each iteration"* is a fact about the loop, not a property that implies the postcondition; the invariant must mention the **data**, not just the counter.
+- 💡 **Choosing an invariant that does not match the code's behaviour** ➔ [[Linear Search]] without an early `return` keeps overwriting `index`, so "`index` is the **first** match" is false; the true invariant names the **largest** $j\le i$.
+- 💡 **Restating the code as the invariant** ➔ *"`i` increases each iteration"* is a fact about the loop, not a property implying the postcondition; the invariant must mention the **data**, not just the counter.
 
 ## 🧠 Active Recall
-> [!FAQ]- State the three obligations of a loop-invariant proof and which combination gives total vs partial correctness.
-> - **Hint:** Partial vs total.
+> [!FAQ]- State the three obligations of a loop-invariant proof and which combination gives total vs partial correctness — and how they map onto induction.
+> - **Hint:** Partial vs total; induction over the iteration counter.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Initialization + maintenance + termination; maintenance + termination = **partial**, add a decreasing non-negative **variant** for **total**.
-> > - **Why:** **Variant proves halting** ➔ correctness-if-it-halts becomes correct-and-halts.
-
-> [!FAQ]- How does the loop-invariant method relate to mathematical induction?
-> - **Hint:** Induction over iteration count.
-> > [!SUCCESS]- Answer
-> > - **Short answer:** Initialization = base case, maintenance = inductive step ⟹ holds at every iteration including the last.
-> > - **Why:** **Discrete index** ➔ exactly induction on the iteration counter.
+> > - **Short answer:** initialization + maintenance + termination; maintenance + termination = **partial**, add a decreasing non-negative **variant** for **total**.
+> > - **Why:** **Discrete index** ➔ initialization is the base case and maintenance the inductive step, so the property holds at every iteration reached; the variant is what proves the last one *is* reached.
 
 > [!FAQ]- Why is the *difference* between selection and insertion sort's invariants algorithmically significant?
 > - **Hint:** Invariant strength gates optimisation.
 > > [!SUCCESS]- Answer
-> > - **Short answer:** Selection's prefix is **sorted and final** — it also dominates the whole suffix — while insertion's is "sorted but not final".
+> > - **Short answer:** selection's prefix is **sorted and final** — it also dominates the whole suffix — while insertion's is "sorted but not final".
 > > - **Why:** **Sound optimisations** ➔ the weaker invariant makes insertion sort incremental/online; the stronger one forbids it, because a later element can never be admitted into a prefix already declared final.
 
 > [!FAQ]- You are shown an algorithm in prose and asked "explain why it is correct" for 2 marks. What exactly do you write?
