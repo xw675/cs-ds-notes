@@ -170,6 +170,26 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | weighted measure | `sum(Total_delivery_Cost * Weight_Factor)` grouped by the bridged dimension | apportions a parent-owned measure to its members — an **estimate**, not a stored fact |
 | never do | putting the far dimension's key in the fact when the source is m–m | the measure is undividable, so the fact row multiplies once per partner |
 
+## 🔑 Determinant, Pivot & Junk Clauses (FIT3003 W5–W6)
+*(➔ [[Determinant Dimensions]] · [[Pivoted Fact Tables]] · [[Junk Dimensions]] · [[Surrogate Key]] · [[Slowly Changing Dimensions (SCD)]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| sequence surrogate | `drop sequence Seq_ID;` then `create sequence Seq_ID start with 1 increment by 1 maxvalue 99999999 minvalue 1 nocycle;` | the warehouse way to key a dimension; `drop` first or a re-run raises `ORA-00955` |
+| consume the sequence | `update JunkDim set JunkID = Seq_ID.nextval;` | **one** statement keys every row; `.nextval` fires once per row, `.currval` never advances |
+| junk dimension | `create table JunkDim as select distinct Ensuite, Pool, Aspect_Facing, Spa from Property order by …;` | the Cartesian product of low-cardinality **unrelated** columns ➔ [[Junk Dimensions]] |
+| deliberate Cartesian product | `create table AllDimensions as select CO.CountryCode, CI.Citizenship, Y.Year, G.Grade from CountryVenueDim CO, CitizenshipDim CI, YearDim Y, GradeDim G;` | **no `where` on purpose** — the only place a product is correct; it is the row grid a pivoted fact must fill |
+| Oracle old-style outer join | `where A.Year = O.Year(+)` | `(+)` marks the side that may be **missing**; ANSI equivalent is `A left outer join O` |
+| zero-fill a pivot measure | `nvl(O.Total_Students_Overall, 0) as Total_Students_Overall` | the inner-joined fact has **no row** for an absent combination; `(+)` keeps it and `nvl` makes it $0$ |
+| band with `CASE` in DML | `update TempFact set GradeOverall = (case when OverallScore >= 30 and OverallScore <= 35 then '4.5' … end);` | W6's banding idiom — **one statement** replaces W2's one-`update`-per-band; unmatched rows get `NULL`, not an error |
+| fill an FK from a dimension | `update TempFact TF set TF.SuburbID = (select S.SuburbID from SuburbDim S where S.Suburb = TF.Suburb);` | correlated update — the loop-free alternative to $n$ hand-typed `update … where` statements |
+| fill an FK, multi-column | `set TF.JunkID = (select J.JunkID from JunkDim J where J.Ensuite = TF.Ensuite and J.Pool = TF.Pool and …)` | every junk column must appear, or the subquery returns many rows ⟹ `ORA-01427` |
+| cursor loop | `declare cursor JunkCursor is select * from JunkDim; begin for JunkCursorRec in JunkCursor loop update … end loop; end;` | PL/SQL route to the same fill; prefer the correlated update unless per-row logic is needed |
+| stack pivot components | `create table FinalFact as select … from OverallFact union select * from ListeningFact union …;` | breaks one wide source record into one fact row per component; union-compatible column lists required |
+| join the components back | `from OverallFactNew O, ListeningFactNew L, … where O.Year = L.Year and L.Year = R.Year and …` | the pivot's last step: $k$ facts need $k-1$ conditions **per key column** |
+| one dimension, many roles | `from PrivateTaxiFact2 F, CarDim D1, CarDim D2, …, CarDim D5 where F.CarNo1 = D1.CarNo and …` | a shifted dimension re-entering as $n$ aliases — the query cost the pivot buys ➔ [[Pivoted Fact Tables]] |
+| open-ended SCD range | `EndDate = 'Dec9999'` as the current-version sentinel | Type 2/4 history; find "now" with a range test or `CurrentFlag`, never `max(EndDate)` |
+
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
 > > [!SUCCESS]- Reference solution
@@ -234,6 +254,40 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > ```
 > > - **Key moves:** count-based diagnosis → `select distinct` CTAS → `alter add` + one `update` per band → single `group by`. The **night band needs `or`**, not `and`, because it wraps past midnight; and the fact's row count is unchanged by cleaning — only `total_usage` moves.
 
+> [!QUESTION]- Practice 5 (FIT3003 Ch8-style): the `Property` table has four low-cardinality columns — `Ensuite`/`Pool`/`Spa` (`yes`/`no`) and `Aspect_Facing` (`East`/`North`/`South`/`West`). Build the junk-dimension star and answer "what are the features of the most expensive property (by average price)?"
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > create table JunkDim as                                  -- 1. Cartesian product = 32 rows
+> > select distinct Ensuite, Pool, Aspect_Facing, Spa from Property
+> > order by Ensuite, Pool, Aspect_Facing, Spa;
+> > alter table JunkDim add (JunkID number(2));
+> >
+> > drop sequence Seq_ID;                                    -- 2. surrogate-key it
+> > create sequence Seq_ID start with 1 increment by 1 maxvalue 99999999 minvalue 1 nocycle;
+> > update JunkDim set JunkID = Seq_ID.nextval;
+> >
+> > create table PropertyTempFact2 as                        -- 3. stage + re-key the fact
+> > select Ensuite, Pool, Aspect_Facing, Spa, Houseprice from Property;
+> > alter table PropertyTempFact2 add (JunkID number(2));
+> > update PropertyTempFact2 TF set TF.JunkID =
+> >   (select J.JunkID from JunkDim J
+> >    where J.Ensuite = TF.Ensuite and J.Pool = TF.Pool
+> >    and   J.Aspect_Facing = TF.Aspect_Facing and J.Spa = TF.Spa);
+> >
+> > create table PropertyFact2 as                            -- 4. aggregate
+> > select JunkID, count(*) as Num_of_Property, sum(Houseprice) as Total_Price
+> > from   PropertyTempFact2 group by JunkID;
+> >
+> > select J.Ensuite, J.Pool, J.Aspect_Facing, J.Spa         -- 5. the nested question
+> > from   PropertyFact2 PF, JunkDim J
+> > where  Total_Price/Num_of_Property =
+> >        (select max(P.Total_Price/P.Num_of_Property) from PropertyFact2 P)
+> > and    PF.JunkID = J.JunkID;
+> > ```
+> > - **Key moves:** `select distinct` over four columns builds the product · `Seq_ID.nextval` keys it in one statement · a **correlated update** fills the fact's FK · the final query needs only **2 tables and 1 join condition**, against 5 tables and 4 conditions in the non-junk version.
+> > - ⚠️ **Never store `avg`** ➔ the fact holds `Total_Price` and `Num_of_Property`; the average is computed at query time ➔ [[Fact Measure Aggregation Rules]].
+
+
 ## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
 - 💡 **"not A or B" trap** ➔ `emp_no <> 3 OR emp_no <> 8` is TRUE for every row; exclusion needs `AND`.
@@ -243,3 +297,6 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Building a FIT3003 fact from the dimension tables** ➔ dimensions were created with `select distinct` and hold no measures; aggregate from the operational (or Temp) tables.
 - 💡 **Staging a fact without counting first** ➔ correct SQL over dirty sources produces a correctly-shaped fact with inflated measures; predict the join cardinality before trusting anything ➔ [[Data Exploration (Warehouse Validation)]].
 - 💡 **`select … as X` while `group by` still names the old column** ➔ ORA-00979; change the projection and the grouping list together.
+- 💡 **Pivoting a fact without `AllDimensions`** ➔ the source fact was built with an **inner join**, so absent combinations have no row at all; outer-joining the component facts to each other cannot invent them ➔ [[Pivoted Fact Tables]].
+- 💡 **`1/count(*)` and `Seq_ID.currval`** ➔ two silent-zero traps: integer division floors every weight factor, and `currval` re-reads the last value instead of advancing — use `1.0/count(*)` and `.nextval`.
+- 💡 **A comma-list `from` with no `where` in a FIT3003 lab** ➔ normally a quota-killing accident, but in the pivot recipe it is the **intended** `AllDimensions` product; know which one you are writing.

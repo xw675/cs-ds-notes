@@ -18,7 +18,7 @@ tags: [2026/S2]
 **Topics covered:** data warehousing (ETL, multidimensional schemas, star/snowflake) · OLAP · data analytics.
 
 ## 🧰 Toolkit Cheatsheets
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`)
 
 ## 📅 Knowledge Index
 
@@ -57,10 +57,24 @@ tags: [2026/S2]
 - [[Star Schema]] *(W4 merge: the one-hop rule and its snowflake exception)*
 - [[Data Warehouse]] *(W4 merge: the five reasons warehousing is needed — Feedback Session 3)*
 
+### Week 5 — Temporal Data Warehousing (Ch6)
+- [[Slowly Changing Dimensions (SCD)]] -> Parent Framework: [[Star Schema]] *(captured from the W6 webinar recap deck — confirm against the W5 slides)*
+
+### Week 6 — Determinant Dimensions (Ch7) & self-study Chapters 8–10
+- [[Determinant Dimensions]] -> Parent Framework: [[Star Schema]]
+- [[Pivoted Fact Tables]] -> Parent Framework: [[Determinant Dimensions]]
+- [[Junk Dimensions]] -> Parent Framework: [[Star Schema]]
+- [[One-Attribute Dimensions]] *(W6 merge: Ch9 dimension-less keys; Ch10's full move-or-keep taxonomy)*
+- [[Surrogate Key]] *(W6 merge: Ch9 sequence implementation; optional when the operational PK is already unique)*
+- [[Star Schema]] *(W6 merge: dashed-box determinant notation, the dimension-less-key band)*
+- [[Fact Measure Aggregation Rules]] *(W6 merge: the single case where a stored `avg` is legal)*
+
 ## 🧭 Suggested Reading Order
 - **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
 - **W3 — never trust the source:** **[[Data Exploration (Warehouse Validation)]]** *(A2 task 1)* → **[[Data Cleaning (Dirty Data)]]** *(A2 task 1)* → [[Multi-Role Facts]] *(two-role transactions)* → [[One-Attribute Dimensions]] *(refinement)*
 - **W4 — when the star must bend:** [[Snowflake Schema]] *(the two families)* → [[Dimension Hierarchies]] *(optional, usually reject)* → **[[Bridge Tables]]** *(A2 hand skill)* → **[[Building Bridge Table Schemas]]** *(lab SQL)*
+- **W5 — the past must stay past:** [[Slowly Changing Dimensions (SCD)]] *(six types, one ladder)*
+- **W6 — when a dimension is compulsory:** **[[Determinant Dimensions]]** *(the test)* → **[[Pivoted Fact Tables]]** *(the ETL recipe)* → [[Junk Dimensions]] *(the opposite move)* → [[One-Attribute Dimensions]] *(move or keep)* → [[Surrogate Key]] *(sequence keys)*
 
 ## 🎯 Learning Outcomes
 
@@ -92,3 +106,16 @@ tags: [2026/S2]
 	- detect the source m–m that forces a bridge table
 	- build a bridge by copying the operational associative table
 	- compute $\text{WeightFactor}$ and `LISTAGG` in the parent dimension
+- **W5** ➔ 
+	- report a measure at the attribute value true when the fact happened
+	- separate SCD types by where the history lives
+	- reject types 0 and 1 for any historical report
+	- key a Type 4 history table on $(\text{ID}, \text{StartDate}, \text{EndDate})$
+	- read a Type 2 dimension via `CurrentFlag` or a date range
+- **W6** ➔ 
+	- test a dimension for determinacy from the fact's aggregate function
+	- reject the inference "Type Dimension $\Rightarrow$ determinant"
+	- enforce a determinant dimension by pivot or by user interface
+	- build a pivoted fact with `AllDimensions` $+$ `(+)` $+$ `nvl`
+	- consolidate unrelated low-cardinality dimensions into a `JunkDim`
+	- key a dimension with `create sequence` and `.nextval`

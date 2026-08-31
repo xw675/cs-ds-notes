@@ -1,11 +1,11 @@
 ---
 unit: FIT3003
-week: 2
+week: [2, 6]
 source: [lecture, slides]
 domain: C
 parent: "[[Star Schema]]"
 tags: [CS/Databases, DataScience/DataWarehousing, Tool/SQL]
-aliases: [Average of an Average, Additivity, Fact Measure Selection]
+aliases: [Average of an Average, Additivity, Fact Measure Selection, Non-Additive Measure]
 ---
 # [[Fact Measure Aggregation Rules]]
 
@@ -30,6 +30,7 @@ aliases: [Average of an Average, Additivity, Fact Measure Selection]
 ### 3. Average — the trap
 - **Roll-up breaks** ➔ $\operatorname{avg}$ of per-group averages ignores group sizes, so it equals the true average only when all groups are the same size.
 - **Correction is decomposition** ➔ store $\text{Total\_Score}$ and $\text{Number\_of\_Students}$; recover the average with `sum(Total_Score)/sum(Number_of_Students)`.
+- **The W6 exception** ➔ a stored `Avg_X` **is** legal when **every** dimension is used in every retrieval, because then no second `avg` is ever applied to it; the Petrol Station star reaches this state only after all four dimensions are made compulsory ➔ [[Determinant Dimensions]].
 
 ### 4. Min / Max
 - **Global value guaranteed** ➔ $\max$ of group maxima $=$ the global maximum, likewise $\min$; both may be stored.
@@ -65,9 +66,9 @@ aliases: [Average of an Average, Additivity, Fact Measure Selection]
 | `count(*)` / `count(col)` / `count(distinct col)` | ✅ | additive | `sum()` over fact rows |
 | `sum` | ✅ | additive | `sum()` over fact rows |
 | `min` / `max` | ✅ (separately) | semi-additive — global value survives | `min()` / `max()`, never crossed |
-| `avg` | ❌ | **not additive** — weights are lost | store total + count, then `sum/sum` |
+| `avg` | ❌ *(⚠️ ✅ only if **all** dimensions are always used)* | **not additive** — weights are lost | store total + count, then `sum/sum` |
 
-> [!NOTE] **When It Flips:** an average is safe to *display* and unsafe to *store*. The rule fires the moment a fact row can be combined with another fact row — which is always, because that is what a dimension roll-up does.
+> [!NOTE] **When It Flips:** an average is safe to *display* and unsafe to *store*. The rule fires the moment a fact row can be combined with another fact row — which is always, because that is what a dimension roll-up does. **The one escape** ➔ if the star forces every query to name every dimension, no fact rows are ever combined and $\text{Avg\_X}$ becomes a legal stored measure ➔ [[Determinant Dimensions]].
 
 ## 📊 Exam Execution Trace & Applied Exercises
 

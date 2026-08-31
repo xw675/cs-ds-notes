@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: [1, 2, 4]
+week: [1, 2, 4, 6]
 source: [lecture, slides]
 domain: C
 parent: "[[Data Warehouse]]"
@@ -28,7 +28,7 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 
 ### 3. Dimensions
 - **Core Mechanism:** **Qualifying characteristics** ➔ perspectives added to a fact; sales viewed by sales location, sales period, sales product.
-- **Structural Invariant:** **One hop only** ➔ each dimension joins directly to the fact (that is what makes the picture a star); a dimension is not further normalised into sub-tables. **W4 exception** ➔ decomposing one dimension turns the star into a [[Snowflake Schema]] — forced when the source relationship is m–m ([[Bridge Tables]]), merely optional when it is many-1 ([[Dimension Hierarchies]]).
+- **Structural Invariant:** **One hop only** ➔ each dimension joins directly to the fact (that is what makes the picture a star); a dimension is not further normalised into sub-tables. **W4 exception** ➔ decomposing one dimension turns the star into a [[Snowflake Schema]] — forced when the source relationship is m–m ([[Bridge Tables]]), merely optional when it is many-1 ([[Dimension Hierarchies]]). **W6 exception** ➔ a dimension can also be *removed* by folding it into the fact, as a [[Pivoted Fact Tables|pivoted fact table]] or a [[Junk Dimensions|junk dimension]].
 
 ### 4. Attributes
 - **Core Mechanism:** **Properties in a dimension** ➔ the descriptive columns a dimension carries (a country attribute inside a student dimension; a level attribute inside a course dimension).
@@ -38,6 +38,8 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 - **Naming:** **`XxxDIM` / `XxxFACT`** ➔ dimensions and the fact are named by suffix; connecting lines may be straight or bent, and the dimension under discussion is **highlighted** in the diagram.
 - **Keys:** **Dimension ID is the dimension's PK** ➔ the same column appears inside the fact as **FK *and* part of the composite PK**, drawn in *bold italic* above the separator line; measures sit below it.
 - **Fact content:** **Numerical only** ➔ a fact may hold only numerical values; anything descriptive belongs in a dimension ➔ [[Fact Measure Aggregation Rules]].
+- **Dashed box $=$ compulsory** *(W6)* ➔ a dimension drawn with a **dashed** outline is a [[Determinant Dimensions|determinant dimension]] — every retrieval from the fact must name its key identifier or the measure is meaningless. All boxes dashed $\Rightarrow$ every dimension is compulsory, which is what makes a stored `Avg_X` legal.
+- **Un-keyed attribute inside the fact** *(W6)* ➔ an attribute drawn in the fact on its own band, below the FK block and above the measures, is a **dimension-less key**: it refers to no dimension at all ➔ [[One-Attribute Dimensions]].
 - **Source-side E/R notation:** **`ENTITY` capitalised**, keys marked `PK` / `FK`, Crow's-foot relationships **with participation**, associative relationship $=$ m–m, non-associative $=$ 1–m ➔ [[Entity Relationship Diagram (ERD)]], [[Cardinality (Crow's Foot Notation)]].
 
 ### 6. Transformation process
