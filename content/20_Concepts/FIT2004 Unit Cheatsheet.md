@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W5; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W6; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -271,7 +271,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | [[K-way Merge]] (scan heads) | $\Theta(Nk)$ all | $\Theta(k)$ | Yes | only for $k\lesssim4$ |
 | Size-$k$ heap ➔ [[Online Algorithm]] | $\Theta(N\log k)$ all | $\Theta(k)$ | **Yes** | $N$ unknown/unbounded, or a memory cap |
 
-## 🔟 Graphs, Traversal and Shortest Paths (W5)
+## 🔟 Graphs, Traversal and Shortest Paths (W5 lecture · W5 applied)
 > [!warning] Every graph bound carries **two** parameters. $\Theta(V+E)$ means $\Theta(V)$ on a sparse graph and $\Theta(V^{2})$ on a dense one, and it is an **adjacency-list** bound — the same code on a matrix is $\Theta(V^{2})$. Name the density and the representation, or the bound is unmarkable ➔ §1️⃣ *bound ≠ case*.
 
 - **Definitions** `[P]` ➔ $G=(V,E)$ · edge $e=(u,v)$, **directed** ⟹ from $u$ to $v$ · **weighted** ⟹ $e=(u,v,w)$ and $G=(V,E,W)$ · **simple** ⟹ no self-edges (loops) and no multi-edges **· precondition:** every FIT2004 algorithm assumes simple unless told otherwise.
@@ -303,3 +303,78 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Kahn's** `[P]` ➔ count incoming edges $\Theta(V+E)$ → seed with the in-degree-$0$ vertices → pop, emit, decrement each out-neighbour, push new zeros ⟹ $\Theta(V+E)$ time and space **· cycle check:** $\lvert\text{sorted}\rvert<V$ ⟹ a cycle exists **· note:** `process` may be a queue or a stack; the choice changes *which* valid order you get.
 - **Modified DFS** `[P]` ➔ push each vertex on **finish** (after all out-neighbours), then **pop**/reverse ⟹ $\Theta(V+E)$ **· precondition:** DFS **pre-order is not a topological order** — the single highest-frequency error — and the outer loop must seed every vertex, since a DAG can have many sources.
 - **Choosing between them** `[C]` ➔ Kahn's for free cycle diagnosis, parallel layering (each zero-in-degree round is a batch) and no recursion depth; modified DFS when a recursive traversal already exists.
+
+
+### 🔟.b The W5 Applied Sheet — Traversal, Recast
+- **Two-colouring is greedy, not a search** `[P]` ➔ pick any colour for the first vertex of a [[Connectivity|component]]; every other colour is then **forced**, so [[Bipartite Graph|DFS colouring]] decides it in $\Theta(V+E)$ **· fire condition:** report failure only when a neighbour already carries the **same** colour — merely *being coloured* is normal **· equivalence:** bipartite $\iff$ two-colourable, so one algorithm answers both.
+- **Counting two-colourings** `[C]` ➔ $0$ if not two-colourable, else $2^{c}$ for $c$ [[Connectivity|connected components]] **· precondition:** test colourability **first**; one bad component zeroes the whole product **· trap:** isolated vertices are components and double the count.
+- **Directed cycle detection needs THREE states** `[P]` ➔ unvisited / **active** (descendants still being explored) / inactive; fire only on an edge into an **active** vertex ➔ [[Cycle Detection]] **· why:** the undirected rule false-positives on the diamond $a\!\to\!b\!\to\!d$, $a\!\to\!c\!\to\!d$ **· write:** `ACTIVE` on entry, `INACTIVE` after the neighbour loop.
+- **Undirected cycle existence is $O(V)$, not $\Theta(V+E)$** `[D]` ➔ acyclic ⟹ forest ⟹ $E\le V-1$ · cyclic ⟹ the run halts at the first non-tree edge, having seen $\le V-1$ tree edges **· rule:** an algorithm that halts on first success is bounded by the work **before** the halt, never by the $\lvert E\rvert$ it never reads.
+- **Shortest cycle needs $\lvert V\rvert$ searches** `[C]` ➔ BFS from **every** vertex, $O(V(V+E))$; rooted inside the shortest cycle the first re-visit is the **source itself**, so the test is `if v == s` **· why one BFS fails:** it orders by distance **from the source**, and a short cycle can sit far behind a long one.
+- **Component is a pure cycle** $\iff$ **every $\deg(v)=2$** `[C]` ➔ ordinary component-counting DFS returning the **conjunction** of the degree test **· trap:** never early-return on a bad degree — the unvisited remainder is re-counted as a new component.
+- **Multi-source shortest path** `[P]` ➔ either seed the BFS queue with all $k$ sources at distance $0$, or add a **super source** joined to each and subtract $1$; both $\Theta(V+E)$ **· preferred:** transform the **input**, keeping the algorithm a black box, so only the transformation needs justifying.
+- **State-graph BFS** `[C]` ➔ when the optimum must **revisit** a vertex, the vertex is not a sufficient state: use $\langle\text{vertex},\text{extra}\rangle$, wire an edge only where the transition is legal, and answer $\min$ over **all** accepting states ➔ [[State-Space Graph Modelling]] **· sizing:** $V'=kV$, $E'\le kE$ — constant $k$ is free, a capacity $C$ from the input must appear in the bound.
+- **Iterative DFS** `[C]` ➔ replace recursion with an explicit [[Stack (ADT)|stack]] and test `visited` **on pop**, not before pushing **· why:** a vertex is legitimately pushed once per neighbour; filtering at push re-scans an adjacency list per push and breaks $\Theta(V+E)$ **· caveat:** neighbours come off in reverse push order.
+- **Universal sink in $O(V)$** `[D]` ➔ in-degree $V-1$, out-degree $0$ ⟹ row all $0$, column all $1$ off-diagonal; at most one exists. $A[i][j]=1$ kills $i$; $A[i][j]=0,\ i\ne j$ kills $j$ **· mechanism:** keep live candidates in a **linked list** and scan only those, splicing out each eliminated vertex ⟹ $\le V-1$ cells read, then $O(V)$ to verify the survivor ➔ [[Graph Representations]] §3.
+- **Bridges by low-link** `[D]` ➔ $e$ is a bridge $\iff$ $e$ lies on **no** cycle $\iff$ $\texttt{low\_link}[v]>\texttt{dfs\_ord}[u]$ for the tree edge traversed $u\to v$, in one $\Theta(V+E)$ DFS ➔ [[Bridges (Low-Link)]] **· recurrence:** $\texttt{low\_link}[v]=\min(\texttt{dfs\_ord}[v],\min_{u\ \text{unused}}\texttt{low\_link}[u])$ **· trap:** the comparison is **mixed** (child's `low_link` vs parent's `dfs_ord`) and **strict**; mark the tree edge traversed **before** recursing.
+- **Guaranteed position in *every* topological order** `[D]` ➔ $r(v)=\#$reachable from $v$, $s(v)=\#$reaching $v$. In the first $m$ of every order $\iff r\ge n-m$ · never in the first $m$ $\iff s\ge m$ **· cost:** a forward and a reverse-graph DFS per vertex ⟹ $O(V(V+E))=O(V^{2}+VE)$ **· trap:** positions in one topological order are a tie-break artefact, not a guarantee.
+- **Hamiltonian path in a DAG** `[D]` ➔ exists $\iff$ the topological order is **unique** $\iff$ every consecutive pair in it is adjacent; compute any order and scan it once ⟹ $\Theta(V+E)$ **· why not NP-hard:** acyclicity forces the path to be a topological order, leaving one candidate ➔ [[Topological Sort]] §5.
+
+| W5-applied task | Time | Auxiliary | Discriminator |
+| :--- | :--- | :--- | :--- |
+| [[Bipartite Graph\|Two-colour]] / bipartiteness | $\Theta(V+E)$ | $\Theta(V)$ | first colour free, rest forced |
+| Count two-colourings | $\Theta(V+E)$ | $\Theta(V)$ | $2^{c}$, or $0$ |
+| [[Cycle Detection\|Directed]] cycle existence | $\Theta(V+E)$ | $\Theta(V)$ | back edge $=$ edge into an **active** vertex |
+| [[Cycle Detection\|Undirected]] cycle existence | $O(V)$ | $\Theta(V)$ | early halt; independent of $\lvert E\rvert$ |
+| Shortest cycle (directed) | $O(V(V+E))$ | $\Theta(V)$ | one BFS **per source** |
+| Count pure-cycle components | $\Theta(V+E)$ | $\Theta(V)$ | conjunction of $\deg=2$ |
+| Multi-source BFS / super source | $\Theta(V+E)$ | $\Theta(V)$ | subtract $1$ for the extra hop |
+| [[State-Space Graph Modelling\|State-graph]] BFS | $\Theta(kV+kE)$ | $\Theta(kV)$ | one slot per **state**, not per vertex |
+| Universal sink (matrix) | $O(V)$ | $\Theta(V)$ | one candidate eliminated per cell read |
+| [[Bridges (Low-Link)\|Bridges]] | $\Theta(V+E)$ | $\Theta(V)$ | beats $\Theta(E(V+E))$ delete-and-recount |
+| Guaranteed top-$m$ in a DAG | $O(V^{2}+VE)$ | $\Theta(V)$ | two DFS per vertex, one on the reversed graph |
+| Hamiltonian path in a DAG | $\Theta(V+E)$ | $\Theta(V)$ | unique order $\iff$ consecutive pairs adjacent |
+
+## 1️⃣1️⃣ Minimum Spanning Trees, Union-Find and Greedy (W6)
+> [!warning] The single most examined W6 sentence is **"can Prim/Kruskal run on negative weights?"** — YES. Non-negativity is [[Dijkstra's Algorithm|Dijkstra]]'s precondition, and importing it here is a straight mark loss ➔ §🔟.
+
+- **[[Minimum Spanning Tree|MST]] definition** `[P]` ➔ acyclic **undirected** subgraph spanning all $V$ vertices, minimising $w(T)=\sum_{e\in T}w(e)$; every spanning tree has exactly $\lvert V\rvert-1$ edges, so only the **weights** discriminate **· precondition:** $G$ connected and undirected; disconnected ⟹ minimum spanning **forest**.
+- **$\lvert V\rvert-1$ is two thresholds at once** `[C]` ➔ the **minimum** edges that connect all vertices **and** the **maximum** that avoid a cycle ➔ [[Spanning Tree]].
+- **Cost unique, tree NOT** `[P]` ➔ ties give several MSTs of equal weight ⟹ always write *an* MST **· exam form:** state your tie-break rule before the first step of a trace, and quote the **selection order**, not just the final edge set.
+- **Negative weights are legal** `[P]` ➔ both algorithms only **compare** edges, never accumulate **· second proof:** adding a constant $c$ to every edge raises **every** spanning tree by exactly $(\lvert V\rvert-1)c$ ⟹ the ranking, and hence the MST, is unchanged **· contrast:** Dijkstra sums into a distance, so a negative edge can lower a finalised estimate.
+- **[[Prim's Algorithm|Prim]] $=$ [[Dijkstra's Algorithm|Dijkstra]] with ONE line changed** `[P]` ➔ `v.distance = w` replaces `v.distance = u.distance + w`; relax only if strictly smaller **· consequence:** the key is *distance to the tree*, one edge — so the finalisation order is **not** nondecreasing, unlike Dijkstra's.
+- **Prim bound** `[P]` ➔ $O((V+E)\log V)=O(E\log V)$, identical to Dijkstra; $O(V^{2})$ with an array scan on a **dense** graph **· precondition:** `update` needs the heap's index map, else $O(VE)$.
+- **Prim needs no cycle test** `[C]` ➔ it only ever attaches a vertex **outside** the tree, so `not v.visited` is the whole guard.
+- **[[Kruskal's Greedy Algorithm|Kruskal]]** `[P]` ➔ sort $E$ ascending → accept edge iff `find(u) != find(v)` → `union` → stop at $\lvert V\rvert-1$ edges **· precondition:** a **comparison** sort — [[Counting Sort]]/[[Radix Sort]] need bounded integer weights, which the problem must state.
+- **Kruskal's implementation ladder** `[P]` ➔ set copy $O(EV)$ · smaller-into-larger $O(E\log V)$ amortised · [[Union-Find (Disjoint Set)|union-find]] $O(E\log E)=O(E\log V)$, **all sort** **· identity:** $E\le V^{2}\Rightarrow\log E\le2\log V$, so $O(E\log E)$ and $O(E\log V)$ are the same bound.
+- **Prim vs Kruskal selection rule** `[C]` ➔ same $O(E\log V)$, so choose on **input shape**: dense graph / matrix / no edge list ⟹ Prim · sparse graph / edge list / edges already sorted ⟹ Kruskal.
+- **MST correctness — the cut-and-swap** `[D]` ➔ invariant *the chosen set is a subset of some MST*; if MST $M$ omits the chosen $e$, $M+\{e\}$ has a cycle re-crossing the cut at $e'$ with $w(e)\le w(e')$, so $M-e'+e$ is still minimum and contains $e$ **· sealing:** a spanning tree that is a subset of an MST with the same $\lvert V\rvert-1$ edges **is** that MST **· note:** nowhere does the argument use $w\ge0$.
+- **Reverse-delete** `[D]` ➔ sort **descending**, $T=E$, delete each edge iff $T-\{e\}$ stays connected; invariant is *$T$ is a **superset** of some MST* — the mirror of Kruskal's subset ➔ [[Minimum Spanning Tree]] §5.
+- **A true invariant can still be too weak** `[D]` ➔ "each component of Kruskal's forest is an MST of its own vertices" is maintained but **cannot** close the proof; counterexample $ab(10),cd(10),bc(1),ad(1)$ **· rule:** invariant $+$ termination must **imply the postcondition** ➔ [[Invariant]].
+- **Bottleneck paths** `[D]` ➔ every path inside an MST minimises its **largest** edge; proof deletes the heaviest edge $e^{*}$ of the tree path, crosses the induced cut with a lighter rival edge, and contradicts minimality **· converse FALSE:** a bottleneck path need not lie in any MST.
+- **[[Union-Find (Disjoint Set)|Union-find]] encoding** `[P]` ➔ one `parent` array — **positive $=$ parent index**, **negative $=$ root, magnitude $=$ size or rank**; init all $-1$ **· precondition:** the magnitude is meaningful **only at a root**; `find` first, then compare roots' counters.
+- **Union by size** `[P]` ➔ smaller tree hangs under the larger root; tie ⟹ the unit's convention makes the **first argument's** root win **· guarantee:** $\text{size}(r)\ge2^{\text{height}(r)}$ ⟹ height $\le\log_2 V$ ⟹ every op $O(\log V)$; $\le V-1$ successful unions ⟹ **all** unions $O(V\log V)$.
+- **The lemma's induction** `[D]` ➔ base singleton $1\ge2^{0}$; case $h(r)>h(s)$ keeps the height and the size only grows; case $h(r)\le h(s)$ gives $h'=h(s)+1$ and $\text{size}'\ge2\,\text{size}(s)\ge2^{h(s)+1}$.
+- **Union by rank $+$ path compression** `[C]` ➔ append the **shorter** tree; after every `find`, re-point the whole walked path at the root ⟹ almost $O(1)$ **amortised** **· fires on refused unions too** — the two `find` calls still flatten, which is why a rejected Kruskal edge is not wasted **· caveat:** compression makes the stored rank an upper bound, not the true height.
+- **Amortised $\ne$ per-operation** `[D]` ➔ one compressed `find` can still cost $\Theta(\log V)$; only the sequence total is near-linear ➔ §1️⃣.
+- **[[Greedy Algorithm|Greedy]] paradigm** `[P]` ➔ ranking rule $+$ feasibility test $+$ **irrevocable** commitment **· needs both:** greedy-choice property (some optimum contains your first pick) **and** optimal substructure; DP needs only the second.
+- **The two greedy proof templates** `[D]` ➔ **exchange** (edit an optimum to contain your choice without getting worse — MST) · **stays ahead** (induct that your $k$-th choice is no worse than any optimum's $k$-th — scheduling) **· both** still owe a termination argument.
+- **Interval scheduling** `[P]` ➔ maximise the **count** of compatible requests: sort by **earliest finish time**, scan and accept whatever is compatible with the last accepted ⟹ $\Theta(n\log n)$ **· proof:** $f_{i_k}\le f_{j_k}$ by induction, so $j_{m+1}$ would have been accepted.
+- **Ranking rules that fail** `[C]` ➔ shortest **duration** dies on $(1,10),(9,12),(11,20)$ *(takes 1, optimum is 2)* · earliest **start** dies when the first request is also the last to finish **· exam form:** kill the rivals with explicit counterexamples before proving the survivor.
+- **Weighted interval scheduling is NOT greedy** `[C]` ➔ maximising total value keeps optimal substructure but loses the greedy-choice property ⟹ dynamic programming.
+- **$0$-$1$ shortest paths** `[C]` ➔ weights $\in\{0,1\}$: BFS on a **deque**, $0$-edges to the **front**, $1$-edges to the **back**, keeping the relaxation test and a `d == dist[u]` staleness guard ⟹ $\Theta(V+E)$ **· why it works:** the queue only ever holds distances $d$ and $d+1$ ⟹ a two-key priority queue **· alternative:** contract zero-weight components by DFS, then plain BFS.
+- **Bounded integer weights** `[D]` ➔ $0\le w\le c$: bucket priority queue of $cV$ linked lists; insert/update $O(1)$, and the served minimum **never decreases** so one forward sweep costs $O(cV)=O(V)$ ⟹ Dijkstra in $\Theta(V+E)$.
+- **State-graph modelling** `[C]` ➔ when cost depends on more than location, put the state **in the vertex** and run the algorithm unmodified — e.g. $\langle\text{town},\text{litres}\rangle$, weight-$0$ travel edges that exist only when fuel suffices, weight-$p_u$ refuel edges $\langle u,c\rangle\to\langle u,c{+}1\rangle$; answer $=$ Dijkstra from $\langle s,0\rangle$ ➔ [[Dijkstra's Algorithm]] §5, recipe in [[State-Space Graph Modelling]].
+- **Buggy-Dijkstra recipe** `[P]` ➔ to break "update only on first discovery", give a vertex an expensive first discovery and a cheap later route: $s\to a(1),a\to c(1000),s\to b(2),b\to c(1)$ locks $c$ at $1001$ instead of $3$.
+
+| W6 algorithm | Time | Auxiliary space | Weights | Discriminator |
+| :--- | :--- | :--- | :--- | :--- |
+| [[Prim's Algorithm]] (binary heap) | $\Theta(E\log V)$ all cases | $\Theta(V)$ | any sign | grows **one** tree; no cycle test needed |
+| [[Prim's Algorithm]] (array scan) | $\Theta(V^{2})$ | $\Theta(V)$ | any sign | **dense** graphs — beats the heap |
+| [[Kruskal's Greedy Algorithm]] $+$ union-find | $\Theta(E\log E)=\Theta(E\log V)$ | $\Theta(V)$ | any sign | sparse, or edge list already sorted ⟹ $\Theta(E\,\alpha(V))$ |
+| [[Kruskal's Greedy Algorithm]] $+$ naive sets | $O(EV)$ | $\Theta(V)$ | any sign | the $V$ is in **union**, not `find` |
+| [[Union-Find (Disjoint Set)]] (by size/rank) | $O(\log V)$ per op | $\Theta(V)$ | — | $O(V\log V)$ for all $V-1$ unions |
+| [[Union-Find (Disjoint Set)]] $+$ compression | almost $O(1)$ amortised | $\Theta(V)$ | — | flattens even on a **refused** union |
+| Interval scheduling ([[Greedy Algorithm]]) | $\Theta(n\log n)$ | $\Theta(1)$ beyond the sort | — | maximises **count**, not value |
+| $0$-$1$ BFS (deque) | $\Theta(V+E)$ | $\Theta(V)$ | $\{0,1\}$ | two-key priority queue |
+| [[Dijkstra's Algorithm\|Dijkstra]] $+$ bucket queue | $\Theta(V+E)$ | $\Theta(cV)=\Theta(V)$ | integer $0\le w\le c$ | minimum never decreases |

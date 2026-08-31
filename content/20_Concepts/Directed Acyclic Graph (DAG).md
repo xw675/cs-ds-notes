@@ -22,6 +22,7 @@ aliases: [DAG, Directed Acyclic Graph]
 - **Models it does not** ➔ anything mutually dependent: `JOB ⇄ EXPERIENCE` is a $2$-cycle, so no order satisfies both edges — this is the exam's canonical non-DAG.
 - **A [[Tree]] is a DAG** ➔ acyclic, with the root the unique vertex having **no incoming edge**; a DAG generalises it by allowing a vertex several parents.
 - **Detecting it** ➔ run [[Topological Sort]]: a run that cannot place all $V$ vertices is a **cycle certificate**, at $\Theta(V+E)$ — the same cost as confirming the DAG.
+- **Detecting it directly** ➔ a three-state [[Cycle Detection|DFS]] (unvisited / **active** / inactive) also decides it in $\Theta(V+E)$; a DAG is exactly a digraph with **no back edge** — no edge into a vertex still on the current search path.
 
 ## ⚠️ Common Mistakes
 - 💡 **"Directed and no undirected cycle"** ➔ only **directed** cycles are forbidden. $A\!\to\!B$, $A\!\to\!C$, $B\!\to\!D$, $C\!\to\!D$ has an undirected cycle $A,B,D,C,A$ and is still a perfectly good DAG.

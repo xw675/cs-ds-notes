@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
-week: 5
-source: [lecture]
+week: [5, 6]
+source: [lecture, applied]
 domain: A
 parent: "[[Graph]]"
 tags: [CS/Algorithms, Math/GraphTheory, CS/DataStructures]
@@ -15,12 +15,12 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 > [!abstract] Quick Revision
 > - **🎯 Objective:** serve the **closest non-finalised** vertex, relax its out-edges ➔ every served vertex leaves with its **final** $\text{dist}$.
 > - **📦 Core Components:** min-[[Heap]] `discovered` ➔ $O(\log V)$ serve/update | `v.distance` ➔ best-known | `v.previous` ➔ backtracking for the **path** | `v.visited` ➔ finalised.
-> - **⚠️ Key Constraint:** **non-negative weights only** — the greedy finalisation is what a negative edge breaks, and it is also what the correctness proof rests on.
+> - **⚡ Key Constraint:** **non-negative weights only** — the greedy finalisation is what a negative edge breaks, and it is also what the correctness proof rests on.
 
 ## 📝 How It Works
 ### 1. The Two Paradigms It Fuses
 - **Dynamic programming** ➔ optimal substructure: $\min(A\rightsquigarrow C)$ is built from $\min(A\rightsquigarrow B)$ plus $B\rightarrow C$ — subproblem answers are reused, never recomputed.
-- **Greedy** ➔ the closest reachable vertex is **finalised immediately**: if $B$ is nearest to $A$, no detour $A\rightarrow C\rightarrow B$ can beat it.
+- **Greedy** ➔ the closest reachable vertex is **finalised immediately**: if $B$ is nearest to $A$, no detour $A\rightarrow C\rightarrow B$ can beat it ➔ [[Greedy Algorithm]].
 - **Where greed dies** ➔ a **negative** edge $C\rightarrow B$ makes the detour cheaper *after* $B$ was finalised ➔ Dijkstra is wrong on negative edges. *(It may still happen to be right when the negative edge sits outside any cycle — never rely on it.)*
 - **The escape hatches** ➔ [[Bellman-Ford]] (single source, tolerates negative edges) and [[Floyd-Warshall]] (all pairs) — later in the unit.
 
@@ -29,12 +29,29 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 - **Increment ➔ relaxation** ➔ BFS sets `v.distance = u.distance + 1`; Dijkstra sets `v.distance = u.distance + w` and, on an **already discovered** vertex, **updates downward** if $v.\text{distance} > u.\text{distance} + w$.
 - **Two flags, not one** ➔ `discovered` (in the heap, estimate may still fall) vs `visited`/finalised (served, distance frozen). A finalised neighbour is **skipped**, never relaxed.
 - **Unweighted case** ➔ if all weights are equal, BFS already solves it in $\Theta(V+E)$ — do not pay for a heap you do not need.
+- **Same loop, third variant** ➔ change the relaxation to `v.distance = w` and the algorithm computes a [[Minimum Spanning Tree]] instead ➔ [[Prim's Algorithm]].
 
 ### 3. Reading the Answer Out
 - **Distance** ➔ `v.distance` at the moment $v$ is served; it never changes again.
 - **Path** ➔ set `v.previous = u` on every successful relaxation, then **backtrack** from the target and reverse.
 - **Single target** ➔ terminate the moment the target is moved to `visited`; the remaining heap is irrelevant.
 - **Unreachable** ➔ a vertex never discovered keeps $\text{dist}=\infty$; the loop ends with an empty heap, not an error.
+
+### 4. Beating the $\log V$ When the Weights Are Restricted *(applied P6, P9)*
+- **Where the $\log$ lives** ➔ entirely in the [[Priority Queue (ADT)|priority queue]]. Restrict the weights enough and a cheaper queue exists, dropping the whole algorithm to $\Theta(V+E)$.
+- **Zero-one shortest paths** ➔ weights $\in\{0,1\}$. A BFS queue always holds vertices of only **two** distinct distances $d$ and $d+1$; a $0$-weight edge lands its target at the **same** distance, so push it to the **front** and a $1$-weight edge to the **back** of a **deque**. That deque *is* a priority queue with at most two keys ⟹ $O(1)$ per operation.
+- **Still needs relaxation** ➔ unlike BFS, the first discovery is no longer final (a vertex may be reached by a $1$-edge before a $0$-edge finds it), so keep the `dist[u] + w < dist[v]` test and skip stale deque entries with `if d == dist[u]`.
+- **Bounded integer weights** ➔ $0\le w\le c$ for constant $c$. Every distance is $<cV$, and the minimum served **never decreases**, so store an array of $cV$ buckets of linked lists: insert and update are $O(1)$, and one forward sweep over all buckets costs $O(cV)=O(V)$ **in total** ⟹ $\Theta(V+E)$.
+- **The transferable move (LO3)** ➔ read the constraint on the *keys*, then replace the ADT — the same lever as [[Counting Sort]] escaping the $\Omega(N\log N)$ comparison floor.
+- **Alternative for $0$-$1$** ➔ contract every zero-weight [[Connectivity|component]] (found by a DFS) into one vertex, then run plain BFS on the contracted graph.
+
+### 5. State-Graph Modelling — Change the Graph, Not the Algorithm *(applied P3)*
+- **The paradigm** ➔ when the answer depends on more than *where you are*, put the extra state **into the vertex** and run unmodified Dijkstra on the enlarged graph.
+- **Worked shape (road trip with fuel)** ➔ vertex $\langle u,c\rangle$ $=$ town $u$ holding $c$ litres, giving $(C+1)n$ vertices for fuel capacity $C$.
+- **Two edge families** ➔ *travel* $\langle u,c\rangle\to\langle v,c-x\rangle$ for every $c\ge x$, weight $\mathbf{0}$ *(driving costs no money)* · *refuel* $\langle u,c\rangle\to\langle u,c+1\rangle$ for $c<C$, weight $p_u$ *(the town's petrol price)*.
+- **One litre at a time** ➔ adding $\langle u,c\rangle\to\langle u,c+2\rangle$ at weight $2p_u$ is redundant and only makes the graph denser.
+- **Answer** ➔ run Dijkstra from $\langle s,0\rangle$ and read $\langle t,0\rangle$; the edge weights now model **money**, and the fuel constraint is enforced by which edges exist.
+- **The general paradigm** ➔ transforming the input so a **known unmodified algorithm** applies is the LO1 move, reused across the W5 and W6 applied sheets ➔ [[State-Space Graph Modelling]] holds the recipe, the unweighted BFS instance, and the sizing rule $V'=kV$.
 
 ## ⚙️ Core Implementation
 ### 🔹 Dijkstra with a min-heap
@@ -70,6 +87,32 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 > 💡 **Common Mistake:** **Searching the heap for $v$** ➔ `update` must reach $v$'s slot in $O(1)$, so the heap keeps an **index map** `vertex ➔ position` maintained by every rise/sink. Scanning for $v$ turns each update into $O(V)$ and the algorithm into $O(VE)$.
 > 💡 **Common Mistake:** **Updating `distance` without `previous`** ➔ the distances come out right and the path comes out wrong; `previous` must be rewritten on **every** successful relaxation, not only on first discovery. Backtrack it from the target and reverse in place, exactly as BFS does.
 
+### 🔹 Zero-one BFS *(applied P6)*
+> [!code]- Code
+> ```python
+> def zero_one_bfs(graph, s):                  # weights restricted to {0, 1}
+>     dist = [INF] * graph.n
+>     pred = [None] * graph.n
+>     dq = Deque()
+>     dist[s] = 0
+>     dq.push_back((s, 0))
+>
+>     while not dq.is_empty():
+>         u, d = dq.pop_front()
+>         if d != dist[u]:
+>             continue                         # stale entry - a better one was queued later
+>         for (v, w) in graph.edges[u]:
+>             if dist[u] + w < dist[v]:        # still a relaxation, unlike plain BFS
+>                 dist[v] = dist[u] + w
+>                 pred[v] = u
+>                 if w == 0:
+>                     dq.push_front((v, dist[v]))   # same layer -> front
+>                 else:
+>                     dq.push_back((v, dist[v]))    # next layer -> back
+>     return dist, pred
+> ```
+> 💡 **Common Mistake:** **Dropping the `d != dist[u]` guard** ➔ a vertex can be pushed twice at different estimates; without the staleness check the older, larger estimate re-expands its neighbours and the $O(V+E)$ bound is lost.
+
 ## ⚖️ Complexity
 Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 
@@ -77,6 +120,8 @@ Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 | :--- | :--- | :--- | :--- |
 | Best | $\Theta(V)$ | $\Theta(V)$ | single target adjacent to the source, early exit — the $\Theta(V)$ init still runs |
 | Average / Worst | $\Theta(E\log V)$ | $\Theta(V)$ | every edge relaxed once, every vertex served once — Dijkstra has **no bad-input case**, only a bad-graph *size* |
+| Weights $\in\{0,1\}$ *(deque)* | $\Theta(V+E)$ | $\Theta(V)$ | the queue holds at most two distinct keys |
+| Weights integer, $0\le w\le c$ *(bucket queue)* | $\Theta(V+E)$ | $\Theta(cV)=\Theta(V)$ | distances bounded by $cV$, minimum never decreases |
 
 - **Slide derivation** ➔ outer loop $O(V)$ $\times$ [ serve $O(\log V)$ $+$ edge scan $O(V)$ $\times$ update $O(\log V)$ ] $=O(V^{2}\log V)=O(E\log V)$, using $E\approx V^{2}$ for a **dense** graph.
 - **Aggregate derivation (tighter, prefer it)** ➔ $V$ serves at $O(\log V)$ **plus** $E$ relaxations at $O(\log V)$ ➔ $O((V+E)\log V)=O(E\log V)$ once $E\ge V-1$. The slide's $V^{2}$ is the dense instantiation, not a separate bound.
@@ -87,12 +132,15 @@ Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 | Situation | Reach for | Why | Cost |
 | :--- | :--- | :--- | :--- |
 | Unweighted (or all-equal weights) | [[Uninformed Search (BFS and DFS)\|BFS]] | hop count already **is** the distance | $\Theta(V+E)$ |
+| Weights $\in\{0,1\}$ | $0$-$1$ BFS with a **deque** | the queue never holds more than two keys | $\Theta(V+E)$ |
+| Integer weights $0\le w\le c$ | Dijkstra $+$ **bucket** priority queue | minimum never decreases ⟹ one forward sweep | $\Theta(V+E)$ |
 | Weighted, all $w\ge0$ | **Dijkstra** | greedy finalisation is sound | $\Theta(E\log V)$ |
 | Some $w<0$, single source | [[Bellman-Ford]] | relaxes $V-1$ rounds, detects negative cycles | $\Theta(VE)$ |
 | All pairs, negatives allowed | [[Floyd-Warshall]] | transitive closure over all intermediates | $\Theta(V^{3})$ |
 | Dense **and** update-heavy | Dijkstra $+$ Fibonacci heap | `update` drops to $O(1)$ amortised | $O(E+V\log V)$ |
+| Cost depends on extra state *(fuel, tolls, time of day)* | **state graph** $+$ unmodified Dijkstra | put the state in the vertex, not in the code | $O(E'\log V')$ on the enlarged graph |
 
-> [!NOTE] **When It Flips:** the hinge is the **sign of the weights**, not their presence. One negative edge invalidates the finalisation step and no heap choice repairs it — the algorithm must change, not its ADT.
+> [!NOTE] **When It Flips:** the hinge is the **sign of the weights**, not their presence. One negative edge invalidates the finalisation step and no heap choice repairs it — the algorithm must change, not its ADT. Restricting the weights **upward** ($\{0,1\}$, bounded integers) flips the other way: the algorithm stays, the ADT gets cheaper.
 
 ## 📊 Exam Execution Trace & Applied Exercises
 Lecture's directed weighted graph — $A\!\to\!B(10)$, $A\!\to\!C(5)$, $B\!\to\!C(2)$, $B\!\to\!D(1)$, $C\!\to\!B(3)$, $C\!\to\!D(9)$, $C\!\to\!E(2)$, $D\!\to\!E(4)$, $E\!\to\!D(6)$. Source $A$.
@@ -111,8 +159,19 @@ Lecture's directed weighted graph — $A\!\to\!B(10)$, $A\!\to\!C(5)$, $B\!\to\!
 
 - **Read the trap** ➔ $D$ was written **three** times ($14\to13\to9$) and only the value it held when **served** is the answer. A vertex's `distance` is an *estimate* until it is finalised.
 
-### Applied Exercise
-**Problem:** state and discharge the correctness claim.
+### Applied Exercise — break the "update only on discovery" bug *(applied P1)*
+**Problem:** an implementation writes `v.distance` the **first** time $v$ is discovered and never relaxes it again. Exhibit a graph where it fails.
+**Graph:** $s\to a(1)$, $a\to c(1000)$, $s\to b(2)$, $b\to c(1)$, $c\to d(1)$.
+$$
+\begin{aligned}
+\text{serve } s &\Rightarrow a{=}1,\ b{=}2 \\
+\text{serve } a\ (1) &\Rightarrow c \text{ discovered at } 1+1000=1001\ \textbf{and locked} \\
+\text{serve } b\ (2) &\Rightarrow 2+1=3<1001 \text{ but the buggy code refuses to update}
+\end{aligned}
+$$
+**Final Extracted Output:** $\text{dist}[c]=1001$ and $\text{dist}[d]=1002$ instead of $3$ and $4$. **The recipe for breaking it:** a vertex whose *first* discovery is via an expensive edge and whose true optimum arrives on a later, cheaper route.
+
+### Applied Exercise — state and discharge the correctness claim
 **Claim:** for every vertex $v$ removed from the queue, $\text{dist}[v]$ is correct. Let $S=V\setminus Q$ be the finalised set.
 $$
 \begin{aligned}
@@ -127,6 +186,7 @@ $$
 
 ## ⚠️ Common Mistakes
 - 💡 **Relaxing a finalised vertex** ➔ writing to `v.distance` after $v$ was served silently corrupts an already-correct answer and hides the negative-weight failure. Test `v.visited` **first**.
+- 💡 **Relaxing only on first discovery** ➔ the mirror error, and the one the applied sheet examines: an estimate must be allowed to **fall** while $v$ is still in the heap.
 - 💡 **Quoting $O(V^{2}\log V)$ as the bound** ➔ that is the **dense** case. The bound that survives marking is $O(E\log V)$ with $E$ named and the sparse/dense distinction stated ([[Graph]] §3).
 - 💡 **"Dijkstra fails on negative edges because distances go negative"** ➔ no — it fails because a vertex is **finalised too early**; state it as a broken greedy choice, with the $A\rightarrow B$ vs $A\rightarrow C\rightarrow B$ counterexample.
 
@@ -141,7 +201,14 @@ $$
 > > - **Short answer:** at $\text{len}(s\rightsquigarrow y)\le\text{len}(P)$ — a prefix is never longer than the whole path only when no edge is negative.
 > > - **Why:** **A negative suffix makes a prefix cost more than the full path** ➔ the inequality reverses and the contradiction evaporates. **Operationally the greedy step dies** ➔ $u$ is finalised while a route through a later negative edge is cheaper, and Dijkstra never revisits a finalised vertex. **The repair is a different algorithm** ➔ [[Bellman-Ford]] relaxes every edge $V-1$ times instead of finalising once.
 
-> [!FAQ]- You need the shortest path from one source to one target on a graph with $V=10^{5}$, $E=10^{5}$. Justify your ADT and bound choices.
+> [!FAQ]- Every edge weight is $0$ or $1$ and you are told to beat $O(E\log V)$. What do you build, and what must you keep from Dijkstra?
+> - **Hint:** how many distinct keys can the queue hold?
 > > [!SUCCESS]- Answer
-> > - **Short answer:** binary heap, $O(E\log V)$, terminate on serving the target.
-> > - **Why:** **The graph is sparse** ($E\approx V$) ➔ the adjacency list is $\Theta(V+E)$ against the matrix's $10^{10}$, and the Fibonacci heap's advantage only shows when $E\gg V$. **Early exit is free correctness** ➔ the target's distance is final the instant it is served. **The path needs `previous`** ➔ distances alone are not the deliverable when the question says "path".
+> > - **Short answer:** BFS on a **deque** — push $0$-weight targets to the front, $1$-weight targets to the back — and keep the relaxation test.
+> > - **Why:** **The queue holds only $d$ and $d+1$** ➔ a two-key priority queue needs no heap, so every queue operation is $O(1)$ and the total is $\Theta(V+E)$. **A $0$-edge does not advance the layer** ➔ its target belongs at the current distance, i.e. the front. **First discovery is no longer final** ➔ a vertex can be reached by a $1$-edge before a $0$-edge finds it, so plain BFS's "set once" is unsafe; keep `dist[u]+w < dist[v]` and skip stale deque entries.
+
+> [!FAQ]- The cost of a move depends on how much fuel you are carrying. Dijkstra takes a graph, not a simulator — what do you do?
+> - **Hint:** widen the vertex.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** build a **state graph** whose vertices are $\langle\text{town},\text{fuel}\rangle$ and run unmodified Dijkstra on it.
+> > - **Why:** **The extra state moves into the vertex** ➔ $(C+1)n$ vertices, one per town per litre level, so "where am I *and* what do I have" is a single node. **Edges become transitions** ➔ driving is a weight-$0$ edge $\langle u,c\rangle\to\langle v,c-x\rangle$ that simply does not exist when $c<x$, which is how the fuel constraint is enforced; refuelling is a weight-$p_u$ edge $\langle u,c\rangle\to\langle u,c+1\rangle$, which is how money becomes the distance. **The algorithm is untouched** ➔ transforming the input so a known algorithm applies is the paradigm being examined, not a Dijkstra variant.

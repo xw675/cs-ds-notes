@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 week: 5
-source: [lecture]
+source: [lecture, applied]
 domain: A
 parent: "[[Directed Acyclic Graph (DAG)]]"
 tags: [CS/Algorithms, Math/GraphTheory]
@@ -34,6 +34,22 @@ aliases: [Topological Sorting, Topological Order, Kahn's Algorithm]
 - **The observation** ➔ raw [[Uninformed Search (BFS and DFS)|DFS]] visit order is **not** a topological order: after hitting a dead end it returns to an earlier vertex that must appear *early*. On the lecture DAG, DFS visits $A,B,D,C,E$, which is invalid.
 - **The repair** ➔ push $u$ onto a stack only **after** every out-neighbour has finished (post-order); the topological order is the stack **popped**, i.e. the **reverse** of the push order.
 - **Why it works** ➔ $u$ finishes after all of its descendants, so its push is deeper in the stack than theirs ➔ on popping, $u$ emerges first.
+
+### 4. What a Topological Order Certifies — Reachability Bounds a Position *(applied P11)*
+- **The reframing** ➔ questions of the form *is $v$ guaranteed to be among the first $m$?* are not about **one** order but about **every** order, so they must be answered from structure, never by computing one topological sort and reading off positions.
+- **Two reachability counts per vertex** ➔ $r(v)=\#$ vertices **reachable from** $v$ (its dependants — they must come **after** it) · $s(v)=\#$ vertices that **reach** $v$ (its superiors — they must come **before** it). Everything else may fall on either side.
+- **Guaranteed in the first $m$** $\iff r(v)\ge n-m$ ➔ at least $n-m$ vertices are pinned after $v$, so its position is at most $n-(n-m)=m$ in **every** order.
+- **Guaranteed *not* in the first $m$** $\iff s(v)\ge m$ ➔ at least $m$ vertices are pinned before $v$, so its position is at least $m+1$ in **every** order.
+- **Computing them** ➔ $r(v)$ is one [[Uninformed Search (BFS and DFS)|DFS]] from $v$ on $G$; $s(v)$ is one DFS from $v$ on $G$ with **every edge reversed**. Two traversals per vertex ⟹ $O(V(V+E))=O(V^{2}+VE)$.
+- **Why not "the first $m$ of a topological order"** ➔ the order is **not unique**, so an incomparable vertex can sit inside or outside the prefix depending on the tie-break; only vertices pinned by reachability are guaranteed either way ➔ §1.
+
+### 5. Hamiltonian Path in a DAG — Unique Order or None *(applied P12, advanced)*
+- **The claim chain** ➔ a Hamiltonian path exists in a [[Directed Acyclic Graph (DAG)|DAG]] **iff** the graph has a **unique** topological order, and then the path **is** that order.
+- **A Hamiltonian path must be a topological order** ➔ if the path ever ran to a vertex that must come earlier, that edge plus the path segment would close a directed cycle, impossible in a DAG.
+- **Hamiltonian path $\Rightarrow$ unique order** ➔ the path makes every pair of vertices comparable (one is an ancestor of the other), so no two vertices are free to swap ⟹ exactly one valid order.
+- **Unique order $\Rightarrow$ Hamiltonian path** ➔ if some consecutive pair in the order were **not** adjacent, swapping them would break no dependency and yield a second valid order, contradicting uniqueness; so every consecutive pair is joined by an edge, which is a path through all $\lvert V\rvert$ vertices.
+- **The algorithm** ➔ compute **any** topological order, then scan it once testing that each consecutive pair is adjacent. $\Theta(V+E)$, and the test doubles as the uniqueness certificate.
+- **Why this is not NP-hard here** ➔ Hamiltonian path is NP-hard on general graphs; acyclicity is the whole gift, because it forces the candidate path to be a topological order and there is at most one to check.
 
 ## ⚙️ Core Implementation
 ### 🔹 Kahn's algorithm
@@ -143,6 +159,7 @@ $$
 ## ⚠️ Common Mistakes
 - 💡 **Emitting the DFS visit order** ➔ the single highest-frequency error; DFS **pre**-order has no ordering guarantee, only the reversed **post**-order does.
 - 💡 **Claiming "the" topological sort** ➔ say *a* topological sort, and if the question demands determinism, state your tie-break rule before tracing.
+- 💡 **Reading a guarantee off one topological order** ➔ positions in a single order are an artefact of the tie-break; "guaranteed in every order" is a **reachability** question ($r\ge n-m$ / $s\ge m$), not a positional one.
 - 💡 **Reporting success on a cyclic graph** ➔ Kahn's terminates happily with a **short** `sorted_list`; the check is `len(sorted_list) == V`.
 
 ## 🧠 Active Recall
@@ -155,3 +172,13 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** it hands you cycle detection and parallel layering for free, and it needs no call stack.
 > > - **Why:** **A build system must *diagnose* circular dependencies, not just fail** ➔ Kahn's leftover set is the offending vertices, ready to print. **Each zero-in-degree round is a parallel batch** ➔ its members have no dependency between them, which is the schedule a build runner wants. **Deep dependency chains overflow recursion** ➔ the iterative form has no depth limit, whereas the DFS variant's stack is $\Theta(V)$.
+
+> [!FAQ]- A company DAG has $n$ employees and the top $m$ get a raise, but nobody is promoted above a superior. Why can you not just take the first $m$ of a topological order?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** the order is not unique, so the first $m$ depends on an arbitrary tie-break; a guarantee must hold in **every** order, which makes it a reachability question.
+> > - **Why:** **Incomparable vertices float** ➔ two employees with no ancestry between them can appear in either order, so one prefix says "raise" and another says "no raise" for the same person. **Descendants pin you from below** ➔ if $r(v)\ge n-m$ vertices must come after $v$, its position is at most $m$ in every order ⟹ guaranteed a raise. **Ancestors pin you from above** ➔ if $s(v)\ge m$ vertices must precede $v$, its position is at least $m+1$ in every order ⟹ guaranteed none. **Cost** ➔ one forward and one reverse-graph DFS per employee, $O(V(V+E))$; everyone else is genuinely undetermined.
+
+> [!FAQ]- Hamiltonian path is NP-hard in general. What does acyclicity give you that collapses it to $\Theta(V+E)$?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** in a DAG any Hamiltonian path must **be** a topological order, so there is at most one candidate — compute an order and check that consecutive vertices are adjacent.
+> > - **Why:** **No cycles means no back-steps** ➔ a Hamiltonian path that visited a vertex which must come earlier would close a directed cycle, so the path respects every edge and is a topological order. **A Hamiltonian path makes every pair comparable** ➔ hence the topological order is unique; conversely, if the unique order had a non-adjacent consecutive pair, swapping them would produce a second valid order. **So the three conditions coincide** ➔ Hamiltonian path exists $\iff$ unique topological order $\iff$ every consecutive pair in the order is adjacent, and the last is one $\Theta(V+E)$ scan.

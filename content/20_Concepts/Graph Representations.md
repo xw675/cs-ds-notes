@@ -1,10 +1,11 @@
 ---
 unit: [FIT1058, FIT2004]
 week: [5, 11]
-source: [lecture]
+source: [lecture, applied]
 domain: [A, D]
 parent: "[[Graph]]"
 tags: [Math/GraphTheory, CS/DataStructures]
+aliases: [Adjacency Matrix, Adjacency List, Edge List, Universal Sink]
 ---
 # [[Graph Representations]]
 
@@ -29,6 +30,17 @@ tags: [Math/GraphTheory, CS/DataStructures]
 - **List, time** ➔ $O(X)$ to retrieve all neighbours of $u$, $X$ that vertex's neighbour count — **output-sensitive** ([[Output-Sensitive Complexity]]), and summed over all vertices it is $\Theta(E)$, which is where traversal's $\Theta(V+E)$ comes from.
 - **List, edge lookup** ➔ *nominally* $O(\log V)$ if each list is kept sorted, but you **cannot binary-search a linked list**; the real cost stays $O(X)$ with an **early exit** once a larger vertex id is reached.
 - **The selection rule** ➔ **sparse** ($E\lll V^{2}$) ⟹ adjacency **list**; **dense** ($E\approx V^{2}$) ⟹ the matrix costs the same space and buys $O(1)$ lookup. Real graphs (road networks, the web, social graphs) are sparse, so the list is the default.
+
+### 3. Reading **Less** Than the Matrix — the Universal Sink in $O(V)$ *(applied P13, advanced)*
+- **The object** ➔ a **universal sink** is a vertex $v$ with in-degree $\lvert V\rvert-1$ and out-degree $0$: every other vertex points at $v$, and $v$ points at nobody.
+- **Its matrix signature** ➔ row $v$ is **all zeros** (no out-edges) and column $v$ is **all ones except the diagonal** (every in-edge present).
+- **At most one exists** ➔ two sinks would each need an edge into the other, contradicting out-degree $0$ — so the task is to find **the** candidate, not a set.
+- **The required bound forbids reading the input** ➔ $O(V)$ on a $V\times V$ matrix means at most $O(V)$ of its $V^{2}$ cells may be examined, so every cell read must **eliminate** a candidate permanently.
+- **The two deductions from one cell $A[i][j]$** ➔ $A[i][j]=1$ ⟹ $i$ has an out-edge ⟹ **$i$ is not a sink** · $A[i][j]=0$ with $i\ne j$ ⟹ $j$ is missing an in-edge ⟹ **$j$ is not a sink**. Either way exactly one vertex dies per probe.
+- **Why a naive column scan is still $\Theta(V^{2})$** ➔ eliminating one vertex per **cell** is not enough if you re-scan a full column of $V$ cells per candidate; the elimination must also stop you revisiting the dead.
+- **The linked-list mechanism** ➔ hold all live candidates in a linked list. To test a column, scan **only** the rows still in the list (skipping the diagonal). Every element scanned eliminates one vertex, which is spliced out of the list and never considered again ⟹ total scanning across the whole run is $O(V)$.
+- **The finish** ➔ one candidate remains; verify it directly by checking its whole row is $0$ and its whole column is $1$ off-diagonal — $O(V)$ cells, and the answer may still be "no universal sink".
+- **The transferable move (LO1)** ➔ when the demanded bound is **below** the input size, look for a constant-cost step that **discards a candidate per unit read** — the same shape as [[Cycle Detection]]'s $O(V)$ undirected argument, where the work before an early halt is what you bound.
 
 ## ⚖️ Core Decision Matrix
 | Representation | Space | Edge-exists test | All neighbours of $u$ | Best for |
@@ -62,6 +74,7 @@ $$
 ## ⚠️ Common Mistakes
 - 💡 **Edge list needs $V$** ➔ isolated vertices have no edges; the matrix is $V^{2}$ cells regardless, the list stores only actual edges.
 - 💡 **Claiming $O(\log V)$ edge lookup on an adjacency list** ➔ only if the neighbours sit in a **sorted array**; a linked list has no random access, so it degrades to a scan with early termination.
+- 💡 **Reading the whole matrix when the bound is $O(V)$** ➔ $\Theta(V^{2})$ cells exist, so a sub-quadratic bound is a promise **not** to read them; find the elimination step first, then the data structure that stops you re-reading.
 - 💡 **Adding the $\Theta(V+E)$ adjacency list to a traversal's *auxiliary* space** ➔ the graph is **input**, not auxiliary ([[Algorithmic Complexity]]); auxiliary is the $\Theta(V)$ queue and flags.
 
 ## 🧠 Active Recall
@@ -76,3 +89,8 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** the **matrix** — $\Theta(V^{2})=4\times10^{6}$ cells is affordable, and $10^{6}$ $O(1)$ lookups beat $10^{6}$ list scans.
 > > - **Why:** **Representation is chosen against the operation mix, not the graph alone** ➔ traversal wants "all neighbours" and favours the list; membership testing wants random access and favours the matrix. **The space penalty must first be survivable** ➔ at $V=10^{5}$ the same argument fails because $10^{10}$ cells cannot be allocated. **This is LO3 in miniature** ➔ every "X vs Y" answer must end in a **selection rule**, not a feature list.
+
+> [!FAQ]- Why does the universal-sink problem need a linked list at all, when each matrix cell already eliminates a vertex?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** eliminating one vertex per **cell** still allows $\Theta(V)$ cells per candidate; the list guarantees each **elimination** is charged to a cell that is never scanned again.
+> > - **Why:** **The deduction is already optimal per cell** ➔ $A[i][j]=1$ kills $i$, $A[i][j]=0$ with $i\ne j$ kills $j$, so no probe is wasted. **The waste is in re-scanning** ➔ testing a column top-to-bottom re-reads rows belonging to vertices already eliminated, giving $O(V)$ per column and $\Theta(V^{2})$ overall. **Splicing makes the total telescope** ➔ scanning only live candidates means every cell read removes an element from the list permanently, so at most $V-1$ cells are read across the entire elimination phase, plus $O(V)$ to verify the survivor.

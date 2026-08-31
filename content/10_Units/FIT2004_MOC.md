@@ -55,27 +55,42 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - [[Radix Sort]] -> [[Counting Sort]] *($K$ stable counting passes, LSD first — $\Theta(KN{+}KM)$; stability is load-bearing · base $b\le N$ buys linearity · string optimisation by length and alignment)*
 - [[K-way Merge]] -> [[Merge Sort]] *(applied P3 `[P,C]` — $\Theta(Nk)$ ➔ $\Theta(N\log k)$ by swapping the linear scan for a min-[[Heap]])*
 - [[Online Algorithm]] -> [[Algorithm]] *(applied P6 `[P,C,D]` — online vs offline, and the size-$k$ **max**-heap for the $k$ smallest)*
-- *Prep P3 (radix on `4329, 5169, 4321, 3369, 2121, 2099`) duplicates the LSD hand-trace in [[Radix Sort]] — **no new content**, run it from the PDF as a timed drill.*
+- *Prep P3 (radix on `4329, 5169, 4321, 3369, 2121, 2099`) duplicates the LSD hand-trace in [[Radix Sort]].*
 - *Applied P7–P13 **deliberately not noted** — one-off puzzles with no transferable pattern. The only two keepers (the comparison model bounds only from below; "in-place" depends on the cost model) live as `[D]` lines in [[FIT2004 Unit Cheatsheet]] §9️⃣.*
 
 ### Week 4 — QuickSort Deep Dive, Selection, and the Partition Suite *(lecture W4 p1/p2 · prep W4 · applied W4 · PT-01)*
 - [[Quick Sort]] -> [[Divide and Conquer]] *(dual-unit — the pivot-policy ladder, the **average-case height** $h=\log_{4/3}N$, why the sort is **never** in-place · **prep §3**: a **minimum** pivot is $\Theta(n^{2})$ in the *best* case too, a $10$th-percentile pivot is still $\Theta(n\log n)$ · **applied**: the **mean-pivot** trap on $a_i=i!$ ⟹ $\Theta(n^{2})$, and **cross-pivoting** to match $n$ locks to $n$ keys)*
-- [[Partitioning (Quicksort)]] -> [[Quick Sort]] *(**new** — out-of-place vs Hoare's vs Lomuto's vs Dutch national flag; invariants, swap counts, and why each is unstable for a **different** reason · **prep**: the unit notes' **naive 3-way** partition traced beside Hoare's on one array — duplicates grouped vs scattered · **applied §6**: **$k$-partitioning**, $\Theta(nk)$ ➔ $\Theta(n\log k)$ by D&C, optimal by **reduction to sorting**)*
+- [[Partitioning (Quicksort)]] -> [[Quick Sort]] *(out-of-place vs Hoare's vs Lomuto's vs Dutch national flag; invariants, swap counts, and why each is unstable for a **different** reason · **prep**: the unit notes' **naive 3-way** partition traced beside Hoare's on one array — duplicates grouped vs scattered · **applied §6**: **$k$-partitioning**, $\Theta(nk)$ ➔ $\Theta(n\log k)$ by D&C, optimal by **reduction to sorting**)*
 - [[Quickselect]] -> [[Divide and Conquer]] *(the $k$-th smallest — **one-sided** recursion turns $\Theta(N\log N)$ into $\Theta(N)$ expected; an **exact-median** pivot still leaves quicksort $\Theta(N^{2})$ · **applied §6**: the **coin-flip** expected-$O(n)$ argument · the **weighted median** · the $k$ **closest to the median** in $\Theta(n)$ · `[D]` order statistic across two sorted arrays)*
 - [[Median of Medians]] -> [[Quickselect]] *(**scope changed** — the W4 deck strikes "not examinable" and writes **examinable from 2023 onwards**; own the **hand execution**, the $30/70$ guarantee, the co-recursion, and $\tfrac15+\tfrac{7}{10}<1$)*
 - [[Merge Sort]] -> [[Divide and Conquer]] *(**applied §4**: the **hybrid cut-off** — mergesort to size $k$ then insertion sort $=\Theta(nk+n\log\tfrac{n}{k})$)*
 - *Applied P8 (iterative quickselect) is already the note's implementation, and P9 (order statistic of two sorted arrays) is one `[D]` bullet in [[Quickselect]] §6 — do not spend `[P]` time on either.*
 
-### Week 5 — Graphs, Traversal, and Shortest Paths *(lecture W5 p1 Graph Traversal $+$ Dijkstra · p2 Directed Acyclic Graph)*
+### Week 5 — Graphs, Traversal, and Shortest Paths *(lecture W5 p1 Graph Traversal $+$ Dijkstra · p2 Directed Acyclic Graph · applied W5)*
 - [[Graph]] -> [[Binary Relation]] *(dual-unit — directed/weighted $G=(V,E,W)$, **simple** graphs, max edges $V(V-1)$ vs $\tfrac{V(V-1)}{2}$, and the **sparse/dense** split every later bound depends on)*
 - [[Graph Representations]] -> [[Graph]] *(dual-unit — matrix $\Theta(V^{2})$/$O(1)$ lookup/$O(V)$ neighbours vs list $\Theta(V+E)$/$O(X)$ output-sensitive; **the representation, not the algorithm, sets the bound** — LO3)*
 - [[Uninformed Search (BFS and DFS)]] -> [[Search Problem Formulation]] *(dual-unit — discovered/visited states, the $\Theta(V+E)$ derivation, the $O(1)$ **flag** that makes it hold, unweighted shortest **distance $+$ path**)*
-- [[Dijkstra's Algorithm]] -> [[Graph]] *(**new** — DP $+$ greedy, relaxation, min-[[Heap]] with an index map, $O(E\log V)$, the **proof by contradiction**, and exactly why a negative edge breaks it)*
-- [[Directed Acyclic Graph (DAG)]] -> [[Types of Graphs]] *(**new** — the dependency model; acyclicity is what makes an order exist)*
-- [[Topological Sort]] -> [[Directed Acyclic Graph (DAG)]] *(**new** — Kahn's peel-the-sources vs DFS **push-on-finish**, both $\Theta(V+E)$; the answer is never unique)*
+- [[Dijkstra's Algorithm]] -> [[Graph]] *(DP $+$ greedy, relaxation, min-[[Heap]] with an index map, $O(E\log V)$, the **proof by contradiction**, and exactly why a negative edge breaks it)*
+- [[Directed Acyclic Graph (DAG)]] -> [[Types of Graphs]] *(the dependency model; acyclicity is what makes an order exist)*
+- [[Topological Sort]] -> [[Directed Acyclic Graph (DAG)]] *(Kahn's peel-the-sources vs DFS **push-on-finish**, both $\Theta(V+E)$; the answer is never unique)*
+- [[Bipartite Graph]] -> [[Graph]] *(dual-unit, **upgraded** — applied P1/P2/P8: the greedy $\Theta(V+E)$ DFS two-colouring, the first colour is **free** and every other is forced · $2^{c}$ colourings for $c$ components, $0$ if any fails · bipartite $\iff$ two-colourable, so one algorithm answers both)*
+- [[Cycle Detection]] -> [[Uninformed Search (BFS and DFS)]] *(**new** — applied P3/P10: the **third vertex state** (`active`) and why the undirected rule false-positives on a diamond · undirected existence is $O(V)$, **independent of $E$** · P6 shortest cycle by BFS from **every** source · P7 pure-cycle components by $\deg(v)=2$)*
+- [[State-Space Graph Modelling]] -> [[Graph]] *(**new** — applied P5, the flagship **LO1** note: a needed **revisit** proves the vertex is not a sufficient state ⟹ $\langle\text{vertex},\text{was previous edge dotted}\rangle$, legality wired into **which edges exist**, answer $=\min$ over all accepting states)*
+- [[Uninformed Search (BFS and DFS)]] -> [[Search Problem Formulation]] *(**applied**: P4 multi-source BFS and the **super source** — transform the input, keep the algorithm a black box, subtract $1$ · P9 iterative DFS, testing `visited` **on pop**)*
+- [[Topological Sort]] -> [[Directed Acyclic Graph (DAG)]] *(**applied `[D]`**: P11 a guaranteed position in **every** order is a **reachability** question, $r\ge n-m$ / $s\ge m$, $O(V^{2}+VE)$ · P12 a **Hamiltonian path** in a DAG exists iff the topological order is unique)*
+- [[Graph Representations]] -> [[Graph]] *(**applied `[D]`**: P13 the **universal sink** in $O(V)$ — one candidate eliminated per matrix cell read, live candidates in a linked list)*
+- [[Bridges (Low-Link)]] -> [[Uninformed Search (BFS and DFS)]] *(**new**, **applied `[D]`** P14 — bridge $\iff$ on no cycle $\iff$ $\texttt{low\_link}[v]>\texttt{dfs\_ord}[u]$, all $E$ edges decided in **one** $\Theta(V+E)$ DFS)*
+
+### Week 6 — Minimum Spanning Trees, Union-Find and the Greedy Paradigm *(lecture W5 p2 MST · prep W6 · applied W6)*
+- [[Minimum Spanning Tree]] -> [[Spanning Tree]] *(**new** — the hub: $\lvert V\rvert-1$ edges so only **weights** discriminate · cost unique, tree **not** · **negative weights are legal** (the week's most-asked short answer) · **applied P4** the bottleneck-path theorem and its false converse · **applied P5** reverse-delete and the **superset** invariant)*
+- [[Prim's Algorithm]] -> [[Minimum Spanning Tree]] *(**new** — [[Dijkstra's Algorithm|Dijkstra]] with **one line** changed, `v.distance = w`; $O(E\log V)$; grows one tree so no cycle test · **prep P2** the root-$a$ hand trace)*
+- [[Kruskal's Greedy Algorithm]] -> [[Minimum Spanning Tree]] *(dual-unit, **upgraded** — sort $+$ `find(u) != find(v)`; the implementation ladder $O(EV)\to O(E\log V)\to$ all-sort · the **subset-of-some-MST** invariant and its cut-and-swap proof · **applied P10** a true invariant that is still too weak)*
+- [[Union-Find (Disjoint Set)]] -> [[Set (ADT)]] *(**new** — one `parent` array, negative $=$ root size/rank · union-by-size, union-by-rank, path compression · **prep P3** the 10-element hand trace · **applied P8** the $\text{size}\ge2^{\text{height}}$ induction ⟹ $O(V\log V)$ for all unions)*
+- [[Greedy Algorithm]] -> [[Algorithm]] *(**new** — the paradigm behind all three: greedy-choice $+$ optimal substructure, proved by **exchange** or **stays ahead** · **applied P7** interval scheduling by earliest finish time, and the ranking rules that fail)*
+- [[Dijkstra's Algorithm]] -> [[Graph]] *(**applied**: P1 the *update-only-on-discovery* bug and how to break it · P3 **state-graph** modelling (fuel $\times$ town) · P6 **$0$-$1$ BFS** on a deque in $\Theta(V+E)$ · P9 the **bucket** priority queue for bounded integer weights)*
 
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · greedy algorithms · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries, union-find · the remaining graph algorithms (**Bellman-Ford**, **Floyd-Warshall**, MST, network flow) · hashing.
+- Amortised analysis · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries · the remaining graph algorithms (**Bellman-Ford**, **Floyd-Warshall**, network flow) · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -89,6 +104,11 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **W4b — the applied partition suite:** **[[Quick Sort]]** *(§3 pivot rules)* → **[[Partitioning (Quicksort)]]** *(naive 3-way · $k$-partitioning)* → **[[Quickselect]]** *(§6 adaptations)* → [[Merge Sort]] *(hybrid cut-off)*
 - **W5a — the structure, then the traversal:** [[Graph]] *(directed, weighted, sparse vs dense)* → **[[Graph Representations]]** *(the bound lives here)* → **[[Uninformed Search (BFS and DFS)]]** *($\Theta(V+E)$, unweighted distance)* → **[[Dijkstra's Algorithm]]** *(queue ➔ min-heap)*
 - **W5b — order instead of distance:** [[Directed Acyclic Graph (DAG)]] *(acyclicity is the precondition)* → **[[Topological Sort]]** *(Kahn's · push-on-finish)*
+- **W5c — the applied sheet, traversal recast:** **[[Bipartite Graph]]** *(greedy colouring, $2^{c}$)* → **[[Cycle Detection]]** *(the third state)* → [[Uninformed Search (BFS and DFS)]] *(§7 super source)* → **[[State-Space Graph Modelling]]** *(state in the vertex)*
+- **W5d — the applied sheet, D/HD tier:** [[Topological Sort]] *(§4 reachability guarantees · §5 Hamiltonian path)* → [[Graph Representations]] *(§3 universal sink in $O(V)$)* → [[Bridges (Low-Link)]] *(low-link in one DFS)*
+- **W6a — the object, then the two builders:** [[Minimum Spanning Tree]] *(what is being minimised)* → **[[Prim's Algorithm]]** *(Dijkstra, one line changed)* → **[[Kruskal's Greedy Algorithm]]** *(sort $+$ cycle test)* → **[[Union-Find (Disjoint Set)]]** *(the test, made free)*
+- **W6b — why the greed is allowed:** [[Greedy Algorithm]] *(choice property $+$ substructure)* → **[[Kruskal's Greedy Algorithm]]** *(§4 cut-and-swap)* → [[Minimum Spanning Tree]] *(§5 reverse-delete, superset)* → [[Invariant]] *(weak vs sufficient)*
+- **W6c — the applied sheet, shortest paths revisited:** **[[Dijkstra's Algorithm]]** *(§4 deque · bucket queue, §5 state graph)* → [[Greedy Algorithm]] *(§4 interval scheduling)* → **[[Union-Find (Disjoint Set)]]** *(§Applied the height lemma)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -148,3 +168,26 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- prove Dijkstra correct by contradiction, pointing at the step that spends non-negativity
 	- define a **DAG** and say why acyclicity is the existence condition for an order
 	- run **Kahn's** and the **push-on-finish DFS**, detecting a cycle from a short output, and reject a DFS **pre-order** as a topological order with the counterexample
+	- two-colour a graph by greedy DFS, justify why the first colour is free, and count the colourings as $2^{c}$ over components
+	- upgrade DFS to **three** states for a digraph, firing only on an edge into an **active** vertex, and say why the undirected rule false-positives
+	- justify $O(V)$ — not $\Theta(V+E)$ — for undirected cycle existence, from *forest $\Rightarrow E\le V-1$* plus early termination
+	- find the **shortest** cycle by BFS from every vertex, $O(V(V+E))$, and say why one BFS returns the wrong one
+	- solve multi-source shortest path by **super source** $+$ subtract $1$, and defend transforming the input over modifying the algorithm
+	- model a constraint as $\langle\text{vertex},\text{extra}\rangle$, wire only legal transitions, and answer $\min$ over **all** accepting states
+	- `[D]` eliminate one candidate per matrix cell for a universal sink in $O(V)$; decide bridges by $\texttt{low\_link}[v]>\texttt{dfs\_ord}[u]$; bound a guaranteed topological position by $r\ge n-m$ / $s\ge m$; decide a DAG Hamiltonian path by order uniqueness
+- **W6** ➔
+	- define an MST and justify $\lvert V\rvert-1$ edges as **both** the minimum that connects and the maximum that avoids a cycle ⟹ only the **weights** discriminate between spanning trees
+	- answer "can Prim/Kruskal take negative weights?" with **yes** and two justifications — they only **compare** edges, and shifting every weight by $+c$ raises every spanning tree by exactly $(\lvert V\rvert-1)c$
+	- derive [[Prim's Algorithm|Prim]] from [[Dijkstra's Algorithm|Dijkstra]] by changing `v.distance = u.distance + w` to **`v.distance = w`**, and hand-trace it from a named root writing every key as $w,\text{parent}$
+	- hand-trace [[Kruskal's Greedy Algorithm|Kruskal]] in sorted-edge order, writing the `find` roots and the forest after every accept/reject, and stopping at $\lvert V\rvert-1$ edges
+	- state the **cut-and-swap** exchange proof for both MST algorithms, and name the invariant *subset of some MST* (Kruskal) vs *superset of some MST* (reverse-delete)
+	- reject a **true but too weak** invariant with a counterexample, quoting the rule invariant $+$ termination $\Rightarrow$ postcondition
+	- prove that every path in an MST is a **bottleneck path**, and give a bottleneck path that lies in no MST
+	- encode [[Union-Find (Disjoint Set)|union-find]] as one `parent` array (positive $=$ parent, negative $=$ root size/rank), hand-trace $10$ unions under **union-by-size** with the stated tie-break, and say where path compression changes the final height
+	- prove $\text{size}(r)\ge2^{\text{height}(r)}$ by induction ⟹ $O(\log V)$ per union ⟹ $O(V\log V)$ for all $V-1$ unions
+	- locate the factor of $V$ in naive-set Kruskal (it is in **union**, not `find`) and quote the ladder $O(EV)\to O(E\log V)\to\Theta(E\log E)$
+	- name the greedy paradigm's two ingredients and pick the right proof template — **exchange** for MST, **stays ahead** for scheduling
+	- solve interval scheduling by **earliest finish time**, prove $f_{i_k}\le f_{j_k}$ by induction, and kill shortest-duration with $(1,10),(9,12),(11,20)$
+	- replace the priority queue when the weights allow — a **deque** for $\{0,1\}$ and a **bucket array** for $0\le w\le c$, both $\Theta(V+E)$ — and keep the relaxation test that plain BFS drops
+	- model an extra resource as a **state graph** ($\langle\text{town},\text{litres}\rangle$, weight-$0$ travel edges, weight-$p_u$ refuel edges) and run Dijkstra unmodified
+	- break "update only on first discovery" with an expensive first route and a cheap later one

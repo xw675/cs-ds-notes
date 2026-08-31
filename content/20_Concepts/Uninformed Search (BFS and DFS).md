@@ -52,6 +52,14 @@ aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Grap
 - **Why DFS cannot do this** ➔ LIFO order destroys the layer property, so a DFS "distance" records the depth of the branch you happened to take.
 - **Why BFS cannot do the weighted case** ➔ $+1$ per edge *is* the assumption; with weights the closest vertex is not the one discovered earliest ➔ swap the [[Queue (ADT)|queue]] for a [[Priority Queue (ADT)|priority queue]].
 
+### 7. Many Sources at Once — Change the Input, Not the Algorithm *(applied P4)*
+- **The problem** ➔ *multi-source shortest path*: given sources $s_1,\dots,s_k$ on an unweighted graph, find $d[v]=\min_{1\le i\le k}\text{dist}(v,s_i)$ for every $v$, in $O(V+E)$.
+- **Solution 1 — modify the algorithm** ➔ enqueue **all $k$ sources** at distance $0$ before the loop and run BFS unchanged. It still discovers everything at distance $1$ from *any* source before anything at distance $2$, so the first arrival is still final; a vertex already discovered is safely skipped, because whichever source found it first is the closest one.
+- **Solution 2 — modify the input** ➔ add a **super source** $\sigma$ joined to every $s_i$, run stock BFS from $\sigma$, then **subtract $1$** from every distance to pay back the extra hop.
+- **They are the same algorithm** ➔ $\sigma$'s first expansion enqueues exactly $s_1,\dots,s_k$ at distance $1$; from there the run is Solution 1 offset by one.
+- **Why the sheet prefers Solution 2 (LO1)** ➔ modifying a complex algorithm can silently break an invariant and puts its correctness back on you; **transforming the input** keeps the algorithm a **black box**, so you owe only one argument — that the transformation preserves the answer ➔ [[State-Space Graph Modelling]].
+- **Cost** ➔ $\Theta(V+E)$ either way; the super source adds one vertex and $k\le V$ edges.
+
 ## ⚙️ Core Implementation
 ### 🔹 BFS — unit pseudocode, final form
 > [!code]- Pseudocode
@@ -84,6 +92,21 @@ aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Grap
 > current ← frontier.pop()  # was dequeue
 > ```
 > 💡 **Common Mistake:** **Rewriting the loop** ➔ any other edit means the comparison is no longer controlled, and the BFS-vs-DFS numbers stop being about the frontier.
+
+### 🔹 DFS without recursion — an explicit stack *(applied P9)*
+> [!code]- Code
+> ```python
+> def dfs_iterative(u):
+>     stack = [u]
+>     while len(stack) > 0:
+>         u = stack.pop()
+>         if not visited[u]:          # test on POP, not before pushing
+>             visited[u] = True
+>             for v in adj[u]:
+>                 stack.append(v)     # may push an already-stacked vertex
+> ```
+> 💡 **Common Mistake:** **Testing `visited` before pushing instead of after popping** ➔ a vertex can be pushed once by **each** neighbour, so the stack legitimately holds duplicates; filtering at push means re-scanning an adjacency list once **per push** and the bound stops being $\Theta(V+E)$. Test at pop and the duplicates are discarded for free.
+> 💡 **Not identical to the recursive version** ➔ neighbours come off the stack in **reverse** push order, so this visits each vertex's neighbours in reverse adjacency order; push them reversed to reproduce the recursive traversal exactly.
 
 ### 🔹 BFS on a graph, with distance and previous (FIT2004 form)
 > [!code]- Code
@@ -205,6 +228,7 @@ Undirected graph, adjacency lists in the order shown, source $A$: $A{:}\,C,B$ ·
 - 💡 **Omitting the visited check** ➔ nodes get re-enqueued after processing, the queue grows without bound and on a cyclic graph the search **never terminates**.
 - 💡 **Returning `success` instead of a path** ➔ at the moment `G` is dequeued every step that led there is gone; the deliverable is the move sequence, not a boolean.
 - 💡 **Exporting BFS optimality to weighted graphs** ➔ FIFO orders by **hop count**; roads with different travel times break the guarantee immediately ➔ [[Dijkstra's Algorithm]].
+- 💡 **Forgetting the super source's $-1$** ➔ every distance from $\sigma$ is one hop too long; the transformation is only answer-preserving once the offset is paid back.
 - 💡 **Quoting $\Theta(V+E)$ without naming the representation** ➔ it is an **adjacency-list** bound; on an adjacency matrix the same code is $\Theta(V^{2})$.
 
 ## 🧠 Active Recall

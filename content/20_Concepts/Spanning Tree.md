@@ -1,13 +1,14 @@
 ---
-unit: FIT1058
+unit: [FIT1058, FIT2004]
+week: [6, 12]
+source: [lecture]
 domain: [A, D]
-week: 12
 parent: "[[Tree]]"
 tags: [Math/GraphTheory, CS/Algorithms]
 ---
 # [[Spanning Tree]]
 
-**Context:** [[FIT1058_MOC]] · a [[Tree|tree]] [[Subgraph|subgraph]] reaching **every** vertex · a minimal connecting skeleton · cost-optimised by [[Kruskal's Greedy Algorithm]]
+**Context:** [[FIT1058_MOC]], [[FIT2004_MOC]] · a [[Tree|tree]] [[Subgraph|subgraph]] reaching **every** vertex · a minimal connecting skeleton · cost-optimised into a [[Minimum Spanning Tree]] by [[Kruskal's Greedy Algorithm]] and [[Prim's Algorithm]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** a tree subgraph containing every vertex ➔ a minimal connected skeleton.
@@ -20,14 +21,21 @@ tags: [Math/GraphTheory, CS/Algorithms]
 - **Minimal connected** ➔ connected, but deleting any edge disconnects it.
 - **Edges** ➔ exactly $n-1$.
 
-### 2. Two Constructions
+### 2. Two Characterisations of $n-1$
+- **Minimum to connect** ➔ no set of fewer than $n-1$ edges spans all $n$ vertices.
+- **Maximum without a cycle** ➔ adding any further edge of $G$ closes a [[Cycle (Graph Theory)|cycle]].
+- **Both true simultaneously** ➔ a spanning tree sits exactly on the boundary between *too few edges to connect* and *enough edges to loop*.
+
+### 3. Two Constructions
 - **Delete** ➔ remove edges whose removal keeps it connected, until none can be.
 - **Add** ➔ add edges that create no [[Cycle (Graph Theory)|cycle]], until none can be (partial = [[Forest]]).
 - **Both succeed** ➔ every connected graph has a spanning tree.
+- **Both scale up** ➔ weighting the add-rule by *cheapest first* gives [[Kruskal's Greedy Algorithm]]; weighting the delete-rule by *dearest first* gives reverse-delete ➔ [[Minimum Spanning Tree]] §5.
 
-### 3. Multiplicity
+### 4. Multiplicity
 - **Many** ➔ different orders usually give different spanning trees.
 - **Disconnected** ➔ a spanning *forest*, one tree per [[Connectivity|component]].
+- **Weighted case** ➔ minimising $\sum w(e)$ over all of them is the [[Minimum Spanning Tree]] problem; the minimum **cost** is unique, the tree still is not.
 
 **Key identities:**
 
@@ -51,6 +59,7 @@ Add edges to $G$ (4-cycle + diagonal $ac$):
 
 ## ⚠️ Common Mistakes
 - 💡 **Add-method stays a forest** ➔ acyclic throughout, connected only at the end; the final tree has $n-1$ edges (minimum to connect all).
+- 💡 **Counting edges to compare spanning trees** ➔ every spanning tree of $G$ has the same $n-1$ edges, so only the **weights** can discriminate ➔ [[Minimum Spanning Tree]].
 
 ## 🧠 Active Recall
 > [!FAQ]- Define a spanning tree and give two methods proving every connected graph has one.
@@ -64,3 +73,9 @@ Add edges to $G$ (4-cycle + diagonal $ac$):
 > > [!SUCCESS]- Answer
 > > - **Short answer:** Each added edge avoids a cycle ⟹ acyclic ([[Forest]]); final tree has $n-1$ edges.
 > > - **Why:** **Connected at end** ➔ becomes a tree once no cycle-free edge remains.
+
+> [!FAQ]- "$n-1$ is both the minimum number of edges that connects all vertices and the maximum that avoids a cycle." Reconcile the two claims.
+> - **Hint:** two boundaries meeting.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** a spanning tree sits exactly where the two thresholds coincide.
+> > - **Why:** **Below $n-1$** ➔ some vertex is unreachable, so connectivity fails. **Above $n-1$** ➔ the extra edge joins two already-connected vertices, closing a [[Cycle (Graph Theory)|cycle]]. **Consequence** ➔ the two constructions in §3 attack the same object from opposite sides and must meet at the same edge count.
