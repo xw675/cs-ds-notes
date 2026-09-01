@@ -29,6 +29,7 @@ aliases: [Topological Sorting, Topological Order, Kahn's Algorithm]
 - **Bookkeeping** ➔ one `incoming_edges` count per vertex, built in $\Theta(V+E)$; a `process` collection holding every currently-zero vertex.
 - **Queue or stack** ➔ `process` may be either; the rule fixes only *which* vertices are eligible, not which eligible one you pick ➔ different choices give different valid orders.
 - **Decrement, do not rescan** ➔ each edge is decremented **once**, which keeps the total at $\Theta(V+E)$ rather than $\Theta(VE)$.
+- **The queue reads out uniqueness** ➔ if `process` **never** holds more than one vertex, no step ever had a choice ⟹ the order is **unique**; two eligible vertices at any step means a second valid order exists ➔ §5 turns that into a Hamiltonian-path test.
 
 ### 3. Modified DFS — push on finish
 - **The observation** ➔ raw [[Uninformed Search (BFS and DFS)|DFS]] visit order is **not** a topological order: after hitting a dead end it returns to an earlier vertex that must appear *early*. On the lecture DAG, DFS visits $A,B,D,C,E$, which is invalid.
@@ -50,6 +51,7 @@ aliases: [Topological Sorting, Topological Order, Kahn's Algorithm]
 - **Unique order $\Rightarrow$ Hamiltonian path** ➔ if some consecutive pair in the order were **not** adjacent, swapping them would break no dependency and yield a second valid order, contradicting uniqueness; so every consecutive pair is joined by an edge, which is a path through all $\lvert V\rvert$ vertices.
 - **The algorithm** ➔ compute **any** topological order, then scan it once testing that each consecutive pair is adjacent. $\Theta(V+E)$, and the test doubles as the uniqueness certificate.
 - **Why this is not NP-hard here** ➔ Hamiltonian path is NP-hard on general graphs; acyclicity is the whole gift, because it forces the candidate path to be a topological order and there is at most one to check.
+- **The cheap certificate** ➔ uniqueness need not be re-derived — Kahn's `process` collection never exceeding size $1$ **is** the proof (§2), so run Kahn's when the question wants the path itself.
 
 ## ⚙️ Core Implementation
 ### 🔹 Kahn's algorithm

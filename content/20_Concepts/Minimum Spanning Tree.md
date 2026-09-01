@@ -49,6 +49,13 @@ aliases: [MST, Minimum Cost Spanning Tree]
 - **Termination shape** ➔ output is connected (never disconnects) and acyclic (any edge in a cycle could have been removed) ⟹ a spanning tree; superset $+$ equal edge counts ⟹ **is** an MST.
 - **Transfer (LO1)** ➔ the same greedy correctness template runs in either direction; what changes is subset ➔ superset and *cheapest safe addition* ➔ *dearest safe deletion*.
 
+### 6. Maximum Spanning Tree — Invert the Comparison, Not the Algorithm
+- **Same object, opposite objective** ➔ a MaxST **maximises** $\sum_{e\in T}w(e)$ over the same $\lvert V\rvert-1$ edges; spanning and acyclicity are untouched.
+- **[[Prim's Algorithm|Prim]]** ➔ swap the min-[[Heap]] for a **max-heap** and relax on $w>v.\text{distance}$.
+- **[[Kruskal's Greedy Algorithm|Kruskal]]** ➔ sort the edges **descending**; the `find`/`union` test does not change.
+- **Either, without editing the code** ➔ **negate every weight** and run the stock minimum version — the smallest negative is the largest positive — then negate the total back.
+- **Why it is sound** ➔ both correctness proofs only ever compare two weights (§3), and negation reverses every comparison consistently.
+
 ## ⚖️ Core Decision Matrix
 | Need | Reach for | Why | Cost |
 | :--- | :--- | :--- | :--- |

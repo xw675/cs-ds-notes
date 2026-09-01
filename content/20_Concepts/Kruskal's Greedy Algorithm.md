@@ -137,9 +137,3 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** reject the edge — it would close a cycle — and move on; the two `find` calls are the whole cost.
 > > - **Why:** **The forest invariant** ➔ the partial result must stay acyclic, and a within-tree edge is exactly what breaks it ➔ [[Spanning Tree]]. **Not wasted** ➔ with path compression the rejected edge's `find` calls flatten both paths, speeding up every later query. **The count is the stopping rule** ➔ rejections do not advance the $\lvert V\rvert-1$ counter, which is why an early exit tests the edge count and not the loop index.
-
-> [!abstract] 极速同步
-> - **核心干货**：按权重**从小到大排序**所有边，**只要不形成环**就无脑加边，直到加满 $\lvert V\rvert-1$ 条。
-> - **关键底层**：并查集（[[Union-Find (Disjoint Set)|Union-Find]]）判环 —— `find(u) == find(v)` 即成环，跳过；否则 `union` 合并。
-> - **复杂度**：$O(E \log E) = O(E\log V)$，瓶颈在排序；负权边完全没问题（只比较、不累加）。
-> - **对比 [[Prim's Algorithm|Prim]]**：Prim 是「长一棵树」，稠密图占优；Kruskal 是「合并多棵树」，稀疏图或边已排序时占优。

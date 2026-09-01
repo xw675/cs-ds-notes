@@ -45,6 +45,10 @@ aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Grap
 - **Same skeleton, graph vocabulary** ➔ put the **source** in `discovered`; while non-empty, serve to `visited`, and for each edge $\langle u,v\rangle$ add $v$ if it is neither discovered nor visited.
 - **The flag, not a scan** ➔ "is $v$ already discovered?" must be a **$O(1)$ attribute** (`v.discovered`), never an $O(V)$ search through the queue — the whole $\Theta(V+E)$ bound depends on this.
 - **The traversal answer is not unique** ➔ it depends on the order edges appear in the adjacency list; state your edge order before tracing.
+- **Tiebreakers are always stated** ➔ an exam trace fixes the rule (usually alphabetical), and it applies to the **insertion** order, never to the serve.
+- **BFS under an alphabetical rule** ➔ append the newly discovered neighbours in **alphabetical** order; FIFO then serves them in that order.
+- **DFS under an alphabetical rule** ➔ push them in **reverse alphabetical** order — LIFO pops the last pushed first, so pushing alphabetically walks the neighbours backwards.
+- **Weight is irrelevant here** ➔ a weighted graph traverses exactly as its unweighted skeleton unless the tiebreaker names the weight ➔ [[Dijkstra's Algorithm]] is where weight starts to order the serve.
 - **What it is a subroutine for** ➔ reachability · connected components · cycle detection · shortest path on an **unweighted** graph · [[Topological Sort]] · and, with the collection upgraded to a min-[[Heap]], [[Dijkstra's Algorithm]].
 
 ### 6. Unweighted Shortest Distance and Path (BFS)
@@ -224,12 +228,25 @@ Undirected graph, adjacency lists in the order shown, source $A$: $A{:}\,C,B$ ·
 
 **Final Extracted Output:** BFS order $A,C,B,D,F,E,G,H$ · distances $A{=}0$, $B{=}C{=}1$, $D{=}E{=}F{=}2$, $G{=}H{=}3$. Swapping the queue for a **stack** gives $A,B,E,H,G,F,C,D$ — same $\Theta(V+E)$, completely different order, and its depth numbers are **not** distances.
 
+### Applied Exercise — the two orders that are NOT valid
+**Problem:** undirected, adjacency lists $A{:}\,X,C$ · $X{:}\,A,Y$ · $C{:}\,A,B$ · $B{:}\,C$ · $Y{:}\,X$, source $A$. Two candidate BFS orders are offered — $[A,B,\dots]$ and $[A,X,C,B,Y]$. Give the correct order and kill both.
+$$
+\begin{aligned}
+\text{serve } A &\Rightarrow \text{discover } X,C,\ \text{queue } [X,C] \\
+\text{serve } X &\Rightarrow \text{discover } Y,\ \text{queue } [C,Y] \\
+\text{serve } C &\Rightarrow \text{discover } B,\ \text{queue } [Y,B] \\
+\text{serve } Y \text{, then } B &\Rightarrow \text{queue empty}
+\end{aligned}
+$$
+**Final Extracted Output:** $A,X,C,Y,B$. **$[A,B,\dots]$ dies** because only $C$ discovers $B$, so $C$ must be served first. **$[A,X,C,B,Y]$ dies** because $X$ was served before $C$, so $Y$ entered the queue **before** $B$ and FIFO must emit it first — both sit at distance $2$, and the **queue**, not the layer, orders them.
+
 ## ⚠️ Common Mistakes
 - 💡 **Omitting the visited check** ➔ nodes get re-enqueued after processing, the queue grows without bound and on a cyclic graph the search **never terminates**.
 - 💡 **Returning `success` instead of a path** ➔ at the moment `G` is dequeued every step that led there is gone; the deliverable is the move sequence, not a boolean.
 - 💡 **Exporting BFS optimality to weighted graphs** ➔ FIFO orders by **hop count**; roads with different travel times break the guarantee immediately ➔ [[Dijkstra's Algorithm]].
 - 💡 **Forgetting the super source's $-1$** ➔ every distance from $\sigma$ is one hop too long; the transformation is only answer-preserving once the offset is paid back.
 - 💡 **Quoting $\Theta(V+E)$ without naming the representation** ➔ it is an **adjacency-list** bound; on an adjacency matrix the same code is $\Theta(V^{2})$.
+- 💡 **Guessing the order inside a distance layer** ➔ same-depth vertices are emitted in **queue** order, fixed by when each was discovered and by the stated tiebreaker — not by name, and not by the order you drew them.
 
 ## 🧠 Active Recall
 > [!FAQ]- BFS and DFS differ by one data structure, yet only one guarantees the shortest path. Where exactly does the guarantee come from, and which line destroys it?

@@ -36,6 +36,9 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 - **Path** ➔ set `v.previous = u` on every successful relaxation, then **backtrack** from the target and reverse.
 - **Single target** ➔ terminate the moment the target is moved to `visited`; the remaining heap is irrelevant.
 - **Unreachable** ➔ a vertex never discovered keeps $\text{dist}=\infty$; the loop ends with an empty heap, not an error.
+- **Threshold cutoff** ➔ stop once the served key exceeds a stated bound $k$; everything still in the heap has a key $\ge k$, so nothing cheaper can appear.
+- **Single target, undirected only** ➔ $\text{dist}(A,B)=\text{dist}(B,A)$ **iff** $G$ is undirected, so the target may be used as the source; on a digraph that is wrong unless every edge is reversed first.
+- **Many sources** ➔ seeding the heap with every source at $0$ is the safe form; a weighted **super source** works only with weight-$0$ links to each $s_i$, and is the easier one to get wrong ➔ [[Uninformed Search (BFS and DFS)]] §7.
 
 ### 4. Beating the $\log V$ When the Weights Are Restricted *(applied P6, P9)*
 - **Where the $\log$ lives** ➔ entirely in the [[Priority Queue (ADT)|priority queue]]. Restrict the weights enough and a cheaper queue exists, dropping the whole algorithm to $\Theta(V+E)$.
@@ -52,6 +55,15 @@ aliases: [Dijkstra, Single Source Shortest Path, SSSP]
 - **One litre at a time** ➔ adding $\langle u,c\rangle\to\langle u,c+2\rangle$ at weight $2p_u$ is redundant and only makes the graph denser.
 - **Answer** ➔ run Dijkstra from $\langle s,0\rangle$ and read $\langle t,0\rangle$; the edge weights now model **money**, and the fuel constraint is enforced by which edges exist.
 - **The general paradigm** ➔ transforming the input so a **known unmodified algorithm** applies is the LO1 move, reused across the W5 and W6 applied sheets ➔ [[State-Space Graph Modelling]] holds the recipe, the unweighted BFS instance, and the sizing rule $V'=kV$.
+
+### 6. Two Heap Implementations — Update vs Duplicate
+- **Update (the unit's form)** ➔ one entry per vertex, reached in $O(1)$ through the index map ➔ heap size $O(V)$, every operation $O(\log V)$; this is the version the assignment wants, since swapping in a Fibonacci heap later changes one line.
+- **Duplicate / lazy** ➔ a library heap (`heapq`) offers append and serve but **no** `update`, so an improved estimate is **pushed as a second entry** and the stale copies are discarded when served.
+- **Where the duplicates come from** ➔ one push per successful **edge relaxation** ⟹ heap size $O(E)=O(V^{2})$.
+- **The bound does not move** ➔ $O(\log E)=O(\log V^{2})=O(2\log V)=O(\log V)$ ⟹ both implementations are $O(E\log V)$.
+- **What moves is the constant** ➔ the bigger heap is appended to and served from more often; say *same bound, more operations*, never "asymptotically slower".
+- **The discard test** ➔ `if u.visited: continue` immediately after the serve — the same staleness guard as `d != dist[u]` in the $0$-$1$ deque (§4).
+- **Match the size to the code** ➔ quote $O(V)$ only for the update form and $O(E)$ for the duplicate form; a heap size that contradicts your own implementation is the marked error.
 
 ## ⚙️ Core Implementation
 ### 🔹 Dijkstra with a min-heap
@@ -127,6 +139,26 @@ Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 - **Aggregate derivation (tighter, prefer it)** ➔ $V$ serves at $O(\log V)$ **plus** $E$ relaxations at $O(\log V)$ ➔ $O((V+E)\log V)=O(E\log V)$ once $E\ge V-1$. The slide's $V^{2}$ is the dense instantiation, not a separate bound.
 - **Fibonacci heap** ➔ $O(1)$ amortised `update` ➔ $O(E+V\log V)$, collapsing on a dense graph to $O(V^{2})$.
 - **Space** ➔ $\Theta(V)$ auxiliary (heap $+$ `distance`/`previous`/flags) on top of the $\Theta(V+E)$ adjacency list, which is **input**, not auxiliary ([[Algorithmic Complexity]] §6).
+- **Adjacency matrix, priced exactly** ➔ the neighbour scan becomes $O(V)$ per served vertex ⟹ $\Theta(V^{2})$ **cell reads**, but a heap operation fires only where an edge actually exists ⟹ $O(V^{2}+E\log V)$, **not** $O(V^{2}\log V)$. An empty cell costs a read, never a $\log$.
+
+**Line-by-line derivation — re-quote it for any priority queue.** Price the five steps against the ADT's own costs: append $A$, serve $B$, update $C$.
+
+| Step | Runs | Cost each | Total |
+| :--- | :--- | :--- | :--- |
+| $1$ reset every vertex | $V$ | $O(1)$ | $O(V)$ |
+| $2$ initialise the queue | $1$ | $O(1)$ or $O(V)$ | $O(V)$ |
+| $3$ serve the minimum | $V$ | $B$ | $O(VB)$ |
+| $4$ append a first discovery | $\le V$ | $A$ | $O(VA)$ |
+| $5$ relax an edge downward | $\le E$ | $C$ | $O(EC)$ |
+
+$$
+T(V,E)=O(V+VA+VB+EC)
+$$
+
+- **Binary heap** ➔ $A=B=C=O(\log V)$ ⟹ $O((V+E)\log V)=O(E\log V)$.
+- **Fibonacci heap** ➔ $C=O(1)$ amortised ⟹ $O(E+V\log V)$.
+- **Deque or bucket queue** ➔ $A=B=C=O(1)$ ⟹ $\Theta(V+E)$ (§4).
+- **Same template next door** ➔ [[Prim's Algorithm|Prim]] fills in the identical table; [[Kruskal's Greedy Algorithm|Kruskal]] replaces rows $3$–$5$ with one sort and $2E$ `find` calls.
 
 ## ⚖️ Core Decision Matrix
 | Situation | Reach for | Why | Cost |
@@ -212,3 +244,9 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** build a **state graph** whose vertices are $\langle\text{town},\text{fuel}\rangle$ and run unmodified Dijkstra on it.
 > > - **Why:** **The extra state moves into the vertex** ➔ $(C+1)n$ vertices, one per town per litre level, so "where am I *and* what do I have" is a single node. **Edges become transitions** ➔ driving is a weight-$0$ edge $\langle u,c\rangle\to\langle v,c-x\rangle$ that simply does not exist when $c<x$, which is how the fuel constraint is enforced; refuelling is a weight-$p_u$ edge $\langle u,c\rangle\to\langle u,c+1\rangle$, which is how money becomes the distance. **The algorithm is untouched** ➔ transforming the input so a known algorithm applies is the paradigm being examined, not a Dijkstra variant.
+
+> [!FAQ]- Your heap is replaced by one where **rise** is $O(1)$ and **sink** is $O(V)$. Re-quote Dijkstra's running time.
+> - **Hint:** price serve, append and update from those two primitives before touching the total.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** $O(V^{2})$.
+> > - **Why:** **Serve is a sink** ➔ removing the root moves the last element to the top and sinks it ⟹ $B=O(V)$, paid $V$ times ⟹ $O(V^{2})$. **Append and update are rises** ➔ a new entry enters at the bottom and a relaxation only ever **decreases** a key, so both travel upward ⟹ $A=C=O(1)$. **Substitute into the template** ➔ $O(V+VA+VB+EC)=O(V+V+V^{2}+E)$, and $E=O(V^{2})$ ⟹ $O(V^{2})$ — the heap's $\log$ is gone, so density no longer moves the answer.
