@@ -13,7 +13,7 @@ tags:
 - **Assignment 1 (10%, due W5)** · **Assignment 2 (20%, due W8)** · **Assignment 3 (20%, due W11)** ➔ carry the whole in-semester half; **all involve implementing models in R (LO5)**.
 - **Final exam (50%)**
 - **LO map** ➔ LO1 EDA/descriptive (W1–2) · LO2 inferential models (W3–5) · LO3 predictive models (W6–9, W11) · LO4 sampling/simulation/testing (W3, W5, W10) · LO5 implement in R (W6–11) · LO6 interpret results (W4–11).
-- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.**
+- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss).
 
 ## 🧰 Toolkit Cheatsheets
 - [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block plus the `qnorm`/`qt` critical-value rows
@@ -100,9 +100,18 @@ tags:
 - [[Hypothesis Testing]] — **merged**: $\sigma^2\uparrow\Rightarrow\lvert z\rvert\downarrow\Rightarrow p\uparrow$; the leukemia-trial true/false drill at $p=0.17$; the rejection threshold **scales with the consequences** of a wrong call
 - [[Confidence Intervals]] — **merged**: a one-sided alternative returns a **bound** $(-\infty,u)$, not a range; the $90/95/99\%$ width sweep on `bpdata`
 
+### Week 7 — Classification & Logistic Regression
+- [[Classification and Conditional Class Probabilities]] -> Parent Framework: [[Statistical Modelling and Inference]] *(hub: $\mathbb{P}(Y=y\mid\mathbf{x})$, joint→conditional by proportions, the $2^{p+1}$ **curse of dimensionality**, generative vs discriminative)*
+- [[Logistic Regression]] -> Parent Framework: [[Classification and Conditional Class Probabilities]] *(**exam-heavy**: odds/log-odds, $\eta_i$ → logistic function, Bernoulli NLL by ML — convex, no closed form; $\beta_j$ as log-odds per unit; linear decision boundary)*
+- [[Classification Evaluation (Confusion Matrix and Metrics)]] — **merged** (now dual-unit with FIT1043): the $\arg\max$ decision rule, $\text{CA}=\frac1{n'}\sum I(y'_i=\hat y'_i)$, the TPR/TNR names, the class-frequency baseline, and the $n'=192$ worked matrix
+- [[ROC and AUC]] -> Parent Framework: [[Classification Evaluation (Confusion Matrix and Metrics)]] *(**hand skill**: threshold $T$ sweep → sensitivity/specificity trade-off → ROC → AUC by counting ordered pairs)*
+- [[Logarithmic Loss]] -> Parent Framework: [[Classification Evaluation (Confusion Matrix and Metrics)]] *(scores the **probabilities**, not the labels; $=$ NLL of future data; $0.501$ vs $0.99$ is the whole point)*
+- [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: the penalty transfers unchanged to logistic regression as $L+k\alpha_n$, with $\alpha_n=1$ (AIC), $\tfrac32$ (**KIC**, new), $\tfrac12\log n$ (BIC)
+- *(Terms to revise, from the lecture: odds/log-odds · logistic regression · classification accuracy · specificity/sensitivity · AUC · logarithmic loss)*
+
 ### 🔭 Coming later in the unit *(from the unit outline — no notes yet)*
-- **W7 next:** supervised learning for **categorical** targets (classification).
-- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · logistic regression · Bayesian classification & inverse probability · cross-validation & model-performance estimation.
+- **W8 next:** more recent developments in **fitting and estimating** linear and logistic regression models.
+- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · decision trees and forests *(W9)* · Bayesian classification & inverse probability · cross-validation & model-performance estimation.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = assessment-critical)*
@@ -114,6 +123,7 @@ tags:
 - **W4 — CLT & intervals:** **[[Central Limit Theorem]]** *(shape for free)* → [[Student-t Distribution]] *(unknown $\sigma^2$)* → **[[Confidence Intervals]]** *(A1 hand skill)* → [[Plug-in Prediction and Held-Out Evaluation]] *(Studio 3, in R)* → [[Monte Carlo Estimator Comparison]] *(Studio 3, in R)*
 - **W5 — testing:** **[[Hypothesis Testing]]** *(the logic + $p$-value)* → **[[Tests for Normal Means (z-test and t-test)]]** *(exam hand skill)* → [[Tests for Bernoulli Populations]] *(proportions)* → **[[Confidence Intervals in R (calcCI)]]** *(Studio 4, A1 skill)* → [[Confidence Interval Coverage Simulation]] *(Studio 4, in R)*
 - **W6 — regression & selection:** **[[Linear Regression (FIT2086)]]** *(the hub)* → [[Least Squares as Maximum Likelihood]] *(derivation drill)* → [[Predictor Transformations (Indicators, Polynomials, Interactions)]] *(build the columns)* → [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] *(why prune)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(exam hand skill)* → **[[Multiple Regression and Stepwise Selection in R]]** *(LO5, in R)* → **[[Hypothesis Testing in R (t.test, binom.test, prop.test)]]** *(Studio 5, in R)*
+- **W7 — classification:** **[[Classification and Conditional Class Probabilities]]** *(why the joint dies)* → **[[Logistic Regression]]** *(the model + the derivation)* → [[Classification Evaluation (Confusion Matrix and Metrics)]] *(CA, TPR, TNR)* → **[[ROC and AUC]]** *(exam hand skill)* → [[Logarithmic Loss]] *(confidence, not labels)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W0** ➔ 
@@ -181,3 +191,10 @@ tags:
 	- *(Studio 5)* judge a large effect with a borderline $p$ — demand a larger trial, not a verdict
 	- *(Studio 5)* compare approximate $z$, Welch $t$ and pooled $t$ on one difference, and say which interval is overconfident
 	- *(Studio 5)* test one and two proportions by hand, then check against `binom.test` / `prop.test`
+- **W7** ➔ 
+	- separate **classification** (categorical $Y$) from regression; predict by $\arg\max_y\mathbb{P}(Y=y\mid\mathbf{x})$
+	- count $2^{p+1}$ joint cells — the **curse of dimensionality** that kills direct estimation
+	- convert $\eta\to$ odds $e^{\eta}\to$ probability $\tfrac{1}{1+e^{-\eta}}$, and read $\beta_j$ as log-odds per unit
+	- derive the Bernoulli NLL $\sum_i[-y_i\eta_i+\log(1+e^{\eta_i})]$; state **convex, no closed form**
+	- compute $\text{CA}$, $\text{TPR}$, $\text{TNR}$ from a confusion matrix, against the **class-frequency** baseline
+	- compute AUC by hand from ranked scores, and say what **log-loss** adds that AUC cannot

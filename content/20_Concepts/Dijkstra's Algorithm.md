@@ -135,7 +135,7 @@ Binary [[Heap]], graph as an adjacency list, $E\ge V-1$ (connected).
 | Weights $\in\{0,1\}$ *(deque)* | $\Theta(V+E)$ | $\Theta(V)$ | the queue holds at most two distinct keys |
 | Weights integer, $0\le w\le c$ *(bucket queue)* | $\Theta(V+E)$ | $\Theta(cV)=\Theta(V)$ | distances bounded by $cV$, minimum never decreases |
 
-- **Slide derivation** ➔ outer loop $O(V)$ $\times$ [ serve $O(\log V)$ $+$ edge scan $O(V)$ $\times$ update $O(\log V)$ ] $=O(V^{2}\log V)=O(E\log V)$, using $E\approx V^{2}$ for a **dense** graph.
+- **Slide derivation** ➔ outer loop $O(V)$ $\times$ serve $O(\log V)$ $+$ edge scan $O(V)$ $\times$ update $O(\log V)$$=O(V^{2}\log V)=O(E\log V)$, using $E\approx V^{2}$ for a **dense** graph.
 - **Aggregate derivation (tighter, prefer it)** ➔ $V$ serves at $O(\log V)$ **plus** $E$ relaxations at $O(\log V)$ ➔ $O((V+E)\log V)=O(E\log V)$ once $E\ge V-1$. The slide's $V^{2}$ is the dense instantiation, not a separate bound.
 - **Fibonacci heap** ➔ $O(1)$ amortised `update` ➔ $O(E+V\log V)$, collapsing on a dense graph to $O(V^{2})$.
 - **Space** ➔ $\Theta(V)$ auxiliary (heap $+$ `distance`/`previous`/flags) on top of the $\Theta(V+E)$ adjacency list, which is **input**, not auxiliary ([[Algorithmic Complexity]] §6).

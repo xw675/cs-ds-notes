@@ -65,7 +65,7 @@ tags:
 - [[Ensemble Models]] -> Parent Framework: [[Machine Learning]]
 
 ### Week 7 — Classification & Clustering
-- [[Classification Evaluation (Confusion Matrix and Metrics)]] -> Parent Framework: [[Predictive Models]]
+- [[Classification Evaluation (Confusion Matrix and Metrics)]] -> Parent Framework: [[Predictive Models]] *(dual-unit — deepened in FIT2086 W7 with the $\arg\max$ rule, $\text{CA}$/TPR/TNR notation and the class-frequency baseline; thresholds and AUC in [[ROC and AUC]])*
 - [[Decision Trees and Regression Trees]] -> Parent Framework: [[Predictive Models]]
 - [[Random Forest]] -> Parent Framework: [[Ensemble Models]]
 - [[k-means Clustering]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]]

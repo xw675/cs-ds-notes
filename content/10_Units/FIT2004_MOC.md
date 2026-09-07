@@ -22,7 +22,7 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **LO thread so far** ➔ analyse running time via recurrences; design divide-and-conquer algorithms; quote tight Big-O with mandatory complexity tables.
 
 ## 🧰 Unit Cheatsheet
-- 📌 [[FIT2004 Unit Cheatsheet]] — analysis discipline, recurrence regimes, D&C shapes, per-algorithm bounds
+- 📌 [[FIT2004 Unit Cheatsheet]] — analysis discipline, recurrence regimes, D&C shapes, DP recurrences, per-algorithm bounds
 
 ## 📅 Knowledge Index
 
@@ -89,8 +89,22 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - [[Greedy Algorithm]] -> [[Algorithm]] *(**new** — the paradigm behind all three: greedy-choice $+$ optimal substructure, proved by **exchange** or **stays ahead** · **applied P7** interval scheduling by earliest finish time, and the ranking rules that fail)*
 - [[Dijkstra's Algorithm]] -> [[Graph]] *(**applied**: P1 the *update-only-on-discovery* bug and how to break it · P3 **state-graph** modelling (fuel $\times$ town) · P6 **$0$-$1$ BFS** on a deque in $\Theta(V+E)$ · P9 the **bucket** priority queue for bounded integer weights)*
 
+### Week 7 — Dynamic Programming, and Shortest Paths With Negative Weights *(lecture-06 deck DP · lecture-07 deck Bellman-Ford/Warshall/Floyd-Warshall · DP wrap-up · applied W7)*
+- [[Dynamic Programming]] -> [[Algorithm]] *(**new** — **PT-02's entire subject**: the MEMO **is** the subproblem definition, the recurrence describes the **output** (not PT-01's time recurrence), and the answer is a *combination* · **§2** the lecture's exact DP-vs-D&C answer — sub-solutions are **optimal** and **reusable because subproblems overlap** · **§3** Fibonacci as the motivating repeat · **§8** decision array vs backtracking · **§11** the classical-problem roster · **applied P1** the salesman's houses end-to-end · **§10** grid DP (P2, P3) · **§6** the redundant-parameter deletion (P8, P13))*
+- [[Coin Change]] -> [[Dynamic Programming]] *(**new** — the lecture's first full DP and **the shape PT-02 wears as a costume**: brute force ➔ greedy ($\{1,5,6,9\}$ wanting $12$ gives $4$ coins, optimum $6{+}6$) ➔ DP; $O(NM)$ time, $\Theta(M)$ space · the **$-1$ not $\infty$** memo sentinel · the **decision array** introduced here, $O(N^{2})$ ➔ $\Theta(M)$ by storing only the last coin)*
+- [[Knapsack Problem]] -> [[Dynamic Programming]] *(**new** — *"given a limitation (cost), optimise something (profit)"*: **unbounded** is 1-D over weight (coin change with $\max$, init $0$, $+$ the carry term), **0/1** is 2-D because the item set is no longer a sufficient state; both $O(NM)$ · the **two-row space trick and why it kills reconstruction** · backtracking by comparing against the **row above**)*
+- [[Longest Increasing Subsequence (LIS)]] -> [[Dynamic Programming]] *(**new**, applied P4 — the **anchored** subproblem *"ending at $i$"*, so the answer is $\max_i\text{DP}[i]$, **never** $\text{DP}[n]$; $\Theta(n^{2})$ · **§5** box stacking (P17) is LIS under a strict partial order)*
+- [[Longest Common Subsequence (LCS)]] -> [[Dynamic Programming]] *(**new**, applied P5 — the **two-prefix grid**, match ⟹ diagonal $+1$, mismatch ⟹ better of dropping each; $\Theta(nm)$ · **§3** SCS by the identity $n+m-\lvert\text{LCS}\rvert$ (P11) · **§4** interleaving with the third index deleted (P13))*
+- [[Maximum Subarray Sum]] -> [[Dynamic Programming]] *(**new**, applied P6 — the vault's home for **prefix sums**; $\Theta(n^{2})$ over all intervals ➔ $\Theta(n)$/$\Theta(1)$-space by anchoring the right end · **§3** the $O(n^{3})$ submatrix by row compression (P14))*
+- [[Interval Dynamic Programming]] -> [[Dynamic Programming]] *(**new**, applied P9/P10/P19 — `DP[i][j]` over a contiguous range, **filled by increasing length**; the adversarial $\max\to\min$ flip in the coin game, palindromic subsequence vs substring, and the $O(n^{3})$ split-at-$k$ family)*
+- [[Bellman-Ford]] -> [[Graph]] *(**new** — single-source shortest distance with **negative edges**: $\lvert V\rvert-1$ relaxation rounds because a shortest path is simple, then **one more pass** as the negative-cycle certificate; $\Theta(VE)$ · the unit-required **early-exit** optimisation)*
+- [[Floyd-Warshall]] -> [[Graph]] *(**new** — **all-pair** shortest distance on a matrix, $\Theta(V^{3})$/$\Theta(V^{2})$; absorbs **Warshall's transitive closure** (same loops, `or`/`and` instead of `min`/`+`), the *"$k$ is the permitted intermediate"* DP layering, and the **negative diagonal** as a cycle certificate)*
+- [[Dijkstra's Algorithm]] -> [[Graph]] *(the W7 contrast — its non-negativity precondition is exactly what these two buy their way out of; the all-pair comparison $\Theta(V^{3})<O(V^{3}\log V)<O(V^{4})$ lives in [[Floyd-Warshall]] §Applied)*
+- *Applied P12, P15, P16, P18, P20–P22 **deliberately not noted** — each is a one-off costume over a shape already covered (suffix-partition, monotone frontier, tree DP, ordered cases). Their transferable moves live as `[C]`/`[D]` lines in [[FIT2004 Unit Cheatsheet]] §1️⃣2️⃣.*
+- ⚠️ ***Pass-level roster, fully sourced except two:** the lecture deck covers Fibonacci, [[Coin Change|coin change]] and both [[Knapsack Problem|knapsack]] variants end-to-end. **Rod cutting** is on the wrap-up's pass list but absent from the deck — it is unbounded knapsack with length as weight. **Edit distance** is *deliberately* skipped in the lecture and deferred to the tutorial videos, linked to [[Longest Common Subsequence (LCS)|LCS]] — that note holds it.*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · **dynamic programming** (the king — recurrence → memo table → trace) · balanced BSTs (AVL), B-trees, tries · the remaining graph algorithms (**Bellman-Ford**, **Floyd-Warshall**, network flow) · hashing.
+- Amortised analysis · balanced BSTs (AVL), B-trees, tries · **network flow** · hashing.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -109,6 +123,9 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **W6a — the object, then the two builders:** [[Minimum Spanning Tree]] *(what is being minimised)* → **[[Prim's Algorithm]]** *(Dijkstra, one line changed)* → **[[Kruskal's Greedy Algorithm]]** *(sort $+$ cycle test)* → **[[Union-Find (Disjoint Set)]]** *(the test, made free)*
 - **W6b — why the greed is allowed:** [[Greedy Algorithm]] *(choice property $+$ substructure)* → **[[Kruskal's Greedy Algorithm]]** *(§4 cut-and-swap)* → [[Minimum Spanning Tree]] *(§5 reverse-delete, superset)* → [[Invariant]] *(weak vs sufficient)*
 - **W6c — the applied sheet, shortest paths revisited:** **[[Dijkstra's Algorithm]]** *(§4 deque · bucket queue, §5 state graph)* → [[Greedy Algorithm]] *(§4 interval scheduling)* → **[[Union-Find (Disjoint Set)]]** *(§Applied the height lemma)*
+- **W7a — the paradigm, then the pass-level pair:** **[[Dynamic Programming]]** *(MEMO ➔ recurrence ➔ reconstruct)* → **[[Coin Change]]** *(the PT-02 costume)* → **[[Knapsack Problem]]** *(1-D vs 2-D state)*
+- **W7b — the applied shapes, credit tier:** **[[Longest Increasing Subsequence (LIS)]]** *(anchored ⟹ scan)* → **[[Longest Common Subsequence (LCS)]]** *(two prefixes, $+$ edit distance)* → [[Maximum Subarray Sum]] *(prefix sums ➔ $\Theta(n)$)* → [[Interval Dynamic Programming]] *(fill by length)*
+- **W7c — the negative-weight escape hatches:** [[Dijkstra's Algorithm]] *(where greed dies)* → **[[Bellman-Ford]]** *($V{-}1$ rounds $+$ the check)* → **[[Floyd-Warshall]]** *(all pairs, $\Theta(V^{3})$)* → [[Graph Representations]] *(density picks the winner)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -191,3 +208,11 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- replace the priority queue when the weights allow — a **deque** for $\{0,1\}$ and a **bucket array** for $0\le w\le c$, both $\Theta(V+E)$ — and keep the relaxation test that plain BFS drops
 	- model an extra resource as a **state graph** ($\langle\text{town},\text{litres}\rangle$, weight-$0$ travel edges, weight-$p_u$ refuel edges) and run Dijkstra unmodified
 	- break "update only on first discovery" with an expensive first route and a cheap later one
+- **W7** ➔
+	- write the **output** recurrence: base, general and edge cases
+	- size the MEMO ⟹ auxiliary space; time $=$ cells $\times$ work each
+	- separate DP from divide & conquer: **optimal** sub-solutions that **overlap**
+	- decide the state: is one parameter enough? *(unbounded vs 0/1 knapsack)*
+	- rebuild the combination by decision array or backtracking
+	- justify [[Bellman-Ford]]'s $\lvert V\rvert-1$ rounds and its extra check pass
+	- select Dijkstra / Bellman-Ford / Floyd-Warshall by weight sign and density

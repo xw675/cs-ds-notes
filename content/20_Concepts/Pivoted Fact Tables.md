@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
-week: 6
-source: [lecture, slides]
+week: [6, 7]
+source: [lecture, slides, applied]
 domain: C
 parent: "[[Determinant Dimensions]]"
 tags: [CS/Databases, DataScience/DataWarehousing, Tool/SQL]
@@ -29,7 +29,39 @@ aliases: [Pivoted Fact Table, Pivot Table, Non-Determinant Dimension Version, Co
 - **Five cars** ➔ $\text{PrivateTaxiFACT}$ keeps `DriverNo`, `MonthYear` and gains `CarNo1 … CarNo5` plus $3 \times 5 = 15$ measures (`Total_Kilometers_Car1`, `Total_Fuel_Used_Car1`, `Total_Income_Car1`, …).
 - **Query cost explodes** ➔ retrieving the five cars' make and year needs **five aliases of `CarDim`** and five join conditions in one `where` clause.
 
+### 3. The lightweight pivot idiom — build the grid from a dimension (Ch11 Review Fact)
+- **When it applies** ➔ only **one** dimension survives the pivot, so the row grid is that dimension itself; no Cartesian product is needed.
+- **Two statements** ➔ `create table … as select CategoryID, 0 as Num_of_1Star_Reviews, … from CategoryDim;` then one `update` filling each column from a **correlated subquery** over the determinant fact.
+- **`nvl` still mandatory** ➔ a category with no $3$-star review returns NULL from the subquery and would overwrite the initialised $0$ ➔ `nvl((select …), 0)`.
+- **No trim step** ➔ the grid is one row per surviving dimension member, so there are no all-zero surplus rows to `delete` ➔ contrast Step 3 below.
+- **The third shape** ➔ pulling the pivoted measures back out as a keyed $\text{TypeDIM}$ is the Type-Dimension solution, the row-wise counterpart of this column-wise one ➔ [[Combining Star Schemas]].
+
 ## ⚙️ Core Implementation
+### 🔹 Step 0 — the five dimensions (what the source can and cannot give)
+> [!code]- extractable by join or derivation, or hand-built
+> ```sql
+> create table CountryVenueDim as              -- extractable: join two operational tables
+> select distinct C.CountryCode, C.CountryName, T.TestPrice
+> from   Test_Venue T, Country C
+> where  T.CountryCode = C.CountryCode;
+>
+> create table CitizenshipDim as               -- same shape, different pair
+> select distinct C.CountryCode as Citizenship, C.CountryName
+> from   Student S, Country C
+> where  S.Citizenship = C.CountryCode;
+>
+> create table YearDim as                      -- extractable by derivation
+> select distinct to_char(TestDate, 'YYYY') as Year from Test;
+>
+> create table GradeDim                        -- NOT extractable: the band scale is business knowledge
+>  (Grade varchar2(3), Description varchar2(20), MinScore number, MaxScore number);
+> insert into GradeDim values ('6', 'Competent', 50, 64);      -- 5 rows: 4.5 / 5 / 6 / 7 / 8-9
+>
+> create table TestComponentDim (TestComponent varchar2(20));  -- the determinant dimension
+> insert into TestComponentDim values ('Listening');           -- 5 rows, incl. 'Overall'
+> ```
+> 💡 **Common Mistake:** **Expecting every dimension to fall out of the source** ➔ `GradeDim` and `TestComponentDim` exist nowhere in the operational schema; because they are hand-built, the fact cannot be aggregated straight from the source — the raw score must first be **banded into a grade** inside `TempFact`, which is the whole reason Step 1 exists.
+
 ### 🔹 Step 1 — the determinant version (PTE Academic Test)
 > [!code]- `TempFact` ➔ band the scores ➔ one fact per component ➔ `union`
 > ```sql
@@ -103,6 +135,16 @@ aliases: [Pivoted Fact Table, Pivot Table, Non-Determinant Dimension Version, Co
 > ```
 > 💡 **Common Mistake:** **Omitting `AllDimensions` and outer-joining the component facts to each other** ➔ a combination missing from *all five* facts is then still missing; only the deliberate Cartesian product guarantees all $60$ rows exist before `nvl` fills them.
 
+### 🔹 Step 3 — drop the combinations that never happened
+> [!code]- the grid is padded, then trimmed
+> ```sql
+> delete from FinalFact2
+> where Total_Students_Overall   = 0 and Total_Students_Listening = 0
+> and   Total_Students_Reading   = 0 and Total_Students_Writing   = 0
+> and   Total_Students_Speaking  = 0;          -- 60 grid rows  ->  11 surviving rows
+> ```
+> 💡 **Common Mistake:** **Reading this as undoing the `nvl`** ➔ a row dies only when **all five** measures are $0$; a row holding $\text{Overall}=3$ and $\text{Listening}=0$ is exactly the zero the pivot was built to record, and it survives.
+
 ## ⚖️ Core Decision Matrix
 | Aspect | Determinant version (dimension kept) | Pivoted version (dimension shifted) |
 | :--- | :--- | :--- |
@@ -112,8 +154,35 @@ aliases: [Pivoted Fact Table, Pivot Table, Non-Determinant Dimension Version, Co
 | Correctness enforcement | ❌ a query may omit it and return nonsense | ✅ omission is impossible |
 | Dimension's other attributes | ✅ retained (`Description`, `MinScore`, `MaxScore`) | ❌ **lost** — only the key identifier survives |
 | Adding a new member | one `insert` into the dimension | `alter table … add` $+$ rebuild the fact |
+| Build effort | ✅ 4 steps: dims → `TempFact` → 5 component facts → `union` | ❌ 7 steps: those 4, then `AllDimensions` → 5 outer joins → join back → delete the all-zero rows |
 
 > [!NOTE] **When It Flips:** the pivot stops being an option once the determinant dimension has **many records** (a thousand measures is impractical) or **many attributes** worth keeping — at that point the only remaining enforcement is the user-interface route ➔ [[Determinant Dimensions]].
+
+## 📊 Exam Execution Trace & Applied Exercises
+
+### Manual Execution Trace — the same five reports, run on both facts
+| Report | Determinant `FinalFact` (45 rows) | Pivoted `FinalFact2` (11 rows) | Answer |
+| :--- | :--- | :--- | :--- |
+| a. Competent in the overall score | 3 tables; `g.description='Competent'` **and** `t.testcomponent='Overall'` | 2 tables; `g.description='Competent'`, read `sum(total_students_overall)` | $3$ |
+| b. Took the test in 2017 | `y.year='2017'` **and** a component predicate — without it the number is wrong | `y.year='2017'`; all five sums return the same figure | $11$ |
+| c. Korean citizens | returns **5 rows**, one per component | returns **1 row**, five columns | $2$ |
+| d. Tested in Australia | 5 rows of $8$; pin one component to collapse to one row | 1 row, $8$ in every column | $8$ |
+| e. Chinese, Proficient, Listening, 2017 | 5 tables $+$ `t.testcomponent='Listening'` | 4 tables; read `total_students_listening` | $2$ |
+| f. Japanese, Competent, 2017 | one more filter — not asked in Task A | 4 tables; every component read at once ➔ $1$ overall but $2$ in Listening | per component |
+
+- **Reading the trace** ➔ every determinant-fact query pays **one extra join** (`TestComponentDim`) **and one extra predicate**; the pivoted fact drops both and hands back all five components as columns — which is why row f is a one-query answer only on the pivot.
+- **Any single component gives a headcount** ➔ a candidate sits all five components, so $\text{Total\_Students\_Listening} = \dots = \text{Total\_Students\_Overall}$ whenever no grade is filtered; the component choice only starts to matter once `g.description` enters the `where`.
+
+### Applied Exercise — the $5\times$ inflation
+**Problem:** `FinalFact` is asked for the 2017 headcount with `where year = '2017'` and no component predicate. The operational `Test_Result` holds $11$ candidates who sat in 2017. What comes back?
+$$
+\begin{aligned}
+\text{FinalFact rows} &= 5\ \text{components} \times 9\ \text{key combinations} = 45 \\
+\textstyle\sum \text{Total\_Students} \big|_{\text{Year}=2017} &= 11 + 11 + 11 + 11 + 11 = 55 \\
+\textstyle\sum \text{Total\_Students} \big|_{\text{Year}=2017,\ \text{Component}=\text{Overall}} &= 11
+\end{aligned}
+$$
+**Final Extracted Output:** $55$ — a $5\times$ over-count that throws no error, returns one tidy row, and reads as a plausible enrolment figure. Pinning **any one** component recovers $11$ ➔ [[Determinant Dimensions]].
 
 ## 🧠 Active Recall
 > [!FAQ]- Why does the pivoted fact need a Cartesian product and outer joins, when the determinant fact needed neither?

@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
-week: 6
-source: [lecture, slides]
+week: [6, 7]
+source: [lecture, slides, applied]
 domain: C
 parent: "[[Star Schema]]"
 tags: [CS/Databases, DataScience/DataWarehousing]
@@ -41,6 +41,12 @@ aliases: [Determinant Dimension, Determinant Attribute, Non-Determinant Dimensio
 - **When Route A is unavailable** ➔ a determinant dimension with **many records** would need one fact measure per record (a thousand measures is not practical) $\Rightarrow$ UI enforcement only.
 - **What Route A costs** ➔ shifting keeps only the **key identifier**; every other attribute of the determinant dimension is **lost from the star schema**.
 
+### 5. Two further sources of determinacy (Ch11)
+- **One pool named twice on the same transaction record** ➔ Flight Charter: a flight row carries a **pilot and a co-pilot** drawn from the one `Employee` pool, so a combined star double-counts hours per aircraft and per month; the combination is legal **only** while `PilotDIM` is determinant ➔ [[Combining Star Schemas]].
+- **A finer grain re-using a coarser measure** ➔ Car Service at Part grain: one part serves many services, so `Number_of_Services` inflates unless `PartNo` is pinned ➔ [[Multi-Fact Star Schemas]].
+- **Three enforcement shapes, not two** ➔ beside the pivot and the user interface, Ch11 adds the **Type Dimension**: $\text{PilotTypeDIM}(\underline{\text{PilotType}}, \text{Description})$ keyed into the fact splits the measures **by row** where the pivot splits them **by column**.
+- **Slicing dissolves determinacy** ➔ after a vertical or horizontal [[Slicing a Fact|slice]] each fact holds one role only, so no retrieval can double-count and the dashed box returns to solid.
+
 ## 📊 Exam Execution Trace & Applied Exercises
 
 ### Manual Execution Trace — the same fact, three queries
@@ -67,6 +73,7 @@ $$
 ## ⚠️ Common Mistakes
 - 💡 **Concluding "Type Dimension $\Rightarrow$ determinant"** ➔ Petrol Type is, Medal Type is not; the label carries no information, only the aggregate function and the business question do.
 - 💡 **Calling the non-determinant version wrong** ➔ both Olympic star schemas are **correct**; they differ on storage (V1 smaller), modelling clarity (V2 clearer) and join count (V1 fewer joins), not on validity.
+- 💡 **Querying the fact without naming the determinant attribute** ➔ on the PTE fact, `where Year = '2017'` alone sums all five test components and returns $55$ where the operational `Test_Result` holds $11$ candidates — a $5\times$ over-count that raises no error and returns one tidy row ➔ [[Pivoted Fact Tables]].
 - 💡 **Forgetting the zeros after a shift** ➔ the fact was built with an **inner join**, so a combination that never occurred (Italy, Swimming, Rio, Silver) has **no row at all** — the pivoted version must manufacture the $0$ ➔ [[Pivoted Fact Tables]].
 
 ## 🧠 Active Recall

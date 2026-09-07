@@ -126,6 +126,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | dimension by copy       | `create table AgentDim as select * from Agent;`                                                                                | route 1 of 3; rows only, **no PK/FK**                                                                               |
 | dimension by projection | `create table CourseDim as select CourseCode, CourseName from Course;`                                                         | route 2 — drop columns no analysis question needs                                                                   |
 | dimension by de-dup     | `create table CountryDim as select distinct Country from Student;`                                                             | mandatory `distinct` when the source is a **transaction** table                                                     |
+| dimension by join       | `create table CountryVenueDim as select distinct C.CountryCode, C.CountryName, T.TestPrice from Test_Venue T, Country C where T.CountryCode = C.CountryCode;` | route 2 across **two** operational tables — drags the lookup's descriptive columns in beside the code; `distinct` stays mandatory |
 | dimension by hand       | `create table TimeDim (Quarter number(1), Description varchar2(20));` + `insert into … values (1,'Jan-Mar');`                  | route 3 — members are business knowledge, membership is fixed and known                                             |
 | manufactured key        | `Country \|\| City as LocationID` · `set QuarterID = Year \|\| Quarter`                                                        | builds an ID the operational DB never stored                                                                        |
 | time key                | `to_char(DownloadDate,'YYYYMM') as TimeID` · `'MM'` · `'YYYY'` · `'Month'`                                                     | `'Month'` yields the *name*; masks are the dimension's attributes                                                   |
@@ -187,8 +188,24 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | cursor loop | `declare cursor JunkCursor is select * from JunkDim; begin for JunkCursorRec in JunkCursor loop update … end loop; end;` | PL/SQL route to the same fill; prefer the correlated update unless per-row logic is needed |
 | stack pivot components | `create table FinalFact as select … from OverallFact union select * from ListeningFact union …;` | breaks one wide source record into one fact row per component; union-compatible column lists required |
 | join the components back | `from OverallFactNew O, ListeningFactNew L, … where O.Year = L.Year and L.Year = R.Year and …` | the pivot's last step: $k$ facts need $k-1$ conditions **per key column** |
+| trim the padded grid | `delete from FinalFact2 where Total_Students_Overall = 0 and Total_Students_Listening = 0 and …;` | the pivot's final step — deletes only rows that are $0$ in **every** measure ($60 \to 11$); a row zero in one component is the zero the pivot exists to record |
 | one dimension, many roles | `from PrivateTaxiFact2 F, CarDim D1, CarDim D2, …, CarDim D5 where F.CarNo1 = D1.CarNo and …` | a shifted dimension re-entering as $n$ aliases — the query cost the pivot buys ➔ [[Pivoted Fact Tables]] |
 | open-ended SCD range | `EndDate = 'Dec9999'` as the current-version sentinel | Type 2/4 history; find "now" with a range test or `CurrentFlag`, never `max(EndDate)` |
+
+## ✂️ Multi-Fact, Combine & Slice Clauses (FIT3003 W7)
+*(➔ [[Multi-Fact Star Schemas]] · [[Combining Star Schemas]] · [[Slicing a Fact]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| merge facts, same measures | `create table F1 as select * from F1a union select * from F1b;` | union-compatible facts differing only by **time period**; identical column lists required |
+| merge facts, same dimensions | `from F1, F2, F3 where F1.CarNo = F2.CarNo and F1.CarNo = F3.CarNo and …` | different measures, one subject ➔ $k$ facts need $k-1$ conditions **per key column** |
+| collapse m rows to 1 before a fact join | `round(avg(Stars)) as Avg_Stars` grouped on the entity key | a book with $4$ reviews would otherwise multiply the sales rows $4\times$ |
+| keep the unmatched entity | `where B.ISBN = R.ISBN(+)` $+$ `nvl(R.Stars, 0)` | inner join silently deletes books with no review; ANSI form is `left outer join … on` |
+| pivot from one dimension | `create table F2 as select CategoryID, 0 as Num_of_1Star_Reviews, … from CategoryDim;` then `update F2 set … = nvl((select Num_of_Reviews from F1 where …), 0)` | the lightweight pivot — grid $=$ the surviving dimension, so **no** `AllDimensions` product and **no** all-zero trim |
+| vertical slice | `create table F1 as select CarNo, DriverNo, WeekNo, Total_Kilometers from F;` | splits **measures**; each slice must repeat the **whole** composite key |
+| horizontal slice by range | `create table F2a as select * from F1 where TimeID < 201001;` | splits **records**; column list unchanged, and each star's `TimeDim` may be trimmed to its own range |
+| horizontal slice by member | `select BookshopID as ReligiousBookshopID, … from BookshopFact1 where BookshopID in (select BookshopID from <operational> where <type is Religious>)` | the slicing attribute lives **outside** the warehouse ➔ reach back to the source; rename the key per star |
+| split a dimension to match | `create table ReligiousBookshopDim as select BookshopID as ReligiousBookshopID, Address, … from BookshopDim where BookshopID in (…);` | keeps each sliced star self-contained; the same subquery selects the members |
 
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
@@ -298,5 +315,6 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Staging a fact without counting first** ➔ correct SQL over dirty sources produces a correctly-shaped fact with inflated measures; predict the join cardinality before trusting anything ➔ [[Data Exploration (Warehouse Validation)]].
 - 💡 **`select … as X` while `group by` still names the old column** ➔ ORA-00979; change the projection and the grouping list together.
 - 💡 **Pivoting a fact without `AllDimensions`** ➔ the source fact was built with an **inner join**, so absent combinations have no row at all; outer-joining the component facts to each other cannot invent them ➔ [[Pivoted Fact Tables]].
+- 💡 **Summing a determinant fact without pinning the determinant attribute** ➔ `where Year = '2017'` over a 5-component fact returns $55$ for $11$ candidates — no error, one tidy row, silently $5\times$ wrong; pin it in the `where` or split it out in the `group by` ➔ [[Determinant Dimensions]].
 - 💡 **`1/count(*)` and `Seq_ID.currval`** ➔ two silent-zero traps: integer division floors every weight factor, and `currval` re-reads the last value instead of advancing — use `1.0/count(*)` and `.nextval`.
 - 💡 **A comma-list `from` with no `where` in a FIT3003 lab** ➔ normally a quota-killing accident, but in the pivot recipe it is the **intended** `AllDimensions` product; know which one you are writing.

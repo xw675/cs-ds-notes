@@ -18,7 +18,7 @@ tags: [2026/S2]
 **Topics covered:** data warehousing (ETL, multidimensional schemas, star/snowflake) · OLAP · data analytics.
 
 ## 🧰 Toolkit Cheatsheets
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`)
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`), plus the Lab 6 join-sourced dimension and pivot grid-trim clauses, and the W7 combine/slice clauses (`union`-merge, multi-fact join, the one-dimension pivot, vertical and horizontal slice CTAS)
 
 ## 📅 Knowledge Index
 
@@ -61,13 +61,20 @@ tags: [2026/S2]
 - [[Slowly Changing Dimensions (SCD)]] -> Parent Framework: [[Star Schema]] *(captured from the W6 webinar recap deck — confirm against the W5 slides)*
 
 ### Week 6 — Determinant Dimensions (Ch7) & self-study Chapters 8–10
-- [[Determinant Dimensions]] -> Parent Framework: [[Star Schema]]
-- [[Pivoted Fact Tables]] -> Parent Framework: [[Determinant Dimensions]]
+- [[Determinant Dimensions]] -> Parent Framework: [[Star Schema]] *(Lab 6 merge: the $5\times$ over-count trap)*
+- [[Pivoted Fact Tables]] -> Parent Framework: [[Determinant Dimensions]] *(Lab 6 merge: PTE case — dimension sourcing, the zero-row trim, both report sets)*
 - [[Junk Dimensions]] -> Parent Framework: [[Star Schema]]
 - [[One-Attribute Dimensions]] *(W6 merge: Ch9 dimension-less keys; Ch10's full move-or-keep taxonomy)*
 - [[Surrogate Key]] *(W6 merge: Ch9 sequence implementation; optional when the operational PK is already unique)*
 - [[Star Schema]] *(W6 merge: dashed-box determinant notation, the dimension-less-key band)*
 - [[Fact Measure Aggregation Rules]] *(W6 merge: the single case where a stored `avg` is legal)*
+
+### Week 7 — Multi-Fact Star Schemas (Ch11) & Slicing a Fact (Ch12)
+- [[Multi-Fact Star Schemas]] -> Parent Framework: [[Star Schema]]
+- [[Combining Star Schemas]] -> Parent Framework: [[Multi-Fact Star Schemas]]
+- [[Slicing a Fact]] -> Parent Framework: [[Multi-Fact Star Schemas]]
+- [[Determinant Dimensions]] *(W7 merge: the pilot/co-pilot double count, Part-grain determinacy, the Type Dimension shape, determinacy lost after slicing)*
+- [[Pivoted Fact Tables]] *(W7 merge: the one-dimension pivot idiom — zeroed columns $+$ correlated `update`)*
 
 ## 🧭 Suggested Reading Order
 - **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
@@ -75,6 +82,7 @@ tags: [2026/S2]
 - **W4 — when the star must bend:** [[Snowflake Schema]] *(the two families)* → [[Dimension Hierarchies]] *(optional, usually reject)* → **[[Bridge Tables]]** *(A2 hand skill)* → **[[Building Bridge Table Schemas]]** *(lab SQL)*
 - **W5 — the past must stay past:** [[Slowly Changing Dimensions (SCD)]] *(six types, one ladder)*
 - **W6 — when a dimension is compulsory:** **[[Determinant Dimensions]]** *(the test)* → **[[Pivoted Fact Tables]]** *(the ETL recipe)* → [[Junk Dimensions]] *(the opposite move)* → [[One-Attribute Dimensions]] *(move or keep)* → [[Surrogate Key]] *(sequence keys)*
+- **W7 — one star, many facts:** **[[Multi-Fact Star Schemas]]** *(the two causes)* → **[[Combining Star Schemas]]** *(the pools test)* → [[Slicing a Fact]] *(vertical vs horizontal)*
 
 ## 🎯 Learning Outcomes
 
@@ -113,9 +121,16 @@ tags: [2026/S2]
 	- key a Type 4 history table on $(\text{ID}, \text{StartDate}, \text{EndDate})$
 	- read a Type 2 dimension via `CurrentFlag` or a date range
 - **W6** ➔ 
-	- test a dimension for determinacy from the fact's aggregate function
-	- reject the inference "Type Dimension $\Rightarrow$ determinant"
+	- test a dimension for determinacy from the fact's aggregate function, not its "Type" label
+	- pin the determinant attribute in every fact query, or the measure over-counts
 	- enforce a determinant dimension by pivot or by user interface
 	- build a pivoted fact with `AllDimensions` $+$ `(+)` $+$ `nvl`
 	- consolidate unrelated low-cardinality dimensions into a `JunkDim`
 	- key a dimension with `create sequence` and `.nextval`
+- **W7** ➔ 
+	- justify a second fact only by different subject or different granularity
+	- reject a multi-fact drafted from differing units of measure
+	- build the measure $\times$ dimension applicability grid before splitting a star
+	- collapse many child rows to one with `round(avg(...))` before joining a fact
+	- classify a combine question by pool count and transaction record
+	- pick vertical vs horizontal slice from pivoted fact vs type dimension
