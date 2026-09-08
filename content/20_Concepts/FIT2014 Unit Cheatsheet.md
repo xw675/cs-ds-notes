@@ -68,7 +68,7 @@ aliases: [FIT2014 Exam Crib, Theory of Computation Cheatsheet]
 - **[[Derivations and Parse Trees|Derivation]]** ➔ leftmost and rightmost give the **same tree and the same length**; the **prefix property** is what makes leftmost usable for parsing.
 - **[[Writing a CFG|Grammar-writing stock]]** ➔ $\mathtt{a}^{n}\mathtt{b}^{n}$: $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$ · Dyck: $S\to\varepsilon\mid(S)\mid SS$ · PALINDROME: $S\to\mathtt{a}S\mathtt{a}\mid\mathtt{b}S\mathtt{b}\mid\mathtt{a}\mid\mathtt{b}\mid\varepsilon$.
 - **[[Regular Grammars and the CFL Hierarchy|Regular grammar]]** ➔ every rule has a **semiword** RHS; from an NFA, $X\xrightarrow{z}Y$ becomes $X\to zY$ ⟹ $\{$regular$\}\subsetneq\{$CFL$\}$.
-- **[[Pushdown Automata (PDA)|PDA]]** ➔ NFA + stack; transition $x,y\to z$ = read $x$, pop $y$, push $z$; $\$$ marks the stack bottom; accept iff **some** path reaches a Final state.
+- **[[Pushdown Automata (PDA)|PDA]]** ➔ NFA + stack; transition $x,y\to z$ = read $x$, pop $y$, push $z$; $\texttt{\textdollar}$ marks the stack bottom; accept iff **some** path reaches a Final state.
 - **Equivalence** ➔ CFG $\iff$ PDA (both directions constructive); an NFA is a stackless PDA **· precondition** **deterministic** PDAs are strictly weaker — $\text{DCFL}\subsetneq\text{CFL}$.
 
 ## 8️⃣ Parsing, Chomsky Normal Form, CYK
@@ -88,7 +88,7 @@ aliases: [FIT2014 Exam Crib, Theory of Computation Cheatsheet]
 - **[[Building Turing Machines|Building recipe]]** ➔ mark-and-sweep: mark leftmost unmarked $\mathtt{a}$, run right to the matching $\mathtt{b}$, mark, return, repeat; accept when a full sweep finds nothing left to match.
 - **[[Computable Functions and the Church-Turing Thesis|Unary code]]** ➔ $n\mapsto\mathtt{a}^{n}$, tuples separated by $\mathtt{b}$; $f$ is computable iff some TM leaves $f(x)$ on the tape **· precondition** the **Church–Turing thesis is a thesis, not a theorem** — it cannot be cited as a proof step.
 - **[[Encoding Turing Machines (Code Words)|Code words]]** ➔ one row per transition, 5 fields: state $\mathtt{a}^{n}\mathtt{b}$, 2-letter symbols, 1-letter direction; $\text{CWL}=(\mathtt{aa}^{*}\mathtt{b}\mathtt{a}\mathtt{a}^{*}\mathtt{b}(\mathtt{a}\cup\mathtt{b})^{5})^{*}$ is **regular** but strictly **larger** than the set of genuine TM codes.
-- **[[Universal Turing Machine|UTM]]** ➔ takes $\langle M\rangle\,\texttt{\$}\,x$ and simulates $M$ on $x$ — programs as data, the stored-program idea.
+- **[[Universal Turing Machine|UTM]]** ➔ takes $\langle M\rangle\,\texttt{\textdollar}\,x$ and simulates $M$ on $x$ — programs as data, the stored-program idea.
 
 ## 🔟 Decidability and Mapping Reductions
 - **[[Decidability and Decision Problems|Decidable]]** ➔ $L=\text{Accept}(M)$ for some **decider** $M$; then $\overline{L}=\text{Reject}(M)$ comes free. Synonyms: recursive, solvable.

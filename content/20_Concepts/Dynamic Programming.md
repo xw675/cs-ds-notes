@@ -186,7 +186,7 @@ $c=[50,10,12,65,40,95,100,12,20,30]$, $\text{DP}[i]=\max(\text{DP}[i-1],\ \text{
 | $2$ | $50\not>50$ | skip | $1$ |
 | $1$ | $50>0$ | take $1$ | $-1$ ➔ stop |
 
-**Final Extracted Output:** $\mathbf{\$252}$ from houses $\{1,4,6,8,10\}$ — matching the sheet. Note the **greedy trap**: house $7$ has the largest single profit ($100$) and is **not** in the optimum.
+**Final Extracted Output:** $\mathbf{\text{\textdollar}252}$ from houses $\{1,4,6,8,10\}$ — matching the sheet. Note the **greedy trap**: house $7$ has the largest single profit ($100$) and is **not** in the optimum.
 
 - **Read the trap** ➔ the *taken* set is not the set of rows where "take" won during the fill; only the backtracking pass identifies it. Row $9$'s take branch won yet house $9$ is not sold to.
 

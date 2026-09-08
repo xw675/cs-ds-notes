@@ -94,7 +94,7 @@ $$\text{CHARTER\_FACT}(\underline{\text{Time\_ID}^{*}, \text{Mod\_Code}^{*}, \te
 | :--- | :--- | :--- | :--- |
 | `Tot_Char_Hours` | the **person** — each crew member logs their own hours | ✅ sum is the employee's true total | ❌ the trip's hours are also logged by the other crew member |
 | `Tot_Fuel` | the **trip** — one tank, one flight | ❌ doubled whenever a flight has two crew | ❌ doubled |
-| `Revenue` | the **trip** — one invoice, one flight | ❌ a $\$1000$ charter becomes $\$2000$ | ❌ doubled |
+| `Revenue` | the **trip** — one invoice, one flight | ❌ a $\text{\textdollar}1000$ charter becomes $\text{\textdollar}2000$ | ❌ doubled |
 
 > [!NOTE] **When It Flips:** the union becomes unconditionally safe — every measure, every dimension, no re-aggregation — the moment the two roles are **mutually exclusive per transaction**. Permanent vs sessional pilot passes; pilot vs co-pilot does not.
 
@@ -109,10 +109,10 @@ $$\text{CHARTER\_FACT}(\underline{\text{Time\_ID}^{*}, \text{Mod\_Code}^{*}, \te
 | 3 | `charter_fact3`, same keys | $13.8$ hrs | ✓ correct **as an employee total** |
 | 4 | read step 3 as "April 1997 hours" | $13.8$ hrs | ✗ the $5.6$ is also in the other pilot's row |
 | 5 | `charter_fact3b`, `Emp_Num` only | $1053.2$ hrs | ✓ 101's genuine lifetime hours |
-| 6 | same row, `Tot_Fuel` / `Revenue` | $50\,534.9$ gal · $\$447\,900.57$ | ✗ trips flown with a second crew member counted twice |
+| 6 | same row, `Tot_Fuel` / `Revenue` | $50\,534.9$ gal · $\text{\textdollar}447\,900.57$ | ✗ trips flown with a second crew member counted twice |
 
 ### Applied Exercise
-**Problem:** one charter with a pilot and a co-pilot bills $\$1000$ and burns $100$ gallons. Compute what `charter_fact3` reports versus the truth.
+**Problem:** one charter with a pilot and a co-pilot bills $\text{\textdollar}1000$ and burns $100$ gallons. Compute what `charter_fact3` reports versus the truth.
 $$
 \begin{aligned}
 \text{fact rows} &: (\text{pilot},\ 1000,\ 100) \ \text{and} \ (\text{co-pilot},\ 1000,\ 100) \\
@@ -132,7 +132,7 @@ $$
 > [!FAQ]- Why is `Tot_Char_Hours` valid in a merged role fact when `Tot_Fuel` and `Revenue` are not?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** hours are individual; fuel and revenue belong to the trip and are already attributed to the other crew member.
-> > - **Why:** **Ownership decides, not the aggregate function** ➔ all three are `sum`s, yet only one is a per-person quantity. **A shared trip appears in both role facts** ➔ merging adds the trip's fuel and revenue once per crew member, so a $\$1000$ charter reports $\$2000$. **Hours are earned twice, legitimately** ➔ pilot and co-pilot each genuinely fly the trip, so their hours are distinct quantities that happen to be equal.
+> > - **Why:** **Ownership decides, not the aggregate function** ➔ all three are `sum`s, yet only one is a per-person quantity. **A shared trip appears in both role facts** ➔ merging adds the trip's fuel and revenue once per crew member, so a $\text{\textdollar}1000$ charter reports $\text{\textdollar}2000$. **Hours are earned twice, legitimately** ➔ pilot and co-pilot each genuinely fly the trip, so their hours are distinct quantities that happen to be equal.
 
 > [!FAQ]- Two star schemas exist for permanent pilots and sessional pilots. Why can these be `union`-ed with no re-aggregation, when pilot/co-pilot cannot?
 > > [!SUCCESS]- Answer

@@ -21,7 +21,7 @@ aliases: [SCD, Temporal Data Warehousing, SCD Type 2, SCD Type 4, Slowly Changin
 ### 1. The failure it fixes — Bookshop case study
 - **Operational source** ➔ $\text{BOOK}(\underline{\text{BookID}}, \text{BookTitle}, \text{Author})$ joined to $\text{BOOKTRANSACTION}$, with price history held apart in $\text{BOOKPRICEHISTORY}(\underline{\text{BookID}^{*}, \text{StartDate}, \text{EndDate}}, \text{Price}, \text{Remarks})$.
 - **The naive star** ➔ $\text{BookSalesFACT}(\underline{\text{TimeID}^{*}, \text{BranchID}^{*}, \text{BookID}^{*}}, \text{Number\_of\_Books\_Sold})$ with `Price` stored flat inside $\text{BookDIM}$.
-- **Symptom** ➔ *Harry Potter 6* reports at $\$30.95$ in **every** month, even though it sold at $\$10.00$ during Mar2008 — the report is arithmetically correct and commercially wrong.
+- **Symptom** ➔ *Harry Potter 6* reports at $\text{\textdollar}30.95$ in **every** month, even though it sold at $\text{\textdollar}10.00$ during Mar2008 — the report is arithmetically correct and commercially wrong.
 - **Open-ended sentinel** ➔ the current price row carries $\text{EndDate} = \text{Dec}9999$, so "the price now" is a range test, not a `max()`.
 
 ### 2. The type ladder

@@ -54,7 +54,7 @@ $$
 \text{upper} &= Q_3 + 1.5\,\text{IQR} = 900{,}000 + 750{,}000 = 1{,}650{,}000
 \end{aligned}
 $$
-**Final Extracted Output:** anything $< -350{,}000$ or $> 1{,}650{,}000$ is an outlier (so a $\$2{,}000{,}000$ listing flags).
+**Final Extracted Output:** anything $< -350{,}000$ or $> 1{,}650{,}000$ is an outlier (so a $\text{\textdollar}2{,}000{,}000$ listing flags).
 
 ## 🧠 Active Recall
 > [!FAQ]- State the IQR outlier rule, and why you shouldn't auto-delete detected outliers.

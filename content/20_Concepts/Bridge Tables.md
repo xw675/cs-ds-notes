@@ -38,7 +38,7 @@ aliases: [Bridge Table, Weight Factor, StoreGroupList]
 ### 4. Truck Delivery — the measure that belongs to another entity
 - **The source:** $\text{Trip}(\underline{\text{TripID}}, \text{Date}, \text{TotalKm}, \text{TruckID}^{*})$, $\text{Truck}(\underline{\text{TruckID}}, \dots, \text{CostPerKm})$, $\text{Destination}(\underline{\text{TripID}^{*}, \text{StoreID}^{*}})$ — the m–m between trip and store.
 - **The measure:** $\text{Total\_Delivery\_Cost} = \text{TotalKm} \times \text{CostPerKm}$.
-- **Three points of view, one failure** ➔ per **truck** works ($\text{Truck1}$ runs $\text{Trip1} + \text{Trip4} = 820\text{ km}$ at $\$1.20/\text{km}$); per **date** works; per **store** does not, because a trip delivers to many stores and the cost is the trip's.
+- **Three points of view, one failure** ➔ per **truck** works ($\text{Truck1}$ runs $\text{Trip1} + \text{Trip4} = 820\text{ km}$ at $\text{\textdollar}1.20/\text{km}$); per **date** works; per **store** does not, because a trip delivers to many stores and the cost is the trip's.
 - **The correct schema:** $\text{DeliveryFACT}(\underline{\text{TruckID}^{*}, \text{TripID}^{*}, \text{SeasonID}^{*}}, \text{Total\_Delivery\_Cost})$ — the fact re-keys onto $\text{TripID}$, and $\text{StoreDIM}$ is reached through $\text{BridgeTable}(\underline{\text{TripID}^{*}, \text{StoreID}^{*}})$.
 
 ### 5. Two optional refinements

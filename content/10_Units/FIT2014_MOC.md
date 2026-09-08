@@ -178,7 +178,7 @@ tags:
 	- build a **derivation** and its **parse tree**, distinguish **leftmost/rightmost** (same tree, same length) and use the **prefix property** 
 	- **write a grammar** from an inductive definition (Dyck $S\to\varepsilon\mid(S)\mid SS$; PALINDROME; $\mathtt{a}^n\mathtt{b}^n$ via $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$) 
 	- recognise a **regular grammar** (semiword rules) and build one from an NFA ($X\xrightarrow{z}Y \Rightarrow X\to zY$); know **{regular} ⊊ {CFL}** 
-	- define a **PDA** (NFA + stack; transition $x,y\to z$ = read/pop/push; $\$$ bottom-marker; accept iff some path reaches Final) and know **CFG ⟺ PDA** (both construction directions), that NFA = stackless PDA, and that **deterministic PDAs are weaker**
+	- define a **PDA** (NFA + stack; transition $x,y\to z$ = read/pop/push; $\texttt{\textdollar}$ bottom-marker; accept iff some path reaches Final) and know **CFG ⟺ PDA** (both construction directions), that NFA = stackless PDA, and that **deterministic PDAs are weaker**
 - **W6** ➔ 
 	- run a **shift-reduce** trace (stack + buffer; reduce = rule in reverse; accept iff stack $=S$, buffer empty) 
 	- diagnose **shift-reduce** vs **reduce-reduce** conflicts and read them as grammar **ambiguity**; know $\text{DCFL}\subsetneq\text{CFL}$ 
@@ -194,7 +194,7 @@ tags:
 	- **build a TM** for $\mathtt{a}^n\mathtt{b}^n$ and $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ by the mark-and-sweep recipe
 	- read the **unary code** ($n\mapsto\mathtt{a}^n$, tuples $\mathtt{b}$-separated) and define $f$ by a TM; state the **Church–Turing thesis** and why it is not a theorem
 	- **encode and decode** a TM table ($\mathtt{a}^n\mathtt{b}$ states, 2-letter symbols, 1-letter direction); know $\text{CWL}=(\mathtt{aa}^*\mathtt{b}\mathtt{aa}^*\mathtt{b}(\mathtt{a}\cup\mathtt{b})^5)^*$ is regular but $\supsetneq$ {TM codes}
-	- say what a **UTM** does, lay out $\langle M\rangle\,\$\,x$, and justify why UTMs exist
+	- say what a **UTM** does, lay out $\langle M\rangle\,\texttt{\textdollar}\,x$, and justify why UTMs exist
 - **W8** ➔ 
 	- define a **decider** ($\text{Loop}(M)=\emptyset$) and **decidable** ($L=\text{Accept}(M)$, so $\overline{L}=\text{Reject}(M)$ free); decidable $=$ recursive $=$ solvable
 	- convert a **decision problem** to its YES-input language and back; encode objects as $\langle O\rangle$, tuples as $\langle O_1,\dots,O_n\rangle$

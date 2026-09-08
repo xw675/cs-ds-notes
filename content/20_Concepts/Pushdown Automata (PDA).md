@@ -26,7 +26,7 @@ A pushdown automaton consists of:
   - $y=\varepsilon$ ➔ **nothing popped**.
   - $z=\varepsilon$ ➔ **nothing pushed**.
 - **Acceptance** ➔ a string is **accepted** if **some** path ends in a Final State (nondeterministic — like an NFA); **rejected** if **every** path crashes or ends non-Final.
-- **The $\$$ marker** ➔ a fresh symbol pushed first ($\varepsilon,\varepsilon\to\$$) to mark the **bottom** of the stack, so the machine can detect "stack empty again" before accepting ($\varepsilon,\$\to\varepsilon$).
+- **The $\texttt{\textdollar}$ marker** ➔ a fresh symbol pushed first ($\varepsilon,\varepsilon\to\texttt{\textdollar}$) to mark the **bottom** of the stack, so the machine can detect "stack empty again" before accepting ($\varepsilon,\texttt{\textdollar}\to\varepsilon$).
 
 ## 🧩 Worked PDA — HALF-AND-HALF $\{\mathtt{a}^{n}\mathtt{b}^{n}\}$
 ```mermaid
@@ -40,8 +40,8 @@ stateDiagram-v2
     q2 --> qf: ε,$→ε
     qf: [*]
 ```
-- **Idea** ➔ **push an $\mathtt{a}$ for every $\mathtt{a}$ read**, then **pop an $\mathtt{a}$ for every $\mathtt{b}$ read**; reaching $\$$ exactly as the input ends means the counts matched. The stack **is** the counter the pumping lemma said a finite automaton lacks.
-- **Dyck / PARENTHESES** ➔ same shape: push on `(`, pop on `)`, accept when the stack returns to $\$$.
+- **Idea** ➔ **push an $\mathtt{a}$ for every $\mathtt{a}$ read**, then **pop an $\mathtt{a}$ for every $\mathtt{b}$ read**; reaching $\texttt{\textdollar}$ exactly as the input ends means the counts matched. The stack **is** the counter the pumping lemma said a finite automaton lacks.
+- **Dyck / PARENTHESES** ➔ same shape: push on `(`, pop on `)`, accept when the stack returns to $\texttt{\textdollar}$.
 
 ## ⚖️ PDA ⟺ CFG (the equivalence)
 $$\{\text{context-free languages}\}\ =\ \{\text{languages recognised by a PDA}\}$$
@@ -61,7 +61,7 @@ Proved in **two containments**, both constructive:
 ## ⚠️ Common Mistakes
 - 💡 **Only the top of the stack is visible** ➔ a transition can inspect/replace **just** the top symbol; there is no random access into the stack.
 - 💡 **Read the transition as read–pop–push** ➔ $x,y\to z$ does all three at once; blanking any component with $\varepsilon$ is the usual source of confusion.
-- 💡 **Use the $\$$ bottom-marker** ➔ without it the PDA cannot tell "stack empty" from "more to pop", so it can't verify the counts balanced.
+- 💡 **Use the $\texttt{\textdollar}$ bottom-marker** ➔ without it the PDA cannot tell "stack empty" from "more to pop", so it can't verify the counts balanced.
 - 💡 **Acceptance is existential** ➔ like an NFA, one accepting path suffices; the machine may explore many nondeterministic paths.
 - 💡 **Deterministic PDAs are weaker** ➔ do **not** assume you can always determinise a PDA the way you can an NFA — that equivalence fails at this level.
 
@@ -71,7 +71,7 @@ Proved in **two containments**, both constructive:
 > > - **Short answer:** it adds an **unbounded stack** with push/pop. Because a transition can push a symbol per input letter and pop it later, the PDA can **match/count without bound** (e.g. push an $\mathtt{a}$ per $\mathtt{a}$, pop per $\mathtt{b}$), which finite automata cannot.
 > > - **Why:** **Stack = the grammar's deferred suffix** ➔ the CFG→PDA construction runs a leftmost derivation with the unresolved suffix on the stack, and the PDA→CFG construction rebuilds a grammar from empty-stack-to-empty-stack computations — so the two models generate/recognise the **same** language class.
 
-> [!FAQ]- Why is the $\$$ bottom-of-stack marker necessary in the HALF-AND-HALF PDA?
+> [!FAQ]- Why is the $\texttt{\textdollar}$ bottom-of-stack marker necessary in the HALF-AND-HALF PDA?
 > > [!SUCCESS]- Answer
-> > - **Short answer:** after popping one $\mathtt{a}$ per $\mathtt{b}$, the machine must confirm the stack is **back to where it started** (all $\mathtt{a}$s matched) before accepting. The $\$$ pushed first is what it looks for: the transition $\varepsilon,\$\to\varepsilon$ to the Final state fires **only** when every $\mathtt{a}$ has been popped.
+> > - **Short answer:** after popping one $\mathtt{a}$ per $\mathtt{b}$, the machine must confirm the stack is **back to where it started** (all $\mathtt{a}$s matched) before accepting. The $\texttt{\textdollar}$ pushed first is what it looks for: the transition $\varepsilon,\texttt{\textdollar}\to\varepsilon$ to the Final state fires **only** when every $\mathtt{a}$ has been popped.
 > > - **Why:** **Detecting "empty" needs a sentinel** ➔ a raw stack gives no signal distinguishing "empty" from "non-empty"; the marker turns "counts balanced" into a concrete, testable top-of-stack condition.

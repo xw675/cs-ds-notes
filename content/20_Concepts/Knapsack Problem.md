@@ -28,7 +28,7 @@ aliases: [Knapsack, 0/1 Knapsack, Unbounded Knapsack, Bounded Knapsack, Space Sa
 | Item | $A$ | $B$ | $C$ | $D$ |
 | :--- | :--- | :--- | :--- | :--- |
 | Weight | $6$ kg | $1$ kg | $5$ kg | $9$ kg |
-| Value | $\$230$ | $\$40$ | $\$350$ | $\$550$ |
+| Value | $\text{\textdollar}230$ | $\text{\textdollar}40$ | $\text{\textdollar}350$ | $\text{\textdollar}550$ |
 
 ### 2. Unbounded — One Dimension Is Enough
 - **Why weight alone is a sufficient state** ➔ items are unlimited, so after taking one the set of options is **unchanged**; nothing about the past constrains the future except the remaining capacity.
@@ -132,7 +132,7 @@ $N$ items, capacity $M$ *(the lecturer's $C$)*.
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Profit** | $0$ | $40$ | $80$ | $120$ | $160$ | $350$ | $390$ | $430$ | $470$ | $550$ | $700$ | $740$ | $\mathbf{780}$ |
 
-**Final Extracted Output:** $\mathbf{\$780}$ from $2\times C + 2\times B$ *(two $5$ kg $+$ two $1$ kg $=12$ kg, $\$700+\$80$)*.
+**Final Extracted Output:** $\mathbf{\text{\textdollar}780}$ from $2\times C + 2\times B$ *(two $5$ kg $+$ two $1$ kg $=12$ kg, $\text{\textdollar}700+\text{\textdollar}80$)*.
 
 - **Read $w=5$** ➔ five copies of $B$ give $200$; item $C$ alone gives $0+350=350$. The $\max$ takes $350$, and *five $B$s were never the answer* — the cell is a running maximum.
 - **Read $w=6$** ➔ $C+B=390$ beats $A=230$ and six $B$s $=240$. **The heaviest single item is rarely the answer.**
@@ -158,11 +158,11 @@ Rows are the growing item set; every cell reads **only** the row above.
 | $B,\ w{=}7$ | $270$ | $230$ | **differs** ⟹ include $B$ *(1 kg)* | $A,\ w{=}6$ |
 | $A,\ w{=}6$ | $230$ | $0$ | **differs** ⟹ include $A$ *(6 kg)* | $\{\},\ w{=}0$ ➔ stop |
 
-**Final Extracted Output:** $\{A,B,C\}$ — $6+1+5=12$ kg for $\$230+\$40+\$350=\mathbf{\$620}$, matching the lecture.
+**Final Extracted Output:** $\{A,B,C\}$ — $6+1+5=12$ kg for $\text{\textdollar}230+\text{\textdollar}40+\text{\textdollar}350=\mathbf{\text{\textdollar}620}$, matching the lecture.
 
 - **Read the trap at $\text{DP}[B][6]$** ➔ $B$ fits and offers $40+\text{DP}[A][5]=40$, but excluding $B$ inherits $230$ from item $A$. The cell is $230$; a student who only ever *adds* the fitting item writes $40$ and corrupts every cell to its right.
-- **Read the variant difference** ➔ the unbounded answer is $\$780$ and the 0/1 answer is $\$620$ on the **same** items and capacity. Quoting one for the other is a whole-question error.
-- **Read row $D$** ➔ $D$ *(9 kg, \$550)* wins at $w=9,10,11$ but is **excluded** at $w=12$, where $\{A,B,C\}$ fills the bag exactly for more.
+- **Read the variant difference** ➔ the unbounded answer is $\text{\textdollar}780$ and the 0/1 answer is $\text{\textdollar}620$ on the **same** items and capacity. Quoting one for the other is a whole-question error.
+- **Read row $D$** ➔ $D$ *($9$ kg, $\text{\textdollar}550$)* wins at $w=9,10,11$ but is **excluded** at $w=12$, where $\{A,B,C\}$ fills the bag exactly for more.
 
 ### Applied Exercise — why unbounded needs one dimension and 0/1 needs two
 $$
@@ -187,7 +187,7 @@ $$
 > > - **Short answer:** with unlimited items the option set never changes, so the remaining **capacity** fully determines the future; once each item is single-use it does not, and the row index records which items are still on offer.
 > > - **Why:** **A state must determine the future** ➔ in the unbounded problem two different histories reaching weight $w$ are interchangeable; in 0/1 they are not, because they may have consumed different items. **The row is "only the first $i$ items"** ➔ fixing an item order turns *"which subset remains"* ($2^{N}$ possibilities) into a single index, which is why the table is $O(NM)$ rather than exponential. **Same question elsewhere** ➔ it is the *"is the vertex a sufficient state?"* test from [[State-Space Graph Modelling]], asked of a DP parameter ➔ [[Dynamic Programming]] §5.
 
-> [!FAQ]- Your 0/1 matrix is filled and the answer is $\$620$. Recover the items without a decision array.
+> [!FAQ]- Your 0/1 matrix is filled and the answer is $\text{\textdollar}620$. Recover the items without a decision array.
 > - **Hint:** the cell is a max of exactly two branches.
 > > [!SUCCESS]- Answer
 > > - **Short answer:** compare each cell with the one **directly above**; same ⟹ the item was excluded, different ⟹ it was included, so record it and move up one row and left by its weight.

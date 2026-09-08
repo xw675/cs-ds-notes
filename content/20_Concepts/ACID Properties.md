@@ -22,7 +22,7 @@ aliases: [ACID, Atomicity, Consistency, Isolation, Durability]
 - **Mnemonic** ➔ **A**ll-or-nothing · **C**orrect/consistent state · **I**ndependent · **D**ata permanent.
 
 ## ⚠️ Common Mistakes
-- 💡 **Consistency is violated *mid*-transaction on purpose** ➔ e.g. $A{-}\$100$ before $B{+}\$100$ leaves money "missing"; the guarantee is only about the *committed* start and end states.
+- 💡 **Consistency is violated *mid*-transaction on purpose** ➔ e.g. $A{-}\text{\textdollar}100$ before $B{+}\text{\textdollar}100$ leaves money "missing"; the guarantee is only about the *committed* start and end states.
 - 💡 **Isolation ≠ serial execution** ➔ interleaving is allowed; locks just make the *result* equivalent to some serial order.
 
 ## 🧠 Active Recall

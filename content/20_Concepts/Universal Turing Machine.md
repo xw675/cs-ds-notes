@@ -12,15 +12,15 @@ aliases: [UTM, universal Turing machine, stored program, interpreter]
 **Context:** [[FIT2014_MOC]] · one [[Turing Machines|Turing machine]] that runs **all** the others, by reading them as data via [[Encoding Turing Machines (Code Words)]] · the theoretical ancestor of the stored-program computer
 
 > [!abstract] Quick Revision
-> - **🎯 Objective:** a **single fixed** TM $U$ taking $\langle M\rangle\,\texttt{\$}\,x$ ➔ simulates $M$ on $x$ step for step, accepting iff $M$ accepts $x$.
+> - **🎯 Objective:** a **single fixed** TM $U$ taking $\langle M\rangle\,\texttt{\textdollar}\,x$ ➔ simulates $M$ on $x$ step for step, accepting iff $M$ accepts $x$.
 > - **⚠️ Key Constraint:** $U$ has a **finite** state set but must simulate machines with arbitrarily many states — so the simulated state is held **on the tape**, and only the *current letter* is carried in $U$'s own states.
 
 ## 📝 Definition and input format
 > [!IMPORTANT] A **Universal Turing Machine** is a Turing Machine that takes as input (i) an **encoding of some Turing Machine $M$** and (ii) a **string $x$** to be used as input to $M$, and **simulates the execution of $M$ on $x$**.
 
-$$\underbrace{\texttt{abaaabaaaabababababbaaabaabaaaab}}_{\langle M\rangle\ \text{— the encoded TM}}\ \underbrace{\texttt{\$}}_{\text{separator}}\ \underbrace{\texttt{bbbaa}}_{x\ \text{— input to } M}\ \Delta\Delta\Delta\dots$$
+$$\underbrace{\texttt{abaaabaaaabababababbaaabaabaaaab}}_{\langle M\rangle\ \text{— the encoded TM}}\ \underbrace{\texttt{\textdollar}}_{\text{separator}}\ \underbrace{\texttt{bbbaa}}_{x\ \text{— input to } M}\ \Delta\Delta\Delta\dots$$
 
-- **The $\texttt{\$}$** ➔ marks the **end of the TM encoding and the start of its input**; without it the head cannot tell program from data on a single tape.
+- **The $\texttt{\textdollar}$** ➔ marks the **end of the TM encoding and the start of its input**; without it the head cannot tell program from data on a single tape.
 - **Worked input** ➔ for $M$ with $1\xrightarrow{\texttt{b}\to R}1$, $1\xrightarrow{\texttt{a}\to R}3$, $3\xrightarrow{\texttt{a}\to R}2$ and $x=\texttt{bbbaa}$:
   - TM: `abaaabaaaabababababbaaabaabaaaab`
   - Data: `bbbaa`
@@ -61,7 +61,7 @@ $$\underbrace{\texttt{abaaabaaaabababababbaaabaabaaaab}}_{\langle M\rangle\ \tex
 ## ⚠️ Common Mistakes
 - 💡 **$U$ is one fixed machine** ➔ it is not "a machine per $M$". Universality means a **single finite program** handles all encodings, which is the whole claim.
 - 💡 **The simulated state is not a state of $U$** ➔ $U$'s finite control cannot hold an unbounded state number; it holds only the **current letter** and the pending write/direction, and finds the state **positionally** in the encoding.
-- 💡 **Don't skip the $\texttt{\$}$** ➔ program and data must be separable on one tape; a missing separator is a common lost mark when asked to lay out the UTM's input.
+- 💡 **Don't skip the $\texttt{\textdollar}$** ➔ program and data must be separable on one tape; a missing separator is a common lost mark when asked to lay out the UTM's input.
 - 💡 **Simulation costs time, not power** ➔ $U$ is slower by a factor $O(m+s)$, but accepts **exactly** the strings $M$ accepts, loops exactly where $M$ loops.
 
 ## 🧠 Active Recall

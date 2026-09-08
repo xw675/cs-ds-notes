@@ -17,7 +17,7 @@ aliases: [Deep Blue, Kasparov 1997, Does How Matter]
 > - **⚠️ Key Constraint:** a verdict without the **machinery** named earns nothing ➔ say *brute-force tree search over $\approx2\times10^8$ positions/s with a hand-tuned evaluator*, then judge that, not "a computer".
 
 ## 📝 Core Commitments
-- **The facts you argue from** ➔ 1997-05-11, Game 6: Kasparov resigns after $19$ moves, match lost $2.5$–$3.5$. IBM, over a decade, $\approx\$10$M; began as Feng-hsiung Hsu's CMU PhD ("ChipTest", 1985). $30$ processors $+$ $480$ special-purpose chess chips, $\approx2\times10^8$ positions/s.
+- **The facts you argue from** ➔ 1997-05-11, Game 6: Kasparov resigns after $19$ moves, match lost $2.5$–$3.5$. IBM, over a decade, $\approx\text{\textdollar}10$M; began as Feng-hsiung Hsu's CMU PhD ("ChipTest", 1985). $30$ processors $+$ $480$ special-purpose chess chips, $\approx2\times10^8$ positions/s.
 - **The mechanism** ➔ no intuition, no experience, no learning ➔ it **searched** ([[Search Problem Formulation]]), evaluated the leaves, picked the best reachable outcome. Same skeleton as [[Uninformed Search (BFS and DFS)]], plus a heuristic evaluator and pruning.
 - **Behavioural rule** ➔ judge only the observable output; the machinery is off-limits by design — Turing's whole move was to replace "can it think" with a performance test.
 - **Mechanist rule** ➔ judge the process; a result produced by exhaustive enumeration is a statement about **hardware and search**, not about understanding.
