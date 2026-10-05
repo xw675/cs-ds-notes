@@ -9,7 +9,7 @@ aliases: [CV, K-fold CV, K-Fold Cross-Validation, Repeated K-fold CV, Leave-One-
 ---
 # [[Cross-Validation]]
 
-**Context:** [[FIT2086_MOC]] · the resampling alternative to [[Model Selection and Information Criteria (AIC, BIC)|information criteria]] · generalises the single train/test split of [[Plug-in Prediction and Held-Out Evaluation]] · picks $\lambda$ in [[Penalized Regression (Ridge and Lasso)]], $L$ in [[Decision Tree Learning (Likelihood Splits, Pruning, CV)|trees]], $k$ in [[k-Nearest Neighbours]]
+**Context:** [[FIT2086_MOC]] · the resampling alternative to [[Model Selection and Information Criteria (AIC, BIC)|information criteria]] · generalises the single train/test split of [[Plug-in Prediction and Held-Out Evaluation]] · picks $\lambda$ in [[Penalized Regression (Ridge and Lasso)]], $L$ in [[Decision Tree Learning (Likelihood Splits, Pruning, CV)|trees]], $k$ in [[k-Nearest Neighbours]] · sibling resampling methods with different jobs ➔ [[Bootstrap]] (variability), [[Permutation Tests]] ($p$-values)
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** estimate a model's **prediction error on future data** from the fitting data alone ➔ fit on part, score on the held-out rest, repeat, average ➔ choose the complexity $\gamma$ with the **smallest CV error**.

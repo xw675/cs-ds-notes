@@ -464,15 +464,15 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Path reconstruction** `[C]` ➔ a second $V\times V$ `pred` matrix, written whenever the `min` takes the $i\to k\to j$ branch: $\text{pred}[i][j]=\text{pred}[k][j]$; still $\Theta(V^{2})$ space.
 - **All-pair selection rule** `[P]` ➔ $V\times$[[Dijkstra's Algorithm|Dijkstra]] $=O(EV\log V)=O(V^{3}\log V)$ dense · $V\times$[[Bellman-Ford]] $=O(V^{2}E)=O(V^{4})$ dense · **[[Floyd-Warshall]]** $=\Theta(V^{3})$ **· hinge:** density, then weight sign — $V$ Dijkstras win only on a **sparse** graph with $w\ge0$.
 
-| Requirement | Algorithm | Time | Aux space | Negatives | Detects a negative cycle? |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Unweighted, single source | [[Uninformed Search (BFS and DFS)\|BFS]] | $\Theta(V+E)$ | $\Theta(V)$ | — | — |
-| $w\ge0$, single source | [[Dijkstra's Algorithm\|Dijkstra]] | $O(E\log V)$ | $\Theta(V)$ | ❌ | ❌ |
-| Some $w<0$, single source | [[Bellman-Ford]] | $\Theta(VE)$ | $\Theta(V)$ | ✅ | ✅ *(reachable only)* |
-| Reachability, all pairs | Warshall's closure | $\Theta(V^{3})$ | $\Theta(V^{2})$ | — | — |
-| All pairs, dense | [[Floyd-Warshall]] | $\Theta(V^{3})$ | $\Theta(V^{2})$ | ✅ | ✅ *(anywhere in $G$)* |
-| All pairs, sparse, $w\ge0$ | $V\times$ [[Dijkstra's Algorithm\|Dijkstra]] | $O(EV\log V)$ | $\Theta(V)$ | ❌ | ❌ |
-| All pairs, sparse, some $w<0$ | $V\times$ [[Bellman-Ford]] | $O(V^{2}E)$ | $\Theta(V)$ | ✅ | ✅ |
+| Requirement                   | Algorithm                                    | Time            | Aux space       | Negatives | Detects a negative cycle? |
+| :---------------------------- | :------------------------------------------- | :-------------- | :-------------- | :-------- | :------------------------ |
+| Unweighted, single source     | [[Uninformed Search (BFS and DFS)\|BFS]]     | $\Theta(V+E)$   | $\Theta(V)$     | —         | —                         |
+| $w\ge0$, single source        | [[Dijkstra's Algorithm\|Dijkstra]]           | $O(E\log V)$    | $\Theta(V)$     | ❌         | ❌                         |
+| Some $w<0$, single source     | [[Bellman-Ford]]                             | $\Theta(VE)$    | $\Theta(V)$     | ✅         | ✅ *(reachable only)*      |
+| Reachability, all pairs       | Warshall's closure                           | $\Theta(V^{3})$ | $\Theta(V^{2})$ | —         | —                         |
+| All pairs, dense              | [[Floyd-Warshall]]                           | $\Theta(V^{3})$ | $\Theta(V^{2})$ | ✅         | ✅ *(anywhere in $G$)*     |
+| All pairs, sparse, $w\ge0$    | $V\times$ [[Dijkstra's Algorithm\|Dijkstra]] | $O(EV\log V)$   | $\Theta(V)$     | ❌         | ❌                         |
+| All pairs, sparse, some $w<0$ | $V\times$ [[Bellman-Ford]]                   | $O(V^{2}E)$     | $\Theta(V)$     | ✅         | ✅                         |
 
 ## 1️⃣4️⃣ Tries, Suffix Tries and Suffix Trees (W9 lecture · W9 applied · **PT-03**)
 > [!warning] PT-03 is **draw $+$ count** (drag-drop, quiz format): the root is a node, `$` alone is a suffix, every word/suffix ends in `$`. One omission shifts every count by one.

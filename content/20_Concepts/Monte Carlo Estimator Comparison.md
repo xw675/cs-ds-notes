@@ -10,7 +10,7 @@ aliases: [simulation study, Monte Carlo estimator comparison, mean vs median, re
 ---
 # [[Monte Carlo Estimator Comparison]]
 
-**Context:** [[FIT2086_MOC]] · Studio 3 · the **empirical** route to [[Estimator Quality (Bias, Variance, MSE)|bias, variance and MSE]] when the algebra is hard or absent — simulate the [[Sampling Distribution of an Estimator|sampling distribution]] and measure it · extends [[R Simulation and Random Sampling]] and [[R Toolkit (Cheatsheet)]]
+**Context:** [[FIT2086_MOC]] · Studio 3 · the **empirical** route to [[Estimator Quality (Bias, Variance, MSE)|bias, variance and MSE]] when the algebra is hard or absent — simulate the [[Sampling Distribution of an Estimator|sampling distribution]] and measure it · the general method ➔ [[Monte Carlo Simulation (Empirical Probabilities)]] · extends [[R Simulation and Random Sampling]] and [[R Toolkit (Cheatsheet)]]
 **Problem it solves:** decide which of two estimators of the same quantity is better, without deriving either one's sampling distribution by hand.
 
 > [!abstract] Quick Revision

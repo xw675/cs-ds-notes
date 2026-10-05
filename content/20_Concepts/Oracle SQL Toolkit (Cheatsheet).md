@@ -237,16 +237,30 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | partial cube / rollup | `group by ProductName, cube (Location, TimeID)` · `…, rollup (…)` | the column outside the parentheses is never rolled up ➔ **no grand total** |
 | subtotal marker | `grouping(ProductName)` | $1$ when the column is rolled up in that row (its `(null)` means "all"), else $0$ |
 | label subtotals | `decode(grouping(ProductName), 1, 'All Products', ProductName) as Product_Name` | `decode(a, b, c, d)` $=$ if $a = b$ then $c$ else $d$; alias must differ from the raw column you `order by` |
+| constant column outside | `group by cube (time_id, c.emp_num), mod_code` | Lab 9a: a filter-fixed column inside the cube doubles every row ($28$) with an identical "All Models" twin; outside it, $14$ |
 | rank | `rank() over (order by sum(Total_Sales) desc) as Sales_Rank` | ties share, then **gap** ($1, 2, 2, 4$); omit `desc` and the smallest is $1$ |
+| rank raw rows | `select time_year, time_month, rank() over (order by time_year, time_month) as time_rank from dw.time;` | no `group by` needed; extra `order by` keys break ties left to right |
 | dense rank | `dense_rank() over (order by sum(Total_Sales) desc)` | ties share, **no gap** ($1, 2, 2, 3$) |
 | row number | `row_number() over (order by sum(Total_Sales) desc)` | unique $1 \dots n$; ties broken arbitrarily — behaves like `rownum` |
-| percent rank | `percent_rank() over (order by sum(Total_Sales))` | $\frac{\text{rank} - 1}{n - 1} \in [0, 1]$; top-percent $=$ order `desc` $+$ outer `<= p` |
+| percent rank | `percent_rank() over (order by sum(Total_Sales))` | $\frac{\text{rank} - 1}{n - 1} \in [0, 1]$; top 10% $=$ inline view $+$ outer `>= 0.9` (Lab 9a: $5$ of $42$ months) |
 | rank per group | `rank() over (partition by ProductName order by sum(Total_Sales) desc)` | numbering restarts in each partition; several `over` clauses may partition differently in one query |
 | top-N with ties | `select * from (select …, rank() over (…) as Product_Rank … group by …) where Product_Rank <= 2;` | window alias is invisible in its own `where` ➔ the inline view is mandatory; keeps tied rows, unlike `rownum` |
 | cumulative | `sum(sum(Total_Sales)) over (order by S.TimeID rows unbounded preceding)` | inner `sum` $=$ the `group by` total, outer `sum` runs from the first result row |
 | cumulative per group | `sum(sum(Total_Sales)) over (partition by LocationID order by LocationID, S.TimeID rows unbounded preceding)` | restarts at each location |
+| two running totals | `… over (partition by t.time_year order by f.mod_code …)` · `… over (partition by f.mod_code order by t.time_year …)` | each window keeps its own partition; order by the column the total runs **along**, never the partition key itself |
 | moving average | `avg(sum(Total_Sales)) over (order by S.TimeID rows 2 preceding) as Avg_3_Months` | $k$ periods $=$ `rows k-1 preceding`; counts **result rows**, not months; first rows average fewer |
 | display format | `to_char(sum(Total_Sales), '999,999,999')` | comma-formatted **string** — display only |
+
+## 📉 Analytics Clauses (FIT3003 W10)
+*(➔ [[Linear Regression in SQL]] · [[Data Analytics for Data Warehousing]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| means to every row | `from (select avg(x) as x_bar, avg(y) as y_bar from dataset) av, dataset` | one-row inline view cross-joined with no `where` ➔ $\bar x, \bar y$ beside each row; deliberate Cartesian |
+| slope | `sum((x - x_bar) * (y - y_bar)) / sum((x - x_bar) * (x - x_bar)) as slope, max(x_bar) as x_bar_max` | $b_1$; carry `x_bar` up as `max(x_bar)` — bare it raises ORA-00937 |
+| intercept | `select slope, y_bar_max - (slope * x_bar_max) as intercept from (…)` | $b_0 = \bar y - b_1 \bar x$ in an **outer** layer — `slope` is invisible beside its own definition |
+| prediction table | `create table linear_regression as select x, y, (intercept + (slope * x)) as y_pred from dataset, (…) order by x;` | the slope/intercept query as a one-row view, cross-joined to every row |
+| period index | `row_number() over (order by S.TimeID) as x` | `TimeID` codes are not evenly spaced numbers ($201812 \to 201901$ jumps $89$) ➔ re-index before regressing |
 
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
@@ -363,6 +377,27 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > ```
 > > - **Key moves:** two windows with **different** `order by`s over the same grouped rows · the filter lives outside the inline view, so `YTD_Sales` was computed over all 12 months **before** the cut — filtering first would shrink the running total.
 
+> [!QUESTION]- Practice 7 (FIT3003 Ch19 $+$ Ch21): fit a least-squares trend line to MEL's monthly total sales — return the slope and intercept.
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > create table monthly as
+> > select row_number() over (order by S.TimeID) as x,
+> >        sum(Total_Sales) as y
+> > from   SalesFact S
+> > where  S.LocationID = 'MEL'
+> > group by S.TimeID;
+> >
+> > select slope, y_bar_max - (slope * x_bar_max) as intercept
+> > from (
+> >   select sum((x - x_bar) * (y - y_bar)) /
+> >          sum((x - x_bar) * (x - x_bar)) as slope,
+> >          max(x_bar) as x_bar_max,
+> >          max(y_bar) as y_bar_max
+> >   from (select avg(x) as x_bar, avg(y) as y_bar from monthly) av, monthly
+> > );
+> > ```
+> > - **Key moves:** aggregate the fact to one row per month, index the months with a window over the grouped rows, then the three-layer regression · `slope` reads as average sales growth **per month**.
+
 ## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
 - 💡 **"not A or B" trap** ➔ `emp_no <> 3 OR emp_no <> 8` is TRUE for every row; exclusion needs `AND`.
@@ -380,3 +415,4 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Summing a parent's cost column through a child join** ➔ joining `Concert` to `Ticket` repeats `HostingCost` once per ticket; re-grain with an intermediate `group by` before the final aggregation ➔ [[Levels of Aggregation]].
 - 💡 **Filtering a window function in its own query** ➔ `where Product_Rank <= 2` beside `rank() over (…)` fails; wrap in an inline view — and remember the window then sees every row, which is what a running total needs ➔ [[OLAP Ranking and Top-N]].
 - 💡 **Unqualified shared key in an OLAP query** ➔ `LocationID` / `TimeID` exist in the fact **and** its dimension; unqualified they raise ORA-00918 (two Chapter 19 slides do this) ➔ always `S.LocationID`, `S.TimeID`.
+- 💡 **Row counts on sparse data** ➔ a cube/rollup grouping set yields one row per combination that **occurs**, not the product of distinct counts — Lab 9a's $3$ months $\times$ $3$ pilots gives $7$ rows, not $9$ ➔ [[OLAP Cube and Rollup]].

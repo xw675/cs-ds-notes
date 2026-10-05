@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
 week: 9
-source: [lecture, slides]
+source: [lecture, slides, lab]
 domain: C
 parent: "[[OLAP (On-Line Analytical Processing)]]"
 tags: [CS/Databases, DataScience/DataWarehousing, Tool/SQL]
@@ -45,6 +45,8 @@ order by Sales_Rank;
 - **`rank`** ➔ ties share a rank, then the sequence **skips** ($1, 2, 2, 4$).
 - **`dense_rank`** ➔ ties share a rank, **no gap** ($1, 2, 2, 3$).
 - **`row_number`** ➔ never ties: $1 \dots n$ from the `order by` inside `over`; tied rows are numbered in arbitrary order.
+- **Lab 9a, same pattern on real data** ➔ 1996 charter hours per (model, month), $36$ rows $= 3$ models $\times 12$ months, ascending: 199606 and 199604 tie at $19.5$ ➔ `row_number` $8, 9$ · `dense_rank` $8, 8$, next $9$ · `rank` $8, 8$, next **$10$**.
+- **No `group by` needed** ➔ over a plain table the window ranks raw rows: `rank() over (order by time_year, time_month) as time_rank from dw.time` numbers the months chronologically; extra `order by` keys break ties left to right.
 - **`desc` inside `over` decides who is $1$** ➔ the slide runs `rank() over (order by sum(Total_Sales))` (Accessories $= 1$) and the `desc` version (Clothing $= 1$) side by side; the outer `order by` only sorts the display.
 
 ## 🔀 Variations
@@ -65,7 +67,8 @@ where Product_Rank <= 2;
 
 ### Top-percent — `percent_rank`
 - **Value** ➔ $\text{percent\_rank} = \dfrac{\text{rank} - 1}{n - 1} \in [0, 1]$; the slide's ascending run gives Accessories $0$, Kids & Baby $0.25$, Cosmetics $0.5$, Shoes $0.75$, Clothing $1$ for $n = 5$.
-- **Top $p$** ➔ order `desc` inside `over` and keep `Percent_Rank <= p` in the outer query — the same inline-view wrapper as Top-N.
+- **Top $p$, Lab 9a form** ➔ keep the ascending `over` and filter `percent_rank >= 1 - p` outside the inline view; the mirror form, `desc` inside `over` with `<= p`, returns the same rows.
+- **Lab 9a top-10% months** ➔ $n = 42$ months of revenue, so the steps are $\frac{1}{41}$; `>= 0.9` keeps ranks $38$–$42$ ➔ $5$ rows: 199503 ($1$), 199408 ($\frac{40}{41} = 0.976$), 199510, 199409, 199703 ($\frac{37}{41} = 0.902$).
 
 ### Rank within groups — `partition by`
 ```sql
@@ -129,6 +132,20 @@ order by ProductName, Rank_by_Product;
 > > - **`rank`** ➔ ranks $1, 2, 2, 4, 5$ ➔ $3$ rows. **`row_number`** ➔ $1, 2, 3, 4, 5$ ➔ $3$ rows.
 > > - **`dense_rank`** ➔ $1, 2, 2, 3, 4$ ➔ **$4$ rows** (Kids & Baby climbs to $3$ because no gap is left).
 > > - **Key move:** only `dense_rank`'s no-gap rule can push the cut past $N$ distinct groups.
+
+> [!QUESTION]- Practice 4 (Lab 9a B.5): the time periods whose total revenue is in the top 10% of all months, best first, from `dw.charter_fact`.
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > select time_id, Total, Pct_Rank
+> > from  (select time_id,
+> >               sum(revenue) as Total,
+> >               percent_rank() over (order by sum(revenue)) as Pct_Rank
+> >        from   dw.charter_fact
+> >        group by time_id)
+> > where  Pct_Rank >= 0.9
+> > order by Pct_Rank desc;
+> > ```
+> > - **Key move:** ascending `percent_rank` puts the best month at $1$, so "top 10%" is `>= 0.9`; $5$ of $42$ months qualify. The lab solution also joins `dw.time`, which adds nothing when only `time_id` is displayed.
 
 ## ⚠️ Common Mistakes
 - 💡 **`where Product_Rank <= 2` in the same query** ➔ the alias is not computed yet (ORA-00904) and a window function is illegal in `where` ➔ always the inline-view wrapper.

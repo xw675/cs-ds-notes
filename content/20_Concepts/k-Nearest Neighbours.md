@@ -1,7 +1,7 @@
 ---
 unit: FIT2086
-week: 9
-source: [lecture]
+week: [9, 10]
+source: [lecture, applied]
 domain: E
 parent: "[[Classification and Conditional Class Probabilities]]"
 tags: [DataScience/Modelling, DataScience/ML]
@@ -36,6 +36,7 @@ aliases: [kNN, k-NN, KNN, k Nearest Neighbours, Nearest Neighbours, Nearest Neig
 - **Classification** ➔ **voting**: the class most frequent among the $k$ neighbours.
 - **Regression** ➔ **averaging**: $\hat y'=\dfrac1k\sum_{i=1}^{k}y^{(i)}$.
 - **Weighted averaging** ➔ $\hat y'=\dfrac{\sum_{i=1}^{k}g(d_{(i)})\,y^{(i)}}{\sum_{i=1}^{k}g(d_{(i)})}$ with $g$ **decreasing** in $d$ ⟹ further neighbours count less; $g$ is a **kernel function** (e.g. uniform, inverse distance, Gaussian).
+- **`kknn` kernels (Studio 9)** ➔ `"rectangular"` = plain averaging (all $k$ equal); `"triangular"`, `"epanechnikov"`, `"gaussian"`, `"rank"`, `"optimal"` weight neighbours by distance ➔ `train.kknn` CV picked `gaussian`, $k=24$ on the diabetes data ➔ [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]].
 
 ### 5. Tuning by Leave-One-Out CV
 - **Tunables** ➔ neighbourhood size $k$ · distance function · kernel weighting function.

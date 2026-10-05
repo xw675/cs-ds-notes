@@ -1,15 +1,15 @@
 ---
-unit: [FIT1043, FIT2086]
+unit: [FIT1043, FIT2086, FIT3003]
 domain: E
-week: [7, 9]
-source: [lecture]
+week: [7, 9, 10]
+source: [lecture, applied]
 parent: "[[Predictive Models]]"
 tags: [DataScience/Modelling, DataScience/ML]
 aliases: [Decision Tree, Regression Tree, Recursive Partitioning, Information Gain, Split and Leaf, Leaf Model]
 ---
 # [[Decision Trees and Regression Trees]]
 
-**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · a [[Predictive Models|predictive model]] you can read as rules · splits the feature space into regions · the building block of a [[Random Forest]] · how FIT2086 grows and sizes one ➔ [[Decision Tree Learning (Likelihood Splits, Pruning, CV)]]
+**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]], [[FIT3003_MOC]] · a [[Predictive Models|predictive model]] you can read as rules · splits the feature space into regions · the building block of a [[Random Forest]] · how FIT2086 grows and sizes one ➔ [[Decision Tree Learning (Likelihood Splits, Pruning, CV)]] · FIT3003's hand build by lowest SSR ➔ [[Regression Tree Construction (SSR Splits)]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** classify or predict by walking a tree of feature tests ➔ decision tree = categorical, regression tree = real value; each leaf holds a **fitted model** for its region.
@@ -45,6 +45,7 @@ aliases: [Decision Tree, Regression Tree, Recursive Partitioning, Information Ga
 - **Non-linearity, classification** ➔ tree boundary = **axis-aligned step line**; [[Logistic Regression]] boundary = one straight line.
 - **Weaknesses** ➔ good tree hard to find (search is approximate) · **unstable** — a slight data change can give a drastically different tree · **inefficient** when the truth is linear (many leaves, many parameters to approximate a line).
 - **Instability, same 185 patients** ➔ three trees score $172.1$, $173.7$, $173.1$ — near-equal fits, different structures ➔ no clear winner ⟹ motivates [[Random Forest|random forests]].
+- **Instability, Studio 9 diabetes** ➔ CV-pruning the 14-leaf tree to 7 leaves moves the worst-progression leaf from BMI $\ge31.35$ & BP $\ge101.5$ ($261.7$) to BMI $\ge27.75$ & BP $<101.5$ & S6 $\ge101.5$ ($243.8$), while BP $\ge101.5$ still predicts $242.9$ ⟹ similar predictions, different structure ➔ [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]].
 
 ## ⚙️ Core Implementation
 ### 🔹 Decision tree — "play tennis?"

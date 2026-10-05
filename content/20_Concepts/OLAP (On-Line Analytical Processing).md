@@ -47,4 +47,4 @@ aliases: [OLAP, OLAP Queries, Drill Down, BI Reporting, Business Intelligence Re
 > [!FAQ]- How are drill down and `rollup` opposite moves on the same `group by`?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** drill down **adds** a grouping attribute (finer rows); `rollup` **removes** attributes right-to-left inside one query (coarser subtotal rows).
-> > - **Why:** **Granularity of the result** ➔ each attribute in `group by` multiplies the rows by its distinct-value count; drill down raises that product, `rollup(A, B)` appends the $(A)$ and $()$ groupings beneath $(A, B)$.
+> > - **Why:** **Granularity of the result** ➔ each attribute in `group by` can multiply the rows by up to its distinct-value count (only combinations present in the data appear); drill down raises that product, `rollup(A, B)` appends the $(A)$ and $()$ groupings beneath $(A, B)$.

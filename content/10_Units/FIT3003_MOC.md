@@ -12,13 +12,13 @@ tags: [2026/S2]
 
 - **Assessment 1 — Online Quiz (10%)** ➔ Introduction to Data Warehousing and Star Schemas; **due Monday of Week 6** (the W4 slide dates this 1 September 2026)
 - **Assessment 2 — Individual Assignment (40%)** ➔ THE unit: design a warehouse and implement it in Oracle; **opens Wed 7 October 2026, due Wed 14 October 2026, 11:55 PM** (W8 webinar); fed by [[Star Schema]] and [[Oracle SQL Toolkit (Cheatsheet)]]. Four tasks, stated in Lab 3: **1** clean the input data (an ERD is *not* supplied — draw one) · **2–3** draw the star and create it in SQL · **4** answer the given queries **plus one of your own**, each touching the fact and $\geq 1$ dimension, with a justification of why management would want it.
-- **Assessment 3 — Online Quiz (10%)**
+- **Assessment 3 — OLAP Quiz (10%)** ➔ individual, **1 attempt, 40 min**; spec released 11 October (W11); **opens Sun 18 October 2026, due Mon 26 October 2026, 11:55 PM** (W10 webinar); fed by the W9 OLAP notes — drill [[OLAP Cube and Rollup]]'s grouping-set arithmetic
 - **Exam (40%)**
 
 **Topics covered:** data warehousing (ETL, multidimensional schemas, star/snowflake) · OLAP · data analytics.
 
 ## 🧰 Toolkit Cheatsheets
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`), plus the Lab 6 join-sourced dimension and pivot grid-trim clauses, and the W7 combine/slice clauses (`union`-merge, multi-fact join, the one-dimension pivot, vertical and horizontal slice CTAS, top-N `rownum`, shared-dimension querying), and the W8 multi-input/granularity clauses (cross-source `"Club.Table"` addressing, union-of-unions dimensions, `||` date derivation, source-key stamping, vertical vs horizontal stacking, TempFact re-graining), and the W9 OLAP clauses (`cube` / `rollup` / partial forms, `grouping` $+$ `decode` labels, `rank` / `dense_rank` / `row_number` / `percent_rank`, `partition by`, rank-based Top-N, `rows unbounded preceding` / `rows n preceding`)
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`), plus the Lab 6 join-sourced dimension and pivot grid-trim clauses, and the W7 combine/slice clauses (`union`-merge, multi-fact join, the one-dimension pivot, vertical and horizontal slice CTAS, top-N `rownum`, shared-dimension querying), and the W8 multi-input/granularity clauses (cross-source `"Club.Table"` addressing, union-of-unions dimensions, `||` date derivation, source-key stamping, vertical vs horizontal stacking, TempFact re-graining), and the W9 OLAP clauses (`cube` / `rollup` / partial forms, `grouping` $+$ `decode` labels, `rank` / `dense_rank` / `row_number` / `percent_rank`, `partition by`, rank-based Top-N, `rows unbounded preceding` / `rows n preceding`), and the W10 analytics clauses (in-SQL least-squares regression via a cross-joined one-row means view, `row_number` period index)
 
 ## 📅 Knowledge Index
 
@@ -95,6 +95,19 @@ tags: [2026/S2]
 - [[OLAP Cumulative and Moving Aggregates]] -> Parent Framework: [[OLAP (On-Line Analytical Processing)]]
 - [[Power BI]] -> Parent Framework: [[OLAP (On-Line Analytical Processing)]]
 - [[SQL Aggregate Functions and GROUP BY]] *(W9 merge: `count(distinct …)` — Ch19 §1 is otherwise FIT2094 revision)*
+- [[OLAP Cube and Rollup]] *(Lab 9a merge: CHARTER fuel report — sparse row counts $7 / 28 / 14 / 18 / 11$, the constant-column doubling, cube vs rollup's missing $10$ rows)*
+- [[OLAP Ranking and Top-N]] *(Lab 9a merge: the real $19.5$ tie across `row_number` / `dense_rank` / `rank`, ranking raw rows, top-10% months with `percent_rank >= 0.9`)*
+- [[OLAP Cumulative and Moving Aggregates]] *(Lab 9a merge: two partitions in one query, the `partition by X order by X` trap)*
+
+### Week 10 — Data Analytics for Data Warehousing (Ch21)
+*(the webinar was a W9 OLAP recap $+$ the A2/A3 dates; the new content is the Chapter 21 deck — "read the entire chapter on your own")*
+- [[Data Analytics for Data Warehousing]] -> Parent Framework: [[Data Warehouse]]
+- [[Linear Regression in SQL]] -> Parent Framework: [[Linear and Polynomial Regression]]
+- [[DBSCAN (Density-Based Clustering)]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]]
+- [[Regression Tree Construction (SSR Splits)]] -> Parent Framework: [[Decision Trees and Regression Trees]]
+- [[Linear and Polynomial Regression]] *(W10 merge: closed-form slope/intercept; time-series vs non-time-series; rolling windows vs regression)*
+- [[k-means Clustering]] *(W10 merge: 1-D midpoint hand trace; normalising non-uniform measures; Voronoi; stop on no movement)*
+- [[OLAP Cube and Rollup]] *(W10 recap merge: the grouping-set count formula for partial forms)*
 
 ## 🧭 Suggested Reading Order
 - **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
@@ -105,6 +118,7 @@ tags: [2026/S2]
 - **W7 — one star, many facts:** **[[Multi-Fact Star Schemas]]** *(the two causes)* → **[[Combining Star Schemas]]** *(the pools test)* → [[Slicing a Fact]] *(vertical vs horizontal)*
 - **W8 — how far has it been rolled up:** **[[Levels of Aggregation]]** *(the ladder $+$ the two lowering moves)* → **[[Identifying a Level-0 Star Schema]]** *(the declared exam trap)* → [[Fact Constellation]] *(hierarchy $\times$ multi-fact)* → **[[Multi-Input Operational Databases]]** *(A2-shaped ETL)* · *drill Lab 8a's two cases before the exam*
 - **W9 — read the warehouse:** [[OLAP (On-Line Analytical Processing)]] *(which family)* → **[[OLAP Cube and Rollup]]** *(row-count arithmetic)* → **[[OLAP Ranking and Top-N]]** *(tie behaviour)* → **[[OLAP Cumulative and Moving Aggregates]]** *(window trace)* → [[Power BI]] *(Data → Model → Report)*
+- **W10 — model the measures:** [[Data Analytics for Data Warehousing]] *(why not association rules / decision trees)* → [[Linear and Polynomial Regression]] *(closed form)* → **[[Linear Regression in SQL]]** *(three-layer query)* → **[[k-means Clustering]]** *(1-D midpoint trace)* → [[DBSCAN (Density-Based Clustering)]] *(vs k-means)* → **[[Regression Tree Construction (SSR Splits)]]** *(min-SSR trace)*
 
 ## 🎯 Learning Outcomes
 
@@ -167,10 +181,23 @@ tags: [2026/S2]
 - **W9** ➔ 
 	- match a report's shape to its OLAP family: `group by`, `cube`/`rollup`, ranking, cumulative/moving, drill down
 	- predict a `cube` ($2^n$ sets) or `rollup` ($n+1$ sets) row count, including the partial forms
+	- count rows per grouping set from the combinations that occur, not the product of distinct values
+	- move a single-valued column outside `cube`/`rollup` to drop its duplicate "All" rows
 	- label subtotal rows with `decode(grouping(col), 1, 'All …', col)`
 	- choose `rank` / `dense_rank` / `row_number` by how ties must behave
 	- write Top-N and top-percent as a filter outside an inline view
 	- rank within groups with `partition by`
+	- give each running total its own `partition by`, ordered along the other column
 	- write a running total with `sum(sum(m)) over (… rows unbounded preceding)` and a $k$-period moving average with `rows k-1 preceding`
 	- trace both window columns by hand, first rows included
 	- build a Power BI report: Data → Model (dimension `1` → fact `*`) → Report, with the right default aggregation and filter scope
+- **W10** ➔ 
+	- explain why association rules and decision trees misfit numerical fact measures
+	- name the fact-table columns that regression, clustering and classification each consume
+	- compute slope $b_1$ and intercept $b_0 = \bar y - b_1 \bar x$ by hand and in SQL
+	- contrast time-series with non-time-series regression, and rolling windows with regression
+	- trace 1-D k-means with midpoint boundaries until no member moves
+	- normalise non-uniform measures before distance-based clustering
+	- contrast k-means with DBSCAN on $k$, outliers and chaining
+	- choose each regression-tree split by lowest SSR over midpoint thresholds, left sub-tree then right
+	- count grouping sets for partial `cube` ($2^N$) and partial `rollup` ($N+1$), $N$ inside the parentheses

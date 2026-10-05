@@ -1,14 +1,14 @@
 ---
-unit: FIT1043
+unit: [FIT1043, FIT3003]
 domain: E
-week: [5, 6]
+week: [5, 6, 10]
 parent: "[[Machine Learning Styles (Supervised vs Unsupervised)]]"
 tags: [DataScience/Modelling, DataScience/ML]
-aliases: [Linear Regression, Polynomial Regression, Least Squares, Learning Curve, MSE, Regression]
+aliases: [Linear Regression, Polynomial Regression, Least Squares, Learning Curve, MSE, Regression, Simple Linear Regression, Rolling Window, Time-Series Regression]
 ---
 # [[Linear and Polynomial Regression]]
 
-**Context:** [[FIT1043_MOC]] · a supervised [[Machine Learning Styles (Supervised vs Unsupervised)|regression]] method · fits an equation by minimising a [[Learning Theory and Loss Functions|loss]] · a real-valued [[Predictive Models|predictive model]] · complexity governed by the [[Bias-Variance Tradeoff (Underfitting vs Overfitting)|bias–variance tradeoff]]
+**Context:** [[FIT1043_MOC]], [[FIT3003_MOC]] · a supervised [[Machine Learning Styles (Supervised vs Unsupervised)|regression]] method · fits an equation by minimising a [[Learning Theory and Loss Functions|loss]] · a real-valued [[Predictive Models|predictive model]] · complexity governed by the [[Bias-Variance Tradeoff (Underfitting vs Overfitting)|bias–variance tradeoff]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** fit an equation to $(x,y)$ data ➔ study a relationship and predict a real $y$ for a new $x$.
@@ -29,6 +29,8 @@ aliases: [Linear Regression, Polynomial Regression, Least Squares, Learning Curv
 - **Residual** ➔ $r_i = y_i - \hat y_i$ (actual − predicted); positive above the line, negative below.
 - **Fit (least squares / MSE)** ➔ choose $(a_0,a_1)$ minimising the loss; **MSE** is that loss averaged, telling how close the line is to the points:
 $$\mathcal{L}(a_0,a_1) = \sum_{i=1}^{N} \big(y_i - (a_0 + a_1 x_i)\big)^2, \qquad \text{MSE} = \frac{1}{N}\sum_{i=1}^{N}\big(y_i - \hat y_i\big)^2.$$
+- **Closed form** *(FIT3003; slides write $b_1, b_0$)* ➔ the minimiser, computable by hand or in [[Linear Regression in SQL]]:
+$$a_1 = \frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}, \qquad a_0 = \bar y - a_1 \bar x$$
 
 ### 2. Polynomial Regression
 - **Motivation** ➔ if a straight line **can't capture the pattern** (underfitting), increase model complexity by assuming a polynomial relationship.
@@ -40,6 +42,12 @@ $$\mathcal{L}(a_0,a_1) = \sum_{i=1}^{N} \big(y_i - (a_0 + a_1 x_i)\big)^2, \qqua
 - **Trend** ➔ more training data ⇒ the fit approaches the true (pre-noise) model (e.g. 90 points fit better than 30).
 - **Learning curve** ➔ a plot of error (**MSE**) vs training-set size; MSE **decreases** as data grows.
 - **Algorithm-dependent** ➔ different algorithms show different decay rates on the learning curve.
+
+### 4. Time Series, Non-Time-Series, Rolling Windows (FIT3003)
+- **Time-series regression** ➔ $x =$ a timestamp dimension, $y =$ a fact measure (Melbourne and Sydney population by Year, from a Population star schema) ➔ a trend line for forecasting.
+- **Non-time-series regression** ➔ $x$ and $y$ both non-temporal measures (Glucose ➔ Albumin rising; Age ➔ white blood cells falling) ➔ new data near the line $=$ high accuracy, far from it $=$ low accuracy.
+- **Rolling window** ➔ smooths the series by averaging over a limited window; larger window $=$ smoother, laggier curve (30-day vs 120-day) ➔ SQL form: the moving average in [[OLAP Cumulative and Moving Aggregates]].
+- **Rolling window vs regression** ➔ the window tracks every turn of the existing data but yields no equation; regression is one global equation — linear misses curvature (AirAsia 2015–2020: the line keeps rising while the price falls after 2018), degree 3 follows the hump but its tail plunges at the edge.
 
 ## 📊 Exam Execution Trace
 
@@ -63,6 +71,11 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** It minimises the sum of squared residuals $\sum (y_i - (a_0 + a_1 x_i))^2$; $a_0$ is the intercept and $a_1$ is the slope.
 > > - **Why:** **Least squares** ➔ the parameters that make predictions closest (in squared error) to the observed $y$.
+
+> [!FAQ]- AirAsia's price rises to 2018 then falls. Compare a 120-day rolling window, a linear regression and a degree-3 polynomial on it.
+> > [!SUCCESS]- Answer
+> > - **Short answer:** The rolling window follows the rise and fall but only smooths existing data; the linear line rises throughout and misrepresents the fall; the cubic captures the hump but its tail swings sharply at the edge.
+> > - **Why:** **Local vs global** ➔ a window averages nearby points only; regression fits one equation $\hat y = a_0 + a_1 x + \dots + a_d x^d$ to every point.
 
 > [!FAQ]- What does a learning curve show, and what happens to MSE as data grows?
 > > [!SUCCESS]- Answer

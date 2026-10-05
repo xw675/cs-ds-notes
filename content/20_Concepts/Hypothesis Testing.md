@@ -9,7 +9,7 @@ aliases: [hypothesis test, null hypothesis, alternative hypothesis, H0, HA, p-va
 ---
 # [[Hypothesis Testing]]
 
-**Context:** [[FIT2086_MOC]] · the **third** inference task, after the point estimation of [[Maximum Likelihood Estimation]] and the interval estimation of [[Confidence Intervals]] · same [[Sampling Distribution of an Estimator|sampling-distribution]] machinery, run **backwards**: fix $\theta$ at the null and ask how improbable the observed $\hat\theta$ was · the concrete tests live in [[Tests for Normal Means (z-test and t-test)]] and [[Tests for Bernoulli Populations]]
+**Context:** [[FIT2086_MOC]] · the **third** inference task, after the point estimation of [[Maximum Likelihood Estimation]] and the interval estimation of [[Confidence Intervals]] · same [[Sampling Distribution of an Estimator|sampling-distribution]] machinery, run **backwards**: fix $\theta$ at the null and ask how improbable the observed $\hat\theta$ was · the concrete tests live in [[Tests for Normal Means (z-test and t-test)]] and [[Tests for Bernoulli Populations]] · a null distribution **simulated** instead of derived ➔ [[Permutation Tests]] (W10)
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** assume $H_0$ true ➔ derive the sampling distribution of a **test statistic** ➔ report the tail probability $p$ of a discrepancy **as extreme or more extreme** than the observed one ➔ small $p$ = strong evidence **against** $H_0$.

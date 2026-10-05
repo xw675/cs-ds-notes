@@ -8,7 +8,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 ---
 # [[R Toolkit (Cheatsheet)]]
 
-**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **`glm` + ROC** → **`glmnet` ridge/lasso** → **simulation/distributions** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
+**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **`glm` + ROC** → **`glmnet` ridge/lasso** → **trees / forests / kNN** → **simulation/distributions** → **bootstrap & permutation** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
 **Read protocol:** scan tables → attempt the practice blank → follow links only where you failed.
 
 > [!abstract] Quick Revision
@@ -219,6 +219,37 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | Bonferroni count | `sum(pv[-1] < 0.05 / p)` | divide by the number of **tests** ➔ [[Multiple Testing and the Bonferroni Correction]] |
 | RIC stepwise | `step(m, k = 2*log(p), direction = "both", trace = 0)` | $L+k\log p$ on R's $-2\log L$ scale; gene data ➔ SNP56 only |
 
+## 🌳 Trees, Forests & kNN (FIT2086 Studio 9 — details ➔ [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]])
+| Task | Micro-syntax | Output / gotcha |
+| :-- | :-- | :-- |
+| load | `library(rpart); library(randomForest); library(kknn); source("wrappers.R")` | `install.packages()` each once |
+| test RMSE | `sqrt(mean((predict(fit, test) - test$Y)^2))` | same units as `Y`; smaller is better |
+| grow a tree | `tree = rpart(Y ~ ., train)` | stops by built-in heuristics ➔ can overfit |
+| read a tree | `tree` · `plot(tree); text(tree, digits = 3)` | `node), split, n, deviance, yval`; `*` = leaf; `yval` = node mean of `Y` |
+| tree importance | `tree$variable.importance / max(tree$variable.importance)` | raw scale arbitrary ➔ normalise by the max |
+| CV-size a tree | `cv = learn.tree.cv(Y ~ ., data = train, nfolds = 10, m = 1000); plot.tree.cv(cv)` | `cv$best.tree` = pruned tree, `cv$best.cp` its complexity parameter; larger `m` = steadier choice |
+| prune by hand | `prune.rpart(tree = tree, cp = cv$best.cp)` | never needed — `cv$best.tree` already is this |
+| tree class probabilities | `predict(tree, test)[, 2]` | matrix of class probabilities; column 2 = second level |
+| forest | `rf = randomForest(Y ~ ., data = train, importance = TRUE, ntree = 5000)` | default `ntree = 500`; `importance = TRUE` needed for `%IncMSE` |
+| forest summary | `rf` | OOB `Mean of squared residuals`, `% Var explained` ($\approx100R^2$), variables tried per split |
+| forest importance | `round(importance(rf), 2)` | `%IncMSE` = OOB MSE rise when the predictor is permuted · `IncNodePurity` |
+| forest class probabilities | `predict(rf, test, type = "prob")[, 2]` | without `type = "prob"` you get labels |
+| kNN predict | `fitted(kknn(Y ~ ., train, test))` | no model object ➔ train **and** test passed every time |
+| kNN tune | `knn = train.kknn(Y ~ ., data = train, kmax = 25, kernel = kernels)` | `knn$best.parameters$k` / `$kernel`; `"rectangular"` = plain average |
+| kNN accuracy | `mean(yhat.test == test$DIABETES) * 100` | labels only ➔ no AUC / log-loss |
+
+## 🔁 Resampling & Monte Carlo (FIT2086 W10 — details ➔ [[Bootstrap]], [[Permutation Tests]], [[Monte Carlo Simulation (Empirical Probabilities)]])
+| Task | Micro-syntax | Gotcha |
+| :-- | :-- | :-- |
+| empirical probability | `X = rnorm(m, 0, 1); mean(sqrt(abs(X)) > 1)` | resolution $1/m$ ➔ need $m\gg1/p$ |
+| simulated summaries | `mean(x)` · `var(x)` · `quantile(x, p = 0.2)` · `hist(x, probability = TRUE)` | lowercase `probability` — the slide's `Probability = T` is not matched |
+| bootstrap row indices | `Ix = sample(n, n, replace = T)` then `df[Ix, ]` | **with** replacement, whole rows; without it = a permutation |
+| bootstrap a fit | `rv[[i]] = lm(BP ~ Weight + Age, data = df[Ix, ])` | store models in a `list()` |
+| bootstrap prediction CI | `yp[i] = predict(rv[[i]], newdata = df.test)`; `quantile(yp, c(0.025, 0.975))` | CI for the **predicted mean**, not one individual |
+| bootstrap se / bias | `th[i] = median(y[sample(n, n, replace = TRUE)])`; `sd(th)`; `mean(th) - median(y)` | `var()` divides by $m-1$, the slide by $M$ |
+| permutation of targets | `y.perm = sample(df$BP)` | **no** replacement; $x$ untouched |
+| permutation $p$-value | `(1 + sum(abs(b.perm) >= abs(b.hat))) / (m + 1)` | two-sided via `abs()`; floor $1/(m+1)$ |
+
 ## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.
 > > [!SUCCESS]- Reference solution
@@ -247,6 +278,20 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 > > ```
 > > - **Key moves:** `[-1]` drops the intercept before counting; `k = 2*log(p)` is RIC; `type = "response"` and `s = "lambda.min"` before scoring.
 
+> [!QUESTION]- Practice 3 *(integration — FIT2086 W10 + Studio 9)*: on `diabetes.train`/`diabetes.test`, fit a CV-pruned tree and a forest, print both test RMSEs, then give a 95% bootstrap interval ($m=200$) for the **forest's** test RMSE by resampling test rows.
+> > [!SUCCESS]- Reference solution
+> > ```r
+> > cv = learn.tree.cv(Y ~ ., data = diabetes.train, nfolds = 10, m = 100)
+> > rf = randomForest(Y ~ ., data = diabetes.train, ntree = 1000)
+> > e.tree = predict(cv$best.tree, diabetes.test) - diabetes.test$Y
+> > e.rf   = predict(rf, diabetes.test) - diabetes.test$Y
+> > c(tree = sqrt(mean(e.tree^2)), forest = sqrt(mean(e.rf^2)))
+> > n = length(e.rf); m = 200; r = rep(0, m)
+> > for (i in 1:m) { Ix = sample(n, n, replace = TRUE); r[i] = sqrt(mean(e.rf[Ix]^2)) }
+> > quantile(r, c(0.025, 0.975))
+> > ```
+> > - **Key moves:** predict once, then resample the **errors' rows** (the model is fixed; only the test sample varies); `replace = TRUE`; percentiles give the interval.
+
 ## ⚠️ Common Mistakes
 - 💡 **1-based indexing** ➔ `x[1]` is the first element; muscle-memory from Python costs marks.
 - 💡 **Negative index drops** ➔ `x[-1]` = everything EXCEPT first (Python: last element).
@@ -255,4 +300,6 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 - 💡 **`*norm` takes `sd`, `*pois` takes an interval-matched `lambda`** ➔ pass $\sigma$ not $\sigma^2$; rescale $\lambda$ to the question's interval **before** the call.
 - 💡 **`predict()` on a `glm` returns log-odds** ➔ add `type = "response"` before thresholding, `roc()` or log-loss.
 - 💡 **`step()` is AIC unless told otherwise** ➔ a "BIC model" without `k = log(n)` is an AIC model; compute `n <- nrow(d)` first.
+- 💡 **Bootstrap without `replace = TRUE`** ➔ `sample(n, n)` is a permutation: every refit is identical and the interval has zero width.
+- 💡 **`predict()` on a classification forest returns labels** ➔ `type = "prob"` then `[, 2]` before AUC or log-loss.
 - 💡 **`cv.glmnet` without `s = "lambda.min"`** ➔ `coefficients`/`predict` fall back to `s = "lambda.1se"` (larger $\lambda$, sparser); Studio 8 reports `lambda.min`.

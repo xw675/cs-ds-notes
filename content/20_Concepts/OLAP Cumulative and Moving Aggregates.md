@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
 week: 9
-source: [lecture, slides]
+source: [lecture, slides, lab]
 domain: C
 parent: "[[OLAP (On-Line Analytical Processing)]]"
 tags: [CS/Databases, DataScience/DataWarehousing, Tool/SQL]
@@ -77,6 +77,33 @@ order by LocationID, S.TimeID;
 - **Reset** ➔ without `partition by`, PER's January would continue from MEL's $2828318$; with it, row 13 restarts at PER's own $150456$ and ends at $1802706$.
 - **`to_char(…, '999,999,999')`** ➔ display-only comma formatting; the column becomes a string.
 
+### Two running totals, two partitions — Lab 9a C.4
+```sql
+select t.time_year, f.mod_code,
+       sum(f.tot_fuel) as Total,
+       sum(sum(f.tot_fuel)) over (partition by t.time_year order by f.mod_code
+                                  rows unbounded preceding) as Cum_Fuel_Year,
+       sum(sum(f.tot_fuel)) over (partition by f.mod_code order by t.time_year
+                                  rows unbounded preceding) as Cum_Fuel_Model
+from   dw.charter_fact f, dw.time t
+where  f.time_id = t.time_id
+group by t.time_year, f.mod_code
+order by t.time_year, f.mod_code;
+```
+**Expected output** (first rows of $12 = 4$ years $\times$ $3$ models):
+
+| time_year | mod_code | Total | Cum_Fuel_Year | Cum_Fuel_Model |
+| :--- | :--- | ---: | ---: | ---: |
+| 1994 | C-90A | 16933.2 | 16,933.20 | 16,933.20 |
+| 1994 | PA23-250 | 9086.9 | 26,020.10 | 9,086.90 |
+| 1994 | PA31-350 | 23773.8 | 49,793.90 | 23,773.80 |
+| 1995 | C-90A | 19058.8 | 19,058.80 | 35,992.00 |
+| 1995 | PA23-250 | 9133.9 | 28,192.70 | 18,220.80 |
+
+- **Each `over` keeps its own partition** ➔ `Cum_Fuel_Year` restarts every year and runs across models; `Cum_Fuel_Model` restarts every model and runs across years.
+- **Order by the *other* column** ➔ the lab solution writes `partition by t.time_year order by time_year` (and `… mod_code order by f.mod_code`): every row in a partition ties on its own key, so the accumulation order is undefined and only happens to come out sensible.
+- **Lab 9a C.1 / C.2** ➔ the MWE shape on `dw.charter_fact` for 1995 revenue: cumulative $29575.47 \to 72854.86 \to 123999.02$; 3-month moving average $29575.47 \to 36427.43 \to 41333.01$ ($= 123999.02 / 3$, the first full window).
+
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Year-to-date 2019 sales for each product in MEL, restarting for every product.
 > > [!SUCCESS]- Reference solution
@@ -112,3 +139,4 @@ order by LocationID, S.TimeID;
 - 💡 **Slide 47's `group by Location, TimeID`** ➔ `Location` is not in the `from` list (ORA-00904) and `TimeID` exists in both `SalesFact` and `TimeDim` (ORA-00918); group on `LocationID, S.TimeID`, exactly what is selected.
 - 💡 **`sum(Total_Sales) over (…)` without the inner `sum`** ➔ in a grouped query the raw `Total_Sales` is not a group expression (ORA-00979); the window must wrap the aggregate.
 - 💡 **Relying on `over`'s order for display** ➔ the `order by` inside `over` fixes the window, not the output; add an outer `order by` or the running column can print out of sequence.
+- 💡 **`partition by X order by X`** ➔ ordering a window by its own partition key gives no order inside the partition, so a running total accumulates in arbitrary sequence; order by the column the total should run along (Lab 9a C.4).

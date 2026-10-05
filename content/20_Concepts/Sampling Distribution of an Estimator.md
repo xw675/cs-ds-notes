@@ -9,7 +9,7 @@ aliases: [sampling distribution, sampling statistics, distribution of the sample
 ---
 # [[Sampling Distribution of an Estimator]]
 
-**Context:** [[FIT2086_MOC]] · the machinery that makes an estimate *auditable* — an estimator is a **random variable**, so it has a distribution · consumed by [[Estimator Quality (Bias, Variance, MSE)]], then by [[Confidence Intervals]] (W4) and hypothesis testing (W5); generalised beyond normal populations by the [[Central Limit Theorem]]
+**Context:** [[FIT2086_MOC]] · the machinery that makes an estimate *auditable* — an estimator is a **random variable**, so it has a distribution · consumed by [[Estimator Quality (Bias, Variance, MSE)]], then by [[Confidence Intervals]] (W4) and hypothesis testing (W5); generalised beyond normal populations by the [[Central Limit Theorem]] · approximated by resampling, with no distributional assumption, in the [[Bootstrap]] (W10)
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** any function of the data is a **realisation of a random variable** ➔ $\hat\theta(Y_1,\dots,Y_n)$ follows a distribution determined by the population $p(y\mid\theta)$.

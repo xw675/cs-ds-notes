@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
-week: 9
-source: [lecture, slides]
+week: [9, 10]
+source: [lecture, slides, lab]
 domain: C
 parent: "[[OLAP (On-Line Analytical Processing)]]"
 tags: [CS/Databases, DataScience/DataWarehousing, Tool/SQL]
@@ -57,9 +57,26 @@ order by ProductName, Location;
 | `P, cube (L, T)` — partial cube | $P$ glued onto each set of `cube (L, T)`: $(P,L,T), (P,L), (P,T), (P)$ | $8+4+4+2 = 18$ |
 | `P, rollup (L, T)` — partial rollup | $(P,L,T), (P,L), (P)$ | $8+4+2 = 14$ |
 
-- **Rows per set** ➔ $\prod$ of the distinct-value counts of the columns kept; the empty set $()$ is always one row.
+- **Rows per set** ➔ the number of value combinations of the kept columns that **actually occur** in the filtered data — at most the $\prod$ of their distinct-value counts, equal only when every combination exists (as in the chapter's dense example); the empty set $()$ is always one row.
 - **Cube $\supseteq$ rollup** ➔ every rollup set is also a cube set; the slide strikes $12$ rows out of the $27$-row cube to leave exactly the $15$-row rollup.
 - **Partial = no grand total** ➔ the column outside the parentheses is never rolled up, so every row keeps a real `ProductName` and no row is all-null.
+- **Set-count formula** *(W10 recap)* ➔ $N$ counts only the columns **inside** the parentheses: full `cube` $2^N$ · full `rollup` $N+1$ · `A, cube (B, C)` $= 1 \times 2^2 = 4$ · `A, rollup (B, C)` $= 1 \times (2+1) = 3$ ➔ a fixed column multiplies by $1$: it appears in every set and adds none.
+
+### Lab 9a — sparse data and a constant column (CHARTER fuel report)
+*(dw.charter_fact $\bowtie$ dw.pilot, Oct–Dec 1995, commercial pilots, model C-90A: $3$ periods $\times$ $3$ pilots, but only $7$ (period, pilot) pairs flew)*
+
+| `group by` clause | sets that survive, with rows each | rows |
+| :--- | :--- | :--- |
+| `time_id, c.emp_num, mod_code` | $(T,P,M)$ $7$ | $7$ |
+| `cube (time_id, c.emp_num, mod_code)` | $(T,P,M)$ $7$ · $(T,P)$ $7$ · $(T,M)$ $3$ · $(T)$ $3$ · $(P,M)$ $3$ · $(P)$ $3$ · $(M)$ $1$ · $()$ $1$ | $28$ |
+| `cube (time_id, c.emp_num), mod_code` | $(T,P,M)$ $7$ · $(T,M)$ $3$ · $(P,M)$ $3$ · $(M)$ $1$ | $14$ |
+| `rollup (time_id, c.emp_num, mod_code)` | $(T,P,M)$ $7$ · $(T,P)$ $7$ · $(T)$ $3$ · $()$ $1$ | $18$ |
+| `rollup (time_id, c.emp_num), mod_code` | $(T,P,M)$ $7$ · $(T,M)$ $3$ · $(M)$ $1$ | $11$ |
+
+- **Sparse, not dense** ➔ $(T,P)$ yields $7$ rows, not $3 \times 3 = 9$: two pilot–month pairs never occur, so they never appear in any grouping set.
+- **A constant column doubles the cube** ➔ `mod_code` holds only `'C-90A'`, so every set with $M$ and its twin without $M$ return identical sums ($525.2$ / $525.2$, …) ➔ $14$ redundant "All Models" rows.
+- **The fix is a partial form** ➔ move the constant column outside the parentheses — `cube (time_id, c.emp_num), mod_code` halves $28 \to 14$, `rollup (time_id, c.emp_num), mod_code` cuts $18 \to 11$; the plain column may sit before **or after** the `cube`/`rollup` term.
+- **Grand total** ➔ $2194.8$ litres in every form ($()$ in the full forms, $(M)$ in the partial ones).
 
 ### Labelling the subtotal rows — `grouping` $+$ `decode`
 ```sql
@@ -76,6 +93,7 @@ order by ProductName, Location;
 ```
 - **`grouping(col)`** ➔ binary: $1$ when `col` is rolled up in this row, $0$ when it holds a real group value; on `cube (P, L)` the pair reads $(0,0)$ detail · $(0,1)$ product subtotal · $(1,0)$ location subtotal · $(1,1)$ grand total.
 - **`decode(a, b, c, d)`** ➔ if $a = b$ then $c$ else $d$ ➔ `(null)` becomes `'All Products'` / `'All Locations'`, the rest pass through.
+- **Lab form** ➔ `decode(grouping(c.emp_num), 1, 'All Pilots', c.emp_num) as Pilot` — the numeric `emp_num` is converted to text to share a column with `'All Pilots'`.
 - **Distinct aliases** ➔ `Location_Name` keeps `order by Location` pointing at the raw column, so the subtotal rows still sort last.
 
 > [!NOTE] 🔭 Beyond the lecture *(not in the slides)* ➔ `grouping` is what separates a subtotal's null from a **genuine** NULL value stored in a dimension column; `is null` cannot tell the two apart.
@@ -114,7 +132,13 @@ order by ProductName, Location;
 > > ```
 > > - **Key move:** partial rollup ➔ sets $(P,L,T), (P,L), (P)$ ➔ $8 + 4 + 2 = 14$ rows; `ProductName` outside the parentheses is never nulled.
 
+> [!QUESTION]- Practice 4 (Lab 9a C.7): the CHARTER cube returns 28 rows and the rollup 18. Which 10 rows does the rollup lack, and what report do they belong to?
+> > [!SUCCESS]- Reference solution
+> > - **Missing sets** ➔ $(T,M)$ $3$ $+$ $(P,M)$ $3$ $+$ $(P)$ $3$ $+$ $(M)$ $1$ $= 10$.
+> > - **Key move:** rollup only walks Period $\rightarrow$ Pilot $\rightarrow$ Model from the left, so it never produces a row with the **period** rolled up but a pilot kept ➔ "each pilot's total over all three months" ($105$: $631.8$, $106$: $848.5$, $109$: $714.5$) exists only in the cube.
+
 ## ⚠️ Common Mistakes
 - 💡 **Unqualified `LocationID`** ➔ the slide's `decode` example writes `and LocationID in (…)` with both `SalesFact` and `LocationDim` in `from` ➔ ORA-00918 column ambiguously defined; write `S.LocationID`.
 - 💡 **Reading `(null)` as missing data** ➔ in a cube/rollup result it means "all values of this column"; label it with `decode(grouping(…))` before it reaches a report.
 - 💡 **Reaching for `cube` by default** ➔ $2^n$ grows fast and fills a hierarchy report with meaningless cross-combinations; a drill path (Year $\rightarrow$ Month, Product $\rightarrow$ Location) is `rollup`.
+- 💡 **Putting a single-valued column inside the cube** ➔ every row appears twice with the same sum (Lab 9a's "All Models"); filter-fixed columns belong outside the parentheses as a partial cube/rollup.

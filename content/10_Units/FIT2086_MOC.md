@@ -13,10 +13,10 @@ tags:
 - **Assignment 1 (10%, due W5)** · **Assignment 2 (20%, due W8)** · **Assignment 3 (20%, due W11)** ➔ carry the whole in-semester half; **all involve implementing models in R (LO5)**.
 - **Final exam (50%)**
 - **LO map** ➔ LO1 EDA/descriptive (W1–2) · LO2 inferential models (W3–5) · LO3 predictive models (W6–9, W11) · LO4 sampling/simulation/testing (W3, W5, W10) · LO5 implement in R (W6–11) · LO6 interpret results (W4–11).
-- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss). W8 formalises **why** complexity must be controlled (bias$^2$ + variance + irreducible $\sigma^2$) and compares the three controls — **tests** (with Bonferroni), **criteria** (AIC/KIC/BIC/RIC), **cross-validation** — before replacing unstable subset search with **ridge/lasso** shrinkage. W9 leaves the parametric families behind: **trees** partition predictor space and fit a model per leaf (grown by Bernoulli NLL, sized by IC/CV), **random forests** average randomised trees to cancel their instability, and **$k$-NN** predicts from neighbours with no model at all — each tuned by the same CV recipe over a complexity parameter $\gamma$.
+- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss). W8 formalises **why** complexity must be controlled (bias$^2$ + variance + irreducible $\sigma^2$) and compares the three controls — **tests** (with Bonferroni), **criteria** (AIC/KIC/BIC/RIC), **cross-validation** — before replacing unstable subset search with **ridge/lasso** shrinkage. W9 leaves the parametric families behind: **trees** partition predictor space and fit a model per leaf (grown by Bernoulli NLL, sized by IC/CV), **random forests** average randomised trees to cancel their instability, and **$k$-NN** predicts from neighbours with no model at all — each tuned by the same CV recipe over a complexity parameter $\gamma$. W10 swaps derivation for **computation**: a probability becomes an average of indicators (**Monte Carlo**, WLLN-backed, resolution $1/m$), a sampling distribution becomes the spread of $\hat\theta$ over **bootstrap** resamples (with replacement ➔ bias, se, percentile CI; bagging), and a null distribution becomes the spread over **permutations** of $y$ (➔ $p=\frac{1+\#\text{extreme}}{m+1}$).
 
 ## 🧰 Toolkit Cheatsheets
-- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block, the `qnorm`/`qt` critical-value rows, and the `glm` / `pROC` / `step(k = 3)` classification block, and the `glmnet` ridge/lasso block (`cv.glmnet.f`, `lambda.min`, `alpha = 0`, RIC `k = 2*log(p)`)
+- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block, the `qnorm`/`qt` critical-value rows, and the `glm` / `pROC` / `step(k = 3)` classification block, and the `glmnet` ridge/lasso block (`cv.glmnet.f`, `lambda.min`, `alpha = 0`, RIC `k = 2*log(p)`), the **trees / forests / kNN** block (`rpart`, `learn.tree.cv`, `randomForest`, `train.kknn`, RMSE), and the **resampling** block (bootstrap `sample(n, n, replace = T)`, permutation `sample(y)`, $+1$ $p$-value)
 
 ## 📅 Knowledge Index
 
@@ -136,9 +136,22 @@ tags:
 - [[Multiple Testing and the Bonferroni Correction]] — **merged**: the gene drill — 12 SNPs pass $0.05$ vs $5$ expected by chance, $0$ pass Bonferroni, RIC `k = 2*log(p)` keeps SNP56 alone ($p=0.0018$)
 - [[Penalized Regression (Ridge and Lasso)]] — **merged**: the one-parameter shrinkage case and the Studio 8 small-$n$ evidence
 
+### Week 10 — Simulation-Based Statistical Methods
+- [[Monte Carlo Simulation (Empirical Probabilities)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam hand skill**: $\frac1m\sum I(\cdot\in Z)$, indicator ➔ Bernoulli ➔ WLLN proof, resolution $1/m$ so $m\gg1/p$, the $\mathbb{P}(\sqrt{\lvert X\rvert}>1)$ convergence table)*
+- [[Pseudo-Random Number Generators]] -> Parent Framework: [[Monte Carlo Simulation (Empirical Probabilities)]] *(seed ➔ deterministic sequence ➔ reproducible; uniforms first; the LCG $X_{n+1}=(aX_n+c)\bmod m$ hand trace)*
+- [[Bootstrap]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: exact bootstrap $M=n^n$, bias/Var formulas, $\mathbf{y}=(2,6,3)$ ➔ Var $=26/27$; resample rows with replacement; percentile CI for a prediction; bagging; CV vs bootstrap vs permutation)*
+- [[Permutation Tests]] -> Parent Framework: [[Hypothesis Testing]] *(**exam-heavy**: $p(Y,X)=p(Y)p(X)$ under $H_0$, shuffle $y$ without replacement, $p\approx\frac{1+\sum I(\lvert\hat\beta^{(i)}\rvert\ge\lvert\hat\beta\rvert)}{m+1}$, BP ~ Age $0.0013$ vs $t$-test $0.00157$)*
+- *(Terms to revise, from the lecture: simulation · pseudo-random numbers · bootstrap distribution · bootstrap algorithm · permutation test)*
+
+#### Studio 9 *(run in W10 — drills the W9 trees/forests/kNN material; `diabetes.*.csv` / `wrappers.R`)*
+- [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**LO5 hand skill**: read `print(tree)`, `learn.tree.cv` ➔ 7 leaves, `randomForest` OOB + `%IncMSE`, `train.kknn`; test RMSE tree $62.7$ · lasso $55.4$ · forest $54.2$)*
+- [[Random Forest]] — **merged**: bagging lineage, out-of-bag error, `%IncMSE` as permutation importance, `ntree`
+- [[k-Nearest Neighbours]] — **merged**: the six `kknn` kernels; CV picked `gaussian`, $k=24$
+- [[Decision Trees and Regression Trees]] — **merged**: the pruned diabetes tree as instability evidence (different top leaf, near-equal prediction)
+
 ### 🔭 Coming later in the unit *(from the unit outline — no notes yet)*
-- **W10 next:** simulation-based methods — **bootstrapping**, **permutation tests**.
-- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · Bayesian classification & inverse probability · model-performance estimation.
+- **W11 next:** machine learning for unsupervised data discovery — **clustering**, **mixture modelling**, **matrix completion**.
+- Multivariate Gaussian, Dirichlet · exploratory vs confirmatory analysis · Bayesian classification & inverse probability · model-performance estimation.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = assessment-critical)*
@@ -153,6 +166,7 @@ tags:
 - **W7 — classification:** **[[Classification and Conditional Class Probabilities]]** *(why the joint dies)* → **[[Logistic Regression]]** *(the model + the derivation)* → [[Classification Evaluation (Confusion Matrix and Metrics)]] *(CA, TPR, TNR)* → **[[ROC and AUC]]** *(exam hand skill)* → [[Logarithmic Loss]] *(confidence, not labels)*
 - **W8 — selection & shrinkage:** **[[Bias-Variance Tradeoff (Underfitting vs Overfitting)]]** *(the decomposition)* → **[[Multiple Testing and the Bonferroni Correction]]** *(why tests mislead)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(four penalties)* → [[Cross-Validation]] *(estimate MSPE)* → **[[Penalized Regression (Ridge and Lasso)]]** *(stable selection)* → **[[Logistic Regression in R (glm, pROC, step)]]** *(Studio 7, in R)*
 - **W9 — trees & neighbours:** [[Machine Learning]] *(the framing)* → [[Decision Trees and Regression Trees]] *(leaves + leaf models)* → **[[Decision Tree Learning (Likelihood Splits, Pruning, CV)]]** *(NLL split drill)* → [[Random Forest]] *(average away instability)* → **[[k-Nearest Neighbours]]** *(vote/average by hand)* → [[Cross-Validation]] *(one $\gamma$ recipe)* → **[[Shrinkage Estimator of the Mean]]** *(Studio 8 derivation)* → **[[Penalized Regression in R (glmnet)]]** *(Studio 8, in R)*
+- **W10 — simulation & resampling:** **[[Monte Carlo Simulation (Empirical Probabilities)]]** *(average indicators)* → [[Pseudo-Random Number Generators]] *(why a seed reproduces)* → **[[Bootstrap]]** *(variability without assumptions)* → **[[Permutation Tests]]** *($p$-values without assumptions)* → **[[Trees, Forests and kNN in R (rpart, randomForest, kknn)]]** *(Studio 9, in R)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W0** ➔ 
@@ -254,3 +268,18 @@ tags:
 	- *(Studio 8)* count false discoveries against $\alpha p$, apply Bonferroni, and run RIC stepwise with `k = 2*log(p)`
 	- *(Studio 8)* fit lasso/ridge with `cv.glmnet.f`, read the `lambda.min` coefficients, and compare with BIC stepwise on test data
 	- *(Studio 8)* explain why penalisation beats stepwise when $n$ is small relative to $p$
+- **W10** ➔ 
+	- write $\mathbb{P}((X_1,\dots,X_p)\in Z)\approx\frac1m\sum_{i=1}^{m}I(\mathbf{X}^{(i)}\in Z)$ and prove convergence via indicator ➔ Bernoulli ➔ WLLN
+	- state the resolution $1/m$ and size $m\gg1/p$ for a rare event
+	- approximate $\mathbb{E}[X]$, $\mathbb{V}[X]$, quantiles and $p(x)$ from simulated draws
+	- explain a PRNG as a seeded deterministic recurrence; trace an LCG $X_{n+1}=(aX_n+c)\bmod m$
+	- enumerate an exact bootstrap ($M=n^n$) and compute its bias and variance by hand
+	- run the bootstrap algorithm: resample rows with replacement, refit, take percentiles for a CI
+	- say why bootstrapping training MSE does not remove its optimism, and how bagging cuts a tree's variance
+	- justify a permutation test from $p(Y,X)=p(Y)p(X)$ and compute $p=\frac{1+\text{count}}{m+1}$
+	- choose CV vs bootstrap vs permutation test from the question asked
+	- *(Studio 9)* read an `rpart` print-out and follow a new individual to its leaf
+	- *(Studio 9)* size a tree with `learn.tree.cv` and compare test RMSE against a lasso benchmark
+	- *(Studio 9)* read a forest's OOB error, `% Var explained` and `%IncMSE`; tune `ntree`
+	- *(Studio 9)* choose $k$ and kernel with `train.kknn` and predict with `fitted(kknn(…))`
+	- *(Studio 9)* score tree/forest classifiers by probability (`[, 2]`, `type = "prob"`) and kNN by accuracy only

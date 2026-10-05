@@ -1,11 +1,11 @@
 ---
 unit: [FIT1043, FIT2086]
 domain: E
-week: [7, 9]
-source: [lecture]
+week: [7, 9, 10]
+source: [lecture, applied]
 parent: "[[Ensemble Models]]"
 tags: [DataScience/Modelling, DataScience/ML]
-aliases: [Random Forest, RF, Variable Importance, Ensemble Learning]
+aliases: [Random Forest, RF, Variable Importance, Ensemble Learning, out-of-bag error, OOB, permutation importance]
 ---
 # [[Random Forest]]
 
@@ -20,7 +20,10 @@ aliases: [Random Forest, RF, Variable Importance, Ensemble Learning]
 - **Grow each tree (FIT2086)** ➔ random forward search: fit to a **random (bootstrap) sample** of the training data · at each split step the candidate variables are a **random subset** of the predictors · pick the split by a cost function (e.g. likelihood) · usually grown **without pruning**.
 - **Aggregate** ➔ FIT1043: classification = majority **vote**, regression = **average** · FIT2086: regression = average the predicted **means**, classification = average the predicted **probabilities** ⟹ $\hat y=\frac1q\sum_{t=1}^{q}\hat y_t$.
 - **Why it works** ➔ individual trees: **low bias, high variance** (unstable) ➔ combining many keeps the low bias and **reduces variance**; randomness also escapes the **greedy** search's single bad early split.
-- **Variable importance** ➔ how much a variable **contributes to prediction across the trees** ➔ the forest's only window into "which predictors matter".
+- **Variable importance** ➔ how much a variable **contributes to prediction across the trees** ➔ the forest's only window into "which predictors matter". `%IncMSE` = rise in out-of-bag MSE when that predictor is randomly **permuted** (the [[Permutation Tests|permutation]] idea aimed at a predictor) · `IncNodePurity` = purity gained by its splits.
+- **Bagging ancestor (W10)** ➔ [[Bootstrap#5. Bagging|bagging]] = bootstrap samples ➔ one tree each ➔ average; a forest is bagged trees **plus** a random subset of candidate variables at every split.
+- **Out-of-bag (OOB) error** ➔ each training row is predicted only by trees whose bootstrap sample **excluded** it ⟹ a free held-out estimate (Studio 9 diabetes: OOB MSE $3222$, $\sqrt{3222}\approx56.8$ vs test RMSE $54.6$); `% Var explained` is the OOB analogue of $100R^2$.
+- **`ntree`** ➔ more trees cut the random variability of the fitted forest until predictions stabilise ($500\to5000$ trees: test RMSE $54.62\to54.19$); cost grows with the number of trees ➔ R usage in [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]].
 - **Strengths** ➔ very stable (resists data perturbations and poor greedy choices) · better predictive accuracy in general · multiclass and count targets · non-linear like trees · built-in variable selection.
 - **Weaknesses** ➔ **poor interpretability** (variable importance is about all you get) · complex to learn — many variants and parameters to tweak.
 

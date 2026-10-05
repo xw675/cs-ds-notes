@@ -10,7 +10,7 @@ aliases: [R simulation, set.seed, sample, rnorm, dnorm, pnorm, qnorm, d p q r fu
 ---
 # [[R Simulation and Random Sampling]]
 
-**Context:** [[FIT2086_MOC]] · generating random data and evaluating distributions in R · the applied engine behind simulation, the bootstrap and Monte Carlo (LO5) · extends [[R Toolkit (Cheatsheet)]]
+**Context:** [[FIT2086_MOC]] · generating random data and evaluating distributions in R · the applied engine behind [[Monte Carlo Simulation (Empirical Probabilities)|Monte Carlo]], the [[Bootstrap]] and [[Permutation Tests]] (LO4/LO5) · why a seed reproduces a run ➔ [[Pseudo-Random Number Generators]] · extends [[R Toolkit (Cheatsheet)]]
 **Problem it solves:** draw random samples, reproduce them, and compute density / probability / quantile / random values for a named distribution.
 
 > [!abstract] Quick Revision
