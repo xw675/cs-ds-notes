@@ -11,7 +11,7 @@ aliases: [FIT1058 Exam Crib, Discrete Maths Cheatsheet]
 **Context:** [[FIT1058_MOC]] · the WHOLE unit in one re-read — logic → sets/functions → proofs → counting → probability → number theory/crypto → graphs. Every claim is a hand-derivable formula or rule; links for depth only.
 
 > [!abstract] Quick Revision
-> - **🎯 Objective:** match the claim's logical SHAPE to a formula or proof blueprint ➔ derive in $\begin{aligned}$ blocks, seal with Q.E.D.
+> - **🎯 Objective:** match the claim's logical SHAPE to a formula or proof blueprint ➔ derive in `aligned` blocks, seal with Q.E.D.
 > - **⚡ Key Constraint:** hypothesis discipline — every rule here has a precondition (disjointness, independence, coprimality, connectedness); marks die when a rule fires without its hypothesis.
 
 ## 1️⃣ Logic

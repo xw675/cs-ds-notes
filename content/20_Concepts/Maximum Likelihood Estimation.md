@@ -78,7 +78,8 @@ p(\mathbf{y}\mid\theta)&=\prod_{i=1}^n\theta^{y_i}(1-\theta)^{1-y_i}=\theta^{m}(
 L(\mathbf{y}\mid\theta)&=-m\log\theta-(n-m)\log(1-\theta)\\
 \frac{dL}{d\theta}&=-\frac{m}{\theta}+\frac{n-m}{1-\theta}=-\frac{n\theta-m}{(\theta-1)\theta}=0\;\Rightarrow\;m-n\theta=0\;\Rightarrow\;\hat\theta=\frac{m}{n}=\frac1n\sum_{i=1}^n y_i
 \end{aligned}
-$$**Q.E.D.** ➔ the ML success probability is the **fraction of successes**, i.e. the sample mean of the $0/1$ trials. The exponents collapse because $\sum_i y_i=m$ counts the successes and $\sum_i(1-y_i)=n-m$ the failures; the derivative's $\frac{d}{d\theta}\log(1-\theta)=-\frac{1}{1-\theta}$ supplies the sign flip.
+$$
+**Q.E.D.** ➔ the ML success probability is the **fraction of successes**, i.e. the sample mean of the $0/1$ trials. The exponents collapse because $\sum_i y_i=m$ counts the successes and $\sum_i(1-y_i)=n-m$ the failures; the derivative's $\frac{d}{d\theta}\log(1-\theta)=-\frac{1}{1-\theta}$ supplies the sign flip.
 
 ## 📊 Worked Numbers
 | Data | Family | ML estimates | Read-off |

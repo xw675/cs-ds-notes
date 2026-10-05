@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W7; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W10; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -414,9 +414,9 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **[[Knapsack Problem|Unbounded knapsack]]** `[P]` ➔ coin change with **$\max$ instead of $\min$** and **init $0$ instead of $\infty$**: $\text{memo}[w]=\max(\text{memo}[w-1],\ \max_{w_i\le w}(v_i+\text{memo}[w-w_i]))$, $O(NM)$ time, $\Theta(M)$ space **· the carry term is a correctness fix:** without $\text{memo}[w-1]$ the cell means *exactly $w$*, which breaks when the capacity cannot be filled or the optimum sits below it — the alternative repair is a final $\max$ scan of the memo.
 - **[[Knapsack Problem|0/1 knapsack]]** `[P]` ➔ $\text{DP}[i][w]=\text{DP}[i-1][w]$ if $w_i>w$, else $\max(\text{DP}[i-1][w],\ v_i+\text{DP}[i-1][w-w_i])$; bases $\text{DP}[0][\cdot]=\text{DP}[\cdot][0]=0$; $O(NM)$ time **and** space **· always read the ROW ABOVE:** using the current row makes the item reusable and silently solves the unbounded problem instead.
 - **Why unbounded is 1-D and $0/1$ is 2-D** `[P]` ➔ with unlimited items the option set never shrinks, so **weight alone is a sufficient state**; once each item is single-use it is not, and the row index encodes *"only the first $i$ items are on offer"* **· same test as** [[State-Space Graph Modelling]], applied to a DP parameter.
-- **Knapsack hand-instance** `[C]` ➔ items $(w,v)$ $A(6,\text{\textdollar}230)$, $B(1,\text{\textdollar}40)$, $C(5,\text{\textdollar}350)$, $D(9,\text{\textdollar}550)$, capacity $12$: **unbounded $=\text{\textdollar}780$** ($2C+2B$) · **$0/1=\text{\textdollar}620$** ($\{A,B,C\}$, exactly $12$ kg) **· trap:** quoting one variant's answer for the other is a whole-question error.
+- **Knapsack hand-instance** `[C]` ➔ items $(w,v)$ $A(6,\$230)$, $B(1,\$40)$, $C(5,\$350)$, $D(9,\$550)$, capacity $12$: **unbounded $=\$780$** ($2C+2B$) · **$0/1=\$620$** ($\{A,B,C\}$, exactly $12$ kg) **· trap:** quoting one variant's answer for the other is a whole-question error.
 - **The two-row space trick** `[C]` ➔ a $0/1$ matrix only ever reads the row above, so two live rows replace the $O(NM)$ matrix **· but:** reconstruction walks every row, so *"in reality we can't do this space saving because we need it to reconstruct the solution"* **· rule:** value only ⟹ roll; *which items* ⟹ keep the matrix, or pay for a decision array.
-- **Salesman / neighbour houses** `[P]` ➔ $\text{DP}[i]=\max(\text{DP}[i-1],\ \text{DP}[i-2]+c_i)$, $\text{DP}[1]=c_1$, $\text{DP}[0]=0$ ⟹ $\Theta(n)$ **· instance:** $50,10,12,65,40,95,100,12,20,30\Rightarrow\text{\textdollar}252$ from houses $1,4,6,8,10$ **· greedy trap:** the largest single profit ($100$, house $7$) is **not** in the optimum.
+- **Salesman / neighbour houses** `[P]` ➔ $\text{DP}[i]=\max(\text{DP}[i-1],\ \text{DP}[i-2]+c_i)$, $\text{DP}[1]=c_1$, $\text{DP}[0]=0$ ⟹ $\Theta(n)$ **· instance:** $50,10,12,65,40,95,100,12,20,30\Rightarrow\$252$ from houses $1,4,6,8,10$ **· greedy trap:** the largest single profit ($100$, house $7$) is **not** in the optimum.
 - **Grid DP** `[P]` ➔ count paths $\text{DP}[i,j]=\text{DP}[i{+}1,j]+\text{DP}[i,j{+}1]$ *(the two path sets are disjoint, so they add)*; max money $\text{DP}[i,j]=c_{i,j}+\max(\cdot,\cdot)$; both $O(n^{2})$, answer $\text{DP}[1,1]$ **· edge cases:** top row and rightmost column have one legal move **· symmetry:** the reverse definition *(from $(1,1)$ to $(i,j)$)* is equally valid — pick one and keep the indices consistent.
 - **The four recurring subproblem shapes** `[C]` ➔ **prefix/suffix** *(salesman, coin change, LIS)* · **partition a sequence, try every cut** *(word break, text justification, umbrella walk — $\text{DP}[i]=\min_{j>i}(\text{block}[i..j{-}1]+\text{DP}[j])$, $O(n^{2})$)* · **two prefixes of two sequences** *(LCS, SCS, interleaving, edit distance)* · **a contiguous range** *(palindromes, coin game, matrix chain)*.
 - **Tree DP** `[D]` ➔ $\text{DP}[v]=$ min rounds to reach $v$'s descendants $=\max_i\bigl(i+\text{DP}[C_v[i]]\bigr)$ over children sorted **descending** by $\text{DP}$ **· cost:** $\sum_v n_C(v)=n$, and the sort is [[Counting Sort|counting sort]] since rounds $\le n$ ⟹ $O(n)$ overall **· why descending:** serve the slowest subtree first.
@@ -446,7 +446,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Text justification | $n$ | $O(n)$ | $O(n^{2})$ | $\Theta(n)$ | $\text{DP}[1]$ |
 | Tree broadcast | $n$ | $O(n_C(v))$ | $O(n)$ | $\Theta(n)$ | $\text{DP}[r]$ |
 
-## 1️⃣3️⃣ Shortest Paths With Negative Weights (W7 lecture)
+## 1️⃣3️⃣ Shortest Paths With Negative Weights (W8 lecture)
 > [!warning] The **sign of the weights** picks the algorithm, and the **number of sources** picks it again. Quoting [[Dijkstra's Algorithm|Dijkstra]] on a graph with one negative edge is an outright wrong answer, not a suboptimal one ➔ §🔟.
 
 - **[[Bellman-Ford]] is DP, not greedy** `[P]` ➔ nothing is ever finalised, so a late negative edge can still lower an estimate; the relaxation line is **identical** to Dijkstra's, only the schedule differs **· consequence:** no priority queue, so every edge is re-examined every round.
@@ -473,3 +473,57 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | All pairs, dense | [[Floyd-Warshall]] | $\Theta(V^{3})$ | $\Theta(V^{2})$ | ✅ | ✅ *(anywhere in $G$)* |
 | All pairs, sparse, $w\ge0$ | $V\times$ [[Dijkstra's Algorithm\|Dijkstra]] | $O(EV\log V)$ | $\Theta(V)$ | ❌ | ❌ |
 | All pairs, sparse, some $w<0$ | $V\times$ [[Bellman-Ford]] | $O(V^{2}E)$ | $\Theta(V)$ | ✅ | ✅ |
+
+## 1️⃣4️⃣ Tries, Suffix Tries and Suffix Trees (W9 lecture · W9 applied · **PT-03**)
+> [!warning] PT-03 is **draw $+$ count** (drag-drop, quiz format): the root is a node, `$` alone is a suffix, every word/suffix ends in `$`. One omission shifts every count by one.
+
+- **[[Trie]] node** `[P]` ➔ `links = [None]*27`, `$` at index $0$, `a..z` at $1..26$ ⟹ $O(1)$ child lookup **· why `$`:** after inserting `apple`, the walk `app` succeeds — only a `$` child makes it a word **· why slot $0$:** `$`-first in-order DFS emits `app` before `apple`.
+- **Trie search** `[P]` ➔ worst $O(M)$, best $O(1)$, $M=$ **query** length — $N$ never appears **· contrast:** sorted array / BST pay $O(M)$ per comparison ⟹ $O(M\log N)$.
+- **Trie properties** `[P]` ➔ $N$ words, longest $M$, $T$ total characters incl. `$`: nodes $\le N(M+1)$, tighter $O(T)$ · leaves $\le N$ *(duplicates share a leaf)* · height $=M+1$ *(count the `$` edge)*.
+- **Sorted output** `[P]` ➔ in-order DFS, `$` first ⟹ $O(T)$; $A$ words of length $\le B$ ⟹ $O(AB)$ **· trap:** building the path with `prefix + c` copies strings ⟹ $O(TM)$.
+- **Iterative vs recursive** `[C]` ➔ same $O(M)$ time; aux $O(1)$ vs $O(M)$ **· pick recursion** when information flows **up** (subtree counts, flags, best leaf).
+- **Selection rule** `[C]` ➔ exact membership only $+$ tight memory ⟹ [[Hash Table]] · prefix, order (sorted, predecessor) or a **worst-case** bound ⟹ trie.
+- **Payload augmentation** `[C]` ➔ P1 distinct strings $=$ number of `$` nodes, $O(T)$ · P2 prefix count: `+1` on every node visited **or** created at insert ⟹ $O(m)$ query, build unchanged · P7 add $w_i\times\text{depth}$ per node, take the max.
+- **Predecessor (P5)** `[C]` ➔ walk the query remembering the deepest node with a child **smaller** than the next character; on failure return there, take the greatest smaller child, then greatest children to a leaf ⟹ $O(m+n)$ output-sensitive.
+- **Binary trie (P10/P11)** `[D]` ➔ max $x\oplus a_i$: prefer the **opposite** bit at each level, $O(w)$ · max subarray XOR: $F(L,R)=P_R\oplus P_{L-1}$, query-then-insert prefix XORs ⟹ $O(nw)$.
+- **Trie inside a DP (P12)** `[D]` ➔ word break's "every $w$ that is a prefix of $S[i..n]$" becomes one trie walk ⟹ $O(n^{2}m)\to O(n^{2}+nm)$ ➔ §1️⃣2️⃣.
+- **[[Suffix Trie and Suffix Tree|Suffix trie]]** `[P]` ➔ trie of the $n+1$ suffixes of `S$` **· substring $=$ prefix of a suffix** ⟹ search $O(m)$, occurrences $=$ leaves below, longest repeated substring $=$ deepest node with $\ge2$ children; build $O(n^{2})$.
+- **PT-03 formulas** `[P]` ➔ $D=$ distinct non-empty substrings of $S$: **trie** nodes $D+n+2$ · inner $D+1$ · leaves $n+1$ · height $n+1$ **· tree** leaves $n+1$ · inner $1..n$ · nodes $n+2..2n+1$ · height $1..n$ **· both:** $\sum$ edge lengths $=D+n+1$.
+- **Suffix tree** `[P]` ➔ compress one-child chains, label edges `[start,end]` ⟹ every internal node branches ⟹ $\le2n+1$ nodes, $\Theta(n)$ space **· precondition:** index labels — text labels stay $O(n^{2})$ **· build still $O(n^{2})$** naively; $O(n)$ needs Ukkonen (FIT3155) **· prep notation:** `(i, l)` $=$ 1-based start $+$ length $\equiv$ `[i-1, i+l-2]` — say which you use.
+- **Space extremes flip** `[C]` ➔ trie smallest on `aaaa` ($2n+2$), largest all-distinct ($\Theta(n^{2})$); tree smallest all-distinct ($n+2$), largest `aaaa` ($2n+1$).
+- **Distinct substrings (P3)** `[C]` ➔ trie: nodes minus root minus the $n+1$ `$` nodes, $O(n^{2})$ · tree: $\sum(\text{end}-\text{start}+1)-(n+1)$ in one $O(n)$ traversal.
+- **Think in the trie, answer in the tree** `[C]` ➔ P4 longest common substring: tree of `s1#s2$`, leaf flags propagated up, deepest node with both · P6 fewest substrings of $S$ forming $T$: **greedy** longest match, restart at the root, $O(n+m)$ · P8 shortest unique: shallowest node with a non-`$` leaf edge, depth $+1$ · P9 shortest absent: shallowest point missing an alphabet character.
+- **Suffix array, prefix doubling** ➔ **not examinable** 2026 S2 *(🔭 block in [[Suffix Trie and Suffix Tree]])*.
+
+| Query | Structure | Time | Space |
+| :--- | :--- | :--- | :--- |
+| Word membership / insert | [[Trie]] | $O(M)$ | $O(T)$ total |
+| Words with prefix $p$ | [[Trie]] $+$ counter | $O(m)$ | $O(T)$ |
+| Predecessor of a query | [[Trie]] | $O(m+n)$ | $O(T)$ |
+| Is $P$ a substring of $S$ / occurrences | [[Suffix Trie and Suffix Tree\|suffix trie/tree]] | $O(m)$ $+$ leaves below | trie $O(n^{2})$ · tree $\Theta(n)$ |
+| Distinct substrings | suffix tree | $O(n)$ after build | $\Theta(n)$ |
+| Longest repeated / common substring | suffix tree | $O(n)$ / $O(n+m)$ after build | $\Theta(n)$ |
+| Build either suffix structure naively | — | $O(n^{2})$ | — |
+
+## 1️⃣5️⃣ Self-Balancing Search Trees (W10 lecture · sanity check · **PT-03**)
+> [!warning] PT-03 can hand you a **half-built** tree and mix inserts with deletes. Fix the **lowest** violation first, then keep checking up to the root — a delete can cascade.
+
+- **Why balance** `[P]` ➔ BST search/insert/delete cost $O(\text{height})$; sorted input makes it $O(N)$ **· fix:** maintain an invariant that forces height $O(\log N)$.
+- **AVL invariant** `[P]` ➔ $bf=h(L)-h(R)\in\{-1,0,1\}$ at **every** node **· hand convention:** empty $=0$, leaf $=1$, annotate `h,bf` — $bf$ is a difference, so the convention never changes it.
+- **AVL insert/delete** `[P]` ➔ plain BST op **at a leaf** (non-leaf delete: swap with predecessor **or** successor, as asked) ➔ update heights bottom-up ➔ restructure the lowest $\lvert bf\rvert>1$ node ➔ continue upward.
+- **Ian's trinode restructure** `[P]` ➔ from $z$ step twice toward the **taller** child (tie on step 2 ⟹ repeat step 1 ⟹ single rotation) ➔ median of the three keys becomes the root, smaller left, bigger right ➔ re-hang $T_1..T_4$ in in-order **· covers** LL (rotate right) · RR (rotate left) · LR / RL (double).
+- **AVL bounds** `[P]` ➔ search, insert, delete $O(\log N)$ **· because:** heights are **stored** and only the path is updated (recomputing would be $O(N)$); each fix $\le2$ rotations $=O(1)$, at most one per level.
+- **2-3 tree** `[P]` ➔ 2-node $=1$ key/2 children, 3-node $=2$ keys/3 children **· balance:** all leaves on the same level **· height bound** *(derived)*: $N\ge2^{h+1}-1$ ⟹ $h=O(\log N)$.
+- **2-3 insert** `[P]` ➔ descend to a leaf (key met anywhere on the path, internal nodes included ⟹ do nothing), insert in order; a 3-node becomes a 4-node ⟹ **split**, median up; repeat to the root **· root split** ⟹ height $+1$, the only way it grows.
+- **2-3 delete** `[P]` ➔ swap to a leaf; a 2-node leaf first borrows: **rotate** (adjacent 3-node sibling: parent key down, sibling key up) else **merge** (parent key down into the 2-node sibling); propagate **· emptied root** ⟹ height $-1$.
+- **LLRB encoding** `[P]` ➔ edge colour stored on the child · 2-node $=$ black · 3-node $[a\ b]$ $=$ black $b$ with **red left** $a$ · no red–red · root black **· black-height** $=$ black edges root ➔ leaf $=$ 2-3 height, never the drawn height.
+- **LLRB insert** `[P]` ➔ red leaf (no black-height change) ➔ right red, left sibling not red ⟹ **rotate left** · both children red ⟹ **flip** · red-red left-left ⟹ **rotate right** then flip · red right of red left ⟹ rotate left ⟹ previous case ➔ propagate ➔ root black **· no delete.**
+- **2-3 ⟷ LLRB dictionary** `[C]` ➔ flip $=$ split with median promoted · root recoloured black $=$ root split · rotate left $=$ redraw a 3-node leaning left **· use:** run the 2-3 insert to verify an LLRB answer, and vice versa.
+- **LLRB height** `[D]` *(derived)* ➔ no two reds in a row ⟹ drawn height $\le2\times$ black-height $+1$ ⟹ $O(\log N)$ search and insert.
+
+| Tree | Balance rule | Insert fix | Delete fix | Time (all ops) |
+| :--- | :--- | :--- | :--- | :--- |
+| [[AVL Tree]] | $\lvert bf\rvert\le1$ per node | trinode restructure | swap to leaf $+$ restructure, cascades | $O(\log N)$ |
+| [[2-3 Tree]] | all leaves level | split $+$ promote | swap to leaf $+$ rotate / merge | $O(\log N)$ |
+| [[Left-Leaning Red-Black Tree\|LLRB]] | equal black edges per path | rotate L / rotate R / flip | not in FIT2004 | $O(\log N)$ |
+

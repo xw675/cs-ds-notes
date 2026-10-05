@@ -18,7 +18,7 @@ aliases: [Motherboard, Computer Deconstruction, IO Interfaces, USB]
 - **Under the hood** ➔ CPU (+ cooling + fan) · RAM modules · GPU · **ROM** (holds the [[The Boot Process|boot firmware]]) · clock oscillator ([[Fetch-Decode-Execute and RTL (Control)|the clock]]) · power supply · PCI expansion ports · hard disk/DVD.
 - **I/O landscape** ➔ inputs (keyboard, touch, mic, camera, GPS, accelerometer, LIDAR…), outputs (screen, printer, audio, vibration…), plus storage (HDD/SSD/SD) and network devices (WiFi, 4G/5G, Ethernet, Bluetooth) — all "I/O" to the CPU.
 - **Interfaces** ➔ devices connect via standardised connectors + protocols, internal or external: USB, PCIe, HDMI…
-- **Why many standards** ➔ competing goals: *convenience* (robust plug) vs *speed* (keyboard needs little, GPU needs enormous bandwidth) vs *cost* ($5 USB stick vs $1000 graphics card) vs *compatibility* (across machines and years).
+- **Why many standards** ➔ competing goals: *convenience* (robust plug) vs *speed* (keyboard needs little, GPU needs enormous bandwidth) vs *cost* (\$5 USB stick vs \$1000 graphics card) vs *compatibility* (across machines and years).
 
 ## ⚠️ Common Mistakes
 - 💡 **ROM ≠ RAM on the board** ➔ ROM is tiny, non-volatile, read-only (boot code); RAM is large, volatile, working memory — mixing them up breaks every boot-process answer.

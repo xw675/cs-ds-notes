@@ -1,14 +1,14 @@
 ---
-unit: FIT1043
+unit: [FIT1043, FIT2086]
 domain: E
-week: [1, 5]
+week: [1, 5, 9]
 parent: "[[Data Science]]"
 tags: [DataScience/Foundations, DataScience/ML]
 aliases: [Machine Learning, ML]
 ---
 # [[Machine Learning]]
 
-**Context:** [[FIT1043_MOC]] · the hacking ∩ maths/stats region of [[Data Science|Conway's diagram]] · algorithms that *learn* from data · the Analysis step of the [[Data Science Process (Standard Value Chain)|value chain]] · learns [[Predictive Models|predictive models]] in two [[Machine Learning Styles (Supervised vs Unsupervised)|styles]]
+**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · the hacking ∩ maths/stats region of [[Data Science|Conway's diagram]] · algorithms that *learn* from data · the Analysis step of the [[Data Science Process (Standard Value Chain)|value chain]] · learns [[Predictive Models|predictive models]] in two [[Machine Learning Styles (Supervised vs Unsupervised)|styles]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** build algorithms/techniques that let computers **learn** from data ➔ patterns/inference, not explicit instructions.
@@ -24,6 +24,8 @@ aliases: [Machine Learning, ML]
   - **Changing conditions** ➔ e.g. junk-email filtering.
   - **Large data** ➔ e.g. discovering astronomical objects.
   - **Humans too expensive** ➔ e.g. handwritten zipcode recognition.
+- **Statistician's framing (FIT2086 W9)** ➔ also called data mining / AI · intersection of **computer science and statistics** · methods often **algorithmic** · usually **non-linear and flexible**, making few assumptions · the resulting "model" is often impossible to interpret ⟹ focus is **prediction**.
+- **Methods named (FIT2086)** ➔ [[Decision Trees and Regression Trees|decision trees]], [[Random Forest|random forests]], [[k-Nearest Neighbours|$k$-nearest neighbours]] (taught W9) · SVMs, neural networks, deep learning, clustering, mixture modelling (named only).
 
 ## ⚙️ Developing an ML Model
 - **1. Choose a measure of success** ➔ the metric the model is judged by.
@@ -45,3 +47,8 @@ aliases: [Machine Learning, ML]
 > > [!SUCCESS]- Answer
 > > - **Short answer:** (1) choose a measure of success; (2) set an evaluation protocol; (3) build a benchmark/baseline model; (4) build a better model and tune its hyperparameters.
 > > - **Why:** **Baseline-then-improve** ➔ a fixed metric + protocol lets you prove each model beats the last, avoiding tuning to noise.
+
+> [!FAQ]- How do FIT2086's ML methods (trees, forests, kNN) differ from its linear and logistic regression?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** They are flexible, non-linear and assumption-light, built for prediction; regression is a parametric model you can read coefficient by coefficient.
+> > - **Why:** **Flexibility vs interpretability** ➔ a tree stays readable, but a forest or kNN gives accurate predictions with little or no interpretable "model".

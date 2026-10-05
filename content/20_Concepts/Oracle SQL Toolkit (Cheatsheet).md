@@ -105,7 +105,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - **ANY / ALL** ➔ `> ANY` (beats at least one ➔ nearly all rows), `> ALL` (beats every one ➔ few rows) — classic MCQ discriminator.
 - **Multi-column pairs** ➔ `WHERE (dt_code, price) IN (SELECT dt_code, MAX(price) … GROUP BY dt_code)` — per-group max pattern.
 - **In DML** ➔ subquery sets the target set: `UPDATE … SET cost = cost*1.2 WHERE manuf_id = (SELECT …)`; see [[Populating Tables from Queries (INSERT-SELECT, CTAS)]].
-
+	
 ## ➕ Advanced SQL (FIT2094 Topic 10)
 | Tool | Micro-syntax | Job / gotcha |
 | :-- | :-- | :-- |
@@ -205,7 +205,48 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | vertical slice | `create table F1 as select CarNo, DriverNo, WeekNo, Total_Kilometers from F;` | splits **measures**; each slice must repeat the **whole** composite key |
 | horizontal slice by range | `create table F2a as select * from F1 where TimeID < 201001;` | splits **records**; column list unchanged, and each star's `TimeDim` may be trimmed to its own range |
 | horizontal slice by member | `select BookshopID as ReligiousBookshopID, … from BookshopFact1 where BookshopID in (select BookshopID from <operational> where <type is Religious>)` | the slicing attribute lives **outside** the warehouse ➔ reach back to the source; rename the key per star |
+| top-N | `select * from (select …, sum(x) as total … order by total desc) where rownum = 1;` | Oracle assigns `rownum` **before** `order by` ➔ the sort must live in an inline view or you get an arbitrary row |
+| query a multi-fact star | `from ReviewFact F, CategoryDim C where F.CategoryID = C.CategoryID` | pick the fact that **owns the measure**; the two facts never join to each other, only to the shared dimensions |
+| filter via a shared dimension | `and S.StarID = F.StarID and S.StarID = 5` | join the dimension even when filtering on its key — its description columns are what the report displays |
 | split a dimension to match | `create table ReligiousBookshopDim as select BookshopID as ReligiousBookshopID, Address, … from BookshopDim where BookshopID in (…);` | keeps each sliced star self-contained; the same subquery selects the members |
+
+## 🧬 Multi-Input & Granularity Clauses (FIT3003 W8)
+*(➔ [[Multi-Input Operational Databases]] · [[Levels of Aggregation]] · [[Identifying a Level-0 Star Schema]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| address another source DB | `from "OrchestraClub.Concert" CT, "OrchestraClub.Ticket" T` | quoted qualified identifier keeps the **case** and the dot; the same table name in two sources never collides |
+| dimension spanning sources | `create table YearDim as select distinct * from ( select * from A union select * from B union select * from C );` | the **outer** `select distinct` is what dedupes across sources; the inner ones only dedupe within each |
+| derive a dimension attribute after the fact | `alter table YearDim add (UniversityStartDate date);` then `update YearDim set UniversityStartDate = to_date('01-Mar-'\|\|Year, 'DD-MON-YYYY');` | `\|\|` concatenates the literal to the `Year` column; a month **name** needs mask `MON` — the slide's `'DD-MM-YYYY'` would reject `Mar` |
+| stamp the source identity | `alter table ClubTempFact add (ClubID integer);` then `update ClubTempFact set ClubID = 1;` | without it the vertical stack cannot tell whose row is whose; do it **before** the final `group by ClubID, Year` |
+| vertical stack (rows down) | `create table MonashClubFact as select * from OrchestraFact union select * from BusinessCommerceFact union select * from JapaneseFact;` | legal only when every per-source fact has the **same dimensions and same measures** |
+| horizontal stack (columns across) | each TempFact: `count(*) as OwnedMeasure, 0 as NotOwned1, 0 as NotOwned2, …` then `select …, sum(m1), sum(m2) from ( union of TempFacts ) group by Postcode, MonthID;` | the `0` padding buys union-compatibility; the **outer `group by` $+$ `sum`** is what merges four partial rows into one complete one |
+| count two populations per event | `create table EventMemberTicket as select E.EventID, count(*) as MemberTicketCount from … group by E.EventID;` $+$ a twin for non-members, then join both into the TempFact | separate counts first, combine second — one query cannot count two different child tables correctly |
+| filter a coded outcome before counting | `and A.AuctionResultCode = 'SA'` inside the `TotalSuccessfulAuction` TempFact | the success rate is derived at query time; the fact stores **numerator and denominator**, never the ratio |
+| re-grain a TempFact | `create table T2 as select ConcertID, Year, HostingCost, Honorarium, sum(Price) as Income from T1 group by ConcertID, Year, HostingCost, Honorarium;` | when a per-child join repeated the parent's cost columns, carry them in the `group by` so they are counted **once** |
+| drop a degenerate measure | Level-0 `count` fact ➔ omit the measure entirely, keep only the FK block | legal **only** for a `count`; a `sum` measure keeps its per-transaction amount at Level-0 |
+
+## 📈 OLAP Clauses (FIT3003 W9)
+*(➔ [[OLAP (On-Line Analytical Processing)]] · [[OLAP Cube and Rollup]] · [[OLAP Ranking and Top-N]] · [[OLAP Cumulative and Moving Aggregates]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| distinct count | `select count(distinct Year) from TimeDim;` | unique non-null values; `count(Month)` counts every row with a month |
+| cube | `group by cube (ProductName, Location)` | all $2^n$ grouping sets ➔ detail $+$ every subtotal $+$ grand total (cross-tab); $2 \times 2$ data ➔ $9$ rows |
+| rollup | `group by rollup (ProductName, Location)` | $n+1$ sets, columns dropped **right-to-left** ➔ order matters; $2 \times 2$ data ➔ $7$ rows |
+| partial cube / rollup | `group by ProductName, cube (Location, TimeID)` · `…, rollup (…)` | the column outside the parentheses is never rolled up ➔ **no grand total** |
+| subtotal marker | `grouping(ProductName)` | $1$ when the column is rolled up in that row (its `(null)` means "all"), else $0$ |
+| label subtotals | `decode(grouping(ProductName), 1, 'All Products', ProductName) as Product_Name` | `decode(a, b, c, d)` $=$ if $a = b$ then $c$ else $d$; alias must differ from the raw column you `order by` |
+| rank | `rank() over (order by sum(Total_Sales) desc) as Sales_Rank` | ties share, then **gap** ($1, 2, 2, 4$); omit `desc` and the smallest is $1$ |
+| dense rank | `dense_rank() over (order by sum(Total_Sales) desc)` | ties share, **no gap** ($1, 2, 2, 3$) |
+| row number | `row_number() over (order by sum(Total_Sales) desc)` | unique $1 \dots n$; ties broken arbitrarily — behaves like `rownum` |
+| percent rank | `percent_rank() over (order by sum(Total_Sales))` | $\frac{\text{rank} - 1}{n - 1} \in [0, 1]$; top-percent $=$ order `desc` $+$ outer `<= p` |
+| rank per group | `rank() over (partition by ProductName order by sum(Total_Sales) desc)` | numbering restarts in each partition; several `over` clauses may partition differently in one query |
+| top-N with ties | `select * from (select …, rank() over (…) as Product_Rank … group by …) where Product_Rank <= 2;` | window alias is invisible in its own `where` ➔ the inline view is mandatory; keeps tied rows, unlike `rownum` |
+| cumulative | `sum(sum(Total_Sales)) over (order by S.TimeID rows unbounded preceding)` | inner `sum` $=$ the `group by` total, outer `sum` runs from the first result row |
+| cumulative per group | `sum(sum(Total_Sales)) over (partition by LocationID order by LocationID, S.TimeID rows unbounded preceding)` | restarts at each location |
+| moving average | `avg(sum(Total_Sales)) over (order by S.TimeID rows 2 preceding) as Avg_3_Months` | $k$ periods $=$ `rows k-1 preceding`; counts **result rows**, not months; first rows average fewer |
+| display format | `to_char(sum(Total_Sales), '999,999,999')` | comma-formatted **string** — display only |
 
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
@@ -304,6 +345,23 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > - **Key moves:** `select distinct` over four columns builds the product · `Seq_ID.nextval` keys it in one statement · a **correlated update** fills the fact's FK · the final query needs only **2 tables and 1 join condition**, against 5 tables and 4 conditions in the non-junk version.
 > > - ⚠️ **Never store `avg`** ➔ the fact holds `Total_Price` and `Num_of_Property`; the average is computed at query time ➔ [[Fact Measure Aggregation Rules]].
 
+> [!QUESTION]- Practice 6 (FIT3003 Ch19-style): for MEL in 2019, list each month's total sales, its running year-to-date total, and its rank among the 12 months (best month $= 1$); show only the top 3 months.
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > select * from
+> >   (select S.TimeID,
+> >           sum(Total_Sales) as Total_Sales,
+> >           sum(sum(Total_Sales)) over (order by S.TimeID rows unbounded preceding) as YTD_Sales,
+> >           rank() over (order by sum(Total_Sales) desc) as Month_Rank
+> >    from   SalesFact S, TimeDim T
+> >    where  S.TimeID = T.TimeID
+> >    and    Year = 2019
+> >    and    S.LocationID = 'MEL'
+> >    group by S.TimeID)
+> > where  Month_Rank <= 3
+> > order by Month_Rank;
+> > ```
+> > - **Key moves:** two windows with **different** `order by`s over the same grouped rows · the filter lives outside the inline view, so `YTD_Sales` was computed over all 12 months **before** the cut — filtering first would shrink the running total.
 
 ## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
@@ -318,3 +376,7 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Summing a determinant fact without pinning the determinant attribute** ➔ `where Year = '2017'` over a 5-component fact returns $55$ for $11$ candidates — no error, one tidy row, silently $5\times$ wrong; pin it in the `where` or split it out in the `group by` ➔ [[Determinant Dimensions]].
 - 💡 **`1/count(*)` and `Seq_ID.currval`** ➔ two silent-zero traps: integer division floors every weight factor, and `currval` re-reads the last value instead of advancing — use `1.0/count(*)` and `.nextval`.
 - 💡 **A comma-list `from` with no `where` in a FIT3003 lab** ➔ normally a quota-killing accident, but in the pivot recipe it is the **intended** `AllDimensions` product; know which one you are writing.
+- 💡 **Horizontal stack without the outer `sum`** ➔ `union` leaves one partial row per source, each carrying a single real measure beside four zeroes; the result looks populated and every report is wrong ➔ [[Multi-Input Operational Databases]].
+- 💡 **Summing a parent's cost column through a child join** ➔ joining `Concert` to `Ticket` repeats `HostingCost` once per ticket; re-grain with an intermediate `group by` before the final aggregation ➔ [[Levels of Aggregation]].
+- 💡 **Filtering a window function in its own query** ➔ `where Product_Rank <= 2` beside `rank() over (…)` fails; wrap in an inline view — and remember the window then sees every row, which is what a running total needs ➔ [[OLAP Ranking and Top-N]].
+- 💡 **Unqualified shared key in an OLAP query** ➔ `LocationID` / `TimeID` exist in the fact **and** its dimension; unqualified they raise ORA-00918 (two Chapter 19 slides do this) ➔ always `S.LocationID`, `S.TimeID`.

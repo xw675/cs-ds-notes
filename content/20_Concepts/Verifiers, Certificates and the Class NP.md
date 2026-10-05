@@ -81,7 +81,7 @@ aliases: [NP, class NP, verifier, certificate, nondeterministic Turing machine, 
 > - **⚡ Key Constraint:** contrast [[Kleene's Theorem|DFA vs NFA]], where nondeterminism costs nothing in expressive power. Here determinising an NDTM is only known to cost **exponential** time — which is precisely the open problem below.
 
 ### 6. The $\mathrm{P}$-versus-$\mathrm{NP}$ problem
-- **Conjecture** ➔ $\mathrm{P}\neq\mathrm{NP}$: the biggest open problem in computer science and one of the biggest in mathematics, carrying a Clay Institute **Millennium Prize** of US$1 million. Many false solutions appear and continue to appear.
+- **Conjecture** ➔ $\mathrm{P}\neq\mathrm{NP}$: the biggest open problem in computer science and one of the biggest in mathematics, carrying a Clay Institute **Millennium Prize** of US\$1 million. Many false solutions appear and continue to appear.
 - **The disputed middle** ➔ in $\mathrm{NP}$ but **not known** to be in $\mathrm{P}$: SATISFIABILITY, 3-SAT, HAMILTONIAN CIRCUIT, 3-COLOURABILITY, VERTEX COVER, INDEPENDENT SET, GRAPH ISOMORPHISM, INTEGER FACTORISATION — see [[Standard NP Problems and Certificates]].
 - **Known inside $\mathrm{P}$** ➔ 2-SAT, EULERIAN CIRCUIT, 2-COLOURABILITY, CONNECTED GRAPHS, SHORTEST PATH, PRIMES, invertible matrices, **all context-free and all regular languages** ⟹ if $\mathrm{P}=\mathrm{NP}$ the two pictures collapse into one.
 

@@ -29,7 +29,7 @@ tags: [CS/DataStructures, CS/Complexity, Math/GraphTheory]
 - **Named theorems** ➔ **(T1)** tree iff minimal connected | **(T2)** $\ge2$ vertices ⟹ a **leaf** (degree-1) | **(T3)** $n$ vertices ⟹ $n-1$ edges (by [[Mathematical Induction|induction]]).
 
 ## ⚙️ Core Implementation
-*Recursion is natural:* a tree is a node plus subtrees, so [[Recursion]] / structural induction is the standard tool. A *trie* (prefix tree) shares common prefixes (`ta`→`table`/`tap`).
+*Recursion is natural:* a tree is a node plus subtrees, so [[Recursion]] / structural induction is the standard tool. A [[Trie|*trie*]] (prefix tree) shares common prefixes (`ta`→`table`/`tap`).
 
 ### 🔹 Recursive height
 > [!code]- `height(node)`

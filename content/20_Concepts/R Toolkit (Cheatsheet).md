@@ -8,7 +8,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 ---
 # [[R Toolkit (Cheatsheet)]]
 
-**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **simulation/distributions** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
+**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **`glm` + ROC** → **`glmnet` ridge/lasso** → **simulation/distributions** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
 **Read protocol:** scan tables → attempt the practice blank → follow links only where you failed.
 
 > [!abstract] Quick Revision
@@ -118,6 +118,23 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 
 *(R scores on the $-2\log L$ scale, so its default `k = 2` is the lecture's $\alpha=k_M$ and `k = log(n)` is $\alpha=\tfrac{k_M}{2}\log n$ — the selected subset is identical either way. Lower score wins ➔ [[Model Selection and Information Criteria (AIC, BIC)]].)*
 
+## 📉 Logistic Regression & Classification (FIT2086 Studio 7 — details ➔ [[Logistic Regression in R (glm, pROC, step)]])
+| Task | Micro-syntax | Output / gotcha |
+| :-- | :-- | :-- |
+| factor target | `read.csv("f.csv", stringsAsFactors = TRUE)`; `levels(d$y)` | **second** level (`"Y"`) is the success |
+| fit | `glm(y ~ ., data = d, family = binomial)` | no `family` ⟹ a Gaussian linear model |
+| read fit | `summary(m)` · `m$null.deviance` · `m$deviance` · `m$aic` | `z value`/`Pr(>\|z\|)` test $H_0:\beta_j=0$; deviance $=2L$; `aic` $=$ deviance $+2k$ |
+| log-odds | `predict(m, test)` | the **default** scale — not a probability |
+| probability | `predict(m, test, type = "response")` | $\mathbb{P}(Y=\text{"Y"}\mid\mathbf{x})$ |
+| class at $\tfrac12$ | `factor(prob > 1/2, c(F, T), c("N", "Y"))` | change `1/2` to move the threshold |
+| confusion matrix | `table(pred, test$y)` | rows = predicted, columns = truth |
+| accuracy | `mean(pred == test$y)` | proportion correct |
+| install / load package | `install.packages("pROC")` once · `library(pROC)` each session | `??pROC` for help |
+| ROC & AUC | `r = roc(response = test$y, prob); r$auc; plot(r)` | older code converts with `as.numeric(test$y) - 1` |
+| all metrics | `source("my.prediction.stats.R"); my.pred.stats(prob, test$y)` | log-loss is a **sum**; labels hard-coded `N`/`Y`; threshold fixed at $\tfrac12$ |
+| KIC stepwise | `step(m, k = 3, direction = "both", trace = 0)` | AIC `k = 2` < KIC `k = 3` < BIC `k = log(n)` in conservativeness |
+| transforms in formula | `. + log(BMI)` · `. + I(PLAS^2)` · `. + SKIN*AGE` · `. + .*.` | `.*.` = all pairwise interactions; `log(PREG+1)` avoids $\log 0$ |
+
 ## 🎲 Simulation & Distributions (FIT2086 — details ➔ [[R Simulation and Random Sampling]])
 | Task | Micro-syntax | Gotcha |
 | :-- | :-- | :-- |
@@ -185,6 +202,23 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | exact two-proportion test | `prop.test(c(mx, my), c(nx, ny))` | pass counts and totals as vectors ➔ [[Tests for Bernoulli Populations]] |
 | sensitivity sweep | `for (x in 4:1) print(binom.test(x, 12, 1/2)$p.value)` | $0.388\to0.146\to0.0386\to0.0063$ — answers "how much bias before I suspect?" |
 
+## 🪢 Penalised Regression — glmnet (FIT2086 Studio 8 — details ➔ [[Penalized Regression in R (glmnet)]])
+| Task | Micro-syntax | Output / gotcha |
+| :-- | :-- | :-- |
+| load | `library(glmnet); source("wrappers.R")` | the wrappers give `glmnet` the formula interface it lacks |
+| lasso at a fixed $\lambda$ | `glmnet.f(y ~ ., d, family = "binomial", lambda = 0.05)` | `"binomial"` **in quotes**; `lambda = 0` ≈ `glm` |
+| ridge | add `alpha = 0` | `alpha = 1` (default) is **lasso** |
+| read coefficients | `coefficients(fit)` · `sum(coefficients(fit)[-1, ] != 0)` | `.` = exactly zero; `[-1, ]` drops the intercept |
+| whole path | `fit = glmnet.f(y ~ ., d, family = "binomial"); plot(fit, "lambda", label = T)` | up to 100 $\lambda$ values; stops early once the fit stops changing |
+| CV for $\lambda$ | `cv = cv.glmnet.f(y ~ ., d, family = "binomial"); plot(cv); min(cv$cvm)` | 10 folds by default, random ➔ `set.seed` first |
+| chosen model | `coefficients(cv, s = "lambda.min")` | without `s` you get `lambda.1se` instead |
+| predict | `predict.glmnet.f(cv, test, type = "response", s = "lambda.min")` | a 1-column matrix ➔ `as.numeric()` before `roc()` |
+| fair lasso vs ridge | `foldid = sample(rep(1:10, length.out = nrow(d)))`, pass `foldid = foldid` to both | same folds ⟹ compare `min(cv$cvm)` |
+| everything formula | `my.make.formula("y", d, use.interactions = T, use.logs = T, use.squares = T, use.cubics = T)` | logs only for strictly positive columns; Pima ➔ 59 columns |
+| $p$-values of a fit | `pv = coefficients(summary(m))[, 4]; sum(pv[-1] < 0.05)` | column 4 is `Pr(>\|z\|)`; row 1 is the intercept |
+| Bonferroni count | `sum(pv[-1] < 0.05 / p)` | divide by the number of **tests** ➔ [[Multiple Testing and the Bonferroni Correction]] |
+| RIC stepwise | `step(m, k = 2*log(p), direction = "both", trace = 0)` | $L+k\log p$ on R's $-2\log L$ scale; gene data ➔ SNP56 only |
+
 ## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.
 > > [!SUCCESS]- Reference solution
@@ -199,10 +233,26 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 > > ```
 > > - **Key moves:** `order()` wrapped in `df[ , ]`; `$out` for outliers; formula syntax in `lm`.
 
+> [!QUESTION]- Practice 2 *(integration — FIT2086)*: gene-style `df` (factor target `y`) and test `newdf`. Count predictors significant at $0.05$ and under Bonferroni, fit an RIC stepwise model and a CV lasso, and print both test AUCs.
+> > [!SUCCESS]- Reference solution
+> > ```r
+> > full = glm(y ~ ., data = df, family = binomial); p = ncol(df) - 1
+> > pv = coefficients(summary(full))[, 4][-1]
+> > c(naive = sum(pv < 0.05), bonferroni = sum(pv < 0.05/p), expected_false = 0.05*p)
+> > ric = step(full, k = 2*log(p), direction = "both", trace = 0)
+> > las = cv.glmnet.f(y ~ ., df, family = "binomial")
+> > p1  = predict(ric, newdf, type = "response")
+> > p2  = as.numeric(predict.glmnet.f(las, newdf, type = "response", s = "lambda.min"))
+> > c(ric = roc(response = newdf$y, p1)$auc, lasso = roc(response = newdf$y, p2)$auc)
+> > ```
+> > - **Key moves:** `[-1]` drops the intercept before counting; `k = 2*log(p)` is RIC; `type = "response"` and `s = "lambda.min"` before scoring.
+
 ## ⚠️ Common Mistakes
 - 💡 **1-based indexing** ➔ `x[1]` is the first element; muscle-memory from Python costs marks.
 - 💡 **Negative index drops** ➔ `x[-1]` = everything EXCEPT first (Python: last element).
 - 💡 **`order` returns indices** ➔ sorting is `df[order(df$col), ]` — forgetting the outer `df[ , ]` returns numbers, not rows.
 - 💡 **`rbinom(n, size, prob)`: `n` ≠ the binomial's $n$** ➔ `n` is **how many variates to generate**, `size` is the number of trials ➔ `rbinom(10, 5, 0.25)` gives 10 draws from $Bin(5,0.25)$.
 - 💡 **`*norm` takes `sd`, `*pois` takes an interval-matched `lambda`** ➔ pass $\sigma$ not $\sigma^2$; rescale $\lambda$ to the question's interval **before** the call.
+- 💡 **`predict()` on a `glm` returns log-odds** ➔ add `type = "response"` before thresholding, `roc()` or log-loss.
 - 💡 **`step()` is AIC unless told otherwise** ➔ a "BIC model" without `k = log(n)` is an AIC model; compute `n <- nrow(d)` first.
+- 💡 **`cv.glmnet` without `s = "lambda.min"`** ➔ `coefficients`/`predict` fall back to `s = "lambda.1se"` (larger $\lambda$, sparser); Studio 8 reports `lambda.min`.

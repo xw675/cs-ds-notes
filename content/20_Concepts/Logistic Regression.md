@@ -1,7 +1,7 @@
 ---
 unit: FIT2086
-week: 7
-source: [lecture]
+week: [7, 8]
+source: [lecture, applied]
 domain: [E, D]
 parent: "[[Classification and Conditional Class Probabilities]]"
 tags: [DataScience/Modelling, DataScience/ML]
@@ -9,7 +9,7 @@ aliases: [Logistic Function, Log-Odds, Logit, Odds, Sigmoid, Linear Predictor, B
 ---
 # [[Logistic Regression]]
 
-**Context:** [[FIT2086_MOC]] · the **binary-target** counterpart of [[Linear Regression (FIT2086)]] — same linear predictor $\eta_i$, squashed into $(0,1)$ · it is the discriminative answer to the curse of dimensionality in [[Classification and Conditional Class Probabilities]] · fitted by [[Maximum Likelihood Estimation|ML]] on a [[Binomial Distribution|Bernoulli]] target · pruned by [[Model Selection and Information Criteria (AIC, BIC)|penalised likelihood]] · scored by [[Classification Evaluation (Confusion Matrix and Metrics)]], [[ROC and AUC]], [[Logarithmic Loss]]
+**Context:** [[FIT2086_MOC]] · the **binary-target** counterpart of [[Linear Regression (FIT2086)]] — same linear predictor $\eta_i$, squashed into $(0,1)$ · it is the discriminative answer to the curse of dimensionality in [[Classification and Conditional Class Probabilities]] · fitted by [[Maximum Likelihood Estimation|ML]] on a [[Binomial Distribution|Bernoulli]] target · pruned by [[Model Selection and Information Criteria (AIC, BIC)|penalised likelihood]] · scored by [[Classification Evaluation (Confusion Matrix and Metrics)]], [[ROC and AUC]], [[Logarithmic Loss]] · run it ➔ [[Logistic Regression in R (glm, pROC, step)]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** model the **log-odds** of $Y=1$ as a linear function of the predictors ➔ $\log\frac{\mathbb{P}(Y_i=1\mid\mathbf{x}_i)}{\mathbb{P}(Y_i=0\mid\mathbf{x}_i)}=\beta_0+\sum_j\beta_jx_{i,j}\equiv\eta_i$ ➔ invert with the logistic function to get a probability.
@@ -71,12 +71,14 @@ $$
 - **Coefficient $\beta_j$** ➔ the increase in **log-odds** per one-unit increase in $x_j$, holding the others fixed ⟹ a **multiplicative** factor $e^{\beta_j}$ on the odds, **not** an additive change in probability.
 - **Sign reading** ➔ $\eta_i>0\Rightarrow e^{\eta_i}>1\Rightarrow Y=1$ more likely; $\eta_i<0\Rightarrow e^{\eta_i}<1\Rightarrow Y=0$ more likely.
 - **Goodness-of-fit** ➔ the minimised $L(\mathbf{y}\mid\hat\beta_0,\hat{\boldsymbol\beta})$ — **smaller is better**; compare it against the **intercept-only** model $L(\mathbf{y}\mid\hat\beta_0)$, whose difference plays the role $\text{RSS}\to\text{TSS}$ plays for $R^2$. The intercept-only model assumes $\mathbb{P}(Y=1)$ is the same for everybody.
+- **Deviance (Studio 7)** ➔ R reports $2L$: **null deviance** $=2L(\mathbf{y}\mid\hat\beta_0)$, **residual deviance** $=2L(\mathbf{y}\mid\hat\beta_0,\hat{\boldsymbol\beta})$; the gap measures improvement over the intercept-only model.
 
 ### 7. Predicting, Deciding and Pruning
 - **Predict** ➔ compute $\hat\eta=\hat\beta_0+\sum_{j=1}^{p}\hat\beta_jx'_j$ for new features, then $\mathbb{P}(Y'=1\mid\mathbf{x}')=\dfrac{1}{1+\exp(-\hat\eta)}$.
 - **Decision rule** ➔ pick the class maximising that probability ⟹ equivalently predict $1$ iff $\mathbb{P}(Y=1\mid\mathbf{x}')>\tfrac12$, iff the odds exceed $1$, iff $\hat\eta>0$ — three views of one rule ➔ generalised to any threshold in [[ROC and AUC]].
 - **Categorical and non-linear predictors** ➔ handled exactly as in linear regression — $K-1$ indicator columns for a $K$-category predictor when an intercept is present, plus $\log$ and polynomial terms ➔ [[Predictor Transformations (Indicators, Polynomials, Interactions)]].
 - **Which predictors** ➔ test $H_0:\beta_j=0$ vs $H_A:\beta_j\neq0$ (smaller $p$-value ⟹ stronger predictor), or score models by penalised likelihood $L(\mathbf{y}\mid\hat\beta_0,\hat{\boldsymbol\beta})+k\alpha_n$ with $\alpha_n=1$ (AIC), $\alpha_n=\tfrac32$ (KIC), $\alpha_n=\tfrac12\log n$ (BIC), then search by forward/backward selection ➔ [[Model Selection and Information Criteria (AIC, BIC)]].
+- **Interactions** ➔ add $x_jx_k$ ⟹ the change in log-odds per unit of $x_j$ now **depends on $x_k$** (and vice versa); without it the change is the same whatever the other predictors are.
 - **The boundary is linear** ➔ the set where $\mathbb{P}(Y=1\mid x_1,x_2)=\tfrac12$ is exactly $\eta=0$, a **line** in two features and a **$p$-dimensional hyperplane** in general ⟹ classes that are not linearly separable in the feature space cannot be separated by logistic regression without transformed predictors.
 
 ## 🔬 Model
@@ -119,6 +121,17 @@ $$
 \end{aligned}
 $$
 **Final Extracted Output:** at $\text{Age}=0$ the log-odds are $-33.68$ (a meaningless extrapolation); **each extra year adds $0.656$ to the log-odds**, i.e. multiplies the odds by $e^{0.656}\approx1.93$. A $50$-year-old has $\approx29\%$ probability ⟹ predict $\text{HighBP}=0$. The model crosses $\tfrac12$ at $\text{Age}=33.68/0.656\approx51.3$ years.
+
+### Applied Exercise 3 — reading a pruned model (Studio 7)
+**Problem:** BIC stepwise on $100$ binary SNP predictors ($n=200$) keeps $\hat\eta=-0.112-1.134\,\text{SNP12}+1.460\,\text{SNP56}$ (indicators $=1$ when mutated). Give the disease probability with neither, only SNP12, and only SNP56 mutated.
+$$
+\begin{aligned}
+\text{neither: } \hat\eta &= -0.112 &\Rightarrow\ \hat p &= \tfrac{1}{1+e^{0.112}}\approx0.47 \\
+\text{SNP12: } \hat\eta &= -0.112-1.134=-1.246 &\Rightarrow\ \hat p &\approx0.22 \\
+\text{SNP56: } \hat\eta &= -0.112+1.460=1.348 &\Rightarrow\ \hat p &\approx0.79
+\end{aligned}
+$$
+**Final Extracted Output:** a SNP12 mutation **lowers** the log-odds by $1.134$ (odds $\times e^{-1.134}\approx0.32$); a SNP56 mutation **raises** them by $1.460$ (odds $\times e^{1.460}\approx4.3$).
 
 ## ⚠️ Common Mistakes
 - 💡 **Reading $\beta_j$ as a change in probability** ➔ it is a change in **log-odds**; the same $\beta_j$ moves the probability a lot near $\eta=0$ and almost nothing in the tails, so no single "percentage point" answer exists.

@@ -20,7 +20,7 @@ aliases: [DWH, DW, Data Warehousing]
 - **Data warehouse** ➔ supports decisions: historical, integrated across sources, **pre-designed**, holding **precomputed values** at a chosen **granularity**, optimised for retrieving and summarising very large record sets.
 - **Multidimensional view** ➔ the analyst sees a **cube** with multiple dimensions; the cube is *logical* — the underlying physical storage is still relational, laid out as a [[Star Schema]].
 - **ETL** ➔ the whole process of extracting data from the operational databases and transforming it into the data warehouse = **E**xtraction, **T**ransformation, **L**oad.
-- **OLAP** ➔ On-Line Analytical Processing; the tool that retrieves large numbers of records from very large data sets and summarises them **"on the fly"** — the cube's query interface.
+- **OLAP** ➔ On-Line Analytical Processing; the tool that retrieves large numbers of records from very large data sets and summarises them **"on the fly"** — the cube's query interface ➔ query families in [[OLAP (On-Line Analytical Processing)]].
 - **Business Intelligence** ➔ the insight layer *on top of* OLAP: reports, charts, dashboards, interactive data navigation, and downstream data analytics.
 
 ## ⚖️ Operational Database vs Data Warehouse

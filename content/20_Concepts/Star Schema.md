@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: [1, 2, 4, 6]
+week: [1, 2, 4, 6, 8]
 source: [lecture, slides]
 domain: C
 parent: "[[Data Warehouse]]"
@@ -46,6 +46,8 @@ aliases: [Fact Table, Dimension Table, Dimensional Modelling]
 $$\text{Operational DB (E/R diagram)} \xrightarrow{\ \text{Transformation (ETL)}\ } \text{Data Warehouse (star schema)}$$
 - **Direction is one-way** ➔ the star is *derived from* the operational schema; the operational database keeps running unchanged.
 - **Build order** ➔ validate with [[Two-Column Table Methodology]] ➔ [[Building Dimension Tables]] ➔ [[Building Fact Tables]].
+- **Structurally an $n$-ary relationship** *(W8)* ➔ the fact is the $n$-ary relationship between all its dimensions and stands for the **transaction** in the source E/R diagram; a Level-0 star therefore carries the E/R diagram's whole information content, only restructured ➔ [[Identifying a Level-0 Star Schema]].
+- **One subject, several granularities** *(W8)* ➔ the same star is kept at several **levels of aggregation** — Level-0 built with `create table`, the upper levels as views over it ➔ [[Levels of Aggregation]].
 
 ## ⚙️ Schema Layout
 ### 🔹 Generic star

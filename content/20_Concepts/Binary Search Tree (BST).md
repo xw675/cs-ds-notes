@@ -1,8 +1,8 @@
 ---
 unit: [FIT1008, FIT2004]
 domain: A
-week: [1, 8]
-source: [applied]
+week: [1, 8, 10]
+source: [applied, lecture]
 parent: "[[Binary Tree]]"
 tags: [CS/DataStructures, SWE/OOP, CS/Complexity]
 aliases: [BST]
@@ -20,7 +20,7 @@ aliases: [BST]
 ### 1. The BST (Ordering Invariant)
 - **Invariant** ➔ for every node, left-subtree keys **less**, right-subtree keys **greater** (keys **unique**).
 - **Search halving** ➔ go left/right by comparison ➔ cost $\propto$ depth; key/item kept separate.
-- **Balance dependency** ➔ balanced $\Rightarrow O(\log N)$, sorted-insert stick $\Rightarrow O(N)$; self-balancing = **AVL**/**red-black**/**2-3-4**.
+- **Balance dependency** ➔ balanced $\Rightarrow O(\log N)$, sorted-insert stick $\Rightarrow O(N)$; self-balancing = [[AVL Tree|AVL]] · [[2-3 Tree|2-3]] · [[Left-Leaning Red-Black Tree|left-leaning red-black]] *(FIT2004 W10)* · 2-3-4.
 
 ### 2. Insert (Return-and-Relink)
 - **Mechanism** ➔ recurse left/right by key; at the empty leaf position, create the node.
@@ -29,6 +29,7 @@ aliases: [BST]
 
 ### 3. Delete (Three Cases via Successor)
 - **Leaf** ➔ null the parent link · **one child** ➔ bypass · **two children** ➔ replace key/item with the **in-order successor** (one step right, then all the way left), then delete it — the successor has no left child, so its removal is the easy case, and the next-largest key preserves left<root<right.
+- **FIT2004 framing** ➔ delete only ever removes a **leaf**: swap the key with its in-order **predecessor** (biggest in left subtree) **or** successor (smallest in right subtree) first — the question names which, so drill both; the choice can change the resulting tree and which rebalancing fires in an [[AVL Tree]].
 
 ### 4. Building the tree: $n$ insertions into an empty BST *(FIT2004)*
 - **Worst case $\Theta(n^2)$** ➔ feed keys **already sorted** ➔ every key descends the growing right spine, the $i$-th insertion walking $i-1$ nodes ⟹ $\sum_{i=1}^{n}\Theta(i)=\Theta(n^2)$ ([[Arithmetic Series]]).

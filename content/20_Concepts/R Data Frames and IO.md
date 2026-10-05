@@ -14,7 +14,7 @@ aliases: [R Data Frame, data.frame, read.csv, aggregate, R wrangling, R Data Fra
 **Problem it solves:** build/read a data frame, audit it, extract/sort/merge/aggregate rows and columns, and write it back.
 
 > [!abstract] Quick Revision
-> - **🎯 Trigger:** tabular data in R ➔ data.frame(); audit with str/summary; slice with [row, col] and the $ operator.
+> - **🎯 Trigger:** tabular data in R ➔ data.frame(); audit with str/summary; slice with [row, col] and the `$` operator.
 > - **⚡ Key Constraint:** `df[i]` selects a **column**; a **row** needs the trailing comma `df[i, ]` — the comma placement changes everything.
 
 ## 🔧 Minimal Working Example

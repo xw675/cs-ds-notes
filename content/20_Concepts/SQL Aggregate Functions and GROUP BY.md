@@ -1,15 +1,15 @@
 ---
-unit: FIT2094
+unit: [FIT2094, FIT3003]
 domain: C
 week: 9
 parent: "[[SQL SELECT and WHERE]]"
 tags: [CS/Databases, Tool/SQL]
 type: pattern
-aliases: [Aggregate Functions, GROUP BY, HAVING, COUNT, AVG, SUM]
+aliases: [Aggregate Functions, GROUP BY, HAVING, COUNT, AVG, SUM, COUNT DISTINCT]
 ---
 # [[SQL Aggregate Functions and GROUP BY]]
 
-**Context:** [[FIT2094_MOC]] · collapse many rows into per-group summaries · extends a plain [[SQL SELECT and WHERE|SELECT]] · pairs with [[SQL Subquery (Nested SELECT)|subqueries]] for "compare to the aggregate" queries
+**Context:** [[FIT2094_MOC]] · collapse many rows into per-group summaries · extends a plain [[SQL SELECT and WHERE|SELECT]] · pairs with [[SQL Subquery (Nested SELECT)|subqueries]] for "compare to the aggregate" queries · [[FIT3003_MOC]] reuses it as the base of every [[OLAP (On-Line Analytical Processing)|OLAP]] query
 **Problem it solves:** compute MIN/MAX/AVG/SUM/COUNT overall or per group, then filter the groups.
 
 > [!abstract] Quick Revision
@@ -27,6 +27,7 @@ ORDER BY dt_code;
 
 - **Aggregates** ➔ `MIN` / `MAX` / `AVG` / `SUM` / `COUNT`; each returns **one** value per group (or one overall with no GROUP BY).
 - **`COUNT(*)` vs `COUNT(col)`** ➔ `COUNT(*)` counts rows incl. NULLs; `COUNT(col)` counts **non-null** values — e.g. `RENTAL`: `COUNT(*)`=25, `COUNT(rent_in_dt)`=22 (3 not yet returned).
+- **`COUNT(DISTINCT col)`** ➔ counts **unique** non-null values (FIT3003 W9) — on a time dimension `count(distinct Month)` is at most $12$ while `count(Month)` counts every row that has a month, one per year $\times$ month.
 - **Clause execution order** ➔ FROM → **WHERE** (rows) → GROUP BY → aggregate → **HAVING** (groups) → SELECT → ORDER BY.
 - **WHERE vs HAVING** ➔ WHERE filters rows *before* grouping; HAVING filters groups *after* aggregation (and may reference an aggregate).
 

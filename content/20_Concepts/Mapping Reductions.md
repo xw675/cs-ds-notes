@@ -53,7 +53,7 @@ aliases: [mapping reduction, many-one reduction, reducibility, "<=m", reduces to
 ## 🔧 Worked reductions
 Each is stated as: the function, then the **iff chain** that certifies it. The chain is the marked part of the answer — a bare function earns nothing.
 
-- **$\text{EQUAL}\le_{m}\text{HALF-AND-HALF}$** ➔ $f(w) := $ **sort $w$**.
+- **$\text{EQUAL}\le_{m}\text{HALF-AND-HALF}$** ➔ $f(w) :=$ **sort $w$**.
 $$w\in\text{EQUAL} \iff \#\mathtt{a}(w)=\#\mathtt{b}(w) \iff \#\mathtt{a}(f(w))=\#\mathtt{b}(f(w)) \iff f(w)=\mathtt{a}^{n}\mathtt{b}^{n} \iff f(w)\in\text{HALF-AND-HALF}$$
   - **Why it works** ➔ sorting **preserves letter frequencies** and forces the canonical $\mathtt{a}$s-then-$\mathtt{b}$s shape, so the counting property survives and the ordering property is manufactured.
 - **$\text{HALF-AND-HALF}\le_{m}\text{PARENTHESES}$** ➔ scan $w$ left to right; if the previous letter was $\mathtt{b}$ and the current is $\mathtt{a}$ (i.e. the substring $\mathtt{ba}$, impossible in HALF-AND-HALF) **output the single string** `)` and stop; otherwise replace $\mathtt{a}\mapsto\texttt{(}$ and $\mathtt{b}\mapsto\texttt{)}$.
@@ -62,7 +62,7 @@ $$w\in\text{EQUAL} \iff \#\mathtt{a}(w)=\#\mathtt{b}(w) \iff \#\mathtt{a}(f(w))=
 - **$\text{FA-Empty}\le_{m}\text{No-Digraph-Path}$** ➔ given $\langle A\rangle$: vertices $:=$ states of $A$; every transition $v\xrightarrow{x}w$ becomes a directed edge $(v,w)$; add a **new vertex $t$** and an edge $(v,t)$ from **every** Final State $v$; set $s :=$ the Start State's vertex; output $\langle G,s,t\rangle$.
 $$\langle A\rangle\in\text{FA-Empty} \iff \text{no transition sequence Start}\to\text{Final} \iff \text{no } s\text{–}t \text{ path in } G \iff \langle G,s,t\rangle\in\text{No-Digraph-Path}$$
   - **What the new sink buys** ➔ collapsing *many* Final States into the **single** target $t$ converts "reaches **some** Final State" into the standard single-pair reachability question ([[Walks, Trails, and Paths]]); letters are discarded because emptiness ignores which word is read.
-- **$\text{RegExpEquiv}\le_{m}\text{FA-Empty}$** ➔ $f(\langle A,B\rangle) := $ the FA $C$ for $\big(L(A)\cap\overline{L(B)}\big)\cup\big(\overline{L(A)}\cap L(B)\big)$; the symmetric difference is empty iff the languages agree. **This is the [[Deciding Properties of FAs and CFGs|Lecture-20 decidability proof]] re-read as a reduction** — same construction, now named.
+- **$\text{RegExpEquiv}\le_{m}\text{FA-Empty}$** ➔ $f(\langle A,B\rangle) :=$ the FA $C$ for $\big(L(A)\cap\overline{L(B)}\big)\cup\big(\overline{L(A)}\cap L(B)\big)$; the symmetric difference is empty iff the languages agree. **This is the [[Deciding Properties of FAs and CFGs|Lecture-20 decidability proof]] re-read as a reduction** — same construction, now named.
 
 ## 🚫 Reducing *from* a decidable language is worthless
 > [!IMPORTANT] **Theorem.** If $L_{1}$ is decidable and $L_{2}$ is any language except $\emptyset$ and $\Sigma^{*}$, then $L_{1}\le_{m}L_{2}$.

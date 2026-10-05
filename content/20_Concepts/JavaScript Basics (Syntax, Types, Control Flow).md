@@ -10,7 +10,7 @@ aliases: [JavaScript Syntax, JavaScript, EcmaScript, const let, JavaScript Opera
 ---
 # [[JavaScript Basics (Syntax, Types, Control Flow)]]
 
-**Context:** [[FIT2102_MOC]] · the imperative half of JavaScript, kept deliberately small so [[JavaScript Functions as Values]] can replace most of it · same role for JS as [[Python Basics (Syntax, Types, Control Flow)]] plays for Python
+**Context:** [[FIT2102_MOC]] · the imperative half of JavaScript, kept deliberately small so [[JavaScript Functions as Values]] can replace most of it
 **Problem it solves:** bind values, branch, and loop in JavaScript — and know which of those constructs the unit wants you to stop using.
 **Course notes:** JavaScript intro.
 

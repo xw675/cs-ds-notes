@@ -1,7 +1,7 @@
 ---
 unit: FIT3003
-week: 7
-source: [lecture, slides]
+week: [7, 8]
+source: [lecture, slides, lab]
 domain: C
 parent: "[[Star Schema]]"
 tags: [CS/Databases, DataScience/DataWarehousing]
@@ -22,12 +22,14 @@ aliases: [Multi-Fact, Multiple Fact Tables, Different Subject Multi-Fact, Differ
 - **Four warehouse features** ➔ Integrated · **Subject-Oriented** · Time-Variant · Non-Volatile; the second one is what forces the rule.
 - **Two causes only** ➔ (i) **different subject**, (ii) **different granularity**; a measure being in different units is not a cause.
 - **Dimensions are shared, not duplicated** ➔ both facts hang off the same $\text{DIM}$ tables wherever they apply; only the *set* of applicable dimensions differs.
+- **Where the granularity cause comes from** *(W8)* ➔ materialising a **dimension hierarchy** as one fact per level is the systematic source of granularity multi-facts; two hierarchies give $\prod_i \ell_i$ facts and the whole thing is a **Fact Constellation** ➔ [[Fact Constellation]], [[Dimension Hierarchies]].
 
 ### 2. The subject test — the measure $\times$ dimension applicability grid (Book Sales)
 - **Method** ➔ cross every candidate fact measure with every candidate dimension and ask whether the pairing answers a **sensible business question**; a measure that fails a dimension cannot sit in that dimension's fact.
 - **Where `Num_of_Reviews` fails** ➔ Store (a star rating belongs to the book, not the shop that sold it) and Time (the recorded date is the **purchase** date, not the review date — read off the E/R diagram, not assumed).
 - **The split** ➔ $\text{BookSalesFACT}(\underline{\text{StoreID}^{*}, \text{CategoryID}^{*}, \text{TimeID}^{*}, \text{StarID}^{*}}, \text{Num\_of\_Books}, \text{Total\_Sales})$ and $\text{ReviewFACT}(\underline{\text{CategoryID}^{*}, \text{StarID}^{*}}, \text{Num\_of\_Reviews})$, sharing $\text{CategoryDIM}$ and $\text{StarRatingDIM}$.
 - **One rating per book** ➔ a book receives many reviews, so `StarID` in the *sales* fact is the book's **rounded average** rating banded into the star dimension, not an individual review.
+- **Lab 7 evidence** ➔ source tables live in the `dtaniar` account (`BOOK5`, `REVIEW5`, `SALES5`, `SALESDETAILS5`, …); ISBN `0316465186` is the book with **no review**, and it is the row that proves the outer join and the `nvl(…, 0)` both fired.
 
 ### 3. Different granularity — Car Service
 - **Star-1, Service grain** ➔ $\text{CarServiceFACT}_1(\underline{\text{TimeID}^{*}, \text{BrandName}^{*}, \text{ServiceNo}^{*}, \text{MechanicID}^{*}}, \text{Total\_Service\_Cost}, \text{Number\_of\_Services})$; $\text{PartDIM}$ reaches it only through a [[Bridge Tables|ServiceBridge]].
@@ -87,6 +89,45 @@ aliases: [Multi-Fact, Multiple Fact Tables, Different Subject Multi-Fact, Differ
 > ```
 > 💡 **Common Mistake:** **Joining `Book` straight to `Review` inside the sales fact** ➔ a book with $4$ reviews appears $4$ times, so `Num_of_Books` is inflated $4\times$; the two temp tables exist to force **one row per book** before the sales join ➔ [[Data Exploration (Warehouse Validation)]].
 > 💡 **Common Mistake:** **Inner-joining `Book` and `Review`** ➔ silently deletes every unreviewed book from the sales figures; `(+)` $+$ `nvl(R.Stars, 0)` is what preserves them.
+
+### 🔹 Lab 7 — the five reports off a two-fact star
+> [!code]- each question is routed to the fact that owns its measure
+> ```sql
+> -- 1. total sales per bookstore per month          -> BookSalesFact
+> select S.StoreID, T.Month, sum(F.Total_Sales) as Total_Sales
+> from   StoreDim S, TimeDim T, BookSalesFact F
+> where  S.StoreID = F.StoreID and F.TimeID = T.TimeID
+> group by S.StoreID, T.Month order by S.StoreID, T.Month;
+>
+> -- 2. books sold per category                       -> BookSalesFact + shared CategoryDim
+> select C.CategoryID, C.CategoryDescription, sum(F.Num_of_Books) as Total_Num_Books
+> from   BookSalesFact F, CategoryDim C
+> where  F.CategoryID = C.CategoryID
+> group by C.CategoryID, C.CategoryDescription;
+>
+> -- 3. the single best-selling category              -> top-N over an ordered inline view
+> select * from (
+>   select C.CategoryID, C.CategoryDescription, sum(F.Num_of_Books) as Total_Num_Books
+>   from   BookSalesFact F, CategoryDim C
+>   where  F.CategoryID = C.CategoryID
+>   group by C.CategoryID, C.CategoryDescription
+>   order by Total_Num_Books desc)
+> where rownum = 1;
+>
+> -- 4. reviews per category                          -> ReviewFact, same CategoryDim
+> select C.CategoryID, C.CategoryDescription, sum(F.Num_of_Review) as Number_of_Reviews
+> from   ReviewFact F, CategoryDim C
+> where  F.CategoryID = C.CategoryID
+> group by C.CategoryID, C.CategoryDescription;
+>
+> -- 5. 5-star reviews per category                   -> ReviewFact + both shared dimensions
+> select C.CategoryID, C.CategoryDescription, sum(F.Num_of_Review) as Number_of_5Star_Reviews
+> from   ReviewFact F, CategoryDim C, StarRatingDim S
+> where  F.CategoryID = C.CategoryID and S.StarID = F.StarID and S.StarID = 5
+> group by C.CategoryID, C.CategoryDescription;
+> ```
+> 💡 **Common Mistake:** **Reaching for the wrong fact** ➔ `Num_of_Books` exists only in `BookSalesFact` and `Num_of_Review` only in `ReviewFact`; no query in a multi-fact star joins the two facts to each other — they meet only through the **shared dimensions**.
+> 💡 **Common Mistake:** **Writing `where rownum = 1 … order by …` in one block** ➔ Oracle assigns `rownum` **before** the sort, so it returns an arbitrary row; the `order by` must sit inside the inline view and `rownum` outside it.
 
 ### 🔹 Removing a dimension by pivoting the small fact
 > [!code]- `ReviewFACT2` — zero columns from the dimension, then a correlated `update`

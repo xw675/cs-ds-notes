@@ -13,10 +13,10 @@ tags:
 - **Assignment 1 (10%, due W5)** · **Assignment 2 (20%, due W8)** · **Assignment 3 (20%, due W11)** ➔ carry the whole in-semester half; **all involve implementing models in R (LO5)**.
 - **Final exam (50%)**
 - **LO map** ➔ LO1 EDA/descriptive (W1–2) · LO2 inferential models (W3–5) · LO3 predictive models (W6–9, W11) · LO4 sampling/simulation/testing (W3, W5, W10) · LO5 implement in R (W6–11) · LO6 interpret results (W4–11).
-- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss).
+- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss). W8 formalises **why** complexity must be controlled (bias$^2$ + variance + irreducible $\sigma^2$) and compares the three controls — **tests** (with Bonferroni), **criteria** (AIC/KIC/BIC/RIC), **cross-validation** — before replacing unstable subset search with **ridge/lasso** shrinkage. W9 leaves the parametric families behind: **trees** partition predictor space and fit a model per leaf (grown by Bernoulli NLL, sized by IC/CV), **random forests** average randomised trees to cancel their instability, and **$k$-NN** predicts from neighbours with no model at all — each tuned by the same CV recipe over a complexity parameter $\gamma$.
 
 ## 🧰 Toolkit Cheatsheets
-- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block plus the `qnorm`/`qt` critical-value rows
+- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block, the `qnorm`/`qt` critical-value rows, and the `glm` / `pROC` / `step(k = 3)` classification block, and the `glmnet` ridge/lasso block (`cv.glmnet.f`, `lambda.min`, `alpha = 0`, RIC `k = 2*log(p)`)
 
 ## 📅 Knowledge Index
 
@@ -109,9 +109,36 @@ tags:
 - [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: the penalty transfers unchanged to logistic regression as $L+k\alpha_n$, with $\alpha_n=1$ (AIC), $\tfrac32$ (**KIC**, new), $\tfrac12\log n$ (BIC)
 - *(Terms to revise, from the lecture: odds/log-odds · logistic regression · classification accuracy · specificity/sensitivity · AUC · logarithmic loss)*
 
+### Week 8 — Model Selection & Penalized Regression
+- [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] — **merged**: $\hat f_{\mathcal{D}}$ over repeated samples, $\text{bias}(x_0)$/$\text{variance}(x_0)$, $\text{MSE}_f=\text{bias}^2+\text{variance}$, **irreducible** $\sigma^2$, the 10,000-sample simulation (order 2 / 7 / 20)
+- [[Multiple Testing and the Bonferroni Correction]] -> Parent Framework: [[Hypothesis Testing]] *(**exam hand skill**: $\alpha p$ false positives, threshold $\alpha/p$, FWER vs FDR)*
+- [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: NLL-scale AIC/**KIC**/BIC/**RIC**, when each over/underfits, the polynomial-order plot, problems with conventional selection
+- [[Cross-Validation]] -> Parent Framework: [[Model Selection and Information Criteria (AIC, BIC)]] *(MSPE estimate; $K$-fold / repeated / LOO; LOO ≈ AIC)*
+- [[Penalized Regression (Ridge and Lasso)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: instability experiment, standardise, $\lambda$ path, ridge $\ell_2$ vs lasso $\ell_1$, CV for $\lambda$, multicollinearity)*
+#### Studio 7 *(run in W8 — drills the W7 logistic-regression material; `gene.*.csv` / `pima.*.csv`)*
+- [[Logistic Regression in R (glm, pROC, step)]] -> Parent Framework: [[Logistic Regression]] *(**LO5 hand skill**: `glm(family = binomial)` ➔ `type = "response"` ➔ `my.pred.stats` ➔ `step` with AIC/KIC/BIC; gene $p\approx n$ overfit; Pima 53-term BIC vs KIC)*
+- [[Logistic Regression]] — **merged**: null/residual **deviance** $=2L$, interaction reading on the log-odds, the pruned SNP12/SNP56 equation drill
+- [[Predictor Transformations (Indicators, Polynomials, Interactions)]] — **merged**: judge a new term by $p$-value **and** deviance drop (`log(BMI)` keep, `PLAS^2` drop, `SKIN*AGE` keep)
+- *(Terms to revise, from the lecture: underfitting/bias · overfitting/variance · irreducible error & MSPE · multiple testing/Bonferroni · AIC, BIC · cross-validation · statistical instability · penalised regression · ridge/lasso)*
+
+### Week 9 — Trees & Nearest Neighbour Methods
+- [[Decision Trees and Regression Trees]] — **merged** (now dual-unit with FIT1043): $L$ disjoint regions, Bernoulli/Normal **leaf models**, complexity $L$, strengths/weaknesses, three near-equal trees ⟹ **instability**
+- [[Decision Tree Learning (Likelihood Splits, Pruning, CV)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**exam hand skill**: leaf NLL $-n_1\log\frac{n_1}{n}-n_0\log\frac{n_0}{n}$, the $x_1$ vs $x_2$ toy split, forward search, pruning, $K$-fold CV over $L$)*
+- [[Random Forest]] — **merged** (dual-unit): bootstrap sample + random candidate variables per split, average means/probabilities, low bias with reduced variance, variable importance
+- [[k-Nearest Neighbours]] -> Parent Framework: [[Classification and Conditional Class Probabilities]] *(**exam hand skill**: Euclidean distance, standardise, vote vs average vs kernel-weighted average, LOO CV for $k$)*
+- [[Cross-Validation]] — **merged**: the general complexity parameter $\gamma$ (predictor count, $\lambda$, $L$, $k$) and $\gamma^*=\arg\min_\gamma\text{CV}(\gamma)$
+- [[Machine Learning]] — **merged**: the statistician's framing — algorithmic, flexible, few assumptions, prediction over interpretation
+- *(Terms to revise, from the lecture: cross-validation · decision tree · split and leaf · random forest · $k$-nearest neighbours method)*
+
+#### Studio 8 *(run in W9 — drills the W8 selection/shrinkage material; `gene.*.csv` / `pima.*.csv` / `wrappers.R`)*
+- [[Shrinkage Estimator of the Mean]] -> Parent Framework: [[Estimator Quality (Bias, Variance, MSE)]] *(**derivation drill**: $\hat\mu(c)=\frac{n}{n+c}\bar Y$ ➔ bias, variance, MSE, crossover $\mu^2<\sigma^2\frac{2n+c}{nc}$, consistency, the ridge argmin proof)*
+- [[Penalized Regression in R (glmnet)]] -> Parent Framework: [[Penalized Regression (Ridge and Lasso)]] *(**LO5 hand skill**: `glmnet.f` / `cv.glmnet.f` / `predict.glmnet.f`, `lambda.min`, `alpha = 0`; lasso vs BIC at $n=668$; graceful degradation at $n=100$, $p=59$)*
+- [[Multiple Testing and the Bonferroni Correction]] — **merged**: the gene drill — 12 SNPs pass $0.05$ vs $5$ expected by chance, $0$ pass Bonferroni, RIC `k = 2*log(p)` keeps SNP56 alone ($p=0.0018$)
+- [[Penalized Regression (Ridge and Lasso)]] — **merged**: the one-parameter shrinkage case and the Studio 8 small-$n$ evidence
+
 ### 🔭 Coming later in the unit *(from the unit outline — no notes yet)*
-- **W8 next:** more recent developments in **fitting and estimating** linear and logistic regression models.
-- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · decision trees and forests *(W9)* · Bayesian classification & inverse probability · cross-validation & model-performance estimation.
+- **W10 next:** simulation-based methods — **bootstrapping**, **permutation tests**.
+- Multivariate Gaussian, Dirichlet · random sampling, simulation & the **bootstrap** · exploratory vs confirmatory analysis · Bayesian classification & inverse probability · model-performance estimation.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = assessment-critical)*
@@ -124,6 +151,8 @@ tags:
 - **W5 — testing:** **[[Hypothesis Testing]]** *(the logic + $p$-value)* → **[[Tests for Normal Means (z-test and t-test)]]** *(exam hand skill)* → [[Tests for Bernoulli Populations]] *(proportions)* → **[[Confidence Intervals in R (calcCI)]]** *(Studio 4, A1 skill)* → [[Confidence Interval Coverage Simulation]] *(Studio 4, in R)*
 - **W6 — regression & selection:** **[[Linear Regression (FIT2086)]]** *(the hub)* → [[Least Squares as Maximum Likelihood]] *(derivation drill)* → [[Predictor Transformations (Indicators, Polynomials, Interactions)]] *(build the columns)* → [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] *(why prune)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(exam hand skill)* → **[[Multiple Regression and Stepwise Selection in R]]** *(LO5, in R)* → **[[Hypothesis Testing in R (t.test, binom.test, prop.test)]]** *(Studio 5, in R)*
 - **W7 — classification:** **[[Classification and Conditional Class Probabilities]]** *(why the joint dies)* → **[[Logistic Regression]]** *(the model + the derivation)* → [[Classification Evaluation (Confusion Matrix and Metrics)]] *(CA, TPR, TNR)* → **[[ROC and AUC]]** *(exam hand skill)* → [[Logarithmic Loss]] *(confidence, not labels)*
+- **W8 — selection & shrinkage:** **[[Bias-Variance Tradeoff (Underfitting vs Overfitting)]]** *(the decomposition)* → **[[Multiple Testing and the Bonferroni Correction]]** *(why tests mislead)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(four penalties)* → [[Cross-Validation]] *(estimate MSPE)* → **[[Penalized Regression (Ridge and Lasso)]]** *(stable selection)* → **[[Logistic Regression in R (glm, pROC, step)]]** *(Studio 7, in R)*
+- **W9 — trees & neighbours:** [[Machine Learning]] *(the framing)* → [[Decision Trees and Regression Trees]] *(leaves + leaf models)* → **[[Decision Tree Learning (Likelihood Splits, Pruning, CV)]]** *(NLL split drill)* → [[Random Forest]] *(average away instability)* → **[[k-Nearest Neighbours]]** *(vote/average by hand)* → [[Cross-Validation]] *(one $\gamma$ recipe)* → **[[Shrinkage Estimator of the Mean]]** *(Studio 8 derivation)* → **[[Penalized Regression in R (glmnet)]]** *(Studio 8, in R)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W0** ➔ 
@@ -198,3 +227,30 @@ tags:
 	- derive the Bernoulli NLL $\sum_i[-y_i\eta_i+\log(1+e^{\eta_i})]$; state **convex, no closed form**
 	- compute $\text{CA}$, $\text{TPR}$, $\text{TNR}$ from a confusion matrix, against the **class-frequency** baseline
 	- compute AUC by hand from ranked scores, and say what **log-loss** adds that AUC cannot
+- **W8** ➔ 
+	- define $\text{bias}(x_0)$ and $\text{variance}(x_0)$ over repeated training samples $\hat f_{\mathcal{D}}$
+	- state $\text{MSE}_f=\text{bias}^2+\text{variance}$ and add $\sigma^2$ for predicting a new $Y'$ — **irreducible**
+	- map underfitting ➔ high bias/low variance and overfitting ➔ low bias/high variance; say what more $n$ does and doesn't fix
+	- compute expected false positives $\alpha p$ and the Bonferroni threshold $\alpha/p$; distinguish **FWER** from **FDR**
+	- write AIC $L+k$, KIC $L+\tfrac32k$, BIC $L+\tfrac k2\log n$, RIC $L+k\log p$ and say which over/underfits
+	- describe $K$-fold, repeated $K$-fold and LOO CV, and choose a model by smallest CV error
+	- explain why all-or-nothing subset selection is **statistically unstable**
+	- write the penalised LS objective, justify **standardising**, and read a $\lambda$ path
+	- contrast ridge ($\ell_2$, stable, no zeros) with lasso ($\ell_1$, sparse, biased large coefficients); pick $\lambda$ by CV then refit on all data
+	- explain penalisation as adding bias to cut variance, and why it helps with **multicollinearity** and $n<p$
+	- *(Studio 7)* fit `glm(…, family = binomial)` and read deviance, AIC $=$ deviance $+2k$, and each $z$-test
+	- *(Studio 7)* predict probabilities with `type = "response"`, threshold at $\tfrac12$, and score CA/sens/spec/AUC/log-loss on test data
+	- *(Studio 7)* prune with `step` at `k = 2` / `3` / `log(n)` and argue BIC (interpretable) vs KIC (predictive)
+	- *(Studio 7)* add `log()`, `I(x^2)` and `a*b` terms and justify each from its $p$-value and deviance drop
+	- *(Studio 7)* write a pruned model's log-odds equation and read each coefficient's effect
+- **W9** ➔ 
+	- explain how a tree partitions predictor space into $L$ leaves and predicts with each leaf's Bernoulli/Normal model
+	- compute a leaf's minimised NLL $-n_1\log\frac{n_1}{n}-n_0\log\frac{n_0}{n}$ and pick the purer split
+	- explain why splitting never raises the NLL ⟹ size trees by IC, pruning, or $K$-fold CV over $L$
+	- explain how bootstrap samples and random candidate variables let a forest cut variance, and what it costs in interpretability
+	- apply kNN: Euclidean distance on standardised predictors, then vote / average / kernel-weighted average
+	- choose $k$, distance and kernel by LOO CV
+	- *(Studio 8)* derive bias, variance and MSE of $\hat\mu(c)=\frac{n}{n+c}\bar Y$, find where it beats $\bar Y$, and prove it is the ridge solution
+	- *(Studio 8)* count false discoveries against $\alpha p$, apply Bonferroni, and run RIC stepwise with `k = 2*log(p)`
+	- *(Studio 8)* fit lasso/ridge with `cv.glmnet.f`, read the `lambda.min` coefficients, and compare with BIC stepwise on test data
+	- *(Studio 8)* explain why penalisation beats stepwise when $n$ is small relative to $p$

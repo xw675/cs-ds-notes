@@ -19,6 +19,7 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 | **D/HD Exam** | $+31$ | 3-hour written paper, on-campus **Week 15**, closed-book; covers unit content **and beyond**, high failure/zero-mark rate | all PTs Competent **by PTR1**, $\ge9/12$ weekly quizzes at 100%, **pre-exam score $\ge60$** |
 
 - **Safety net** ➔ PTR1/PTR2 reattempts cover missed competencies, but **bonus marks are forfeited**.
+- **PT-03 scope** ➔ W9 tries/suffix structures **and** W10 self-balancing trees — may start from a half-built tree and mix insert with delete · **no CD question on W10**.
 - **LO thread so far** ➔ analyse running time via recurrences; design divide-and-conquer algorithms; quote tight Big-O with mandatory complexity tables.
 
 ## 🧰 Unit Cheatsheet
@@ -89,7 +90,7 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - [[Greedy Algorithm]] -> [[Algorithm]] *(**new** — the paradigm behind all three: greedy-choice $+$ optimal substructure, proved by **exchange** or **stays ahead** · **applied P7** interval scheduling by earliest finish time, and the ranking rules that fail)*
 - [[Dijkstra's Algorithm]] -> [[Graph]] *(**applied**: P1 the *update-only-on-discovery* bug and how to break it · P3 **state-graph** modelling (fuel $\times$ town) · P6 **$0$-$1$ BFS** on a deque in $\Theta(V+E)$ · P9 the **bucket** priority queue for bounded integer weights)*
 
-### Week 7 — Dynamic Programming, and Shortest Paths With Negative Weights *(lecture-06 deck DP · lecture-07 deck Bellman-Ford/Warshall/Floyd-Warshall · DP wrap-up · applied W7)*
+### Week 7 — Dynamic Programming *(lecture-06 deck DP · DP wrap-up · applied W7)*
 - [[Dynamic Programming]] -> [[Algorithm]] *(**new** — **PT-02's entire subject**: the MEMO **is** the subproblem definition, the recurrence describes the **output** (not PT-01's time recurrence), and the answer is a *combination* · **§2** the lecture's exact DP-vs-D&C answer — sub-solutions are **optimal** and **reusable because subproblems overlap** · **§3** Fibonacci as the motivating repeat · **§8** decision array vs backtracking · **§11** the classical-problem roster · **applied P1** the salesman's houses end-to-end · **§10** grid DP (P2, P3) · **§6** the redundant-parameter deletion (P8, P13))*
 - [[Coin Change]] -> [[Dynamic Programming]] *(**new** — the lecture's first full DP and **the shape PT-02 wears as a costume**: brute force ➔ greedy ($\{1,5,6,9\}$ wanting $12$ gives $4$ coins, optimum $6{+}6$) ➔ DP; $O(NM)$ time, $\Theta(M)$ space · the **$-1$ not $\infty$** memo sentinel · the **decision array** introduced here, $O(N^{2})$ ➔ $\Theta(M)$ by storing only the last coin)*
 - [[Knapsack Problem]] -> [[Dynamic Programming]] *(**new** — *"given a limitation (cost), optimise something (profit)"*: **unbounded** is 1-D over weight (coin change with $\max$, init $0$, $+$ the carry term), **0/1** is 2-D because the item set is no longer a sufficient state; both $O(NM)$ · the **two-row space trick and why it kills reconstruction** · backtracking by comparing against the **row above**)*
@@ -97,14 +98,27 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - [[Longest Common Subsequence (LCS)]] -> [[Dynamic Programming]] *(**new**, applied P5 — the **two-prefix grid**, match ⟹ diagonal $+1$, mismatch ⟹ better of dropping each; $\Theta(nm)$ · **§3** SCS by the identity $n+m-\lvert\text{LCS}\rvert$ (P11) · **§4** interleaving with the third index deleted (P13))*
 - [[Maximum Subarray Sum]] -> [[Dynamic Programming]] *(**new**, applied P6 — the vault's home for **prefix sums**; $\Theta(n^{2})$ over all intervals ➔ $\Theta(n)$/$\Theta(1)$-space by anchoring the right end · **§3** the $O(n^{3})$ submatrix by row compression (P14))*
 - [[Interval Dynamic Programming]] -> [[Dynamic Programming]] *(**new**, applied P9/P10/P19 — `DP[i][j]` over a contiguous range, **filled by increasing length**; the adversarial $\max\to\min$ flip in the coin game, palindromic subsequence vs substring, and the $O(n^{3})$ split-at-$k$ family)*
-- [[Bellman-Ford]] -> [[Graph]] *(**new** — single-source shortest distance with **negative edges**: $\lvert V\rvert-1$ relaxation rounds because a shortest path is simple, then **one more pass** as the negative-cycle certificate; $\Theta(VE)$ · the unit-required **early-exit** optimisation)*
-- [[Floyd-Warshall]] -> [[Graph]] *(**new** — **all-pair** shortest distance on a matrix, $\Theta(V^{3})$/$\Theta(V^{2})$; absorbs **Warshall's transitive closure** (same loops, `or`/`and` instead of `min`/`+`), the *"$k$ is the permitted intermediate"* DP layering, and the **negative diagonal** as a cycle certificate)*
-- [[Dijkstra's Algorithm]] -> [[Graph]] *(the W7 contrast — its non-negativity precondition is exactly what these two buy their way out of; the all-pair comparison $\Theta(V^{3})<O(V^{3}\log V)<O(V^{4})$ lives in [[Floyd-Warshall]] §Applied)*
 - *Applied P12, P15, P16, P18, P20–P22 **deliberately not noted** — each is a one-off costume over a shape already covered (suffix-partition, monotone frontier, tree DP, ordered cases). Their transferable moves live as `[C]`/`[D]` lines in [[FIT2004 Unit Cheatsheet]] §1️⃣2️⃣.*
 - ⚠️ ***Pass-level roster, fully sourced except two:** the lecture deck covers Fibonacci, [[Coin Change|coin change]] and both [[Knapsack Problem|knapsack]] variants end-to-end. **Rod cutting** is on the wrap-up's pass list but absent from the deck — it is unbounded knapsack with length as weight. **Edit distance** is *deliberately* skipped in the lecture and deferred to the tutorial videos, linked to [[Longest Common Subsequence (LCS)|LCS]] — that note holds it.*
 
+### Week 8 — Shortest Paths With Negative Weights *(lecture-07 deck Bellman-Ford/Warshall/Floyd-Warshall)*
+- [[Bellman-Ford]] -> [[Graph]] *(**new** — single-source shortest distance with **negative edges**: $\lvert V\rvert-1$ relaxation rounds because a shortest path is simple, then **one more pass** as the negative-cycle certificate; $\Theta(VE)$ · the unit-required **early-exit** optimisation)*
+- [[Floyd-Warshall]] -> [[Graph]] *(**new** — **all-pair** shortest distance on a matrix, $\Theta(V^{3})$/$\Theta(V^{2})$; absorbs **Warshall's transitive closure** (same loops, `or`/`and` instead of `min`/`+`), the *"$k$ is the permitted intermediate"* DP layering, and the **negative diagonal** as a cycle certificate)*
+- [[Dijkstra's Algorithm]] -> [[Graph]] *(the W8 contrast — its non-negativity precondition is exactly what these two buy their way out of; the all-pair comparison $\Theta(V^{3})<O(V^{3}\log V)<O(V^{4})$ lives in [[Floyd-Warshall]] §Applied)*
+
+### Week 9 — Tries, Suffix Tries and Suffix Trees *(lecture-10 p2 Trie · sanity check W9 · prep W9 · applied W9 · PT-03)*
+- [[Trie]] -> [[Tree]] *(**new** — $k+1$ children with `$` at `links[0]` (why the terminal exists, why it goes first) · $O(M)$ search with $N$ absent · **prep P1** `cat`/`cathode` — a word that is also a prefix · nodes $O(T)$, leaves $\le N$, height $M+1$ · the selection rule vs sorted array / BST / hash table · **applied** P1 distinct count, P2 prefix counter, P5 predecessor trace, P7 scored prefix · `[D]` P10–P12 binary-trie XOR and trie-accelerated word break)*
+- [[Suffix Trie and Suffix Tree]] -> [[Trie]] *(**new** — **PT-03's subject**: draw the trie, compress to `[start,end]` edges, count by formula — nodes $D+n+2$, inner $D+1$, leaves and height $n+1$ · $\le2n+1$ tree nodes, build still $O(n^{2})$ · **applied** P3 distinct substrings, P4 longest common substring via `s1#s2$`, P6 greedy concatenation, P8/P9 shortest unique/absent · **prep** the `(i, l)` start$+$length label and the `ABAABA$` / `GATTACA$` drills)*
+- *Suffix array $+$ prefix doubling (lecture-10 p1) is **not examinable this semester** — quarantined as one 🔭 block in [[Suffix Trie and Suffix Tree]].*
+
+### Week 10 — Self-Balancing Search Trees *(lecture-11 p1 AVL deck · sanity check W10 · PT-03 notes · prep W10 · no CD content)*
+- [[AVL Tree]] -> [[Binary Search Tree (BST)]] *(**new** — $\lvert h(L)-h(R)\rvert\le1$ per node, `h,bf` hand annotation · LL/RR/LR/RL · **Ian's trinode restructure**: two steps down the taller side, median up, $T_1..T_4$ in-order · delete via predecessor **or** successor, cascades to the root · $O(\log N)$ because heights are stored · **prep P1**: fix the **lowest** imbalance even when an ancestor is also skewed)*
+- [[2-3 Tree]] -> [[Tree]] *(**new** — all leaves level · insert $=$ split $+$ promote the median, root split $=$ height $+1$ · delete $=$ swap to leaf, **rotate** from a 3-node sibling else **merge**, propagate · **prep P2**: a duplicate found at an **internal** node stops the insert; a split into a 2-node parent ends it)*
+- [[Left-Leaning Red-Black Tree]] -> [[2-3 Tree]] *(**new** — red edge $=$ 3-node glue, black-height $=$ 2-3 height · red leaf insert fixed by rotate left / rotate right / flip, root to black · **2-3 ⟷ LLRB conversion** to cross-check · insert only · **prep P3**: rotate left on a red right leaf, then a **double flip** that stops at a red left child of the root)*
+- [[Binary Search Tree (BST)]] -> [[Binary Tree]] *(lecture recap — leaf-only delete via predecessor **or** successor)*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · balanced BSTs (AVL), B-trees, tries · **network flow** · hashing.
+- Amortised analysis · **network flow**. *(Hashing was removed from the unit in 2025 S1; B-trees continue in FIT3155.)*
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -125,7 +139,9 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **W6c — the applied sheet, shortest paths revisited:** **[[Dijkstra's Algorithm]]** *(§4 deque · bucket queue, §5 state graph)* → [[Greedy Algorithm]] *(§4 interval scheduling)* → **[[Union-Find (Disjoint Set)]]** *(§Applied the height lemma)*
 - **W7a — the paradigm, then the pass-level pair:** **[[Dynamic Programming]]** *(MEMO ➔ recurrence ➔ reconstruct)* → **[[Coin Change]]** *(the PT-02 costume)* → **[[Knapsack Problem]]** *(1-D vs 2-D state)*
 - **W7b — the applied shapes, credit tier:** **[[Longest Increasing Subsequence (LIS)]]** *(anchored ⟹ scan)* → **[[Longest Common Subsequence (LCS)]]** *(two prefixes, $+$ edit distance)* → [[Maximum Subarray Sum]] *(prefix sums ➔ $\Theta(n)$)* → [[Interval Dynamic Programming]] *(fill by length)*
-- **W7c — the negative-weight escape hatches:** [[Dijkstra's Algorithm]] *(where greed dies)* → **[[Bellman-Ford]]** *($V{-}1$ rounds $+$ the check)* → **[[Floyd-Warshall]]** *(all pairs, $\Theta(V^{3})$)* → [[Graph Representations]] *(density picks the winner)*
+- **W8a — the negative-weight escape hatches:** [[Dijkstra's Algorithm]] *(where greed dies)* → **[[Bellman-Ford]]** *($V{-}1$ rounds $+$ the check)* → **[[Floyd-Warshall]]** *(all pairs, $\Theta(V^{3})$)* → [[Graph Representations]] *(density picks the winner)*
+- **W9 — retrieval by character, then by suffix:** [[Trie]] *(the `$` terminal, $O(M)$, properties)* → **[[Suffix Trie and Suffix Tree]]** *(PT-03: draw, compress, count)* → [[Trie]] *(§4 payload augmentation)* → [[Suffix Trie and Suffix Tree]] *(§4 think in the trie, answer in the tree)*
+- **W10 — balance, three ways (PT-03):** [[Binary Search Tree (BST)]] *(why balance)* → **[[AVL Tree]]** *(trinode restructure)* → **[[2-3 Tree]]** *(split · rotate · merge)* → **[[Left-Leaning Red-Black Tree]]** *(rotate · flip, verify via 2-3)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -214,5 +230,23 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- separate DP from divide & conquer: **optimal** sub-solutions that **overlap**
 	- decide the state: is one parameter enough? *(unbounded vs 0/1 knapsack)*
 	- rebuild the combination by decision array or backtracking
+- **W8** ➔
 	- justify [[Bellman-Ford]]'s $\lvert V\rvert-1$ rounds and its extra check pass
 	- select Dijkstra / Bellman-Ford / Floyd-Warshall by weight sign and density
+- **W9** ➔
+	- justify the `$` terminal and its `links[0]` slot, and quote trie search as $O(M)$ with $N$ absent
+	- bound a trie by its properties — nodes $O(T)$, leaves $\le N$, height $M+1$ — and choose it over a sorted array, BST or hash table from the query type
+	- augment the node payload to answer a query in $O(m)$ — prefix count, scored prefix, predecessor
+	- draw the suffix trie of `S$` and compress it to a `[start,end]` suffix tree
+	- count nodes, inner nodes, leaves and height of both (PT-03)
+	- solve a substring problem in the suffix trie, then translate it to the tree
+- **W10** ➔
+	- annotate every node `h,bf` with $bf=h(L)-h(R)$ and find the **lowest** node with $\lvert bf\rvert>1$
+	- classify LL/RR/LR/RL by two steps down the taller side — a tie on step 2 repeats step 1
+	- restructure by Ian's way: median up, smaller left, bigger right, $T_1..T_4$ re-hung in-order
+	- delete via predecessor **or** successor and keep rebalancing up to the root
+	- justify AVL operations as $O(\log N)$: stored heights, $\le2$ rotations per fix
+	- insert into a 2-3 tree by split $+$ promote, cascading to a root split
+	- delete from a 2-3 tree by rotate (3-node sibling) or merge, propagating to the root
+	- insert into an LLRB as a red leaf and fix by rotate left / rotate right / colour flip, then blacken the root
+	- convert 2-3 ⟷ LLRB and check equal black-height on every branch

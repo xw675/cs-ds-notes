@@ -1,7 +1,7 @@
 ---
 unit: FIT2086
-week: 6
-source: [lecture]
+week: [6, 8]
+source: [lecture, applied]
 domain: E
 parent: "[[Linear Regression (FIT2086)]]"
 tags: [DataScience/Modelling, DataScience/ML]
@@ -41,7 +41,9 @@ aliases: [Indicator Variables, Dummy Variables, Categorical Predictors, Polynomi
 - **The claim being modelled** ➔ the effect of predictor $j$ on the target **depends on the value of** predictor $k$.
 - **Construction** ➔ append one new design-matrix column equal to $x_{i,j}\times x_{i,k}$; fit as usual.
 - **Reading the sign** ➔ with both main effects negative, a **positive** interaction means their combined negative effect is **weakened** when both rise together.
-- **Practical note** ➔ most packages build interaction columns for you (in R, `y ~ a*b` expands to `a + b + a:b`).
+- **Practical note** ➔ most packages build interaction columns for you (in R, `y ~ a*b` expands to `a + b + a:b`; `.*.` builds every pair).
+- **Weak alone ≠ useless (Studio 7)** ➔ in the Pima logistic model SKIN is unimportant ($p=0.37$) and AGE marginal ($p=0.07$), yet `SKIN*AGE` gives $p=0.015$ and a deviance drop of $5.16$ ➔ a variable can matter **only through** an interaction.
+- **Checking a transformation** ➔ look at the new term's $p$-value **and** the drop in residual deviance: `log(BMI)` $p=0.0013$, drop $10.76$ (keep) vs `I(PLAS^2)` $p=0.70$, drop $0.14$ (no curvature) ➔ [[Logistic Regression in R (glm, pROC, step)]].
 
 ## ⚖️ Core Decision Matrix
 | Transformation | Trigger condition | New columns added | What the coefficient means | Cost |
