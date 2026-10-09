@@ -8,7 +8,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ---
 # [[FIT2004 Unit Cheatsheet]]
 
-**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W10; extend each week.*
+**Context:** [[FIT2004_MOC]] · the WHOLE unit in one re-read, syllabus-ordered. This sheet holds the FIT2004 **rigour layer** (recurrences, derivations, bounds). *Currently covers W1–W12; extend each week.*
 **Tier tags:** `[P]` PT-critical, must be automatic · `[C]` needed for Credit Discussions · `[D]` D/HD-exam rigour. Drill `[P]` to fluency **before** reading a `[D]` line.
 
 > [!abstract] Quick Revision
@@ -526,4 +526,57 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | [[AVL Tree]] | $\lvert bf\rvert\le1$ per node | trinode restructure | swap to leaf $+$ restructure, cascades | $O(\log N)$ |
 | [[2-3 Tree]] | all leaves level | split $+$ promote | swap to leaf $+$ rotate / merge | $O(\log N)$ |
 | [[Left-Leaning Red-Black Tree\|LLRB]] | equal black edges per path | rotate L / rotate R / flip | not in FIT2004 | $O(\log N)$ |
+
+## 1️⃣6️⃣ Network Flow (W11 lecture · prep W11 · applied W11)
+> [!warning] Two sign rules decide every flow question: the residual **backward** edge has capacity $f$ (cancellable), and a cut's **capacity** counts $S\to T$ edges only while its **flow** subtracts $T\to S$ flow.
+
+- **Flow network** `[C]` ➔ directed, capacities $c\ge0$, source $s$ (no in-edges), target $t$ (no out-edges) **· capacity constraint:** $0\le f\le c$ **· conservation:** in $=$ out at every $v\notin\{s,t\}$ **· value:** $\lvert f\rvert=$ net out of $s$ $=$ net into $t$.
+- **[[Ford-Fulkerson Method|Residual network]] $G_f$** `[C]` ➔ per edge $u\to v$: forward $u\to v$ of $c-f$, backward $v\to u$ of $f$ · drop zeros · merge parallels **· check:** $r(u,v)+r(v,u)=c(u,v)+c(v,u)$ **· size:** $\le2E$ edges.
+- **Augment** `[C]` ➔ any $s\rightsquigarrow t$ path in $G_f$ (BFS/DFS) · $b=\min$ **residual** capacity · forward edge $f\mathrel{+}=b$, backward edge cancels $f\mathrel{-}=b$ · $\lvert f\rvert\mathrel{+}=b$ **· stop:** no path ⟹ maximum.
+- **Why backward edges** `[C]` ➔ lecture network stalls at $19$ with forward pushes only; $s\to b\to c\to t$ through backward $b\to c$ cancels $4$ on $c\to b$ ⟹ $23$.
+- **FF bounds** `[C]` ➔ $O(V+E)$ per iteration · $\le F$ iterations (integer capacities ⟹ $b\ge1$) ⟹ $O(FE)$, **pseudo-polynomial** ($F$ is a value) **· BFS:** Edmonds–Karp $O(VE^{2})$ (FIT3155) **· unit capacities:** $F\le V-1$ ⟹ $O(VE)$ **· space:** $\Theta(V+E)$.
+- **Integrality** `[C]` ➔ integer capacities ⟹ integer flow on every edge **· use:** matchings and $0/1$ entries read straight off edge flows.
+- **Answer not unique** `[C]` ➔ max-flow **value** fixed; edge assignment and min cut may differ between runs.
+- **[[Min-Cut Max-Flow Theorem|Cut]] $(S,T)$** `[C]` ➔ $s\in S$, $t\in T$, any partition **· capacity** $=\sum c(S\to T)$ **· flow** $=\sum f(S\to T)-\sum f(T\to S)$.
+- **Every cut carries $\lvert f\rvert$** `[D]` ➔ sum conservation over $S$: only $s$ is non-zero, $S$–$S$ edges cancel **· applied P1:** cuts $(\{s\},\cdot)$ and $(\cdot,\{t\})$ ⟹ net out of $s$ $=$ net into $t$.
+- **Weak duality** `[D]` ➔ $\lvert f\rvert=f(S,T)\le c(S,T)$ for every flow and cut ⟹ a flow equal to a cut capacity is maximum.
+- **Max-flow $=$ min-cut** `[D]` ➔ at FF's exit let $S=$ reachable from $s$ in $G_f$: every $S\to T$ edge saturated, every $T\to S$ edge empty, else $S$ would grow ⟹ $\lvert f\rvert=c(S,T)$ **· this + termination $=$ FF's correctness proof.**
+- **Find the min cut** `[C]` ➔ FF to completion ➔ BFS/DFS from $s$ in the **final residual** ➔ $S=$ reached ➔ sum $S\to T$ capacities, confirm $=\lvert f\rvert$ **· trap:** searching $G$ instead of $G_f$.
+- **[[Network Flow Reductions|Reductions]]** `[C]` ➔ transform the input, never modify FF · owe construction $+$ why max flow $\iff$ answer $+$ read-off.
+- **Super source / sink (P2)** `[C]` ➔ $s^{*}\to s_i$ cap $=$ out-capacity of $s_i$, $t_j\to t^{*}$ cap $=$ in-capacity of $t_j$ **· value unchanged** (BFS's super source shifts by $1$, flow's does not).
+- **Vertex capacity (P5)** `[C]` ➔ split $v_{in}\to v_{out}$ cap $c(v)$; in-edges to $v_{in}$, out-edges from $v_{out}$ ⟹ $V'=2V-2$.
+- **Bipartite matching (lecture)** `[C]` ➔ $s\to L$ cap $1$ (quota), $L\to R$ cap $1$, $R\to t$ cap $1$ ⟹ max flow $=$ max matching **· quotas:** $s\to\ell$ cap $q$ lets $\ell$ match $q$ times.
+- **Quota feasibility (P3, P7)** `[C]` ➔ $0/1$ matrix: $s\to a_i$ cap $r_i$, $a_i\to b_j$ cap $1$, $b_j\to t$ cap $c_j$ ⟹ feasible $\iff\lvert f\rvert=\sum r_i$, $X_{ij}=f(a_i,b_j)$ **· songs:** middle cap $=$ distinct songs in (era, genre).
+- **Disjoint paths (P6)** `[C]` ➔ unit edge capacities ⟹ max flow $=$ edge-disjoint path count, $O(E\cdot\text{outdeg}(s))=O(VE)$ **· vertex-disjoint:** vertex cap $1$ $+$ split.
+- **Min-cut split (P4)** `[D]` ➔ $s\to j$ cap $\text{cost}_1$, $j\to t$ cap $\text{cost}_2$, **two** opposite penalty edges per related pair ⟹ min cut $=$ min cost **· read-off:** $S$ side ⟹ computer **2**, $T$ side ⟹ computer **1**.
+- **$\infty$ edge (W12 P3, P5)** `[C]` ➔ $u\to v$ cap $\infty$ never crosses $S\to T$ in a finite min cut ⟹ "$u\in S$ ⟹ $v\in S$" **· use:** prerequisites, cells pinned to one side.
+- **Project selection (W12 P3)** `[C]` ➔ $s\to x$ cap $p$ ($p>0$), $x\to t$ cap $p$ (profit $-p$), $x\to y$ cap $\infty$ ($y$ prerequisite of $x$) ⟹ $S$ $=$ done **· profit** $=\sum_{p_x>0}p_x-$ min cut **· trap:** the cut is the loss, not the profit.
+- **Fencing / segmentation (W12 P5)** `[C]` ➔ $s\to$ boundary $\infty$, $s\to$ ground cell $c_{\text{dig}}$, hole $\to t$ $c_{\text{fill}}$, two opposite $c_{\text{fence}}$ edges per adjacent pair ⟹ min cut $=$ min cost.
+- **DAG minimum path cover (W12 P2)** `[C]` ➔ split $V$ into $u_L$, $u_R$, edge $u\to v$ ⟹ $u_L\to v_R$, max matching $M$ ⟹ min paths $=\lvert V\rvert-\lvert M\rvert$ **· why:** a match picks a successor; unmatched left copies are path ends.
+
+| Question asks | Build | Read off |
+| :--- | :--- | :--- |
+| how much can get through | the network as given | $\lvert f\rvert$ |
+| several sources / sinks | super $s^{*}$, $t^{*}$ | $\lvert f\rvert$ |
+| node throughput limits | vertex split | $\lvert f\rvert$ |
+| pair two groups (with quotas) | $s\to L\to R\to t$ | middle edges with flow |
+| exact counts per row / category | quota outer edges | feasible $\iff\lvert f\rvert=\sum$ quotas |
+| paths sharing no edge / vertex | unit capacities ($+$ split) | $\lvert f\rvert$ |
+| cheapest two-way assignment | $s\to j$, $j\to t$, paired penalties | min cut sides, value $=$ cost |
+| subset with prerequisites, max profit | profits from $s$, costs to $t$, $\infty$ prerequisites | $S$ side, profit $=\sum p^{+}-$ min cut |
+| fewest disjoint paths covering a DAG | $u_L\to v_R$ matching | $\lvert V\rvert-\lvert M\rvert$ |
+| "at least" on a link, fixed supplies / needs | circulation (§1️⃣7️⃣) | feasible $\iff$ super-edges saturated |
+
+## 1️⃣7️⃣ Circulation with Demands and Lower Bounds (W12 lecture · applied W12)
+> [!warning] Two signs decide every circulation question: $d_v<0$ is a **supplier** (edge from $s$), and lower bounds enter $d^{*}$ as **minus incoming, plus outgoing**.
+
+- **[[Circulation with Demands and Lower Bounds|Circulation with demands]]** `[C]` ➔ $0\le f\le c$ **· demand constraint** $\text{in}(v)-\text{out}(v)=d_v$ at every $v$, no $s$/$t$ **· feasibility**, not optimisation.
+- **Feasibility by max flow** `[C]` ➔ $s\to v$ cap $-d_v$ ($d_v<0$), $v\to t$ cap $d_v$ ($d_v>0$), FF ⟹ feasible $\iff$ every super-edge saturated $\iff\lvert f\rvert=D^{+}=D^{-}$ **· read-off:** delete $s$, $t$ **· quick reject:** $D^{+}\ne D^{-}$.
+- **Why the test is exact** `[D]` ➔ (⟸) a saturated $s\to v$ supplies exactly $-d_v$ · (⟹) feasible circulation $+$ full super-edges has value $D^{+}=c(\{s\},\cdot)$ ⟹ maximum by weak duality.
+- **Lower bounds** `[C]` ➔ pre-push $f_\ell=\ell$ **·** $c^{*}=c-\ell$ **·** $d^{*}_v=d_v-\sum\ell(\cdot,v)+\sum\ell(v,\cdot)$ **·** solve demands on $G^{*}$ **·** $f=f_\ell+f^{*}$ with the original $d_v$ **· self-check:** $\sum d^{*}_v=\sum d_v$.
+- **Infeasibility certificate** `[C]` ➔ a cut of capacity $<D^{+}$ · Clayton network: $d^{*}_w=4$ but $w$'s in-capacity in $G^{*}$ is $3$.
+- **Cost** `[D]` ➔ transform $O(V+E)$, FF $O(D^{+}(V+E))$ — **pseudo-polynomial** in the demands, space $\Theta(V+E)$.
+- **Modelling** `[C]` ➔ exact count on a vertex $=$ demand · range on a link $=$ window $[\ell,c]$ · range per item with only a fixed total ⟹ extra vertex carrying $-D$ (roster P4a) · cap on a **group** of edges ⟹ selector vertex (P4b).
+- **Lecture applications** `[C]` ➔ survey: $q\to c_i$ $[c_i^-,c_i^+]$, $c_i\to p_j$ $[0,1]$, $p_j\to f$ $[p_j^-,p_j^+]$, $f\to q$ closing edge **· airline:** route $[1,1]$, $s\to\text{dep}$ / $\text{arr}\to t$ / chain $[0,1]$, $s\to t$ $[0,k]$, $d_s=-k$, $d_t=k$.
+- **Baseball elimination (P6)** `[D]` ➔ $x$ wins all ⟹ $y$ · $G_{i,j}$ ($d=-r_{ij}$) $\to T_i,T_j$ cap $r_{ij}$ · $T_i\to A$ cap $y-w_i$ · $d_A=\sum r_{ij}$ ⟹ feasible $\iff x$ can finish at least tied.
 

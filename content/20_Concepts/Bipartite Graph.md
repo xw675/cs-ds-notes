@@ -55,6 +55,10 @@ $$\#\text{two-colourings}=2^{\,c},\qquad c=\#\text{connected components}$$
 - **Isolated vertices count** ➔ a degree-$0$ vertex is its own component and doubles the answer; forgetting them is the standard arithmetic slip.
 - **Total cost** ➔ still $\Theta(V+E)$: one traversal decides colourability and counts components in the same pass.
 
+### 7. Maximum Matching Is a Flow Problem *(FIT2004 W11 lecture)*
+- **The step up from testing** ➔ the parts $L$, $R$ become the middle layer of a flow network, $s\to L\to R\to t$, every edge capacity $1$ ➔ max flow $=$ maximum matching, matched pairs $=$ saturated middle edges.
+- **Construction, quotas and proof** ➔ [[Network Flow Reductions]] §3.
+
 ## ⚙️ Core Implementation
 ### 🔹 `TWO_COLOUR` — decide and colour in one DFS
 > [!code]- Pseudocode

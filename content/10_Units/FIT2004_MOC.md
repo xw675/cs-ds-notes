@@ -117,8 +117,18 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - [[Left-Leaning Red-Black Tree]] -> [[2-3 Tree]] *(**new** — red edge $=$ 3-node glue, black-height $=$ 2-3 height · red leaf insert fixed by rotate left / rotate right / flip, root to black · **2-3 ⟷ LLRB conversion** to cross-check · insert only · **prep P3**: rotate left on a red right leaf, then a **double flip** that stops at a red left child of the root)*
 - [[Binary Search Tree (BST)]] -> [[Binary Tree]] *(lecture recap — leaf-only delete via predecessor **or** successor)*
 
+### Week 11 — Network Flow *(lecture-08 deck Network Flow · prep W11 · applied W11)*
+- [[Ford-Fulkerson Method]] -> [[Graph]] *(**new** — flow network $+$ capacity/conservation · **residual network**, forward $c-f$ and backward $f$, parallels merged · augment by the bottleneck, **cancelling** through backward edges ($19\to23$ needs it) · $O(FE)$ **pseudo-polynomial**, BFS $=$ Edmonds–Karp $O(VE^{2})$ as FIT3155 · **prep P1** warm-start trace $5\to7$ · **applied P8** BFS/DFS implementation)*
+- [[Min-Cut Max-Flow Theorem]] -> [[Ford-Fulkerson Method]] *(**new** — cut capacity counts $S\to T$ only, cut flow is out $-$ in · every cut carries $\lvert f\rvert$ (**applied P1**) · weak duality $+$ residual-reachability proof ⟹ FF is correct · seven-cut trace on the lecture graph · **prep P1(e)** min cut $(\{s\},\text{rest})$)*
+- [[Network Flow Reductions]] -> [[Ford-Fulkerson Method]] *(**new**, the **LO1** note — super source/sink (P2) · vertex split (P5) · **bipartite matching** with quotas, $0/1$ matrix (P3), radio songs (P7) · unit-capacity **disjoint paths** $O(E\cdot\text{outdeg}(s))$ (P6) · **min-cut** job allocation, $S$ side $=$ computer 2 (P4))*
+- [[Bipartite Graph]] -> [[Graph]] *(**§7 pointer** — maximum matching is a flow problem)*
+
+### Week 12 — Circulation with Demands and Lower Bounds *(lecture-09 deck Circulation · applied W12)*
+- [[Circulation with Demands and Lower Bounds]] -> [[Ford-Fulkerson Method]] *(**new** — demand constraint $\text{in}-\text{out}=d_v$ · $s\to$ suppliers ($d<0$), consumers $\to t$, feasible $\iff$ every super-edge saturated · lower bounds: pre-push $\ell$, $d^{*}=d-\ell_{\text{in}}+\ell_{\text{out}}$, $c^{*}=c-\ell$, $f=f_\ell+f^{*}$ · **applied P1** full trace · the lecture's Clayton network, infeasible at $w$ · **modelling**: survey design, airline scheduling, weekend roster with selector nodes (P4), baseball elimination (P6) · P7 implementation)*
+- [[Network Flow Reductions]] -> [[Ford-Fulkerson Method]] *(**applied**: P2 DAG **minimum path cover** $=\lvert V\rvert-\lvert M\rvert$ · P3 **project selection**, $\infty$ prerequisite edges, profit $=\sum p^{+}-$ min cut · P5 land **fencing** as segmentation)*
+
 ### 🔭 Coming later in the unit *(from the handbook outline — no notes yet)*
-- Amortised analysis · **network flow**. *(Hashing was removed from the unit in 2025 S1; B-trees continue in FIT3155.)*
+- Amortised analysis. *(Hashing was removed from the unit in 2025 S1; B-trees continue in FIT3155.)*
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = competency-test hand skill)*
@@ -142,6 +152,8 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **W8a — the negative-weight escape hatches:** [[Dijkstra's Algorithm]] *(where greed dies)* → **[[Bellman-Ford]]** *($V{-}1$ rounds $+$ the check)* → **[[Floyd-Warshall]]** *(all pairs, $\Theta(V^{3})$)* → [[Graph Representations]] *(density picks the winner)*
 - **W9 — retrieval by character, then by suffix:** [[Trie]] *(the `$` terminal, $O(M)$, properties)* → **[[Suffix Trie and Suffix Tree]]** *(PT-03: draw, compress, count)* → [[Trie]] *(§4 payload augmentation)* → [[Suffix Trie and Suffix Tree]] *(§4 think in the trie, answer in the tree)*
 - **W10 — balance, three ways (PT-03):** [[Binary Search Tree (BST)]] *(why balance)* → **[[AVL Tree]]** *(trinode restructure)* → **[[2-3 Tree]]** *(split · rotate · merge)* → **[[Left-Leaning Red-Black Tree]]** *(rotate · flip, verify via 2-3)*
+- **W11 — push, prove, reduce:** [[Graph]] *(directed, weighted)* → **[[Ford-Fulkerson Method]]** *(residual $+$ augment)* → **[[Min-Cut Max-Flow Theorem]]** *(why it stops at max · find the cut)* → **[[Network Flow Reductions]]** *(build the network)* → [[Bipartite Graph]] *(§7 matching)*
+- **W12 — feasibility, then modelling:** [[Ford-Fulkerson Method]] *(the engine)* → **[[Circulation with Demands and Lower Bounds]]** *(§2 super-edges · §3 pre-push $\ell$)* → [[Circulation with Demands and Lower Bounds]] *(§4 survey · airline · roster · baseball)* → **[[Network Flow Reductions]]** *(§3 path cover · §5 $\infty$ edges, project selection, fencing)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W1** ➔
@@ -250,3 +262,20 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- delete from a 2-3 tree by rotate (3-node sibling) or merge, propagating to the root
 	- insert into an LLRB as a red leaf and fix by rotate left / rotate right / colour flip, then blacken the root
 	- convert 2-3 ⟷ LLRB and check equal black-height on every branch
+- **W11** ➔
+	- state the capacity constraint and flow conservation, and read $\lvert f\rvert$ off a network
+	- draw the residual network — forward $c-f$, backward $f$, zeros dropped, parallels merged
+	- hand-run Ford-Fulkerson: path, **residual** bottleneck, augment (cancelling via backward edges), repeat to no path
+	- derive $O(FE)$, call it pseudo-polynomial, and quote BFS (Edmonds–Karp) $O(VE^{2})$
+	- compute a cut's capacity ($S\to T$ only) and flow (out $-$ in), and prove every cut carries $\lvert f\rvert$
+	- prove max-flow $=$ min-cut from residual reachability, and extract the min cut after FF
+	- reduce a new problem to max flow — super source/sink, vertex split, matching with quotas, disjoint paths, min-cut split — and state the read-off
+- **W12** ➔
+	- state the demand constraint $\text{in}(v)-\text{out}(v)=d_v$ and read a negative demand as a supplier
+	- decide circulation feasibility by one max flow — $s\to v$ cap $-d_v$, $v\to t$ cap $d_v$, feasible $\iff$ every super-edge saturated
+	- remove lower bounds by pre-pushing $\ell$ — $c^{*}=c-\ell$, $d^{*}_v=d_v-\ell_{\text{in}}+\ell_{\text{out}}$ — then return $f=f_\ell+f^{*}$
+	- certify infeasibility with a cut of capacity $<D^{+}$
+	- model "at least / at most / exactly" as edge windows and demands — survey design, airline scheduling, rosters, baseball elimination
+	- cap a group of edges with a selector vertex
+	- reduce DAG minimum path cover to bipartite matching, answer $\lvert V\rvert-\lvert M\rvert$
+	- encode prerequisites as $\infty$ edges in a min cut and recover profit $=\sum p^{+}-c(S,T)$
