@@ -1,7 +1,7 @@
 ---
 unit: [FIT2094, FIT3003]
 domain: C
-week: [5, 6]
+week: [5, 6, 11]
 parent: "[[Primary Key]]"
 tags: [CS/Databases, SWE/Design]
 aliases: [Artificial Key, Sequence Key]
@@ -32,6 +32,7 @@ aliases: [Artificial Key, Sequence Key]
 - **Scope is one dimension** ➔ a surrogate key is a **unique identification for each record in a dimension table** and its PK; it is *local* to that dimension, not global to the warehouse.
 - **Implementation is a sequence** ➔ not hand-typed `update … where` statements; the same `Seq_ID` idiom keys a [[Junk Dimensions|junk dimension]].
 - **The fact must be re-keyed too** ➔ the staged `TempFact` holds the natural values, so it gains the surrogate column and is filled from the dimension before the final `group by`.
+- **Trigger-filled alternative** *(W11)* ➔ a `BEFORE INSERT … FOR EACH ROW` trigger runs `select seq.nextval into :new.ID from dual`, so every inserted row is keyed with no `update` pass ➔ [[Database Triggers (Oracle)]].
 - **It is optional, not mandatory** ➔ if the operational PK is already unique **across all source systems**, adding a surrogate buys nothing in the warehouse.
 - **It does not rescue a thin dimension** ➔ `SexDim(SexID, Sex)` still has nothing to look up; what earns a one-column dimension its place is a **description** ➔ [[One-Attribute Dimensions]].
 

@@ -1,11 +1,11 @@
 ---
 unit: FIT2086
-week: [6, 8]
+week: [6, 8, 11]
 source: [lecture]
 domain: [E, D]
 parent: "[[Linear Regression (FIT2086)]]"
 tags: [DataScience/Modelling, DataScience/ML]
-aliases: [AIC, BIC, Akaike Information Criterion, Bayesian Information Criterion, Model Selection, Penalised Likelihood, Stepwise Selection, Forward Selection, All Subsets, t-score, KIC, Kullback-Leibler Information Criterion, RIC, Risk Inflation Criterion, Backward Selection]
+aliases: [AIC, BIC, Akaike Information Criterion, Bayesian Information Criterion, Model Selection, Penalised Likelihood, Stepwise Selection, Forward Selection, All Subsets, t-score, KIC, Kullback-Leibler Information Criterion, RIC, Risk Inflation Criterion, Backward Selection, MML, minimum message length]
 ---
 # [[Model Selection and Information Criteria (AIC, BIC)]]
 
@@ -50,6 +50,7 @@ $$
 $$
 - **Shared parameters don't matter** ➔ parameters present in **every** candidate (e.g. intercept, $\sigma^2$) add the same constant to all scores and never change the choice.
 - **Refined criteria** ➔ MML, MDL, corrected AIC/KIC ➔ often better for **small $n$**.
+- **Beyond regression (W11)** ➔ the same fit $+$ complexity score picks the number of classes $K$ in a [[Mixture Models (EM Algorithm)|mixture model]]; **MML** (C.S. Wallace, Monash) reads it as information: compress the data with the model, shortest compressed message wins.
 - **Polynomial example** ➔ orders $0$–$20$ fitted to the fifth-order truth: the NLL keeps falling with order while each criterion bottoms out; read off the lecture plot, BIC and KIC select order $5$ and AIC a higher order ($\approx7$).
 - **Significance rule of thumb** ➔ score differences of $\ge3$ are considered meaningful; smaller gaps are a tie.
 

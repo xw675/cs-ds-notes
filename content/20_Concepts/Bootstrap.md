@@ -1,15 +1,15 @@
 ---
 unit: FIT2086
-week: 10
-source: [lecture]
+week: [10, 11]
+source: [lecture, applied]
 domain: [D, E]
 parent: "[[Sampling Distribution of an Estimator]]"
 tags: [Math/Probability, DataScience/Modelling, Tool/R]
-aliases: [the bootstrap, bootstrap methods, exact bootstrap, bootstrap distribution, bootstrap algorithm, resampling, resampling methods, sampling with replacement, bootstrap confidence interval, percentile interval, bootstrapping predictions, bagging, bootstrap aggregation]
+aliases: [the bootstrap, bootstrap methods, exact bootstrap, bootstrap distribution, bootstrap algorithm, resampling, resampling methods, sampling with replacement, bootstrap confidence interval, percentile interval, bootstrapping predictions, bagging, bootstrap aggregation, BCa interval, bias-corrected and accelerated, basic bootstrap interval, bootstrap median]
 ---
 # [[Bootstrap]]
 
-**Context:** [[FIT2086_MOC]] · W10 · estimates a [[Sampling Distribution of an Estimator|sampling distribution]] by **resampling** instead of deriving it · same family as [[Cross-Validation]], different job · the $p$-value counterpart ➔ [[Permutation Tests]] · bagging is the ancestor of [[Random Forest]] · relies on [[Monte Carlo Simulation (Empirical Probabilities)|Monte Carlo]] averaging
+**Context:** [[FIT2086_MOC]] · W10 · estimates a [[Sampling Distribution of an Estimator|sampling distribution]] by **resampling** instead of deriving it · same family as [[Cross-Validation]], different job · the $p$-value counterpart ➔ [[Permutation Tests]] · bagging is the ancestor of [[Random Forest]] · relies on [[Monte Carlo Simulation (Empirical Probabilities)|Monte Carlo]] averaging · Studio 10 R workflow ➔ [[Resampling Inference in R (boot, boot.ci, perm.log.reg)]]
 **Parent Framework:** [[Sampling Distribution of an Estimator]]
 
 > [!abstract] Quick Revision
@@ -40,7 +40,7 @@ aliases: [the bootstrap, bootstrap methods, exact bootstrap, bootstrap distribut
 - **One model per resample** ➔ fit BP on Age + Weight to each resample ⟹ $\hat\beta_0^{(i)},\hat\beta_{\text{Age}}^{(i)},\hat\beta_{\text{Weight}}^{(i)}$, $i=1,\dots,m$ — a range of plausible models.
 - **Prediction CI** ➔ new individual (age $a$, weight $w$): $\hat y^{(i)}=\hat\beta_{\text{Weight}}^{(i)}w+\hat\beta_{\text{Age}}^{(i)}a+\hat\beta_0^{(i)}$ ➔ 95% CI $=$ [2.5th, 97.5th] percentiles of the $m$ predictions.
 - **What it covers** ➔ uncertainty in the **predicted mean** at $(a,w)$; an interval for one individual's actual BP would also need the outcome noise.
-- **Training MSE** ➔ resample ➔ fit ➔ MSE of fit ➔ its bootstrap distribution quantifies the **sampling variability** of the training MSE — but does **not** remove its **optimistic bias** (that is [[Cross-Validation]]'s job).
+- **Training MSE / AUC** ➔ resample ➔ fit ➔ score on the same resample ➔ the bootstrap distribution quantifies the **sampling variability** of the in-sample score — but does **not** remove its **optimistic bias** (that is [[Cross-Validation]]'s job); Studio 10's AUC case in §7.
 
 ### 5. Bagging
 - **Bootstrap aggregation** ➔ draw $m$ bootstrap samples ➔ fit a model to each ➔ predict new data by **averaging** the $m$ predictions $\hat y_{\text{bag}}=\frac1m\sum_{i=1}^{m}\hat y_i$ (classification: majority vote).
@@ -50,6 +50,12 @@ aliases: [the bootstrap, bootstrap methods, exact bootstrap, bootstrap distribut
 ### 6. Strengths and Weaknesses
 - **Strengths** ➔ few distributional assumptions (standard bootstrap: observations **independently** sampled) · easy to code and apply · accuracy improves with $n$.
 - **Weaknesses** ➔ slow when $\hat\theta$ is slow to compute · poor accuracy at small $n$ · may need large $m$ for a smooth distribution · some problems need modifications first, e.g. the **lasso**.
+
+### 7. Studio 10 — Interval Types and Hard Statistics
+- **Three intervals for one mean** ➔ $t$ interval (normal-theory) · **basic** bootstrap (bootstrap percentiles reflected about the observed statistic) · **BCa** (bias-corrected and accelerated: adjusts for bias and **skewness** in the bootstrap distribution) ➔ roughly symmetric data ⟹ all close. BSA ($n=20$): $t$ $(1.934,2.062)$ · basic $(1.937,2.050)$ · BCa $(1.942,2.058)$.
+- **Any statistic, no formula** ➔ median BSA $1.98$ vs mean $1.998$; bootstrap se $\approx0.044$ vs $\approx0.030$; basic CI $(1.89,2.06)$ vs $(1.937,2.050)$ ⟹ the median is the noisier estimator here — found by computation, no derivation ("computational power replaces mathematical cleverness").
+- **Spiky median distribution** ➔ the median is the middle order statistic(s) — an observed value ($n$ odd) or the average of two ($n$ even) ⟹ many resamples share the same median ⟹ discrete spikes, tallest at the original median $1.98$. Resistance in miniature: `c(1,2,6,8,9)`, `c(1,1,6,8,9)`, `c(2,2,6,8,8)` all have median $6$.
+- **Complex statistic** ➔ AUC of a logistic regression refitted to each resampled Pima training set: BCa $\approx(0.811,0.872)$ around a training AUC of $0.848$; the test AUC $0.816$ falls inside — yet every replicate is itself an in-sample AUC, so the interval inherits the optimism rather than correcting it.
 
 ## 🧮 Proof Blueprint
 *(Derivation not on the slides — it reproduces their $26/27$ and explains it.)*
@@ -156,6 +162,16 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** $M=20^{20}\approx1.05\times10^{26}$ resamples; draw $m\approx1000$ at random instead (the bootstrap algorithm).
 > > - **Why:** **Monte Carlo approximation** ➔ $m$ random resamples approximate the exact distribution, improving as $m$ grows.
+
+> [!FAQ]- Why does `plot()` of a bootstrapped median show spikes while the bootstrapped mean looks normal?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** a resample's median is always one observed value or the average of two, and it ignores changes away from the middle, so many resamples give exactly the same median; the mean moves with every value, so its replicates spread smoothly.
+> > - **Why:** **Order statistic vs average** ➔ the mean is a sum (CLT-smooth); the median depends only on the middle order statistic(s) ⟹ a discrete bootstrap distribution with its tallest spike at the sample median.
+
+> [!FAQ]- The BCa interval "corrects for bias". Why doesn't it fix the optimism of a training-set AUC?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** BCa corrects bias of the statistic **relative to its bootstrap distribution**; the optimism comes from scoring a model on the data it was fitted to, and every bootstrap replicate does exactly that too, so the shift is shared and invisible to the bootstrap.
+> > - **Why:** **Variability ≠ optimism** ➔ the interval describes how much the in-sample AUC estimator wobbles; held-out data or [[Cross-Validation]] estimates how far it sits above future performance.
 
 > [!FAQ]- Why does bagging help a decision tree much more than a linear regression?
 > > [!SUCCESS]- Answer

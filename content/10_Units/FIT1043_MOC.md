@@ -19,7 +19,7 @@ tags:
 - [[Pandas Toolkit (Cheatsheet)]] -> integrates Weeks 3–4: audit → clean → groupby/agg → plot
 - [[Sklearn Workflow (Cheatsheet)]] -> integrates Weeks 6–7: one estimator skeleton + metrics
 - [[R Toolkit (Cheatsheet)]] -> integrates Week 8: syntax → data frames → plots → lm
-- [[Shell Toolkit (Cheatsheet)]] -> integrates Weeks 9–10: navigate → inspect → grep/sort/cut/awk → pipes → shell→R handoff *(tri-unit — FIT2014 adds `sed`/`tr`/regex, FIT2109 adds permissions/streams/exit status)*
+- [[Shell Toolkit (Cheatsheet)]] -> integrates Weeks 9–10: navigate → inspect → grep/sort/cut/awk → pipes → shell→R handoff *(dual-unit — FIT2014 adds `sed`/`tr`/regex)*
 
 ## 📅 Knowledge Index
 
@@ -65,7 +65,7 @@ tags:
 - [[Ensemble Models]] -> Parent Framework: [[Machine Learning]]
 
 ### Week 7 — Classification & Clustering
-- [[Classification Evaluation (Confusion Matrix and Metrics)]] -> Parent Framework: [[Predictive Models]] *(dual-unit — deepened in FIT2086 W7 with the $\arg\max$ rule, $\text{CA}$/TPR/TNR notation and the class-frequency baseline; thresholds and AUC in [[ROC and AUC]])*
+- [[Classification Evaluation (Confusion Matrix and Metrics)]] -> Parent Framework: [[Predictive Models]] *(dual-unit — deepened in FIT2086 W7; AUC in [[ROC and AUC]])*
 - [[Decision Trees and Regression Trees]] -> Parent Framework: [[Predictive Models]]
 - [[Random Forest]] -> Parent Framework: [[Ensemble Models]]
 - [[k-means Clustering]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]]

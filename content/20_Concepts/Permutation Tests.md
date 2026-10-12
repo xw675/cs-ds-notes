@@ -1,15 +1,15 @@
 ---
 unit: FIT2086
-week: 10
-source: [lecture]
+week: [10, 11]
+source: [lecture, applied]
 domain: [D, E]
 parent: "[[Hypothesis Testing]]"
 tags: [Math/Probability, DataScience/Modelling, Tool/R]
-aliases: [permutation test, permutation p-value, randomisation test, test of association by resampling, exchangeability, null distribution by permutation]
+aliases: [permutation test, permutation p-value, randomisation test, test of association by resampling, exchangeability, null distribution by permutation, global null, perm.log.reg]
 ---
 # [[Permutation Tests]]
 
-**Context:** [[FIT2086_MOC]] · W10 · a [[Hypothesis Testing|hypothesis test]] whose null distribution is **simulated** rather than derived · the $p$-value sibling of the [[Bootstrap]] (contrast table there) · the slope test it replaces ➔ [[Model Selection and Information Criteria (AIC, BIC)|$t_j$ for $H_0:\beta_j=0$]] · same idea powers random-forest `%IncMSE` ➔ [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]]
+**Context:** [[FIT2086_MOC]] · W10 · a [[Hypothesis Testing|hypothesis test]] whose null distribution is **simulated** rather than derived · the $p$-value sibling of the [[Bootstrap]] (contrast table there) · the slope test it replaces ➔ [[Model Selection and Information Criteria (AIC, BIC)|$t_j$ for $H_0:\beta_j=0$]] · same idea powers random-forest `%IncMSE` ➔ [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]] · Studio 10 R workflow ➔ [[Resampling Inference in R (boot, boot.ci, perm.log.reg)]]
 **Parent Framework:** [[Hypothesis Testing]]
 
 > [!abstract] Quick Revision
@@ -34,6 +34,14 @@ aliases: [permutation test, permutation p-value, randomisation test, test of ass
 ### 3. Strengths and Weaknesses
 - **Strengths** ➔ few assumptions about the population distribution · potentially more accurate $p$-values for **non-normal** models (logistic regression, etc.) · easy to code and apply.
 - **Weaknesses** ➔ resolution set by $m$ (smallest $p=1/(m+1)$) · slow if each model fit is slow · assumes **independent** individuals.
+
+### 4. Studio 10 — Permuting a Logistic Regression
+- **Every coefficient at once** ➔ shuffle the target column, refit the `glm`, store **all** coefficients ➔ one empirical null per coefficient; $p_j=$ share of permutations with $\lvert\hat\beta_j^{(i)}\rvert>\lvert\hat\beta_j\rvert$.
+- **Which null is simulated** ➔ permuting $y$ breaks its link with **every** predictor together ⟹ the **global** null "target independent of all predictors". The `glm` Wald $p$-values test $\beta_j=0$ **given the other predictors**, via an asymptotic normal ⟹ different hypotheses, so the two sets need not agree (Pima BP $0.0166$ vs $0.004$, AGE $0.070$ vs $0.040$, SKIN $0.374$ vs $0.265$).
+- **What it avoids** ➔ under an appropriate exchangeability null, no asymptotic approximation; cost ➔ $R$ full model fits.
+- **Monte Carlo noise** ➔ at $R=1000$ reruns visibly move a smallish $p$ (BP $0.008$ in one run, $0.004$ at $R=10{,}000$) ⟹ raise $R$ until the decision stops changing.
+- **Reading the null histogram** ➔ INS: $\hat\beta=0.00035$ sits inside a null spanning $\pm0.002$ ⟹ $p\approx0.75$ · BP: $\hat\beta=-0.017$ lies beyond the null bulk $\pm0.01$ ⟹ $p\approx0.004$.
+- **The zero floor in practice** ➔ the studio's `perm.log.reg` computes $b/R$ and prints $0.0000$ for PREG, PLAS, BMI — the $+1$ form of §2 would give $\le1/(R+1)\approx0.0001$.
 
 ## 🧮 Proof Blueprint
 - **Theorem** ➔ randomly permuting the observed $y$ values against fixed $x$ produces datasets distributed as under $H_0$: no association.
@@ -105,6 +113,11 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** the $t$-test's null assumes normally distributed regression errors; the permutation null is built from the data with no such assumption (plus simulation noise from finite $m$). It matters for non-normal models, where the derived null may be inaccurate.
 > > - **Why:** **Assumed vs simulated null** ➔ both answer $H_0:\beta=0$; only the route to the null distribution differs.
+
+> [!FAQ]- Studio 10's permutation $p$ for BP is $0.004$; `summary(glm)` says $0.0166$. Which hypothesis does each test, and why can they differ?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** permuting the target simulates the **global** null (no predictor matters), compared coefficient by coefficient; the Wald test asks whether $\beta_{\text{BP}}=0$ **given** the other seven predictors, using a large-sample normal approximation.
+> > - **Why:** **Different null, different route** ➔ shuffling $y$ also scrambles PLAS, BMI… so the null spread of $\hat\beta_{\text{BP}}$ is not the conditional one; and Wald $p$-values rely on asymptotics, permutation $p$-values on exchangeability plus finite-$R$ noise.
 
 > [!FAQ]- Bootstrap or permutation test — which would you use to (a) give a CI for a slope, (b) give a $p$-value for "Age is unrelated to BP"?
 > > [!SUCCESS]- Answer

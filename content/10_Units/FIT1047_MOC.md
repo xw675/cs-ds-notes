@@ -107,7 +107,7 @@ tags:
 - [[Cybersecurity Case Studies]] -> Parent Framework: [[Information Security and Cryptography]]
 - [[Cybersecurity Risk Management]] -> Parent Framework: [[Information Security and Cryptography]]
 - [[Privacy and Data Protection (FIT1047)]] -> Parent Framework: [[Information Security and Cryptography]]
-- *(Cross-links: botnet/DDoS → [[Internet of Things (IoT)]]; buffer overflow return address → [[MARIE Patterns (Indirect Addressing, Arrays, Subroutines)]]; SQL injection → [[SQL SELECT and WHERE]]; privacy → [[Privacy, Confidentiality, and Security]], [[Personal Data and Privacy in Database Design]].)*
+- *(Cross-links: DDoS → [[Internet of Things (IoT)]] · buffer overflow → [[MARIE Patterns (Indirect Addressing, Arrays, Subroutines)]] · SQL injection → [[SQL SELECT and WHERE]] · privacy → [[Privacy, Confidentiality, and Security]], [[Personal Data and Privacy in Database Design]])*
 
 ## 🧭 Suggested Reading Order
 *(read left→right within each week · **bold** = assessment-critical hand skill)*

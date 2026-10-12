@@ -7,16 +7,16 @@ tags:
 # 📘 FIT2086: Modelling for Data Analysis
 
 > [!INFO] Map of Content
-> Index for **FIT2086 Modelling for Data Analysis** — the **statistics spine** of the DS degree. Much of Week 0–1 is **revision** shared dual-unit with [[FIT1058_MOC]] (probability) and [[FIT1043_MOC]] (descriptive statistics, R) rather than duplicated.
+> Index for **FIT2086 Modelling for Data Analysis** — the **statistics spine** of the DS degree; W0–1 revision is shared with [[FIT1058_MOC]] and [[FIT1043_MOC]], not duplicated.
 
 ## 📊 Assessment Map
 - **Assignment 1 (10%, due W5)** · **Assignment 2 (20%, due W8)** · **Assignment 3 (20%, due W11)** ➔ carry the whole in-semester half; **all involve implementing models in R (LO5)**.
 - **Final exam (50%)**
 - **LO map** ➔ LO1 EDA/descriptive (W1–2) · LO2 inferential models (W3–5) · LO3 predictive models (W6–9, W11) · LO4 sampling/simulation/testing (W3, W5, W10) · LO5 implement in R (W6–11) · LO6 interpret results (W4–11).
-- **LO thread so far** ➔ frame data via probability models; manipulate random variables (pmf/pdf/cdf, joint/marginal/conditional/iid); summarise them by expectations; name the parametric families — then **fit** them by maximum likelihood (W3), **judge the fit** by bias/variance/MSE, and **bound the estimate** by a confidence interval (W4). **A1 (due W5) sits directly on W3–4 estimation.** W6 turns the estimation machinery on a mean that **varies with predictors** (linear regression) and adds the second-order question — **which** predictors — answered by a penalised likelihood. **A2 (due W8) sits on W6–7 supervised learning.** W7 swaps the Gaussian target for a **Bernoulli** one — the same linear predictor, now read as log-odds — and adds the classification-specific scoring layer (CA, sensitivity/specificity, AUC, log-loss). W8 formalises **why** complexity must be controlled (bias$^2$ + variance + irreducible $\sigma^2$) and compares the three controls — **tests** (with Bonferroni), **criteria** (AIC/KIC/BIC/RIC), **cross-validation** — before replacing unstable subset search with **ridge/lasso** shrinkage. W9 leaves the parametric families behind: **trees** partition predictor space and fit a model per leaf (grown by Bernoulli NLL, sized by IC/CV), **random forests** average randomised trees to cancel their instability, and **$k$-NN** predicts from neighbours with no model at all — each tuned by the same CV recipe over a complexity parameter $\gamma$. W10 swaps derivation for **computation**: a probability becomes an average of indicators (**Monte Carlo**, WLLN-backed, resolution $1/m$), a sampling distribution becomes the spread of $\hat\theta$ over **bootstrap** resamples (with replacement ➔ bias, se, percentile CI; bagging), and a null distribution becomes the spread over **permutations** of $y$ (➔ $p=\frac{1+\#\text{extreme}}{m+1}$).
+- **LO thread so far** ➔ W1–2 probability models ➔ W3–4 **fit** (MLE), **judge** (bias/var/MSE), **bound** (CI) *[A1]* ➔ W5 **test** ➔ W6–7 linear + logistic regression, predictor selection *[A2]* ➔ W8 complexity control (tests · IC · CV · ridge/lasso) ➔ W9 trees · forests · kNN ➔ W10 simulation (Monte Carlo · bootstrap · permutation) ➔ W11 unsupervised (k-means · mixtures/EM · imputation) *[A3]*.
 
 ## 🧰 Toolkit Cheatsheets
-- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 adds the simulation / distribution (`d`/`p`/`q`/`r`) block, the `qnorm`/`qt` critical-value rows, and the `glm` / `pROC` / `step(k = 3)` classification block, and the `glmnet` ridge/lasso block (`cv.glmnet.f`, `lambda.min`, `alpha = 0`, RIC `k = 2*log(p)`), the **trees / forests / kNN** block (`rpart`, `learn.tree.cv`, `randomForest`, `train.kknn`, RMSE), and the **resampling** block (bootstrap `sample(n, n, replace = T)`, permutation `sample(y)`, $+1$ $p$-value)
+- [[R Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2086); FIT2086 blocks: simulation/distributions · hypothesis tests · `lm`/`step` · `glm`/`pROC` · `glmnet` · trees/forests/kNN · resampling (hand loops + `boot`/`boot.ci`)
 
 ## 📅 Knowledge Index
 
@@ -31,23 +31,23 @@ tags:
 - [[Statistical Modelling and Inference]] -> Parent Framework: [[FIT2086_MOC]] *(hub: population/sample/model/inference)*
 - [[Random Variables and Probability Distributions (FIT2086)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy**: pmf/pdf/cdf/quantile/mode; joint→marginal→conditional; iid)*
 - [[R Simulation and Random Sampling]] -> Parent Framework: [[R for Data Science]] *( `set.seed`, `sample`, `d`/`p`/`q`/`r`)*
-- *(Cross-links to the FIT1058 probability cluster: [[Random Variable]], [[Conditional Probability]], [[Bayes' Theorem]], [[Expectation]], [[Variance and Standard Deviation]], [[Binomial Distribution]], [[Poisson Distribution]], [[Uniform Distribution]] — the maths lives there, deepened here for modelling.)*
+- *(Cross-links: the FIT1058 probability cluster — [[Random Variable]], [[Conditional Probability]], [[Bayes' Theorem]], [[Expectation]], [[Variance and Standard Deviation]] — holds the maths.)*
 
 ### Week 2 — Expectations & Probability Distributions
 - [[Expectations and Covariance (FIT2086)]] -> Parent Framework: [[Random Variables and Probability Distributions (FIT2086)]] *(**exam-heavy**: $E[f(X)]$, linearity, $V=E[X^2]-E[X]^2$, cov/corr, WLLN, non-existence)*
 - [[Taylor Approximation of Expectations]] -> Parent Framework: [[Expectations and Covariance (FIT2086)]] *(**derivation drill** — 2nd order for $E$, 1st order for $V$)*
 - [[Parametric Probability Distributions]] -> Parent Framework: [[Statistical Modelling and Inference]] *(hub: $p(x\mid\theta)$, $\theta\in\Theta$ + the distribution zoo tables)*
 - [[Gaussian Distribution]] -> Parent Framework: [[Parametric Probability Distributions]] *(self-similarity, $\sigma$-rules, additivity)*
-- [[Binomial Distribution]] — $Be(\theta)$/$Bin(\theta,n)$, additivity in $n$; [[Poisson Distribution]] — rate $\lambda$, additivity + thinning $Poi(\lambda/k)$, the four appropriateness conditions; [[Uniform Distribution]] — the **continuous** $U(a,b)$ with $V=\tfrac{(b-a)^2}{12}$.
+- [[Binomial Distribution]] · [[Poisson Distribution]] · [[Uniform Distribution]] — the discrete pair plus continuous $U(a,b)$, with means and variances
 
 #### Studio 1 *(run in W2 — R foundations, `heart.csv` / `Mushroom.csv` / `wine.csv`)*
 - [[Categorical Summaries and Cross-Tabulation in R]] -> Parent Framework: [[R for Data Science]] *(`factor`/`table`/`prop.table`/`pie` — the cat–cat toolkit)*
-- [[R Basics (Syntax, Types, Control Flow)]] — user-defined **functions**, `list` returns, `stop`, `cat`, `ls`/`rm`/`source`; [[R Data Frames and IO]] — **logical referencing**, add/drop columns, `stringsAsFactors`; [[Association Between Variables]] — the `cor` screening loop over `wine.csv`.
+- [[R Basics (Syntax, Types, Control Flow)]] · [[R Data Frames and IO]] · [[Association Between Variables]] — **merged**: functions, logical referencing, the `cor` screening loop
 
 ### Week 3 — Parameter Estimation, Maximum Likelihood & Estimator Quality
-- [[Maximum Likelihood Estimation]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy derivation drill** — likelihood → NLL → $\partial L/\partial\theta=0$; Gaussian, Poisson, Exponential, power families; plug-in distribution)*
+- [[Maximum Likelihood Estimation]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy derivation drill**: likelihood → NLL → $\partial L/\partial\theta=0$)*
 - [[Sampling Distribution of an Estimator]] -> Parent Framework: [[Statistical Modelling and Inference]] *($\hat\theta$ is an RV; $\bar Y\sim N(\mu,\sigma^2/n)$; strength-of-assumptions ladder)*
-- [[Estimator Quality (Bias, Variance, MSE)]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: $b_\theta$, $\mathrm{Var}_\theta$, $\mathrm{MSE}=b^2+\mathrm{Var}$, efficiency, $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u$, consistency)*
+- [[Estimator Quality (Bias, Variance, MSE)]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: $\mathrm{MSE}=b^2+\mathrm{Var}$, efficiency, consistency)*
 - *(Reading: Ross Ch. 6 §6.1, 6.2, 6.4, 6.5 and Ch. 7 §7.1, 7.2, 7.7)*
 
 #### Studio 2 *(run in W3 — drills the W2 distributions; **no new notes**, merged into the existing four)*
@@ -59,13 +59,13 @@ tags:
 - [[R Simulation and Random Sampling]] — $O(n)$ **running-mean** accumulator + the WLLN convergence plot; why $\theta=0.9$ converges faster than $\theta=0.5$
 
 ### Week 4 — Central Limit Theorem & Confidence Intervals
-- [[Central Limit Theorem]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: $\sum Y_i\xrightarrow{d}N(n\mu,n\sigma^2)$ ➔ $\bar Y\xrightarrow{d}N(\mu,\sigma^2/n)$; normal approximation to $Bin$/$Poi$; asymptotic normality of averages)*
+- [[Central Limit Theorem]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: $\bar Y\xrightarrow{d}N(\mu,\sigma^2/n)$; normal approximations)*
 - [[Confidence Intervals]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy**: coverage vs the wrong "$95\%$ probability" reading; the four cases $z$ / $t$ / difference / CLT-approximate)*
 - [[Student-t Distribution]] -> Parent Framework: [[Parametric Probability Distributions]] *($\nu=n-1$, heavier tails, $t_{\alpha/2,\nu}>z_{\alpha/2}$ always)*
 - *(Reading: Ross Ch. 6 §6.3 and Ch. 7 §7.3, 7.4, 7.5)*
 
 #### Studio 3 *(run in W4 — drills the W3 estimation material; `train.csv` / `test.csv`)*
-- [[Plug-in Prediction and Held-Out Evaluation]] -> Parent Framework: [[Maximum Likelihood Estimation]] *(fit on train ➔ `pnorm` predictions ➔ empirical proportions ➔ **out-of-sample NLL**; $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u$ head-to-head)*
+- [[Plug-in Prediction and Held-Out Evaluation]] -> Parent Framework: [[Maximum Likelihood Estimation]] *(fit on train ➔ predict ➔ out-of-sample NLL)*
 - [[Monte Carlo Estimator Comparison]] -> Parent Framework: [[Estimator Quality (Bias, Variance, MSE)]] *(simulation loop for $b_\theta$/$\mathrm{Var}_\theta$/MSE; **RelMSE**; mean vs median under contamination)*
 - [[Maximum Likelihood Estimation]] — the **Bernoulli** derivation $\hat\theta=m/n$; ML's **boundary overconfidence** at $m\in\{0,n\}$
 - [[Estimator Quality (Bias, Variance, MSE)]] — **efficiency vs robustness**: RelMSE is scale-free, moves with $n$ and the contamination fraction
@@ -86,44 +86,44 @@ tags:
 
 ### Week 6 — Linear Regression & Model Selection
 - [[Linear Regression (FIT2086)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam-heavy** hub: supervised setup, simple→multiple, least squares, $\text{RSS}$/$\text{TSS}$/$R^2$, prediction)*
-- [[Least Squares as Maximum Likelihood]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**derivation drill**: $\varepsilon_i\sim N(0,\sigma^2)$ ➔ $L=\tfrac n2\log(2\pi\sigma^2)+\tfrac{\text{RSS}}{2\sigma^2}$; $\hat\sigma^2_{ML}$ vs $\hat\sigma^2_u=\text{RSS}/(n-p-1)$)*
+- [[Least Squares as Maximum Likelihood]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**derivation drill**: Gaussian errors ⟹ LS $=$ ML)*
 - [[Predictor Transformations (Indicators, Polynomials, Interactions)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *($K-1$ indicators, $\log$/polynomial, $x_jx_k$ — linear in $\boldsymbol\beta$, not in $x$)*
-- [[Model Selection and Information Criteria (AIC, BIC)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: $t_j$ + $H_0:\beta_j=0$; $L+\alpha(n,k_M)$; AIC $k_M$ vs BIC $\tfrac{k_M}2\log n$; all-subsets $2^p$ vs stepwise)*
+- [[Model Selection and Information Criteria (AIC, BIC)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: $L+\alpha(n,k_M)$, AIC vs BIC, stepwise)*
 - [[Multiple Regression and Stepwise Selection in R]] -> Parent Framework: [[R for Data Science]] *(**LO5 hand skill**: `lm` ➔ `summary` ➔ `step(…, k = log(n))`)*
 - [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] — **merged**: under/overfitting restated as *omitting important* vs *including spurious* predictors; generalisation; polynomial degree $=$ predictor-set choice
 - *(Reading: Ross Ch. 9)*
 
 #### Studio 5 *(run in W6 — drills the W5 hypothesis-testing material; `bpdata.csv` / `SP500.csv`)*
 - [[Hypothesis Testing in R (t.test, binom.test, prop.test)]] -> Parent Framework: [[Hypothesis Testing]] *(**exam + A2 hand skill**: `mu` / `alternative` / `conf.level` / `var.equal`; `rv$p.value`; `binom.test` vs `prop.test`)*
-- [[Tests for Normal Means (z-test and t-test)]] — **merged**: the `bpdata` two-sided ($9.0\times10^{-5}$) vs one-sided ($4.5\times10^{-5}$) pair, and the **three routes to one difference** on S&P (approximate $z$ / Welch $t$ / pooled $t$)
-- [[Tests for Bernoulli Populations]] — **merged**: the "guess the coin" drill ($z=-1.155$, $p=0.248$ vs exact $0.3877$), the two-sample pooled $\hat\theta_p=14/24$ ($p=0.0130$ vs exact $0.0384$), and the `binom.test` **sensitivity sweep**
-- [[Hypothesis Testing]] — **merged**: $\sigma^2\uparrow\Rightarrow\lvert z\rvert\downarrow\Rightarrow p\uparrow$; the leukemia-trial true/false drill at $p=0.17$; the rejection threshold **scales with the consequences** of a wrong call
+- [[Tests for Normal Means (z-test and t-test)]] — **merged**: one- vs two-sided on `bpdata`; three routes to one difference on S&P
+- [[Tests for Bernoulli Populations]] — **merged**: CLT $z$ vs exact `binom.test`/`prop.test`; the sensitivity sweep
+- [[Hypothesis Testing]] — **merged**: $\sigma^2\uparrow\Rightarrow p\uparrow$; the threshold scales with the consequences of a wrong call
 - [[Confidence Intervals]] — **merged**: a one-sided alternative returns a **bound** $(-\infty,u)$, not a range; the $90/95/99\%$ width sweep on `bpdata`
 
 ### Week 7 — Classification & Logistic Regression
-- [[Classification and Conditional Class Probabilities]] -> Parent Framework: [[Statistical Modelling and Inference]] *(hub: $\mathbb{P}(Y=y\mid\mathbf{x})$, joint→conditional by proportions, the $2^{p+1}$ **curse of dimensionality**, generative vs discriminative)*
-- [[Logistic Regression]] -> Parent Framework: [[Classification and Conditional Class Probabilities]] *(**exam-heavy**: odds/log-odds, $\eta_i$ → logistic function, Bernoulli NLL by ML — convex, no closed form; $\beta_j$ as log-odds per unit; linear decision boundary)*
-- [[Classification Evaluation (Confusion Matrix and Metrics)]] — **merged** (now dual-unit with FIT1043): the $\arg\max$ decision rule, $\text{CA}=\frac1{n'}\sum I(y'_i=\hat y'_i)$, the TPR/TNR names, the class-frequency baseline, and the $n'=192$ worked matrix
+- [[Classification and Conditional Class Probabilities]] -> Parent Framework: [[Statistical Modelling and Inference]] *(hub: $\mathbb{P}(Y=y\mid\mathbf{x})$, curse of dimensionality)*
+- [[Logistic Regression]] -> Parent Framework: [[Classification and Conditional Class Probabilities]] *(**exam-heavy**: log-odds, Bernoulli NLL, $\beta_j$ reading)*
+- [[Classification Evaluation (Confusion Matrix and Metrics)]] — **merged** (now dual-unit): $\arg\max$ rule, CA/TPR/TNR, class-frequency baseline
 - [[ROC and AUC]] -> Parent Framework: [[Classification Evaluation (Confusion Matrix and Metrics)]] *(**hand skill**: threshold $T$ sweep → sensitivity/specificity trade-off → ROC → AUC by counting ordered pairs)*
 - [[Logarithmic Loss]] -> Parent Framework: [[Classification Evaluation (Confusion Matrix and Metrics)]] *(scores the **probabilities**, not the labels; $=$ NLL of future data; $0.501$ vs $0.99$ is the whole point)*
 - [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: the penalty transfers unchanged to logistic regression as $L+k\alpha_n$, with $\alpha_n=1$ (AIC), $\tfrac32$ (**KIC**, new), $\tfrac12\log n$ (BIC)
 - *(Terms to revise, from the lecture: odds/log-odds · logistic regression · classification accuracy · specificity/sensitivity · AUC · logarithmic loss)*
 
 ### Week 8 — Model Selection & Penalized Regression
-- [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] — **merged**: $\hat f_{\mathcal{D}}$ over repeated samples, $\text{bias}(x_0)$/$\text{variance}(x_0)$, $\text{MSE}_f=\text{bias}^2+\text{variance}$, **irreducible** $\sigma^2$, the 10,000-sample simulation (order 2 / 7 / 20)
+- [[Bias-Variance Tradeoff (Underfitting vs Overfitting)]] — **merged**: $\text{MSE}_f=\text{bias}^2+\text{variance}$, irreducible $\sigma^2$, the simulation
 - [[Multiple Testing and the Bonferroni Correction]] -> Parent Framework: [[Hypothesis Testing]] *(**exam hand skill**: $\alpha p$ false positives, threshold $\alpha/p$, FWER vs FDR)*
 - [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: NLL-scale AIC/**KIC**/BIC/**RIC**, when each over/underfits, the polynomial-order plot, problems with conventional selection
 - [[Cross-Validation]] -> Parent Framework: [[Model Selection and Information Criteria (AIC, BIC)]] *(MSPE estimate; $K$-fold / repeated / LOO; LOO ≈ AIC)*
-- [[Penalized Regression (Ridge and Lasso)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: instability experiment, standardise, $\lambda$ path, ridge $\ell_2$ vs lasso $\ell_1$, CV for $\lambda$, multicollinearity)*
+- [[Penalized Regression (Ridge and Lasso)]] -> Parent Framework: [[Linear Regression (FIT2086)]] *(**exam-heavy**: ridge $\ell_2$ vs lasso $\ell_1$, $\lambda$ by CV)*
 #### Studio 7 *(run in W8 — drills the W7 logistic-regression material; `gene.*.csv` / `pima.*.csv`)*
-- [[Logistic Regression in R (glm, pROC, step)]] -> Parent Framework: [[Logistic Regression]] *(**LO5 hand skill**: `glm(family = binomial)` ➔ `type = "response"` ➔ `my.pred.stats` ➔ `step` with AIC/KIC/BIC; gene $p\approx n$ overfit; Pima 53-term BIC vs KIC)*
+- [[Logistic Regression in R (glm, pROC, step)]] -> Parent Framework: [[Logistic Regression]] *(**LO5 hand skill**: `glm` ➔ `type = "response"` ➔ `my.pred.stats` ➔ `step`)*
 - [[Logistic Regression]] — **merged**: null/residual **deviance** $=2L$, interaction reading on the log-odds, the pruned SNP12/SNP56 equation drill
 - [[Predictor Transformations (Indicators, Polynomials, Interactions)]] — **merged**: judge a new term by $p$-value **and** deviance drop (`log(BMI)` keep, `PLAS^2` drop, `SKIN*AGE` keep)
-- *(Terms to revise, from the lecture: underfitting/bias · overfitting/variance · irreducible error & MSPE · multiple testing/Bonferroni · AIC, BIC · cross-validation · statistical instability · penalised regression · ridge/lasso)*
+- *(Terms to revise: under/overfitting · irreducible error · Bonferroni · AIC/BIC · CV · instability · ridge/lasso)*
 
 ### Week 9 — Trees & Nearest Neighbour Methods
 - [[Decision Trees and Regression Trees]] — **merged** (now dual-unit with FIT1043): $L$ disjoint regions, Bernoulli/Normal **leaf models**, complexity $L$, strengths/weaknesses, three near-equal trees ⟹ **instability**
-- [[Decision Tree Learning (Likelihood Splits, Pruning, CV)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**exam hand skill**: leaf NLL $-n_1\log\frac{n_1}{n}-n_0\log\frac{n_0}{n}$, the $x_1$ vs $x_2$ toy split, forward search, pruning, $K$-fold CV over $L$)*
+- [[Decision Tree Learning (Likelihood Splits, Pruning, CV)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**exam hand skill**: leaf-NLL splits, pruning, CV over $L$)*
 - [[Random Forest]] — **merged** (dual-unit): bootstrap sample + random candidate variables per split, average means/probabilities, low bias with reduced variance, variable importance
 - [[k-Nearest Neighbours]] -> Parent Framework: [[Classification and Conditional Class Probabilities]] *(**exam hand skill**: Euclidean distance, standardise, vote vs average vs kernel-weighted average, LOO CV for $k$)*
 - [[Cross-Validation]] — **merged**: the general complexity parameter $\gamma$ (predictor count, $\lambda$, $L$, $k$) and $\gamma^*=\arg\min_\gamma\text{CV}(\gamma)$
@@ -131,27 +131,41 @@ tags:
 - *(Terms to revise, from the lecture: cross-validation · decision tree · split and leaf · random forest · $k$-nearest neighbours method)*
 
 #### Studio 8 *(run in W9 — drills the W8 selection/shrinkage material; `gene.*.csv` / `pima.*.csv` / `wrappers.R`)*
-- [[Shrinkage Estimator of the Mean]] -> Parent Framework: [[Estimator Quality (Bias, Variance, MSE)]] *(**derivation drill**: $\hat\mu(c)=\frac{n}{n+c}\bar Y$ ➔ bias, variance, MSE, crossover $\mu^2<\sigma^2\frac{2n+c}{nc}$, consistency, the ridge argmin proof)*
-- [[Penalized Regression in R (glmnet)]] -> Parent Framework: [[Penalized Regression (Ridge and Lasso)]] *(**LO5 hand skill**: `glmnet.f` / `cv.glmnet.f` / `predict.glmnet.f`, `lambda.min`, `alpha = 0`; lasso vs BIC at $n=668$; graceful degradation at $n=100$, $p=59$)*
+- [[Shrinkage Estimator of the Mean]] -> Parent Framework: [[Estimator Quality (Bias, Variance, MSE)]] *(**derivation drill**: $\hat\mu(c)=\frac{n}{n+c}\bar Y$ — bias, variance, MSE)*
+- [[Penalized Regression in R (glmnet)]] -> Parent Framework: [[Penalized Regression (Ridge and Lasso)]] *(**LO5 hand skill**: `cv.glmnet.f`, `lambda.min`, lasso vs BIC)*
 - [[Multiple Testing and the Bonferroni Correction]] — **merged**: the gene drill — 12 SNPs pass $0.05$ vs $5$ expected by chance, $0$ pass Bonferroni, RIC `k = 2*log(p)` keeps SNP56 alone ($p=0.0018$)
 - [[Penalized Regression (Ridge and Lasso)]] — **merged**: the one-parameter shrinkage case and the Studio 8 small-$n$ evidence
 
 ### Week 10 — Simulation-Based Statistical Methods
-- [[Monte Carlo Simulation (Empirical Probabilities)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam hand skill**: $\frac1m\sum I(\cdot\in Z)$, indicator ➔ Bernoulli ➔ WLLN proof, resolution $1/m$ so $m\gg1/p$, the $\mathbb{P}(\sqrt{\lvert X\rvert}>1)$ convergence table)*
+- [[Monte Carlo Simulation (Empirical Probabilities)]] -> Parent Framework: [[Statistical Modelling and Inference]] *(**exam hand skill**: average of indicators, resolution $1/m$)*
 - [[Pseudo-Random Number Generators]] -> Parent Framework: [[Monte Carlo Simulation (Empirical Probabilities)]] *(seed ➔ deterministic sequence ➔ reproducible; uniforms first; the LCG $X_{n+1}=(aX_n+c)\bmod m$ hand trace)*
-- [[Bootstrap]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: exact bootstrap $M=n^n$, bias/Var formulas, $\mathbf{y}=(2,6,3)$ ➔ Var $=26/27$; resample rows with replacement; percentile CI for a prediction; bagging; CV vs bootstrap vs permutation)*
-- [[Permutation Tests]] -> Parent Framework: [[Hypothesis Testing]] *(**exam-heavy**: $p(Y,X)=p(Y)p(X)$ under $H_0$, shuffle $y$ without replacement, $p\approx\frac{1+\sum I(\lvert\hat\beta^{(i)}\rvert\ge\lvert\hat\beta\rvert)}{m+1}$, BP ~ Age $0.0013$ vs $t$-test $0.00157$)*
+- [[Bootstrap]] -> Parent Framework: [[Sampling Distribution of an Estimator]] *(**exam-heavy**: exact bootstrap by hand, resampling algorithm, percentile CI, bagging)*
+- [[Permutation Tests]] -> Parent Framework: [[Hypothesis Testing]] *(**exam-heavy**: shuffle $y$ under $H_0$, $p=\frac{1+\text{count}}{m+1}$)*
 - *(Terms to revise, from the lecture: simulation · pseudo-random numbers · bootstrap distribution · bootstrap algorithm · permutation test)*
 
 #### Studio 9 *(run in W10 — drills the W9 trees/forests/kNN material; `diabetes.*.csv` / `wrappers.R`)*
-- [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**LO5 hand skill**: read `print(tree)`, `learn.tree.cv` ➔ 7 leaves, `randomForest` OOB + `%IncMSE`, `train.kknn`; test RMSE tree $62.7$ · lasso $55.4$ · forest $54.2$)*
+- [[Trees, Forests and kNN in R (rpart, randomForest, kknn)]] -> Parent Framework: [[Decision Trees and Regression Trees]] *(**LO5 hand skill**: `rpart`, `randomForest`, `train.kknn`, test RMSE)*
 - [[Random Forest]] — **merged**: bagging lineage, out-of-bag error, `%IncMSE` as permutation importance, `ntree`
 - [[k-Nearest Neighbours]] — **merged**: the six `kknn` kernels; CV picked `gaussian`, $k=24$
 - [[Decision Trees and Regression Trees]] — **merged**: the pruned diabetes tree as instability evidence (different top leaf, near-equal prediction)
 
-### 🔭 Coming later in the unit *(from the unit outline — no notes yet)*
-- **W11 next:** machine learning for unsupervised data discovery — **clustering**, **mixture modelling**, **matrix completion**.
-- Multivariate Gaussian, Dirichlet · exploratory vs confirmatory analysis · Bayesian classification & inverse probability · model-performance estimation.
+### Week 11 — Introduction to Unsupervised Learning
+- [[Machine Learning Styles (Supervised vs Unsupervised)]] — **merged** (now dual-unit): $p(Y\mid X)$ vs joint $p(X_1,\dots,X_q)$, intrinsic classification
+- [[k-means Clustering]] — **merged** (now tri-unit): objective $D=\sum_i\min_kd_k(i)^2$ (WCSS), local minima + **k-means++**, cityblock/Hamming, the limitations list, the 5-person height/weight $K=2$ trace
+- [[Mixture Models (EM Algorithm)]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]] *(**exam hand skill**: posterior $r_{i,k}$ by Bayes, EM, $K$ by IC)*
+- [[Multivariate Normal Distribution]] -> Parent Framework: [[Gaussian Distribution]] *(density, $\mu_j$/$\Sigma_{i,j}$, spherical/diagonal/elliptical, read $\boldsymbol\Sigma$ from a scatter)*
+- [[Missing Data Imputation and Recommender Systems]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]] *(**hand skill**: univariate vs MVN vs kNN imputation; the Netflix $k=1$ trace)*
+- [[k-Nearest Neighbours]] · [[Model Selection and Information Criteria (AIC, BIC)]] — **merged**: kNN reused for imputation; IC/MML choose $K$
+- *(Terms to revise, from the lecture: clustering · k-means algorithm · mixture modelling · missing data · imputation · recommender systems · collaborative filtering)*
+
+#### Studio 10 *(run in W11 — drills the W10 resampling material; `bpdata.csv` / `pima.*.csv` / `studio10.prediction.stats.R` / `perm.log.reg.R`)*
+- [[Resampling Inference in R (boot, boot.ci, perm.log.reg)]] -> Parent Framework: [[Bootstrap]] *(**LO5 hand skill**: `boot` ➔ `boot.ci` basic/BCa; permutation vs Wald $p$-values)*
+- [[Bootstrap]] — **merged**: $t$ vs basic vs BCa on BSA, median se and its **spiky** bootstrap distribution, the AUC interval inherits training optimism
+- [[Permutation Tests]] — **merged**: **global** null vs conditional Wald test, Monte Carlo noise at $R=1000$, reading INS/BP null histograms, the shipped code's $b/R$ zeros
+
+### 🔭 Coming later in the unit
+- **W12:** subject revision (per the W11 lecture).
+- Still unseen from the unit outline: Dirichlet · exploratory vs confirmatory analysis · Bayesian classification & inverse probability · model-performance estimation.
 
 ## 🧭 Suggested Reading Order
 *(read left→right · **bold** = assessment-critical)*
@@ -167,6 +181,7 @@ tags:
 - **W8 — selection & shrinkage:** **[[Bias-Variance Tradeoff (Underfitting vs Overfitting)]]** *(the decomposition)* → **[[Multiple Testing and the Bonferroni Correction]]** *(why tests mislead)* → **[[Model Selection and Information Criteria (AIC, BIC)]]** *(four penalties)* → [[Cross-Validation]] *(estimate MSPE)* → **[[Penalized Regression (Ridge and Lasso)]]** *(stable selection)* → **[[Logistic Regression in R (glm, pROC, step)]]** *(Studio 7, in R)*
 - **W9 — trees & neighbours:** [[Machine Learning]] *(the framing)* → [[Decision Trees and Regression Trees]] *(leaves + leaf models)* → **[[Decision Tree Learning (Likelihood Splits, Pruning, CV)]]** *(NLL split drill)* → [[Random Forest]] *(average away instability)* → **[[k-Nearest Neighbours]]** *(vote/average by hand)* → [[Cross-Validation]] *(one $\gamma$ recipe)* → **[[Shrinkage Estimator of the Mean]]** *(Studio 8 derivation)* → **[[Penalized Regression in R (glmnet)]]** *(Studio 8, in R)*
 - **W10 — simulation & resampling:** **[[Monte Carlo Simulation (Empirical Probabilities)]]** *(average indicators)* → [[Pseudo-Random Number Generators]] *(why a seed reproduces)* → **[[Bootstrap]]** *(variability without assumptions)* → **[[Permutation Tests]]** *($p$-values without assumptions)* → **[[Trees, Forests and kNN in R (rpart, randomForest, kknn)]]** *(Studio 9, in R)*
+- **W11 — unsupervised learning:** [[Machine Learning Styles (Supervised vs Unsupervised)]] *(joint, not conditional)* → **[[k-means Clustering]]** *(WCSS trace by hand)* → [[Multivariate Normal Distribution]] *(read $\boldsymbol\Sigma$)* → **[[Mixture Models (EM Algorithm)]]** *(posterior by hand)* → **[[Missing Data Imputation and Recommender Systems]]** *(kNN fill by hand)* → **[[Resampling Inference in R (boot, boot.ci, perm.log.reg)]]** *(Studio 10, in R)*
 
 ## 🎯 Learning Outcomes (key skills per week)
 - **W0** ➔ 
@@ -283,3 +298,18 @@ tags:
 	- *(Studio 9)* read a forest's OOB error, `% Var explained` and `%IncMSE`; tune `ntree`
 	- *(Studio 9)* choose $k$ and kernel with `train.kknn` and predict with `fitted(kknn(…))`
 	- *(Studio 9)* score tree/forest classifiers by probability (`[, 2]`, `type = "prob"`) and kNN by accuracy only
+- **W11** ➔ 
+	- contrast supervised $p(Y\mid X_1,\dots,X_p)$ with unsupervised structure in $p(X_1,\dots,X_q)$
+	- run k-means by hand: assign to the nearest centroid, re-centre, stop when nothing moves
+	- state the WCSS objective $\sum_i\min_kd_k(i)^2$, why seeds give local minima, and what k-means++ changes
+	- list k-means' limitations: hard assignment, mixed attributes, no statistical reading, choosing $K$
+	- write the mixture density $\sum_k\alpha_kp(\mathbf{y}_i\mid\boldsymbol\theta_k)$ and the conditional-independence product $\prod_jp(y_{i,j}\mid\boldsymbol\theta_{k,j})$
+	- compute posterior memberships $r_{i,k}=\alpha_kp_k/\sum_l\alpha_lp_l$ and assign by the largest
+	- describe EM (E-step soft assign, M-step weighted ML) as a generalisation of k-means
+	- choose $K$ by an information criterion / MML and say why the search needs split/merge/restart moves
+	- read $\boldsymbol\mu$ and $\boldsymbol\Sigma$ of a multivariate normal off a scatter; name the spherical/diagonal/elliptical structures
+	- compare univariate, multivariate-normal and kNN imputation; impute a ratings matrix with kNN on co-observed columns
+	- *(Studio 10)* write a `boot` statistic `function(data, indices)` and get basic and BCa intervals with `boot.ci`
+	- *(Studio 10)* explain the spiky bootstrap distribution of a median
+	- *(Studio 10)* bootstrap a refitted model's AUC and say why the interval does not remove training optimism
+	- *(Studio 10)* run a coefficient-wise permutation test on a `glm` and explain why its $p$-values differ from the Wald $p$-values

@@ -9,7 +9,7 @@ aliases: [normal distribution, Gaussian, N(mu, sigma^2), standard normal, unit n
 ---
 # [[Gaussian Distribution]]
 
-**Context:** [[FIT2086_MOC]] · the default [[Parametric Probability Distributions|parametric model]] for $\mathcal{X}=\mathbb{R}$ · two parameters $\theta=(\mu,\sigma^2)$ that **are** the mean and variance · self-similar and additive, which is why it carries the confidence-interval and regression work later in the unit
+**Context:** [[FIT2086_MOC]] · the default [[Parametric Probability Distributions|parametric model]] for $\mathcal{X}=\mathbb{R}$ · two parameters $\theta=(\mu,\sigma^2)$ that **are** the mean and variance · self-similar and additive, which is why it carries the confidence-interval and regression work later in the unit · $q$-dimensional, correlated generalisation ➔ [[Multivariate Normal Distribution]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** $X\sim N(\mu,\sigma^2)$ with

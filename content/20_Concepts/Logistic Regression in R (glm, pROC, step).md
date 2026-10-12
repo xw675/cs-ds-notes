@@ -1,12 +1,12 @@
 ---
 unit: FIT2086
-week: [7, 8]
+week: [7, 8, 11]
 source: [applied]
 domain: E
 parent: "[[Logistic Regression]]"
 tags: [Tool/R, DataScience/Modelling, DataScience/ML]
 type: pattern
-aliases: [glm binomial, logistic regression in R, pROC, roc in R, my.pred.stats, studio7, KIC in R, step k = 3, null deviance, residual deviance]
+aliases: [glm binomial, logistic regression in R, pROC, roc in R, my.pred.stats, studio7, KIC in R, step k = 3, null deviance, residual deviance, display = F]
 ---
 # [[Logistic Regression in R (glm, pROC, step)]]
 
@@ -105,5 +105,6 @@ my.pred.stats(predict(bic, test, type = "response"), test$DIABETES)
 ## ⚠️ Common Mistakes
 - 💡 **Omitting `family = binomial`** ➔ `glm` silently fits a Gaussian linear model.
 - 💡 **Target not a factor** ➔ read with `stringsAsFactors = TRUE`; R treats the **second** level as success, and `my.pred.stats` hard-codes the labels `"N"`/`"Y"`.
+- 💡 **Studio 10's `my.pred.stats` is a new version** ➔ `display = F` **returns** `list(ca, sens, spec, auc, log.loss)` instead of printing — needed to feed a statistic to `boot()` ➔ [[Resampling Inference in R (boot, boot.ci, perm.log.reg)]].
 - 💡 **Reading `my.pred.stats` log-loss as an average** ➔ it is a **sum** over the test set ($18112$ over $10{,}000$ rows) ➔ compare only on the same test data.
 - 💡 **Judging a $p\approx n$ model in-sample** ➔ deviance $277\to154$ looks excellent; test AUC $0.55$ says otherwise.

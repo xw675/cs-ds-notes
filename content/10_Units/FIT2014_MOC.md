@@ -7,7 +7,7 @@ tags:
 # 📘 FIT2014: Theory of Computation
 
 > [!INFO] Map of Content
-> Index for **FIT2014 (Malaysia campus)**. Arc: languages → logic/CNF → automata → grammars → parsing → Turing machines → NP-completeness. Conventions: $\Sigma$ alphabets, $\varepsilon$ empty word, **CNF is the working form** — but **[[Conjunctive Normal Form]] (logic) ≠ [[Chomsky Normal Form]] (grammars)**; W1–2 logic notes are shared dual-unit with [[FIT1058_MOC]].
+> Index for **FIT2014 (Malaysia campus)** — languages → logic/CNF → automata → grammars → parsing → Turing machines → NP-completeness. ⚠️ **[[Conjunctive Normal Form]] (logic) ≠ [[Chomsky Normal Form]] (grammars)**; W1–2 logic shared with [[FIT1058_MOC]].
 
 ## 📊 Assessment Map
 - **Practical Preparation (5%)** ➔ ongoing weekly prac work — part of the in-semester threshold hurdle.
@@ -20,12 +20,12 @@ tags:
 
 ## 🧰 Toolkit Cheatsheets
 - [[FIT2014 Unit Cheatsheet]] -> **the whole-unit exam crib** — W1→W11 as formulas/rules with firing preconditions, in syllabus order; the single re-read before the 3h10 exam
-- [[Shell Toolkit (Cheatsheet)]] -> tri-unit (FIT1043 + FIT2014 + FIT2109); FIT2014 adds the `sed`/`tr`/grep-regex block (Lab 0)
+- [[Shell Toolkit (Cheatsheet)]] -> dual-unit (FIT1043 + FIT2014); FIT2014 adds the `sed`/`tr`/grep-regex block (Lab 0)
 
 ## 📅 Knowledge Index
 
 ### Lab 0 — Linux Tooling *(all assignment work runs in Linux)*
-- [[Unix Shell (Bash)]] -> Parent Framework: [[FIT2014_MOC]] *(tri-unit — navigate/inspect/pipe/grep; grep patterns are regexes)*
+- [[Unix Shell (Bash)]] -> Parent Framework: [[FIT2014_MOC]] *(dual-unit — navigate/inspect/pipe/grep; grep patterns are regexes)*
 - [[Text Processing with sed and tr]] -> Parent Framework: [[Unix Shell (Bash)]] *(applied bridge to [[Regular Expressions]] — POSIX BRE)*
 
 ### Week 1 — Languages, Propositional & Predicate Logic *(Lectures 1–3)*
@@ -178,7 +178,7 @@ tags:
 	- build a **derivation** and its **parse tree**, distinguish **leftmost/rightmost** (same tree, same length) and use the **prefix property** 
 	- **write a grammar** from an inductive definition (Dyck $S\to\varepsilon\mid(S)\mid SS$; PALINDROME; $\mathtt{a}^n\mathtt{b}^n$ via $S\to\mathtt{a}S\mathtt{b}\mid\varepsilon$) 
 	- recognise a **regular grammar** (semiword rules) and build one from an NFA ($X\xrightarrow{z}Y \Rightarrow X\to zY$); know **{regular} ⊊ {CFL}** 
-	- define a **PDA** (NFA + stack; transition $x,y\to z$ = read/pop/push; $\texttt{\$}$ bottom-marker; accept iff some path reaches Final) and know **CFG ⟺ PDA** (both construction directions), that NFA = stackless PDA, and that **deterministic PDAs are weaker**
+	- define a **PDA** (NFA $+$ stack, $x,y\to z$ = read/pop/push) and know CFG ⟺ PDA, with deterministic PDAs weaker
 - **W6** ➔ 
 	- run a **shift-reduce** trace (stack + buffer; reduce = rule in reverse; accept iff stack $=S$, buffer empty) 
 	- diagnose **shift-reduce** vs **reduce-reduce** conflicts and read them as grammar **ambiguity**; know $\text{DCFL}\subsetneq\text{CFL}$ 
@@ -193,7 +193,7 @@ tags:
 	- convert an **FA → TM** by the 5 steps ⟹ every regular language is **decidable**
 	- **build a TM** for $\mathtt{a}^n\mathtt{b}^n$ and $\mathtt{a}^n\mathtt{b}^n\mathtt{a}^n$ by the mark-and-sweep recipe
 	- read the **unary code** ($n\mapsto\mathtt{a}^n$, tuples $\mathtt{b}$-separated) and define $f$ by a TM; state the **Church–Turing thesis** and why it is not a theorem
-	- **encode and decode** a TM table ($\mathtt{a}^n\mathtt{b}$ states, 2-letter symbols, 1-letter direction); know $\text{CWL}=(\mathtt{aa}^*\mathtt{b}\mathtt{aa}^*\mathtt{b}(\mathtt{a}\cup\mathtt{b})^5)^*$ is regular but $\supsetneq$ {TM codes}
+	- **encode and decode** a TM table as code words, and say why CWL is regular but contains non-codes
 	- say what a **UTM** does, lay out $\langle M\rangle\,\texttt{\$}\,x$, and justify why UTMs exist
 - **W8** ➔ 
 	- define a **decider** ($\text{Loop}(M)=\emptyset$) and **decidable** ($L=\text{Accept}(M)$, so $\overline{L}=\text{Reject}(M)$ free); decidable $=$ recursive $=$ solvable

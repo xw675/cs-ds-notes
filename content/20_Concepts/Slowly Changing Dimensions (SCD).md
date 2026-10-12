@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: [5, 6]
+week: [5, 6, 11]
 source: [lecture, slides]
 domain: C
 parent: "[[Star Schema]]"
@@ -30,6 +30,7 @@ aliases: [SCD, Temporal Data Warehousing, SCD Type 2, SCD Type 4, Slowly Changin
 - **Type 2 — versioned rows** ➔ history is **not** separated from the main dimension; new records keep being **added** to it, so $\text{BookDIM}$ gains $\text{StartDate}, \text{EndDate}, \text{Price}, \text{Remarks}, \text{CurrentFlag}$ and one book occupies many rows.
 - **Type 3 — previous column** ➔ a simplification of Type 2 assuming the **complete history is not necessary**: one row per member, with `CurrentPrice` beside `PreviousPrice` (`Null` when the member never changed).
 - **Type 4 — history table** ➔ a **new dimension** holds the full change history; $\text{BookDIM}$ keeps only the stable attributes and the price columns move to $\text{BookPriceDIM}$. The same book keeps **one** `BookID`.
+- **Type 4 for a changed business rule** *(W11)* ➔ when Semester 1's end date moves (15 Jul ➔ 30 Jun from 2021), $\text{SemesterHistoryDIM}(\underline{\text{SemesterID}^{*}, \text{VersionNo}}, \text{StartYear}, \text{EndYear}, \text{StartDate}, \text{EndDate}, \text{Remark})$ keeps both versions, `EndYear` null marking the one in force ➔ [[Active Data Warehousing]].
 - **Type 6 — 2 $+$ 3** ➔ no separate identifier for the same book, but the **entire history is kept** alongside `CurrentPrice` / `PreviousPrice`: $\text{BookDIM}(\underline{\text{BookID}}, \text{BookTitle}, \text{Author}, \text{StartDate}, \text{EndDate}, \text{CurrentPrice}, \text{PreviousPrice}, \text{Remarks}, \text{CurrentFlag})$.
 
 ## ⚙️ Schema Layout

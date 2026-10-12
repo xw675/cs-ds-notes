@@ -8,7 +8,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 ---
 # [[R Toolkit (Cheatsheet)]]
 
-**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **`glm` + ROC** → **`glmnet` ridge/lasso** → **trees / forests / kNN** → **simulation/distributions** → **bootstrap & permutation** · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
+**Context:** [[FIT1043_MOC]], [[FIT2086_MOC]] · base R in one place — syntax → vectors → data frames → CSV → plots → `lm` → **`glm` + ROC** → **`glmnet` ridge/lasso** → **trees / forests / kNN** → **simulation/distributions** → **bootstrap & permutation** (hand loops + `boot`/`boot.ci`) · plots detailed in [[R Visualisation (base graphics)]]; simulation detailed in [[R Simulation and Random Sampling]] · lab: `30_Projects/FIT1043_Labs/Week8-R-Solution.pdf`
 **Read protocol:** scan tables → attempt the practice blank → follow links only where you failed.
 
 > [!abstract] Quick Revision
@@ -238,7 +238,7 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | kNN tune | `knn = train.kknn(Y ~ ., data = train, kmax = 25, kernel = kernels)` | `knn$best.parameters$k` / `$kernel`; `"rectangular"` = plain average |
 | kNN accuracy | `mean(yhat.test == test$DIABETES) * 100` | labels only ➔ no AUC / log-loss |
 
-## 🔁 Resampling & Monte Carlo (FIT2086 W10 — details ➔ [[Bootstrap]], [[Permutation Tests]], [[Monte Carlo Simulation (Empirical Probabilities)]])
+## 🔁 Resampling & Monte Carlo (FIT2086 W10 + Studio 10 — details ➔ [[Bootstrap]], [[Permutation Tests]], [[Monte Carlo Simulation (Empirical Probabilities)]], [[Resampling Inference in R (boot, boot.ci, perm.log.reg)]])
 | Task | Micro-syntax | Gotcha |
 | :-- | :-- | :-- |
 | empirical probability | `X = rnorm(m, 0, 1); mean(sqrt(abs(X)) > 1)` | resolution $1/m$ ➔ need $m\gg1/p$ |
@@ -249,6 +249,17 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 | bootstrap se / bias | `th[i] = median(y[sample(n, n, replace = TRUE)])`; `sd(th)`; `mean(th) - median(y)` | `var()` divides by $m-1$, the slide by $M$ |
 | permutation of targets | `y.perm = sample(df$BP)` | **no** replacement; $x$ untouched |
 | permutation $p$-value | `(1 + sum(abs(b.perm) >= abs(b.hat))) / (m + 1)` | two-sided via `abs()`; floor $1/(m+1)$ |
+| `boot` package | `library(boot)` · `bs = boot(data, statistic, R = 1000)` | `install.packages("boot")` once |
+| statistic, vector data | `boot(x, function(x, I) { return(median(x[I])) }, 1000)` | must take `(data, indices)` and **use** the indices, or se $=0$ |
+| statistic, data frame | `f = function(formula, data, indices) { d = data[indices, ]; … }` · `boot(df, f, R = 1000, formula = y ~ .)` | `data[indices, ]` keeps whole rows; extra args go to `boot` **by name** |
+| read a boot object | `bs` ➔ `original` · `bias` · `std. error` · `bs$t0` · `bs$t` | `bs$t` = $R\times1$ matrix of replicates |
+| bootstrap CI | `boot.ci(bs, 0.95, type = "basic")` · `type = "bca"` | BCa adjusts for bias + skew; neither fixes in-sample optimism |
+| replicate histogram | `plot(bs)` | the statistic's bootstrap distribution, not the data |
+| response name from a formula | `as.character(fit$terms[[2]])` | lets one wrapper serve any target |
+| metrics as values | `my.pred.stats(prob, y, display = F)$auc` | Studio 10 version returns `ca`, `sens`, `spec`, `auc`, `log.loss` |
+| permute a df's target | `d[, target] = d[sample(n), target]` | predictors untouched |
+| coefficient store | `matrix(NA, R, k, dimnames = list(NULL, names(fit$coefficients)))` | index by name: `M[, "BP"]` |
+| per-coefficient comparison | `colMeans(sweep(abs(M), 2, abs(b), ">"))` | `sweep(…, 2, …)` compares each **column** to its own $\lvert\hat\beta_j\rvert$; gives $b/R$ — can print $0$ |
 
 ## ✍️ Practice 
 > [!QUESTION]- Load `students.csv` (columns Name, Age, Score); report dimensions and structure; mean and sd of Score; the top-3 rows by Score (descending); boxplot Score and extract its outliers; fit Score ~ Age and state the slope.
@@ -292,6 +303,25 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 > > ```
 > > - **Key moves:** predict once, then resample the **errors' rows** (the model is fixed; only the test sample varies); `replace = TRUE`; percentiles give the interval.
 
+> [!QUESTION]- Practice 4 *(integration — FIT2086 Studio 10)*: on `pima.train`, give a 95% BCa interval for the **BMI coefficient** of the full logistic model ($R=1000$) and a $+1$-corrected permutation $p$-value for it ($R=2000$).
+> > [!SUCCESS]- Reference solution
+> > ```r
+> > library(boot)
+> > coef.bmi = function(formula, data, indices) {
+> >   coef(glm(formula, data[indices, ], family = binomial))[["BMI"]]
+> > }
+> > bs = boot(pima.train, coef.bmi, R = 1000, formula = DIABETES ~ .)
+> > boot.ci(bs, 0.95, type = "bca")
+> > b.hat = coef(glm(DIABETES ~ ., pima.train, family = binomial))[["BMI"]]
+> > d = pima.train; n = nrow(d); R = 2000; b.perm = rep(0, R)
+> > for (i in 1:R) {
+> >   d$DIABETES = sample(pima.train$DIABETES)               # shuffle target, no replacement
+> >   b.perm[i] = coef(glm(DIABETES ~ ., d, family = binomial))[["BMI"]]
+> > }
+> > (1 + sum(abs(b.perm) >= abs(b.hat))) / (R + 1)
+> > ```
+> > - **Key moves:** bootstrap = rows **with** replacement through `indices`; permutation = target **without** replacement; `[["BMI"]]` pulls one named coefficient; the $+1$ form never returns $0$.
+
 ## ⚠️ Common Mistakes
 - 💡 **1-based indexing** ➔ `x[1]` is the first element; muscle-memory from Python costs marks.
 - 💡 **Negative index drops** ➔ `x[-1]` = everything EXCEPT first (Python: last element).
@@ -300,6 +330,6 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 - 💡 **`*norm` takes `sd`, `*pois` takes an interval-matched `lambda`** ➔ pass $\sigma$ not $\sigma^2$; rescale $\lambda$ to the question's interval **before** the call.
 - 💡 **`predict()` on a `glm` returns log-odds** ➔ add `type = "response"` before thresholding, `roc()` or log-loss.
 - 💡 **`step()` is AIC unless told otherwise** ➔ a "BIC model" without `k = log(n)` is an AIC model; compute `n <- nrow(d)` first.
-- 💡 **Bootstrap without `replace = TRUE`** ➔ `sample(n, n)` is a permutation: every refit is identical and the interval has zero width.
+- 💡 **Bootstrap without `replace = TRUE`** ➔ `sample(n, n)` is a permutation: every refit is identical and the interval has zero width; the `boot()` equivalent is a statistic that ignores its `indices` argument.
 - 💡 **`predict()` on a classification forest returns labels** ➔ `type = "prob"` then `[, 2]` before AUC or log-loss.
 - 💡 **`cv.glmnet` without `s = "lambda.min"`** ➔ `coefficients`/`predict` fall back to `s = "lambda.1se"` (larger $\lambda$, sparser); Studio 8 reports `lambda.min`.

@@ -1,6 +1,6 @@
 ---
 unit: FIT3003
-week: 8
+week: [8, 11]
 source: [lecture, slides, applied]
 domain: C
 parent: "[[Data Warehouse]]"
@@ -47,6 +47,7 @@ aliases: [Data Warehousing Granularity, Level of Aggregation, Level-0, Facts wit
 ### 5. Implementation
 - **Level-0 is physical, upper levels are derived** ➔ Level-0 is built with `create table`; the upper-level star schemas are normally implemented as **views** over it.
 - **The top level is the dashboard** ➔ the most aggregated schema is what an interactive management dashboard reads.
+- **Build direction follows activity** *(W11)* ➔ a passive warehouse is often easier **top-down** (start at Level-2, lower step by step); an active one must be **bottom-up**, each level maintained from the one immediately below ➔ [[Active Data Warehousing]].
 
 ## 🗂️ Schema
 $$\text{ComputerLabFACT}_{\text{L2}}(\underline{\text{SemesterID}^{*}, \text{TimeID}^{*}, \text{DegreeCode}^{*}}, \text{Num\_of\_Logins})$$

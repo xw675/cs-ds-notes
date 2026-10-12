@@ -1,11 +1,11 @@
 ---
 unit: FIT2086
-week: [9, 10]
+week: [9, 10, 11]
 source: [lecture, applied]
 domain: E
 parent: "[[Classification and Conditional Class Probabilities]]"
 tags: [DataScience/Modelling, DataScience/ML]
-aliases: [kNN, k-NN, KNN, k Nearest Neighbours, Nearest Neighbours, Nearest Neighbour Smoothing, k-Nearest Neighbors, Kernel Weighting, Euclidean Distance]
+aliases: [kNN, k-NN, KNN, k Nearest Neighbours, Nearest Neighbours, Nearest Neighbour Smoothing, k-Nearest Neighbors, Kernel Weighting, Euclidean Distance, kNN imputation]
 ---
 # [[k-Nearest Neighbours]]
 
@@ -21,6 +21,7 @@ aliases: [kNN, k-NN, KNN, k Nearest Neighbours, Nearest Neighbours, Nearest Neig
 ### 1. Idea
 - **No model fitted** ➔ keep the $n$ pairs $(x_{i,1},\dots,x_{i,p};\,y_i)$; predict the target of a new individual $x'_1,\dots,x'_p$ from its most similar individuals.
 - **Very weak assumption** ➔ individuals similar in predictor values are similar in targets — nothing about linearity or a distribution.
+- **Reused without a target (W11)** ➔ ignore missing values in the distance and predict each missing entry from the other columns ➔ imputation / collaborative filtering in [[Missing Data Imputation and Recommender Systems]].
 
 ### 2. Distance
 - **Euclidean (default)** ➔ $d(\mathbf{x},\mathbf{x}')=\left[\sum_{j=1}^{p}(x_j-x'_j)^2\right]^{1/2}$.

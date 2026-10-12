@@ -15,8 +15,8 @@ tags: [2026/S1]
 
 ## 🧰 Toolkit Cheatsheets
 - 📌 [[FIT2099 Unit Cheatsheet]] — principles, smells→refactors, contracts, UML rules
-- [[Java Toolkit (Cheatsheet)]] — code a class from a blank editor: class anatomy, modifiers, types/`==`-vs-`equals`, collections, inheritance/polymorphism/interfaces/enums, exceptions/DbC/CQS, DI/defensive copying, Factory Method, and the smell→refactoring quick-map.
-- [[UML Toolkit (Cheatsheet)]] — draw from a blank page: class-diagram compartments/visibility/**relationship-arrow legend**/multiplicity/stereotypes, sequence-diagram lifelines/messages/activation/fragments, and the domain/activity/use-case/CRC modelling tools (Mermaid syntax throughout).
+- [[Java Toolkit (Cheatsheet)]] — code a class from a blank editor: anatomy, types, collections, inheritance/interfaces, exceptions, Factory Method, smell→refactoring map
+- [[UML Toolkit (Cheatsheet)]] — draw from a blank page: class and sequence diagrams, relationship-arrow legend, domain/activity/use-case/CRC tools (Mermaid)
 
 ## 📅 Knowledge Index
 
@@ -42,7 +42,7 @@ tags: [2026/S1]
 - [[Java Collections (List, Set, Map)]] -> Parent Framework: [[Java Arrays]]
 - [[Polymorphism (Java)]] -> Parent Framework: [[Inheritance (Java)]]
 - [[Abstract Classes (Java)]] -> Parent Framework: [[Inheritance (Java)]]
-- *(deepened this week: [[Static and Final (Java)]] — static↔instance access matrix, why-use/why-carefully; [[Encapsulation and Access Modifiers (Java)]] — encapsulation boundaries & ReD; [[Java Packages and Imports]] — `module-info.java`)*
+- *(deepened: [[Static and Final (Java)]] · [[Encapsulation and Access Modifiers (Java)]] · [[Java Packages and Imports]] — `module-info.java`)*
 
 ### Week 4 — Interfaces & Enumerations
 - [[Interfaces (Java)]] -> Parent Framework: [[Abstract Classes (Java)]]
@@ -78,7 +78,7 @@ tags: [2026/S1]
 - [[Refactoring (Java)]] -> Parent Framework: [[Design Smells (Java)]]
 
 ### Week 10 — Refactoring to Address Code Smells
-- *(deepened this week: [[Refactoring (Java)]] — the refactor-to-enable-change motivation (Fowler `statement()` scenario) + the identify→fix→apply→test→commit→repeat loop; no new note — Week 10 is a worked deepening of the Week 9 material.)*
+- *(deepened: [[Refactoring (Java)]] — refactor-to-enable-change and the identify→fix→test→commit loop; no new note this week)*
 
 ### Week 11 — Design in the Lifecycle, Technical Debt & the Design Process
 - [[Software Design in the Lifecycle (FIT2099)]] -> Parent Framework: [[FIT2099_MOC]]  *(when/why to design; SDLC + Lean)*

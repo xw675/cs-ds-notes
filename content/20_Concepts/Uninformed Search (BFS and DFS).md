@@ -1,15 +1,14 @@
 ---
-unit: [FIT1061, FIT2004]
-week: [2, 5]
+unit: FIT2004
+week: 5
 source: [lecture, applied]
 domain: A
-parent: "[[Search Problem Formulation]]"
-tags: [CS/AI, CS/Algorithms, Math/GraphTheory, CS/DataStructures]
+parent: "[[Graph]]"
+tags: [CS/Algorithms, Math/GraphTheory, CS/DataStructures]
 aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Graph Traversal]
 ---
 # [[Uninformed Search (BFS and DFS)]]
-**Context:** [[FIT1061_MOC]] · Block A's two **blind** searches — no sense of direction, only an ordering rule · [[FIT2004_MOC]] · the W5 **graph traversal** spine that [[Dijkstra's Algorithm]] and [[Topological Sort]] are both built from
-**Parent Framework:** [[Search Problem Formulation]]
+**Context:** [[FIT2004_MOC]] · the W5 **graph traversal** spine that [[Dijkstra's Algorithm]] and [[Topological Sort]] are both built from
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** ONE loop, ONE parameter ➔ the **frontier's discipline** — FIFO ([[Queue (ADT)]]) gives BFS, LIFO ([[Stack (ADT)]]) gives DFS.
@@ -20,7 +19,7 @@ aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Grap
 ### 1. The Shared Skeleton
 - **One loop, four moves** ➔ take a node off the frontier ➔ count it ➔ goal-test it ➔ push its unvisited neighbours on.
 - **Only the frontier differs** ➔ every other line of BFS and DFS is character-identical; the data structure *is* the algorithm.
-- **Domain-blind** ➔ needs only the successor function, so grid, maze and road network run the same code ([[Search Problem Formulation]]).
+- **Domain-blind** ➔ needs only the successor function, so grid, maze and road network run the same code.
 - **Termination** ➔ goal dequeued ➔ reconstruct path · frontier empties ➔ **failure** (goal unreachable).
 
 ### 2. Frontier = Queue ➔ BFS
@@ -38,7 +37,6 @@ aliases: [BFS, DFS, Breadth-First Search, Depth-First Search, Blind Search, Grap
 - **`visited` (a set)** ➔ membership test before enqueueing; **initialise with `start`**. Without it a cyclic graph re-enqueues forever.
 - **`came_from` (a dict)** ➔ `came_from[B] = A` records *B was reached from A*; walk it backwards from the goal and reverse ➔ the path.
 - **Mark on discovery, not on expansion** ➔ add to `visited` at the moment of enqueue/push; marking at pop lets one node enter the frontier many times.
-- **Handout variant** ➔ the handout drops `visited` and tests `neighbour not in came_from` instead — `came_from`'s **keys are** the visited set. Both are correct; the explicit set is the traceable one.
 
 ### 5. The FIT2004 Graph Formulation (W5)
 - **Two states, three words** ➔ **undiscovered** ➔ **discovered** (in the collection, reachable but unprocessed) ➔ **visited** (served/popped, edges already scanned). FIT2004 traces carry a `Discovered` row and a `Visited` row and both must be written every step.
@@ -172,7 +170,6 @@ On a graph stored as an adjacency list ([[Graph Representations]]), BFS and DFS 
 - **Where $\Theta(V+E)$ comes from** ➔ each vertex is served **once** ($V$) and each undirected edge inspected **twice**, once from each endpoint ($2E$) — the $O(1)$ discovered flag keeps the per-neighbour test constant.
 - **Where the space goes** ➔ $\Theta(V)$ for the collection plus flags, $\Theta(E)$ for the adjacency list itself; quote $\Theta(V+E)$ when the graph is counted, $\Theta(V)$ when only **auxiliary** space is asked for.
 - **Adjacency matrix instead** ➔ the neighbour scan becomes $O(V)$ per vertex ➔ $\Theta(V^{2})$ regardless of $E$.
-- **Neither scales to chess** ➔ $b\approx35$, so depth $10$ is $\approx2.7\times10^{15}$ nodes $\approx9$ years at $10^7$ nodes/s — **for either algorithm**. Blind search is the problem, not the choice between these two.
 
 ## ⚖️ Core Decision Matrix
 | Frontier | Trigger condition | Pro | Con | Exploration shape |
@@ -184,35 +181,7 @@ On a graph stored as an adjacency list ([[Graph Representations]]), BFS and DFS 
 > [!NOTE] **When It Flips:** on a **dead-end grid** DFS commits to the corridor, dead-ends and backtracks ➔ a longer path. On a **corridor-shaped** space with the goal deep along one branch, DFS reaches it after $\approx d$ expansions while BFS pays for the entire radius. Uniform cost is the hinge — introduce edge weights and BFS's guarantee dies.
 
 ## 📊 Exam Execution Trace & Applied Exercises
-Lecture $3\times3$ grid, one wall at the centre. Nodes are walkable cells; edges join $4$-neighbours.
-```text
-S  1  2
-3  ■  4
-5  6  G
-```
-**Neighbour order fixed as right → down → left → up.** Exploration order is undefined without it.
-
 ### Manual Execution Trace
-BFS, queue written front→back.
-
-| Step | Dequeued | Unvisited neighbours enqueued | Queue after | `came_from` added |
-| :--- | :--- | :--- | :--- | :--- |
-| $1$ | `S` | `1`, `3` | `[1, 3]` | `1←S`, `3←S` |
-| $2$ | `1` | `2` | `[3, 2]` | `2←1` |
-| $3$ | `3` | `5` | `[2, 5]` | `5←3` |
-| $4$ | `2` | `4` | `[5, 4]` | `4←2` |
-| $5$ | `5` | `6` | `[4, 6]` | `6←5` |
-| $6$ | `4` | `G` | `[6, G]` | `G←4` |
-| $7$ | `6` | — (`G` already visited) | `[G]` | — |
-| $8$ | `G` | **goal** ➔ reconstruct | — | — |
-
-**Reconstruction:** `G ← 4 ← 2 ← 1 ← S` ➔ path $S,1,2,4,G$ · **length $4$ edges** · **nodes_expanded $=8$**.
-
-DFS on the identical grid, stack written bottom→top: pops `S`→`3`→`5`→`6`→`G`, giving path $S,3,5,6,G$ · **length $4$ edges** · **nodes_expanded $=5$**.
-
-- **Read the result honestly** ➔ DFS matched BFS's length here **because this grid is symmetric**, and expanded $5$ nodes against $8$. DFS lacks the *guarantee*, which is not the same as always producing a worse path — the dead-end grid in the lab is engineered to make the gap appear.
-
-### Manual Execution Trace (FIT2004 graph form)
 Undirected graph, adjacency lists in the order shown, source $A$: $A{:}\,C,B$ · $B{:}\,A,F,E$ · $C{:}\,A,D$ · $D{:}\,C$ · $E{:}\,B,G,H$ · $F{:}\,B,G$ · $G{:}\,F,E$ · $H{:}\,E$.
 
 | Step | Served | Newly discovered | `Discovered` after | `Visited` after | `distance` set |
@@ -258,8 +227,3 @@ $$
 > > [!SUCCESS]- Answer
 > > - **Short answer:** each vertex is served once and each edge inspected twice, provided the "already discovered?" test is $O(1)$.
 > > - **Why:** **The visited flag caps vertex serves at $V$** ➔ a discovered vertex is never re-added, so the outer loop runs $V$ times whatever the shape. **Summing adjacency-list lengths gives $2E$** ➔ every undirected edge is scanned once from each endpoint, so inner work is $\Theta(E)$, not $\Theta(V\cdot E)$. **The $O(1)$ membership test is load-bearing** ➔ a linear search of the collection makes each test $O(V)$ and the bound $\Theta(VE)$.
-
-> [!FAQ]- Both algorithms explore $\approx b^d$ nodes. Why is `nodes_expanded` still the number the lab asks you to record?
-> > [!SUCCESS]- Answer
-> > - **Short answer:** $b^d$ is the worst case; `nodes_expanded` is what actually happened on *this* graph shape.
-> > - **Why:** **The bound is shape-blind** ➔ it assumes a full tree, whereas a grid with walls or a corridor produces wildly different real counts. **It is the only controlled comparison available** ➔ with the loop identical and the frontier the sole variable, a difference in `nodes_expanded` is caused by FIFO-vs-LIFO and nothing else, and pairing it with path length shows optimality bought with breadth.

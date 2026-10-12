@@ -11,14 +11,17 @@ tags: [2026/S2]
 ## 📊 Assessment Map
 
 - **Assessment 1 — Online Quiz (10%)** ➔ Introduction to Data Warehousing and Star Schemas; **due Monday of Week 6** (the W4 slide dates this 1 September 2026)
-- **Assessment 2 — Individual Assignment (40%)** ➔ THE unit: design a warehouse and implement it in Oracle; **opens Wed 7 October 2026, due Wed 14 October 2026, 11:55 PM** (W8 webinar); fed by [[Star Schema]] and [[Oracle SQL Toolkit (Cheatsheet)]]. Four tasks, stated in Lab 3: **1** clean the input data (an ERD is *not* supplied — draw one) · **2–3** draw the star and create it in SQL · **4** answer the given queries **plus one of your own**, each touching the fact and $\geq 1$ dimension, with a justification of why management would want it.
-- **Assessment 3 — OLAP Quiz (10%)** ➔ individual, **1 attempt, 40 min**; spec released 11 October (W11); **opens Sun 18 October 2026, due Mon 26 October 2026, 11:55 PM** (W10 webinar); fed by the W9 OLAP notes — drill [[OLAP Cube and Rollup]]'s grouping-set arithmetic
+- **Assessment 2 — Individual Assignment (40%)** ➔ THE unit: design a warehouse and implement it in Oracle; **opens Wed 7 Oct, due Wed 14 Oct 2026, 11:55 PM** ➔ [[Star Schema]], [[Oracle SQL Toolkit (Cheatsheet)]]
+	- **1** clean the input data (no ERD supplied — draw one)
+	- **2–3** draw the star and create it in SQL
+	- **4** answer the given queries **plus one of your own** (fact $+\ge1$ dimension, justified for management)
+- **Assessment 3 — OLAP Quiz (10%)** ➔ 1 attempt, 40 min; **opens Sun 18 Oct, due Mon 26 Oct 2026, 11:55 PM** ➔ drill [[OLAP Cube and Rollup]]'s grouping-set arithmetic
 - **Exam (40%)**
 
 **Topics covered:** data warehousing (ETL, multidimensional schemas, star/snowflake) · OLAP · data analytics.
 
 ## 🧰 Toolkit Cheatsheets
-- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; extended for FIT3003 with DDL/DML, `INSERT ALL`, cross-account CTAS, the **old-style join** syntax this unit uses, the W2 warehouse-ETL clauses, the W3 exploration/cleaning probes, and the W4 bridge/`LISTAGG`/weight-factor clauses, and the W5–W6 sequence/pivot/junk clauses (`create sequence`, `.nextval`, `(+)`, `nvl`, correlated `update`), plus the Lab 6 join-sourced dimension and pivot grid-trim clauses, and the W7 combine/slice clauses (`union`-merge, multi-fact join, the one-dimension pivot, vertical and horizontal slice CTAS, top-N `rownum`, shared-dimension querying), and the W8 multi-input/granularity clauses (cross-source `"Club.Table"` addressing, union-of-unions dimensions, `||` date derivation, source-key stamping, vertical vs horizontal stacking, TempFact re-graining), and the W9 OLAP clauses (`cube` / `rollup` / partial forms, `grouping` $+$ `decode` labels, `rank` / `dense_rank` / `row_number` / `percent_rank`, `partition by`, rank-based Top-N, `rows unbounded preceding` / `rows n preceding`), and the W10 analytics clauses (in-SQL least-squares regression via a cross-joined one-row means view, `row_number` period index)
+- [[Oracle SQL Toolkit (Cheatsheet)]] -> shared with FIT2094; FIT3003 adds warehouse DDL/ETL (CTAS, `INSERT ALL`, sequences, old-style `(+)` joins) · bridge/`LISTAGG` · union-merge, pivot and slice CTAS · re-graining · OLAP (`cube`/`rollup`/`grouping`, `rank`/`row_number`, windows) · in-SQL regression · PL/SQL, triggers and the active-DW maintenance idioms *(W1–W11)*
 
 ## 📅 Knowledge Index
 
@@ -102,12 +105,22 @@ tags: [2026/S2]
 ### Week 10 — Data Analytics for Data Warehousing (Ch21)
 *(the webinar was a W9 OLAP recap $+$ the A2/A3 dates; the new content is the Chapter 21 deck — "read the entire chapter on your own")*
 - [[Data Analytics for Data Warehousing]] -> Parent Framework: [[Data Warehouse]]
-- [[Linear Regression in SQL]] -> Parent Framework: [[Linear and Polynomial Regression]]
+- [[Linear Regression in SQL]] -> Parent Framework: [[Linear and Polynomial Regression]] *(Lab 10 merge: `avg(x) over ()` means, Glucose–Albumin and Age–WBC fits, the `numeric(3,0)` rounding trap; script in `30_Projects/FIT3003_Labs/`)*
 - [[DBSCAN (Density-Based Clustering)]] -> Parent Framework: [[Machine Learning Styles (Supervised vs Unsupervised)]]
 - [[Regression Tree Construction (SSR Splits)]] -> Parent Framework: [[Decision Trees and Regression Trees]]
 - [[Linear and Polynomial Regression]] *(W10 merge: closed-form slope/intercept; time-series vs non-time-series; rolling windows vs regression)*
 - [[k-means Clustering]] *(W10 merge: 1-D midpoint hand trace; normalising non-uniform measures; Voronoi; stop on no movement)*
 - [[OLAP Cube and Rollup]] *(W10 recap merge: the grouping-set count formula for partial forms)*
+
+### Week 11 — Active Data Warehousing (Ch18) & PL/SQL Revision
+*(the webinar was a W10 recap $+$ the A3 dates; the content is the Chapter 18 deck — "read the entire chapter on your own" — and the PL/SQL revision deck)*
+- [[Active Data Warehousing]] -> Parent Framework: [[Data Warehouse]]
+- [[Active Data Warehouse Evolution]] -> Parent Framework: [[Active Data Warehousing]]
+- [[PL-SQL Stored Procedures and Functions]] -> Parent Framework: [[SQL Sublanguages (DDL, DML, DCL)]]
+- [[Database Triggers (Oracle)]] -> Parent Framework: [[PL-SQL Stored Procedures and Functions]]
+- [[Levels of Aggregation]] *(W11 merge: bottom-up build for active warehouses, top-down for passive)*
+- [[Slowly Changing Dimensions (SCD)]] *(W11 merge: a changed business rule versioned in a Type 4 history dimension)*
+- [[Surrogate Key]] *(W11 merge: a `before insert` trigger filling `:new.ID` from a sequence)*
 
 ## 🧭 Suggested Reading Order
 - **W2 — draft, validate, build:** [[Star Schema]] *(notation)* → [[Two-Column Table Methodology]] *(validate first)* → **[[Building Dimension Tables]]** *(A2 hand skill)* → **[[Building Fact Tables]]** *(A2 hand skill)* → [[Fact Measure Aggregation Rules]] *(measure choice)*
@@ -119,6 +132,7 @@ tags: [2026/S2]
 - **W8 — how far has it been rolled up:** **[[Levels of Aggregation]]** *(the ladder $+$ the two lowering moves)* → **[[Identifying a Level-0 Star Schema]]** *(the declared exam trap)* → [[Fact Constellation]] *(hierarchy $\times$ multi-fact)* → **[[Multi-Input Operational Databases]]** *(A2-shaped ETL)* · *drill Lab 8a's two cases before the exam*
 - **W9 — read the warehouse:** [[OLAP (On-Line Analytical Processing)]] *(which family)* → **[[OLAP Cube and Rollup]]** *(row-count arithmetic)* → **[[OLAP Ranking and Top-N]]** *(tie behaviour)* → **[[OLAP Cumulative and Moving Aggregates]]** *(window trace)* → [[Power BI]] *(Data → Model → Report)*
 - **W10 — model the measures:** [[Data Analytics for Data Warehousing]] *(why not association rules / decision trees)* → [[Linear and Polynomial Regression]] *(closed form)* → **[[Linear Regression in SQL]]** *(three-layer query)* → **[[k-means Clustering]]** *(1-D midpoint trace)* → [[DBSCAN (Density-Based Clustering)]] *(vs k-means)* → **[[Regression Tree Construction (SSR Splits)]]** *(min-SSR trace)*
+- **W11 — keep it live:** [[PL-SQL Stored Procedures and Functions]] *(the language)* → **[[Database Triggers (Oracle)]]** *(`:old` / `:new`)* → **[[Active Data Warehousing]]** *(view or trigger, per level)* → **[[Active Data Warehouse Evolution]]** *(follow the dependency)*
 
 ## 🎯 Learning Outcomes
 
@@ -195,9 +209,21 @@ tags: [2026/S2]
 	- explain why association rules and decision trees misfit numerical fact measures
 	- name the fact-table columns that regression, clustering and classification each consume
 	- compute slope $b_1$ and intercept $b_0 = \bar y - b_1 \bar x$ by hand and in SQL
+	- get $\bar x, \bar y$ onto every row by a cross-joined one-row view or `avg(x) over ()`
 	- contrast time-series with non-time-series regression, and rolling windows with regression
 	- trace 1-D k-means with midpoint boundaries until no member moves
 	- normalise non-uniform measures before distance-based clustering
 	- contrast k-means with DBSCAN on $k$, outliers and chaining
 	- choose each regression-tree split by lowest SSR over midpoint thresholds, left sub-tree then right
 	- count grouping sets for partial `cube` ($2^N$) and partial `rollup` ($N+1$), $N$ inside the parentheses
+- **W11** ➔ 
+	- contrast passive and active warehouses on change, build direction and the need for PK–FK constraints
+	- choose view or table $+$ trigger for each dimension, TempFact and fact
+	- trace one operational insert up every level of the trigger chain
+	- maintain a counted fact with a find-or-insert trigger, and decrement it on expiry from `:old`
+	- absorb a changed business rule in the TempFact trigger and a history dimension
+	- predict which levels a schema change reaches by following build dependencies
+	- meet an operational change by updating the existing stars or by building and merging new ones
+	- write a PL/SQL block with `%type`, `if`/`elsif`, loops and a cursor `for` loop
+	- distinguish procedure, function and trigger, and `IN` / `OUT` / `IN OUT`
+	- pick trigger timing, level and event; read `:old`/`:new` per event; veto with `raise_application_error`

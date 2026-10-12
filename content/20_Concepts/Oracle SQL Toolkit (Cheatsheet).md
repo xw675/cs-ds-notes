@@ -257,10 +257,43 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 | Tool | Micro-syntax | Job / gotcha |
 | :--- | :--- | :--- |
 | means to every row | `from (select avg(x) as x_bar, avg(y) as y_bar from dataset) av, dataset` | one-row inline view cross-joined with no `where` ➔ $\bar x, \bar y$ beside each row; deliberate Cartesian |
+| means by window | `select x, avg(x) over () as x_bar, y, avg(y) over () as y_bar from dataset` | empty `over ()` $=$ whole result as one window ➔ grand mean on every row; the Lab 10 form, no cross join |
 | slope | `sum((x - x_bar) * (y - y_bar)) / sum((x - x_bar) * (x - x_bar)) as slope, max(x_bar) as x_bar_max` | $b_1$; carry `x_bar` up as `max(x_bar)` — bare it raises ORA-00937 |
 | intercept | `select slope, y_bar_max - (slope * x_bar_max) as intercept from (…)` | $b_0 = \bar y - b_1 \bar x$ in an **outer** layer — `slope` is invisible beside its own definition |
 | prediction table | `create table linear_regression as select x, y, (intercept + (slope * x)) as y_pred from dataset, (…) order by x;` | the slope/intercept query as a one-row view, cross-joined to every row |
 | period index | `row_number() over (order by S.TimeID) as x` | `TimeID` codes are not evenly spaced numbers ($201812 \to 201901$ jumps $89$) ➔ re-index before regressing |
+| decimal $x$ column | `Age number(4,1)` — not `numeric(3,0)` | scale $0$ **rounds** $56.3 \to 56$ on insert with no error ➔ shifts the fit (Lab 10: $20.1455 \to 20.1574$) |
+
+## ⚡ PL/SQL & Trigger Clauses (FIT3003 W11)
+*(➔ [[PL-SQL Stored Procedures and Functions]] · [[Database Triggers (Oracle)]] · [[Active Data Warehousing]] · [[Active Data Warehouse Evolution]])*
+
+| Tool | Micro-syntax | Job / gotcha |
+| :--- | :--- | :--- |
+| block | `declare v_x number; begin … exception when NO_DATA_FOUND then … end;` | `:=` assigns, `=` compares; a procedure/function puts locals after `as`/`is` with **no** `declare` |
+| anchored type | `Degree Student.DegreeCode%type` | follows the column if it is retyped |
+| single-row fetch | `select DegreeCode into Degree from Student where StudentNo = :new.StudentNo;` | exactly one row, or `NO_DATA_FOUND` |
+| existence test | `select count(*) into IsFound from SemesterYearDim where SemYearID = v_ID;` | never raises — the find-or-insert guard in every active-DW trigger |
+| branch | `if … then … elsif … then … else … end if;` | `elsif`, one word |
+| loops | `loop … if c then exit; end if; end loop;` · `while c loop … end loop;` | the plain `loop` exits only where you say |
+| cursor loop | `cursor c is select …;` then `for r in c loop … r.col … end loop;` | one pass per active-set row; `r` is undeclared |
+| debug print | `set serveroutput on;` then `dbms_output.put_line('…');` | prints nothing without the SQL*Plus setting |
+| procedure | `create or replace procedure P (p1 in number, p2 out number) as … begin … end P;` | run `execute P(…);` · remove `drop procedure P;` |
+| function | `create or replace function F (…) return varchar2 is … begin … return v; end F;` | called **inside** an expression: `select department, ClassInfo(department, course) from classes;` |
+| dictionary | `user_objects where object_type = 'PROCEDURE'` · `user_source` · `user_errors` · `user_triggers` | names are stored **UPPERCASE** — `where name = 'ADDNEWSTUDENT'` |
+| row trigger | `create or replace trigger T after insert on LabActivities for each row declare … begin … end T;` | once per affected row; the only level that sees `:new` / `:old` |
+| statement trigger | the same header without `for each row` | once per statement, even when $0$ rows change |
+| context variables | `:new.col` (insert, update) · `:old.col` (update, delete) | colon only on these two, never on a local |
+| event predicates | `if inserting …` · `if updating and :old.deptno != :new.deptno …` · `if deleting …` | branch one multi-event trigger |
+| column-scoped event | `after delete or insert or update of deptno, sal on emp` | fires on update only when a listed column is set |
+| auto-ID | `before insert on students for each row begin select student_sequence.nextval into :new.ID from dual; end;` | writing `:new` needs `before`; never add `or update` |
+| veto | `raise_application_error(-20000, 'Cannot delete employee...');` | inside a `before` trigger, cancels the triggering operation |
+| view DML | `instead of delete on room_summary for each row begin delete from rooms where building = :old.building; end;` | makes an aggregate view deletable |
+| self-maintaining DW object | `create or replace view StudentDim as select …` | dimension, measure-less fact, upper level that only re-sums — no trigger needed |
+| fact increment | `if IsFound <> 0 then update F set Num = Num + 1 where <keys = :new.keys>; else insert into F values (…, 1); end if;` | update-only loses the first row of every new key combination |
+| fact decrement | `after delete on TempFact for each row … set Num = Num - 1 where <keys = :old.keys>` | expiry: delete from the **TempFact**, which still holds the date |
+| expiry filter | `and to_char(LoginDate,'YYYY') >= '2015'` in the Level-0 build or view | decides which source rows may enter the star |
+| derive-then-insert | `if to_char(:new.LoginDate,'YYYY') >= '2021' then … '06/30' … else … '07/15' … end if;` | a rule change edits **only** the TempFact trigger |
+| `commit` in a trigger | slides end every trigger body with `commit;` | 🔭 live Oracle raises ORA-04092 — the firing statement's transaction owns the commit |
 
 ## ✍️ Integration Practice
 > [!QUESTION]- Practice 1 (FIT2094 Topic 8, Q5-style): full name (one column, space-separated) and contact number of customers who completed a training course longer than 4 hours, ordered by name.
@@ -398,6 +431,30 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 > > ```
 > > - **Key moves:** aggregate the fact to one row per month, index the months with a window over the grouped rows, then the three-layer regression · `slope` reads as average sales growth **per month**.
 
+> [!QUESTION]- Practice 8 (FIT3003 Ch18-style): a new Sub-Level-1 star needs `MonthDim(MonthID, Month, Year)` with `MonthID` like `'202104'`. Write the trigger that keeps it complete as logins arrive in `LabActivities(LoginNo, StudentNo, LoginDate, LoginTime, ComputerID)`.
+> > [!SUCCESS]- Reference solution
+> > ```sql
+> > create or replace trigger AddMonthYear
+> >   after insert on LabActivities
+> >   for each row
+> > declare
+> >   TempMonthID MonthDim.MonthID%type;
+> >   TempYear    MonthDim.Year%type;
+> >   TempMonth   MonthDim.Month%type;
+> >   IsFound     number;
+> > begin
+> >   TempMonthID := to_char(:new.LoginDate,'YYYY') || to_char(:new.LoginDate,'MM');
+> >   TempYear    := to_char(:new.LoginDate,'YYYY');
+> >   TempMonth   := to_char(:new.LoginDate,'MON');
+> >   select count(*) into IsFound from MonthDim where MonthID = TempMonthID;
+> >   if IsFound = 0 then
+> >     insert into MonthDim values (TempMonthID, TempMonth, TempYear);
+> >   end if;
+> > end AddMonthYear;
+> > ```
+> > - **Key moves:** row-level `after insert` on the **source** · `%type` anchors · the key built in the **same** `YYYY || MM` order as the build · `count(*) into` as the existence test, so a month already present is skipped, not duplicated · the star's fact is a view, so no fact trigger ➔ [[Active Data Warehouse Evolution]].
+> > - ⚠️ The slide version ends the `if` with `commit;` — see the toolkit's `commit` row.
+
 ## ⚠️ Common Mistakes
 - 💡 **`= NULL` never matches** ➔ 3-valued logic makes it UNKNOWN; only `IS NULL` works.
 - 💡 **"not A or B" trap** ➔ `emp_no <> 3 OR emp_no <> 8` is TRUE for every row; exclusion needs `AND`.
@@ -416,3 +473,4 @@ ORDER BY dt_code;                                           -- 6. sort (aliases 
 - 💡 **Filtering a window function in its own query** ➔ `where Product_Rank <= 2` beside `rank() over (…)` fails; wrap in an inline view — and remember the window then sees every row, which is what a running total needs ➔ [[OLAP Ranking and Top-N]].
 - 💡 **Unqualified shared key in an OLAP query** ➔ `LocationID` / `TimeID` exist in the fact **and** its dimension; unqualified they raise ORA-00918 (two Chapter 19 slides do this) ➔ always `S.LocationID`, `S.TimeID`.
 - 💡 **Row counts on sparse data** ➔ a cube/rollup grouping set yields one row per combination that **occurs**, not the product of distinct counts — Lab 9a's $3$ months $\times$ $3$ pilots gives $7$ rows, not $9$ ➔ [[OLAP Cube and Rollup]].
+- 💡 **Two spellings of one manufactured key** ➔ a dimension built on `Year || Semester` and a trigger looking up `Semester || Year` never match, so every member is re-inserted under a key no fact row uses (Ch18 slide 68) ➔ [[Active Data Warehouse Evolution]].

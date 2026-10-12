@@ -8,7 +8,7 @@ aliases: [Data Quality, Missing Values, Outliers, Duplicates, IQR]
 ---
 # [[Data Quality Problems]]
 
-**Context:** [[FIT1043_MOC]] · the defects [[Data Wrangling|wrangling]] must fix · found by [[Data Auditing in Pandas|auditing]] · each has a **detect → fix** strategy
+**Context:** [[FIT1043_MOC]] · the defects [[Data Wrangling|wrangling]] must fix · found by [[Data Auditing in Pandas|auditing]] · each has a **detect → fix** strategy · model-based imputation (MVN, mixture, kNN / collaborative filtering) ➔ [[Missing Data Imputation and Recommender Systems]]
 
 > [!abstract] Quick Revision
 > - **🎯 Objective:** recognise the common data-quality issues and pair each with a detection and a fix.
