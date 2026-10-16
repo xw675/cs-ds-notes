@@ -16,22 +16,22 @@ aliases: [R Cheatsheet, R Basics, R simulation cheatsheet]
 > - **⚡ Key Constraint:** indexing semantics — `df["col"]` (data frame) vs `df$col` (vector) vs `df[rows, cols]` (matrix-style); negative index = *drop*.
 
 ## 🧱 Language Core
-| Tool | Micro-syntax | Output / gotcha |
-| :-- | :-- | :-- |
-| assign | `A <- 10` | `<-` is the R idiom, not `=` |
-| types | `10.5` numeric · `as.integer(10.5)` · `1+2i` · `TRUE` · `"str"` | default number type is numeric (double) |
-| inspect type | `class(y)` · `is.integer(y)` · `as.character(y)` | `is.*` tests, `as.*` converts |
-| help | `help(c)` | — |
-| if | `if (x > 0) { … }` | braces, C-style |
-| for / while | `for (i in 1:3) { … }` · `while (i <= 6) { … }` | `1:n` is an inclusive sequence |
-| break / next | `break` exits loop · `next` skips iteration | `next` ≈ Python's `continue` |
-| stepped sequence | `seq(1, 15, 2)` · `1:15` | `seq(from,to,by)` avoids a modulo test |
-| modulo / int div | `i %% 2` remainder · `i %/% 2` quotient | `%% 2 == 1` tests odd |
-| print in a loop/fn | `cat("i is:", i, "\n")` | loops/functions **don't** auto-print; `\n` = newline |
-| define a function | `f <- function(a, b) { return(a/b) }` | not usable until the definition is **executed** |
-| multi-value return | `r = list(); r$min = 1; return(r)` | `list()` is R's struct; nests and mixes types |
-| argument guard | `if (!is.numeric(x)) { stop("msg") }` | `stop()` aborts with a message |
-| scalar vs vector OR | `\|\|` and `&&` in `if` · `\|` and `&` element-wise | `!` negates a logical |
+| Tool                | Micro-syntax                                                    | Output                                               |
+| :------------------ | :-------------------------------------------------------------- | :--------------------------------------------------- |
+| assign              | `A <- 10`                                                       | `<-` is the R idiom, not `=`                         |
+| types               | `10.5` numeric · `as.integer(10.5)` · `1+2i` · `TRUE` · `"str"` | default number type is numeric (double)              |
+| inspect type        | `class(y)` · `is.integer(y)` · `as.character(y)`                | `is.*` tests, `as.*` converts                        |
+| help                | `help(c)`                                                       | —                                                    |
+| if                  | `if (x > 0) { … }`                                              | braces, C-style                                      |
+| for / while         | `for (i in 1:3) { … }` · `while (i <= 6) { … }`                 | `1:n` is an inclusive sequence                       |
+| break / next        | `break` exits loop · `next` skips iteration                     | `next` ≈ Python's `continue`                         |
+| stepped sequence    | `seq(1, 15, 2)` · `1:15`                                        | `seq(from,to,by)` avoids a modulo test               |
+| modulo / int div    | `i %% 2` remainder · `i %/% 2` quotient                         | `%% 2 == 1` tests odd                                |
+| print in a loop/fn  | `cat("i is:", i, "\n")`                                         | loops/functions **don't** auto-print; `\n` = newline |
+| define a function   | `f <- function(a, b) { return(a/b) }`                           | not usable until the definition is **executed**      |
+| multi-value return  | `r = list(); r$min = 1; return(r)`                              | `list()` is R's struct; nests and mixes types        |
+| argument guard      | `if (!is.numeric(x)) { stop("msg") }`                           | `stop()` aborts with a message                       |
+| scalar vs vector OR | `\|\|` and `&&` in `if` · `\|` and `&` element-wise             | `!` negates a logical                                |
 
 ## 🖥 Workspace & Scripts
 | Task | Micro-syntax | Gotcha |
