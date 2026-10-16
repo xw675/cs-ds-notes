@@ -26,15 +26,22 @@ aliases: [BST]
 - **Mechanism** ➔ recurse left/right by key; at the empty leaf position, create the node.
 - **Critical return** ➔ **return `current` and re-assign the link on the way back** (`current.left = insert_aux(...)`, `self.root = insert_aux(...)`).
 - **Duplicate** ➔ raise, or `current.item = item` for insert-or-update (`__setitem__`).
+- **Unique insertion point** *(applied P3)* ➔ for $x\notin T$ with predecessor $p$ and successor $s$, one is an ancestor of the other — otherwise their split ancestor $a$ gives $p<a<s$ with $a\ne x$, a key strictly between $p$ and $x$ or $x$ and $s$. $s$ above $p$ ⟹ $s$ has a left child and $p$ has **no right child** ($r$ would give $p<r<s$) ⟹ $x$ becomes $p$'s right child; $p$ above $s$ ⟹ the mirror, $x$ becomes $s$'s left child. Exactly one holds ⟹ one legal slot.
 
 ### 3. Delete (Three Cases via Successor)
 - **Leaf** ➔ null the parent link · **one child** ➔ bypass · **two children** ➔ replace key/item with the **in-order successor** (one step right, then all the way left), then delete it — the successor has no left child, so its removal is the easy case, and the next-largest key preserves left<root<right.
 - **FIT2004 framing** ➔ delete only ever removes a **leaf**: swap the key with its in-order **predecessor** (biggest in left subtree) **or** successor (smallest in right subtree) first — the question names which, so drill both; the choice can change the resulting tree and which rebalancing fires in an [[AVL Tree]].
+- **Why the successor has no left child** *(applied P2, proof by contradiction)* ➔ (a) $s$ is in $x$'s **right subtree**: a split ancestor $a$ would give $x<a<s$; $s$ above $x$ would put $x$'s right child $r$ at $x<r<s$ · (b) a left child $t$ of $s$ lies in $x$'s right subtree ⟹ $x<t<s$. Both contradict "$s$ is the smallest key $>x$".
 
 ### 4. Building the tree: $n$ insertions into an empty BST *(FIT2004)*
 - **Worst case $\Theta(n^2)$** ➔ feed keys **already sorted** ➔ every key descends the growing right spine, the $i$-th insertion walking $i-1$ nodes ⟹ $\sum_{i=1}^{n}\Theta(i)=\Theta(n^2)$ ([[Arithmetic Series]]).
 - **Best case $\Theta(n\log n)$** ➔ an arrival order that keeps the tree balanced ⟹ each insertion $\Theta(\log n)$.
 - **Per-op worst × $n$ is only an UPPER bound** ➔ "each insertion is $O(n)$, so $n$ of them are $O(n^2)$" is valid but does **not** establish $\Theta(n^2)$; tightness needs a **witness input** on which the worst cases genuinely co-occur, which sorted input supplies. This is the degenerate-chain failure that motivates AVL/red-black balancing.
+
+### 5. Minimal-Height Build From $n$ Keys *(FIT2004 applied P7)*
+- **Algorithm** ➔ sort, then make the **median** the root and recurse on the two halves ➔ code below; total $O(n\log n)$, dominated by the sort.
+- **Height $\le\log n$** ➔ each half has $\le\lfloor n/2\rfloor$ keys ⟹ $H(n)\le1+H(n/2)$, $H(1)=0$; telescoping $H(n)\le k+H(n/2^{k})$, set $k=\log n$ ⟹ $H(n)\le\log n$ ([[Solving Recurrences (Telescoping)]]).
+- **$\Theta(n\log n)$ is optimal** ➔ reduction to sorting: building any BST in $o(n\log n)$, then an $O(n)$ in-order traversal, would sort in $o(n\log n)$ — impossible in the comparison model ([[Sorting Problem]]).
 
 ## ⚙️ Core Implementation
 ### 🔹 Search + Insert
@@ -76,6 +83,20 @@ aliases: [BST]
 >     return node
 > ```
 > 💡 **Common Mistake:** **A tree has no single "next" link** ➔ an external [[Iterator]] keeps its own [[Stack (ADT)]]; push right then left to emit **preorder** (the [[Recursion|recursion→explicit-stack]] conversion).
+
+### 🔹 Minimal-height build (applied P7)
+> [!code]- `optimal_bst` — median as root, recurse on halves
+> ```python
+> def optimal_bst(x, lo, hi):            # x sorted ascending; builds keys x[lo..hi]
+>     if lo > hi:
+>         return None
+>     mid = (lo + hi) // 2               # median of this range
+>     root = BinarySearchTreeNode(x[mid])
+>     root.left = optimal_bst(x, lo, mid - 1)
+>     root.right = optimal_bst(x, mid + 1, hi)
+>     return root
+> ```
+> 💡 **Common Mistake:** **Skipping the sort** ➔ the median of an unsorted range is not its middle element; sort first, $O(n\log n)$.
 
 ## ⚖️ Core Decision Matrix
 | Variant / Strategy | search | insert / delete | Ordered? | Note |

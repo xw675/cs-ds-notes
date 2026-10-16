@@ -423,6 +423,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **Non-crossing bridges** `[D]` ➔ the state is *(current house, furthest-right bridge built so far)*: $\text{DP}[i,j]=\max(1+\text{DP}[i{+}1,f[i]],\ \text{DP}[i{+}1,j])$ when $f[i]>j$, else $\text{DP}[i{+}1,j]$ ⟹ $O(n^{2})$ **· the move:** replace "remember every bridge built" with the one **monotone frontier** that actually constrains the future.
 - **Grouping with a spread constraint** `[D]` ➔ sort, then $\text{DP}[i]=\bigvee_{j\ge i+k-1,\ a[j]-a[i]\le d}\text{DP}[j{+}1]$ ⟹ $O(n^{2})$; a balanced BST or a monotone $j'$ pointer $+$ partial sums of $\text{DP}$ drops it to $O(n\log n)$ then $O(n)$ **· why sorting is safe:** any valid solution can be rearranged into contiguous sorted groups by an exchange argument ➔ [[Greedy Algorithm]] §3.
 - **Ordered cases in a recurrence** `[D]` ➔ wildcard matching reads its cases **top to bottom, first match wins**; the $\bigvee_{k\ge i}\text{DP}[k][j+1]$ for `*` becomes $O(1)$ by solving in **descending** $i$ then descending $j$ and caching *"has any $\text{DP}[k][j{+}1]$ been true"* ⟹ $O(n^{2}m)\to O(nm)$.
+- **DP over a DAG runs in reverse topological order** `[D]` *(W8 supplementary P9)* ➔ $\text{DP}[u]=1$ if $u=t$, else $\sum_{(u,v)\in E}\text{DP}[v]$ *(paths $u\rightsquigarrow t$)*, filled sinks-first so every $\text{DP}[v]$ is ready ⟹ $\Theta(V+E)$ **· same skeleton:** $\max$ for the critical (longest) path · an extra string index $\text{DP}[u,i]$ for label-spelling paths, $O((V+E)n)$ · unbounded knapsack $=$ critical path on vertices $0..C$.
 
 | W7 DP problem | Subproblems | Work each | Time | Aux space | Answer |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -446,33 +447,39 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Text justification | $n$ | $O(n)$ | $O(n^{2})$ | $\Theta(n)$ | $\text{DP}[1]$ |
 | Tree broadcast | $n$ | $O(n_C(v))$ | $O(n)$ | $\Theta(n)$ | $\text{DP}[r]$ |
 
-## 1️⃣3️⃣ Shortest Paths With Negative Weights (W8 lecture)
+## 1️⃣3️⃣ Shortest Paths With Negative Weights (W8 lecture · W8 applied)
 > [!warning] The **sign of the weights** picks the algorithm, and the **number of sources** picks it again. Quoting [[Dijkstra's Algorithm|Dijkstra]] on a graph with one negative edge is an outright wrong answer, not a suboptimal one ➔ §🔟.
 
 - **[[Bellman-Ford]] is DP, not greedy** `[P]` ➔ nothing is ever finalised, so a late negative edge can still lower an estimate; the relaxation line is **identical** to Dijkstra's, only the schedule differs **· consequence:** no priority queue, so every edge is re-examined every round.
 - **$\lvert V\rvert-1$ rounds** `[P]` ➔ a shortest path is **simple**, so it has at most $\lvert V\rvert-1$ edges — *"the maximum number of jumps without a cycle"* **· invariant:** after round $i$, every distance realisable in $\le i$ edges is correct.
 - **The $\lvert V\rvert$-th pass IS the negative-cycle test** `[P]` ➔ any further improvement uses $\ge\lvert V\rvert$ edges ⟹ a repeated vertex ⟹ a negative cycle **· report:** raise an error; **no shortest distance exists** (infimum $-\infty$), so a distance table is a wrong answer, not a partial one.
-- **Scope of Bellman-Ford's detection** `[C]` ➔ only cycles **reachable from the source** — an unreached vertex never relaxes **· fixes:** a weight-$0$ super source to every vertex, or [[Floyd-Warshall]]'s diagonal.
+- **Scope of Bellman-Ford's detection** `[C]` ➔ only cycles **reachable from the source** — an unreached vertex never relaxes **· fix (applied P2):** a weight-$0$ super source to every vertex and ONE run ⟹ $O(VE)$, not $V$ runs at $O(V^{2}E)$; $O(VE+V^{2})$ if $G$ may be disconnected **· or:** [[Floyd-Warshall]]'s diagonal.
+- **Extract the cycle by walking `pred` back** `[C]` *(applied P3)* ➔ a vertex updated in the $\lvert V\rvert$-th pass may sit **downstream** of the cycle, and cycle vertices may not update ⟹ never report the updated set; follow `pred` to the first repeat, or step back $\lvert V\rvert-1$ times then lap once for $O(1)$ auxiliary.
 - **Bellman-Ford bounds** `[P]` ➔ $\Theta(VE)$ time *(init $O(V)$ $+$ $O(V)\times O(E)$ $+$ check $O(E)$)*, $\Theta(V)$ auxiliary **· trap:** the $V\times V$ trace grid is a **revision device**; only `dist` and `pred` are stored **· dense:** $\Theta(V^{3})$.
 - **The required early-exit optimisation** `[P]` ➔ a `changed` flag per round; a pass that relaxes nothing is a fixed point ⟹ break **· effect:** best case $\Theta(V+E)$, worst case unmoved **· source:** the unit outline lists it as a requirement — drill the studio/bonus-video form.
 - **Guard the $\infty$ arithmetic** `[C]` ➔ test `dist[u] != INF` before relaxing; with a large-integer sentinel $\infty+(-4)<\infty$ is *true* and leaks finite garbage into unreachable vertices.
+- **A constant shift does NOT make Dijkstra legal** `[C]` *(applied P1)* ➔ adding $c$ to every edge adds $kc$ to a $k$-edge path, so few-edge paths gain and the shortest path changes **· counterexample shape:** a shortest path with more edges than a rival.
 - **Warshall's transitive closure** `[P]` ➔ $G'=(V,E')$ with an edge $\langle u,v\rangle$ whenever a **path** exists; `m[i][j] = m[i][j] or (m[i][k] and m[k][j])` ⟹ $\Theta(V^{3})$ time, $\Theta(V^{2})$ space **· precondition:** directed reachability — $u\rightsquigarrow v$ does not give $v\rightsquigarrow u$.
 - **[[Floyd-Warshall]] $=$ Warshall's with $(\min,+)$ for $(\texttt{or},\texttt{and})$** `[P]` ➔ `m[i][j] = min(m[i][j], m[i][k] + m[k][j])` **· init:** diagonal $0$ · every edge written in · $\infty$ elsewhere.
 - **$k$ MUST be the outer loop** `[P]` ➔ after iteration $k$, $\text{m}[i][j]$ is the shortest $i\rightsquigarrow j$ using **intermediates from $\{1..k\}$** **· recurrence:** $\text{dist}^{(k)}[i][j]=\min(\text{dist}^{(k-1)}[i][j],\ \text{dist}^{(k-1)}[i][k]+\text{dist}^{(k-1)}[k][j])$ **· in-place is safe:** row $k$ and column $k$ cannot change during iteration $k$.
 - **Floyd-Warshall bounds** `[P]` ➔ $\Theta(V^{3})$ time, $\Theta(V^{2})$ space, **all cases identical** — three fixed loops, no input-dependent branching **· trap:** $E$ never appears, so a sparse graph costs as much as a complete one.
 - **Negative cycle $\iff$ a negative diagonal entry** `[P]` ➔ $\text{m}[u][u]<0$ is literally a negative closed walk **· stronger than Bellman-Ford's:** every vertex is a start, so **any** negative cycle in $G$ is found **· contamination:** every pair routed through the cycle is $-\infty$, not just the diagonal cell.
-- **Path reconstruction** `[C]` ➔ a second $V\times V$ `pred` matrix, written whenever the `min` takes the $i\to k\to j$ branch: $\text{pred}[i][j]=\text{pred}[k][j]$; still $\Theta(V^{2})$ space.
-- **All-pair selection rule** `[P]` ➔ $V\times$[[Dijkstra's Algorithm|Dijkstra]] $=O(EV\log V)=O(V^{3}\log V)$ dense · $V\times$[[Bellman-Ford]] $=O(V^{2}E)=O(V^{4})$ dense · **[[Floyd-Warshall]]** $=\Theta(V^{3})$ **· hinge:** density, then weight sign — $V$ Dijkstras win only on a **sparse** graph with $w\ge0$.
+- **The $-\infty$ post-process** `[C]` *(applied P5)* ➔ for each $k$ with $\text{m}[k][k]<0$, set $\text{m}[u][v]=-\infty$ whenever $\text{m}[u][k]<\infty$ and $\text{m}[k][v]<\infty$ ⟹ $O(V^{3})$, bound unchanged.
+- **Arbitrage $=$ a negative cycle on $\log$ rates** `[C]` *(applied P6)* ➔ profit $\iff\prod r_i<1\iff\sum\log r_i<0$ ⟹ plain Floyd-Warshall, read the diagonal, $\Theta(n^{3})$ **· precondition:** $r(a,b)=$ units of $a$ paid per unit of $b$.
+- **Path reconstruction** `[C]` *(applied P4)* ➔ init $\text{succ}[u][v]=v$ per edge; on every update $\text{succ}[i][j]=\text{succ}[i][k]$; rebuild by `i = succ[i][j]` ⟹ $O(\ell)$ per path, bounds unchanged **· alt:** $\text{mid}[i][j]=k$ with a recursive rebuild, $O(\ell)$ only with $O(1)$ list concatenation.
+- **[[Johnson's Algorithm|Johnson's]] potentials** `[D]` *(applied P7)* ➔ $p=$ [[Bellman-Ford]] distances from a weight-$0$ super source; $w'(u,v)=p[u]-p[v]+w(u,v)\ge0$ by the triangle inequality; $w'(P)=w(P)+p[v_1]-p[v_k]$ telescopes, so shortest paths survive ⟹ $V$ Dijkstras, undo by $d=d'-p[u]+p[v]$ **· bound:** $O(VE\log V)$, sparse $O(V^{2}\log V)$.
+- **All-pair selection rule** `[P]` ➔ $V\times$[[Dijkstra's Algorithm|Dijkstra]] $=O(EV\log V)=O(V^{3}\log V)$ dense · $V\times$[[Bellman-Ford]] $=O(V^{2}E)=O(V^{4})$ dense · **[[Floyd-Warshall]]** $=\Theta(V^{3})$ **· hinge:** density — on a **sparse** graph $V$ Dijkstras win, after [[Johnson's Algorithm|Johnson's]] reweighting if some $w<0$.
 
 | Requirement                   | Algorithm                                    | Time            | Aux space       | Negatives | Detects a negative cycle? |
 | :---------------------------- | :------------------------------------------- | :-------------- | :-------------- | :-------- | :------------------------ |
 | Unweighted, single source     | [[Uninformed Search (BFS and DFS)\|BFS]]     | $\Theta(V+E)$   | $\Theta(V)$     | —         | —                         |
 | $w\ge0$, single source        | [[Dijkstra's Algorithm\|Dijkstra]]           | $O(E\log V)$    | $\Theta(V)$     | ❌         | ❌                         |
 | Some $w<0$, single source     | [[Bellman-Ford]]                             | $\Theta(VE)$    | $\Theta(V)$     | ✅         | ✅ *(reachable only)*      |
+| Any negative cycle in $G$ | [[Bellman-Ford]] $+$ super source | $O(VE)$ | $\Theta(V)$ | ✅ | ✅ *(anywhere in $G$)* |
 | Reachability, all pairs       | Warshall's closure                           | $\Theta(V^{3})$ | $\Theta(V^{2})$ | —         | —                         |
 | All pairs, dense              | [[Floyd-Warshall]]                           | $\Theta(V^{3})$ | $\Theta(V^{2})$ | ✅         | ✅ *(anywhere in $G$)*     |
 | All pairs, sparse, $w\ge0$    | $V\times$ [[Dijkstra's Algorithm\|Dijkstra]] | $O(EV\log V)$   | $\Theta(V)$     | ❌         | ❌                         |
-| All pairs, sparse, some $w<0$ | $V\times$ [[Bellman-Ford]]                   | $O(V^{2}E)$     | $\Theta(V)$     | ✅         | ✅                         |
+| All pairs, sparse, some $w<0$ | [[Johnson's Algorithm\|Johnson's]] | $O(VE\log V)$ | $\Theta(V+E)$ | ✅ | ✅ *(its Bellman-Ford step)* |
 
 ## 1️⃣4️⃣ Tries, Suffix Tries and Suffix Trees (W9 lecture · W9 applied · **PT-03**)
 > [!warning] PT-03 is **draw $+$ count** (drag-drop, quiz format): the root is a node, `$` alone is a suffix, every word/suffix ends in `$`. One omission shifts every count by one.
@@ -505,7 +512,7 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Longest repeated / common substring | suffix tree | $O(n)$ / $O(n+m)$ after build | $\Theta(n)$ |
 | Build either suffix structure naively | — | $O(n^{2})$ | — |
 
-## 1️⃣5️⃣ Self-Balancing Search Trees (W10 lecture · sanity check · **PT-03**)
+## 1️⃣5️⃣ Self-Balancing Search Trees (W10 lecture · sanity check · applied W10 · **PT-03**)
 > [!warning] PT-03 can hand you a **half-built** tree and mix inserts with deletes. Fix the **lowest** violation first, then keep checking up to the root — a delete can cascade.
 
 - **Why balance** `[P]` ➔ BST search/insert/delete cost $O(\text{height})$; sorted input makes it $O(N)$ **· fix:** maintain an invariant that forces height $O(\log N)$.
@@ -513,9 +520,13 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 - **AVL insert/delete** `[P]` ➔ plain BST op **at a leaf** (non-leaf delete: swap with predecessor **or** successor, as asked) ➔ update heights bottom-up ➔ restructure the lowest $\lvert bf\rvert>1$ node ➔ continue upward.
 - **Ian's trinode restructure** `[P]` ➔ from $z$ step twice toward the **taller** child (tie on step 2 ⟹ repeat step 1 ⟹ single rotation) ➔ median of the three keys becomes the root, smaller left, bigger right ➔ re-hang $T_1..T_4$ in in-order **· covers** LL (rotate right) · RR (rotate left) · LR / RL (double).
 - **AVL bounds** `[P]` ➔ search, insert, delete $O(\log N)$ **· because:** heights are **stored** and only the path is updated (recomputing would be $O(N)$); each fix $\le2$ rotations $=O(1)$, at most one per level.
+- **AVL height is $O(\log n)$** `[D]` *(applied P8)* ➔ sparsest tree: $n(h)=1+n(h-1)+n(h-2)=F(h+2)-1$ with $F(0)=F(1)=1$ · $F(h)\ge1.5^{h-1}$ by induction ⟹ $n\ge1.5^{h+1}-1$ ⟹ $h\le\log_{1.5}(n+1)-1$.
+- **Rotation correctness** `[C]` *(applied P4)* ➔ read every subtree height off the given balance factors, rebuild, show $bf=0$ at the three moved nodes; untouched subtrees stay AVL.
+- **BST delete/insert correctness** `[C]` *(applied P2, P3)* ➔ successor of a two-child $x$ is in $x$'s right subtree and has no left child · for $x\notin T$ exactly one of *successor has no left child* / *predecessor has no right child* ⟹ unique insertion slot **· proof shape:** a node strictly between two consecutive keys contradicts predecessor/successor.
+- **Minimal-height BST** `[C]` *(applied P7)* ➔ sort, median as root, recurse ⟹ height $\le\log n$ via $H(n)\le1+H(n/2)$ **· optimal** $\Theta(n\log n)$: faster build $+$ $O(n)$ in-order walk would beat the sorting lower bound.
 - **2-3 tree** `[P]` ➔ 2-node $=1$ key/2 children, 3-node $=2$ keys/3 children **· balance:** all leaves on the same level **· height bound** *(derived)*: $N\ge2^{h+1}-1$ ⟹ $h=O(\log N)$.
 - **2-3 insert** `[P]` ➔ descend to a leaf (key met anywhere on the path, internal nodes included ⟹ do nothing), insert in order; a 3-node becomes a 4-node ⟹ **split**, median up; repeat to the root **· root split** ⟹ height $+1$, the only way it grows.
-- **2-3 delete** `[P]` ➔ swap to a leaf; a 2-node leaf first borrows: **rotate** (adjacent 3-node sibling: parent key down, sibling key up) else **merge** (parent key down into the 2-node sibling); propagate **· emptied root** ⟹ height $-1$.
+- **2-3 delete (top-down)** `[P]` ➔ never **enter** a 2-node: a 2-node root over two 2-nodes merges into a 4-node first · child is a 2-node with a 3-node immediate sibling ⟹ **rotate** (sibling key up, separating parent key down) · sibling also a 2-node ⟹ **merge** child $+$ parent key $+$ sibling into a temporary 4-node · remove at the leaf · split leftover 4-nodes on the way back up **· height shrinks** only when a root merge survives **· scope:** applied deletes leaf keys only; internal key ⟹ swap with predecessor/successor first.
 - **LLRB encoding** `[P]` ➔ edge colour stored on the child · 2-node $=$ black · 3-node $[a\ b]$ $=$ black $b$ with **red left** $a$ · no red–red · root black **· black-height** $=$ black edges root ➔ leaf $=$ 2-3 height, never the drawn height.
 - **LLRB insert** `[P]` ➔ red leaf (no black-height change) ➔ right red, left sibling not red ⟹ **rotate left** · both children red ⟹ **flip** · red-red left-left ⟹ **rotate right** then flip · red right of red left ⟹ rotate left ⟹ previous case ➔ propagate ➔ root black **· no delete.**
 - **2-3 ⟷ LLRB dictionary** `[C]` ➔ flip $=$ split with median promoted · root recoloured black $=$ root split · rotate left $=$ redraw a 3-node leaning left **· use:** run the 2-3 insert to verify an LLRB answer, and vice versa.
@@ -524,31 +535,36 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 | Tree | Balance rule | Insert fix | Delete fix | Time (all ops) |
 | :--- | :--- | :--- | :--- | :--- |
 | [[AVL Tree]] | $\lvert bf\rvert\le1$ per node | trinode restructure | swap to leaf $+$ restructure, cascades | $O(\log N)$ |
-| [[2-3 Tree]] | all leaves level | split $+$ promote | swap to leaf $+$ rotate / merge | $O(\log N)$ |
+| [[2-3 Tree]] | all leaves level | split $+$ promote | top-down rotate / merge, split leftover 4-nodes | $O(\log N)$ |
 | [[Left-Leaning Red-Black Tree\|LLRB]] | equal black edges per path | rotate L / rotate R / flip | not in FIT2004 | $O(\log N)$ |
 
-## 1️⃣6️⃣ Network Flow (W11 lecture · prep W11 · applied W11)
-> [!warning] Two sign rules decide every flow question: the residual **backward** edge has capacity $f$ (cancellable), and a cut's **capacity** counts $S\to T$ edges only while its **flow** subtracts $T\to S$ flow.
+## 1️⃣6️⃣ Network Flow (W11 lecture · sanity check · prep W11 · applied W11 · **PT-03**)
+> [!warning] Two sign rules decide every flow question: the residual **backward** edge has capacity $f$ (cancellable), and a cut's **capacity** counts $S\to T$ edges only while its **flow** subtracts $T\to S$ flow. **PT-03** carries two pass-level flow questions: run max-flow/min-cut by hand, and model a scenario as a network.
 
-- **Flow network** `[C]` ➔ directed, capacities $c\ge0$, source $s$ (no in-edges), target $t$ (no out-edges) **· capacity constraint:** $0\le f\le c$ **· conservation:** in $=$ out at every $v\notin\{s,t\}$ **· value:** $\lvert f\rvert=$ net out of $s$ $=$ net into $t$.
-- **[[Ford-Fulkerson Method|Residual network]] $G_f$** `[C]` ➔ per edge $u\to v$: forward $u\to v$ of $c-f$, backward $v\to u$ of $f$ · drop zeros · merge parallels **· check:** $r(u,v)+r(v,u)=c(u,v)+c(v,u)$ **· size:** $\le2E$ edges.
-- **Augment** `[C]` ➔ any $s\rightsquigarrow t$ path in $G_f$ (BFS/DFS) · $b=\min$ **residual** capacity · forward edge $f\mathrel{+}=b$, backward edge cancels $f\mathrel{-}=b$ · $\lvert f\rvert\mathrel{+}=b$ **· stop:** no path ⟹ maximum.
-- **Why backward edges** `[C]` ➔ lecture network stalls at $19$ with forward pushes only; $s\to b\to c\to t$ through backward $b\to c$ cancels $4$ on $c\to b$ ⟹ $23$.
+- **Flow network** `[P]` ➔ directed, capacities $c\ge0$, source $s$ (no in-edges), target $t$ (no out-edges) **· capacity constraint:** $0\le f\le c$ **· conservation:** in $=$ out at every $v\notin\{s,t\}$ **· value:** $\lvert f\rvert=$ net out of $s$ $=$ net into $t$.
+- **[[Ford-Fulkerson Method|Residual network]] $G_f$** `[P]` ➔ per edge $u\to v$: forward $u\to v$ of $c-f$, backward $v\to u$ of $f$ · drop zeros · merge parallels **· check:** $r(u,v)+r(v,u)=c(u,v)+c(v,u)$ **· size:** $\le2E$ edges.
+- **Augment** `[P]` ➔ any $s\rightsquigarrow t$ path in $G_f$ (BFS/DFS) · $b=\min$ **residual** capacity · forward edge $f\mathrel{+}=b$, backward edge cancels $f\mathrel{-}=b$ · $\lvert f\rvert\mathrel{+}=b$ **· stop:** no path ⟹ maximum.
+- **Why backward edges** `[P]` ➔ lecture network stalls at $19$ with forward pushes only; $s\to b\to c\to t$ through backward $b\to c$ cancels $4$ on $c\to b$ ⟹ $23$.
 - **FF bounds** `[C]` ➔ $O(V+E)$ per iteration · $\le F$ iterations (integer capacities ⟹ $b\ge1$) ⟹ $O(FE)$, **pseudo-polynomial** ($F$ is a value) **· BFS:** Edmonds–Karp $O(VE^{2})$ (FIT3155) **· unit capacities:** $F\le V-1$ ⟹ $O(VE)$ **· space:** $\Theta(V+E)$.
 - **Integrality** `[C]` ➔ integer capacities ⟹ integer flow on every edge **· use:** matchings and $0/1$ entries read straight off edge flows.
-- **Answer not unique** `[C]` ➔ max-flow **value** fixed; edge assignment and min cut may differ between runs.
-- **[[Min-Cut Max-Flow Theorem|Cut]] $(S,T)$** `[C]` ➔ $s\in S$, $t\in T$, any partition **· capacity** $=\sum c(S\to T)$ **· flow** $=\sum f(S\to T)-\sum f(T\to S)$.
+- **Answer not unique** `[P]` ➔ max-flow **value** fixed; edge assignment and min cut may differ between runs.
+- **[[Min-Cut Max-Flow Theorem|Cut]] $(S,T)$** `[P]` ➔ $s\in S$, $t\in T$, any partition **· capacity** $=\sum c(S\to T)$ **· flow** $=\sum f(S\to T)-\sum f(T\to S)$.
 - **Every cut carries $\lvert f\rvert$** `[D]` ➔ sum conservation over $S$: only $s$ is non-zero, $S$–$S$ edges cancel **· applied P1:** cuts $(\{s\},\cdot)$ and $(\cdot,\{t\})$ ⟹ net out of $s$ $=$ net into $t$.
 - **Weak duality** `[D]` ➔ $\lvert f\rvert=f(S,T)\le c(S,T)$ for every flow and cut ⟹ a flow equal to a cut capacity is maximum.
 - **Max-flow $=$ min-cut** `[D]` ➔ at FF's exit let $S=$ reachable from $s$ in $G_f$: every $S\to T$ edge saturated, every $T\to S$ edge empty, else $S$ would grow ⟹ $\lvert f\rvert=c(S,T)$ **· this + termination $=$ FF's correctness proof.**
-- **Find the min cut** `[C]` ➔ FF to completion ➔ BFS/DFS from $s$ in the **final residual** ➔ $S=$ reached ➔ sum $S\to T$ capacities, confirm $=\lvert f\rvert$ **· trap:** searching $G$ instead of $G_f$.
-- **[[Network Flow Reductions|Reductions]]** `[C]` ➔ transform the input, never modify FF · owe construction $+$ why max flow $\iff$ answer $+$ read-off.
-- **Super source / sink (P2)** `[C]` ➔ $s^{*}\to s_i$ cap $=$ out-capacity of $s_i$, $t_j\to t^{*}$ cap $=$ in-capacity of $t_j$ **· value unchanged** (BFS's super source shifts by $1$, flow's does not).
-- **Vertex capacity (P5)** `[C]` ➔ split $v_{in}\to v_{out}$ cap $c(v)$; in-edges to $v_{in}$, out-edges from $v_{out}$ ⟹ $V'=2V-2$.
-- **Bipartite matching (lecture)** `[C]` ➔ $s\to L$ cap $1$ (quota), $L\to R$ cap $1$, $R\to t$ cap $1$ ⟹ max flow $=$ max matching **· quotas:** $s\to\ell$ cap $q$ lets $\ell$ match $q$ times.
+- **Find the min cut** `[P]` ➔ FF to completion ➔ BFS/DFS from $s$ in the **final residual**, backward edges included ➔ $S=$ reached ➔ sum $S\to T$ capacities, confirm $=\lvert f\rvert$ **· trap:** searching $G$ instead of $G_f$.
+- **Reading $G$ off $G_f$** `[P]` ➔ flow $=$ backward weight · capacity $=$ forward $+$ backward *(the W11 sanity-check sheet's "flow $=$ forward" is a slip — forward is $c-f$)*.
+- **No discrimination** `[P]` ➔ forward and backward edges are traversed alike, for augmenting paths **and** min-cut reachability; they differ only at update — forward $+b$, backward $-b$, each $O(1)$ through the twin pointer **· BFS** "is the best" traversal.
+- **PT-03 run question** `[P]` ➔ may start blank or **mid-stage**; a mid-stage network usually needs a backward augment **· self-check:** re-run from blank — the max-flow must match, the min cut may differ.
+- **PT-03 modelling checklist** `[P]` ➔ vertices · directed connections (from source, to sink, between bipartite sets) · number of edges · capacities · lower bounds · demands — each read straight off the question.
+- **Why $O(VE^{2})$ with BFS** `[D]` ➔ BFS distances in $G_f$ never shrink · each edge is the bottleneck $\le V/2$ times ⟹ $O(VE)$ augments $\times\ O(E)$ per BFS *(sanity check poses it; argument beyond the provided material)*.
+- **[[Network Flow Reductions|Reductions]]** `[P]` ➔ transform the input, never modify FF · owe construction $+$ why max flow $\iff$ answer $+$ read-off.
+- **Super source / sink (P2)** `[P]` ➔ $s^{*}\to s_i$ cap $=$ out-capacity of $s_i$, $t_j\to t^{*}$ cap $=$ in-capacity of $t_j$ **· value unchanged** (BFS's super source shifts by $1$, flow's does not).
+- **Vertex capacity (P5)** `[P]` ➔ split $v_{in}\to v_{out}$ cap $c(v)$; in-edges to $v_{in}$, out-edges from $v_{out}$ ⟹ $V'=2V-2$.
+- **Bipartite matching (lecture)** `[P]` ➔ $s\to L$ cap $1$ (quota), $L\to R$ cap $1$, $R\to t$ cap $1$ ⟹ max flow $=$ max matching **· quotas:** $s\to\ell$ cap $q$ lets $\ell$ match $q$ times.
 - **Quota feasibility (P3, P7)** `[C]` ➔ $0/1$ matrix: $s\to a_i$ cap $r_i$, $a_i\to b_j$ cap $1$, $b_j\to t$ cap $c_j$ ⟹ feasible $\iff\lvert f\rvert=\sum r_i$, $X_{ij}=f(a_i,b_j)$ **· songs:** middle cap $=$ distinct songs in (era, genre).
 - **Disjoint paths (P6)** `[C]` ➔ unit edge capacities ⟹ max flow $=$ edge-disjoint path count, $O(E\cdot\text{outdeg}(s))=O(VE)$ **· vertex-disjoint:** vertex cap $1$ $+$ split.
-- **Min-cut split (P4)** `[D]` ➔ $s\to j$ cap $\text{cost}_1$, $j\to t$ cap $\text{cost}_2$, **two** opposite penalty edges per related pair ⟹ min cut $=$ min cost **· read-off:** $S$ side ⟹ computer **2**, $T$ side ⟹ computer **1**.
+- **Min-cut split (P4)** `[C]` ➔ $s\to j$ cap $=$ cost on **computer-s**, $j\to t$ cap $=$ cost on **computer-t**, **two** opposite penalty edges per related pair ⟹ min cut $=$ min cost **· read-off:** a job runs on the computer whose edge is **cut** ⟹ $S$ side ⟹ computer-t, $T$ side ⟹ computer-s **· lecturer's drill:** cost $13$, $S=\{s,a,b\}$; penalty $p$ gives $\min(11+p,17)$, flipping at $p=6$.
 - **$\infty$ edge (W12 P3, P5)** `[C]` ➔ $u\to v$ cap $\infty$ never crosses $S\to T$ in a finite min cut ⟹ "$u\in S$ ⟹ $v\in S$" **· use:** prerequisites, cells pinned to one side.
 - **Project selection (W12 P3)** `[C]` ➔ $s\to x$ cap $p$ ($p>0$), $x\to t$ cap $p$ (profit $-p$), $x\to y$ cap $\infty$ ($y$ prerequisite of $x$) ⟹ $S$ $=$ done **· profit** $=\sum_{p_x>0}p_x-$ min cut **· trap:** the cut is the loss, not the profit.
 - **Fencing / segmentation (W12 P5)** `[C]` ➔ $s\to$ boundary $\infty$, $s\to$ ground cell $c_{\text{dig}}$, hole $\to t$ $c_{\text{fill}}$, two opposite $c_{\text{fence}}$ edges per adjacent pair ⟹ min cut $=$ min cost.
@@ -570,13 +586,13 @@ aliases: [FIT2004 Exam Crib, Algorithms II Cheatsheet]
 ## 1️⃣7️⃣ Circulation with Demands and Lower Bounds (W12 lecture · applied W12)
 > [!warning] Two signs decide every circulation question: $d_v<0$ is a **supplier** (edge from $s$), and lower bounds enter $d^{*}$ as **minus incoming, plus outgoing**.
 
-- **[[Circulation with Demands and Lower Bounds|Circulation with demands]]** `[C]` ➔ $0\le f\le c$ **· demand constraint** $\text{in}(v)-\text{out}(v)=d_v$ at every $v$, no $s$/$t$ **· feasibility**, not optimisation.
-- **Feasibility by max flow** `[C]` ➔ $s\to v$ cap $-d_v$ ($d_v<0$), $v\to t$ cap $d_v$ ($d_v>0$), FF ⟹ feasible $\iff$ every super-edge saturated $\iff\lvert f\rvert=D^{+}=D^{-}$ **· read-off:** delete $s$, $t$ **· quick reject:** $D^{+}\ne D^{-}$.
+- **[[Circulation with Demands and Lower Bounds|Circulation with demands]]** `[P]` ➔ $0\le f\le c$ **· demand constraint** $\text{in}(v)-\text{out}(v)=d_v$ at every $v$, no $s$/$t$ **· feasibility**, not optimisation.
+- **Feasibility by max flow** `[P]` ➔ $s\to v$ cap $-d_v$ ($d_v<0$), $v\to t$ cap $d_v$ ($d_v>0$), FF ⟹ feasible $\iff$ every super-edge saturated $\iff\lvert f\rvert=D^{+}=D^{-}$ **· read-off:** delete $s$, $t$ **· quick reject:** $D^{+}\ne D^{-}$ (i.e. $\sum d_v\ne0$) — but $\sum d_v=0$ is **necessary, not sufficient**.
 - **Why the test is exact** `[D]` ➔ (⟸) a saturated $s\to v$ supplies exactly $-d_v$ · (⟹) feasible circulation $+$ full super-edges has value $D^{+}=c(\{s\},\cdot)$ ⟹ maximum by weak duality.
-- **Lower bounds** `[C]` ➔ pre-push $f_\ell=\ell$ **·** $c^{*}=c-\ell$ **·** $d^{*}_v=d_v-\sum\ell(\cdot,v)+\sum\ell(v,\cdot)$ **·** solve demands on $G^{*}$ **·** $f=f_\ell+f^{*}$ with the original $d_v$ **· self-check:** $\sum d^{*}_v=\sum d_v$.
+- **Lower bounds** `[P]` ➔ pre-push $f_\ell=\ell$ **·** $c^{*}=c-\ell$ **·** $d^{*}_v=d_v-\sum\ell(\cdot,v)+\sum\ell(v,\cdot)$ **·** solve demands on $G^{*}$ **·** $f=f_\ell+f^{*}$ with the original $d_v$ **· self-check:** $\sum d^{*}_v=\sum d_v$ **· per edge** $\langle u,v,\ell,c\rangle$: $d_u\mathrel{+}=\ell$, $d_v\mathrel{-}=\ell$, $c\mathrel{-}=\ell$.
 - **Infeasibility certificate** `[C]` ➔ a cut of capacity $<D^{+}$ · Clayton network: $d^{*}_w=4$ but $w$'s in-capacity in $G^{*}$ is $3$.
 - **Cost** `[D]` ➔ transform $O(V+E)$, FF $O(D^{+}(V+E))$ — **pseudo-polynomial** in the demands, space $\Theta(V+E)$.
-- **Modelling** `[C]` ➔ exact count on a vertex $=$ demand · range on a link $=$ window $[\ell,c]$ · range per item with only a fixed total ⟹ extra vertex carrying $-D$ (roster P4a) · cap on a **group** of edges ⟹ selector vertex (P4b).
+- **Modelling** `[P]` ➔ exact count on a vertex $=$ demand · range on a link $=$ window $[\ell,c]$ · range per item with only a fixed total ⟹ extra vertex carrying $-D$ (roster P4a) · cap on a **group** of edges ⟹ selector vertex (P4b).
 - **Lecture applications** `[C]` ➔ survey: $q\to c_i$ $[c_i^-,c_i^+]$, $c_i\to p_j$ $[0,1]$, $p_j\to f$ $[p_j^-,p_j^+]$, $f\to q$ closing edge **· airline:** route $[1,1]$, $s\to\text{dep}$ / $\text{arr}\to t$ / chain $[0,1]$, $s\to t$ $[0,k]$, $d_s=-k$, $d_t=k$.
 - **Baseball elimination (P6)** `[D]` ➔ $x$ wins all ⟹ $y$ · $G_{i,j}$ ($d=-r_{ij}$) $\to T_i,T_j$ cap $r_{ij}$ · $T_i\to A$ cap $y-w_i$ · $d_A=\sum r_{ij}$ ⟹ feasible $\iff x$ can finish at least tied.
 

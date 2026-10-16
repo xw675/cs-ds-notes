@@ -13,8 +13,8 @@ aliases: [2-3 Search Tree, Two-Three Tree]
 **Parent Framework:** [[Tree]]
 
 > [!abstract] Quick Revision
-> - **🎯 Objective:** every leaf on the **same level** ➔ height $O(\log N)$ by construction; insert by **split $+$ promote**, delete by **rotate / merge**, both propagating to the root.
-> - **📦 Core Components:** **2-node** ➔ 1 key, 2 children | **3-node** ➔ 2 keys, 3 children | temporary **4-node** ➔ 3 keys, exists only mid-insert.
+> - **🎯 Objective:** every leaf on the **same level** ➔ height $O(\log N)$ by construction; insert bottom-up by **split $+$ promote**, delete **top-down** by **rotate / merge** so the target leaf is never a 2-node.
+> - **📦 Core Components:** **2-node** ➔ 1 key, 2 children | **3-node** ➔ 2 keys, 3 children | temporary **4-node** ➔ 3 keys, split as soon as the operation passes back through it.
 > - **⚡ Key Constraint:** keys enter and leave **only at a leaf**; the tree grows and shrinks **at the root**, never at the leaves — that is why leaves stay level.
 
 ## 📝 How It Works
@@ -28,17 +28,18 @@ aliases: [2-3 Search Tree, Two-Three Tree]
 - **Descend to the leaf** ➔ key met **anywhere** on the path, internal nodes included ⟹ stop, tree unchanged.
 - **Leaf is a 2-node** ➔ insert in order ⟹ 3-node, done.
 - **Leaf is a 3-node** ➔ insert in order ⟹ 4-node $[a\ b\ c]$ ⟹ **split**: median $b$ moves **up** into the parent, $a$ and $c$ become two 2-nodes.
-- **Propagate** ➔ the parent may now be a 4-node ⟹ split again; repeat until no 4-node remains. A **root split** creates a new root ⟹ height $+1$.
+- **Propagate** ➔ the parent may now be a 4-node ⟹ split again; repeat until no 4-node remains. A **root split** creates a new root ⟹ height $+1$, the only way the tree gains height.
 
 ![[2-3 Tree Split-Promotion.png]]
 
-### 3. Delete — Rotate or Merge
-- **Move the key to a leaf** ➔ a non-leaf key is swapped with its in-order **predecessor or successor** (as in [[AVL Tree|AVL]] / BST), then removed from the leaf.
-- **Leaf is a 3-node** ➔ remove the key, done.
-- **Leaf is a 2-node** ➔ removing it would empty a node, so first give the leaf a second key:
-	- **Rotate** — an adjacent sibling is a 3-node ➔ the parent key between them comes **down** into the leaf, the sibling's nearest key goes **up** to replace it.
-	- **Merge** — no sibling can spare a key ➔ the parent key comes **down** and merges with the 2-node sibling; the parent loses a key.
-- **Propagate** ➔ an emptied parent is repaired the same way one level up; an emptied **root** is removed ⟹ height $-1$.
+### 3. Delete — Top-Down, Never Enter a 2-Node
+- **Invariant** ➔ every node you step **into** holds $\ge2$ keys, so the leaf can always lose one and a parent can always give one down. Fix each child **before** entering it.
+- **Root first** ➔ a 2-node root whose children are both 2-nodes is merged with them into a 4-node $[a\ r\ b]$ before the descent.
+- **Child is a 2-node, an immediate sibling is a 3-node** ➔ **rotate**: the sibling's nearest key goes **up** into the parent, the parent's separating key comes **down** into the child.
+- **Child and its immediate sibling are both 2-nodes** ➔ **merge**: child $+$ separating parent key $+$ sibling ⟹ one temporary **4-node**; the parent loses a key, which the invariant says it can spare.
+- **At the leaf** ➔ it holds $\ge2$ keys ⟹ remove the key.
+- **On the way back up** ➔ split every 4-node still standing, root included, exactly as in insert. Height shrinks only when a root merge survives to the end.
+- **Scope** ➔ the applied sheet examines **leaf** keys only; an internal key is first swapped with its predecessor or successor (sanity check).
 
 ## ⚖️ Complexity
 *(derived from the balance property)*
@@ -46,29 +47,26 @@ aliases: [2-3 Search Tree, Two-Three Tree]
 | :--- | :--- | :--- |
 | Search | $O(\log N)$ | $\le2$ comparisons per node $\times$ height |
 | Insert | $O(\log N)$ | descent $+$ at most one $O(1)$ split per level |
-| Delete | $O(\log N)$ | descent $+$ at most one $O(1)$ rotate/merge per level |
+| Delete | $O(\log N)$ | descent with at most one $O(1)$ rotate/merge per level $+$ at most one split per level on the way back |
 
 - **Height bound** ➔ every internal node has $\ge2$ children and all leaves are level ⟹ $N\ge2^{h+1}-1$ ⟹ $h\le\log_2(N+1)-1=O(\log N)$; all 3-nodes gives the other extreme $h\approx\log_3 N$.
 
 ## 📊 Exam Execution Trace & Applied Exercises
-### Manual Execution Trace — insert `50 30 40 20 10 60 55 25`
-| Step | Insert | Leaf before | Event | Tree after |
-| :--- | :--- | :--- | :--- | :--- |
-| 1–2 | 50, 30 | $[50]$ | 2-node ➔ 3-node | `[30 50]` |
-| 3 | 40 | $[30\ 50]$ | 4-node $[30\ 40\ 50]$ ⟹ split, **new root** | `[40]([30],[50])` |
-| 4 | 20 | $[30]$ | ➔ 3-node | `[40]([20 30],[50])` |
-| 5 | 10 | $[20\ 30]$ | $[10\ 20\ 30]$ ⟹ split, $20$ up | `[20 40]([10],[30],[50])` |
-| 6 | 60 | $[50]$ | ➔ 3-node | `[20 40]([10],[30],[50 60])` |
-| 7 | 55 | $[50\ 60]$ | $[50\ 55\ 60]$ ⟹ $55$ up ⟹ root $[20\ 40\ 55]$ ⟹ split, $40$ **new root** | `[40]([20]([10],[30]),[55]([50],[60]))` |
-| 8 | 25 | $[30]$ | ➔ 3-node | `[40]([20]([10],[25 30]),[55]([50],[60]))` |
+### Manual Execution Trace — applied P5(a)
+Start: `[15 51]([3 6]([0],[4],[8 12]),[19 28]([16 18],[23 25],[40]),[60]([59],[65 70]))`
 
-- **Step 7** ➔ the only cascade: two splits in one insert, height $1\to2$. Same sequence in [[Left-Leaning Red-Black Tree|LLRB]] must produce the mirror of every row.
+| Step | Op | Event | Changed part |
+| :--- | :--- | :--- | :--- |
+| i | ins 5 | leaf $[4]$ is a 2-node ➔ $[4\ 5]$ | `[3 6]([0],[4 5],[8 12])` |
+| ii | ins 62 | $[62\ 65\ 70]$ ⟹ split, $65$ up into $[60]$ | `[60 65]([59],[62],[70])` |
+| iii | del 59 | root and $[60\ 65]$ are 3-nodes ✓ · target $[59]$ and sibling $[62]$ both 2-nodes ⟹ **merge** $[59\ 60\ 62]$, parent $[65]$ ⟹ remove $59$ | `[65]([60 62],[70])` |
+| iv | ins 10 | $[8\ 10\ 12]$ ⟹ $10$ up ⟹ $[3\ 6\ 10]$ ⟹ $6$ up ⟹ root $[6\ 15\ 51]$ ⟹ split, $15$ **new root** | `[15]([6]([3](…),[10]([8],[12])),[51](…))` |
+| v | del 40 | 2-node root over two 2-nodes ⟹ **root merge** $[6\ 15\ 51]$ · $[19\ 28]$ ✓ · target $[40]$, sibling $[23\ 25]$ ⟹ **rotate** $25$ up, $28$ down ⟹ $[28\ 40]$ ⟹ remove $40$ ⟹ split the leftover root 4-node | `[19 25]([16 18],[23],[28])` |
 
-### Applied Exercise — delete `10`, then delete `40` (successor) from the step-8 tree
-- **Delete 10** ➔ leaf $[10]$ is a 2-node; adjacent sibling $[25\ 30]$ is a 3-node ⟹ **rotate**: parent key $20$ down, $25$ up ➔ `[40]([25]([20],[30]),[55]([50],[60]))`.
-- **Delete 40, successor** ➔ swap with $50$ (smallest in right subtree); leaf $[50]$ empties; sibling $[60]$ is a 2-node ⟹ **merge** $55$ down ➔ $[55\ 60]$; parent $[55]$ now empty; its sibling $[25]$ is a 2-node ⟹ **merge** root $50$ down ➔ $[25\ 50]$; root empty ⟹ removed.
+**Final Extracted Output:** `[15]([6]([3]([0],[4 5]),[10]([8],[12])),[51]([19 25]([16 18],[23],[28]),[65]([60 62],[70])))`
 
-**Final Extracted Output:** `[25 50]([20],[30],[55 60])` — height $2\to1$. *(Predecessor $30$ instead also cascades: `[30 55]([20 25],[50],[60])`.)*
+- **Step iii** ➔ the merge creates a 4-node **leaf**; deleting from it leaves a legal 3-node, so nothing is left to split.
+- **Step v** ➔ the root merge was temporary — the 4-node root survives the descent untouched and is split on exit, so the height is unchanged. Its LLRB form is [[Left-Leaning Red-Black Tree]] Practice 4.
 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Insert `1, 2, 3, 4, 5, 6, 7` into an empty 2-3 tree. When does the height change?
@@ -80,21 +78,30 @@ aliases: [2-3 Search Tree, Two-Three Tree]
 > [!QUESTION]- Practice 2: From `[30 60]([10 20],[40],[70])`, delete `40`.
 > - **Hint:** Which sibling of $[40]$ can lend a key?
 > > [!SUCCESS]- Answer
-> > - **Rotate from the left 3-node** ➔ parent key $30$ comes down, $20$ goes up ➔ `[20 60]([10],[30],[70])`.
-> > - **Why:** **Rotate before merge** ➔ a sibling with a spare key fixes the leaf locally; merging would steal a parent key for no reason.
+> > - **Rotate from the left 3-node** ➔ $20$ goes up, parent key $30$ comes down ⟹ $[30\ 40]$ ⟹ remove $40$ ➔ `[20 60]([10],[30],[70])`.
+> > - **Why:** **Rotate before merge** ➔ a sibling with a spare key fixes the child locally; merging would take a parent key for no reason.
 
 > [!QUESTION]- Practice 3 (prep P2): On `[10 30]([4 7]([2],[5],[9]),[22]([12],[25 27]),[40]([35],[42 45]))`, insert $6$, then $7$, then $50$.
 > - **Hint:** Where is $7$ found? How many splits does $50$ cause?
 > > [!SUCCESS]- Answer
-> > - **Insert 6** ➔ path $[10\ 30]	o[4\ 7]	o[5]$; 2-node leaf ⟹ $[5\ 6]$.
+> > - **Insert 6** ➔ path $[10\ 30]\to[4\ 7]\to[5]$; 2-node leaf ⟹ $[5\ 6]$.
 > > - **Insert 7** ➔ found in the **internal** node $[4\ 7]$ ⟹ no change; the search never reaches a leaf.
 > > - **Insert 50** ➔ $[42\ 45\ 50]$ ⟹ split, $45$ up into the 2-node $[40]$ ⟹ `[40 45]([35],[42],[50])`; parent now a 3-node ⟹ stop, height unchanged.
 > > - **Why:** **A split only cascades into a full parent** ➔ promoting into a 2-node absorbs the key.
 
+> [!QUESTION]- Practice 4: From `[4]([2]([1],[3]),[6]([5],[7]))`, delete $1$. Does the height change?
+> - **Hint:** Process the root before descending.
+> > [!SUCCESS]- Answer
+> > - **Root merge** ➔ 2-node root over two 2-nodes ⟹ `[2 4 6]([1],[3],[5],[7])`.
+> > - **Merge at the leaf** ➔ target $[1]$, sibling $[3]$ both 2-nodes ⟹ $[1\ 2\ 3]$, parent $[4\ 6]$ ⟹ remove $1$ ⟹ $[2\ 3]$.
+> > - **Final** ➔ `[4 6]([2 3],[5],[7])` — no 4-node left to split, so height $2\to1$.
+> > - **Why:** **Shrink at the root** ➔ the root merge lowers every leaf by one at once; it is undone on exit only if the root is still a 4-node.
+
 ## ⚠️ Common Mistakes
 - 💡 **Promoting the new key instead of the median** ➔ the **middle** of the three keys goes up, whichever was inserted.
 - 💡 **Stopping after one split** ➔ check the parent; a promotion into a 3-node creates another 4-node.
-- 💡 **Deleting an internal key in place** ➔ swap to a leaf first (predecessor or successor, as the question says).
+- 💡 **Fixing the leaf after deleting** ➔ the unit's delete is top-down: rotate or merge **before** entering each 2-node, starting with the root.
+- 💡 **Leaving a 4-node behind** ➔ after a delete, split any 4-node still on the path, including a merged root.
 
 ## 🧠 Active Recall
 > [!FAQ]- How does a 2-3 tree keep every leaf on the same level while inserting only at leaves?
@@ -102,7 +109,7 @@ aliases: [2-3 Search Tree, Two-Three Tree]
 > > - **Short answer:** a full leaf never grows downward; it splits and pushes its median **up**.
 > > - **Why:** **Root-only growth** ➔ new levels are only ever created by a root split, which lowers every leaf by exactly one ⟹ all leaves remain level ⟹ height $O(\log N)$.
 
-> [!FAQ]- When does deletion use a rotate and when a merge?
+> [!FAQ]- During delete, when do you rotate and when do you merge — and why can the parent always afford a merge?
 > > [!SUCCESS]- Answer
-> > - **Short answer:** rotate when an adjacent sibling is a 3-node; merge when every adjacent sibling is a 2-node.
-> > - **Why:** **Key budget** ➔ a rotate borrows a spare key through the parent (parent unchanged in size); a merge consumes a parent key, which can empty the parent and propagate up to the root, shrinking the height.
+> > - **Short answer:** rotate when an immediate sibling is a 3-node; merge when it is a 2-node. The parent was itself made $\ge2$ keys before you entered it.
+> > - **Why:** **Top-down invariant** ➔ a rotate borrows a spare key through the parent (parent size unchanged); a merge pulls a parent key down into a temporary 4-node, which never empties the parent because it held $\ge2$ keys. Leftover 4-nodes are split on the way back up.

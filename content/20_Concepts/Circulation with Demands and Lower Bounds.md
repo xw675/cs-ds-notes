@@ -21,13 +21,14 @@ aliases: [Circulation with Demands, Circulation with Lower Bounds, Circulation P
 ### 1. Circulation with Demands
 - **Capacity constraint** ➔ $0\le f(e)\le c(e)$, unchanged from max flow.
 - **Demand constraint replaces conservation** ➔ $\text{in}(v)-\text{out}(v)=d_v$ at **every** vertex · no source, no sink.
+- **Why no $s$/$t$** ➔ a source is just a vertex with negative demand and a sink one with positive demand — the demands take over both roles, and "$0$ demand is still demand".
 - **Reading $d_v$** ➔ $d_v>0$ ⟹ $v$ **absorbs** $d_v$ (in $5$, out $3$, $d=2$) · $d_v<0$ ⟹ $v$ **supplies** $-d_v$ (in $3$, out $5$, $d=-2$) · $d_v=0$ ⟹ plain conservation, ignored by the construction.
 - **Feasibility, not optimisation** ➔ "does **any** $f$ satisfy both constraints?" — answer yes/no, with the flow as the witness.
 
 ### 2. Deciding Feasibility With One Max Flow *(lecture)*
 - **Construction** ➔ new $s$ with $s\to v$ of capacity $-d_v$ for every $d_v<0$ · new $t$ with $v\to t$ of capacity $d_v$ for every $d_v>0$ · original edges kept ⟹ network $G'$.
 - **Run FF** ➔ $s$ to $t$ on $G'$, unmodified.
-- **Test** ➔ feasible $\iff$ every $s$-edge **and** every $t$-edge is saturated $\iff\lvert f\rvert=D^{+}=D^{-}$, where $D^{+}=\sum_{d_v>0}d_v$, $D^{-}=\sum_{d_v<0}(-d_v)$ · $D^{+}\ne D^{-}$ ⟹ infeasible without running FF.
+- **Test** ➔ feasible $\iff$ every $s$-edge **and** every $t$-edge is saturated $\iff\lvert f\rvert=D^{+}=D^{-}$, where $D^{+}=\sum_{d_v>0}d_v$, $D^{-}=\sum_{d_v<0}(-d_v)$ · $D^{+}\ne D^{-}$ ⟹ infeasible without running FF · $D^{+}=D^{-}$ (i.e. $\sum d_v=0$) is **necessary, not sufficient** — the Clayton network passes it and is still infeasible (§Applied).
 - **Read-off** ➔ delete $s$, $t$ and their edges; the flow left on the original edges is the circulation ("clean it up").
 - **Why (⟸)** ➔ a saturated $s\to v$ hands $v$ exactly $-d_v$ of extra inflow; conservation in $G'$ then forces $\text{in}_G(v)-\text{out}_G(v)=d_v$ — symmetric for $v\to t$.
 - **Why (⟹)** ➔ a feasible circulation plus full super-edges conserves at every $v$ and has value $D^{+}=c(\{s\},\cdot)$ ⟹ maximum by weak duality ([[Min-Cut Max-Flow Theorem]] §3), so FF reaches it too.
@@ -46,6 +47,7 @@ d^{*}_v&=d_v-\sum_{u}\ell(u,v)+\sum_{w}\ell(v,w)
 $$
 
 - **Sign intuition** ➔ lower-bound flow already **into** $v$ is demand already met ⟹ subtract · lower-bound flow already **out of** $v$ must be refilled ⟹ add.
+- **Per-edge form (sanity check)** ➔ for $\langle u,v,\ell,c\rangle$: $d_u\mathrel{+}=\ell$, $d_v\mathrel{-}=\ell$, $c\mathrel{-}=\ell$ — "minus incoming, plus outgoing" seen from the demand side.
 - **Step 3** ➔ circulation with demands $\{d^{*}_v\}$ on $G^{*}$ by §2 ⟹ $f^{*}$, or infeasible.
 - **Step 4 — combine** ➔ $f=f_\ell+f^{*}$ ⟹ $\ell\le f\le c$ because $0\le f^{*}\le c-\ell$ · annotate edges $\ell/f/c$ and restore the **original** $d_v$ ("don't forget the demand").
 - **Equivalence** ➔ $f$ feasible in $G$ $\iff$ $f-f_\ell$ feasible in $G^{*}$ ⟹ $G^{*}$ infeasible means $G$ infeasible; nothing is lost.
@@ -148,6 +150,7 @@ $$
 - 💡 **Demand sign flipped** ➔ $d_v<0$ is a **supplier**: edge $s\to v$, never $v\to t$.
 - 💡 **$d^{*}$ sign flipped** ➔ incoming lower bounds are **subtracted**, outgoing **added** · self-check: $\sum d^{*}_v=\sum d_v$, since each $\ell$ is subtracted once at its head and added once at its tail.
 - 💡 **Reporting $f^{*}$ as the circulation** ➔ the answer is $f=f_\ell+f^{*}$ under the **original** demands; $f^{*}$ alone breaks every lower bound.
+- 💡 **$\sum d_v=0$ read as feasible** ➔ it only clears the quick reject; the saturation test decides.
 - 💡 **"FF finished" read as "feasible"** ➔ FF always returns a max flow; feasibility is the extra saturation test.
 
 ## 🧠 Active Recall

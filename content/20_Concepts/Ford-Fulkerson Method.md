@@ -5,11 +5,11 @@ source: [lecture, applied]
 domain: A
 parent: "[[Graph]]"
 tags: [CS/Algorithms, Math/GraphTheory]
-aliases: [Network Flow, Maximum Flow, Max Flow, Max-Flow Problem, Flow Network, Residual Network, Augmenting Path, Edmonds-Karp]
+aliases: [Network Flow, Maximum Flow, Max Flow, Max-Flow Problem, Flow Network, Residual Network, Potential Network, Augmenting Path, Edmonds-Karp]
 ---
 # [[Ford-Fulkerson Method]]
 
-**Context:** [[FIT2004_MOC]] · the W11 max-flow engine — repeatedly find an $s\rightsquigarrow t$ path in the **residual network** by [[Uninformed Search (BFS and DFS)|BFS/DFS]] and push its bottleneck · proved optimal by the [[Min-Cut Max-Flow Theorem]] · reused unmodified by every [[Network Flow Reductions|reduction]]
+**Context:** [[FIT2004_MOC]] · the W11 max-flow engine — repeatedly find an $s\rightsquigarrow t$ path in the **residual network** by [[Uninformed Search (BFS and DFS)|BFS/DFS]] and push its bottleneck · proved optimal by the [[Min-Cut Max-Flow Theorem]] · reused unmodified by every [[Network Flow Reductions|reduction]] · **PT-03**: run max-flow/min-cut by hand, from a blank or a mid-stage network
 **Parent Framework:** [[Graph]]
 
 > [!abstract] Quick Revision
@@ -26,19 +26,20 @@ aliases: [Network Flow, Maximum Flow, Max Flow, Max-Flow Problem, Flow Network, 
 - **Value** ➔ $\lvert f\rvert=$ net flow out of $s$ $=$ net flow into $t$ (equal by [[Min-Cut Max-Flow Theorem]] §2, applied P1).
 - **Max-flow problem** ➔ find a valid $f$ maximising $\lvert f\rvert$ · the **value** is unique, the **assignment is not** (the lecture's run and MUA's slides both reach $23$ with different edge flows).
 
-### 2. The Residual Network $G_f$
+### 2. The Residual Network $G_f$ *(a.k.a. potential network)*
 - **Same vertices, edges re-derived from the current flow** ➔ for each $u\to v$ in $G$:
 	- **forward / residual edge** $u\to v$ of capacity $c(u,v)-f(u,v)$ ➔ room still unused.
 	- **backward / reversible edge** $v\to u$ of capacity $f(u,v)$ ➔ flow already sent that may be **cancelled**.
 - **Drop zeros** ➔ a saturated edge has no forward edge; an empty edge has no backward edge.
 - **Merge parallels** ➔ $G_f$ is simple: $a\to b$ ($c{=}10$, $f{=}0$) and $b\to a$ ($c{=}4$, $f{=}1$) give $r(a,b)=10+1=11$, $r(b,a)=3+0=3$.
 - **Self-check** ➔ $r(u,v)+r(v,u)=c(u,v)+c(v,u)$ — the slide's "sum of the edges between 2 vertices same as the edge capacity".
+- **Reading $G$ back off $G_f$** ➔ flow $=$ backward weight · capacity $=$ forward $+$ backward *(the W11 sanity-check sheet writes "flow $=$ forward" — a slip; forward is $c-f$)*.
 - **Size** ➔ at most $2E$ edges ⟹ built in $O(V+E)$.
 
 ### 3. Path Augmentation
-- **Augmenting path** ➔ any $s\rightsquigarrow t$ path in $G_f$, found by **BFS or DFS**.
+- **Augmenting path** ➔ any $s\rightsquigarrow t$ path in $G_f$, found by **BFS or DFS** (BFS "is the best") · forward and backward edges are traversed alike — "no discrimination"; they differ only at update time.
 - **Bottleneck** ➔ $b=\min$ **residual** capacity along the path — the most that fits through every edge.
-- **Augment** ➔ each path edge: forward ⟹ $f(u,v)\mathrel{+}=b$ · backward ⟹ $f(v,u)\mathrel{-}=b$ ➔ $\lvert f\rvert\mathrel{+}=b$ ➔ refresh both residual directions.
+- **Augment** ➔ each path edge: forward ⟹ $f(u,v)\mathrel{+}=b$ · backward ⟹ $f(v,u)\mathrel{-}=b$ ➔ $\lvert f\rvert\mathrel{+}=b$ ➔ refresh both residual directions · **$O(1)$ per edge** — each residual edge holds a pointer to its twin, so no search (§Core Implementation).
 - **What a backward edge means in $G$** ➔ re-routing, not reverse flow. Lecture, from $\lvert f\rvert=19$: path $s\to b\to c\to t$ ($b=\min(5,4,5)=4$) uses backward $b\to c$ ⟹ $c\to b$ drops $4\to0$, $c$ sends those $4$ to $t$ instead, and $s\to b$ ($8\to12$) refills $b$'s lost inflow ⟹ $\lvert f\rvert=23$.
 - **Why a greedy push fails** ➔ the direct route $s\to b\to d\to c\to t$ needs $d\to c$ (already $7/7$) — "we can't, over capacity"; only the cancellation finds the extra $4$.
 
@@ -58,6 +59,11 @@ aliases: [Network Flow, Maximum Flow, Max Flow, Max-Flow Problem, Flow Network, 
 - **Why path choice matters** ➔ each iteration adds between $1$ and $F$; increments $8,13,41,\dots$ finish far sooner than $1,2,3,\dots$
 - **Fewest edges** ➔ BFS ⟹ **Edmonds–Karp** ⟹ $O(VE^{2})$, independent of $F$ (proof in FIT3155) · fewer edges, lower chance of a small capacity on the path.
 - **Largest bottleneck** ➔ the lecture's route is a **maximum spanning tree** — the bottleneck idea from [[Minimum Spanning Tree]] §4.
+
+> [!tip]- 🔭 Beyond the lecture *(the sanity check poses "explain $O(VE^{2})$" as D/HD; the argument is not in the provided material)*
+> - **Distances never shrink** ➔ augmenting along BFS shortest paths keeps every $\delta_f(s,v)$ in $G_f$ non-decreasing.
+> - **Each edge is the bottleneck $\le V/2$ times** ➔ a bottleneck edge $u\to v$ leaves $G_f$; it returns only after a later path uses $v\to u$, which pushes $\delta(s,u)$ up by $\ge2$, and distances are capped at $V$.
+> - **Count** ➔ $\le2E$ residual edges $\times\ V/2$ ⟹ $O(VE)$ augmentations $\times\ O(E)$ per BFS ⟹ $O(VE^{2})$, independent of $F$.
 
 ## ⚙️ Core Implementation
 ### 🔹 Ford-Fulkerson with BFS (applied P8) — paired residual edges
@@ -111,7 +117,7 @@ aliases: [Network Flow, Maximum Flow, Max Flow, Max-Flow Problem, Flow Network, 
 | One iteration | $O(V+E)$ | $\Theta(V)$ | one BFS/DFS $+$ two $O(V)$ path walks |
 | Iterations | $\le F$ | — | integer capacities ⟹ $b\ge1$ |
 | **FF, any path (DFS)** | $O(F(V+E))=O(FE)$ | $\Theta(V+E)$ | $E\ge V-1$ once every vertex lies on an $s$–$t$ path |
-| **FF with BFS (Edmonds–Karp)** | $O(\min(FE,\ VE^{2}))$ | $\Theta(V+E)$ | $VE^{2}$ proved in FIT3155 |
+| **FF with BFS (Edmonds–Karp)** | $O(\min(FE,\ VE^{2}))$ | $\Theta(V+E)$ | $VE^{2}$ is D/HD-level (sketch: §6 🔭) |
 | Unit capacities | $O(VE)$ | $\Theta(V+E)$ | $F\le\deg^{+}(s)\le V-1$ ([[Network Flow Reductions]] §4) |
 
 - **Pseudo-polynomial** ➔ $F$ is a **number** in the input; capacities near $2^{32}$ make $F$ exponential in the input's **bit-length** ([[Algorithmic Complexity]]) even though $V$ and $E$ are tiny.
@@ -144,6 +150,7 @@ $$
 - 💡 **Bottleneck from original capacities** ➔ use **residual** ones: prep $s\to a$ has $c=3$ but residual $2$.
 - 💡 **Drawing a backward edge into $G$** ➔ a backward edge lives only in $G_f$; augmenting along it **decreases** the flow on the real edge, it never creates a reverse edge.
 - 💡 **Calling $O(FE)$ polynomial** ➔ it is pseudo-polynomial; the polynomial bound needs BFS ($O(VE^{2})$).
+- 💡 **Mid-stage start with forward edges only** ➔ a PT-03 network that already carries flow usually needs a **backward** augment; verify by re-running from blank — the max-flow value must match.
 - 💡 **"The max flow"** ➔ the value is unique, the edge assignment is not — mark schemes accept any valid final network.
 
 ## 🧠 Active Recall

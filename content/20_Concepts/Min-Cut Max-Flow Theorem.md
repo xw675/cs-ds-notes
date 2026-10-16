@@ -41,9 +41,9 @@ aliases: [Max-Flow Min-Cut Theorem, Minimum Cut, Min Cut, s-t Cut, Cut Capacity]
 - **A cut can match the capacity rule yet fail the empty rule** ➔ the lecture's "does this meet the requirement? NO" check: test **both** conditions.
 
 ### 5. Finding the Min Cut *(exam procedure)*
-- **Steps** ➔ run FF to completion ➔ BFS/DFS from $s$ in the **final residual** $G_f$ ➔ $S=$ reached, $T=$ rest ➔ list the $S\to T$ edges of $G$ (all saturated) ➔ sum their capacities, confirm $=\lvert f\rvert$, confirm every $T\to S$ edge carries $0$.
+- **Steps** ➔ run FF to completion ➔ BFS/DFS from $s$ in the **final residual** $G_f$, **backward edges included** ➔ $S=$ reached, $T=$ rest ➔ list the $S\to T$ edges of $G$ (all saturated) ➔ sum their capacities, confirm $=\lvert f\rvert$, confirm every $T\to S$ edge carries $0$.
 - **Cost** ➔ $O(V+E)$ after FF — it is the final failed path search, kept.
-- **Not unique** ➔ several cuts can share the minimum capacity; the lecture invites finding the cut behind MUA's different final network — the **capacity** is fixed by the network, never by which max flow you found.
+- **Not unique** ➔ several cuts can share the minimum capacity; the lecture invites finding the cut behind MUA's different final network — the **capacity** is fixed by the network, never by which max flow you found · the residual-reachability trick always returns a correct one ("the best min-cut you can say") · **PT-03 self-check**: re-run FF from a blank network — the max-flow must match, the min cut may differ.
 
 ## 🧮 Proof Blueprint
 **Theorem.** For any valid flow $f$ and cut $(S,T)$: $f(S,T)=\lvert f\rvert\le c(S,T)$; and when [[Ford-Fulkerson Method|Ford-Fulkerson]] stops, $\lvert f\rvert=c(S,T)$ for the cut of residual-reachable vertices.
@@ -97,6 +97,7 @@ $$
 ## ⚠️ Common Mistakes
 - 💡 **Counting $T\to S$ capacity** ➔ capacity sums $S\to T$ edges only; $c\to b$ adds nothing to $c(\{s,a,b\},\cdot)$.
 - 💡 **Forgetting to subtract $T\to S$ flow** ➔ $f(\{s,a,b\})=23$ is wrong, $19$ is right.
+- 💡 **Skipping backward edges in the reachability search** ➔ a backward edge $u\to v$ with $f(v,u)>0$ puts $v$ in $S$ as surely as a forward one.
 - 💡 **Reachability in $G$ instead of $G_f$** ➔ in $G$ almost everything is reachable from $s$; only the **residual** search finds $S$.
 
 ## 🧠 Active Recall

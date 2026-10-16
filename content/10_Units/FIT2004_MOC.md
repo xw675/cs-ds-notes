@@ -19,7 +19,7 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 | **D/HD Exam** | $+31$ | 3-hour written paper, on-campus **Week 15**, closed-book; covers unit content **and beyond**, high failure/zero-mark rate | all PTs Competent **by PTR1**, $\ge9/12$ weekly quizzes at 100%, **pre-exam score $\ge60$** |
 
 - **Safety net** ➔ PTR1/PTR2 reattempts cover missed competencies, but **bonus marks are forfeited**.
-- **PT-03 scope** ➔ W9 tries/suffix structures **and** W10 self-balancing trees — may start from a half-built tree and mix insert with delete · **no CD question on W10**.
+- **PT-03 scope** ➔ W9 tries/suffix structures **and** W10 self-balancing trees — may start from a half-built tree and mix insert with delete · **no CD question on W10** · **plus two pass-level flow questions** (W11–12 sanity-check doc): **run max-flow/min-cut** by hand from a blank or mid-stage network ([[Ford-Fulkerson Method]], [[Min-Cut Max-Flow Theorem]]) and **model a scenario** — vertices, directed edges, edge count, capacities, lower bounds, demands ([[Network Flow Reductions]], [[Circulation with Demands and Lower Bounds]]).
 - **LO thread so far** ➔ analyse running time via recurrences; design divide-and-conquer algorithms; quote tight Big-O with mandatory complexity tables.
 
 ## 🧰 Unit Cheatsheet
@@ -101,26 +101,28 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - *Applied P12, P15, P16, P18, P20–P22 **not noted** — costumes over covered shapes; moves in [[FIT2004 Unit Cheatsheet]] §1️⃣2️⃣.*
 - ⚠️ *Pass roster: rod cutting $=$ unbounded knapsack (not in the deck); edit distance deferred to tutorial videos ➔ held in [[Longest Common Subsequence (LCS)|LCS]].*
 
-### Week 8 — Shortest Paths With Negative Weights *(lecture-07 deck Bellman-Ford/Warshall/Floyd-Warshall)*
-- [[Bellman-Ford]] -> [[Graph]] *(**new** — negative edges: $\lvert V\rvert-1$ rounds $+$ one check pass, $\Theta(VE)$)*
-- [[Floyd-Warshall]] -> [[Graph]] *(**new** — all-pairs, $\Theta(V^{3})$; absorbs Warshall's transitive closure)*
+### Week 8 — Shortest Paths With Negative Weights *(lecture-07 deck Bellman-Ford/Warshall/Floyd-Warshall · applied W8)*
+- [[Bellman-Ford]] -> [[Graph]] *(**new** — negative edges: $\lvert V\rvert-1$ rounds $+$ one check pass, $\Theta(VE)$ · **applied** P2 super source finds *any* cycle in $O(VE)$ · P3 walk `pred` back to extract it)*
+- [[Floyd-Warshall]] -> [[Graph]] *(**new** — all-pairs, $\Theta(V^{3})$; absorbs Warshall's transitive closure · **applied** P4 `succ` rebuild in $O(\ell)$ · P5 $-\infty$ post-process · P6 arbitrage on $\log$ rates)*
+- [[Johnson's Algorithm]] -> [[Graph]] *(**new**, applied P1/P7 — a constant shift fails, potentials telescope; sparse all-pairs with negatives in $O(VE\log V)$)*
 - [[Dijkstra's Algorithm]] -> [[Graph]] *(the W8 contrast — the non-negativity these two remove)*
+- *Supplementary P8–P13 **not noted** — P8 is implementation; P9, P10, P12, P13 share one shape, DP over a DAG in reverse topological order (`[D]` line in [[FIT2004 Unit Cheatsheet]] §1️⃣2️⃣); P11 (SPFA) is Bellman-Ford with a queue, same $O(VE)$ worst case.*
 
 ### Week 9 — Tries, Suffix Tries and Suffix Trees *(lecture-10 p2 Trie · sanity check W9 · prep W9 · applied W9 · PT-03)*
 - [[Trie]] -> [[Tree]] *(**new** — `$` terminal, $O(M)$ search, payload augmentation)*
 - [[Suffix Trie and Suffix Tree]] -> [[Trie]] *(**new** — **PT-03's subject**: draw, compress, count nodes)*
 - *Suffix array $+$ prefix doubling **not examinable** this semester — one 🔭 block in [[Suffix Trie and Suffix Tree]].*
 
-### Week 10 — Self-Balancing Search Trees *(lecture-11 p1 AVL deck · sanity check W10 · PT-03 notes · prep W10 · no CD content)*
-- [[AVL Tree]] -> [[Binary Search Tree (BST)]] *(**new** — `h,bf` annotation, Ian's trinode restructure, delete cascades)*
-- [[2-3 Tree]] -> [[Tree]] *(**new** — insert by split $+$ promote, delete by rotate or merge)*
-- [[Left-Leaning Red-Black Tree]] -> [[2-3 Tree]] *(**new** — rotate/flip insert, cross-check via 2-3 conversion)*
-- [[Binary Search Tree (BST)]] -> [[Binary Tree]] *(lecture recap — leaf-only delete via predecessor **or** successor)*
+### Week 10 — Self-Balancing Search Trees *(lecture-11 p1 AVL deck · sanity check W10 · PT-03 notes · prep W10 · applied W10 · no CD content)*
+- [[AVL Tree]] -> [[Binary Search Tree (BST)]] *(**new** — `h,bf` annotation, Ian's trinode restructure, delete cascades · applied P1, P4 proof, `[D]` P8 height bound)*
+- [[2-3 Tree]] -> [[Tree]] *(**new** — split $+$ promote insert · **top-down** rotate/merge delete, applied P5)*
+- [[Left-Leaning Red-Black Tree]] -> [[2-3 Tree]] *(**new** — rotate/flip insert, 2-3 cross-check · applied P6 black-height, P5b conversion)*
+- [[Binary Search Tree (BST)]] -> [[Binary Tree]] *(recap — predecessor **or** successor delete · applied P2/P3 proofs, P7 minimal-height build)*
 
-### Week 11 — Network Flow *(lecture-08 deck Network Flow · prep W11 · applied W11)*
-- [[Ford-Fulkerson Method]] -> [[Graph]] *(**new** — residual network, augment by bottleneck, $O(FE)$ pseudo-polynomial)*
-- [[Min-Cut Max-Flow Theorem]] -> [[Ford-Fulkerson Method]] *(**new** — cut capacity vs cut flow; why FF is correct)*
-- [[Network Flow Reductions]] -> [[Ford-Fulkerson Method]] *(**new**, the **LO1** note — super source, vertex split, matching, disjoint paths)*
+### Week 11 — Network Flow *(lecture-08 deck Network Flow · sanity check W11 · prep W11 · applied W11 · **PT-03**)*
+- [[Ford-Fulkerson Method]] -> [[Graph]] *(**new** — residual network, augment by bottleneck, $O(FE)$ pseudo-polynomial · **sanity check**: flow $=$ backward weight, capacity $=$ forward $+$ backward, $O(1)$ twin updates, 🔭 the $O(VE^{2})$ argument)*
+- [[Min-Cut Max-Flow Theorem]] -> [[Ford-Fulkerson Method]] *(**new** — cut capacity vs cut flow; why FF is correct · reachability **includes backward edges**, min cut not unique)*
+- [[Network Flow Reductions]] -> [[Ford-Fulkerson Method]] *(**new**, the **LO1** note — super source, vertex split, matching, disjoint paths · **credit-discussion** P3/P4: the $r=\{3,1,2\}$ matrix drill and the supercomputer min cut $13$, flipping at penalty $6$)*
 - [[Bipartite Graph]] -> [[Graph]] *(**§7 pointer** — maximum matching is a flow problem)*
 
 ### Week 12 — Circulation with Demands and Lower Bounds *(lecture-09 deck Circulation · applied W12)*
@@ -150,8 +152,10 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 - **W7a — the paradigm, then the pass-level pair:** **[[Dynamic Programming]]** *(MEMO ➔ recurrence ➔ reconstruct)* → **[[Coin Change]]** *(the PT-02 costume)* → **[[Knapsack Problem]]** *(1-D vs 2-D state)*
 - **W7b — the applied shapes, credit tier:** **[[Longest Increasing Subsequence (LIS)]]** *(anchored ⟹ scan)* → **[[Longest Common Subsequence (LCS)]]** *(two prefixes, $+$ edit distance)* → [[Maximum Subarray Sum]] *(prefix sums ➔ $\Theta(n)$)* → [[Interval Dynamic Programming]] *(fill by length)*
 - **W8a — the negative-weight escape hatches:** [[Dijkstra's Algorithm]] *(where greed dies)* → **[[Bellman-Ford]]** *($V{-}1$ rounds $+$ the check)* → **[[Floyd-Warshall]]** *(all pairs, $\Theta(V^{3})$)* → [[Graph Representations]] *(density picks the winner)*
+- **W8b — the applied sheet:** **[[Bellman-Ford]]** *(§5 super source, extract the cycle)* → **[[Floyd-Warshall]]** *(§4 $-\infty$ · §5 `succ` · arbitrage)* → **[[Johnson's Algorithm]]** *(why a shift fails, why potentials work)*
 - **W9 — retrieval by character, then by suffix:** [[Trie]] *(the `$` terminal, $O(M)$, properties)* → **[[Suffix Trie and Suffix Tree]]** *(PT-03: draw, compress, count)* → [[Trie]] *(§4 payload augmentation)* → [[Suffix Trie and Suffix Tree]] *(§4 think in the trie, answer in the tree)*
 - **W10 — balance, three ways (PT-03):** [[Binary Search Tree (BST)]] *(why balance)* → **[[AVL Tree]]** *(trinode restructure)* → **[[2-3 Tree]]** *(split · rotate · merge)* → **[[Left-Leaning Red-Black Tree]]** *(rotate · flip, verify via 2-3)*
+- **W10b — the applied sheet, proofs then trees:** [[Binary Search Tree (BST)]] *(P2/P3 proofs · §5 min-height build)* → **[[AVL Tree]]** *(P1 · P4 proof · P8 height bound)* → **[[2-3 Tree]]** *(P5 top-down delete)* → **[[Left-Leaning Red-Black Tree]]** *(P6 black-height · P5b conversion)*
 - **W11 — push, prove, reduce:** [[Graph]] *(directed, weighted)* → **[[Ford-Fulkerson Method]]** *(residual $+$ augment)* → **[[Min-Cut Max-Flow Theorem]]** *(why it stops at max · find the cut)* → **[[Network Flow Reductions]]** *(build the network)* → [[Bipartite Graph]] *(§7 matching)*
 - **W12 — feasibility, then modelling:** [[Ford-Fulkerson Method]] *(the engine)* → **[[Circulation with Demands and Lower Bounds]]** *(§2 super-edges · §3 pre-push $\ell$)* → [[Circulation with Demands and Lower Bounds]] *(§4 survey · airline · roster · baseball)* → **[[Network Flow Reductions]]** *(§3 path cover · §5 $\infty$ edges, project selection, fencing)*
 
@@ -244,7 +248,11 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- rebuild the combination by decision array or backtracking
 - **W8** ➔
 	- justify [[Bellman-Ford]]'s $\lvert V\rvert-1$ rounds and its extra check pass
-	- select Dijkstra / Bellman-Ford / Floyd-Warshall by weight sign and density
+	- find **any** negative cycle with ONE Bellman-Ford from a weight-$0$ super source in $O(VE)$, and extract its vertices by walking `pred` back to a repeat
+	- rebuild a [[Floyd-Warshall]] path in $O(\ell)$ from `succ`, and post-process every pair through a negative cycle to $-\infty$ in $O(V^{3})$
+	- reduce arbitrage to a negative cycle on $\log$ rates
+	- break the constant-shift repair with a counterexample, and prove potential reweighting preserves shortest paths by telescoping
+	- select Dijkstra / Bellman-Ford / Floyd-Warshall / [[Johnson's Algorithm|Johnson's]] by weight sign, number of sources and density
 - **W9** ➔
 	- justify the `$` terminal and its `links[0]` slot, and quote trie search as $O(M)$ with $N$ absent
 	- bound a trie by its properties — nodes $O(T)$, leaves $\le N$, height $M+1$ — and choose it over a sorted array, BST or hash table from the query type
@@ -259,9 +267,13 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- delete via predecessor **or** successor and keep rebalancing up to the root
 	- justify AVL operations as $O(\log N)$: stored heights, $\le2$ rotations per fix
 	- insert into a 2-3 tree by split $+$ promote, cascading to a root split
-	- delete from a 2-3 tree by rotate (3-node sibling) or merge, propagating to the root
+	- delete from a 2-3 tree top-down — rotate or merge before entering each 2-node (root first), then split leftover 4-nodes on the way out
 	- insert into an LLRB as a red leaf and fix by rotate left / rotate right / colour flip, then blacken the root
 	- convert 2-3 ⟷ LLRB and check equal black-height on every branch
+	- state the LLRB black-height after each insert, and say why it rises only when red reaches the root
+	- prove the successor of a two-child node has no left child, and that a new key has exactly one insertion point
+	- build a minimal-height BST from sorted keys, prove height $\le\log n$, and prove $\Theta(n\log n)$ optimal by reduction to sorting
+	- `[D]` prove AVL height $O(\log n)$ via $n(h)=F(h+2)-1\ge1.5^{h+1}-1$
 - **W11** ➔
 	- state the capacity constraint and flow conservation, and read $\lvert f\rvert$ off a network
 	- draw the residual network — forward $c-f$, backward $f$, zeros dropped, parallels merged
@@ -269,6 +281,7 @@ Tiered framework — **"Easy to Pass, Hard to Distinction (D/HD)."**
 	- derive $O(FE)$, call it pseudo-polynomial, and quote BFS (Edmonds–Karp) $O(VE^{2})$
 	- compute a cut's capacity ($S\to T$ only) and flow (out $-$ in), and prove every cut carries $\lvert f\rvert$
 	- prove max-flow $=$ min-cut from residual reachability, and extract the min cut after FF
+	- verify a mid-stage PT-03 answer by re-running from blank — same max-flow, possibly a different min cut
 	- reduce a new problem to max flow — super source/sink, vertex split, matching with quotas, disjoint paths, min-cut split — and state the read-off
 - **W12** ➔
 	- state the demand constraint $\text{in}(v)-\text{out}(v)=d_v$ and read a negative demand as a supplier

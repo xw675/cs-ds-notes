@@ -22,7 +22,7 @@ aliases: [AVL, Adelson-Velskii Landis Tree, Height-Balanced BST]
 - **Lecture height convention** ➔ empty $=0$, leaf $=1$, node $=1+\max(h(L),h(R))$. Annotate every node by hand as `h,bf` (the slides' format).
 - **Balance factor** ➔ $bf=h(L)-h(R)$ · positive ⟹ left taller · negative ⟹ right taller.
 - **AVL** ⟺ $bf\in\{-1,0,1\}$ at every node — recursive, like the BST definition ("true for each subtree as well").
-- **Convention-proof** ➔ Ian's hand heights are not the textbook height (leaf $=0$); $bf$ is a **difference**, so it is identical under either convention.
+- **Convention-proof** ➔ Ian's hand heights (leaf $=1$) are not the textbook height; applied P8 counts a lone node as height $0$. $bf$ is a **difference**, so it is identical under either convention.
 
 ### 2. Operations = BST + Rebalance
 - **Search** ➔ identical to BST.
@@ -58,6 +58,15 @@ aliases: [AVL, Adelson-Velskii Landis Tree, Height-Balanced BST]
 
 - **Heights are stored, not recomputed** ➔ recomputing $h$ from scratch, as done by hand, would cost $O(N)$; updating only the path is what keeps rebalancing $O(\log N)$.
 
+### Why the Height Is $O(\log N)$ — applied P8 `[D]`
+- **Sparsest AVL tree** ➔ the fewest nodes at height $h$ has subtrees of heights $h-1$ and $h-2$ (equal heights would let one subtree drop its bottom level and stay AVL), each itself sparsest ⟹ $n(0)=1$, $n(1)=2$, $n(h)=1+n(h-1)+n(h-2)$.
+- **Closed form** ➔ $n(h)=F(h+2)-1$ with $F(0)=F(1)=1$; strong induction: $n(k+1)=1+\big(F(k+2)-1\big)+\big(F(k+1)-1\big)=F(k+3)-1$.
+- **Fibonacci floor** ➔ $F(h)\ge1.5^{h-1}$; induction step $F(h+1)\ge1.5^{h-1}+1.5^{h-2}=2.5\cdot1.5^{h-2}\ge2.25\cdot1.5^{h-2}=1.5^{h}$.
+- **Conclude** ➔ any AVL tree with $n$ nodes and height $h$ has at least $n(h)$ nodes:
+$$
+n\;\ge\;F(h+2)-1\;\ge\;1.5^{h+1}-1\;\Longrightarrow\;h+1\le\log_{1.5}(n+1)\;\Longrightarrow\;h=O(\log n)
+$$
+
 ## ⚖️ Core Decision Matrix
 | Tree | Balance definition | Node shape | Rebalancing move | Delete in FIT2004 |
 | :--- | :--- | :--- | :--- | :--- |
@@ -84,6 +93,7 @@ aliases: [AVL, Adelson-Velskii Landis Tree, Height-Balanced BST]
 - **Step 9 tie** ➔ $60$'s children both have height $1$; going L would wrongly do a double rotation. $55$ ($T_2$) becomes $50$'s right child.
 - **Then delete 60** ➔ predecessor $55$: `55(50,70)`, no imbalance · successor $70$: `70(50(_,55),_)` is LR at $70$ ➔ `55(50,70)`. Same tree, different work.
 - **Prep P1** ➔ insert $5$ into `50(20(10,_),55(52,60))`: $20$ is at $bf=+2$ while the root is only $+1$ ⟹ fix $20$, LL, median $10$ ➔ `50(10(5,20),55(52,60))`. The solution's "rotate the node 10" means $10$ rises to the subtree root.
+- **Applied P1** ➔ insert $6$ into `3(2(1,_),8(5(4,7),9))`: both $3$ ($-2$) and $8$ ($+2$) are imbalanced ⟹ fix the **lower** one, $8$: L to $5$ ($bf=-1$), R to $7$ ⟹ **LR**, median $7$ ➔ `3(2(1,_),7(5(4,6),8(_,9)))`. The root is balanced again without being touched — the reason rotations always start low.
 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Insert `10, 20, 30, 25, 28` into an empty AVL tree. Name each imbalance and give the final tree.
@@ -100,6 +110,13 @@ aliases: [AVL, Adelson-Velskii Landis Tree, Height-Balanced BST]
 > > - **Fix 2** ➔ now $z=19\ (+2)$: L to $12$ ($bf=-1$), R to $15$ ⟹ **LR**, median $15$; $T_1=$`9(1,_)`, $T_2=13$, $T_3=$`18(17,_)`, $T_4=$`22(20,28)`.
 > > - **Final** ➔ `15(12(9(1,_),13),19(18(17,_),22(20,28)))`.
 > > - **Why:** **Deletes shorten subtrees** ➔ a restructure after a delete can lower the height and expose an imbalance higher up, so the walk must continue to the root.
+
+> [!QUESTION]- Practice 3 (applied P4): $x$ has $bf=-2$, left subtree $ST_1$, right child $z$ ($bf=+1$); $z$ has left child $y$ ($bf=0$, subtrees $ST_2$, $ST_3$) and right subtree $ST_4$. All $ST_i$ are AVL. Prove the RL rotation yields an AVL tree.
+> - **Hint:** Fix $h=\text{height}(ST_2)$ and read every other height off the balance factors.
+> > [!SUCCESS]- Answer
+> > - **Heights** ➔ $bf(y)=0$ ⟹ $ST_3$ is $h$, $y$ is $h+1$ · $bf(z)=+1$ ⟹ $ST_4$ is $h$, $z$ is $h+2$ · $bf(x)=-2$ ⟹ $ST_1$ is $h$.
+> > - **After RL** ➔ `y(x(ST1,ST2), z(ST3,ST4))`: all four subtrees height $h$ ⟹ $bf(x)=bf(z)=0$, both height $h+1$ ⟹ $bf(y)=0$.
+> > - **Why:** **Every node checked** ➔ $x,y,z$ have $bf=0$ and every node inside $ST_1..ST_4$ is unchanged and AVL by assumption ⟹ all $bf\in\{-1,0,1\}$.
 
 ## ⚠️ Common Mistakes
 - 💡 **Restructuring the highest imbalanced node** ➔ always fix the **lowest** one first, then move up.

@@ -18,20 +18,20 @@ aliases: [Max-Flow Reductions, Bipartite Matching, Maximum Bipartite Matching, S
 > - **⚡ Key Constraint:** every answer owes **three** things — the construction (vertices, edges, capacities), why max flow $\iff$ the answer, and the read-off rule. Never modify FF: "reduce the problem by transforming the input" (applied footnote).
 
 ## 📝 How It Works
-### 1. Many Sources or Sinks — Super Source and Super Sink *(applied P2)*
+### 1. Many Sources or Sinks — Super Source and Super Sink *(applied P2 · `[P,C,D,HD]`)*
 - **Construction** ➔ new $s^{*}$ with an edge to each source $s_i$, capacity $=$ total out-capacity of $s_i$ · new $t^{*}$ with an edge from each sink $t_j$, capacity $=$ total in-capacity of $t_j$ ➔ FF from $s^{*}$ to $t^{*}$.
 - **Why the capacities** ➔ big enough never to bind, so they add no constraint that the original problem lacked.
 - **Contrast with BFS** ➔ the BFS super source shifts distances by $1$ ([[State-Space Graph Modelling]] §5); here nothing shifts — the flow value is unchanged.
 
-### 2. Vertex Capacities — Split Every Vertex *(applied P5)*
+### 2. Vertex Capacities — Split Every Vertex *(applied P5 · `[P,C,D,HD]`)*
 - **Construction** ➔ each $v\notin\{s,t\}$ becomes $v_{in}\to v_{out}$ with capacity $c(v)$ · every edge into $v$ now enters $v_{in}$, every edge out of $v$ leaves $v_{out}$ · delete $v$.
-- **Why** ➔ all flow through $v$ must cross the single edge $v_{in}\to v_{out}$, so the vertex limit becomes an edge limit FF already enforces.
+- **Why** ➔ all flow through $v$ must cross the single edge $v_{in}\to v_{out}$, so the vertex limit becomes an edge limit FF already enforces — **conservation** pushes everything through it, the **capacity constraint** caps it.
 
-### 3. Bipartite Matching and Quota Assignment *(lecture · applied P3, P7)*
+### 3. Bipartite Matching and Quota Assignment *(lecture · applied P3 `[C,D,HD]` credit discussion · P7)*
 - **Matching agency (lecture)** ➔ men $L$, women $R$, a preference is an edge $\ell\to r$ of capacity $1$ · $s\to\ell$ capacity $1$, $r\to t$ capacity $1$ ➔ **max flow $=$ max number of matches** · matched pairs $=$ middle edges carrying $1$.
 - **Why FF beats greedy** ➔ a greedy pairing stalls at $2$ on the lecture example where $3$ is possible; a backward edge re-assigns an earlier match to free a partner.
 - **Quotas** ➔ the source edge's capacity is how many matches that vertex may take ("if Zach pays more" ⟹ $s\to\text{Zach}=4$) · in general $s\to\ell=$ supply, $r\to t=$ demand, $\ell\to r=$ how many times that pair may be used.
-- **$0/1$ matrix with row sums $r_i$, column sums $c_j$ (P3)** ➔ $s\to a_i$ cap $r_i$ · $a_i\to b_j$ cap $1$ · $b_j\to t$ cap $c_j$ ➔ feasible $\iff$ max flow $=\sum r_i$ (every source edge saturated) ➔ $X_{ij}=f(a_i,b_j)$.
+- **$0/1$ matrix with row sums $r_i$, column sums $c_j$ (P3)** ➔ $s\to a_i$ cap $r_i$ · $a_i\to b_j$ cap $1$ · $b_j\to t$ cap $c_j$ ➔ feasible $\iff$ max flow $=\sum r_i$ (every source edge saturated) ➔ $X_{ij}=f(a_i,b_j)$ · the lecturer's drill $r=\{3,1,2\}$, $c=\{1,1,2,2\}$ is §Applied · a **3D** version was set on the 2026 S1 D/HD paper.
 - **Radio songs (P7)** ➔ eras $\to$ genres, $s\to\text{era}_i$ cap $e_i$, $\text{era}_i\to\text{genre}_j$ cap $=$ number of distinct songs in that pair, $\text{genre}_j\to t$ cap $g_j$ ➔ feasible $\iff$ max flow $=\sum e_i$ ➔ $f(\text{era}_i,\text{genre}_j)=$ how many songs to pick from that pair.
 - **Integrality is load-bearing** ➔ FF on integer capacities returns an integer flow on every edge ([[Ford-Fulkerson Method]] §5), so a middle edge carries exactly $0$ or $1$ — a valid matrix entry or match, never a fraction.
 - **Circulation with demands** *(applied P3 aside, taught in W12)* ➔ $a_i$ demand $-r_i$, $b_j$ demand $c_j$, no $s$/$t$; the $s$/$t$ construction above is exactly that problem's reduction ➔ [[Circulation with Demands and Lower Bounds]] §2.
@@ -40,16 +40,16 @@ aliases: [Max-Flow Reductions, Bipartite Matching, Maximum Bipartite Matching, S
 	- **Answer** ➔ minimum paths $=\lvert V\rvert-\lvert M\rvert$.
 	- **Why** ➔ matching $u_L$ to $v_R$ $=$ choosing $v$ as $u$'s **successor** · capacity $1$ on both sides ⟹ $\le1$ successor and $\le1$ predecessor per vertex ⟹ the chosen edges form disjoint paths · unmatched $u_L$ $=$ a path **end**, unmatched $v_R$ $=$ a path **start** ⟹ paths $=$ ends $=\lvert V\rvert-\lvert M\rvert$, minimised by maximising $\lvert M\rvert$.
 
-### 4. Disjoint Paths — Unit Capacities *(applied P6)*
+### 4. Disjoint Paths — Unit Capacities *(applied P6 · `[P,C,D,HD]` · past-year question)*
 - **Edge-disjoint** ➔ every edge capacity $1$ ➔ max flow $=$ maximum number of edge-disjoint $s$–$t$ paths.
 - **Both directions** ➔ $k$ disjoint paths ⟹ send $1$ along each ⟹ a flow of $k$ · an integral flow of $k$ on unit edges ⟹ trace $k$ paths from $s$, each using its own saturated edges · a vertex carries at most $\min(\text{indeg}(v),\text{outdeg}(v))$ paths, matching its flow limit.
 - **Vertex-disjoint (P6c)** ➔ add vertex capacity $1$ to every $v\notin\{s,t\}$, then split as in §2 — without the split a vertex still carries as many paths as its degree allows.
 
-### 5. Min Cut as a Cheapest Two-Way Split *(W11 applied P4 · W12 applied P3, P5)*
+### 5. Min Cut as a Cheapest Two-Way Split *(W11 applied P4 `[C,D,HD]` credit discussion · W12 applied P3, P5)*
 - **Problem** ➔ each job runs on computer $1$ or $2$ at known costs; related pairs on different computers pay a penalty ➔ minimise total cost.
-- **Construction** ➔ $s\to j$ cap $=$ cost on computer $1$ · $j\to t$ cap $=$ cost on computer $2$ · each related pair gets **two** edges $i\to k$ and $k\to i$, cap $=$ penalty.
-- **Why min cut $=$ min cost** ➔ every $s$–$t$ cut puts each job on one side and pays: $j\in T$ cuts $s\to j$ (cost $1$) · $j\in S$ cuts $j\to t$ (cost $2$) · a related pair split across the cut cuts exactly one of its two edges (the $S\to T$ one) ⟹ penalty paid once.
-- **Read-off — reversed** ➔ $S$ side ⟹ **computer 2**, $T$ side ⟹ **computer 1** · minimum cost $=$ max flow value · the sides come from residual reachability ([[Min-Cut Max-Flow Theorem]] §5).
+- **Construction** ➔ $s\to j$ cap $=$ cost on **computer-s** · $j\to t$ cap $=$ cost on **computer-t** *(the sheet's computers $1$ and $2$)* · each related pair gets **two** edges $i\to k$ and $k\to i$, cap $=$ penalty.
+- **Why min cut $=$ min cost** ➔ every $s$–$t$ cut puts each job on one side and pays: $j\in T$ cuts $s\to j$ (computer-s cost) · $j\in S$ cuts $j\to t$ (computer-t cost) · a related pair split across the cut cuts exactly one of its two edges (the $S\to T$ one) ⟹ penalty paid once.
+- **Read-off — reversed** ➔ a job runs on the computer whose edge is **cut** ⟹ $S$ side ⟹ **computer-t**, $T$ side ⟹ **computer-s** · minimum cost $=$ max flow value · the sides come from residual reachability ([[Min-Cut Max-Flow Theorem]] §5) · in class the lecturer reads **saturation** instead (the job's saturated terminal edge) — same answer whenever exactly one of its two terminal edges is full · worked on the lecturer's network in §Applied.
 - **Why two opposite edges** ➔ one edge $i\to k$ only charges when $i\in S$, $k\in T$; the reverse split would be free.
 - **$\infty$ edge $=$ hard constraint** ➔ an edge $u\to v$ of capacity $\infty$ never crosses $S\to T$ in a finite min cut ⟹ "$u$ chosen ⟹ $v$ chosen" · $s\to v$ of $\infty$ pins $v$ to $S$.
 - **Project selection (W12 P3)** ➔ $s\to x$ cap $p$ for profit $p>0$ · $x\to t$ cap $p$ for profit $-p$ · $x\to y$ cap $\infty$ when $y$ is a prerequisite of $x$.
@@ -92,19 +92,33 @@ FF costs $O(F\cdot E')$ on the built network; the construction is $O(V'+E')$.
 
 ## 📊 Exam Execution Trace & Applied Exercises
 ### Applied Exercise — $0/1$ matrix, feasible and infeasible
-**Problem:** (i) $r=(2,1)$, $c=(1,1,1)$ · (ii) $r=(2,0)$, $c=(2,0)$. Decide each by max flow.
+**Problem:** (i) the lecturer's drill $r=(3,1,2)$, $c=(1,1,2,2)$ · (ii) $r=(2,0)$, $c=(2,0)$. Decide each by max flow.
 $$
 \begin{aligned}
-\text{(i) } & s\to a_1\to b_1\to t,\ \ s\to a_1\to b_2\to t,\ \ s\to a_2\to b_3\to t \ \Rightarrow\ \lvert f\rvert=3=\textstyle\sum r_i\\
-& X=\begin{pmatrix}1&1&0\\0&0&1\end{pmatrix}\\
+\text{(i) } & a_1\to b_1,b_3,b_4\ \cdot\ a_2\to b_2\ \cdot\ a_3\to b_3,b_4\ \text{ each carrying } 1 \ \Rightarrow\ \lvert f\rvert=6=\textstyle\sum r_i=\sum c_j\\
+& X=\begin{pmatrix}1&0&1&1\\0&1&0&0\\0&0&1&1\end{pmatrix}\\
 \text{(ii) } & b_1 \text{ is fed only by } a_1\to b_1\ (\text{cap } 1) \text{ and } a_2\ (r_2=0) \Rightarrow \lvert f\rvert=1<2=\textstyle\sum r_i
 \end{aligned}
 $$
-**Final Extracted Output:** (i) feasible, matrix read off the middle edges · (ii) infeasible — column $1$ needs two $1$s but only row $1$ has any, and a cell holds at most one $1$; the unsaturated $s\to a_1$ is the evidence.
+**Final Extracted Output:** (i) feasible — every $s\to a_i$ and $b_j\to t$ saturated, matrix read off the middle edges (other max flows give other valid matrices) · (ii) infeasible — column $1$ needs two $1$s but only row $1$ has any, and a cell holds at most one $1$; the unsaturated $s\to a_1$ is the evidence.
+
+### Applied Exercise — supercomputer network *(W11 applied P4, the lecturer's diagram)*
+**Problem:** $s\to a\,5$, $s\to b\,10$, $s\to c\,3$ (computer-s costs) · $a\to t\,4$, $b\to t\,4$, $c\to t\,9$ (computer-t costs) · $b\to c$ and $c\to b$ at $p=2$ (split penalty). Find the minimum cost and the assignment, then say how $p$ changes it.
+$$
+\begin{aligned}
+\text{Augment: } & s\to a\to t\ (4)\ \cdot\ s\to b\to t\ (4)\ \cdot\ s\to c\to t\ (3)\ \cdot\ s\to b\to c\to t\ (2) \Rightarrow \lvert f\rvert=13\\
+\text{Reach in } G_f: & \ s\to a\ (1),\ s\to b\ (4);\ \ a\to t,\ b\to t,\ b\to c \text{ full} \Rightarrow S=\{s,a,b\},\ T=\{c,t\}\\
+c(S,T) &= \underbrace{4}_{a\to t}+\underbrace{4}_{b\to t}+\underbrace{2}_{b\to c}+\underbrace{3}_{s\to c}=13\\
+\text{cost}(p) &= 4+\min(4+3+p,\ 13)=\min(11+p,\ 17)
+\end{aligned}
+$$
+**Final Extracted Output:** minimum cost $13$ · $a$, $b$ on **computer-t** ($4+4$) · $c$ on **computer-s** ($3$) · split penalty $2$ · saturation agrees: $a\to t$, $b\to t$, $s\to c$ are the full terminal edges.
+
+> [!NOTE] **When It Flips:** $p<6$ keeps $b$ and $c$ apart (cost $11+p$) · $p>6$ forces them together — both on computer-t ($4+9$) or both on computer-s ($10+3$), $13$ either way ⟹ total $17$ · $p=6$ ties · $a$ stays on computer-t for every $p$, since $4<5$ and it has no penalty edge.
 
 ## ⚠️ Common Mistakes
 - 💡 **Stopping at "run max flow"** ➔ feasibility questions need the test "$\lvert f\rvert=\sum$ quotas" and the read-off; without them the answer earns half.
-- 💡 **Job allocation sides swapped** ➔ $S$ side runs on computer **2**: a job in $S$ pays through its $j\to t$ edge.
+- 💡 **Job allocation sides swapped** ➔ $S$ side runs on **computer-t**: a job in $S$ pays through its cut $j\to t$ edge.
 - 💡 **One edge per related pair** ➔ penalties then charge only one direction of split; use two opposite edges.
 - 💡 **Vertex-disjoint without the split** ➔ unit edge capacities alone still let several paths share a vertex.
 - 💡 **Project selection: min cut reported as the profit** ➔ the cut is what you **lose**; profit $=\sum_{p_x>0}p_x-c(S,T)$.

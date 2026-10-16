@@ -1,7 +1,7 @@
 ---
 unit: FIT2004
 week: 8
-source: [lecture]
+source: [lecture, applied]
 domain: A
 parent: "[[Graph]]"
 tags: [CS/Algorithms, Math/GraphTheory]
@@ -35,7 +35,7 @@ aliases: [Bellman Ford, Negative Cycle Detection, SSSP with Negative Edges]
 - **The test** ➔ run the relaxation pass a $\lvert V\rvert$-th time. If **any** edge still relaxes, a path of $\ge\lvert V\rvert$ edges is beating every simple path ⟹ it must contain a cycle, and that cycle must be negative.
 - **The lecture's phrasing** ➔ *"if a cycle exists, this additional traversal will form the biggest cycle"* — round $\lvert V\rvert$ is the first round that can only be reporting a non-simple walk.
 - **Report, do not repair** ➔ the unit's pseudocode raises `error "Graph contains a negative-weight cycle"`; it does not return distances.
-- **Only cycles REACHABLE from the source are found** ➔ a vertex still at $\infty$ never satisfies `dist[u] + w < dist[v]` in a meaningful way, so an unreachable negative cycle is invisible. Detecting *any* negative cycle needs [[Floyd-Warshall]]'s diagonal, or a super source joined to every vertex at weight $0$.
+- **Only cycles REACHABLE from the source are found** ➔ a vertex still at $\infty$ never satisfies `dist[u] + w < dist[v]` in a meaningful way, so an unreachable negative cycle is invisible. Detecting *any* negative cycle needs a weight-$0$ super source (§5) or [[Floyd-Warshall]]'s diagonal.
 
 ### 4. The Required Early-Termination Optimisation
 - **The observation** ➔ if a full pass over all $E$ edges relaxes **nothing**, no later pass can either — the state is a fixed point ⟹ **break**.
@@ -43,6 +43,14 @@ aliases: [Bellman Ford, Negative Cycle Detection, SSSP with Negative Edges]
 - **What it buys** ➔ best case collapses from $\Theta(VE)$ to $\Theta(V+E)$ *(one productive pass $+$ one confirming pass)*; the worst case is unmoved.
 - **Free negative-cycle diagnosis** ➔ if `changed` is still true at the end of round $\lvert V\rvert-1$, the extra check pass is already implied — the two halves of the algorithm become one loop with a round counter.
 - **Scope** ➔ the unit outline lists this optimisation as a requirement, discussed in the studio/applied session and the bonus video; drill the exact form from that video before the competency test.
+
+### 5. Any Negative Cycle, and Which Vertices Form It *(applied P2, P3)*
+- **Super source** ➔ add $q$ with a weight-$0$ edge to every vertex and run Bellman-Ford **once** from $q$ ⟹ every vertex is reachable, so every negative cycle is seen. $O(VE)$, vs $O(V^{2}E)$ for one run per source.
+- **The disconnected caveat** ➔ the $V$ added edges make it $O(V(E+V))=O(VE+V^{2})$, which collapses to $O(VE)$ only when $G$ is connected ($E\ge V-1$) — $V$ isolated vertices with $E=0$ is the case that needs the $V^{2}$.
+- **An updated vertex need not lie ON the cycle** ➔ the $\lvert V\rvert$-th pass also lowers vertices **downstream** of the cycle, and may leave some cycle vertices unchanged — which ones depends on the edge order. Never report the updated set as the cycle.
+- **Extract by walking `pred` back** ➔ from any vertex updated in the $\lvert V\rvert$-th pass, follow `pred` until a vertex $u$ repeats; the cycle is $u$ plus every vertex between its two occurrences. A `visited` array costs $\Theta(V)$ auxiliary.
+- **$O(1)$-auxiliary variant** ➔ step back $\lvert V\rvert-1$ times first — guaranteed to land on the cycle — then follow `pred` once round until returning to that vertex.
+- **Cost** ➔ $O(VE)$ run $+$ $O(V)$ walk ⟹ $O(VE)$.
 
 ## ⚙️ Core Implementation
 ### 🔹 Bellman-Ford (unit pseudocode $+$ early exit)
@@ -74,6 +82,38 @@ aliases: [Bellman Ford, Negative Cycle Detection, SSSP with Negative Edges]
 > 💡 **Common Mistake:** **Omitting the `dist[u] != INF` guard** ➔ $\infty+(-4)<\infty$ evaluates true with a large sentinel integer, so unreached vertices leak finite garbage distances and the cycle check fires on a graph that has no cycle.
 > 💡 **Common Mistake:** **Returning distances after detecting a cycle** ➔ the answer to *"what is the shortest distance"* is that **none exists**; a table of numbers is wrong, not partially right.
 
+### 🔹 Extract one negative cycle *(applied P3)*
+> [!code]- Code
+> ```python
+> def negative_cycle(n, edges):                 # vertices 0..n-1, edges (u, v, w)
+>     q = n                                     # super source: weight-0 edge to every vertex
+>     aug = edges + [(q, v, 0) for v in range(n)]
+>     dist = [INF] * (n + 1)
+>     pred = [None] * (n + 1)
+>     dist[q] = 0
+>     for _ in range(n):                        # |V'| - 1 = n rounds
+>         for (u, v, w) in aug:
+>             if dist[u] != INF and dist[u] + w < dist[v]:
+>                 dist[v] = dist[u] + w
+>                 pred[v] = u
+>     x = None
+>     for (u, v, w) in aug:                     # the check pass
+>         if dist[u] != INF and dist[u] + w < dist[v]:
+>             dist[v] = dist[u] + w
+>             pred[v] = u
+>             x = v                             # updated, but maybe OFF the cycle
+>     if x is None:
+>         return None                           # no negative cycle anywhere in G
+>     for _ in range(n):                        # step back onto the cycle, O(1) aux
+>         x = pred[x]
+>     cycle, y = [x], pred[x]
+>     while y != x:                             # one lap round the cycle
+>         cycle.append(y)
+>         y = pred[y]
+>     return cycle[::-1]                        # in edge direction
+> ```
+> 💡 **Common Mistake:** **Returning `x` itself as a cycle vertex** ➔ the vertex that changed in the check pass may only hang off the cycle; the backward steps are what guarantee you are on it.
+
 ## ⚖️ Complexity
 Adjacency **list** *(an edge list is enough — Bellman-Ford never asks for a vertex's neighbours)*.
 
@@ -94,11 +134,13 @@ Adjacency **list** *(an edge list is enough — Bellman-Ford never asks for a ve
 | All $w\ge0$, single source | [[Dijkstra's Algorithm\|Dijkstra]] | greedy finalisation is sound | $O(E\log V)$ |
 | Some $w<0$, single source | **Bellman-Ford** | nothing is finalised, so a late improvement still lands | $\Theta(VE)$ |
 | Need to *know* whether a negative cycle exists | **Bellman-Ford** step 3 | the $\lvert V\rvert$-th pass is the certificate | $\Theta(E)$ extra |
-| Negative cycle anywhere, not just reachable | [[Floyd-Warshall]] | a negative diagonal entry $\text{dist}[u][u]<0$ | $\Theta(V^{3})$ |
-| All pairs, negatives allowed | [[Floyd-Warshall]] | $\Theta(V^{3})$ beats $\Theta(V^{2}E)$ | $\Theta(V^{3})$ |
+| Negative cycle anywhere in $G$ | **Bellman-Ford** from a weight-$0$ super source (§5) | one run reaches every vertex | $O(VE)$ |
+| … and the all-pair matrix is wanted too | [[Floyd-Warshall]] | a negative diagonal entry $\text{dist}[u][u]<0$ | $\Theta(V^{3})$ |
+| All pairs, negatives, dense | [[Floyd-Warshall]] | $\Theta(V^{3})$ beats $\Theta(V^{2}E)$ | $\Theta(V^{3})$ |
+| All pairs, negatives, sparse | [[Johnson's Algorithm\|Johnson's]] | one Bellman-Ford reweights every edge to $\ge0$, then $V$ Dijkstras | $O(VE\log V)$ |
 | Weights $\ge0$ **and** all pairs **and** sparse | $V\times$ [[Dijkstra's Algorithm\|Dijkstra]] | $O(EV\log V)$ beats $\Theta(V^{3})$ when $E\lll V^{2}$ | $O(EV\log V)$ |
 
-> [!NOTE] **When It Flips:** the hinge is the **sign of the weights**, then the **number of sources**. One negative edge moves you from Dijkstra to Bellman-Ford; needing *all* pairs moves you from Bellman-Ford to [[Floyd-Warshall]] the moment $V\cdot E$ exceeds $V^{2}$, i.e. essentially always on a dense graph.
+> [!NOTE] **When It Flips:** the hinge is the **sign of the weights**, then the **number of sources**, then **density**. One negative edge moves you from Dijkstra to Bellman-Ford; needing *all* pairs moves you to [[Floyd-Warshall]] on a dense graph and to [[Johnson's Algorithm|Johnson's]] — one Bellman-Ford, then $V$ Dijkstras — on a sparse one. $V$ separate Bellman-Fords is never the answer.
 
 ## 📊 Exam Execution Trace & Applied Exercises
 Lecture graph — $s\!\to\!u(5)$, $s\!\to\!v(8)$, $u\!\to\!w(3)$, $w\!\to\!x(-1)$, $x\!\to\!v(-1)$, $v\!\to\!u(-4)$. Source $s$. Cells read *value* $+$ *predecessor*.
@@ -128,10 +170,23 @@ $$
 $$
 **Final Extracted Output:** $\text{dist}[u]=4$ via $s\to v\to u$. **The recipe:** a cheap-looking direct edge that is beaten by a longer route ending in a negative edge — exactly the greedy-finalisation failure, with no cycle needed.
 
+### Applied Exercise — the updated vertex is off the cycle *(applied P3)*
+**Problem:** $s\!\to\!a(0)$, $s\!\to\!b(0)$, $s\!\to\!c(0)$, $s\!\to\!d(0)$ *($s$ already plays the super source)*, $d\!\to\!a(-1)$, $d\!\to\!c(-5)$, $c\!\to\!b(1)$, $b\!\to\!d(2)$. Output the vertices of a negative cycle.
+$$
+\begin{aligned}
+\text{After round } \lvert V\rvert-1:&\ \ a=-1\,(d),\ \ b=-4\,(c),\ \ c=-5\,(d),\ \ d=-2\,(b)\\
+\text{Round } \lvert V\rvert:&\ \ a=-2-1=\mathbf{-3},\ \ c=-2-5=\mathbf{-7};\ \ b,\ d\ \text{unchanged}\\
+\text{Walk pred from } a:&\ \ a\leftarrow d\leftarrow b\leftarrow c\leftarrow d\ \Rightarrow\ d\ \text{repeats}\\
+\text{Cycle:}&\ \ d\to c\to b\to d=-5+1+2=\mathbf{-2}
+\end{aligned}
+$$
+**Final Extracted Output:** the cycle is $\{d,c,b\}$. **Read the trap** ➔ the updated set $\{a,c\}$ contains $a$, which is **off** the cycle (it only hangs off $d$), and misses $b$ and $d$, which are **on** it.
+
 ## ⚠️ Common Mistakes
 - 💡 **Looping $\lvert V\rvert$ times "to be safe"** ➔ the $\lvert V\rvert$-th pass **is** the cycle check; folding it into the main loop destroys the diagnosis and silently returns $-\infty$-bound garbage.
 - 💡 **"Bellman-Ford handles negative cycles"** ➔ it **detects** them. No algorithm can return a shortest distance that does not exist.
 - 💡 **Claiming it finds every negative cycle** ➔ only those **reachable from the source**. Say so, and offer the weight-$0$ super source or [[Floyd-Warshall]] as the fix.
+- 💡 **Reporting the vertices updated in the $\lvert V\rvert$-th pass as the cycle** ➔ downstream vertices update too and some cycle vertices may not; walk `pred` back to a repeat (§5).
 - 💡 **Quoting $O(V^{2})$ or $O(E\log V)$** ➔ the bound is $\Theta(VE)$; the dense instantiation is $\Theta(V^{3})$, and it must be stated with $E$ named ([[Graph]] §3).
 - 💡 **Storing a $V\times V$ table** ➔ auxiliary space is $\Theta(V)$; the grid exists only for hand-tracing.
 
@@ -150,4 +205,9 @@ $$
 > [!FAQ]- Your run finishes and the $\lvert V\rvert$-th pass improves one vertex by $3$. What do you write, and what must you NOT write?
 > > [!SUCCESS]- Answer
 > > - **Short answer:** write *"a negative cycle reachable from $s$ exists, so no shortest distance is defined"* — do **not** write a distance table.
-> > - **Why:** **The improvement certifies a non-simple walk** ➔ after $\lvert V\rvert-1$ rounds every simple path is already accounted for, so a further improvement uses $\ge\lvert V\rvert$ edges and must repeat a vertex; the repeated segment is a cycle whose total weight is negative. **The infimum is $-\infty$** ➔ each lap subtracts the same amount again, so no finite number is the answer. **Scope the claim** ➔ *reachable from $s$*; a negative cycle in an unreachable component is not detected by this run ➔ [[Floyd-Warshall]] §4.
+> > - **Why:** **The improvement certifies a non-simple walk** ➔ after $\lvert V\rvert-1$ rounds every simple path is already accounted for, so a further improvement uses $\ge\lvert V\rvert$ edges and must repeat a vertex; the repeated segment is a cycle whose total weight is negative. **The infimum is $-\infty$** ➔ each lap subtracts the same amount again, so no finite number is the answer. **Scope the claim** ➔ *reachable from $s$*; a negative cycle in an unreachable component is not detected by this run ➔ §5 super source, or [[Floyd-Warshall]] §4.
+
+> [!FAQ]- The $\lvert V\rvert$-th pass improves vertex $a$. Is $a$ on the negative cycle, and how do you output the cycle's vertices in $O(VE)$?
+> > [!SUCCESS]- Answer
+> > - **Short answer:** not necessarily — walk `pred` back from $a$ until a vertex repeats; the vertices between its two occurrences are the cycle.
+> > - **Why:** **Improvements ripple downstream** ➔ every vertex reachable from the cycle keeps falling, so $a$ may only hang off it (applied P3: $a$ hangs off $d$). **The `pred` chain must enter the cycle** ➔ each improvement was caused by its predecessor, the source never improves, and with finitely many vertices the chain must repeat. **Cost** ➔ an $O(V)$ walk on top of the $O(VE)$ run — with a `visited` array, or step back $\lvert V\rvert-1$ times and lap once for $O(1)$ auxiliary.

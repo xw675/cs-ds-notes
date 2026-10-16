@@ -23,7 +23,7 @@ aliases: [LLRB, LLRB Tree, Red-Black Tree, RB Tree]
 - **No red parent with a red child** ➔ two reds in a row would be a 4-node.
 - **Left-leaning** ➔ a red link may only be a **left** child.
 - **Root is black** ➔ at the end of every operation, a red root is recoloured black.
-- **Black-height** ➔ number of black edges from root to leaf, equal on every path $=$ the 2-3 tree's height. Red edges add none, which is what keeps it balanced.
+- **Black-height** ➔ number of black edges from root to leaf, equal on every path $=$ the 2-3 tree's height (a lone root has black-height $0$). Red edges add none, which is what keeps it balanced.
 
 ### 2. Ian's Way — 2-3 ⟷ LLRB
 | 2-3 tree | LLRB |
@@ -56,20 +56,23 @@ aliases: [LLRB, LLRB Tree, Red-Black Tree, RB Tree]
 | Space | $\Theta(N)$ | one colour bit per node |
 
 ## 📊 Exam Execution Trace & Applied Exercises
-### Manual Execution Trace — insert `50 30 40 20 10 60 55 25` *(`r` = red; same keys as the [[2-3 Tree]] trace)*
-| Step | Insert | Situation | Fix sequence | LLRB after | 2-3 mirror |
+### Manual Execution Trace — applied P6, inserts into an empty LLRB *(`r` = red · bh = black-height)*
+| Step | Insert | Fix sequence | LLRB after | 2-3 mirror | bh |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 50 | root | recolour black | `50` | `[50]` |
-| 2 | 30 | left of black | none | `50(30r,_)` | `[30 50]` |
-| 3 | 40 | right of red $30$ | (e) rotL@30 ➔ (d) rotR@50 ➔ (c) flip@40 ➔ root black | `40(30,50)` | `[40]([30],[50])` |
-| 4 | 20 | left of black | none | `40(30(20r,_),50)` | `[40]([20 30],[50])` |
-| 5 | 10 | left of red $20$ | (d) rotR@30 ➔ (c) flip@20; at $40$ only a red left | `40(20r(10,30),50)` | `[20 40]([10],[30],[50])` |
-| 6 | 60 | right of black, no red sibling | (b) rotL@50 | `40(20r(10,30),60(50r,_))` | `[20 40]([10],[30],[50 60])` |
-| 7 | 55 | right of red $50$ | rotL@50 ➔ rotR@60 ➔ flip@55 ➔ **flip@40** ➔ root black | `40(20(10,30),55(50,60))` | `[40]([20]([10],[30]),[55]([50],[60]))` |
-| 8 | 25 | left of black | none | `40(20(10,30(25r,_)),55(50,60))` | `[40]([20]([10],[25 30]),[55]([50],[60]))` |
+| a | 40 | red root ⟹ black | `40` | `[40]` | $0$ |
+| b | 20 | none — red left child | `40(20r,_)` | `[20 40]` | $0$ |
+| c | 5 | rotR@40 ➔ flip@20 ➔ root black | `20(5,40)` | `[20]([5],[40])` | $1$ |
+| d | 1 | none | `20(5(1r,_),40)` | `[20]([1 5],[40])` | $1$ |
+| e | 32 | none | `20(5(1r,_),40(32r,_))` | `[20]([1 5],[32 40])` | $1$ |
+| f | 64 | flip@40 ➔ rotL@20 | `40(20r(5(1r,_),32),64)` | `[20 40]([1 5],[32],[64])` | $1$ |
+| g | 13 | flip@5 ➔ rotR@40 ➔ flip@20 ➔ root black | `20(5(1,13),40(32,64))` | `[20]([5]([1],[13]),[40]([32],[64]))` | $2$ |
+| h | 5 | duplicate ⟹ unchanged | — | — | $2$ |
+| i | 38 | rotL@32 | `20(5(1,13),40(38(32r,_),64))` | `[20]([5]([1],[13]),[40]([32 38],[64]))` | $2$ |
+| j | 36 | rotL@32 ➔ rotR@38 ➔ flip@36 | `20(5(1,13),40(36r(32,38),64))` | `[20]([5]([1],[13]),[36 40]([32],[38],[64]))` | $2$ |
 
-- **Step 7** ➔ the flip at $55$ makes it red beside red $20$ ⟹ a second flip at $40$ — the LLRB form of the 2-3 double split.
-- **Check** ➔ final black-height $2$ on every path (e.g. $40\to20\to30\to25$: two black edges, one red) $=$ 2-3 height $2$.
+- **bh rises only at (c) and (g)** ➔ the steps where a flip pushes red into the root and it is blackened — the 2-3 root split.
+- **Step (f)** ➔ the flip at $40$ leaves it a red **right** child of $20$ ⟹ rotate left one level up; the 2-3 view is $[32\ 40\ 64]$ splitting into the root.
+- **Step (j)** ➔ the flip leaves $36$ a red **left** child of black $40$ ⟹ legal, stop.
 
 ## ✍️ Practice
 > [!QUESTION]- Practice 1: Convert the 2-3 tree `[25 50]([20],[30],[55 60])` to an LLRB and state its black-height.
@@ -94,6 +97,13 @@ aliases: [LLRB, LLRB Tree, Red-Black Tree, RB Tree]
 > > - **Insert 15** ➔ red right of $13$ beside red $12$ ⟹ **flip@13** ($13$ red) ⟹ $9$ now has red $5$ **and** red $13$ ⟹ **flip@9** ⟹ $9$ is a red **left** child of black $19$ ⟹ valid, stop.
 > > - **Final** ➔ `19(9r(5(4(1r,_),8(7r,_)),13(12,15)),36(21r(20,35),37))`, black-height $2$ on every path.
 > > - **Why:** **2-3 mirror** ➔ $15$ makes $[12\ 13\ 15]$, $13$ promoted makes $[5\ 9\ 13]$, $9$ promoted makes root $[9\ 19]$ — two splits, two flips, no root split so the root stays black.
+
+> [!QUESTION]- Practice 4 (applied P5b): Convert `[15]([6]([3]([0],[4 5]),[10]([8],[12])),[51]([19 25]([16 18],[23],[28]),[65]([60 62],[70])))` to an LLRB.
+> - **Hint:** Work node by node; a 3-node's left and middle children hang under the red key, its right child under the black key.
+> > [!SUCCESS]- Answer
+> > - **LLRB** ➔ `15(6(3(0,5(4r,_)),10(8,12)),51(25(19r(18(16r,_),23),28),65(62(60r,_),70)))`.
+> > - **Check** ➔ black-height $3$ on every path ($15\to51\to25\to19\to18\to16$: black, black, red, black, red) $=$ the 2-3 height.
+> > - **Why:** **$[19\ 25]$** ➔ black $25$, red left $19$; $19$ takes $[16\ 18]$ and $[23]$, $25$ keeps $[28]$ on its right.
 
 ## ⚠️ Common Mistakes
 - 💡 **Measuring height by drawn levels** ➔ count **black** edges only; the drawn tree may be up to twice as tall.
